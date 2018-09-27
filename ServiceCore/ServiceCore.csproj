@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataMapper\DataMapper.csproj" />
+    <ProjectReference Include="..\RepositoryCore\RepositoryCore.csproj" />
+  </ItemGroup>
+
+</Project>

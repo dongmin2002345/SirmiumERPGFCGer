@@ -1,0 +1,102 @@
+﻿<Controls:MetroWindow x:Class="SirmiumERPGFC.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:Fluent="urn:fluent-ribbon"
+        xmlns:local="clr-namespace:SirmiumERPGFC"
+        mc:Ignorable="d"
+        Title="{Binding Path=Header}" Height="740" Width="1024" WindowState="Maximized"   
+        Background="LightGray"
+        BorderBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="2"
+        WindowStartupLocation="CenterScreen">
+
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button x:Name="btnHome" Click="btnHome_Click">
+                <iconPacks:PackIconModern Width="22" Height="22" Kind="Home" />
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="239*"/>
+            <ColumnDefinition Width="773*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--<Grid.Background>
+            <ImageBrush ImageSource="Resources\Backgrounds\cowww.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Fluent:Ribbon Grid.Row="0" Grid.ColumnSpan="2">
+
+            <Fluent:RibbonTabItem Header="Administracija" x:Name="mniAdministration" KeyTip="ADM">
+                <Fluent:RibbonGroupBox Header="Firme">
+                    <Fluent:ToggleButton Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" GroupName="SirmiumErpMenuItem">
+                        <Fluent:ToggleButton.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:ToggleButton.LargeIcon>
+                    </Fluent:ToggleButton>
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Radnici">
+                    <Fluent:ToggleButton Click="mniIndividuals_Click" Header="Radnici" KeyTip="RAD" GroupName="SirmiumErpMenuItem">
+                        <Fluent:ToggleButton.LargeIcon>
+                            <Image Source="Resources\Icons\delivery-man.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:ToggleButton.LargeIcon>
+                    </Fluent:ToggleButton>
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Izlazni računi">
+                    <Fluent:ToggleButton Click="mniOutputInvoices_Click" Header="Izlazni računi" KeyTip="IZL" GroupName="SirmiumErpMenuItem">
+                        <Fluent:ToggleButton.LargeIcon>
+                            <Image Source="Resources\Icons\outputinvoice.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:ToggleButton.LargeIcon>
+                    </Fluent:ToggleButton>
+                </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="Gradovi">
+                    <Fluent:ToggleButton Click="mniCities_Click" Header="Gradovi" KeyTip="GRA" GroupName="SirmiumErpMenuItem">
+                        <Fluent:ToggleButton.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:ToggleButton.LargeIcon>
+                    </Fluent:ToggleButton>
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+        </Fluent:Ribbon>
+
+        <Grid Grid.Row="1" Visibility="Hidden" Grid.ColumnSpan="2">
+            <!--<Grid.Background>
+                <ImageBrush ImageSource="Resources\Backgrounds\cowww.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>-->
+
+            <ContentControl x:Name="cntCtrl" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <TabControl Margin="5" x:Name="contentTabControl" local:CloseableTabItem.TabClose="TabClosed">
+            </TabControl>
+        </Grid>
+
+    </Grid>
+
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout x:Name="mainFlyout" Header="Radni nalog" Position="Left" Width="600" Theme="Light" BorderBrush="Green" BorderThickness="3" IsModal="True" TitleVisibility="Hidden" CloseButtonVisibility="Visible">
+                <!-- Your custom content here -->
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+
+</Controls:MetroWindow>
+

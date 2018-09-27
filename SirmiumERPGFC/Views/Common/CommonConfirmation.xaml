@@ -1,0 +1,39 @@
+﻿<Window x:Class="SirmiumERPGFC.Views.Common.CommonConfirmation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:SirmiumERPGFC.Views.Common"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Title="DeleteConfirmation" Height="180" Width="500"
+        BorderBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="2"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0" Margin="10 25 10 5">
+            <TextBlock FontSize="20" x:Name="tbMessage"/>
+        </WrapPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="btnOK"
+                    Click="btnOK_Click"
+                    Style="{StaticResource AccentedSquareButtonStyle}"
+                    VerticalAlignment="Center"
+                    Margin="5" Width="100"
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal">Da</Button>
+            <Button x:Name="btnCancel"
+                    Click="btnCancel_Click"
+                    Style="{StaticResource AccentedSquareButtonStyle}"
+                    VerticalAlignment="Center"
+                    Margin="5" Width="100" 
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal">Ne</Button>
+        </StackPanel>
+    </Grid>
+</Window>
+

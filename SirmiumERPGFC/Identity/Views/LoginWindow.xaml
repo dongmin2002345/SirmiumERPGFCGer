@@ -1,0 +1,61 @@
+﻿<Controls:MetroWindow x:Class="SirmiumERPGFC.Identity.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:SirmiumERPGFC.Identity.Views"
+        mc:Ignorable="d"
+        Title="Logovanje" Height="175" Width="800"
+        BorderBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="2"
+        WindowStartupLocation="CenterScreen"
+        Loaded="MetroWindow_Loaded">
+
+    <Grid Margin="10 10 10 5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource username}" />
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtUsername" Text="Admin" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource password}" />
+        <PasswordBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtPasswordBox" Password="Secret123$" />
+
+        <!--<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource company}" />
+        <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="cbxCompanies" SelectedValuePath="Content" DisplayMemberPath="CompanyName"></ComboBox>-->
+
+        <!--    Cancel and Login buttons    -->
+        <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="10 5 2 0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                <Button x:Name="btnLogIn" Click="btnLogIn_Click" Margin="5 0 0 5" TabIndex="0" Width="150">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\log-in.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource login}" />
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 5" TabIndex="1" Width="150">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{DynamicResource close}" />
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Controls:MetroWindow>
