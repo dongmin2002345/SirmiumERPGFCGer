@@ -7,6 +7,7 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.BusinessPartners;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -63,6 +64,56 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
+        #region IsCreateProcess
+        private bool _IsCreateProcess;
+
+        public bool IsCreateProcess
+        {
+            get { return _IsCreateProcess; }
+            set
+            {
+                if (_IsCreateProcess != value)
+                {
+                    _IsCreateProcess = value;
+                    NotifyPropertyChanged("IsCreateProcess");
+                }
+            }
+        }
+        #endregion
+
+        #region SaveButtonContent
+        private string _SaveButtonContent = " Sačuvaj ";
+
+        public string SaveButtonContent
+        {
+            get { return _SaveButtonContent; }
+            set
+            {
+                if (_SaveButtonContent != value)
+                {
+                    _SaveButtonContent = value;
+                    NotifyPropertyChanged("SaveButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SaveButtonEnabled
+        private bool _SaveButtonEnabled = true;
+
+        public bool SaveButtonEnabled
+        {
+            get { return _SaveButtonEnabled; }
+            set
+            {
+                if (_SaveButtonEnabled != value)
+                {
+                    _SaveButtonEnabled = value;
+                    NotifyPropertyChanged("SaveButtonEnabled");
+                }
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Notifier for displaying error and success messages
@@ -75,67 +126,31 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         /// BusinessPartnerAddEdit constructor
         /// </summary>
         /// <param name="businessPartnerViewModel"></param>
-        public BusinessPartnerAddEdit(BusinessPartnerViewModel businessPartnerViewModel)
+        public BusinessPartnerAddEdit(BusinessPartnerViewModel businessPartnerViewModel, bool isCreateProcess)
         {
             // Initialize service
-            this.businessPartnerService = DependencyResolver.Kernel.Get<IBusinessPartnerService>();
-            
+            businessPartnerService = DependencyResolver.Kernel.Get<IBusinessPartnerService>();
+
             // Draw all components
             InitializeComponent();
 
             this.DataContext = this;
 
-            // Initialize notifications
-            notifier = new Notifier(cfg =>
-            {
-                cfg.PositionProvider = new WindowPositionProvider(
-                    parentWindow: System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault(),
-                    corner: Corner.TopRight,
-                    offsetX: 10,
-                    offsetY: 10);
-
-                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                    notificationLifetime: TimeSpan.FromSeconds(3),
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(3));
-
-                cfg.Dispatcher = Application.Current.Dispatcher;
-            });
-
             CurrentBusinessPartner = businessPartnerViewModel;
-
-            //if (CurrentBusinessPartner.Code <= 0)
-            //    CurrentBusinessPartner.Code = businessPartnerService.GetNewCodeValue().Code;
-
-            // Add handler for keyboard shortcuts
-            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
-
-            txtName.Focus();
+            IsCreateProcess = isCreateProcess;
         }
         #endregion
 
         #region Cancel save button 
 
-
-        /// <summary>
-        /// Cancel operation and close window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             FlyoutHelper.CloseFlyout(this);
         }
 
-        /// <summary>
-        /// Create or update BusinessPartner
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
-            CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
-            CurrentBusinessPartner.CreatedBy = new UserViewModel() { Id = customPrincipal.Identity.Id };
+            #region Validation
 
             if (String.IsNullOrEmpty(CurrentBusinessPartner.Mobile))
             {
@@ -143,32 +158,73 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 return;
             }
 
-            //int PIB = 0;
-            //Int32.TryParse(CurrentBusinessPartner.PIB, out PIB);
+            #endregion
 
-            BusinessPartnerResponse response;
-
-            //// If by any chance PIB exists in the database
-            //if (response.Success == false)
-            //{
-            //    if (CurrentBusinessPartner.Id != response.BusinessPartner.Id)
-            //    {
-            //        notifier.ShowError("PIB mora biti jedinstven!");
-            //        return;
-            //    }
-            //}
-            if (CurrentBusinessPartner.Id > 0)
-                response = businessPartnerService.Update(CurrentBusinessPartner);
-            else
-                response = businessPartnerService.Create(CurrentBusinessPartner);
-
-            if (response.Success)
+            Thread th = new Thread(() =>
             {
-                BusinessPartnerCreatedUpdated(response.BusinessPartner);
-                FlyoutHelper.CloseFlyout(this);
-            }
-            else
-                notifier.ShowError(response.Message);
+                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonEnabled = false;
+
+                CurrentBusinessPartner.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                CurrentBusinessPartner.IsSynced = false;
+                CurrentBusinessPartner.UpdatedAt = DateTime.Now;
+
+                BusinessPartnerResponse response = new BusinessPartnerSQLiteRepository().Delete(CurrentBusinessPartner.Identifier);
+                response = new BusinessPartnerSQLiteRepository().Create(CurrentBusinessPartner);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
+                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonEnabled = true;
+                    return;
+                }
+
+                response = businessPartnerService.Create(CurrentBusinessPartner);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonEnabled = true;
+                }
+
+                if (response.Success)
+                {
+                    new BusinessPartnerSQLiteRepository().UpdateSyncStatus(response.BusinessPartner.Identifier, response.BusinessPartner.Id, true);
+                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonEnabled = true;
+
+                    BusinessPartnerCreatedUpdated();
+
+                    if (IsCreateProcess)
+                    {
+                        CurrentBusinessPartner = new BusinessPartnerViewModel();
+                        CurrentBusinessPartner.Identifier = Guid.NewGuid();
+                        CurrentBusinessPartner.Code = new BusinessPartnerSQLiteRepository().GetNewCodeValue();
+
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                txtName.Focus();
+                            })
+                        );
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                FlyoutHelper.CloseFlyout(this);
+                            })
+                        );
+                    }
+                }
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         #endregion
@@ -191,63 +247,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
-        //#region Validation
-
-        ///// <summary>
-        ///// Validation of input fields
-        ///// </summary>
-        ///// <returns></returns>
-        //private bool InputIsValid()
-        //{
-        //    bool isValid = true;
-
-        //    // Check is CompanyName entered
-        //    if (String.IsNullOrEmpty(txtName.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Ime kompanije je obavezno!");
-        //    }
-
-        //    // Check is address entered
-        //    if (String.IsNullOrEmpty(txtAddress.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Adresa je obavezna!");
-        //    }
-
-        //    // Check is phone entered
-        //    if (String.IsNullOrEmpty(txtPhone.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Telefon je obavezan!");
-        //    }
-
-        //    // Check is Code entered
-        //    if (String.IsNullOrEmpty(txtCode.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Sifra je obavezna!");
-        //    }
-
-        //    // Check is Code entered
-        //    if (String.IsNullOrEmpty(txtPIBNumber.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("PIB je obavezan!");
-        //    }
-
-        //    if(String.IsNullOrEmpty(txtDueDate.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Valuta partnera je obavezna!");
-        //    }
-
-
-        //    return isValid;
-        //}
-
-        //#endregion
-
         #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -257,19 +256,5 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
-        private void municipalityPopup_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cbxIsInPDV_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cbxIsFarmer_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

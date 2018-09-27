@@ -30,16 +30,6 @@ namespace DataMapper.Mappers.Common.BusinessPartners
             return businessPartnerViewModels;
         }
 
-        public static List<BusinessPartner> ConvertToBusinessPartnerList(this List<BusinessPartnerViewModel> businessPartners)
-        {
-            List<BusinessPartner> businessPartnerList = new List<BusinessPartner>();
-            foreach (BusinessPartnerViewModel businessPartner in businessPartners)
-            {
-                businessPartnerList.Add(businessPartner.ConvertToBusinessPartner());
-            }
-            return businessPartnerList;
-        }
-
         public static BusinessPartnerViewModel ConvertToBusinessPartnerViewModel(this BusinessPartner businessPartner)
         {
             BusinessPartnerViewModel businessPartnerViewModel = new BusinessPartnerViewModel()
@@ -141,7 +131,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 OpeningDate = businessPartnerViewModel.OpeningDate,
                 BranchOpeningDate = businessPartnerViewModel.BranchOpeningDate,
 
-                CreatedBy = new User() { Id = businessPartnerViewModel.CreatedBy?.Id ?? 0 },
+                CreatedById = businessPartnerViewModel.CreatedBy?.Id ?? null,
                 CreatedAt = businessPartnerViewModel.CreatedAt
             };
             return businessPartner;

@@ -21,7 +21,7 @@ namespace SirmiumERPWeb.Controllers.Cities
         }
 
         [HttpGet]
-        public JsonResult GetCitys()
+        public JsonResult GetCities()
         {
             CityListResponse response = new CityListResponse();
             try
@@ -48,8 +48,7 @@ namespace SirmiumERPWeb.Controllers.Cities
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.Message = ex.Message;
+                response = null;
                 Console.WriteLine(ex.Message);
             }
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });

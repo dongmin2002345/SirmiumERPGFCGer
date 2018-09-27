@@ -10,22 +10,12 @@ namespace ServiceInterfaces.Abstractions.Common.BusinessPartners
 {
     public interface IBusinessPartnerService
     {
-        BusinessPartnerListResponse GetBusinessPartners(string filterString);
-
-        BusinessPartnerListResponse GetBusinessPartnersByPage(int currentPage = 1, int itemsPerPage = 20, string searchParameter = "");
-
-        BusinessPartnerListResponse GetBusinessPartnersForPopup(string filterString);
-
-        BusinessPartnerListResponse GetBusinessPartnersCount(string searchParameter = "");
-
-        BusinessPartnerResponse GetBusinessPartner(int id);
-
-        BusinessPartnerCodeResponse GetNewCodeValue();
+        BusinessPartnerListResponse GetBusinessPartners();
+        BusinessPartnerListResponse GetBusinessPartnersNewerThen(DateTime? lastUpdateTime);
 
         BusinessPartnerResponse Create(BusinessPartnerViewModel businessPartner);
+        BusinessPartnerResponse Delete(Guid identifier);
 
-        BusinessPartnerResponse Update(BusinessPartnerViewModel businessPartner);
-
-        BusinessPartnerResponse Delete(int id);
+        BusinessPartnerListResponse Sync(SyncBusinessPartnerRequest request);
     }
 }

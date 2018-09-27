@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Repository.Cities;
 using SirmiumERPGFC.Repository.Companies;
 using SirmiumERPGFC.Repository.Users;
@@ -67,6 +68,20 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(CitySQLiteRepository.CityTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region BusinessPartners
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE BusinessPartners", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(BusinessPartnerSQLiteRepository.BusinessPartnerTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
 

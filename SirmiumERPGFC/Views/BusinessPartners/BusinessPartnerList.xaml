@@ -6,19 +6,28 @@
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.BusinessPartners"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
+             xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
+             xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Control.Background>
+        <SolidColorBrush Color="White" />
+    </Control.Background>
+
+    <UserControl.Resources>
+        <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
+        <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="Pretraga" IsExpanded="True" Grid.Row="0">
+        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="Pretraga" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -51,34 +60,36 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Poslovni partneri" Margin="5,2,5,0" Grid.Row="1" >
+        <GroupBox Header="Poslovni partneri" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Button x:Name="btnAddBusinessPartner" Click="btnAddBusinessPartner_Click" HorizontalAlignment="Left" Margin="5" Width="200">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1">
+                    <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-
-                            <TextBlock Text=" Dodaj" />
+                            <TextBlock Text=" Dodaj " />
                         </StackPanel>
                     </Button>
-
-                    <Button x:Name="btnEdit" Click="btnEdit_Click" HorizontalAlignment="Left" Margin="5" Width="200">
+                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" Width="150">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
-
-                            <TextBlock Text=" Izmeni" />
+                            <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <TextBlock Text=" Osveži " />
                         </StackPanel>
                     </Button>
-
+                    <Button Margin="2" x:Name="btnSync" Click="btnSync_Click" IsEnabled="{Binding Path=BusinessPartnerButtonEnabled, Mode=TwoWay}" Width="250">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                            <TextBlock Text="{Binding Path=BusinessPartnerButtonContent, Mode=TwoWay}" Foreground="Black" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
 
                 <!-- Pagination -->
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
                     <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\chevron0.png" HorizontalAlignment="Center" Height="16" Width="16" />
@@ -101,45 +112,60 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
+                
+                <!--Listing-->
                 <Controls:ProgressRing Grid.Row="2" IsActive="{Binding BusinessPartnersLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                 <DataGrid x:Name="dgBusinessPartners"
-                              Grid.Row="2" Margin="0 5 0 0"
+                              Grid.Row="1"
+                              Margin="5 5 5 0"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
                               CanUserResizeRows="False"
-                              CanUserResizeColumns="True"  
+                              CanUserResizeColumns="True"
+                              IsManipulationEnabled="False"
                               GridLinesVisibility="All"
                               HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
                               Style="{DynamicResource AzureDataGrid}"
                               ItemsSource="{Binding Path=BusinessPartnersFromDB}"
-                              SelectedItem="{Binding Path=CurrentBusinessPartner}" >
+                              SelectedItem="{Binding Path=CurrentBusinessPartner, Mode=TwoWay}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv firme" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Director" Header="Direktor" Binding="{Binding Director}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PIB" Header="PIB" Binding="{Binding PIB}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Mobile}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Email}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="BankAccountNumber" Header="Tekuci racun" Binding="{Binding BankAccountNumber}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="CreatedBy.Username" Header="Kreirao/promenio" Binding="{Binding CreatedBy.Username}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="UpdatedAt" Header="Vreme izmene" Binding="{Binding UpdatedAt}" Width="*" IsReadOnly="True"  />
-
+                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv firme" Binding="{Binding Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Director" Header="Direktor" Binding="{Binding Director}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PIB" Header="PIB" Binding="{Binding PIB}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Mobile}" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Email}" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="BankAccountNumber" Header="Tekuci racun" Binding="{Binding BankAccountNumber}" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" >
+                                    <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="Margin" Value="2 0 2 0" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-
-                                        <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Obrši">
+                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="0" CommandParameter="{Binding}" ToolTip="Promeni">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                             </StackPanel>
                                         </Button>
-
-                                        <Button x:Name="btnExcel" Click="btnExportToExcel_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Excel">
+                                        <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Obriši">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                             </StackPanel>
                                         </Button>
                                     </StackPanel>
@@ -148,11 +174,8 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
             </Grid>
         </GroupBox>
-
     </Grid>
-
 </UserControl>
 

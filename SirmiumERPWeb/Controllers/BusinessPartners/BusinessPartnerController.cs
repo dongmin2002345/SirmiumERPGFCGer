@@ -19,78 +19,31 @@ namespace SirmiumERPWeb.Controllers.BusinessPartners
             businessPartnerService = provider.GetRequiredService<IBusinessPartnerService>();
 
         }
-        // GET: api/BusinessPartner
+
         [HttpGet]
-        public JsonResult GetBusinessPartners(string filterString)
+        public JsonResult GetBusinessPartners()
+        {
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
+            try
+            {
+                response = businessPartnerService.GetBusinessPartners();
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+                Console.WriteLine(ex.Message);
+            }
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        }
+
+        [HttpGet]
+        public JsonResult GetBusinessPartnersNewerThen(DateTime? lastUpdateTime)
         {
             BusinessPartnerListResponse response;
             try
             {
-                response = businessPartnerService.GetBusinessPartners(filterString);
-            }
-            catch (Exception ex)
-            {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult GetBusinessPartner(int id)
-        {
-            BusinessPartnerResponse response;
-            try
-            {
-                response = businessPartnerService.GetBusinessPartner(id);
-            }
-            catch (Exception ex)
-            {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult GetBusinessPartnersByPage(int currentPage = 1, int itemsPerPage = 6, string businessPartnerName = "")
-        {
-            BusinessPartnerListResponse response;
-            try
-            {
-                response = businessPartnerService.GetBusinessPartnersByPage(currentPage, itemsPerPage, businessPartnerName);
-            }
-            catch (Exception ex)
-            {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult GetBusinessPartnersCount(string searchParameter = "")
-        {
-            BusinessPartnerListResponse response;
-            try
-            {
-                response = businessPartnerService.GetBusinessPartnersCount(searchParameter);
-            }
-            catch (Exception ex)
-            {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult GetNewCodeValue()
-        {
-            BusinessPartnerCodeResponse response;
-            try
-            {
-                response = businessPartnerService.GetNewCodeValue();
+                response = businessPartnerService.GetBusinessPartnersNewerThen(lastUpdateTime);
             }
             catch (Exception ex)
             {
@@ -98,52 +51,21 @@ namespace SirmiumERPWeb.Controllers.BusinessPartners
                 Console.WriteLine(ex.Message);
             }
             return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }        
-
-        [HttpGet]
-        public JsonResult GetBusinessPartnersForPopup(string filterString)
-        {
-            BusinessPartnerListResponse response;
-            try
-            {
-                response = businessPartnerService.GetBusinessPartnersForPopup(filterString);
-            }
-            catch (Exception ex)
-            {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
+
 
         [HttpPost]
         public JsonResult Create([FromBody] BusinessPartnerViewModel c)
         {
-            BusinessPartnerResponse response;
+            BusinessPartnerResponse response = new BusinessPartnerResponse();
             try
             {
                 response = this.businessPartnerService.Create(c);
             }
             catch (Exception ex)
             {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpPost]
-        public JsonResult Update([FromBody] BusinessPartnerViewModel c)
-        {
-            BusinessPartnerResponse response;
-            try
-            {
-                response = this.businessPartnerService.Update(c);
-            }
-            catch (Exception ex)
-            {
-                response = null;
+                response.Success = false;
+                response.Message = ex.Message;
                 Console.WriteLine(ex.Message);
             }
 
@@ -153,41 +75,36 @@ namespace SirmiumERPWeb.Controllers.BusinessPartners
         [HttpPost]
         public JsonResult Delete([FromBody] BusinessPartnerViewModel c)
         {
-            BusinessPartnerResponse response;
+            BusinessPartnerResponse response = new BusinessPartnerResponse();
             try
             {
-                response = this.businessPartnerService.Delete(c.Id);
+                response = this.businessPartnerService.Delete(c.Identifier);
             }
             catch (Exception ex)
             {
-                response = null;
+                response.Success = false;
+                response.Message = ex.Message;
                 Console.WriteLine(ex.Message);
             }
 
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
-        #region Report test
-        [HttpGet]
-        public ActionResult GetBusinessPartnersForReport(int companyId)
+        [HttpPost]
+        public JsonResult Sync([FromBody] SyncBusinessPartnerRequest request)
         {
-            BusinessPartnerListResponse response;
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                response = businessPartnerService.GetBusinessPartnersByPage(1, 50, "");
-
-                if (response.Success)
-                {
-                    return View("~/Views/Reports/BusinessPartners/BusinessPartnerReportView.cshtml", response.BusinessPartnersByPage.ToList());
-                }
+                response = this.businessPartnerService.Sync(request);
             }
             catch (Exception ex)
             {
-                response = null;
-                Console.WriteLine(ex.Message);
+                response.Success = false;
+                response.Message = ex.Message;
             }
-            return new NotFoundResult();
+
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
-        #endregion
     }
 }

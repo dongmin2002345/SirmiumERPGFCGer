@@ -15,80 +15,24 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
     {
         IUnitOfWork unitOfWork;
 
-        /// <summary>
-        /// Business partner service constructor
-        /// </summary>
-        /// <param name="BusinessPartnerRepository"></param>
         public BusinessPartnerService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        /// <summary>
-        /// Get all active business partners for selected company
-        /// </summary>
-        /// <returns></returns>
-        public BusinessPartnerListResponse GetBusinessPartners(string filterString)
+        public BusinessPartnerListResponse GetBusinessPartners()
         {
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                //response.BusinessPartners = unitOfWork.GetBusinessPartnerRepository()
-                //    .GetBusinessPartners(filterString)
-                //    .ConvertToBusinessPartnerViewModelList();
-                //response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.BusinessPartners = new List<BusinessPartnerViewModel>();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-
-        public BusinessPartnerListResponse GetBusinessPartnersForPopup(string filterString)
-        {
-            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
-            try
-            {
-                //List<BusinessPartner> returnList = new List<BusinessPartner>();
-                //returnList = unitOfWork.GetBusinessPartnerRepository()
-                //    .GetBusinessPartnersForPopup(filterString);
-
-                //response.BusinessPartners = returnList.ConvertToBusinessPartnerViewModelList();
-                //response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.BusinessPartners = new List<BusinessPartnerViewModel>();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        /// <summary>
-        /// Get single active business partner for selected company
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public BusinessPartnerResponse GetBusinessPartner(int id)
-        {
-            BusinessPartnerResponse response = new BusinessPartnerResponse();
-            try
-            {
-                response.BusinessPartner = unitOfWork.GetBusinessPartnerRepository()
-                    .GetBusinessPartner(id)
-                    .ConvertToBusinessPartnerViewModel();
+                response.BusinessPartners = unitOfWork.GetBusinessPartnerRepository()
+                    .GetBusinessPartners()
+                    .ConvertToBusinessPartnerViewModelList();
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.BusinessPartner = new BusinessPartnerViewModel();
+                response.BusinessPartners = new List<BusinessPartnerViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }
@@ -96,21 +40,29 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             return response;
         }
 
-        ///<summary>
-        /// Gets new code for business partner creation
-        ///</summary>
-        ///<returns></returns>
-        public BusinessPartnerCodeResponse GetNewCodeValue()
-        {
-            BusinessPartnerCodeResponse response = new BusinessPartnerCodeResponse();
 
+        public BusinessPartnerListResponse GetBusinessPartnersNewerThen(DateTime? lastUpdateTime)
+        {
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                //response.Code = unitOfWork.GetBusinessPartnerRepository().GetNewCodeValue();
-                //response.Success = true;
+                if (lastUpdateTime != null)
+                {
+                    response.BusinessPartners = unitOfWork.GetBusinessPartnerRepository()
+                        .GetBusinessPartnersNewerThen((DateTime)lastUpdateTime)
+                        .ConvertToBusinessPartnerViewModelList();
+                }
+                else
+                {
+                    response.BusinessPartners = unitOfWork.GetBusinessPartnerRepository()
+                        .GetBusinessPartners()
+                        .ConvertToBusinessPartnerViewModelList();
+                }
+                response.Success = true;
             }
             catch (Exception ex)
             {
+                response.BusinessPartners = new List<BusinessPartnerViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }
@@ -118,30 +70,37 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             return response;
         }
 
-        /// <summary>
-        /// Create new business partner
-        /// </summary>
-        /// <param name="businessPartner"></param>
-        /// <returns></returns>
         public BusinessPartnerResponse Create(BusinessPartnerViewModel businessPartner)
         {
             BusinessPartnerResponse response = new BusinessPartnerResponse();
             try
             {
 
-                BusinessPartner createdBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Create(businessPartner.ConvertToBusinessPartner());
+                BusinessPartner addedBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Create(businessPartner.ConvertToBusinessPartner());
+                unitOfWork.Save();
+                response.BusinessPartner = addedBusinessPartner.ConvertToBusinessPartnerViewModel();
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.BusinessPartner = new BusinessPartnerViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
 
+            return response;
+        }
+
+        public BusinessPartnerResponse Delete(Guid identifier)
+        {
+            BusinessPartnerResponse response = new BusinessPartnerResponse();
+            try
+            {
+                BusinessPartner deletedBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Delete(identifier);
 
                 unitOfWork.Save();
-                response.BusinessPartner = createdBusinessPartner.ConvertToBusinessPartnerViewModel();
 
-                //Thread td = new Thread(() =>
-                //{
-                //    var resp = FirebaseHelper.Send<BusinessPartnerViewModel>("BusinessPartners", response.BusinessPartner);
-                //});
-                //td.IsBackground = true;
-                //td.Start();
-
+                response.BusinessPartner = deletedBusinessPartner.ConvertToBusinessPartnerViewModel();
                 response.Success = true;
             }
             catch (Exception ex)
@@ -154,107 +113,46 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             return response;
         }
 
-        /// <summary>
-        /// Update business partner 
-        /// </summary>
-        /// <param name="businessPartner"></param>
-        /// <returns></returns>
-        public BusinessPartnerResponse Update(BusinessPartnerViewModel businessPartner)
+        public BusinessPartnerListResponse Sync(SyncBusinessPartnerRequest request)
         {
-            BusinessPartnerResponse response = new BusinessPartnerResponse();
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                //BusinessPartner createdBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Update(businessPartner.ConvertToBusinessPartner());
+                response.BusinessPartners = new List<BusinessPartnerViewModel>();
 
-                //unitOfWork.Save();
-                //response.BusinessPartner = createdBusinessPartner.ConvertToBusinessPartnerViewModel();
+                if (request.LastUpdatedAt != null)
+                {
+                    response.BusinessPartners.AddRange(unitOfWork.GetBusinessPartnerRepository()
+                        .GetBusinessPartnersNewerThen((DateTime)request.LastUpdatedAt)
+                        ?.ConvertToBusinessPartnerViewModelList() ?? new List<BusinessPartnerViewModel>());
+                }
+                else
+                {
+                    response.BusinessPartners.AddRange(unitOfWork.GetBusinessPartnerRepository()
+                        .GetBusinessPartners()
+                        ?.ConvertToBusinessPartnerViewModelList() ?? new List<BusinessPartnerViewModel>());
+                }
 
-                ////Thread td = new Thread(() =>
-                ////{
-                ////    var resp = FirebaseHelper.Send<BusinessPartnerViewModel>("BusinessPartners", response.BusinessPartner);
-                ////});
-                ////td.IsBackground = true;
-                ////td.Start();
+                List<BusinessPartner> addedBusinessPartners = new List<BusinessPartner>();
+                foreach (var remedy in request.UnSyncedBusinessPartners)
+                {
+                    addedBusinessPartners.Add(unitOfWork.GetBusinessPartnerRepository().Create(remedy.ConvertToBusinessPartner()));
+                }
 
-                //response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.BusinessPartner = new BusinessPartnerViewModel();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
+                unitOfWork.Save();
 
-            return response;
-        }
-
-        /// <summary>
-        /// Deactivate business partner by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public BusinessPartnerResponse Delete(int id)
-        {
-            BusinessPartnerResponse response = new BusinessPartnerResponse();
-            try
-            {
-                //BusinessPartner deletedBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Delete(id);
-                //unitOfWork.Save();
-
-                //response.BusinessPartner = deletedBusinessPartner.ConvertToBusinessPartnerViewModel();
-
-                ////Thread td = new Thread(() =>
-                ////{
-                ////    var resp = FirebaseHelper.Send<BusinessPartnerViewModel>("BusinessPartners", response.BusinessPartner);
-                ////});
-                ////td.IsBackground = true;
-                ////td.Start();
+                foreach (var item in addedBusinessPartners)
+                {
+                    response.BusinessPartners.Add(unitOfWork.GetBusinessPartnerRepository().GetBusinessPartner(item.Id).ConvertToBusinessPartnerViewModel());
+                }
 
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.BusinessPartner = new BusinessPartnerViewModel();
+                response.BusinessPartners = new List<BusinessPartnerViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public BusinessPartnerListResponse GetBusinessPartnersByPage(int currentPage = 1, int itemsPerPage = 6, string searchParameter = "")
-        {
-            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
-            try
-            {
-                //response.BusinessPartnersByPage = unitOfWork.GetBusinessPartnerRepository()
-                //    .GetBusinessPartnersByPage(currentPage, itemsPerPage, searchParameter)
-                //    .ConvertToBusinessPartnerViewModelList();
-                //response.TotalItems = unitOfWork.GetBusinessPartnerRepository().GetBusinessPartnersCount(searchParameter);
-                //response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.BusinessPartnersByPage = new List<BusinessPartnerViewModel>();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public BusinessPartnerListResponse GetBusinessPartnersCount(string searchParameter = "")
-        {
-            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
-            try
-            {
-                //response.TotalItems = unitOfWork.GetBusinessPartnerRepository().GetBusinessPartnersCount(searchParameter);
-                //response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                //response.Success = false;
-                //response.Message = ex.Message;
             }
 
             return response;

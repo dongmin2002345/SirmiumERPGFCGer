@@ -5,6 +5,7 @@ using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.BusinessPartners
 {
-    public delegate void BusinessPartnerHandler(BusinessPartnerViewModel businessPartner);
+    public delegate void BusinessPartnerHandler();
 
     public partial class BusinessPartnerList : UserControl, INotifyPropertyChanged
     {
@@ -128,6 +129,40 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
+        #region BusinessPartnerButtonContent
+        private string _BusinessPartnerButtonContent = " Sinhronizacija firmi sa serverom ";
+
+        public string BusinessPartnerButtonContent
+        {
+            get { return _BusinessPartnerButtonContent; }
+            set
+            {
+                if (_BusinessPartnerButtonContent != value)
+                {
+                    _BusinessPartnerButtonContent = value;
+                    NotifyPropertyChanged("BusinessPartnerButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerButtonEnabled
+        private bool _BusinessPartnerButtonEnabled = true;
+
+        public bool BusinessPartnerButtonEnabled
+        {
+            get { return _BusinessPartnerButtonEnabled; }
+            set
+            {
+                if (_BusinessPartnerButtonEnabled != value)
+                {
+                    _BusinessPartnerButtonEnabled = value;
+                    NotifyPropertyChanged("BusinessPartnerButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructor
@@ -149,64 +184,115 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
+        #region Display data
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = 1;
+
+            Thread displayThread = new Thread(() => PopulateData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = 1;
+
+            Thread displayThread = new Thread(() => PopulateData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+        }
+
+        private void PopulateData()
+        {
+            BusinessPartnersLoading = true;
+
+            BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
+                .GetBusinessPartnersByPage(BusinessPartnerFilterObject, currentPage, itemsPerPage);
+
+            if (response.Success)
+            {
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());
+                totalItems = response.TotalItems;
+            }
+            else
+            {
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
+                totalItems = 0;
+                MainWindow.ErrorMessage = response.Message;
+            }
+
+            int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+            int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
+
+            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+
+            BusinessPartnersLoading = false;
+        }
+        #endregion
+
         #region Add, Edit, Delete buttons click
 
-        private void btnAddBusinessPartner_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            BusinessPartnerViewModel businessPartner = new BusinessPartnerViewModel();
+            businessPartner.Code = new BusinessPartnerSQLiteRepository().GetNewCodeValue();
+            businessPartner.Identifier = Guid.NewGuid();
 
-            BusinessPartnerAddEdit addEditForm = new BusinessPartnerAddEdit(new BusinessPartnerViewModel());
-            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler((BusinessPartnerViewModel) => {
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            });
-            FlyoutHelper.OpenFlyout(this, "Podaci o poslovnim partnerima", 70, addEditForm);
+            BusinessPartnerAddEdit addEditForm = new BusinessPartnerAddEdit(businessPartner, true);
+            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(PopulateData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o poslovnim partnerima", 95, addEditForm);
         }
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati firmu za izmenu!";
+                return;
+            }
 
-            BusinessPartnerAddEdit addEditForm = new BusinessPartnerAddEdit(CurrentBusinessPartner);
-            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler((BusinessPartnerViewModel) => {
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            });
-            FlyoutHelper.OpenFlyout(this, "Podaci o poslovnim partnerima", 70, addEditForm);
+            BusinessPartnerAddEdit addEditForm = new BusinessPartnerAddEdit(CurrentBusinessPartner, false);
+            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(PopulateData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o poslovnim partnerima", 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            // Check if any data is selected for delete
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.ErrorMessage = ("Morate odabrati poslovnog partnera za brisanje!");
+                MainWindow.WarningMessage = "Morate odabrati firmu za brisanje!";
                 return;
             }
 
-            // Show blur effects
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
             // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("poslovnog partnera", CurrentBusinessPartner.Name);
-
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("firma", CurrentBusinessPartner.Name + CurrentBusinessPartner.Code);
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
-                // Delete business partner
-                BusinessPartnerResponse response = businessPartnerService.Delete(CurrentBusinessPartner.Id);
+                BusinessPartnerResponse response = businessPartnerService.Delete(CurrentBusinessPartner.Identifier);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+                    return;
+                }
 
-                // Display data and notifications
-                if (response.Success)
+                response = new BusinessPartnerSQLiteRepository().Delete(CurrentBusinessPartner.Identifier);
+                if (!response.Success)
                 {
-                    MainWindow.SuccessMessage = ("Podaci su uspešno obrisani!");
-                    Thread displayThread = new Thread(() => PopulateData());
-                    displayThread.IsBackground = true;
-                    displayThread.Start();
+                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+                    return;
                 }
-                else
-                {
-                    MainWindow.ErrorMessage = (response.Message);
-                }
+
+                MainWindow.SuccessMessage = "Firma je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => PopulateData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
             }
 
             // Remove blur effects
@@ -217,189 +303,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
-        #region Search buttons
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            Thread displayThread = new Thread(() => PopulateData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-        }
-
-        private void PopulateData()
-        {
-            BusinessPartnersLoading = true;
-
-            string SearchObjectJson = JsonConvert.SerializeObject(BusinessPartnerFilterObject,
-                Formatting.Indented,
-                new JsonSerializerSettings
-                {
-                    DateTimeZoneHandling = DateTimeZoneHandling.Unspecified
-                });
-
-
-            var response = businessPartnerService.GetBusinessPartnersByPage(currentPage, itemsPerPage, SearchObjectJson);
-            if (response.Success)
-            {
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response?.BusinessPartnersByPage ?? new List<BusinessPartnerViewModel>());
-                totalItems = response?.TotalItems ?? 0;
-
-                int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
-                int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
-
-                PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
-            }
-            else
-            {
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(new List<BusinessPartnerViewModel>());
-                MainWindow.ErrorMessage = response.Message;
-                totalItems = 0;
-            }
-            BusinessPartnersLoading = false;
-        }
-        #endregion
-
-        #region Export to excel
-
-        /// <summary>
-        /// Export all data to excel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnExportToExcel_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    // Create excel workbook and sheet
-            //    Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            //    excel.Visible = true;
-            //    Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            //    Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
-
-            //    // Load data that will be exported to excel
-            //    List<BusinessPartnerViewModel> businessPartnersForExport = BusinessPartnersFromDB.ToList();
-
-            //    // Insert document headers
-            //    sheet1.Range[sheet1.Cells[1, 1], sheet1.Cells[1, 12]].Merge();
-            //    sheet1.Cells[1, 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-            //    sheet1.Cells[1, 1].Font.Bold = true;
-            //    sheet1.Cells[1, 1] = "Podaci o poslovnim partnerima";
-
-            //    // Insert row headers
-            //    sheet1.Rows[3].Font.Bold = true;
-            //    sheet1.Cells[3, 1] = "Šifra";
-            //    sheet1.Cells[3, 2] = "Ime poslovnog partnera";
-            //    sheet1.Cells[3, 3] = "Grad";
-            //    sheet1.Cells[3, 4] = "Država";
-            //    sheet1.Cells[3, 5] = "Adresa";
-            //    sheet1.Cells[3, 6] = "Broj bankovnog računa";
-            //    sheet1.Cells[3, 7] = "Naziv računa";
-            //    sheet1.Cells[3, 8] = "PIB";
-            //    sheet1.Cells[3, 9] = "PIO";
-            //    sheet1.Cells[3, 10] = "PDV";
-            //    sheet1.Cells[3, 11] = "Email";
-            //    sheet1.Cells[3, 12] = "Sajt";
-
-            //    // Insert data to excel
-            //    for (int i = 0; i < businessPartnersForExport.Count; i++)
-            //    {
-            //        sheet1.Cells[i + 4, 1] = businessPartnersForExport[i].Code;
-            //        sheet1.Cells[i + 4, 2] = businessPartnersForExport[i].Name;
-            //        sheet1.Cells[i + 4, 3] = businessPartnersForExport[i].City?.Name;
-            //        sheet1.Cells[i + 4, 4] = businessPartnersForExport[i].Country?.Name;
-            //        sheet1.Cells[i + 4, 5] = businessPartnersForExport[i].Address;
-            //        sheet1.Cells[i + 4, 6] = businessPartnersForExport[i].BankAccountNumber;
-            //        sheet1.Cells[i + 4, 7] = businessPartnersForExport[i].BankAccountName;
-            //        sheet1.Cells[i + 4, 8] = businessPartnersForExport[i].PIB;
-            //        sheet1.Cells[i + 4, 9] = businessPartnersForExport[i].PIO;
-            //        sheet1.Cells[i + 4, 10] = businessPartnersForExport[i].PDV;
-            //        sheet1.Cells[i + 4, 11] = businessPartnersForExport[i].Email;
-            //        sheet1.Cells[i + 4, 12] = businessPartnersForExport[i].WebSite;
-            //    }
-
-            //    // Set additional options
-            //    sheet1.Columns.AutoFit();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MainWindow.ErrorMessage = (ex.Message);
-            //}
-
-        }
-
-        #endregion
-
-        #region Additional options
-
-        //private void btnBusinessPartnerPhones_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Show blur efects
-        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-        //    // Create business partner phones window
-        //    BusinessPartnerPhoneList businessPartnerPhoneListForm = new BusinessPartnerPhoneList(CurrentBusinessPartner.Id);
-
-        //    // Display window
-        //    businessPartnerPhoneListForm.ShowDialog();
-
-        //    // Remove blur efects
-        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-
-        //    dgBusinessPartners.Focus();
-        //}
-
-        //private void btnBankAccounts_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Show blur efects
-        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-        //    // Create business partner bank accounts window
-        //    BusinessPartnerBankAccountList businessPartnerBankAccountListForm = new BusinessPartnerBankAccountList(CurrentBusinessPartner.Id);
-
-        //    // Display window
-        //    businessPartnerBankAccountListForm.ShowDialog();
-
-        //    // Remove blur efects 
-        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        //}
-
-        //private void btnCities_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-        //    BusinessPartnerLocationList businessPartnerLocationListForm = new BusinessPartnerLocationList(CurrentBusinessPartner.Id);
-        //    businessPartnerLocationListForm.ShowDialog();
-        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        //}
-
-        //private void btnDocuments_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-        //private void btnPrices_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            //SiemiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            //BusinessPartnersReportForm businessPartnersReportForm = new BusinessPartnersReportForm();
-
-            //businessPartnersReportForm.ShowDialog();
-
-            //SiemiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-
-        }
-
-        private void btnExcelReport_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        #endregion
-
-
         #region Pagination
 
         private void btnFirstPage_Click(object sender, RoutedEventArgs e)
@@ -407,6 +310,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (currentPage > 1)
             {
                 currentPage = 1;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
@@ -418,6 +322,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (currentPage > 1)
             {
                 currentPage--;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
@@ -429,6 +334,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (currentPage < Math.Ceiling((double)this.totalItems / this.itemsPerPage))
             {
                 currentPage++;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
@@ -441,12 +347,58 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (currentPage < lastPage)
             {
                 currentPage = lastPage;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
         }
+
         #endregion
+
+        #region Sync data
+
+        private void btnSync_Click(object sender, RoutedEventArgs e)
+        {
+            Thread th = new Thread(() =>
+            {
+                BusinessPartnerButtonContent = " Sinhronizacija u toku... ";
+                BusinessPartnerButtonEnabled = false;
+
+                BusinessPartnerSQLiteRepository sqlLite = new BusinessPartnerSQLiteRepository();
+
+                SyncBusinessPartnerRequest request = new SyncBusinessPartnerRequest();
+                request.UnSyncedBusinessPartners = sqlLite.GetUnSyncedBusinessPartners().BusinessPartners;
+                request.LastUpdatedAt = sqlLite.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                BusinessPartnerListResponse response = businessPartnerService.Sync(request);
+                if (response.Success)
+                {
+                    List<BusinessPartnerViewModel> businessPartnersFromDB = response.BusinessPartners;
+                    int total = businessPartnersFromDB.Count;
+                    int counter = 1;
+                    foreach (var businessPartner in businessPartnersFromDB.OrderBy(x => x.Id))
+                    {
+                        BusinessPartnerButtonContent = " Sinhronizacija u toku " + counter++ + " od " + total;
+                        sqlLite.Delete(businessPartner.Identifier);
+                        businessPartner.IsSynced = true;
+                        sqlLite.Create(businessPartner);
+                    }
+
+                    MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani (" + businessPartnersFromDB.Count + ")!";
+                }
+
+                PopulateData();
+
+                BusinessPartnerButtonContent = " Sinhronizacija lekova sa serverom ";
+                BusinessPartnerButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
+        }
+
+        #endregion
+
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

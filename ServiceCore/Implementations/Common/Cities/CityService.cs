@@ -67,16 +67,14 @@ namespace ServiceCore.Implementations.Common.Cities
             return response;
         }
 
-        public CityResponse Create(CityViewModel CityViewModel)
+        public CityResponse Create(CityViewModel cityViewModel)
         {
             CityResponse response = new CityResponse();
             try
             {
-                City createdCity = unitOfWork.GetCityRepository()
-                    .Create(CityViewModel.ConvertToCity());
+                City addedCity = unitOfWork.GetCityRepository().Create(cityViewModel.ConvertToCity());
                 unitOfWork.Save();
-
-                response.City = createdCity.ConvertToCityViewModel();
+                response.City = addedCity.ConvertToCityViewModel();
                 response.Success = true;
             }
             catch (Exception ex)

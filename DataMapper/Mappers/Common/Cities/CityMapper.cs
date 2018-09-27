@@ -11,13 +11,12 @@ namespace DataMapper.Mappers.Common.Cities
     {
         public static List<CityViewModel> ConvertToCityViewModelList(this IEnumerable<City> cities)
         {
-            List<CityViewModel> CityViewModels = new List<CityViewModel>();
-
+            List<CityViewModel> cityViewModels = new List<CityViewModel>();
             foreach (City city in cities)
             {
-                CityViewModels.Add(city.ConvertToCityViewModel());
+                cityViewModels.Add(city.ConvertToCityViewModel());
             }
-            return CityViewModels;
+            return cityViewModels;
         }
 
         public static CityViewModel ConvertToCityViewModel(this City city)
@@ -36,6 +35,16 @@ namespace DataMapper.Mappers.Common.Cities
                 CreatedAt = city.CreatedAt,
             };
             return cityViewModel;
+        }
+
+        public static List<CityViewModel> ConvertToCityViewModelListLite(this IEnumerable<City> cities)
+        {
+            List<CityViewModel> cityViewModels = new List<CityViewModel>();
+            foreach (City city in cities)
+            {
+                cityViewModels.Add(city.ConvertToCityViewModelLite());
+            }
+            return cityViewModels;
         }
 
         public static CityViewModel ConvertToCityViewModelLite(this City City)
@@ -65,7 +74,6 @@ namespace DataMapper.Mappers.Common.Cities
                 Name = CityViewModel.Name,
 
                 CreatedById = CityViewModel.CreatedBy?.Id ?? null,
-                CompanyId = CityViewModel.Company?.Id ?? null,
 
                 UpdatedAt = CityViewModel.UpdatedAt,
                 CreatedAt = CityViewModel.CreatedAt,

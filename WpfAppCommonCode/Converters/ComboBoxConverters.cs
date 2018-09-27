@@ -450,6 +450,4 @@ namespace WpfAppCommonCode.Converters
             return 0;
         }
     }
-
 }
-

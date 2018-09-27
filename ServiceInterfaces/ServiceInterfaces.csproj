@@ -53,9 +53,9 @@
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceService.cs" />
     <Compile Include="InvoiceHelpers\InvoiceHelpers.cs" />
     <Compile Include="Messages\Base\BaseResponse.cs" />
-    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerCodeResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerListResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerRequest.cs" />
     <Compile Include="Messages\Common\Cities\CityListResponse.cs" />
     <Compile Include="Messages\Common\Cities\CityResponse.cs" />
     <Compile Include="Messages\Common\Cities\SyncCityRequest.cs" />

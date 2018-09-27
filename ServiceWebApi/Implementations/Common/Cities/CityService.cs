@@ -43,9 +43,10 @@ namespace ServiceWebApi.Implementations.Common.Cities
                 }
                 catch (Exception ex)
                 {
-                    response.Success = false;
-                    response.Message = ex.Message;
-                }
+                response.Cities = new List<CityViewModel>();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
 
                 return response;
             }
