@@ -7,7 +7,7 @@ namespace DomainCore.Common.BusinessPartners
 {
     public class BusinessPartner : BaseEntity
     {
-        public int Code { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
 
         public string Director { get; set; }

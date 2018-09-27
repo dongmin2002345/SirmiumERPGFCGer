@@ -23,6 +23,7 @@ namespace RepositoryCore.Implementations.Common.Cities
             List<City> Cities = context.Cities
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Active == true)
+                .OrderByDescending(x => x.CreatedAt)
                 .AsNoTracking()
                 .ToList();
 
@@ -48,30 +49,30 @@ namespace RepositoryCore.Implementations.Common.Cities
             .FirstOrDefault(x => x.Id == id && x.Active == true);
         }
 
-        public City Create(City City)
+        public City Create(City city)
         {
-            if (context.Cities.Where(x => x.Identifier != null && x.Identifier == City.Identifier).Count() == 0)
+            if (context.Cities.Where(x => x.Identifier != null && x.Identifier == city.Identifier).Count() == 0)
             {
-                City.Id = 0;
+                city.Id = 0;
 
-                City.Active = true;
+                city.Active = true;
 
-                context.Cities.Add(City);
-                return City;
+                context.Cities.Add(city);
+                return city;
             }
             else
             {
                 // Load item that will be updated
                 City dbEntry = context.Cities
-                    .FirstOrDefault(x => x.Identifier == City.Identifier && x.Active == true);
+                    .FirstOrDefault(x => x.Identifier == city.Identifier && x.Active == true);
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CreatedById = City.CreatedById ?? null;
+                    dbEntry.CreatedById = city.CreatedById ?? null;
 
                     // Set properties
-                    dbEntry.Code = City.Code;
-                    dbEntry.Name = City.Name;
+                    dbEntry.Code = city.Code;
+                    dbEntry.Name = city.Name;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

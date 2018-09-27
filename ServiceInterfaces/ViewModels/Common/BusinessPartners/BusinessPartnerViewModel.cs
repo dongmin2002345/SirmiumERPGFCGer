@@ -11,9 +11,9 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
     public class BusinessPartnerViewModel : BaseEntityViewModel, INotifyPropertyChanged
     {
         #region Code
-        private int _Code;
+        private string _Code;
 
-        public int Code
+        public string Code
         {
             get { return _Code; }
             set
@@ -39,6 +39,23 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
                 {
                     _Name = value;
                     NotifyPropertyChanged("Name");
+                }
+            }
+        }
+        #endregion
+
+        #region IsSynced
+        private bool _IsSynced;
+
+        public bool IsSynced
+        {
+            get { return _IsSynced; }
+            set
+            {
+                if (_IsSynced != value)
+                {
+                    _IsSynced = value;
+                    NotifyPropertyChanged("IsSynced");
                 }
             }
         }

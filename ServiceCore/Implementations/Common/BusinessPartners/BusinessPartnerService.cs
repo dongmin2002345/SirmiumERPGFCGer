@@ -33,10 +33,10 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                response.BusinessPartners = unitOfWork.GetBusinessPartnerRepository()
-                    .GetBusinessPartners(filterString)
-                    .ConvertToBusinessPartnerViewModelList();
-                response.Success = true;
+                //response.BusinessPartners = unitOfWork.GetBusinessPartnerRepository()
+                //    .GetBusinessPartners(filterString)
+                //    .ConvertToBusinessPartnerViewModelList();
+                //response.Success = true;
             }
             catch (Exception ex)
             {
@@ -54,12 +54,12 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                List<BusinessPartner> returnList = new List<BusinessPartner>();
-                returnList = unitOfWork.GetBusinessPartnerRepository()
-                    .GetBusinessPartnersForPopup(filterString);
+                //List<BusinessPartner> returnList = new List<BusinessPartner>();
+                //returnList = unitOfWork.GetBusinessPartnerRepository()
+                //    .GetBusinessPartnersForPopup(filterString);
 
-                response.BusinessPartners = returnList.ConvertToBusinessPartnerViewModelList();
-                response.Success = true;
+                //response.BusinessPartners = returnList.ConvertToBusinessPartnerViewModelList();
+                //response.Success = true;
             }
             catch (Exception ex)
             {
@@ -106,8 +106,8 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
 
             try
             {
-                response.Code = unitOfWork.GetBusinessPartnerRepository().GetNewCodeValue();
-                response.Success = true;
+                //response.Code = unitOfWork.GetBusinessPartnerRepository().GetNewCodeValue();
+                //response.Success = true;
             }
             catch (Exception ex)
             {
@@ -164,19 +164,19 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             BusinessPartnerResponse response = new BusinessPartnerResponse();
             try
             {
-                BusinessPartner createdBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Update(businessPartner.ConvertToBusinessPartner());
+                //BusinessPartner createdBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Update(businessPartner.ConvertToBusinessPartner());
 
-                unitOfWork.Save();
-                response.BusinessPartner = createdBusinessPartner.ConvertToBusinessPartnerViewModel();
+                //unitOfWork.Save();
+                //response.BusinessPartner = createdBusinessPartner.ConvertToBusinessPartnerViewModel();
 
-                //Thread td = new Thread(() =>
-                //{
-                //    var resp = FirebaseHelper.Send<BusinessPartnerViewModel>("BusinessPartners", response.BusinessPartner);
-                //});
-                //td.IsBackground = true;
-                //td.Start();
+                ////Thread td = new Thread(() =>
+                ////{
+                ////    var resp = FirebaseHelper.Send<BusinessPartnerViewModel>("BusinessPartners", response.BusinessPartner);
+                ////});
+                ////td.IsBackground = true;
+                ////td.Start();
 
-                response.Success = true;
+                //response.Success = true;
             }
             catch (Exception ex)
             {
@@ -198,17 +198,17 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             BusinessPartnerResponse response = new BusinessPartnerResponse();
             try
             {
-                BusinessPartner deletedBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Delete(id);
-                unitOfWork.Save();
+                //BusinessPartner deletedBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Delete(id);
+                //unitOfWork.Save();
 
-                response.BusinessPartner = deletedBusinessPartner.ConvertToBusinessPartnerViewModel();
+                //response.BusinessPartner = deletedBusinessPartner.ConvertToBusinessPartnerViewModel();
 
-                //Thread td = new Thread(() =>
-                //{
-                //    var resp = FirebaseHelper.Send<BusinessPartnerViewModel>("BusinessPartners", response.BusinessPartner);
-                //});
-                //td.IsBackground = true;
-                //td.Start();
+                ////Thread td = new Thread(() =>
+                ////{
+                ////    var resp = FirebaseHelper.Send<BusinessPartnerViewModel>("BusinessPartners", response.BusinessPartner);
+                ////});
+                ////td.IsBackground = true;
+                ////td.Start();
 
                 response.Success = true;
             }
@@ -227,11 +227,11 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                response.BusinessPartnersByPage = unitOfWork.GetBusinessPartnerRepository()
-                    .GetBusinessPartnersByPage(currentPage, itemsPerPage, searchParameter)
-                    .ConvertToBusinessPartnerViewModelList();
-                response.TotalItems = unitOfWork.GetBusinessPartnerRepository().GetBusinessPartnersCount(searchParameter);
-                response.Success = true;
+                //response.BusinessPartnersByPage = unitOfWork.GetBusinessPartnerRepository()
+                //    .GetBusinessPartnersByPage(currentPage, itemsPerPage, searchParameter)
+                //    .ConvertToBusinessPartnerViewModelList();
+                //response.TotalItems = unitOfWork.GetBusinessPartnerRepository().GetBusinessPartnersCount(searchParameter);
+                //response.Success = true;
             }
             catch (Exception ex)
             {
@@ -248,13 +248,13 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                response.TotalItems = unitOfWork.GetBusinessPartnerRepository().GetBusinessPartnersCount(searchParameter);
-                response.Success = true;
+                //response.TotalItems = unitOfWork.GetBusinessPartnerRepository().GetBusinessPartnersCount(searchParameter);
+                //response.Success = true;
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.Message = ex.Message;
+                //response.Success = false;
+                //response.Message = ex.Message;
             }
 
             return response;

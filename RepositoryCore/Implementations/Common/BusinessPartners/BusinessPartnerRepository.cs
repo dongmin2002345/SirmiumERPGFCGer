@@ -22,23 +22,27 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
         public List<BusinessPartner> GetBusinessPartners()
         {
-            return context.BusinessPartners
+            List<BusinessPartner> BusinessPartners = context.BusinessPartners
                 .Include("CreatedBy")
                 .Where(x => x.Active == true)
                 .OrderByDescending(x => x.UpdatedAt)
                 .AsNoTracking()
                 .ToList();
 
+            return BusinessPartners;
         }
 
-        public List<BusinessPartner> GetBusinessPartnersForPopup(string filterString)
+        public List<BusinessPartner> GetBusinessPartnersNewerThen(DateTime lastUpdateTime)
         {
-            return context.BusinessPartners
-                .Where(x => String.IsNullOrEmpty(filterString) || x.Name.ToLower().Contains(filterString.ToLower()) || x.Code.ToString().Contains(filterString.ToLower()))
+            List<BusinessPartner> BusinessPartners = context.BusinessPartners
+                .Include(x => x.CreatedBy)
+                .Where(x => x.UpdatedAt > lastUpdateTime && x.Active == true)
                 .OrderBy(x => x.Code)
                 .Take(20)
                 .AsNoTracking()
                 .ToList();
+
+            return BusinessPartners;
         }
 
         public BusinessPartner GetBusinessPartner(int id)
@@ -49,117 +53,64 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 .FirstOrDefault(x => x.Id == id && x.Active == true);
         }
 
-        public List<BusinessPartner> GetBusinessPartnersByPage(int currentPage = 1, int itemsPerPage = 20, string businessPartnerName = "")
-        {
-            BusinessPartnerViewModel filterObject = JsonConvert.DeserializeObject<BusinessPartnerViewModel>(businessPartnerName);
-
-            List<BusinessPartner> businessPartners = context.BusinessPartners
-                .Include("CreatedBy")
-                .Where(x => x.Active == true)
-                .Where(x => filterObject == null || String.IsNullOrEmpty(filterObject.SearchBy_BusinessPartnerName) || x.Name.ToLower().Contains(filterObject.SearchBy_BusinessPartnerName.ToLower()))
-                .OrderBy(x => x.Id)
-                .Skip((currentPage - 1) * itemsPerPage)
-                .Take(itemsPerPage)
-                .AsNoTracking()
-                .ToList();
-
-            return businessPartners;
-        }
-
-        public int GetBusinessPartnersCount(string searchParameter = "")
-        {
-            BusinessPartnerViewModel filterObject = JsonConvert.DeserializeObject<BusinessPartnerViewModel>(searchParameter);
-
-            return context.BusinessPartners
-                .Where(x => x.Active == true)
-                .Where(x => filterObject == null || String.IsNullOrEmpty(filterObject.SearchBy_BusinessPartnerName) || x.Name.ToLower().Contains(filterObject.SearchBy_BusinessPartnerName.ToLower()))
-                .Count();
-        }
-
-        public int GetNewCodeValue()
-        {
-            var businessPartnerID = context.BusinessPartners.Max(x => (int?)x.Id);
-            var maxId = (businessPartnerID == null ? 0 : businessPartnerID);
-            var newId = maxId + 1;
-            if (newId < 1000)
-                newId = 1000 + newId;
-            return (int)newId;
-        }
-
         public BusinessPartner Create(BusinessPartner businessPartner)
         {
-            // Attach user
-            businessPartner.CreatedBy = context.Users
-                .FirstOrDefault(x => x.Id == businessPartner.CreatedBy.Id && x.Active == true);
-
-            //// Attach company
-            //businessPartner.Company = context.Companies
-            //    .FirstOrDefault(x => x.Id == businessPartner.Company.Id && x.Active == true);
-
-            // Set activity
-            businessPartner.Active = true;
-
-            // Set timestamps
-            businessPartner.CreatedAt = DateTime.Now;
-            businessPartner.UpdatedAt = DateTime.Now;
-
-            // Add business partner to database
-            context.BusinessPartners.Add(businessPartner);
-
-            return businessPartner;
-        }
-
-        public BusinessPartner Update(BusinessPartner businessPartner)
-        {
-            // Load business partner that will be updated
-            BusinessPartner dbEntry = context.BusinessPartners
-                .FirstOrDefault(x => x.Id == businessPartner.Id && x.Active == true);
-
-            if (dbEntry != null)
+            if (context.BusinessPartners.Where(x => x.Identifier != null && x.Identifier == businessPartner.Identifier).Count() == 0)
             {
-                // Attach user
-                dbEntry.CreatedBy = context.Users
-                .FirstOrDefault(x => x.Id == businessPartner.CreatedBy.Id && x.Active == true);
+                businessPartner.Id = 0;
 
-                //// Attach company
-                //dbEntry.Company = context.Companies
-                //    .FirstOrDefault(x => x.Id == businessPartner.Company.Id && x.Active == true);
+                businessPartner.Active = true;
 
-                // Set properties 
-                dbEntry.Code = businessPartner.Code;
-                dbEntry.Name = businessPartner.Name;
-
-                dbEntry.Director = businessPartner.Director;
-
-                dbEntry.Address = businessPartner.Address;
-                dbEntry.InoAddress = businessPartner.InoAddress;
-
-                dbEntry.PIB = businessPartner.PIB;
-                dbEntry.MatCode = businessPartner.MatCode;
-                
-                dbEntry.Mobile = businessPartner.Mobile;
-                dbEntry.Phone = businessPartner.Phone;
-                dbEntry.Email = businessPartner.Email;
-
-                dbEntry.ActivityCode = businessPartner.ActivityCode;
-
-                dbEntry.BankAccountNumber = businessPartner.BankAccountNumber;
-
-                dbEntry.OpeningDate = businessPartner.OpeningDate;
-                dbEntry.BranchOpeningDate = businessPartner.BranchOpeningDate;
-
-                // Set timestamp
-                dbEntry.UpdatedAt = DateTime.Now;
+                context.BusinessPartners.Add(businessPartner);
+                return businessPartner;
             }
+            else
+            {
+                // Load businessPartner that will be updated
+                BusinessPartner dbEntry = context.BusinessPartners
+                .FirstOrDefault(x => x.Identifier == businessPartner.Identifier && x.Active == true);
 
-            return dbEntry;
+                if (dbEntry != null)
+                {
+                    dbEntry.CreatedById = businessPartner.CreatedById ?? null;
+
+                    // Set properties
+                    dbEntry.Code = businessPartner.Code;
+                    dbEntry.Name = businessPartner.Name;
+
+                    dbEntry.Director = businessPartner.Director;
+
+                    dbEntry.Address = businessPartner.Address;
+                    dbEntry.InoAddress = businessPartner.InoAddress;
+
+                    dbEntry.PIB = businessPartner.PIB;
+                    dbEntry.MatCode = businessPartner.MatCode;
+
+                    dbEntry.Mobile = businessPartner.Mobile;
+                    dbEntry.Phone = businessPartner.Phone;
+                    dbEntry.Email = businessPartner.Email;
+
+                    dbEntry.ActivityCode = businessPartner.ActivityCode;
+
+                    dbEntry.BankAccountNumber = businessPartner.BankAccountNumber;
+
+                    dbEntry.OpeningDate = businessPartner.OpeningDate;
+                    dbEntry.BranchOpeningDate = businessPartner.BranchOpeningDate;
+
+
+                    // Set timestamp
+                    dbEntry.UpdatedAt = DateTime.Now;
+                }
+
+                return dbEntry;
+            }
         }
 
-        public BusinessPartner Delete(int id)
+        public BusinessPartner Delete(Guid identifier)
         {
             // Load business partner that will be deleted
             BusinessPartner dbEntry = context.BusinessPartners
-                .FirstOrDefault(x => x.Id == id && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {

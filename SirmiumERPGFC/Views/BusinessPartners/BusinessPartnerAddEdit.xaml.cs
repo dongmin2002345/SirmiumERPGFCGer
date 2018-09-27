@@ -103,8 +103,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             CurrentBusinessPartner = businessPartnerViewModel;
 
-            if (CurrentBusinessPartner.Code <= 0)
-                CurrentBusinessPartner.Code = businessPartnerService.GetNewCodeValue().Code;
+            //if (CurrentBusinessPartner.Code <= 0)
+            //    CurrentBusinessPartner.Code = businessPartnerService.GetNewCodeValue().Code;
 
             // Add handler for keyboard shortcuts
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
