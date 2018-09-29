@@ -150,6 +150,7 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
+                
                 <Controls:ProgressRing Grid.Row="2" IsActive="{Binding IndividualsLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                 <DataGrid x:Name="dgIndividuals"
                               Grid.Row="2" Margin="0 5 0 0"

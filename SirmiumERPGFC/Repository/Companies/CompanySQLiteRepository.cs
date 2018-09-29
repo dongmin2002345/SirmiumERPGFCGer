@@ -78,7 +78,7 @@ namespace SirmiumERPGFC.Repository.Companies
         {
             CompanyResponse response = new CompanyResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -116,7 +116,7 @@ namespace SirmiumERPGFC.Repository.Companies
         {
             CompanyResponse response = new CompanyResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 

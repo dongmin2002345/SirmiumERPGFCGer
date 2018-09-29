@@ -9,7 +9,7 @@
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
 
     <Control.Background>
         <SolidColorBrush Color="White" />
@@ -23,11 +23,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="Pretraga" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="Pretraga" IsExpanded="True" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -36,20 +39,20 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
-
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
 
-                <TextBlock Text="Pretraga po nazivu firme"  Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                <TextBlock Text="Pretraga po nazivu firme"  Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,5,10" Height="16" Width="130"/>
                 <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="1" 
-                                    Margin="5"
+                                    Margin="5,5,10,5"
                                     Controls:TextBoxHelper.ClearTextButton="True"
-                         Text="{Binding Path=BusinessPartnerFilterObject.SearchBy_BusinessPartnerName, UpdateSourceTrigger=PropertyChanged}"
-                                    Width="200"/>
+                         Text="{Binding Path=BusinessPartnerFilterObject.SearchBy_BusinessPartnerName, UpdateSourceTrigger=PropertyChanged}"/>
 
 
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="0" Grid.Column="3" Width="150">
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="3,2,4,2" Grid.Row="0" Grid.Column="4">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\search.png" HorizontalAlignment="Center" Height="16" Width="16" />
                         <TextBlock Text=" Prikaži " />
@@ -60,88 +63,84 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Poslovni partneri" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
+        <GroupBox Header="Poslovni partneri" Margin="5,2,5,0" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1">
-                    <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" Dodaj " />
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" Width="150">
-                        <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <Button x:Name="btnAdd" Click="btnAdd_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <TextBlock Text=" Dodaj " />
+                            </StackPanel>
+                        </Button>
+                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                            <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" Osveži " />
-                        </StackPanel>
-                    </Button>
-                    <Button Margin="2" x:Name="btnSync" Click="btnSync_Click" IsEnabled="{Binding Path=BusinessPartnerButtonEnabled, Mode=TwoWay}" Width="250">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text="{Binding Path=BusinessPartnerButtonContent, Mode=TwoWay}" Foreground="Black" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+                                <TextBlock Text=" Osveži " />
+                            </StackPanel>
+                        </Button>
+                        <Button Margin="2" x:Name="btnSync" Click="btnSync_Click" IsEnabled="{Binding Path=BusinessPartnerButtonEnabled, Mode=TwoWay}" Width="250">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                                <TextBlock Text="{Binding Path=BusinessPartnerButtonContent, Mode=TwoWay}" Foreground="Black" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
 
-                <!-- Pagination -->
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
-                    <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron0.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="btnPrevPage" Click="btnPrevPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        </StackPanel>
-                    </Button>
-                    <TextBox IsEnabled="False" Margin="2" Text="{Binding Path=PaginationDisplay}"/>
-                    <Button x:Name="btnNextPage" Click="btnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron2.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="btnLastPage" Click="btnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron3.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                
+                    <!-- Pagination -->
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\chevron0.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnPrevPage" Click="btnPrevPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\chevron.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            </StackPanel>
+                        </Button>
+                        <TextBox IsEnabled="False" Margin="2" Text="{Binding Path=PaginationDisplay}"/>
+                        <Button x:Name="btnNextPage" Click="btnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\chevron2.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnLastPage" Click="btnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\chevron3.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
                 <!--Listing-->
                 <Controls:ProgressRing Grid.Row="2" IsActive="{Binding BusinessPartnersLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                 <DataGrid x:Name="dgBusinessPartners"
-                              Grid.Row="1"
-                              Margin="5 5 5 0"
+                              Grid.Row="2"
+                              Margin="0 5 0 0"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
                               CanUserResizeRows="False"
                               CanUserResizeColumns="True"
-                              IsManipulationEnabled="False"
                               GridLinesVisibility="All"
                               HorizontalGridLinesBrush="Gray"
-                              VerticalAlignment="Stretch"
-                              HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Auto"
                               Style="{DynamicResource AzureDataGrid}"
                               ItemsSource="{Binding Path=BusinessPartnersFromDB}"
                               SelectedItem="{Binding Path=CurrentBusinessPartner, Mode=TwoWay}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv firme" Binding="{Binding Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Director" Header="Direktor" Binding="{Binding Director}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PIB" Header="PIB" Binding="{Binding PIB}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Mobile}" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Email}" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="BankAccountNumber" Header="Tekuci racun" Binding="{Binding BankAccountNumber}" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv firme" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Director" Header="Direktor" Binding="{Binding Director}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PIB" Header="PIB" Binding="{Binding PIB}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Mobile}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Email}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="BankAccountNumber" Header="Tekuci racun" Binding="{Binding BankAccountNumber}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" Width="*" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
                                     <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />

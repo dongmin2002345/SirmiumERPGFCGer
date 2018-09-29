@@ -41,7 +41,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "PIB, MatCode, Mobile, Phone, Email, ActivityCode, BankAccountNumber, OpeningDate, BranchOpeningDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName ";
 
-        public string SqlCommandInsertPart = "INSERT INTO Remedies " +
+        public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
             "(Id, ServerId, Identifier, Code, Name, Director,Address, InoAddress, " +
             "PIB, MatCode, Mobile, Phone, Email, ActivityCode, BankAccountNumber, OpeningDate, BranchOpeningDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName) " +

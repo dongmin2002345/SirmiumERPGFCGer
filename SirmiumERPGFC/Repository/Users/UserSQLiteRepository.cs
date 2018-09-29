@@ -38,7 +38,7 @@ namespace SirmiumERPGFC.Repository.Users
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPDB.db"))
+                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                 {
                     db.Open();
 
@@ -86,7 +86,7 @@ namespace SirmiumERPGFC.Repository.Users
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPDB.db"))
+                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                 {
                     db.Open();
 
@@ -135,7 +135,7 @@ namespace SirmiumERPGFC.Repository.Users
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPDB.db"))
+                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                 {
                     db.Open();
                     db.EnableExtensions(true);
@@ -186,7 +186,7 @@ namespace SirmiumERPGFC.Repository.Users
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPDB.db"))
+                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                 {
                     db.Open();
                     db.EnableExtensions(true);
