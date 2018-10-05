@@ -1,16 +1,16 @@
 ﻿using Ninject;
-using ServiceWebApi.Implementations.Common.Companies;
-using ServiceWebApi.Implementations.Common.Identity;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Abstractions.Common.Cities;
 using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Identity;
-using ServiceInterfaces.Abstractions.Common.BusinessPartners;
-using ServiceWebApi.Implementations.Common.BusinessPartners;
-using ServiceWebApi.Implementations.Common.Individuals;
 using ServiceInterfaces.Abstractions.Common.Individuals;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
-using ServiceWebApi.Implementations.Common.OutputInvoices;
-using ServiceInterfaces.Abstractions.Common.Cities;
+using ServiceWebApi.Implementations.Common.BusinessPartners;
 using ServiceWebApi.Implementations.Common.Cities;
+using ServiceWebApi.Implementations.Common.Companies;
+using ServiceWebApi.Implementations.Common.Identity;
+using ServiceWebApi.Implementations.Common.Individuals;
+using ServiceWebApi.Implementations.Common.OutputInvoices;
 
 namespace SirmiumERPGFC.Infrastructure
 {
