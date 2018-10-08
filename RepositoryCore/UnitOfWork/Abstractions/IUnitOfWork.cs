@@ -25,6 +25,8 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IOutputInvoiceRepository GetOutputInvoiceRepository();
 
         ICityRepository GetCityRepository();
+        IRegionRepository GetRegionRepository();
+        IMunicipalityRepository GetMunicipalityRepository();
 
 		ISectorRepository GetSectorRepository();
 

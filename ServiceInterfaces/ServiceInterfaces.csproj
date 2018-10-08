@@ -50,6 +50,7 @@
     <Compile Include="Abstractions\Common\Identity\IAuthenticationService.cs" />
     <Compile Include="Abstractions\Common\Identity\IUserService.cs" />
     <Compile Include="Abstractions\Common\Individuals\IIndividualService.cs" />
+    <Compile Include="Abstractions\Common\Locations\IRegionService.cs" />
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceService.cs" />
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
     <Compile Include="InvoiceHelpers\InvoiceHelpers.cs" />
@@ -59,6 +60,8 @@
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerRequest.cs" />
     <Compile Include="Messages\Common\Locations\CityListResponse.cs" />
     <Compile Include="Messages\Common\Locations\CityResponse.cs" />
+    <Compile Include="Messages\Common\Locations\RegionListResponse.cs" />
+    <Compile Include="Messages\Common\Locations\RegionResponse.cs" />
     <Compile Include="Messages\Common\Locations\SyncCityRequest.cs" />
     <Compile Include="Messages\Common\Companies\CompanyListResponse.cs" />
     <Compile Include="Messages\Common\Companies\CompanyResponse.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="Messages\Common\Individuals\IndividualCodeResponse.cs" />
     <Compile Include="Messages\Common\Individuals\IndividualListResponse.cs" />
     <Compile Include="Messages\Common\Individuals\IndividualResponse.cs" />
+    <Compile Include="Messages\Common\Locations\SyncRegionRequest.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceResponse.cs" />
     <Compile Include="Messages\Common\Sectors\SectorCodeResponse.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="ViewModels\Common\Identity\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\Common\Identity\UserViewModel.cs" />
     <Compile Include="ViewModels\Common\Individuals\IndividualViewModel.cs" />
+    <Compile Include="ViewModels\Common\Locations\RegionViewModel.cs" />
     <Compile Include="ViewModels\Common\OutputInvoices\OutputInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
   </ItemGroup>

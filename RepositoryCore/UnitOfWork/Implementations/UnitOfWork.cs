@@ -40,6 +40,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IOutputInvoiceRepository outputInvoiceRepository;
 
         private ICityRepository cityRepository;
+        private IRegionRepository regionRepository;
+        private IMunicipalityRepository municipalityRepository;
 
 		private ISectorRepository sectorRepository;
 
@@ -120,6 +122,21 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return cityRepository;
         }
 
+        public IRegionRepository GetRegionRepository()
+        {
+            if (regionRepository == null)
+                regionRepository = new RegionRepository(context);
+            return regionRepository;
+        }
+
+        public IMunicipalityRepository GetMunicipalityRepository()
+        {
+            if (municipalityRepository == null)
+                municipalityRepository = new MunicipalityRepository(context);
+            return municipalityRepository;
+        }
+
+        #endregion
 		public ISectorRepository GetSectorRepository()
 		{
 			if (sectorRepository == null)

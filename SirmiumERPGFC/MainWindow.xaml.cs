@@ -367,6 +367,12 @@ namespace SirmiumERPGFC
             cntCtrl.Content = new CountryList();
         }
 
+        private void mniRegions_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new RegionList();
+        }
+    
+
 		private void mniSector_Click(object sender, RoutedEventArgs e)
 		{
 			cntCtrl.Content = new Sector_List();
