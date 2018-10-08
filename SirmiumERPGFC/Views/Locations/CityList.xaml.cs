@@ -30,11 +30,12 @@ namespace SirmiumERPGFC.Views.Locations
 
     public partial class CityList : UserControl, INotifyPropertyChanged
     {
-        #region Attributes 
+        #region Attributes
 
         #region Services
         ICityService cityService;
         #endregion
+
 
         #region CitiesFromDB
         private ObservableCollection<CityViewModel> _CitiesFromDB;
@@ -70,18 +71,18 @@ namespace SirmiumERPGFC.Views.Locations
         }
         #endregion
 
-        #region CitiesearchObject
-        private CityViewModel _CitiesearchObject = new CityViewModel();
+        #region CitySearchObject
+        private CityViewModel _CitySearchObject = new CityViewModel();
 
-        public CityViewModel CitiesearchObject
+        public CityViewModel CitySearchObject
         {
-            get { return _CitiesearchObject; }
+            get { return _CitySearchObject; }
             set
             {
-                if (_CitiesearchObject != value)
+                if (_CitySearchObject != value)
                 {
-                    _CitiesearchObject = value;
-                    NotifyPropertyChanged("CitiesearchObject");
+                    _CitySearchObject = value;
+                    NotifyPropertyChanged("CitySearchObject");
                 }
             }
         }
@@ -104,6 +105,7 @@ namespace SirmiumERPGFC.Views.Locations
         }
         #endregion
 
+
         #region Pagination data
         int currentPage = 1;
         int itemsPerPage = 50;
@@ -125,38 +127,39 @@ namespace SirmiumERPGFC.Views.Locations
             }
         }
         #endregion
+
         #endregion
 
 
-        #region CityButtonContent
-        private string _CityButtonContent = " Sinhronizacija gradova sa serverom ";
+        #region RefreshButtonContent
+        private string _RefreshButtonContent = " Osveži ";
 
-        public string CityButtonContent
+        public string RefreshButtonContent
         {
-            get { return _CityButtonContent; }
+            get { return _RefreshButtonContent; }
             set
             {
-                if (_CityButtonContent != value)
+                if (_RefreshButtonContent != value)
                 {
-                    _CityButtonContent = value;
-                    NotifyPropertyChanged("CityButtonContent");
+                    _RefreshButtonContent = value;
+                    NotifyPropertyChanged("RefreshButtonContent");
                 }
             }
         }
         #endregion
 
-        #region CityButtonEnabled
-        private bool _CityButtonEnabled = true;
+        #region RefreshButtonEnabled
+        private bool _RefreshButtonEnabled = true;
 
-        public bool CityButtonEnabled
+        public bool RefreshButtonEnabled
         {
-            get { return _CityButtonEnabled; }
+            get { return _RefreshButtonEnabled; }
             set
             {
-                if (_CityButtonEnabled != value)
+                if (_RefreshButtonEnabled != value)
                 {
-                    _CityButtonEnabled = value;
-                    NotifyPropertyChanged("CityButtonEnabled");
+                    _RefreshButtonEnabled = value;
+                    NotifyPropertyChanged("RefreshButtonEnabled");
                 }
             }
         }
@@ -168,14 +171,15 @@ namespace SirmiumERPGFC.Views.Locations
 
         public CityList()
         {
-            // Initialize services
+            // Get required services
             cityService = DependencyResolver.Kernel.Get<ICityService>();
 
+            // Initialize form components
             InitializeComponent();
 
             this.DataContext = this;
 
-            Thread displayThread = new Thread(() => DisplayData());
+            Thread displayThread = new Thread(() => SyncData());
             displayThread.IsBackground = true;
             displayThread.Start();
         }
@@ -188,9 +192,14 @@ namespace SirmiumERPGFC.Views.Locations
         {
             currentPage = 1;
 
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
+            Thread syncThread = new Thread(() =>
+            {
+                SyncData();
+
+                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+            });
+            syncThread.IsBackground = true;
+            syncThread.Start();
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -202,14 +211,16 @@ namespace SirmiumERPGFC.Views.Locations
             displayThread.Start();
         }
 
-        private void DisplayData()
+        public void DisplayData()
         {
             CityDataLoading = true;
 
-            CityListResponse response = new CitySQLiteRepository().GetCitiesByPage(CitiesearchObject, currentPage, itemsPerPage);
+            CityListResponse response = new CitySQLiteRepository()
+                .GetCitiesByPage(MainWindow.CurrentCompanyId, CitySearchObject, currentPage, itemsPerPage);
+
             if (response.Success)
             {
-                CitiesFromDB = new ObservableCollection<CityViewModel>(response.Cities);
+                CitiesFromDB = new ObservableCollection<CityViewModel>(response.Cities ?? new List<CityViewModel>());
                 totalItems = response.TotalItems;
             }
             else
@@ -224,27 +235,37 @@ namespace SirmiumERPGFC.Views.Locations
 
             PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
 
-
             CityDataLoading = false;
+        }
+
+        private void SyncData()
+        {
+            RefreshButtonEnabled = false;
+
+            RefreshButtonContent = " Gradovi ... ";
+            new CitySQLiteRepository().Sync(cityService);
+
+            DisplayData();
+
+            RefreshButtonContent = " Osveži ";
+            RefreshButtonEnabled = true;
         }
 
         #endregion
 
-        #region Add City, edit City and delete City
+        #region Add city, edit city and delete city
 
-        private void btnAddCity_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            CityViewModel City = new CityViewModel();
-            City.Code = new CitySQLiteRepository().GetNewCodeValue().ToString();
-            City.Identifier = Guid.NewGuid();
+            CityViewModel city = new CityViewModel();
+            city.Identifier = Guid.NewGuid();
 
-            CityAddEdit CityAddEditForm = new CityAddEdit(City, true);
-            CityAddEditForm.CityCreatedUpdated += new CityHandler(DisplayData);
-            FlyoutHelper.OpenFlyout(this, "Grad", 95, CityAddEditForm);
-
+            CityAddEdit addEditForm = new CityAddEdit(city, true);
+            addEditForm.CityCreatedUpdated += new CityHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o gradovima", 95, addEditForm);
         }
 
-        private void btnEditCity_Click(object sender, RoutedEventArgs e)
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentCity == null)
             {
@@ -252,12 +273,12 @@ namespace SirmiumERPGFC.Views.Locations
                 return;
             }
 
-            CityAddEdit CityAddEditForm = new CityAddEdit(CurrentCity, false);
-            CityAddEditForm.CityCreatedUpdated += new CityHandler(DisplayData);
-            FlyoutHelper.OpenFlyout(this, "Depo", 95, CityAddEditForm);
+            CityAddEdit addEditForm = new CityAddEdit(CurrentCity, false);
+            addEditForm.CityCreatedUpdated += new CityHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o lekovima", 95, addEditForm);
         }
 
-        private void btnDeleteCity_Click(object sender, RoutedEventArgs e)
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentCity == null)
             {
@@ -268,7 +289,7 @@ namespace SirmiumERPGFC.Views.Locations
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
             // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("grad", CurrentCity.Name);
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("grad", CurrentCity.ZipCode + " " + CurrentCity.Name);
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
@@ -290,14 +311,13 @@ namespace SirmiumERPGFC.Views.Locations
 
                 MainWindow.SuccessMessage = "Grad je uspešno obrisan!";
 
-                Thread displayThread = new Thread(() => DisplayData());
+                Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
 
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
-
         #endregion
 
         #region Pagination
@@ -353,13 +373,18 @@ namespace SirmiumERPGFC.Views.Locations
 
         #endregion
 
-        #region INotifyPropertyChange implementation
+        #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(string inPropName)
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
     }
 }

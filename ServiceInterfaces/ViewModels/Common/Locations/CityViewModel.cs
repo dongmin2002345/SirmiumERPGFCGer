@@ -1,13 +1,14 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceInterfaces.ViewModels.Common.Locations
 {
-    public class CityViewModel : BaseEntityViewModel
+    public class CityViewModel : BaseEntityViewModel, INotifyPropertyChanged
     {
         #region Code
         private string _Code;
@@ -21,6 +22,23 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
                 {
                     _Code = value;
                     NotifyPropertyChanged("Code");
+                }
+            }
+        }
+        #endregion
+
+        #region ZipCode
+        private string _ZipCode = null;
+
+        public string ZipCode
+        {
+            get { return _ZipCode; }
+            set
+            {
+                if (_ZipCode != value)
+                {
+                    _ZipCode = value;
+                    NotifyPropertyChanged("ZipCode");
                 }
             }
         }
@@ -43,6 +61,57 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
+        #region Country
+        private CountryViewModel _Country;
+
+        public CountryViewModel Country
+        {
+            get { return _Country; }
+            set
+            {
+                if (_Country != value)
+                {
+                    _Country = value;
+                    NotifyPropertyChanged("Country");
+                }
+            }
+        }
+        #endregion
+
+        #region Region
+        private RegionViewModel _Region;
+
+        public RegionViewModel Region
+        {
+            get { return _Region; }
+            set
+            {
+                if (_Region != value)
+                {
+                    _Region = value;
+                    NotifyPropertyChanged("Region");
+                }
+            }
+        }
+        #endregion
+
+        #region Municipality
+        private MunicipalityViewModel _Municipality;
+
+        public MunicipalityViewModel Municipality
+        {
+            get { return _Municipality; }
+            set
+            {
+                if (_Municipality != value)
+                {
+                    _Municipality = value;
+                    NotifyPropertyChanged("Municipality");
+                }
+            }
+        }
+        #endregion
+
         #region IsSynced
         private bool _IsSynced;
 
@@ -60,23 +129,72 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
-        #region SearchBy_Name
-        private string _SearchBy_Name;
+        #region Search_ZipCode
+        private string _Search_ZipCode;
 
-        public string SearchBy_Name
+        public string Search_ZipCode
         {
-            get { return _SearchBy_Name; }
+            get { return _Search_ZipCode; }
             set
             {
-                if (_SearchBy_Name != value)
+                if (_Search_ZipCode != value)
                 {
-                    _SearchBy_Name = value;
-                    NotifyPropertyChanged("SearchBy_Name");
+                    _Search_ZipCode = value;
+                    NotifyPropertyChanged("Search_ZipCode");
                 }
             }
         }
         #endregion
 
+        #region Search_Name
+        private string _Search_Name;
 
+        public string Search_Name
+        {
+            get { return _Search_Name; }
+            set
+            {
+                if (_Search_Name != value)
+                {
+                    _Search_Name = value;
+                    NotifyPropertyChanged("Search_Name");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Municipality
+        private string _Search_Municipality;
+
+        public string Search_Municipality
+        {
+            get { return _Search_Municipality; }
+            set
+            {
+                if (_Search_Municipality != value)
+                {
+                    _Search_Municipality = value;
+                    NotifyPropertyChanged("Search_Municipality");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Region
+        private string _Search_Region;
+
+        public string Search_Region
+        {
+            get { return _Search_Region; }
+            set
+            {
+                if (_Search_Region != value)
+                {
+                    _Search_Region = value;
+                    NotifyPropertyChanged("Search_Region");
+                }
+            }
+        }
+        #endregion
     }
 }

@@ -204,7 +204,7 @@ namespace SirmiumERPGFC.Repository.Common
                 {
                     Id = query.GetInt32(counter++),
                     Identifier = query.GetGuid(counter++),
-                    //ZipCode = query.GetString(counter++),
+                    ZipCode = query.GetString(counter++),
                     Name = query.GetString(counter++)
                 };
         }

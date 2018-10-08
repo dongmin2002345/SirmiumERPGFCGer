@@ -12,95 +12,98 @@ namespace ServiceWebApi.Implementations.Common.Locations
 {
     public class CityService : ICityService
     {
-            public CityListResponse GetCities()
+        public CityListResponse GetCities(int companyId)
+        {
+            CityListResponse response = new CityListResponse();
+            try
             {
-                CityListResponse response = new CityListResponse();
-                try
+                response = WpfApiHandler.GetFromApi<List<CityViewModel>, CityListResponse>("GetCities", new Dictionary<string, string>()
                 {
-                    response = WpfApiHandler.GetFromApi<List<CityViewModel>, CityListResponse>("GetCities", new Dictionary<string, string>()
-                {
+                    { "CompanyId", companyId.ToString() }
                 });
-                }
-                catch (Exception ex)
-                {
-                    response.Cities = new List<CityViewModel>();
-                    response.Success = false;
-                    response.Message = ex.Message;
-                }
-
-                return response;
             }
-
-            public CityListResponse GetCitiesNewerThen(DateTime? lastUpdateTime)
+            catch (Exception ex)
             {
-                CityListResponse response = new CityListResponse();
-                try
-                {
-                    response = WpfApiHandler.GetFromApi<List<CityViewModel>, CityListResponse>("GetCitiesNewerThen", new Dictionary<string, string>()
-                {
-                    { "LastUpdateTime", lastUpdateTime.ToString() }
-                });
-                }
-                catch (Exception ex)
-                {
                 response.Cities = new List<CityViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }
 
-                return response;
-            }
+            return response;
+        }
 
-            public CityResponse Create(CityViewModel cityViewModel)
+        public CityListResponse GetCitiesNewerThen(int companyId, DateTime? lastUpdateTime)
+        {
+            CityListResponse response = new CityListResponse();
+            try
             {
-                CityResponse response = new CityResponse();
-                try
+                response = WpfApiHandler.GetFromApi<List<CityViewModel>, CityListResponse>("GetCitiesNewerThen", new Dictionary<string, string>()
                 {
-                    response = WpfApiHandler.SendToApi<CityViewModel, CityResponse>(cityViewModel, "Create");
-                }
-                catch (Exception ex)
-                {
-                    response.City = new CityViewModel();
-                    response.Success = false;
-                    response.Message = ex.Message;
-                }
-                return response;
+                    { "CompanyId", companyId.ToString() },
+                    { "LastUpdateTime", lastUpdateTime.ToString() }
+                });
             }
-
-            public CityResponse Delete(Guid identifier)
+            catch (Exception ex)
             {
-                CityResponse response = new CityResponse();
-                try
-                {
-                    CityViewModel viewModel = new CityViewModel();
-                    viewModel.Identifier = identifier;
-                    response = WpfApiHandler.SendToApi<CityViewModel, CityResponse>(viewModel, "Delete");
-                }
-                catch (Exception ex)
-                {
-                    response.City = new CityViewModel();
-                    response.Success = false;
-                    response.Message = ex.Message;
-                }
-
-                return response;
+                response.Cities = new List<CityViewModel>();
+                response.Success = false;
+                response.Message = ex.Message;
             }
 
-            public CityListResponse Sync(SyncCityRequest request)
+            return response;
+        }
+
+        public CityResponse Create(CityViewModel city)
+        {
+            CityResponse response = new CityResponse();
+            try
             {
-                CityListResponse response = new CityListResponse();
-                try
-                {
-                    response = WpfApiHandler.SendToApi<SyncCityRequest, CityViewModel, CityListResponse>(request, "Sync");
-                }
-                catch (Exception ex)
-                {
-                    response.Cities = new List<CityViewModel>();
-                    response.Success = false;
-                    response.Message = ex.Message;
-                }
-
-                return response;
+                response = WpfApiHandler.SendToApi<CityViewModel, CityResponse>(city, "Create");
             }
+            catch (Exception ex)
+            {
+                response.City = new CityViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public CityResponse Delete(Guid identifier)
+        {
+            CityResponse response = new CityResponse();
+            try
+            {
+                CityViewModel re = new CityViewModel();
+                re.Identifier = identifier;
+                response = WpfApiHandler.SendToApi<CityViewModel, CityResponse>(re, "Delete");
+            }
+            catch (Exception ex)
+            {
+                response.City = new CityViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public CityListResponse Sync(SyncCityRequest request)
+        {
+            CityListResponse response = new CityListResponse();
+            try
+            {
+                response = WpfApiHandler.SendToApi<SyncCityRequest, CityViewModel, CityListResponse>(request, "Sync");
+            }
+            catch (Exception ex)
+            {
+                response.Cities = new List<CityViewModel>();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
         }
     }
+}

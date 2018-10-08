@@ -72,15 +72,13 @@ namespace RepositoryCore.Context
         public DbSet<City> Cities { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
-		public DbSet<Sector> Sectors { get; set; }
+        public DbSet<Sector> Sectors { get; set; }
 
         public DbSet<Profession> Professions { get; set; }
 
-
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
-
-        public DbSet<Country> Countries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

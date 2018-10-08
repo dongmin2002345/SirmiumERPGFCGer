@@ -50,9 +50,7 @@ namespace SirmiumERPGFC.Infrastructure
 				Kernel.Bind<ISectorService>().To<SectorService>();
 
                 Kernel.Bind<IProfessionService>().To<ProfessionService>();
-
             }
         }
     }
-
 }

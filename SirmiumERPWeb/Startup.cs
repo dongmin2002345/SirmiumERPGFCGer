@@ -137,10 +137,7 @@ namespace SirmiumERPWeb
 
 			services.AddScoped<ISectorService, SectorService>();
 
-
             services.AddScoped<IProfessionService, ProfessionService>();
-
-
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

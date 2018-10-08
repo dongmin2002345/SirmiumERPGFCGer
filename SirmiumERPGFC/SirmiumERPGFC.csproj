@@ -172,8 +172,17 @@
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
+    <Compile Include="ViewComponents\Popups\CityPopup.xaml.cs">
+      <DependentUpon>CityPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Popups\CompanyPopup.xaml.cs">
       <DependentUpon>CompanyPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\CountryPopup.xaml.cs">
+      <DependentUpon>CountryPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\MunicipalityPopup.xaml.cs">
+      <DependentUpon>MunicipalityPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
       <DependentUpon>RegionPopup.xaml</DependentUpon>
@@ -300,7 +309,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ViewComponents\Popups\CityPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewComponents\Popups\CompanyPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\CountryPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\MunicipalityPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

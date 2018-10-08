@@ -12,20 +12,20 @@ namespace ServiceCore.Implementations.Common.Locations
 {
     public class CityService : ICityService
     {
-        IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork;
 
         public CityService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        public CityListResponse GetCities()
+        public CityListResponse GetCities(int companyId)
         {
             CityListResponse response = new CityListResponse();
             try
             {
-                List<City> Cities = unitOfWork.GetCityRepository().GetCities();
-                response.Cities = Cities.ConvertToCityViewModelList();
+                response.Cities = unitOfWork.GetCityRepository().GetCities(companyId)
+                    .ConvertToCityViewModelList();
                 response.Success = true;
             }
             catch (Exception ex)
@@ -38,7 +38,7 @@ namespace ServiceCore.Implementations.Common.Locations
             return response;
         }
 
-        public CityListResponse GetCitiesNewerThen(DateTime? lastUpdateTime)
+        public CityListResponse GetCitiesNewerThen(int companyId, DateTime? lastUpdateTime)
         {
             CityListResponse response = new CityListResponse();
             try
@@ -46,13 +46,13 @@ namespace ServiceCore.Implementations.Common.Locations
                 if (lastUpdateTime != null)
                 {
                     response.Cities = unitOfWork.GetCityRepository()
-                        .GetCitiesNewerThen((DateTime)lastUpdateTime)
+                        .GetCitiesNewerThen(companyId, (DateTime)lastUpdateTime)
                         .ConvertToCityViewModelList();
                 }
                 else
                 {
                     response.Cities = unitOfWork.GetCityRepository()
-                        .GetCities()
+                        .GetCities(companyId)
                         .ConvertToCityViewModelList();
                 }
                 response.Success = true;
@@ -67,13 +67,15 @@ namespace ServiceCore.Implementations.Common.Locations
             return response;
         }
 
-        public CityResponse Create(CityViewModel cityViewModel)
+
+        public CityResponse Create(CityViewModel city)
         {
             CityResponse response = new CityResponse();
             try
             {
-                City addedCity = unitOfWork.GetCityRepository().Create(cityViewModel.ConvertToCity());
+                City addedCity = unitOfWork.GetCityRepository().Create(city.ConvertToCity());
                 unitOfWork.Save();
+
                 response.City = addedCity.ConvertToCityViewModel();
                 response.Success = true;
             }
@@ -83,8 +85,10 @@ namespace ServiceCore.Implementations.Common.Locations
                 response.Success = false;
                 response.Message = ex.Message;
             }
+
             return response;
         }
+
 
         public CityResponse Delete(Guid identifier)
         {
@@ -92,6 +96,7 @@ namespace ServiceCore.Implementations.Common.Locations
             try
             {
                 City deletedCity = unitOfWork.GetCityRepository().Delete(identifier);
+
                 unitOfWork.Save();
 
                 response.City = deletedCity.ConvertToCityViewModel();
@@ -117,29 +122,14 @@ namespace ServiceCore.Implementations.Common.Locations
                 if (request.LastUpdatedAt != null)
                 {
                     response.Cities.AddRange(unitOfWork.GetCityRepository()
-                        .GetCitiesNewerThen((DateTime)request.LastUpdatedAt)
+                        .GetCitiesNewerThen(request.CompanyId, (DateTime)request.LastUpdatedAt)
                         ?.ConvertToCityViewModelList() ?? new List<CityViewModel>());
                 }
                 else
                 {
                     response.Cities.AddRange(unitOfWork.GetCityRepository()
-                        .GetCities()
+                        .GetCities(request.CompanyId)
                         ?.ConvertToCityViewModelList() ?? new List<CityViewModel>());
-                }
-
-                List<City> addedCities = new List<City>();
-                foreach (var City in request.UnSyncedCities)
-                {
-                    addedCities.Add(unitOfWork.GetCityRepository().Create(City.ConvertToCity()));
-                }
-
-                unitOfWork.Save();
-
-                foreach (var item in addedCities)
-                {
-                    response.Cities.Add(unitOfWork.GetCityRepository()
-                        .GetCity(item.Id)
-                        .ConvertToCityViewModel());
                 }
 
                 response.Success = true;

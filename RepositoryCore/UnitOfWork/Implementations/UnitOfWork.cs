@@ -46,16 +46,12 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IMunicipalityRepository municipalityRepository;
         private ICountryRepository countryRepository;
 
-		private ISectorRepository sectorRepository;
-
-
-        #endregion
-        #region Profession
         private IProfessionRepository professionRepository;
 
+        private ISectorRepository sectorRepository;
 
         #endregion
-
+        
 		#region Constructor
 
 		public UnitOfWork(bool useSql2005Compatibility = false)
@@ -123,6 +119,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return outputInvoiceRepository;
         }
 
+        public ICountryRepository GetCountryRepository()
+        {
+            if (countryRepository == null)
+                countryRepository = new CountryRepository(context);
+            return countryRepository;
+        }
+
         public ICityRepository GetCityRepository()
         {
             if (cityRepository == null)
@@ -144,19 +147,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return municipalityRepository;
         }
 
-		#endregion
+        public ISectorRepository GetSectorRepository()
+        {
+            if (sectorRepository == null)
+                sectorRepository = new SectorRepository(context);
+            return sectorRepository;
+        }
 
-		#region Sectors
-		public ISectorRepository GetSectorRepository()
-		{
-			if (sectorRepository == null)
-				sectorRepository = new SectorRepository(context);
-			return sectorRepository;
-		}
-
-        #endregion
-
-        #region Professions
         public IProfessionRepository GetProfessionRepository()
         {
             if (professionRepository == null)
@@ -164,15 +161,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return professionRepository;
         }
 
-        public ICountryRepository GetCountryRepository()
-        {
-            if (countryRepository == null)
-                countryRepository = new CountryRepository(context);
-            return countryRepository;
-        }
-
         #endregion
-
+        
         #region Save method
 
         public void Save()
@@ -181,7 +171,6 @@ namespace RepositoryCore.UnitOfWork.Implementations
         }
 
         #endregion
-
 
         #region Dispose 
 
@@ -206,6 +195,5 @@ namespace RepositoryCore.UnitOfWork.Implementations
         }
 
         #endregion
-
     }
 }

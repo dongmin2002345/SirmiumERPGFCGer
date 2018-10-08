@@ -1,4 +1,5 @@
-﻿using DataMapper.Mappers.Common.Identity;
+﻿using DataMapper.Mappers.Common.Companies;
+using DataMapper.Mappers.Common.Identity;
 using DomainCore.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
@@ -11,12 +12,12 @@ namespace DataMapper.Mappers.Common.Locations
     {
         public static List<CityViewModel> ConvertToCityViewModelList(this IEnumerable<City> cities)
         {
-            List<CityViewModel> cityViewModels = new List<CityViewModel>();
+            List<CityViewModel> citiesViewModels = new List<CityViewModel>();
             foreach (City city in cities)
             {
-                cityViewModels.Add(city.ConvertToCityViewModel());
+                citiesViewModels.Add(city.ConvertToCityViewModel());
             }
-            return cityViewModels;
+            return citiesViewModels;
         }
 
         public static CityViewModel ConvertToCityViewModel(this City city)
@@ -27,12 +28,19 @@ namespace DataMapper.Mappers.Common.Locations
                 Identifier = city.Identifier,
 
                 Code = city.Code,
+                ZipCode = city.ZipCode,
                 Name = city.Name,
 
+                Country = city.Country?.ConvertToCountryViewModelLite(),
+                Region = city.Region?.ConvertToRegionViewModelLite(),
+                Municipality = city.Municipality?.ConvertToMunicipalityViewModelLite(),
+
                 CreatedBy = city.CreatedBy?.ConvertToUserViewModelLite(),
+                Company = city.Company?.ConvertToCompanyViewModelLite(),
 
                 UpdatedAt = city.UpdatedAt,
-                CreatedAt = city.CreatedAt,
+                CreatedAt = city.CreatedAt
+
             };
             return cityViewModel;
         }
@@ -40,45 +48,54 @@ namespace DataMapper.Mappers.Common.Locations
         public static List<CityViewModel> ConvertToCityViewModelListLite(this IEnumerable<City> cities)
         {
             List<CityViewModel> cityViewModels = new List<CityViewModel>();
-            foreach (City city in cities)
+            foreach (City remedy in cities)
             {
-                cityViewModels.Add(city.ConvertToCityViewModelLite());
+                cityViewModels.Add(remedy.ConvertToCityViewModelLite());
             }
             return cityViewModels;
         }
 
-        public static CityViewModel ConvertToCityViewModelLite(this City City)
+
+        public static CityViewModel ConvertToCityViewModelLite(this City city)
         {
-            CityViewModel CityViewModel = new CityViewModel()
+            CityViewModel cityViewModel = new CityViewModel()
             {
-                Id = City.Id,
-                Identifier = City.Identifier,
+                Id = city.Id,
+                Identifier = city.Identifier,
 
-                Code = City.Code,
-                Name = City.Name,
+                Code = city.Code,
+                ZipCode = city.ZipCode,
+                Name = city.Name,
 
-                UpdatedAt = City.UpdatedAt,
-                CreatedAt = City.CreatedAt,
+                CreatedAt = city.CreatedAt,
+                UpdatedAt = city.UpdatedAt
             };
-            return CityViewModel;
+            return cityViewModel;
         }
 
-        public static City ConvertToCity(this CityViewModel CityViewModel)
+        public static City ConvertToCity(this CityViewModel cityViewModel)
         {
-            City City = new City()
+            City city = new City()
             {
-                Id = CityViewModel.Id,
-                Identifier = CityViewModel.Identifier,
+                Id = cityViewModel.Id,
+                Identifier = cityViewModel.Identifier,
 
-                Code = CityViewModel.Code,
-                Name = CityViewModel.Name,
+                Code = cityViewModel.Code,
+                ZipCode = cityViewModel.ZipCode ?? "",
+                Name = cityViewModel.Name,
 
-                CreatedById = CityViewModel.CreatedBy?.Id ?? null,
+                CountryId = cityViewModel.Country?.Id ?? null,
+                RegionId = cityViewModel.Region?.Id ?? null,
+                MunicipalityId = cityViewModel.Municipality?.Id ?? null,
 
-                UpdatedAt = CityViewModel.UpdatedAt,
-                CreatedAt = CityViewModel.CreatedAt,
+                CreatedById = cityViewModel.CreatedBy?.Id ?? null,
+                CompanyId = cityViewModel.Company?.Id ?? null,
+
+                CreatedAt = cityViewModel.CreatedAt,
+                UpdatedAt = cityViewModel.UpdatedAt
+
             };
-            return City;
+            return city;
         }
     }
 }

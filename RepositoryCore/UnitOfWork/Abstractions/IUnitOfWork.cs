@@ -28,13 +28,11 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         ICityRepository GetCityRepository();
         IRegionRepository GetRegionRepository();
         IMunicipalityRepository GetMunicipalityRepository();
+        ICountryRepository GetCountryRepository();
 
-		ISectorRepository GetSectorRepository();
+        ISectorRepository GetSectorRepository();
 
         IProfessionRepository GetProfessionRepository();
-
-
-        ICountryRepository GetCountryRepository();
 
         void Save();
     }

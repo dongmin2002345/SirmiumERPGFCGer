@@ -7,10 +7,8 @@ namespace RepositoryCore.Abstractions.Common.Locations
 {
     public interface ICityRepository
     {
-        List<City> GetCities();
-        List<City> GetCitiesNewerThen(DateTime lastUpdateTime);
-
-        City GetCity(int id);
+        List<City> GetCities(int companyId);
+        List<City> GetCitiesNewerThen(int companyId, DateTime lastUpdateTime);
 
         City Create(City city);
         City Delete(Guid identifier);

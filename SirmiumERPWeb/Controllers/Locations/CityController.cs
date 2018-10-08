@@ -13,7 +13,7 @@ namespace SirmiumERPWeb.Controllers.Locations
 {
     public class CityController : Controller
     {
-        ICityService cityService;
+        ICityService cityService { get; set; }
 
         public CityController(IServiceProvider provider)
         {
@@ -21,12 +21,12 @@ namespace SirmiumERPWeb.Controllers.Locations
         }
 
         [HttpGet]
-        public JsonResult GetCities()
+        public JsonResult GetCities(int companyId)
         {
             CityListResponse response = new CityListResponse();
             try
             {
-                response = cityService.GetCities();
+                response = cityService.GetCities(companyId);
             }
             catch (Exception ex)
             {
@@ -37,21 +37,20 @@ namespace SirmiumERPWeb.Controllers.Locations
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
-
         [HttpGet]
-        public JsonResult GetCitysNewerThen(DateTime? lastUpdateTime)
+        public JsonResult GetCitiesNewerThen(int companyId, DateTime? lastUpdateTime)
         {
-            CityListResponse response = new CityListResponse();
+            CityListResponse response;
             try
             {
-                response = cityService.GetCitiesNewerThen(lastUpdateTime);
+                response = cityService.GetCitiesNewerThen(companyId, lastUpdateTime);
             }
             catch (Exception ex)
             {
                 response = null;
                 Console.WriteLine(ex.Message);
             }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+            return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
         [HttpPost]
@@ -73,12 +72,12 @@ namespace SirmiumERPWeb.Controllers.Locations
         }
 
         [HttpPost]
-        public JsonResult Delete([FromBody] CityViewModel c)
+        public JsonResult Delete([FromBody]CityViewModel remedy)
         {
             CityResponse response = new CityResponse();
             try
             {
-                response = this.cityService.Delete(c.Identifier);
+                response = this.cityService.Delete(remedy.Identifier);
             }
             catch (Exception ex)
             {

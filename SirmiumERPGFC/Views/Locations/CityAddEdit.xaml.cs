@@ -22,22 +22,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ServiceInterfaces.ViewModels.Common.Companies;
 
 namespace SirmiumERPGFC.Views.Locations
 {
-    /// <summary>
-    /// Interaction logic for CityAddEdit.xaml
-    /// </summary>
-    public partial class CityAddEdit : INotifyPropertyChanged
+    public partial class CityAddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes
 
-        #region Event
-        public event CityHandler CityCreatedUpdated;
-        #endregion
-
         #region Services
         ICityService cityService;
+        #endregion
+
+        #region Event
+        public event CityHandler CityCreatedUpdated;
         #endregion
 
         #region CurrentCity
@@ -70,6 +68,23 @@ namespace SirmiumERPGFC.Views.Locations
                 {
                     _IsCreateProcess = value;
                     NotifyPropertyChanged("IsCreateProcess");
+                }
+            }
+        }
+        #endregion
+
+        #region IsPopup
+        private bool _IsPopup;
+
+        public bool IsPopup
+        {
+            get { return _IsPopup; }
+            set
+            {
+                if (_IsPopup != value)
+                {
+                    _IsPopup = value;
+                    NotifyPropertyChanged("IsPopup");
                 }
             }
         }
@@ -114,27 +129,33 @@ namespace SirmiumERPGFC.Views.Locations
 
         #region Constructor
 
-        public CityAddEdit(CityViewModel city, bool isCreateProcess)
+        public CityAddEdit(CityViewModel cityViewModel, bool isCreateProcess, bool isPopup = false)
         {
-            // Load required services
             cityService = DependencyResolver.Kernel.Get<ICityService>();
 
+            // Initialize form components
             InitializeComponent();
 
             this.DataContext = this;
 
-            CurrentCity = city;
+            CurrentCity = cityViewModel;
             IsCreateProcess = isCreateProcess;
+            IsPopup = isPopup;
         }
-
 
         #endregion
 
-        #region Save and Cancel button click
+        #region Cancel and Save buttons
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
+
+            if (CurrentCity.ZipCode == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Postanski broj";
+                return;
+            }
 
             if (String.IsNullOrEmpty(CurrentCity.Name))
             {
@@ -149,6 +170,7 @@ namespace SirmiumERPGFC.Views.Locations
                 SaveButtonContent = " Čuvanje u toku... ";
                 SaveButtonEnabled = false;
 
+                CurrentCity.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentCity.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentCity.IsSynced = false;
@@ -184,14 +206,13 @@ namespace SirmiumERPGFC.Views.Locations
                     if (IsCreateProcess)
                     {
                         CurrentCity = new CityViewModel();
-                        CurrentCity.Code = new CitySQLiteRepository().GetNewCodeValue().ToString();
                         CurrentCity.Identifier = Guid.NewGuid();
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtCityName.Focus();
+                                txtZipCode.Focus();
                             })
                         );
                     }
@@ -201,11 +222,15 @@ namespace SirmiumERPGFC.Views.Locations
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                FlyoutHelper.CloseFlyout(this);
+                                if (IsPopup)
+                                    FlyoutHelper.CloseFlyoutPopup(this);
+                                else
+                                    FlyoutHelper.CloseFlyout(this);
                             })
                         );
                     }
                 }
+
             });
             th.IsBackground = true;
             th.Start();
@@ -213,14 +238,16 @@ namespace SirmiumERPGFC.Views.Locations
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.CloseFlyout(this);
+            if (IsPopup)
+                FlyoutHelper.CloseFlyoutPopup(this);
+            else
+                FlyoutHelper.CloseFlyout(this);
         }
 
         #endregion
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         // This method is called by the Set accessor of each property.
         // The CallerMemberName attribute that is applied to the optional propertyName
@@ -229,6 +256,7 @@ namespace SirmiumERPGFC.Views.Locations
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
     }
 }

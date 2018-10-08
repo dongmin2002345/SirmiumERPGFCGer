@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Messages.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using SirmiumERPGFC.Repository.Common;
@@ -13,33 +14,57 @@ namespace SirmiumERPGFC.Repository.Locations
     public class CitySQLiteRepository
     {
         public static string CityTableCreatePart =
-               "CREATE TABLE IF NOT EXISTS Cities " +
-               "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-               "ServerId INTEGER NULL, " +
-               "Identifier GUID, " +
-               "Code NVARCHAR(48) NULL, " +
-               "Name NVARCHAR(48) NULL, " +
-               "IsSynced BOOL NULL, " +
-               "UpdatedAt DATETIME NULL, " +
-               "CreatedById INTEGER NULL, " +
-               "CreatedByName NVARCHAR(2048) NULL, ";
+           "CREATE TABLE IF NOT EXISTS Cities " +
+            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "ServerId INTEGER NULL, " +
+            "Identifier GUID, " +
+            "ZipCode NVARCHAR(48) NULL, " +
+            "Name NVARCHAR(48) NULL, " +
+            "CountryId INTEGER NULL, " +
+            "CountryIdentifier GUID NULL, " +
+            "CountryCode NVARCHAR(2048) NULL, " +
+            "CountryName NVARCHAR(2048) NULL, " +
+            "RegionId INTEGER NULL, " +
+            "RegionIdentifier GUID NULL, " +
+            "RegionCode NVARCHAR(2048) NULL, " +
+            "RegionName NVARCHAR(2048) NULL, " +
+            "MunicipalityId INTEGER NULL, " +
+            "MunicipalityIdentifier GUID NULL, " +
+            "MunicipalityCode NVARCHAR(2048) NULL, " +
+            "MunicipalityName NVARCHAR(2048) NULL, " +
+            "IsSynced BOOL NULL, " +
+            "UpdatedAt DATETIME NULL, " +
+            "CreatedById INTEGER NULL, " +
+            "CreatedByName NVARCHAR(2048) NULL, " +
+            "CompanyId INTEGER NULL, " +
+            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, " +
-            "IsSynced, UpdatedAt, CreatedById, CreatedByName ";
+            "SELECT ServerId, Identifier, ZipCode, Name, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Cities " +
-            "(Id, ServerId, Identifier, Code, Name, " +
-            "IsSynced, UpdatedAt, CreatedById, CreatedByName) " +
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, " +
-            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName)";
+            "(Id, ServerId, Identifier, ZipCode, Name, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-        public CityListResponse GetCitiesByPage(CityViewModel citiesearchObject, int currentPage = 1, int itemsPerPage = 50)
+            "VALUES (NULL, @ServerId, @Identifier, @ZipCode, @Name, " +
+            "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
+            "@RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
+            "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, " +
+            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        public CityListResponse GetCitiesByPage(int companyId, CityViewModel citySearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             CityListResponse response = new CityListResponse();
-            List<CityViewModel> cities = new List<CityViewModel>();
+            List<CityViewModel> Remedies = new List<CityViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
             {
                 db.Open();
                 try
@@ -47,10 +72,20 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Cities " +
-                        "ORDER BY IsSynced, Id DESC;", db);
-
+                        "WHERE (@ZipCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        //"AND (@Region IS NULL OR @Region = '' OR Region LIKE @Region) " +
+                        //"AND (@Municipality IS NULL OR @Municipality = '' OR Municipality LIKE @Municipality) " +
+                        "AND CompanyId = @CompanyId " +
+                        "ORDER BY IsSynced, Id DESC " +
+                        "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    selectCommand.Parameters.AddWithValue("@ZipCode", ((object)citySearchObject.Search_ZipCode) != null ? "%" + citySearchObject.Search_ZipCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)citySearchObject.Search_Name) != null ? "%" + citySearchObject.Search_Name + "%" : "");
+                    //selectCommand.Parameters.AddWithValue("@Region", ((object)citySearchObject.Search_Region) != null ? "%" + citySearchObject.Search_Region + "%" : "");
+                    //selectCommand.Parameters.AddWithValue("@Municipality", ((object)citySearchObject.Search_Municipality) != null ? "%" + citySearchObject.Search_Municipality + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
-                    //selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
+                    selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
@@ -60,18 +95,32 @@ namespace SirmiumERPGFC.Repository.Locations
                         CityViewModel dbEntry = new CityViewModel();
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ZipCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        cities.Add(dbEntry);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        Remedies.Add(dbEntry);
                     }
 
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
-                        "FROM Cities " , db);
+                        "FROM Cities " +
+                        "WHERE (@ZipCode IS NULL OR @ZipCode = '' OR Name LIKE @ZipCode) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        //"AND (@Region IS NULL OR @Region = '' OR Region LIKE @Region) " +
+                        //"AND (@Municipality IS NULL OR @Municipality = '' OR Municipality LIKE @Municipality) " +
+                        "AND CompanyId = @CompanyId;", db);
+                    selectCommand.Parameters.AddWithValue("@ZipCode", ((object)citySearchObject.Search_ZipCode) != null ? "%" + citySearchObject.Search_ZipCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)citySearchObject.Search_Name) != null ? "%" + citySearchObject.Search_Name + "%" : "");
+                    //selectCommand.Parameters.AddWithValue("@Region", ((object)citySearchObject.Search_Region) != null ? "%" + citySearchObject.Search_Region + "%" : "");
+                    //selectCommand.Parameters.AddWithValue("@Municipality", ((object)citySearchObject.Search_Municipality) != null ? "%" + citySearchObject.Search_Municipality + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
 
@@ -89,16 +138,16 @@ namespace SirmiumERPGFC.Repository.Locations
                 db.Close();
             }
             response.Success = true;
-            response.Cities = cities;
+            response.Cities = Remedies;
             return response;
         }
 
-        public CityListResponse GetCitiesForPopup(string filterString)
+        public CityListResponse GetCitiesForPopup(int companyId, string filterString)
         {
             CityListResponse response = new CityListResponse();
-            List<CityViewModel> cities = new List<CityViewModel>();
+            List<CityViewModel> Cities = new List<CityViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
             {
                 db.Open();
                 try
@@ -106,10 +155,14 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Cities " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "WHERE (@ZipCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    selectCommand.Parameters.AddWithValue("@ZipCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
@@ -120,13 +173,16 @@ namespace SirmiumERPGFC.Repository.Locations
                         CityViewModel dbEntry = new CityViewModel();
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ZipCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
                         dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        cities.Add(dbEntry);
+                        Cities.Add(dbEntry);
                     }
                 }
                 catch (SqliteException error)
@@ -140,65 +196,16 @@ namespace SirmiumERPGFC.Repository.Locations
                 db.Close();
             }
             response.Success = true;
-            response.Cities = cities;
-            return response;
-        }
-
-        public CityListResponse GetUnSyncedCities()
-        {
-            CityListResponse response = new CityListResponse();
-            List<CityViewModel> cities = new List<CityViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM Cities " +
-                        "WHERE IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        CityViewModel dbEntry = new CityViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        cities.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.Cities = new List<CityViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.Cities = cities;
+            response.Cities = Cities;
             return response;
         }
 
         public CityResponse GetCity(Guid identifier)
         {
             CityResponse response = new CityResponse();
-            CityViewModel City = new CityViewModel();
+            CityViewModel city = new CityViewModel();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
             {
                 db.Open();
                 try
@@ -217,13 +224,16 @@ namespace SirmiumERPGFC.Repository.Locations
                         CityViewModel dbEntry = new CityViewModel();
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ZipCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
                         dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        City = dbEntry;
+                        city = dbEntry;
                     }
                 }
                 catch (SqliteException error)
@@ -237,55 +247,38 @@ namespace SirmiumERPGFC.Repository.Locations
                 db.Close();
             }
             response.Success = true;
-            response.City = City;
+            response.City = city;
             return response;
         }
 
-        public int GetNewCodeValue()
+        public void Sync(ICityService cityService)
         {
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            SyncCityRequest request = new SyncCityRequest();
+            request.CompanyId = MainWindow.CurrentCompanyId;
+            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+            CityListResponse response = cityService.Sync(request);
+            if (response.Success)
             {
-                db.Open();
-                try
+                List<CityViewModel> citiesFromDB = response.Cities;
+                foreach (var city in citiesFromDB.OrderBy(x => x.Id))
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from Cities ", db);
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-                    int count = query.Read() ? query.GetInt32(0) : 0;
-
-                    if (count == 0)
-                        return 1;
-                    else
-                    {
-                        selectCommand = new SqliteCommand(
-                            "SELECT Code from Cities " +
-                            "WHERE Id = (SELECT MAX(Id) FROM Cities )", db);
-                        query = selectCommand.ExecuteReader();
-
-                        //int activeCode = query.Read() ? query.GetInt32(0) : -1;
-                        //return activeCode++;
-
-                        int activeCode = query.Read() ? query.GetInt32(0) : +1;
-                        int intValue = activeCode + 1;
-                        return intValue;
-                    }
+                    Delete(city.Identifier);
+                    city.IsSynced = true;
+                    Create(city);
                 }
-                catch (Exception ex)
-                {
-                    MainWindow.ErrorMessage = ex.Message;
-                }
-                db.Close();
             }
-            return 0;
         }
 
-        public DateTime? GetLastUpdatedAt()
+        public DateTime? GetLastUpdatedAt(int companyId)
         {
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
             {
                 db.Open();
                 try
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from Cities ", db);
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from Cities WHERE CompanyId = @CompanyId", db);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     SqliteDataReader query = selectCommand.ExecuteReader();
                     int count = query.Read() ? query.GetInt32(0) : 0;
 
@@ -293,7 +286,8 @@ namespace SirmiumERPGFC.Repository.Locations
                         return null;
                     else
                     {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from Cities ", db);
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from Cities WHERE CompanyId = @CompanyId", db);
+                        selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
@@ -310,11 +304,11 @@ namespace SirmiumERPGFC.Repository.Locations
             return null;
         }
 
-        public CityResponse Create(CityViewModel City)
+        public CityResponse Create(CityViewModel city)
         {
             CityResponse response = new CityResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
             {
                 db.Open();
 
@@ -324,14 +318,28 @@ namespace SirmiumERPGFC.Repository.Locations
                 //Use parameterized query to prevent SQL injection attacks
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", City.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", City.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", City.Code);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)City.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", City.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", City.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@ServerId", city.Id);
+                insertCommand.Parameters.AddWithValue("@Identifier", city.Identifier);
+                insertCommand.Parameters.AddWithValue("@ZipCode", ((object)city.ZipCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@Name", ((object)city.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryId", ((object)city.Country?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)city.Country?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)city.Country?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryName", ((object)city.Country?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionId", ((object)city.Region?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)city.Region?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionCode", ((object)city.Region?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionName", ((object)city.Region?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)city.Municipality?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)city.Municipality?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)city.Municipality?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)city.Municipality?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@IsSynced", city.IsSynced);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", city.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
 
                 try
                 {
@@ -355,7 +363,7 @@ namespace SirmiumERPGFC.Repository.Locations
         {
             CityResponse response = new CityResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
             {
                 db.Open();
 
@@ -393,7 +401,7 @@ namespace SirmiumERPGFC.Repository.Locations
         {
             CityResponse response = new CityResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
             {
                 db.Open();
 
@@ -428,7 +436,7 @@ namespace SirmiumERPGFC.Repository.Locations
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
                 {
                     db.Open();
                     db.EnableExtensions(true);
