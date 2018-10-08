@@ -46,7 +46,7 @@ namespace SirmiumERPGFC.Repository.Locations
             CountryListResponse response = new CountryListResponse();
             List<CountryViewModel> Countries = new List<CountryViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -129,7 +129,7 @@ namespace SirmiumERPGFC.Repository.Locations
             CountryListResponse response = new CountryListResponse();
             List<CountryViewModel> countries = new List<CountryViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -185,7 +185,7 @@ namespace SirmiumERPGFC.Repository.Locations
             CountryResponse response = new CountryResponse();
             CountryViewModel Country = new CountryViewModel();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -252,7 +252,7 @@ namespace SirmiumERPGFC.Repository.Locations
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -288,7 +288,7 @@ namespace SirmiumERPGFC.Repository.Locations
         {
             CountryResponse response = new CountryResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -334,7 +334,7 @@ namespace SirmiumERPGFC.Repository.Locations
         {
             CountryResponse response = new CountryResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -372,7 +372,7 @@ namespace SirmiumERPGFC.Repository.Locations
         {
             CountryResponse response = new CountryResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -407,7 +407,7 @@ namespace SirmiumERPGFC.Repository.Locations
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                 {
                     db.Open();
                     db.EnableExtensions(true);
