@@ -39,6 +39,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private ICityRepository cityRepository;
         private IRegionRepository regionRepository;
+        private IMunicipalityRepository municipalityRepository;
 
         #endregion
 
@@ -121,6 +122,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (regionRepository == null)
                 regionRepository = new RegionRepository(context);
             return regionRepository;
+        }
+
+        public IMunicipalityRepository GetMunicipalityRepository()
+        {
+            if (municipalityRepository == null)
+                municipalityRepository = new MunicipalityRepository(context);
+            return municipalityRepository;
         }
 
         #endregion

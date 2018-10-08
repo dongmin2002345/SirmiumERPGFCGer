@@ -69,6 +69,7 @@ namespace RepositoryCore.Context
 
         public DbSet<City> Cities { get; set; }
         public DbSet<Region> Regions { get; set; }
+        public DbSet<Municipality> Municipalities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

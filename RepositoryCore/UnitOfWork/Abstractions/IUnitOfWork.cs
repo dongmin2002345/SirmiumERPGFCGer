@@ -25,6 +25,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         ICityRepository GetCityRepository();
         IRegionRepository GetRegionRepository();
+        IMunicipalityRepository GetMunicipalityRepository();
 
         void Save();
     }
