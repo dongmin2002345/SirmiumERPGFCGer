@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using DomainCore.Common.Professions;
 
 namespace RepositoryCore.Context
 {
@@ -69,6 +70,9 @@ namespace RepositoryCore.Context
 
         public DbSet<City> Cities { get; set; }
         public DbSet<Region> Regions { get; set; }
+
+        public DbSet<Profession> Professions { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -17,6 +17,8 @@ using RepositoryCore.UnitOfWork.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryCore.Abstractions.Common.Professions;
+using RepositoryCore.Implementations.Common.Professions;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -38,6 +40,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IOutputInvoiceRepository outputInvoiceRepository;
 
         private ICityRepository cityRepository;
+
+        private IProfessionRepository professionRepository;
+
 
         #endregion
 
@@ -115,6 +120,12 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return cityRepository;
         }
 
+        public IProfessionRepository GetProfessionRepository()
+        {
+            if (professionRepository == null)
+                professionRepository = new ProfessionRepository(context);
+            return professionRepository;
+        }
         #endregion
 
         #region Save method

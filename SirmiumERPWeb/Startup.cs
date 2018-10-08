@@ -26,6 +26,8 @@ using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.Individuals;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Professions;
+using ServiceCore.Implementations.Common.Professions;
 
 namespace SirmiumERPWeb
 {
@@ -127,6 +129,9 @@ namespace SirmiumERPWeb
             services.AddScoped<IOutputInvoiceService, OutputInvoiceService>();
 
             services.AddScoped<ICityService, CityService>();
+
+            services.AddScoped<IProfessionService, ProfessionService>();
+
 
         }
 

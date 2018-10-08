@@ -51,6 +51,12 @@
                             <Image Source="Resources\Icons\delivery-man.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
+
+                    <Fluent:Button Click="mniProfessions_Click" Header="Zanimanja" KeyTip="RAD" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\delivery-man.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 

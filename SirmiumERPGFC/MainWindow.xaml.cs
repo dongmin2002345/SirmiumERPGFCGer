@@ -27,6 +27,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using SirmiumERPGFC.Views.Profession;
 
 namespace SirmiumERPGFC
 {
@@ -364,6 +365,17 @@ namespace SirmiumERPGFC
         private void mniCountries_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new CountryList();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mniProfessions_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ProfessionList();
+            //OpenTab("Poslovni partneri", new ProfessionList());
         }
     }
 }
