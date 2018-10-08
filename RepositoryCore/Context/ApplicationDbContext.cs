@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using DomainCore.Common.Sectors;
 
 namespace RepositoryCore.Context
 {
@@ -71,7 +72,10 @@ namespace RepositoryCore.Context
         public DbSet<Region> Regions { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		public DbSet<Sector> Sectors { get; set; }
+
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             base.OnModelCreating(modelBuilder);

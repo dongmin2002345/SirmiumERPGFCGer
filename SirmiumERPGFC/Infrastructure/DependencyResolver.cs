@@ -11,6 +11,8 @@ using ServiceWebApi.Implementations.Common.Companies;
 using ServiceWebApi.Implementations.Common.Identity;
 using ServiceWebApi.Implementations.Common.Individuals;
 using ServiceWebApi.Implementations.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Sectors;
+using ServiceWebApi.Implementations.Common.Sectors;
 
 namespace SirmiumERPGFC.Infrastructure
 {
@@ -43,6 +45,13 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IMunicipalityService>().To<MunicipalityService>();
             }
         }
+            
+        
+
+				Kernel.Bind<ISectorService>().To<SectorService>();
+
+			}
+		}
     }
 
 }

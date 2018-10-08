@@ -62,6 +62,13 @@
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Sektori">
+                    <Fluent:Button Click="mniSector_Click" Header="Sektori" KeyTip="FIR" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">

@@ -168,6 +168,7 @@
     <Compile Include="Repository\Companies\CompanySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
+    <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="ViewComponents\Popups\CompanyPopup.xaml.cs">
       <DependentUpon>CompanyPopup.xaml</DependentUpon>
@@ -223,6 +224,12 @@
     </Compile>
     <Compile Include="Views\OutputInvoices\OutputInvoiceList.xaml.cs">
       <DependentUpon>OutputInvoiceList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sectors\Sector_AddEdit.xaml.cs">
+      <DependentUpon>Sector_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sectors\Sector_List.xaml.cs">
+      <DependentUpon>Sector_List.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -351,6 +358,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OutputInvoices\OutputInvoiceList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sectors\Sector_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sectors\Sector_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

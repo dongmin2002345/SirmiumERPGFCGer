@@ -17,6 +17,8 @@ using RepositoryCore.UnitOfWork.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Implementations.Common.Sectors;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -41,11 +43,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IRegionRepository regionRepository;
         private IMunicipalityRepository municipalityRepository;
 
-        #endregion
+		private ISectorRepository sectorRepository;
 
-        #region Constructor
 
-        public UnitOfWork(bool useSql2005Compatibility = false)
+		#endregion
+
+		#region Constructor
+
+		public UnitOfWork(bool useSql2005Compatibility = false)
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             if (useSql2005Compatibility)
@@ -131,11 +136,21 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return municipalityRepository;
         }
 
-        #endregion
+		#endregion
 
-        #region Save method
+		#region Sectors
+		public ISectorRepository GetSectorRepository()
+		{
+			if (sectorRepository == null)
+				sectorRepository = new SectorRepository(context);
+			return sectorRepository;
+		}
 
-        public void Save()
+		#endregion
+
+		#region Save method
+
+		public void Save()
         {
             context.SaveChanges();
         }
