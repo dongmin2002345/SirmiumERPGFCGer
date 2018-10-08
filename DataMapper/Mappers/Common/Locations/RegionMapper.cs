@@ -29,6 +29,7 @@ namespace DataMapper.Mappers.Common.Locations
                 Identifier = region.Identifier,
 
                 Code = region.Code,
+                RegionCode = region.RegionCode,
                 Name = region.Name,
 
                 CreatedBy = region.CreatedBy?.ConvertToUserViewModelLite(),
@@ -61,6 +62,7 @@ namespace DataMapper.Mappers.Common.Locations
                 Identifier = region.Identifier,
 
                 Code = region.Code,
+                RegionCode = region.RegionCode,
                 Name = region.Name,
 
                 UpdatedAt = region.UpdatedAt,
@@ -79,6 +81,7 @@ namespace DataMapper.Mappers.Common.Locations
                 Identifier = regionViewModel.Identifier,
 
                 Code = regionViewModel.Code,
+                RegionCode = regionViewModel.RegionCode,
                 Name = regionViewModel.Name,
 
                 CreatedById = regionViewModel.CreatedBy?.Id ?? null,

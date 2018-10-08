@@ -166,6 +166,7 @@
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
     <Compile Include="Repository\Common\SQLiteInitializer.cs" />
     <Compile Include="Repository\Companies\CompanySQLiteRepository.cs" />
+    <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="ViewComponents\Popups\CompanyPopup.xaml.cs">
@@ -204,6 +205,12 @@
     </Compile>
     <Compile Include="Views\Locations\CountryList.xaml.cs">
       <DependentUpon>CountryList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Locations\MunicipalityAddEdit.xaml.cs">
+      <DependentUpon>MunicipalityAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Locations\MunicipalityList.xaml.cs">
+      <DependentUpon>MunicipalityList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\RegionAddEdit.xaml.cs">
       <DependentUpon>RegionAddEdit.xaml</DependentUpon>
@@ -320,6 +327,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Locations\CountryList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Locations\MunicipalityAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Locations\MunicipalityList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

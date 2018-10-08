@@ -213,7 +213,7 @@ namespace SirmiumERPGFC
 
                 //    notifier.ShowError(value);
 
-                    _ErrorMessage = value;
+                _ErrorMessage = value;
                 //}));
             }
         }
@@ -369,6 +369,11 @@ namespace SirmiumERPGFC
         private void mniRegions_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new RegionList();
+        }
+
+        private void mniMunicipalities_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new MunicipalityList();
         }
     }
 }

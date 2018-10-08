@@ -1,14 +1,13 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceInterfaces.ViewModels.Common.Locations
 {
-    public class RegionViewModel : BaseEntityViewModel, INotifyPropertyChanged
+    public class MunicipalityViewModel : BaseEntityViewModel
     {
         #region Code
         private string _Code;
@@ -27,18 +26,18 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
-        #region RegionCode
-        private string _RegionCode;
+        #region MunicipalityCode
+        private string _MunicipalityCode;
 
-        public string RegionCode
+        public string MunicipalityCode
         {
-            get { return _RegionCode; }
+            get { return _MunicipalityCode; }
             set
             {
-                if (_RegionCode != value)
+                if (_MunicipalityCode != value)
                 {
-                    _RegionCode = value;
-                    NotifyPropertyChanged("RegionCode");
+                    _MunicipalityCode = value;
+                    NotifyPropertyChanged("MunicipalityCode");
                 }
             }
         }
@@ -60,6 +59,41 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
             }
         }
         #endregion
+
+        #region Region
+        private RegionViewModel _Region;
+
+        public RegionViewModel Region
+        {
+            get { return _Region; }
+            set
+            {
+                if (_Region != value)
+                {
+                    _Region = value;
+                    NotifyPropertyChanged("Region");
+                }
+            }
+        }
+        #endregion
+
+        #region Country
+        //private CountryViewModel _Country;
+
+        //public CountryViewModel Country
+        //{
+        //    get { return _Country; }
+        //    set
+        //    {
+        //        if (_Country != value)
+        //        {
+        //            _Country = value;
+        //            NotifyPropertyChanged("Country");
+        //        }
+        //    }
+        //}
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;
@@ -95,17 +129,5 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
-        #region INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

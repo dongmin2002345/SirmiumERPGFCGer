@@ -71,6 +71,34 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
                     #endregion
 
+                    #region Regions
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Regions", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(RegionSQLiteRepository.RegionTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region Municipalities
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Municipalities", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(MunicipalitySQLiteRepository.MunicipalityTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #region BusinessPartners
                     if (withTableDrop)
                     {

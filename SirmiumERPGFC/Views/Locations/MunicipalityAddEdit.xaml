@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.Locations.RegionAddEdit"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Locations.MunicipalityAddEdit"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Locations"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
     <Control.Background>
         <SolidColorBrush Color="White" />
     </Control.Background>
@@ -18,35 +18,43 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Osnovni podaci"  Margin="2 2 2 0">
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="Osnovni podaci" Margin="2 2 2 0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
-
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" Text="{Binding Path=CurrentRegion.Code}" IsEnabled="False" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentMunicipality.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra regiona *" />
-                    <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtRegionCode" Text="{Binding Path=CurrentRegion.RegionCode}" />
-                    
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv regiona *" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentRegion.Name}" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra opstine *" />
+                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentMunicipality.MunicipalityCode}" />
 
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv opštine" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentMunicipality.Name}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Region" />
+                    <popups:RegionPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2"
+                                        CurrentRegion="{Binding Path=CurrentMunicipality.Region}" />
+
+                  
                 </Grid>
             </GroupBox>
 
-            <!-- Cancel and Save buttons    -->
+            <!--    Cancel and Save buttons    -->
             <Grid Grid.Row="6" Grid.ColumnSpan="2" Margin="5 2 5 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -61,6 +69,7 @@
                         <TextBlock FontSize="20" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent"/>
                     </StackPanel>
                 </Button>
+
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
@@ -68,7 +77,7 @@
                     </StackPanel>
                 </Button>
             </Grid>
-
         </Grid>
     </ScrollViewer>
 </UserControl>
+
