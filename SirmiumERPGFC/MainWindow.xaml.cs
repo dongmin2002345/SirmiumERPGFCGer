@@ -383,14 +383,7 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new MunicipalityList();
         }
-    }
-	
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        
         private void mniProfessions_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new ProfessionList();
