@@ -86,8 +86,8 @@ namespace SirmiumERPGFC.Repository.Sectors
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-						//dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
 						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
@@ -163,12 +163,10 @@ namespace SirmiumERPGFC.Repository.Sectors
 						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-
 						dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-					//	dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
 						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
@@ -217,9 +215,8 @@ namespace SirmiumERPGFC.Repository.Sectors
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-						//dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
 						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
@@ -312,14 +309,12 @@ namespace SirmiumERPGFC.Repository.Sectors
 				insertCommand.Parameters.AddWithValue("@Identifier", sector.Identifier);
 				insertCommand.Parameters.AddWithValue("@Code", ((object)sector.Code) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@SecondCode", ((object)sector.SecondCode) ?? DBNull.Value);
-
 				insertCommand.Parameters.AddWithValue("@Name", ((object)sector.Name) ?? DBNull.Value);
-				//insertCommand.Parameters.AddWithValue("@CountryId", ((object)sector.Country?.Id) ?? DBNull.Value);
-				//insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)sector.Country?.Identifier) ?? DBNull.Value);
-				//insertCommand.Parameters.AddWithValue("@CountryCode", ((object)sector.Country?.Code) ?? DBNull.Value);
-				//insertCommand.Parameters.AddWithValue("@CountryName", ((object)sector.Country?.Name) ?? DBNull.Value);
-				
-				insertCommand.Parameters.AddWithValue("@IsSynced", sector.IsSynced);
+                insertCommand.Parameters.AddWithValue("@CountryId", ((object)sector.Country?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)sector.Country?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)sector.Country?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryName", ((object)sector.Country?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@IsSynced", sector.IsSynced);
 				insertCommand.Parameters.AddWithValue("@UpdatedAt", sector.UpdatedAt);
 				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
 				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);

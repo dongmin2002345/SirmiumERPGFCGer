@@ -26,9 +26,6 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Sectors
 {
-	/// <summary>
-	/// Interaction logic for Sector_AddEdit.xaml
-	/// </summary>
 	public partial class Sector_AddEdit : UserControl, INotifyPropertyChanged
 	{
 		#region Attributes

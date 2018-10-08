@@ -1,5 +1,6 @@
 ﻿using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
+using DataMapper.Mappers.Common.Locations;
 using DomainCore.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using System;
@@ -31,10 +32,9 @@ namespace DataMapper.Mappers.Common.Sectors
 				SecondCode = sector.SecondCode,
 				Name = sector.Name,
 
-//				Country = city.Country?.ConvertToCountryViewModelLite(),
+                Country = sector.Country?.ConvertToCountryViewModelLite(),
 
-
-				CreatedBy = sector.CreatedBy?.ConvertToUserViewModelLite(),
+                CreatedBy = sector.CreatedBy?.ConvertToUserViewModelLite(),
 				Company = sector.Company?.ConvertToCompanyViewModelLite(),
 
 				UpdatedAt = sector.UpdatedAt,
@@ -83,10 +83,9 @@ namespace DataMapper.Mappers.Common.Sectors
 				SecondCode = sectorViewModel.SecondCode ?? "",
 				Name = sectorViewModel.Name,
 
-			//	CountryId = cityViewModel.Country?.Id ?? null,
+                CountryId = sectorViewModel.Country?.Id ?? null,
 
-
-				CreatedById = sectorViewModel.CreatedBy?.Id ?? null,
+                CreatedById = sectorViewModel.CreatedBy?.Id ?? null,
 				CompanyId = sectorViewModel.Company?.Id ?? null,
 
 				CreatedAt = sectorViewModel.CreatedAt,

@@ -21,9 +21,8 @@ namespace RepositoryCore.Implementations.Common.Sectors
 		public List<Sector> GetSectors(int companyId)
 		{
 			List<Sector> sectors = context.Sectors
-				//.Include(x => x.Country)
-
-				.Include(x => x.Company)
+                .Include(x => x.Country)
+                .Include(x => x.Company)
 				.Include(x => x.CreatedBy)
 				.Where(x => x.Active == true && x.CompanyId == companyId)
 				.OrderByDescending(x => x.CreatedAt)
@@ -36,9 +35,8 @@ namespace RepositoryCore.Implementations.Common.Sectors
 		public List<Sector> GetSectorsNewerThen(int companyId, DateTime lastUpdateTime)
 		{
 			List<Sector> sectors = context.Sectors
-				//.Include(x => x.Country)
-
-				.Include(x => x.Company)
+                .Include(x => x.Country)
+                .Include(x => x.Company)
 				.Include(x => x.CreatedBy)
 				.Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
 				.OrderByDescending(x => x.UpdatedAt)
@@ -99,9 +97,8 @@ namespace RepositoryCore.Implementations.Common.Sectors
 
 				if (dbEntry != null)
 				{
-					//dbEntry.CountryId = sector.Country?.Id ?? null;
-
-					dbEntry.CompanyId = sector.CompanyId ?? null;
+                    dbEntry.CountryId = sector.Country?.Id ?? null;
+                    dbEntry.CompanyId = sector.CompanyId ?? null;
 					dbEntry.CreatedById = sector.CreatedById ?? null;
 
 					// Set properties

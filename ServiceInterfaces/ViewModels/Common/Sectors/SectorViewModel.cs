@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,28 +60,28 @@ namespace ServiceInterfaces.ViewModels.Common.Sectors
 				}
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Country
-		//private CountryViewModel _Country;
+        #region Country
+        private CountryViewModel _Country;
 
-		//public CountryViewModel Country
-		//{
-		//	get { return _Country; }
-		//	set
-		//	{
-		//		if (_Country != value)
-		//		{
-		//			_Country = value;
-		//			NotifyPropertyChanged("Country");
-		//		}
-		//	}
-		//}
-		#endregion
+        public CountryViewModel Country
+        {
+            get { return _Country; }
+            set
+            {
+                if (_Country != value)
+                {
+                    _Country = value;
+                    NotifyPropertyChanged("Country");
+                }
+            }
+        }
+        #endregion
 
-		
-		#region IsSynced
-		private bool _IsSynced;
+
+        #region IsSynced
+        private bool _IsSynced;
 
 		public bool IsSynced
 		{
@@ -146,7 +147,5 @@ namespace ServiceInterfaces.ViewModels.Common.Sectors
 			}
 		}
 		#endregion
-
-		
 	}
 }
