@@ -93,24 +93,26 @@ namespace ApiExtension.Sender
                 { typeof(MunicipalityViewModel), "Municipality" },
                 { typeof(List<MunicipalityViewModel>), "Municipality" },
 
+                { typeof(CountryViewModel), "Country" },
+                { typeof(List<CountryViewModel>), "Country" },
+
                 #endregion
 
-			#region Sectors
+			    #region Sectors
 
-            { typeof(SectorViewModel), "Sector" },
-			{ typeof(List<SectorViewModel>), "Sector" },
+                { typeof(SectorViewModel), "Sector" },
+			    { typeof(List<SectorViewModel>), "Sector" },
+
+                #endregion
+
+                #region Professions
+
+                { typeof(ProfessionViewModel), "Profession" },
+                { typeof(List<ProfessionViewModel>), "Profession" },
+
+                #endregion
 
             #endregion
-
-             #region Professions
-
-            { typeof(ProfessionViewModel), "Profession" },
-            { typeof(List<ProfessionViewModel>), "Profession" },
-
-            #endregion
-
-            #endregion
-
         };
 
         static WpfApiHandler()

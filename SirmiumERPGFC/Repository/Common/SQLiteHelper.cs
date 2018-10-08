@@ -192,6 +192,23 @@ namespace SirmiumERPGFC.Repository.Common
                 };
         }
 
+        public static CityViewModel GetCity(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new CityViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    //ZipCode = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
         public static RegionViewModel GetRegion(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))
@@ -227,7 +244,22 @@ namespace SirmiumERPGFC.Repository.Common
                 };
         }
 
-
+        public static CountryViewModel GetCountry(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new CountryViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
     }
 }
 

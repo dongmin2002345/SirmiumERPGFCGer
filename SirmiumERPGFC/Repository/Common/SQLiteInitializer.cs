@@ -59,6 +59,20 @@ namespace SirmiumERPGFC.Repository.Common
 
                     #endregion
 
+                    #region Countries
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Countries", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(CountrySQLiteRepository.CountryTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #region Cities
                     if (withTableDrop)
                     {

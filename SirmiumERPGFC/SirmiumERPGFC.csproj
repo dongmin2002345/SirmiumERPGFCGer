@@ -166,6 +166,7 @@
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
     <Compile Include="Repository\Common\SQLiteInitializer.cs" />
     <Compile Include="Repository\Companies\CompanySQLiteRepository.cs" />
+    <Compile Include="Repository\Locations\CountrySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
@@ -204,6 +205,9 @@
     </Compile>
     <Compile Include="Views\Individuals\IndividualList.xaml.cs">
       <DependentUpon>IndividualList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Locations\CountryAddEdit.xaml.cs">
+      <DependentUpon>CountryAddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\CountryList.xaml.cs">
       <DependentUpon>CountryList.xaml</DependentUpon>
@@ -337,6 +341,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Individuals\IndividualList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Locations\CountryAddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

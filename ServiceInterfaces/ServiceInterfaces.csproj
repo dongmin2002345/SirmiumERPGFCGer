@@ -50,6 +50,7 @@
     <Compile Include="Abstractions\Common\Identity\IAuthenticationService.cs" />
     <Compile Include="Abstractions\Common\Identity\IUserService.cs" />
     <Compile Include="Abstractions\Common\Individuals\IIndividualService.cs" />
+    <Compile Include="Abstractions\Common\Locations\ICountryService.cs" />
     <Compile Include="Abstractions\Common\Locations\IMunicipalityService.cs" />
     <Compile Include="Abstractions\Common\Locations\IRegionService.cs" />
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceService.cs" />
