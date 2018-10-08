@@ -127,6 +127,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IOutputInvoiceService, OutputInvoiceService>();
 
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IRegionService, RegionService>();
 
         }
 

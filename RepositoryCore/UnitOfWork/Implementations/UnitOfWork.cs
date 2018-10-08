@@ -38,6 +38,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IOutputInvoiceRepository outputInvoiceRepository;
 
         private ICityRepository cityRepository;
+        private IRegionRepository regionRepository;
 
         #endregion
 
@@ -113,6 +114,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (cityRepository == null)
                 cityRepository = new CityRepository(context);
             return cityRepository;
+        }
+
+        public IRegionRepository GetRegionRepository()
+        {
+            if (regionRepository == null)
+                regionRepository = new RegionRepository(context);
+            return regionRepository;
         }
 
         #endregion

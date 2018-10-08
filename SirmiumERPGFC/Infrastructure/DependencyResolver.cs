@@ -39,6 +39,7 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IOutputInvoiceService>().To<OutputInvoiceService>();
 
                 Kernel.Bind<ICityService>().To<CityService>();
+                Kernel.Bind<IRegionService>().To<RegionService>();
             }
         }
     }

@@ -80,10 +80,14 @@ namespace ApiExtension.Sender
 
             #endregion
 
-            #region Cities
+            #region Locations
 
             { typeof(CityViewModel), "City" },
             { typeof(List<CityViewModel>), "City" },
+
+            { typeof(RegionViewModel), "Region" },
+            { typeof(List<RegionViewModel>), "Region" },
+
 
             #endregion
 
