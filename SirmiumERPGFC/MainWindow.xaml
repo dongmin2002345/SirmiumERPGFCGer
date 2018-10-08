@@ -51,6 +51,12 @@
                             <Image Source="Resources\Icons\delivery-man.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
+
+                    <Fluent:Button Click="mniProfessions_Click" Header="Zanimanja" KeyTip="RAD" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\delivery-man.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
@@ -92,6 +98,13 @@
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="Gradovi">
                     <Fluent:Button Click="mniCities_Click" Header="Gradovi" KeyTip="GRA" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Opstine">
+                    <Fluent:Button Click="mniMunicipalities_Click" Header="Opstine" KeyTip="OPS" >
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>

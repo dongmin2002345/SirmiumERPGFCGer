@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using DomainCore.Common.Sectors;
+using DomainCore.Common.Professions;
 
 namespace RepositoryCore.Context
 {
@@ -74,8 +75,13 @@ namespace RepositoryCore.Context
 
 		public DbSet<Sector> Sectors { get; set; }
 
+        public DbSet<Profession> Professions { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             base.OnModelCreating(modelBuilder);

@@ -311,6 +311,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("RegionCode");
+
                     b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
@@ -408,6 +410,39 @@ namespace RepositoryCore.Migrations
                     b.ToTable("Sectors");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.Professions.Profession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Code");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("SecondCode");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Professions");
+                });
+
             modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartner", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
@@ -490,6 +525,17 @@ namespace RepositoryCore.Migrations
                 });
 
             modelBuilder.Entity("DomainCore.Common.Sectors.Sector", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.Professions.Profession", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()

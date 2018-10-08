@@ -22,11 +22,14 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
@@ -34,8 +37,11 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
                     <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" Text="{Binding Path=CurrentRegion.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv regiona *" />
-                    <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentRegion.Name}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra regiona *" />
+                    <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtRegionCode" Text="{Binding Path=CurrentRegion.RegionCode}" />
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv regiona *" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentRegion.Name}" />
 
                 </Grid>
             </GroupBox>

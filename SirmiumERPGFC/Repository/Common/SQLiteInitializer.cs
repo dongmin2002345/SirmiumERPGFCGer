@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SirmiumERPGFC.Repository.Sectors;
+using SirmiumERPGFC.Repository.Professions;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -72,6 +73,34 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
                     #endregion
 
+                    #region Regions
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Regions", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(RegionSQLiteRepository.RegionTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region Municipalities
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Municipalities", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(MunicipalitySQLiteRepository.MunicipalityTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #region BusinessPartners
                     if (withTableDrop)
                     {
@@ -84,24 +113,38 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerSQLiteRepository.BusinessPartnerTableCreatePart, db);
                     createTable.ExecuteReader();
-					#endregion
+                    #endregion
 
-					#region Sectors
-					if (withTableDrop)
-					{
-						try
-						{
-							SqliteCommand dropTable = new SqliteCommand("DROP TABLE Sectors", db);
-							dropTable.ExecuteNonQuery();
-						}
-						catch (Exception ex) { }
-					}
-					createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
-					createTable.ExecuteReader();
-					#endregion
+                    #region Sectors
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Sectors", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
 
-				}
-			}
+                    #region Profession
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Professions", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ProfessionSQLiteRepository.ProfessionTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+                }
+            }
+
             catch (SqliteException e)
             {
                 MainWindow.ErrorMessage = e.Message;

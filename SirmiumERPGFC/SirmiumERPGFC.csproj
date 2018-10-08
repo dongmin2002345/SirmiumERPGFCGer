@@ -166,8 +166,10 @@
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
     <Compile Include="Repository\Common\SQLiteInitializer.cs" />
     <Compile Include="Repository\Companies\CompanySQLiteRepository.cs" />
+    <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
+    <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="ViewComponents\Popups\CompanyPopup.xaml.cs">
       <DependentUpon>CompanyPopup.xaml</DependentUpon>
@@ -206,6 +208,12 @@
     <Compile Include="Views\Locations\CountryList.xaml.cs">
       <DependentUpon>CountryList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Locations\MunicipalityAddEdit.xaml.cs">
+      <DependentUpon>MunicipalityAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Locations\MunicipalityList.xaml.cs">
+      <DependentUpon>MunicipalityList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Locations\RegionAddEdit.xaml.cs">
       <DependentUpon>RegionAddEdit.xaml</DependentUpon>
     </Compile>
@@ -223,6 +231,12 @@
     </Compile>
     <Compile Include="Views\Sectors\Sector_List.xaml.cs">
       <DependentUpon>Sector_List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Profession\ProfessionAddEdit.xaml.cs">
+      <DependentUpon>ProfessionAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Profession\ProfessionList.xaml.cs">
+      <DependentUpon>ProfessionList.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -330,6 +344,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Locations\MunicipalityAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Locations\MunicipalityList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Locations\RegionAddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -351,6 +373,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Sectors\Sector_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Profession\ProfessionAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Profession\ProfessionList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

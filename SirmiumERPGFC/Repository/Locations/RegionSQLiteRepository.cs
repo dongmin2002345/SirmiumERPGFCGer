@@ -19,6 +19,7 @@ namespace SirmiumERPGFC.Repository.Locations
               "ServerId INTEGER NULL, " +
               "Identifier GUID, " +
               "Code NVARCHAR(48) NULL, " +
+              "RegionCode NVARCHAR(48) NULL, " +
               "Name NVARCHAR(48) NULL, " +
               "IsSynced BOOL NULL, " +
               "UpdatedAt DATETIME NULL, " +
@@ -28,14 +29,14 @@ namespace SirmiumERPGFC.Repository.Locations
               "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name,  " +
+            "SELECT ServerId, Identifier, Code, RegionCode, Name,  " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Regions " +
-            "(Id, ServerId, Identifier, Code, Name,  " +
+            "(Id, ServerId, Identifier, Code, RegionCode, Name,  " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name,  " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @RegionCode, @Name,  " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public RegionListResponse GetRegionsByPage(int companyId, RegionViewModel regionSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -69,6 +70,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.RegionCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -137,6 +139,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.RegionCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -185,6 +188,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.RegionCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -278,6 +282,7 @@ namespace SirmiumERPGFC.Repository.Locations
                 insertCommand.Parameters.AddWithValue("@ServerId", region.Id);
                 insertCommand.Parameters.AddWithValue("@Identifier", region.Identifier);
                 insertCommand.Parameters.AddWithValue("@Code", ((object)region.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionCode", ((object)region.RegionCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", ((object)region.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", region.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", region.UpdatedAt);

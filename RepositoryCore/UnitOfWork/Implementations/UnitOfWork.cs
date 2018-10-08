@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Text;
 using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Implementations.Common.Sectors;
+using RepositoryCore.Abstractions.Common.Professions;
+using RepositoryCore.Implementations.Common.Professions;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -46,7 +48,12 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		private ISectorRepository sectorRepository;
 
 
-		#endregion
+        #endregion
+        #region Profession
+        private IProfessionRepository professionRepository;
+
+
+        #endregion
 
 		#region Constructor
 
@@ -146,11 +153,21 @@ namespace RepositoryCore.UnitOfWork.Implementations
 			return sectorRepository;
 		}
 
-		#endregion
+        #endregion
 
-		#region Save method
+        #region Professions
+        public IProfessionRepository GetProfessionRepository()
+        {
+            if (professionRepository == null)
+                professionRepository = new ProfessionRepository(context);
+            return professionRepository;
+        }
 
-		public void Save()
+        #endregion
+
+        #region Save method
+
+        public void Save()
         {
             context.SaveChanges();
         }

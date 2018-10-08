@@ -28,6 +28,8 @@ using ServiceInterfaces.Abstractions.Common.Individuals;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceCore.Implementations.Common.Sectors;
+using ServiceInterfaces.Abstractions.Common.Professions;
+using ServiceCore.Implementations.Common.Professions;
 
 namespace SirmiumERPWeb
 {
@@ -130,11 +132,15 @@ namespace SirmiumERPWeb
 
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IRegionService, RegionService>();
+            services.AddScoped<IMunicipalityService, MunicipalityService>();
 
 			services.AddScoped<ISectorService, SectorService>();
 
 
-		}
+            services.AddScoped<IProfessionService, ProfessionService>();
+
+
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeedData seedData)

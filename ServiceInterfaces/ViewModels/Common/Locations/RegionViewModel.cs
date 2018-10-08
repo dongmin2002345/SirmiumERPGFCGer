@@ -27,6 +27,23 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
+        #region RegionCode
+        private string _RegionCode;
+
+        public string RegionCode
+        {
+            get { return _RegionCode; }
+            set
+            {
+                if (_RegionCode != value)
+                {
+                    _RegionCode = value;
+                    NotifyPropertyChanged("RegionCode");
+                }
+            }
+        }
+        #endregion
+
         #region Name
         private string _Name;
 
