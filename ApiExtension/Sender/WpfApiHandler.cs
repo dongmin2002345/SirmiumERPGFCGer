@@ -12,7 +12,7 @@ using System.Configuration;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Individuals;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
-using ServiceInterfaces.ViewModels.Common.Cities;
+using ServiceInterfaces.ViewModels.Common.Locations;
 
 namespace ApiExtension.Sender
 {

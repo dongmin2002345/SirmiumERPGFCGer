@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceInterfaces.ViewModels.Common.Cities
+namespace ServiceInterfaces.ViewModels.Common.Locations
 {
     public class CityViewModel : BaseEntityViewModel
     {

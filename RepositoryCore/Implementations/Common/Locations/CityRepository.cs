@@ -1,13 +1,13 @@
-﻿using DomainCore.Common.Cities;
+﻿using DomainCore.Common.Locations;
 using Microsoft.EntityFrameworkCore;
-using RepositoryCore.Abstractions.Common.Cities;
+using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RepositoryCore.Implementations.Common.Cities
+namespace RepositoryCore.Implementations.Common.Locations
 {
     public class CityRepository : ICityRepository
     {

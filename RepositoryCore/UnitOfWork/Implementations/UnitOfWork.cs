@@ -1,14 +1,14 @@
 ﻿using Configurator;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
-using RepositoryCore.Abstractions.Common.Cities;
+using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Individuals;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Context;
 using RepositoryCore.Implementations.Common.BusinessPartners;
-using RepositoryCore.Implementations.Common.Cities;
+using RepositoryCore.Implementations.Common.Locations;
 using RepositoryCore.Implementations.Common.Companies;
 using RepositoryCore.Implementations.Common.Identity;
 using RepositoryCore.Implementations.Common.Individuals;

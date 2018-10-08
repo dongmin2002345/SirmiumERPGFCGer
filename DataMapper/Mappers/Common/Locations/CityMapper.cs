@@ -1,11 +1,11 @@
 ﻿using DataMapper.Mappers.Common.Identity;
-using DomainCore.Common.Cities;
-using ServiceInterfaces.ViewModels.Common.Cities;
+using DomainCore.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataMapper.Mappers.Common.Cities
+namespace DataMapper.Mappers.Common.Locations
 {
     public static class CityMapper
     {

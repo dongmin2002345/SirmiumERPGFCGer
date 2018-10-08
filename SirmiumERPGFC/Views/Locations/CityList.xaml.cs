@@ -1,10 +1,10 @@
 ﻿using Ninject;
-using ServiceInterfaces.Abstractions.Common.Cities;
-using ServiceInterfaces.Messages.Common.Cities;
-using ServiceInterfaces.ViewModels.Common.Cities;
+using ServiceInterfaces.Abstractions.Common.Locations;
+using ServiceInterfaces.Messages.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
-using SirmiumERPGFC.Repository.Cities;
+using SirmiumERPGFC.Repository.Locations;
 using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;

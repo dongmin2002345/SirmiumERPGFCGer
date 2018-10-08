@@ -1,5 +1,5 @@
 ﻿using DomainCore.Common.BusinessPartners;
-using DomainCore.Common.Cities;
+using DomainCore.Common.Locations;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.Individuals;
@@ -68,6 +68,7 @@ namespace RepositoryCore.Context
         public DbSet<OutputInvoice> OutputInvoices { get; set; }
 
         public DbSet<City> Cities { get; set; }
+        public DbSet<Region> Regions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

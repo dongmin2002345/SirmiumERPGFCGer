@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
-using ServiceInterfaces.Messages.Common.Cities;
-using ServiceInterfaces.ViewModels.Common.Cities;
+using ServiceInterfaces.Messages.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SirmiumERPGFC.Repository.Cities
+namespace SirmiumERPGFC.Repository.Locations
 {
     public class CitySQLiteRepository
     {

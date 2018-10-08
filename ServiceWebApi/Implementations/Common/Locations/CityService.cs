@@ -1,14 +1,14 @@
 ﻿using ApiExtension.Sender;
-using ServiceInterfaces.Abstractions.Common.Cities;
-using ServiceInterfaces.Messages.Common.Cities;
-using ServiceInterfaces.ViewModels.Common.Cities;
+using ServiceInterfaces.Abstractions.Common.Locations;
+using ServiceInterfaces.Messages.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceWebApi.Implementations.Common.Cities
+namespace ServiceWebApi.Implementations.Common.Locations
 {
     public class CityService : ICityService
     {

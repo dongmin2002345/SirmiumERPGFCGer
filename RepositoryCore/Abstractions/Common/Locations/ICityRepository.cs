@@ -1,9 +1,9 @@
-﻿using DomainCore.Common.Cities;
+﻿using DomainCore.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RepositoryCore.Abstractions.Common.Cities
+namespace RepositoryCore.Abstractions.Common.Locations
 {
     public interface ICityRepository
     {

@@ -1,5 +1,5 @@
 ﻿using RepositoryCore.Abstractions.Common.BusinessPartners;
-using RepositoryCore.Abstractions.Common.Cities;
+using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Individuals;

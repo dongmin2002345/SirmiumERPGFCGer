@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DomainCore.Common.Cities
+namespace DomainCore.Common.Locations
 {
     public class City : BaseEntity
     {

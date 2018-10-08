@@ -162,7 +162,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
-    <Compile Include="Repository\Cities\CitySQLiteRepository.cs" />
+    <Compile Include="Repository\Locations\CitySQLiteRepository.cs" />
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
     <Compile Include="Repository\Common\SQLiteInitializer.cs" />
     <Compile Include="Repository\Companies\CompanySQLiteRepository.cs" />

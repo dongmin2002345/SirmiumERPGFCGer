@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using SirmiumERPGFC.Repository.BusinessPartners;
-using SirmiumERPGFC.Repository.Cities;
+using SirmiumERPGFC.Repository.Locations;
 using SirmiumERPGFC.Repository.Companies;
 using SirmiumERPGFC.Repository.Users;
 using System;

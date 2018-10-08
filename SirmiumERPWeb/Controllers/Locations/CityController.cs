@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using ServiceCore.Implementations.Common.Cities;
-using ServiceInterfaces.Abstractions.Common.Cities;
-using ServiceInterfaces.Messages.Common.Cities;
-using ServiceInterfaces.ViewModels.Common.Cities;
+using ServiceCore.Implementations.Common.Locations;
+using ServiceInterfaces.Abstractions.Common.Locations;
+using ServiceInterfaces.Messages.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Locations;
 
-namespace SirmiumERPWeb.Controllers.Cities
+namespace SirmiumERPWeb.Controllers.Locations
 {
     public class CityController : Controller
     {

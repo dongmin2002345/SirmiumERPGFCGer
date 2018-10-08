@@ -1,14 +1,14 @@
-﻿using DataMapper.Mappers.Common.Cities;
-using DomainCore.Common.Cities;
+﻿using DataMapper.Mappers.Common.Locations;
+using DomainCore.Common.Locations;
 using RepositoryCore.UnitOfWork.Abstractions;
-using ServiceInterfaces.Abstractions.Common.Cities;
-using ServiceInterfaces.Messages.Common.Cities;
-using ServiceInterfaces.ViewModels.Common.Cities;
+using ServiceInterfaces.Abstractions.Common.Locations;
+using ServiceInterfaces.Messages.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServiceCore.Implementations.Common.Cities
+namespace ServiceCore.Implementations.Common.Locations
 {
     public class CityService : ICityService
     {
