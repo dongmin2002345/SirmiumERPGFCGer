@@ -75,9 +75,10 @@ namespace RepositoryCore.Context
 
 		public DbSet<Sector> Sectors { get; set; }
 
-
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
         public DbSet<Profession> Professions { get; set; }
+
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

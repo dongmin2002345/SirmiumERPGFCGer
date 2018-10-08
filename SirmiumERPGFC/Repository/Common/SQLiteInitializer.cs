@@ -85,24 +85,22 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerSQLiteRepository.BusinessPartnerTableCreatePart, db);
                     createTable.ExecuteReader();
-					#endregion
+                    #endregion
 
-					#region Sectors
-					if (withTableDrop)
-					{
-						try
-						{
-							SqliteCommand dropTable = new SqliteCommand("DROP TABLE Sectors", db);
-							dropTable.ExecuteNonQuery();
-						}
-						catch (Exception ex) { }
-					}
-					createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
-					createTable.ExecuteReader();
-					#endregion
+                    #region Sectors
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Sectors", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
 
-				}
-			}
                     #region Profession
                     if (withTableDrop)
                     {
@@ -116,9 +114,9 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(ProfessionSQLiteRepository.ProfessionTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
-
                 }
             }
+
             catch (SqliteException e)
             {
                 MainWindow.ErrorMessage = e.Message;

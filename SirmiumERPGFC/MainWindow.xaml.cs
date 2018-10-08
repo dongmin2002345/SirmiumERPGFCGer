@@ -378,7 +378,7 @@ namespace SirmiumERPGFC
 		{
 			cntCtrl.Content = new Sector_List();
 		}
-	}
+	
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

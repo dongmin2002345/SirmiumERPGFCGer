@@ -31,8 +31,6 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
 		ISectorRepository GetSectorRepository();
 
-
-		void Save();
         IProfessionRepository GetProfessionRepository();
 
 

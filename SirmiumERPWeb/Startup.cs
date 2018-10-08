@@ -136,7 +136,6 @@ namespace SirmiumERPWeb
 			services.AddScoped<ISectorService, SectorService>();
 
 
-		}
             services.AddScoped<IProfessionService, ProfessionService>();
 
 
