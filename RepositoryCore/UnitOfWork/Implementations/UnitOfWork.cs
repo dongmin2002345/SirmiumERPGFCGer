@@ -136,7 +136,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return municipalityRepository;
         }
 
-        #endregion
+		#endregion
+
+		#region Sectors
 		public ISectorRepository GetSectorRepository()
 		{
 			if (sectorRepository == null)
