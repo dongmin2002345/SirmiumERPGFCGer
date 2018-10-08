@@ -17,6 +17,10 @@ using RepositoryCore.UnitOfWork.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Implementations.Common.Sectors;
+using RepositoryCore.Abstractions.Common.Professions;
+using RepositoryCore.Implementations.Common.Professions;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -38,13 +42,23 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IOutputInvoiceRepository outputInvoiceRepository;
 
         private ICityRepository cityRepository;
+        private IRegionRepository regionRepository;
+        private IMunicipalityRepository municipalityRepository;
         private ICountryRepository countryRepository;
+
+		private ISectorRepository sectorRepository;
+
+
+        #endregion
+        #region Profession
+        private IProfessionRepository professionRepository;
+
 
         #endregion
 
-        #region Constructor
+		#region Constructor
 
-        public UnitOfWork(bool useSql2005Compatibility = false)
+		public UnitOfWork(bool useSql2005Compatibility = false)
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             if (useSql2005Compatibility)
@@ -116,6 +130,40 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return cityRepository;
         }
 
+        public IRegionRepository GetRegionRepository()
+        {
+            if (regionRepository == null)
+                regionRepository = new RegionRepository(context);
+            return regionRepository;
+        }
+
+        public IMunicipalityRepository GetMunicipalityRepository()
+        {
+            if (municipalityRepository == null)
+                municipalityRepository = new MunicipalityRepository(context);
+            return municipalityRepository;
+        }
+
+		#endregion
+
+		#region Sectors
+		public ISectorRepository GetSectorRepository()
+		{
+			if (sectorRepository == null)
+				sectorRepository = new SectorRepository(context);
+			return sectorRepository;
+		}
+
+        #endregion
+
+        #region Professions
+        public IProfessionRepository GetProfessionRepository()
+        {
+            if (professionRepository == null)
+                professionRepository = new ProfessionRepository(context);
+            return professionRepository;
+        }
+
         public ICountryRepository GetCountryRepository()
         {
             if (countryRepository == null)
@@ -133,6 +181,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         }
 
         #endregion
+
 
         #region Dispose 
 

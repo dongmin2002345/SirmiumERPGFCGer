@@ -7,6 +7,8 @@ using RepositoryCore.Abstractions.Common.Invoices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.Professions;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
 {
@@ -24,6 +26,13 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IOutputInvoiceRepository GetOutputInvoiceRepository();
 
         ICityRepository GetCityRepository();
+        IRegionRepository GetRegionRepository();
+        IMunicipalityRepository GetMunicipalityRepository();
+
+		ISectorRepository GetSectorRepository();
+
+        IProfessionRepository GetProfessionRepository();
+
 
         ICountryRepository GetCountryRepository();
 

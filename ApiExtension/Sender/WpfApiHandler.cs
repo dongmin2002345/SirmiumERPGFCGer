@@ -13,6 +13,8 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Individuals;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.Common.Professions;
 
 namespace ApiExtension.Sender
 {
@@ -47,48 +49,67 @@ namespace ApiExtension.Sender
             #region Common
 
                 #region Companies
-            { typeof(CompanyViewModel), "Company" },
-            { typeof(List<CompanyViewModel>), "Company" },
+                { typeof(CompanyViewModel), "Company" },
+                { typeof(List<CompanyViewModel>), "Company" },
                 #endregion
             
                 #region Identity
-            { typeof(UserViewModel), "User" },
-            { typeof(List<UserViewModel>), "User" },
+                { typeof(UserViewModel), "User" },
+                { typeof(List<UserViewModel>), "User" },
 
-            { typeof(AuthenticationViewModel), "Authentication" },
-            { typeof(List<AuthenticationViewModel>), "Authentication" },
+                { typeof(AuthenticationViewModel), "Authentication" },
+                { typeof(List<AuthenticationViewModel>), "Authentication" },
                 #endregion
 
-            #region BusinessPartners
+                #region BusinessPartners
 
-            { typeof(BusinessPartnerViewModel), "BusinessPartner" },
-            { typeof(List<BusinessPartnerViewModel>), "BusinessPartner" },
+                { typeof(BusinessPartnerViewModel), "BusinessPartner" },
+                { typeof(List<BusinessPartnerViewModel>), "BusinessPartner" },
+
+                #endregion
+
+                #region Individuals
+
+                { typeof(IndividualViewModel), "Individual" },
+                { typeof(List<IndividualViewModel>), "Individual" },
+
+                #endregion
+
+                #region OutputInvoices
+
+                { typeof(OutputInvoiceViewModel), "OutputInvoice" },
+                { typeof(List<OutputInvoiceViewModel>), "OutputInvoice" },
+
+                #endregion
+
+                #region Locations
+
+                { typeof(CityViewModel), "City" },
+                { typeof(List<CityViewModel>), "City" },
+
+                { typeof(RegionViewModel), "Region" },
+                { typeof(List<RegionViewModel>), "Region" },
+
+                { typeof(MunicipalityViewModel), "Municipality" },
+                { typeof(List<MunicipalityViewModel>), "Municipality" },
+
+                #endregion
+
+			#region Sectors
+
+            { typeof(SectorViewModel), "Sector" },
+			{ typeof(List<SectorViewModel>), "Sector" },
 
             #endregion
 
-             #region Individuals
+             #region Professions
 
-            { typeof(IndividualViewModel), "Individual" },
-            { typeof(List<IndividualViewModel>), "Individual" },
-
-            #endregion
-
-            #region OutputInvoices
-
-            { typeof(OutputInvoiceViewModel), "OutputInvoice" },
-            { typeof(List<OutputInvoiceViewModel>), "OutputInvoice" },
-
-            #endregion
-
-            #region Cities
-
-            { typeof(CityViewModel), "City" },
-            { typeof(List<CityViewModel>), "City" },
+            { typeof(ProfessionViewModel), "Profession" },
+            { typeof(List<ProfessionViewModel>), "Profession" },
 
             #endregion
 
             #endregion
-
 
         };
 

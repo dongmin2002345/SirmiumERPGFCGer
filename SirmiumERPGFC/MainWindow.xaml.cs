@@ -27,6 +27,8 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using SirmiumERPGFC.Views.Sectors;
+using SirmiumERPGFC.Views.Profession;
 
 namespace SirmiumERPGFC
 {
@@ -213,7 +215,7 @@ namespace SirmiumERPGFC
 
                 //    notifier.ShowError(value);
 
-                    _ErrorMessage = value;
+                _ErrorMessage = value;
                 //}));
             }
         }
@@ -364,6 +366,28 @@ namespace SirmiumERPGFC
         private void mniCountries_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new CountryList();
+        }
+
+        private void mniRegions_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new RegionList();
+        }
+    
+
+		private void mniSector_Click(object sender, RoutedEventArgs e)
+		{
+			cntCtrl.Content = new Sector_List();
+		}
+
+        private void mniMunicipalities_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new MunicipalityList();
+        }
+        
+        private void mniProfessions_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ProfessionList();
+            //OpenTab("Poslovni partneri", new ProfessionList());
         }
     }
 }
