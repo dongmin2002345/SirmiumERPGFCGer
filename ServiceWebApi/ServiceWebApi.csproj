@@ -46,7 +46,9 @@
     <Compile Include="Implementations\Common\Identity\AuthenticationService.cs" />
     <Compile Include="Implementations\Common\Identity\UserService.cs" />
     <Compile Include="Implementations\Common\Individuals\IndividualService.cs" />
+    <Compile Include="Implementations\Common\Locations\RegionService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceService.cs" />
+    <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,8 +67,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementations\Common\Cities\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

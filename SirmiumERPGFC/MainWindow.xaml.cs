@@ -27,6 +27,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using SirmiumERPGFC.Views.Sectors;
 using SirmiumERPGFC.Views.Profession;
 
 namespace SirmiumERPGFC
@@ -366,6 +367,18 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new CountryList();
         }
+
+        private void mniRegions_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new RegionList();
+        }
+    
+
+		private void mniSector_Click(object sender, RoutedEventArgs e)
+		{
+			cntCtrl.Content = new Sector_List();
+		}
+	}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

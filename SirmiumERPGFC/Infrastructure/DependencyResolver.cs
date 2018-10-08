@@ -11,6 +11,8 @@ using ServiceWebApi.Implementations.Common.Companies;
 using ServiceWebApi.Implementations.Common.Identity;
 using ServiceWebApi.Implementations.Common.Individuals;
 using ServiceWebApi.Implementations.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Sectors;
+using ServiceWebApi.Implementations.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceWebApi.Implementations.Common.Professions;
 
@@ -41,6 +43,14 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IOutputInvoiceService>().To<OutputInvoiceService>();
 
                 Kernel.Bind<ICityService>().To<CityService>();
+                Kernel.Bind<IRegionService>().To<RegionService>();
+            
+        
+
+				Kernel.Bind<ISectorService>().To<SectorService>();
+
+			}
+		}
 
                 Kernel.Bind<IProfessionService>().To<ProfessionService>();
 

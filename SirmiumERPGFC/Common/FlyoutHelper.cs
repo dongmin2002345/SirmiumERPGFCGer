@@ -46,6 +46,24 @@ namespace SirmiumERPGFC.Common
             flyout.IsOpen = true;
         }
 
+
+        public static void OpenFlyoutPopup(this DependencyObject depObject, string header, double width, object content)
+        {
+            var mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault() as Window;
+            if (mainWindow == null)
+            {
+                mainWindow = System.Windows.Window.GetWindow(depObject);
+
+            }
+            object obj = mainWindow.FindName("popupFlyout");
+            Flyout flyout = (Flyout)obj;
+            flyout.Header = header;
+            var widthNew = (mainWindow.ActualWidth * (width / 100));
+            flyout.Width = widthNew;
+            flyout.Content = content;
+            flyout.IsOpen = true;
+        }
+
         public static void CloseFlyoutForList(this DependencyObject depObject)
         {
 
@@ -70,6 +88,19 @@ namespace SirmiumERPGFC.Common
             flyout.Content = content;
             flyout.IsOpen = true;
         }
+
+        public static void CloseFlyoutPopup(this DependencyObject depObject)
+        {
+            var mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault() as Window;
+            if (mainWindow == null)
+            {
+                mainWindow = System.Windows.Window.GetWindow(depObject);
+            }
+            object obj = mainWindow.FindName("popupFlyout");
+            Flyout flyout = (Flyout)obj;
+            flyout.IsOpen = false;
+        }
+
     }
 }
 

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SirmiumERPGFC.Repository.Sectors;
 using SirmiumERPGFC.Repository.Professions;
 
 namespace SirmiumERPGFC.Repository.Common
@@ -84,8 +85,24 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerSQLiteRepository.BusinessPartnerTableCreatePart, db);
                     createTable.ExecuteReader();
-                    #endregion
+					#endregion
 
+					#region Sectors
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE Sectors", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+
+				}
+			}
                     #region Profession
                     if (withTableDrop)
                     {

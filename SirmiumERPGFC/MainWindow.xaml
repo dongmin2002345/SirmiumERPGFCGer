@@ -68,6 +68,13 @@
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Sektori">
+                    <Fluent:Button Click="mniSector_Click" Header="Sektori" KeyTip="FIR" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">
@@ -77,6 +84,13 @@
             <Fluent:RibbonTabItem Header="Kartoteka" KeyTip="KAR">
                 <Fluent:RibbonGroupBox Header="Države">
                     <Fluent:Button x:Name="mniCountries" Click="mniCountries_Click" Header="Države" KeyTip="DRZ" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Regioni">
+                    <Fluent:Button x:Name="mniRegions" Click="mniRegions_Click" Header="Regioni" KeyTip="REG" >
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>

@@ -166,10 +166,15 @@
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
     <Compile Include="Repository\Common\SQLiteInitializer.cs" />
     <Compile Include="Repository\Companies\CompanySQLiteRepository.cs" />
+    <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
+    <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="ViewComponents\Popups\CompanyPopup.xaml.cs">
       <DependentUpon>CompanyPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
+      <DependentUpon>RegionPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml.cs">
       <DependentUpon>BusinessPartnerAddEdit.xaml</DependentUpon>
@@ -202,11 +207,23 @@
     <Compile Include="Views\Locations\CountryList.xaml.cs">
       <DependentUpon>CountryList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Locations\RegionAddEdit.xaml.cs">
+      <DependentUpon>RegionAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Locations\RegionList.xaml.cs">
+      <DependentUpon>RegionList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OutputInvoices\OutputInvoiceAddEdit.xaml.cs">
       <DependentUpon>OutputInvoiceAddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OutputInvoices\OutputInvoiceList.xaml.cs">
       <DependentUpon>OutputInvoiceList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sectors\Sector_AddEdit.xaml.cs">
+      <DependentUpon>Sector_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sectors\Sector_List.xaml.cs">
+      <DependentUpon>Sector_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Profession\ProfessionAddEdit.xaml.cs">
       <DependentUpon>ProfessionAddEdit.xaml</DependentUpon>
@@ -276,6 +293,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ViewComponents\Popups\RegionPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -316,11 +337,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Locations\RegionAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Locations\RegionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\OutputInvoices\OutputInvoiceAddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OutputInvoices\OutputInvoiceList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sectors\Sector_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sectors\Sector_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

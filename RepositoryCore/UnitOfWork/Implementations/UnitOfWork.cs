@@ -17,6 +17,8 @@ using RepositoryCore.UnitOfWork.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Implementations.Common.Sectors;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
 
@@ -40,15 +42,21 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IOutputInvoiceRepository outputInvoiceRepository;
 
         private ICityRepository cityRepository;
+        private IRegionRepository regionRepository;
+        private IMunicipalityRepository municipalityRepository;
 
+		private ISectorRepository sectorRepository;
+
+
+		#endregion
         private IProfessionRepository professionRepository;
 
 
         #endregion
 
-        #region Constructor
+		#region Constructor
 
-        public UnitOfWork(bool useSql2005Compatibility = false)
+		public UnitOfWork(bool useSql2005Compatibility = false)
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             if (useSql2005Compatibility)
@@ -120,17 +128,35 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return cityRepository;
         }
 
-        public IProfessionRepository GetProfessionRepository()
+        public IRegionRepository GetRegionRepository()
         {
-            if (professionRepository == null)
-                professionRepository = new ProfessionRepository(context);
-            return professionRepository;
+            if (regionRepository == null)
+                regionRepository = new RegionRepository(context);
+            return regionRepository;
         }
-        #endregion
 
-        #region Save method
+        public IMunicipalityRepository GetMunicipalityRepository()
+        {
+            if (municipalityRepository == null)
+                municipalityRepository = new MunicipalityRepository(context);
+            return municipalityRepository;
+        }
 
-        public void Save()
+		#endregion
+
+		#region Sectors
+		public ISectorRepository GetSectorRepository()
+		{
+			if (sectorRepository == null)
+				sectorRepository = new SectorRepository(context);
+			return sectorRepository;
+		}
+
+		#endregion
+
+		#region Save method
+
+		public void Save()
         {
             context.SaveChanges();
         }
