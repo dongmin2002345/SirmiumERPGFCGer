@@ -50,6 +50,7 @@
     <Compile Include="Abstractions\Common\Identity\IAuthenticationService.cs" />
     <Compile Include="Abstractions\Common\Identity\IUserService.cs" />
     <Compile Include="Abstractions\Common\Individuals\IIndividualService.cs" />
+    <Compile Include="Abstractions\Common\Locations\IMunicipalityService.cs" />
     <Compile Include="Abstractions\Common\Locations\IRegionService.cs" />
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceService.cs" />
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
@@ -61,6 +62,8 @@
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerRequest.cs" />
     <Compile Include="Messages\Common\Locations\CityListResponse.cs" />
     <Compile Include="Messages\Common\Locations\CityResponse.cs" />
+    <Compile Include="Messages\Common\Locations\MunicipalityListResponse.cs" />
+    <Compile Include="Messages\Common\Locations\MunicipalityResponse.cs" />
     <Compile Include="Messages\Common\Locations\RegionListResponse.cs" />
     <Compile Include="Messages\Common\Locations\RegionResponse.cs" />
     <Compile Include="Messages\Common\Locations\SyncCityRequest.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="Messages\Common\Individuals\IndividualCodeResponse.cs" />
     <Compile Include="Messages\Common\Individuals\IndividualListResponse.cs" />
     <Compile Include="Messages\Common\Individuals\IndividualResponse.cs" />
+    <Compile Include="Messages\Common\Locations\SyncMunicipalityRequest.cs" />
     <Compile Include="Messages\Common\Locations\SyncRegionRequest.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceResponse.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="ViewModels\Common\Identity\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\Common\Identity\UserViewModel.cs" />
     <Compile Include="ViewModels\Common\Individuals\IndividualViewModel.cs" />
+    <Compile Include="ViewModels\Common\Locations\MunicipalityViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\RegionViewModel.cs" />
     <Compile Include="ViewModels\Common\OutputInvoices\OutputInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
@@ -97,8 +102,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Messages\Common\Cities\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

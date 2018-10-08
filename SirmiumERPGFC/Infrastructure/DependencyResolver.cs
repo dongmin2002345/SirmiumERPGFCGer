@@ -44,8 +44,7 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<ICityService>().To<CityService>();
                 Kernel.Bind<IRegionService>().To<RegionService>();
-            
-        
+                Kernel.Bind<IMunicipalityService>().To<MunicipalityService>();
 
 				Kernel.Bind<ISectorService>().To<SectorService>();
 

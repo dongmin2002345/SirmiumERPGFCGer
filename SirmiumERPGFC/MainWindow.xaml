@@ -103,6 +103,13 @@
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Opstine">
+                    <Fluent:Button Click="mniMunicipalities_Click" Header="Opstine" KeyTip="OPS" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             
             <Fluent:RibbonTabItem Header="Administracija" x:Name="mniAdministration" KeyTip="ADM">

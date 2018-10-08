@@ -26,30 +26,35 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Locations
 {
-    public partial class RegionAddEdit : UserControl, INotifyPropertyChanged
+    /// <summary>
+    /// Interaction logic for MunicipalityAddEdit.xaml
+    /// </summary>
+    public partial class MunicipalityAddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes
 
         #region Services
-        IRegionService regionService;
+        IMunicipalityService MunicipalityService;
         #endregion
+
 
         #region Events
-        public event RegionHandler RegionCreatedUpdated;
+        public event MunicipalityHandler MunicipalityCreatedUpdated;
         #endregion
 
-        #region CurrentRegion
-        private RegionViewModel _CurrentRegion;
 
-        public RegionViewModel CurrentRegion
+        #region CurrentMunicipality
+        private MunicipalityViewModel _CurrentMunicipality;
+
+        public MunicipalityViewModel CurrentMunicipality
         {
-            get { return _CurrentRegion; }
+            get { return _CurrentMunicipality; }
             set
             {
-                if (_CurrentRegion != value)
+                if (_CurrentMunicipality != value)
                 {
-                    _CurrentRegion = value;
-                    NotifyPropertyChanged("CurrentRegion");
+                    _CurrentMunicipality = value;
+                    NotifyPropertyChanged("CurrentMunicipality");
                 }
             }
         }
@@ -129,16 +134,16 @@ namespace SirmiumERPGFC.Views.Locations
 
         #region Constructor
 
-        public RegionAddEdit(RegionViewModel regionViewModel, bool isCreateProcess, bool isPopup = false)
+        public MunicipalityAddEdit(MunicipalityViewModel MunicipalityViewModel, bool isCreateProcess, bool isPopup = false)
         {
             // Initialize service
-            this.regionService = DependencyResolver.Kernel.Get<IRegionService>();
+            MunicipalityService = DependencyResolver.Kernel.Get<IMunicipalityService>();
 
             InitializeComponent();
 
             this.DataContext = this;
 
-            CurrentRegion = regionViewModel;
+            CurrentMunicipality = MunicipalityViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
         }
@@ -151,9 +156,9 @@ namespace SirmiumERPGFC.Views.Locations
         {
             #region Validation
 
-            if (String.IsNullOrEmpty(CurrentRegion.Name))
+            if (String.IsNullOrEmpty(CurrentMunicipality.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv regiona";
+                MainWindow.WarningMessage = "Obavezno polje: Naziv opštine";
                 return;
             }
 
@@ -164,14 +169,14 @@ namespace SirmiumERPGFC.Views.Locations
                 SaveButtonContent = " Čuvanje u toku... ";
                 SaveButtonEnabled = false;
 
-                CurrentRegion.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                CurrentRegion.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                CurrentMunicipality.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentMunicipality.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentRegion.IsSynced = false;
-                CurrentRegion.UpdatedAt = DateTime.Now;
+                CurrentMunicipality.IsSynced = false;
+                CurrentMunicipality.UpdatedAt = DateTime.Now;
 
-                RegionResponse response = new RegionSQLiteRepository().Delete(CurrentRegion.Identifier);
-                response = new RegionSQLiteRepository().Create(CurrentRegion);
+                MunicipalityResponse response = new MunicipalitySQLiteRepository().Delete(CurrentMunicipality.Identifier);
+                response = new MunicipalitySQLiteRepository().Create(CurrentMunicipality);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
@@ -180,7 +185,7 @@ namespace SirmiumERPGFC.Views.Locations
                     return;
                 }
 
-                response = regionService.Create(CurrentRegion);
+                response = MunicipalityService.Create(CurrentMunicipality);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
@@ -190,23 +195,23 @@ namespace SirmiumERPGFC.Views.Locations
 
                 if (response.Success)
                 {
-                    new RegionSQLiteRepository().UpdateSyncStatus(CurrentRegion.Identifier, response.Region.Id, true);
+                    new MunicipalitySQLiteRepository().UpdateSyncStatus(response.Municipality.Identifier, response.Municipality.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " Sačuvaj ";
                     SaveButtonEnabled = true;
 
-                    RegionCreatedUpdated();
+                    MunicipalityCreatedUpdated();
 
                     if (IsCreateProcess)
                     {
-                        CurrentRegion = new RegionViewModel();
-                        CurrentRegion.Identifier = Guid.NewGuid();
+                        CurrentMunicipality = new MunicipalityViewModel();
+                        CurrentMunicipality.Identifier = Guid.NewGuid();
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtRegionCode.Focus();
+                                txtName.Focus();
                             })
                         );
                     }
@@ -227,7 +232,6 @@ namespace SirmiumERPGFC.Views.Locations
             });
             th.IsBackground = true;
             th.Start();
-            txtName.Focus();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -250,6 +254,7 @@ namespace SirmiumERPGFC.Views.Locations
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         #endregion
     }
 }

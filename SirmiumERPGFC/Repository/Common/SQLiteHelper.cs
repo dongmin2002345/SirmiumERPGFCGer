@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -190,6 +191,42 @@ namespace SirmiumERPGFC.Repository.Common
                     CompanyName = query.GetString(counter++)
                 };
         }
+
+        public static RegionViewModel GetRegion(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 2;
+                return null;
+            }
+            else
+                return new RegionViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    RegionCode = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
+
+        public static MunicipalityViewModel GetMunicipality(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 2;
+                return null;
+            }
+            else
+                return new MunicipalityViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    MunicipalityCode = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
 
     }
 }

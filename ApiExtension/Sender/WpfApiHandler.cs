@@ -49,49 +49,51 @@ namespace ApiExtension.Sender
             #region Common
 
                 #region Companies
-            { typeof(CompanyViewModel), "Company" },
-            { typeof(List<CompanyViewModel>), "Company" },
+                { typeof(CompanyViewModel), "Company" },
+                { typeof(List<CompanyViewModel>), "Company" },
                 #endregion
             
                 #region Identity
-            { typeof(UserViewModel), "User" },
-            { typeof(List<UserViewModel>), "User" },
+                { typeof(UserViewModel), "User" },
+                { typeof(List<UserViewModel>), "User" },
 
-            { typeof(AuthenticationViewModel), "Authentication" },
-            { typeof(List<AuthenticationViewModel>), "Authentication" },
+                { typeof(AuthenticationViewModel), "Authentication" },
+                { typeof(List<AuthenticationViewModel>), "Authentication" },
                 #endregion
 
-            #region BusinessPartners
+                #region BusinessPartners
 
-            { typeof(BusinessPartnerViewModel), "BusinessPartner" },
-            { typeof(List<BusinessPartnerViewModel>), "BusinessPartner" },
+                { typeof(BusinessPartnerViewModel), "BusinessPartner" },
+                { typeof(List<BusinessPartnerViewModel>), "BusinessPartner" },
 
-            #endregion
+                #endregion
 
-             #region Individuals
+                #region Individuals
 
-            { typeof(IndividualViewModel), "Individual" },
-            { typeof(List<IndividualViewModel>), "Individual" },
+                { typeof(IndividualViewModel), "Individual" },
+                { typeof(List<IndividualViewModel>), "Individual" },
 
-            #endregion
+                #endregion
 
-            #region OutputInvoices
+                #region OutputInvoices
 
-            { typeof(OutputInvoiceViewModel), "OutputInvoice" },
-            { typeof(List<OutputInvoiceViewModel>), "OutputInvoice" },
+                { typeof(OutputInvoiceViewModel), "OutputInvoice" },
+                { typeof(List<OutputInvoiceViewModel>), "OutputInvoice" },
 
-            #endregion
+                #endregion
 
-            #region Locations
+                #region Locations
 
-            { typeof(CityViewModel), "City" },
-            { typeof(List<CityViewModel>), "City" },
+                { typeof(CityViewModel), "City" },
+                { typeof(List<CityViewModel>), "City" },
 
-            { typeof(RegionViewModel), "Region" },
-            { typeof(List<RegionViewModel>), "Region" },
+                { typeof(RegionViewModel), "Region" },
+                { typeof(List<RegionViewModel>), "Region" },
 
+                { typeof(MunicipalityViewModel), "Municipality" },
+                { typeof(List<MunicipalityViewModel>), "Municipality" },
 
-            #endregion
+                #endregion
 
 			#region Sectors
 
@@ -108,7 +110,6 @@ namespace ApiExtension.Sender
             #endregion
 
             #endregion
-
 
         };
 
