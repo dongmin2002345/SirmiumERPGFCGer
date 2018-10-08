@@ -13,6 +13,7 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Individuals;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Sectors;
 
 namespace ApiExtension.Sender
 {
@@ -84,6 +85,13 @@ namespace ApiExtension.Sender
 
             { typeof(CityViewModel), "City" },
             { typeof(List<CityViewModel>), "City" },
+
+            #endregion
+
+			#region Sectors
+
+            { typeof(SectorViewModel), "Sector" },
+			{ typeof(List<SectorViewModel>), "Sector" },
 
             #endregion
 

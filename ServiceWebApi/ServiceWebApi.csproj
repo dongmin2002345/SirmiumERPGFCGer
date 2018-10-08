@@ -47,6 +47,7 @@
     <Compile Include="Implementations\Common\Identity\UserService.cs" />
     <Compile Include="Implementations\Common\Individuals\IndividualService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceService.cs" />
+    <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

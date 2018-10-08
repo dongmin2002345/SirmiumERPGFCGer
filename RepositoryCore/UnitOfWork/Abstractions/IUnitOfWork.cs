@@ -7,6 +7,7 @@ using RepositoryCore.Abstractions.Common.Invoices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryCore.Abstractions.Common.Sectors;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
 {
@@ -25,6 +26,9 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         ICityRepository GetCityRepository();
 
-        void Save();
+		ISectorRepository GetSectorRepository();
+
+
+		void Save();
     }
 }
