@@ -26,9 +26,6 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Profession
 {
-    /// <summary>
-    /// Interaction logic for ProfessionAddEdit.xaml
-    /// </summary>
     public partial class ProfessionAddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes

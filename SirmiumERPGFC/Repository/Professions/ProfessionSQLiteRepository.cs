@@ -83,7 +83,7 @@ namespace SirmiumERPGFC.Repository.Professions
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        //dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -160,7 +160,7 @@ namespace SirmiumERPGFC.Repository.Professions
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        //dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -210,7 +210,7 @@ namespace SirmiumERPGFC.Repository.Professions
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        //dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -305,10 +305,10 @@ namespace SirmiumERPGFC.Repository.Professions
                 insertCommand.Parameters.AddWithValue("@Code", ((object)profession.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ZipCode", ((object)profession.SecondCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", ((object)profession.Name) ?? DBNull.Value);
-                //insertCommand.Parameters.AddWithValue("@CountryId", ((object)profession.Country?.Id) ?? DBNull.Value);
-                //insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)profession.Country?.Identifier) ?? DBNull.Value);
-                //insertCommand.Parameters.AddWithValue("@CountryCode", ((object)profession.Country?.Code) ?? DBNull.Value);
-                //insertCommand.Parameters.AddWithValue("@CountryName", ((object)profession.Country?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryId", ((object)profession.Country?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)profession.Country?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)profession.Country?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryName", ((object)profession.Country?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", profession.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", profession.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

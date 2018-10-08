@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,22 +62,22 @@ namespace ServiceInterfaces.ViewModels.Common.Professions
         }
         #endregion
 
-        //#region Country
-        //private CountryViewModel _Country;
+        #region Country
+        private CountryViewModel _Country;
 
-        //public CountryViewModel Country
-        //{
-        //    get { return _Country; }
-        //    set
-        //    {
-        //        if (_Country != value)
-        //        {
-        //            _Country = value;
-        //            NotifyPropertyChanged("Country");
-        //        }
-        //    }
-        //}
-        //#endregion
+        public CountryViewModel Country
+        {
+            get { return _Country; }
+            set
+            {
+                if (_Country != value)
+                {
+                    _Country = value;
+                    NotifyPropertyChanged("Country");
+                }
+            }
+        }
+        #endregion
 
 
         #region IsSynced
@@ -95,6 +96,7 @@ namespace ServiceInterfaces.ViewModels.Common.Professions
             }
         }
         #endregion
+
 
         #region Search_SecondCode
         private string _Search_SecondCode;
@@ -130,7 +132,6 @@ namespace ServiceInterfaces.ViewModels.Common.Professions
         }
         #endregion
 
-
         #region Search_Country
         private string _Search_Country;
 
@@ -147,18 +148,5 @@ namespace ServiceInterfaces.ViewModels.Common.Professions
             }
         }
         #endregion
-
-        //#region INotifyPropertyChanged implementation
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-
-        //// This method is called by the Set accessor of each property.
-        //// The CallerMemberName attribute that is applied to the optional propertyName
-        //// parameter causes the property name of the caller to be substituted as an argument.
-        //private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
-        //#endregion
     }
 }

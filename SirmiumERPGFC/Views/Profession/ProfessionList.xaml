@@ -55,11 +55,11 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <!--<TextBlock Text="Država"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <TextBlock Text="Država"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
                 <TextBox x:Name="txtSearchByCountry" Grid.Column="1" Grid.Row="1" 
                          Text="{Binding Path=ProfessionSearchObject.Search_Country, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>-->
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
 
 
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="4">
@@ -139,9 +139,9 @@
                           SelectedItem="{Binding Path=CurrentProfession, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Šifra" Header="Postanski broj" Binding="{Binding SecondCode}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SecondCode" Header="Sifra" Binding="{Binding SecondCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Naziv zanimanja" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <!--<DataGridTextColumn SortMemberPath="Country.Name" Header="Region" Binding="{Binding Region.Name}" IsReadOnly="True" />-->
+                        <DataGridTextColumn SortMemberPath="Country.Name" Header="Drzava" Binding="{Binding Country.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

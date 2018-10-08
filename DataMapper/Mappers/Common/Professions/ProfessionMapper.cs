@@ -1,5 +1,6 @@
 ﻿using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
+using DataMapper.Mappers.Common.Locations;
 using DomainCore.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using System;
@@ -31,7 +32,7 @@ namespace DataMapper.Mappers.Common.Professions
                 SecondCode = profession.SecondCode,
                 Name = profession.Name,
 
-                //Country = profession.Country?.ConvertToCountryViewModelLite(),
+                Country = profession.Country?.ConvertToCountryViewModelLite(),
 
                 CreatedBy = profession.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = profession.Company?.ConvertToCompanyViewModelLite(),
@@ -82,7 +83,7 @@ namespace DataMapper.Mappers.Common.Professions
                 SecondCode = professionViewModel.SecondCode ?? "",
                 Name = professionViewModel.Name,
 
-                //CountryId = professionViewModel.Country?.Id ?? null,
+                CountryId = professionViewModel.Country?.Id ?? null,
 
                 CreatedById = professionViewModel.CreatedBy?.Id ?? null,
                 CompanyId = professionViewModel.Company?.Id ?? null,

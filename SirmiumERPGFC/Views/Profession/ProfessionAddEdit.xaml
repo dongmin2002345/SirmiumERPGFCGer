@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Profession"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Control.Background>
@@ -39,16 +40,15 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtCode"  Margin="2" Text="{Binding Path=CurrentProfession.Code}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="4" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
-                    <TextBox Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" x:Name="txtSecondCode"  Margin="2" Text="{Binding Path=CurrentProfession.SecondCode}" IsEnabled="True" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
+                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtSecondCode"  Margin="2" Text="{Binding Path=CurrentProfession.SecondCode}" IsEnabled="True" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv zanimanja *" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtName" Margin="2" Text="{Binding Path=CurrentProfession.Name}" />
 
-                    <!--<TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
-                    <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
-                                                CurrentCountry="{Binding Path=CurrentCity.Region, Mode=TwoWay}"/>-->
-
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
+                    <popups:CountryPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCountry" 
+                                                CurrentCountry="{Binding Path=CurrentProfession.Region, Mode=TwoWay}"/>
 
                 </Grid>
             </GroupBox>
@@ -76,7 +76,6 @@
                     </StackPanel>
                 </Button>
             </Grid>
-
         </Grid>
     </ScrollViewer>
 </UserControl>

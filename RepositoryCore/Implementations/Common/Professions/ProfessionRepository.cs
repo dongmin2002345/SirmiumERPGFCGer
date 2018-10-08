@@ -21,7 +21,7 @@ namespace RepositoryCore.Implementations.Common.Professions
         public List<Profession> GetProfessions(int companyId)
         {
             List<Profession> professions = context.Professions
-                //.Include(x => x.Country)
+                .Include(x => x.Country)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Active == true && x.CompanyId == companyId)
@@ -35,7 +35,7 @@ namespace RepositoryCore.Implementations.Common.Professions
         public List<Profession> GetProfessionsNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<Profession> professions = context.Professions
-                //.Include(x => x.Country)
+                .Include(x => x.Country)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Common.Professions
 
                 if (dbEntry != null)
                 {
-                    //dbEntry.CountryId = city.Country?.Id ?? null;
+                    dbEntry.CountryId = profession.Country?.Id ?? null;
                     dbEntry.CompanyId = profession.CompanyId ?? null;
                     dbEntry.CreatedById = profession.CreatedById ?? null;
 
