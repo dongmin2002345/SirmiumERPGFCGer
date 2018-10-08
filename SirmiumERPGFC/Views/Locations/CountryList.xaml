@@ -1,16 +1,16 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.Cities.CityList"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Locations.CountryList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Cities"
-             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Locations"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
+
     <UserControl.Background>
         <SolidColorBrush Color="White" />
     </UserControl.Background>
@@ -24,13 +24,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="2" />
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-
         <!--Citiss list-->
-        <GroupBox Header="GRAD" Margin="2,2,2,1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch">
+        <GroupBox Header="DRŽAVA" Margin="2,2,2,1" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -45,7 +42,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1">
-                        <Button x:Name="btnAddCity" Click="btnAddCity_Click" Margin="2" Width="150">
+                        <Button x:Name="btnAddCountry" Click="btnAddCountry_Click" Margin="2" Width="150">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                 <TextBlock Text=" Dodaj " />
@@ -55,12 +52,6 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                 <TextBlock Text=" Osveži " />
-                            </StackPanel>
-                        </Button>
-                        <Button Margin="2" x:Name="btnSync" Click="btnSync_Click" IsEnabled="{Binding Path=DepotButtonEnabled, Mode=TwoWay}" Width="250">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text="{Binding Path=DepotButtonContent, Mode=TwoWay}" Foreground="Black" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -92,8 +83,8 @@
                 </Grid>
 
                 <!--Listing-->
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding CityDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgCities"
+                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding CountryDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <DataGrid x:Name="dgCountries"
                           Grid.Row="1" Margin="0 5 0 0"
                           AutoGenerateColumns="False"
                           CanUserAddRows="False"
@@ -105,8 +96,8 @@
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
                           Style="{DynamicResource AzureDataGrid}"
-                          ItemsSource="{Binding Path=CitiesFromDB}"
-                          SelectedItem="{Binding Path=CurrentCity}">
+                          ItemsSource="{Binding Path=CountriesFromDB}"
+                          SelectedItem="{Binding Path=CurrentCountry}">
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" Width="Auto" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
@@ -127,13 +118,13 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnEditCity" Click="btnEditCity_Click" Margin="2 0 0 0" CommandParameter="{Binding}">
+                                        <Button x:Name="btnEditCountry" Click="btnEditCountry_Click" Margin="2 0 0 0" CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                             </StackPanel>
                                         </Button>
 
-                                        <Button x:Name="btnDeleteCity" Click="btnDeleteCity_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                        <Button x:Name="btnDeleteCountry" Click="btnDeleteCountry_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                             </StackPanel>

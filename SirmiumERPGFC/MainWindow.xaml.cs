@@ -3,7 +3,7 @@ using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Views.BusinessPartners;
-using SirmiumERPGFC.Views.Cities;
+using SirmiumERPGFC.Views.Locations;
 using SirmiumERPGFC.Views.Home;
 using SirmiumERPGFC.Views.Individuals;
 using SirmiumERPGFC.Views.OutputInvoices;
@@ -256,172 +256,115 @@ namespace SirmiumERPGFC
             // First page to display is Home page
             //cntCtrl.Content = new Home();
 
-            OpenTab("Početna", new Home());
+            //OpenTab("Početna", new Home());
         }
+
+        //private void OpenTab(string header, UserControl userControl)
+        //{
+        //    bool itemInList = false;
+        //    CloseableTabItem selectedTabItem = null;
+        //    foreach (CloseableTabItem item in contentTabControl.Items)
+        //    {
+        //        if (item.Uid == userControl.GetType().ToString())
+        //        {
+        //            itemInList = true;
+        //            selectedTabItem = item;
+        //        }
+        //    }
+
+        //    if (itemInList)
+        //    {
+        //        ((UIElement)selectedTabItem.Content).Visibility = Visibility.Visible; // show its contents
+        //        selectedTabItem.Visibility = Visibility.Visible; // show the tab itself
+        //        selectedTabItem.IsSelected = true; // select it
+        //    }
+        //    else
+        //    {
+        //        CloseableTabItem tabItem = new CloseableTabItem();
+        //        tabItem.Header = header;
+        //        tabItem.Uid = userControl.GetType().ToString();
+        //        tabItem.Content = userControl;
+        //        contentTabControl.Items.Insert(contentTabControl.Items.Count, tabItem);
+
+        //        ((UIElement)tabItem.Content).Visibility = Visibility.Visible; // show its contents
+        //        tabItem.Visibility = Visibility.Visible; // show the tab itself
+        //        tabItem.IsSelected = true; // select it
+        //    }
+        //}
+
+        //private void TabClosed(object source, RoutedEventArgs args)
+        //{
+        //    CloseableTabItem tabItem = (CloseableTabItem)args.Source; // get chosen tab
+        //    ((UIElement)tabItem.Content).Visibility = Visibility.Collapsed; // collapse tab contents
+        //    tabItem.Visibility = Visibility.Collapsed; // collapse tab
+        //    tabItem.CIsVisible = false; // WPF bug workaround: set the binded property to false, as to change the IsChecked status
+
+        //    if (contentTabControl.SelectedItem == tabItem)
+        //    { // if no visible tab is selected
+        //      // first, try to find a visible tab after the just-collapsed-tab
+        //        for (int newIndex = contentTabControl.Items.IndexOf(tabItem) + 1;
+        //                newIndex < contentTabControl.Items.Count; newIndex++)
+        //        {
+        //            TabItem newSelectedItem = (TabItem)contentTabControl.Items.GetItemAt(newIndex);
+        //            if (newSelectedItem.Visibility == Visibility.Visible)
+        //            {
+        //                newSelectedItem.IsSelected = true;
+        //                return; // a visible tab has been selected
+        //            }
+        //        }
+        //        // second, try to find a visible tab before it
+        //        for (int newIndex = contentTabControl.Items.IndexOf(tabItem) - 1;
+        //                newIndex >= 0; newIndex--)
+        //        {
+        //            TabItem newSelectedItem = (TabItem)contentTabControl.Items.GetItemAt(newIndex);
+        //            if (newSelectedItem.Visibility == Visibility.Visible)
+        //            {
+        //                newSelectedItem.IsSelected = true;
+        //                return; // a visible tab has been selected
+        //            }
+        //        }
+        //    }
+
+        //    contentTabControl.Items.Remove(tabItem);
+        //    tabItem.Content = null;
+        //    tabItem = null;
+
+        //}
 
         private void mniBusinessPartners_Click(object sender, RoutedEventArgs e)
         {
-            //cntCtrl.Content = new BusinessPartnerList();
-            OpenTab("Poslovni partneri", new BusinessPartnerList());
+            cntCtrl.Content = new BusinessPartnerList();
+            //OpenTab("Poslovni partneri", new BusinessPartnerList());
         }
 
         private void mniIndividuals_Click(object sender, RoutedEventArgs e)
         {
-            //cntCtrl.Content = new BusinessPartnerList();
-            OpenTab("Radnici", new IndividualList());
+            cntCtrl.Content = new IndividualList();
+            //OpenTab("Radnici", new IndividualList());
         }
 
         private void mniOutputInvoices_Click(object sender, RoutedEventArgs e)
         {
-            //cntCtrl.Content = new BusinessPartnerList();
-            OpenTab("Izlazni računi", new OutputInvoiceList());
+            cntCtrl.Content = new OutputInvoiceList();
+            //OpenTab("Izlazni računi", new OutputInvoiceList());
         }
 
         private void mniCities_Click(object sender, RoutedEventArgs e)
         {
-            //cntCtrl.Content = new BusinessPartnerList();
-            OpenTab("Gradovi", new CityList());
+            cntCtrl.Content = new CityList();
+            //OpenTab("Gradovi", new CityList());
         }
-
-        private void TabOpened(object source, RoutedEventArgs args)
-        {
-            TabItem theTab = args.Source as TabItem; // get the chosen tab
-            ((UIElement)theTab.Content).Visibility = Visibility.Visible; // show its contents
-            theTab.Visibility = Visibility.Visible; // show the tab itself
-            theTab.IsSelected = true; // select it
-        }
-
-        private void OpenTab(string header, UserControl userControl)
-        {
-            bool itemInList = false;
-            CloseableTabItem selectedTabItem = null;
-            foreach (CloseableTabItem item in contentTabControl.Items)
-            {
-                if (item.Uid == userControl.GetType().ToString())
-                {
-                    itemInList = true;
-                    selectedTabItem = item;
-                }
-            }
-
-            if (itemInList)
-            {
-                ((UIElement)selectedTabItem.Content).Visibility = Visibility.Visible; // show its contents
-                selectedTabItem.Visibility = Visibility.Visible; // show the tab itself
-                selectedTabItem.IsSelected = true; // select it
-            }
-            else
-            {
-                CloseableTabItem tabItem = new CloseableTabItem();
-                tabItem.Header = header;
-                tabItem.Uid = userControl.GetType().ToString();
-                tabItem.Content = userControl;
-                contentTabControl.Items.Insert(contentTabControl.Items.Count, tabItem);
-
-                ((UIElement)tabItem.Content).Visibility = Visibility.Visible; // show its contents
-                tabItem.Visibility = Visibility.Visible; // show the tab itself
-                tabItem.IsSelected = true; // select it
-            }
-        }
-
-        private void TabClosed(object source, RoutedEventArgs args)
-        {
-            CloseableTabItem tabItem = (CloseableTabItem)args.Source; // get chosen tab
-            //((UIElement)tabItem.Content).Visibility = Visibility.Collapsed; // collapse tab contents
-            tabItem.Visibility = Visibility.Collapsed; // collapse tab
-            tabItem.CIsVisible = false; // WPF bug workaround: set the binded property to false, as to change the IsChecked status
-
-            if (contentTabControl.SelectedItem == tabItem)
-            { // if no visible tab is selected
-              // first, try to find a visible tab after the just-collapsed-tab
-                for (int newIndex = contentTabControl.Items.IndexOf(tabItem) + 1;
-                        newIndex < contentTabControl.Items.Count; newIndex++)
-                {
-                    TabItem newSelectedItem = (TabItem)contentTabControl.Items.GetItemAt(newIndex);
-                    if (newSelectedItem.Visibility == Visibility.Visible)
-                    {
-                        newSelectedItem.IsSelected = true;
-                        return; // a visible tab has been selected
-                    }
-                }
-                // second, try to find a visible tab before it
-                for (int newIndex = contentTabControl.Items.IndexOf(tabItem) - 1;
-                        newIndex >= 0; newIndex--)
-                {
-                    TabItem newSelectedItem = (TabItem)contentTabControl.Items.GetItemAt(newIndex);
-                    if (newSelectedItem.Visibility == Visibility.Visible)
-                    {
-                        newSelectedItem.IsSelected = true;
-                        return; // a visible tab has been selected
-                    }
-                }
-            }
-
-            contentTabControl.Items.Remove(tabItem);
-
-        }
-
-
-
-        #region Administracija
-
-
-        //private void mniCommercialist_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new CommercialistList();
-        //}
-
-        //private void BusinessPartnerCards_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new BusinessPartnerCardList();
-        //}
-
-        //private void mniCountries_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new CountryList();
-        //}
-
-        //private void mniCities_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new CityList();
-        //}
-
-        //private void mniPastQuarteringList_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new PastQuarteringList();
-        //}
-
-        //private void mniPastRefinementList_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new PastRefinementList();
-        //}
-
-        //private void mniCowRefinementGroupList_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new CowRefinementGroupList();
-        //}
-
-        //private void mniCowRefinementLateEnterList_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new CowQuarteringEnter_Measurements();
-        //}
-
-        //private void mniLambRefinementLateEnterList_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new LambRefinementEnterList();
-        //}
-
-        //private void RefinementSpecification_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cntCtrl.Content = new RefinementSpecification_SingleMeasurement();
-        //}
-        #endregion
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
-            OpenTab("Početna", new Home());
+            cntCtrl.Content = new Home();
+            //OpenTab("Početna", new Home());
         }
 
+        private void mniCountries_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new CountryList();
+        }
     }
 }
 

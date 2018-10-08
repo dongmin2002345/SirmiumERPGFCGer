@@ -27,9 +27,9 @@ namespace RepositoryCore.Implementations.Common.Identity
                 //.Include(o => o.CompanyUsers)
                 //.ThenInclude(o2 => o2.Company)
 
-                .Include("CompanyUsers")
-                .Include("CompanyUsers.Company")
-                .Include("CompanyUsers.User")
+                //.Include("CompanyUsers")
+                //.Include("CompanyUsers.Company")
+                //.Include("CompanyUsers.User")
 
                 .FirstOrDefault(x =>
                     x.Username == username &&

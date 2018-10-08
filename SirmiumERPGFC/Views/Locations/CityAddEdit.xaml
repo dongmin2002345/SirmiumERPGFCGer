@@ -1,15 +1,20 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.Cities.CityAddEdit"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Locations.CityAddEdit"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Cities"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Locations"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              BorderBrush="{DynamicResource AccentColorBrush}"
              BorderThickness="2">
     
+    <UserControl.Background>
+        <SolidColorBrush Color="White" />
+    </UserControl.Background>
+
+
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>

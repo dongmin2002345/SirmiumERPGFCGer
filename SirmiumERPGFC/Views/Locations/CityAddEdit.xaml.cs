@@ -23,7 +23,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.Cities
+namespace SirmiumERPGFC.Views.Locations
 {
     /// <summary>
     /// Interaction logic for CityAddEdit.xaml

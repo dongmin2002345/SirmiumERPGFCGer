@@ -24,13 +24,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.Cities
+namespace SirmiumERPGFC.Views.Locations
 {
     public delegate void CityHandler();
 
-    /// <summary>
-    /// Interaction logic for CityList.xaml
-    /// </summary>
     public partial class CityList : UserControl, INotifyPropertyChanged
     {
         #region Attributes 
@@ -299,49 +296,6 @@ namespace SirmiumERPGFC.Views.Cities
             }
 
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        }
-
-        #endregion
-
-        #region Sync data
-
-        private void btnSync_Click(object sender, RoutedEventArgs e)
-        {
-            Thread th = new Thread(() =>
-            {
-                CityButtonContent = " Sinhronizacija u toku... ";
-                CityButtonEnabled = false;
-
-                CitySQLiteRepository sqlLite = new CitySQLiteRepository();
-
-                SyncCityRequest request = new SyncCityRequest();
-                request.UnSyncedCities = sqlLite.GetUnSyncedCities().Cities;
-                request.LastUpdatedAt = sqlLite.GetLastUpdatedAt();
-
-                CityListResponse response = cityService.Sync(request);
-                if (response.Success)
-                {
-                    List<CityViewModel> CitiesFromDB = response.Cities;
-                    int total = CitiesFromDB.Count;
-                    int counter = 1;
-                    foreach (var City in CitiesFromDB.OrderBy(x => x.Id))
-                    {
-                        CityButtonContent = " Sinhronizacija u toku " + counter++ + " od " + total;
-                        sqlLite.Delete(City.Identifier);
-                        City.IsSynced = true;
-                        sqlLite.Create(City);
-                    }
-
-                    MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani (" + CitiesFromDB.Count + ")!";
-                }
-
-                DisplayData();
-
-                CityButtonContent = " Sinhronizacija grada sa serverom ";
-                CityButtonEnabled = true;
-            });
-            th.IsBackground = true;
-            th.Start();
         }
 
         #endregion

@@ -23,11 +23,6 @@
     </Controls:MetroWindow.LeftWindowCommands>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="239*"/>
-            <ColumnDefinition Width="773*"/>
-        </Grid.ColumnDefinitions>
-
         <!--<Grid.Background>
             <ImageBrush ImageSource="Resources\Backgrounds\cowww.jpg" Stretch="UniformToFill"/>
         </Grid.Background>-->
@@ -37,45 +32,79 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Fluent:Ribbon Grid.Row="0" Grid.ColumnSpan="2">
+        <Fluent:Ribbon Grid.Row="0">
 
-            <Fluent:RibbonTabItem Header="Administracija" x:Name="mniAdministration" KeyTip="ADM">
-                <Fluent:RibbonGroupBox Header="Firme">
-                    <Fluent:ToggleButton Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" GroupName="SirmiumErpMenuItem">
-                        <Fluent:ToggleButton.LargeIcon>
+            <Fluent:RibbonTabItem Header="Početna" x:Name="mniHome" KeyTip="POC">
+                <Fluent:RibbonGroupBox Header="Početna">
+                    <Fluent:Button Click="btnHome_Click" Header="Početna" KeyTip="POC" >
+                        <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
-                        </Fluent:ToggleButton.LargeIcon>
-                    </Fluent:ToggleButton>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
 
+            <Fluent:RibbonTabItem Header="Radnici" KeyTip="RAD">
                 <Fluent:RibbonGroupBox Header="Radnici">
-                    <Fluent:ToggleButton Click="mniIndividuals_Click" Header="Radnici" KeyTip="RAD" GroupName="SirmiumErpMenuItem">
-                        <Fluent:ToggleButton.LargeIcon>
+                    <Fluent:Button Click="mniIndividuals_Click" Header="Radnici" KeyTip="RAD" >
+                        <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\delivery-man.png" HorizontalAlignment="Center" Height="30" Width="30" />
-                        </Fluent:ToggleButton.LargeIcon>
-                    </Fluent:ToggleButton>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Firme" KeyTip="FIR">
+                <Fluent:RibbonGroupBox Header="Firme">
+                    <Fluent:Button Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">
+                
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Kartoteka" KeyTip="KAR">
+                <Fluent:RibbonGroupBox Header="Države">
+                    <Fluent:Button x:Name="mniCountries" Click="mniCountries_Click" Header="Države" KeyTip="DRZ" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Gradovi">
+                    <Fluent:Button Click="mniCities_Click" Header="Gradovi" KeyTip="GRA" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            
+            <Fluent:RibbonTabItem Header="Administracija" x:Name="mniAdministration" KeyTip="ADM">
+                
+                
+
+                
 
                 <Fluent:RibbonGroupBox Header="Izlazni računi">
-                    <Fluent:ToggleButton Click="mniOutputInvoices_Click" Header="Izlazni računi" KeyTip="IZL" GroupName="SirmiumErpMenuItem">
-                        <Fluent:ToggleButton.LargeIcon>
+                    <Fluent:Button Click="mniOutputInvoices_Click" Header="Izlazni računi" KeyTip="IZL" >
+                        <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\outputinvoice.png" HorizontalAlignment="Center" Height="30" Width="30" />
-                        </Fluent:ToggleButton.LargeIcon>
-                    </Fluent:ToggleButton>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
                 </Fluent:RibbonGroupBox>
 
-                <Fluent:RibbonGroupBox Header="Gradovi">
-                    <Fluent:ToggleButton Click="mniCities_Click" Header="Gradovi" KeyTip="GRA" GroupName="SirmiumErpMenuItem">
-                        <Fluent:ToggleButton.LargeIcon>
-                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
-                        </Fluent:ToggleButton.LargeIcon>
-                    </Fluent:ToggleButton>
-                </Fluent:RibbonGroupBox>
+                
             </Fluent:RibbonTabItem>
 
         </Fluent:Ribbon>
 
-        <Grid Grid.Row="1" Visibility="Hidden" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1" Visibility="Visible" Grid.ColumnSpan="2">
             <!--<Grid.Background>
                 <ImageBrush ImageSource="Resources\Backgrounds\cowww.jpg" Stretch="UniformToFill"/>
             </Grid.Background>-->
@@ -83,16 +112,19 @@
             <ContentControl x:Name="cntCtrl" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
         </Grid>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <!--<Grid Grid.Row="1" Grid.ColumnSpan="2">
             <TabControl Margin="5" x:Name="contentTabControl" local:CloseableTabItem.TabClose="TabClosed">
             </TabControl>
-        </Grid>
+        </Grid>-->
 
     </Grid>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="mainFlyout" Header="Radni nalog" Position="Left" Width="600" Theme="Light" BorderBrush="Green" BorderThickness="3" IsModal="True" TitleVisibility="Hidden" CloseButtonVisibility="Visible">
+            <Controls:Flyout x:Name="mainFlyout" Header="Radni nalog" Position="Left" Theme="Light" BorderThickness="3" IsModal="True" TitleVisibility="Hidden" CloseButtonVisibility="Hidden">
+                <!-- Your custom content here -->
+            </Controls:Flyout>
+            <Controls:Flyout x:Name="popupFlyout" Header="Radni nalog" Position="Left" Theme="Light" BorderThickness="3" IsModal="True" TitleVisibility="Hidden" CloseButtonVisibility="Hidden">
                 <!-- Your custom content here -->
             </Controls:Flyout>
         </Controls:FlyoutsControl>
