@@ -377,7 +377,6 @@ namespace SirmiumERPGFC
 		{
 			cntCtrl.Content = new Sector_List();
 		}
-	}
 
         private void mniMunicipalities_Click(object sender, RoutedEventArgs e)
         {
