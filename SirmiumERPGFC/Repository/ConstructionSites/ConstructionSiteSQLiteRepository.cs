@@ -63,7 +63,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "FROM ConstructionSites " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
+                        //"AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
@@ -102,7 +102,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "FROM ConstructionSites " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Name LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
+                       // "AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
@@ -145,7 +145,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "FROM ConstructionSites " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
+                        //"AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
