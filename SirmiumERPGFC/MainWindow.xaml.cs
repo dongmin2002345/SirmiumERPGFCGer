@@ -5,7 +5,7 @@ using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Views.BusinessPartners;
 using SirmiumERPGFC.Views.Locations;
 using SirmiumERPGFC.Views.Home;
-using SirmiumERPGFC.Views.Individuals;
+using SirmiumERPGFC.Views.Employees;
 using SirmiumERPGFC.Views.OutputInvoices;
 using System;
 using System.Collections.Generic;
@@ -31,6 +31,7 @@ using SirmiumERPGFC.Views.Sectors;
 using SirmiumERPGFC.Views.Profession;
 using SirmiumERPGFC.Views.Banks;
 using SirmiumERPGFC.Views.ConstructionSites;
+using SirmiumERPGFC.Views.Common;
 
 namespace SirmiumERPGFC
 {
@@ -343,7 +344,7 @@ namespace SirmiumERPGFC
 
         private void mniIndividuals_Click(object sender, RoutedEventArgs e)
         {
-            cntCtrl.Content = new IndividualList();
+            cntCtrl.Content = new Employee_List();
             //OpenTab("Radnici", new IndividualList());
         }
 
@@ -410,6 +411,16 @@ namespace SirmiumERPGFC
         private void mniConstructionSite_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new ConstructionSite_List();
+        }
+
+        private void mniConstructionSiteEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ConstructionSiteEmployee_List();
+        }
+
+        private void mniFamilyMembers_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new FamilyMember_List();
         }
     }
 }

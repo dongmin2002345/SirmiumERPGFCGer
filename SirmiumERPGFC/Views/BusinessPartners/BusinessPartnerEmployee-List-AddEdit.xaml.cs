@@ -21,9 +21,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
     /// <summary>
     /// Interaction logic for BusinessPartnerEmployee_List_Add.xaml
     /// </summary>
-    public partial class BusinessPartnerEmployee_List_Add : UserControl, INotifyPropertyChanged
+    public partial class BusinessPartnerEmployee_List_AddEdit : UserControl, INotifyPropertyChanged
     {
-        public BusinessPartnerEmployee_List_Add()
+        public BusinessPartnerEmployee_List_AddEdit()
         {
             InitializeComponent();
 
