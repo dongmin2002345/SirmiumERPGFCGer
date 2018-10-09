@@ -42,7 +42,7 @@ namespace SirmiumERPGFC.Repository.Professions
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code @SecondCode, @Name, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @SecondCode, @Name, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
