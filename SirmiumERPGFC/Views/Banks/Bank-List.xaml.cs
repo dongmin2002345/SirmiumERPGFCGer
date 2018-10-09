@@ -32,55 +32,7 @@ namespace SirmiumERPGFC.Views.Banks
 	/// </summary>
 	public partial class Bank_List : UserControl, INotifyPropertyChanged
 	{
-		//public Bank_List()
-		//{
-		//    InitializeComponent();
-		//}
-
-		//private void btnSearch_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnAdd_Click(object sender, RoutedEventArgs e)
-		//{
-		//    FlyoutHelper.OpenFlyout(this, "Podaci o bankama", 95, new Bank_List_AddEdit());
-		//}
-
-		//private void btnRefresh_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnFirstPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnPrevPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnNextPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnLastPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnEdit_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnDelete_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
+		
 		#region Attributes
 
 		#region Services

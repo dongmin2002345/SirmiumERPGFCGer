@@ -31,20 +31,7 @@ namespace SirmiumERPGFC.Views.Banks
     /// </summary>
     public partial class Bank_List_AddEdit : UserControl, INotifyPropertyChanged
 	{
-		//public Bank_List_AddEdit()
-		//{
-		//    InitializeComponent();
-		//}
-
-		//private void btnSave_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnCancel_Click(object sender, RoutedEventArgs e)
-		//{
-		//    FlyoutHelper.CloseFlyout(this);
-		//}
+		
 
 		#region Attributes
 

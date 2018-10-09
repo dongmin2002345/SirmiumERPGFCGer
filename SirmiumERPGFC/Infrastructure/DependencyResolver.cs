@@ -17,6 +17,8 @@ using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceWebApi.Implementations.Common.Professions;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceWebApi.Implementations.Banks;
+using ServiceInterfaces.Abstractions.Employees;
+using ServiceWebApi.Implementations.Employees;
 
 namespace SirmiumERPGFC.Infrastructure
 {
@@ -53,6 +55,8 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<IProfessionService>().To<ProfessionService>();
 				Kernel.Bind<IBankService>().To<BankService>();
+				Kernel.Bind<ILicenceTypeService>().To<LicenceTypeService>();
+
 
 			}
 		}

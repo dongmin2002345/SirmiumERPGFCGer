@@ -53,6 +53,7 @@
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceService.cs" />
     <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
+    <Compile Include="Implementations\Employees\LicenceTypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

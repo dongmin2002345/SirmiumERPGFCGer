@@ -10,6 +10,7 @@ using System.Text;
 using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Banks;
+using RepositoryCore.Abstractions.Employees;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
 {
@@ -35,6 +36,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         IProfessionRepository GetProfessionRepository();
 		IBankRepository GetBankRepository();
+		ILicenceTypeRepository GetLicenceTypeRepository();
 
 
 		void Save();

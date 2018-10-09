@@ -23,6 +23,8 @@ using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Abstractions.Banks;
 using RepositoryCore.Implementations.Banks;
+using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Implementations.Employees;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -52,6 +54,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
+		private ILicenceTypeRepository licenceTypeRepository;
 
 
 		#endregion
@@ -172,6 +175,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
 			if (bankRepository == null)
 				bankRepository = new BankRepository(context);
 			return bankRepository;
+		}
+
+		public ILicenceTypeRepository GetLicenceTypeRepository()
+		{
+			if (licenceTypeRepository == null)
+				licenceTypeRepository = new LicenceTypeRepository(context);
+			return licenceTypeRepository;
 		}
 
 		#endregion

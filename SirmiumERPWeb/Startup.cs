@@ -32,6 +32,8 @@ using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceCore.Implementations.Common.Professions;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceCore.Implementations.Banks;
+using ServiceInterfaces.Abstractions.Employees;
+using ServiceCore.Implementations.Employees;
 
 namespace SirmiumERPWeb
 {
@@ -141,6 +143,8 @@ namespace SirmiumERPWeb
 
             services.AddScoped<IProfessionService, ProfessionService>();
 			services.AddScoped<IBankService, BankService>();
+			services.AddScoped<ILicenceTypeService, LicenceTypeService>();
+
 
 		}
 
