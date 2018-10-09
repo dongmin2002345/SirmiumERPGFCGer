@@ -32,6 +32,7 @@ namespace DataMapper.Mappers.Common.Locations
                 RegionCode = region.RegionCode,
                 Name = region.Name,
 
+                Country = region.Country?.ConvertToCountryViewModelLite(),
                 CreatedBy = region.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = region.Company?.ConvertToCompanyViewModelLite(),
 
@@ -84,6 +85,7 @@ namespace DataMapper.Mappers.Common.Locations
                 RegionCode = regionViewModel.RegionCode,
                 Name = regionViewModel.Name,
 
+                CountryId = regionViewModel.Country?.Id ?? null,
                 CreatedById = regionViewModel.CreatedBy?.Id ?? null,
                 CompanyId = regionViewModel.Company?.Id ?? null,
 

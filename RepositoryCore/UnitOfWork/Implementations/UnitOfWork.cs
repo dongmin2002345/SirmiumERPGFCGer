@@ -21,6 +21,8 @@ using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Implementations.Common.Sectors;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
+using RepositoryCore.Abstractions.Banks;
+using RepositoryCore.Implementations.Banks;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -49,9 +51,11 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IProfessionRepository professionRepository;
 
         private ISectorRepository sectorRepository;
+		private IBankRepository bankRepository;
 
-        #endregion
-        
+
+		#endregion
+
 		#region Constructor
 
 		public UnitOfWork(bool useSql2005Compatibility = false)
@@ -161,11 +165,20 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return professionRepository;
         }
 
-        #endregion
-        
-        #region Save method
+		
 
-        public void Save()
+		public IBankRepository GetBankRepository()
+		{
+			if (bankRepository == null)
+				bankRepository = new BankRepository(context);
+			return bankRepository;
+		}
+
+		#endregion
+
+		#region Save method
+
+		public void Save()
         {
             context.SaveChanges();
         }
