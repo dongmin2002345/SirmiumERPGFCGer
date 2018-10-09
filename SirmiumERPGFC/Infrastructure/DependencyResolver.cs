@@ -15,6 +15,8 @@ using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceWebApi.Implementations.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceWebApi.Implementations.Common.Professions;
+using ServiceInterfaces.Abstractions.ConstructionSites;
+using ServiceWebApi.Implementations.ConstructionSites;
 
 namespace SirmiumERPGFC.Infrastructure
 {
@@ -50,6 +52,9 @@ namespace SirmiumERPGFC.Infrastructure
 				Kernel.Bind<ISectorService>().To<SectorService>();
 
                 Kernel.Bind<IProfessionService>().To<ProfessionService>();
+
+                Kernel.Bind<IConstructionSiteService>().To<ConstructionSiteService>();
+
             }
         }
     }

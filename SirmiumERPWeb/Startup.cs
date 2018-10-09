@@ -30,6 +30,8 @@ using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceCore.Implementations.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceCore.Implementations.Common.Professions;
+using ServiceInterfaces.Abstractions.ConstructionSites;
+using ServiceCore.Implementations.ConstructionSites;
 
 namespace SirmiumERPWeb
 {
@@ -138,10 +140,13 @@ namespace SirmiumERPWeb
 			services.AddScoped<ISectorService, SectorService>();
 
             services.AddScoped<IProfessionService, ProfessionService>();
+
+            services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
+
         }
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeedData seedData)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeedData seedData)
         {
             if (env.IsDevelopment())
             {

@@ -21,6 +21,8 @@ using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Implementations.Common.Sectors;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
+using RepositoryCore.Abstractions.ConstructionSites;
+using RepositoryCore.Implementations.ConstructionSites;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -47,6 +49,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private ICountryRepository countryRepository;
 
         private IProfessionRepository professionRepository;
+
+        private IConstructionSiteRepository constructionSiteRepository;
+
 
         private ISectorRepository sectorRepository;
 
@@ -161,8 +166,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return professionRepository;
         }
 
+        public IConstructionSiteRepository GetConstructionSiteRepository()
+        {
+            if (constructionSiteRepository == null)
+                constructionSiteRepository = new ConstructionSiteRepository(context);
+            return constructionSiteRepository;
+        }
         #endregion
-        
+
         #region Save method
 
         public void Save()

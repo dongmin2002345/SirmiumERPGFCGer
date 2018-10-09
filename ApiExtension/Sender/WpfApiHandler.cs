@@ -15,6 +15,7 @@ using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.Professions;
+using ServiceInterfaces.ViewModels.ConstructionSites;
 
 namespace ApiExtension.Sender
 {
@@ -111,6 +112,14 @@ namespace ApiExtension.Sender
                 { typeof(List<ProfessionViewModel>), "Profession" },
 
                 #endregion
+
+                #region ConstructionSites
+
+                { typeof(ConstructionSiteViewModel), "ConstructionSite" },
+                { typeof(List<ConstructionSiteViewModel>), "ConstructionSite" },
+
+                #endregion
+
 
             #endregion
         };

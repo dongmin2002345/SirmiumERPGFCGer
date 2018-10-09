@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SirmiumERPGFC.Repository.Sectors;
 using SirmiumERPGFC.Repository.Professions;
+using SirmiumERPGFC.Repository.ConstructionSites;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -156,6 +157,21 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(ProfessionSQLiteRepository.ProfessionTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
+
+                    #region ConstructionSites
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ConstructionSites", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ConstructionSiteSQLiteRepository.ConstructionSiteTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                 }
             }
 
