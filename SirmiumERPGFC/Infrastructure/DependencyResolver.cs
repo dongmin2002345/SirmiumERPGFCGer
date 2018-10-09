@@ -19,6 +19,8 @@ using ServiceInterfaces.Abstractions.Banks;
 using ServiceWebApi.Implementations.Banks;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceWebApi.Implementations.ConstructionSites;
+using ServiceWebApi.Implementations.Employees;
+using ServiceInterfaces.Abstractions.Employees;
 
 namespace SirmiumERPGFC.Infrastructure
 {
@@ -56,6 +58,7 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IProfessionService>().To<ProfessionService>();
 				Kernel.Bind<IBankService>().To<BankService>();
 
+                Kernel.Bind<IFamilyMemberService>().To<FamilyMemberService>();
 
                 Kernel.Bind<IConstructionSiteService>().To<ConstructionSiteService>();
 
