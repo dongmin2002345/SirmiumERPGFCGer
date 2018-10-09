@@ -88,6 +88,7 @@
     <Compile Include="Messages\Common\Locations\SyncCountryRequest.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceResponse.cs" />
+    <Compile Include="Messages\Common\Professions\ProfessionCodeResponse.cs" />
     <Compile Include="Messages\Common\Sectors\SectorCodeResponse.cs" />
     <Compile Include="Messages\Common\Sectors\SectorListResponse.cs" />
     <Compile Include="Messages\Common\Sectors\SectorResponse.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Messages\Common\Professions\ProfessionListResponse.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionResponse.cs" />
     <Compile Include="Messages\Common\Professions\SyncProfessionRequest.cs" />
+    <Compile Include="Messages\ConstructionSites\ConstructionSiteCodeResponse.cs" />
     <Compile Include="Messages\ConstructionSites\ConstructionSiteListResponse.cs" />
     <Compile Include="Messages\ConstructionSites\ConstructionSiteResponse.cs" />
     <Compile Include="Messages\ConstructionSites\SyncConstructionSiteRequest.cs" />
