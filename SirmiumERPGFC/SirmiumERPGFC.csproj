@@ -169,6 +169,7 @@
     <Compile Include="Repository\Locations\CountrySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
+    <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
@@ -186,6 +187,9 @@
     </Compile>
     <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
       <DependentUpon>RegionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\SectorPopup.xaml.cs">
+      <DependentUpon>SectorPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Banks\Bank-List-AddEdit.xaml.cs">
       <DependentUpon>Bank-List-AddEdit.xaml</DependentUpon>
@@ -263,6 +267,12 @@
     <Compile Include="Views\OutputInvoices\OutputInvoiceList.xaml.cs">
       <DependentUpon>OutputInvoiceList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sectors\AgencyAddEdit.xaml.cs">
+      <DependentUpon>AgencyAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sectors\AgencyList.xaml.cs">
+      <DependentUpon>AgencyList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sectors\Sector_AddEdit.xaml.cs">
       <DependentUpon>Sector_AddEdit.xaml</DependentUpon>
     </Compile>
@@ -274,12 +284,6 @@
     </Compile>
     <Compile Include="Views\Profession\ProfessionList.xaml.cs">
       <DependentUpon>ProfessionList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sectors\WorkActivity-List-AddEdit.xaml.cs">
-      <DependentUpon>WorkActivity-List-AddEdit.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sectors\WorkActivity-List.xaml.cs">
-      <DependentUpon>WorkActivity-List.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -356,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\RegionPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\SectorPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -459,6 +467,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Sectors\AgencyAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sectors\AgencyList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Sectors\Sector_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -472,14 +488,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Profession\ProfessionList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sectors\WorkActivity-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sectors\WorkActivity-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

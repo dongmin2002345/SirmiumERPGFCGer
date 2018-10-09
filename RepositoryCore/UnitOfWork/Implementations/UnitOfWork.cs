@@ -49,6 +49,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IProfessionRepository professionRepository;
 
         private ISectorRepository sectorRepository;
+        private IAgencyRepository agencyRepository;
 
         #endregion
         
@@ -152,6 +153,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (sectorRepository == null)
                 sectorRepository = new SectorRepository(context);
             return sectorRepository;
+        }
+
+        public IAgencyRepository GetAgencyRepository()
+        {
+            if (agencyRepository == null)
+                agencyRepository = new AgencyRepository(context);
+            return agencyRepository;
         }
 
         public IProfessionRepository GetProfessionRepository()

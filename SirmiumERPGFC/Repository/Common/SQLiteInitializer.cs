@@ -141,6 +141,19 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Agencies", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(AgencySQLiteRepository.AgencyTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
 
                     #region Profession

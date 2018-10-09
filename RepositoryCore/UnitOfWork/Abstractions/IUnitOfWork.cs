@@ -31,6 +31,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         ICountryRepository GetCountryRepository();
 
         ISectorRepository GetSectorRepository();
+        IAgencyRepository GetAgencyRepository();
 
         IProfessionRepository GetProfessionRepository();
 
