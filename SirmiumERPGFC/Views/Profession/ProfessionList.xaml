@@ -49,8 +49,8 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Naziv zanimanja"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="3" 
+                <TextBlock Text="Naziv zanimanja"  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByName" Grid.Column="3" 
                          Text="{Binding Path=ProfessionSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>

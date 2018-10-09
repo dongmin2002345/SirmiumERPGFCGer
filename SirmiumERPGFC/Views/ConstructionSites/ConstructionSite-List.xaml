@@ -49,7 +49,7 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Naziv gradilišta"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="Naziv gradilišta"  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByName" Grid.Column="3" 
                          Text="{Binding Path=ConstructionSiteSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
