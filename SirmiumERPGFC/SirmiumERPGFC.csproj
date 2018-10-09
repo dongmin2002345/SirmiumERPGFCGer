@@ -232,6 +232,12 @@
     <Compile Include="Views\Employees\FamilyMember-List.xaml.cs">
       <DependentUpon>FamilyMember-List.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Employees\LicenceType_List.xaml.cs">
+      <DependentUpon>LicenceType_List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\LicenceType_List_AddEdit.xaml.cs">
+      <DependentUpon>LicenceType_List_AddEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
     </Compile>
@@ -427,6 +433,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Employees\FamilyMember-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\LicenceType_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\LicenceType_List_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
