@@ -1,4 +1,4 @@
-﻿using ServiceInterfaces.ViewModels.Common.BusinessPartners;
+﻿using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Common;
 using System;
 using System.Collections.Generic;
@@ -17,36 +17,36 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.BusinessPartners
+namespace SirmiumERPGFC.Views.ConstructionSites
 {
-    public partial class BusinessPartnerEmployee_List : UserControl, INotifyPropertyChanged
+    public partial class ConstructionSiteEmployee_List : UserControl, INotifyPropertyChanged
     {
-        #region BusinessPartnersFromDB
-        private ObservableCollection<BusinessPartnerViewModel> _BusinessPartnersFromDB;
+        #region ConstructionSitesFromDB
+        private ObservableCollection<ConstructionSiteViewModel> _ConstructionSitesFromDB;
 
-        public ObservableCollection<BusinessPartnerViewModel> BusinessPartnersFromDB
+        public ObservableCollection<ConstructionSiteViewModel> ConstructionSitesFromDB
         {
-            get { return _BusinessPartnersFromDB; }
+            get { return _ConstructionSitesFromDB; }
             set
             {
-                if (_BusinessPartnersFromDB != value)
+                if (_ConstructionSitesFromDB != value)
                 {
-                    _BusinessPartnersFromDB = value;
-                    NotifyPropertyChanged("BusinessPartnersFromDB");
+                    _ConstructionSitesFromDB = value;
+                    NotifyPropertyChanged("ConstructionSitesFromDB");
                 }
             }
         }
         #endregion
 
-        public BusinessPartnerEmployee_List()
+        public ConstructionSiteEmployee_List()
         {
             InitializeComponent();
 
             this.DataContext = this;
 
-            BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>()
+            ConstructionSitesFromDB = new ObservableCollection<ConstructionSiteViewModel>()
             {
-                new BusinessPartnerViewModel()
+                new ConstructionSiteViewModel()
                 {
                     Code = "123",
                     Name = "SirmiumERP d.o.o."
@@ -86,7 +86,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.OpenFlyout(this, "Unos zaposlenih", 95, new BusinessPartnerEmployee_List_AddEdit());
+            FlyoutHelper.OpenFlyout(this, "Radnici po gradilištu", 95, new ConstructionSiteEmployee_List_AddEdit());
         }
 
         #region INotifyPropertyChanged implementation

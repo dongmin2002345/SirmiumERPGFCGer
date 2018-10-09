@@ -90,7 +90,7 @@
 
             <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">
                 <Fluent:RibbonGroupBox>
-                    <Fluent:Button Click="mniConstructionSite_Click" Header="Radnici po gradilištu" KeyTip="SEK" Width="70">
+                    <Fluent:Button x:Name="mniConstructionSiteEmployees" Click="mniConstructionSiteEmployees_Click" Header="Radnici po gradilištu" KeyTip="SEK" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>

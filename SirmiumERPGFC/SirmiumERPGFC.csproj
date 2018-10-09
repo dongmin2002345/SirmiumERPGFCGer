@@ -196,14 +196,20 @@
     <Compile Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml.cs">
       <DependentUpon>BusinessPartnerAddEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List-Add.xaml.cs">
-      <DependentUpon>BusinessPartnerEmployee-List-Add.xaml</DependentUpon>
+    <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List-AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartnerEmployee-List-AddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml.cs">
       <DependentUpon>BusinessPartnerEmployee-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerList.xaml.cs">
       <DependentUpon>BusinessPartnerList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSiteEmployee-List-AddEdit.xaml.cs">
+      <DependentUpon>ConstructionSiteEmployee-List-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSiteEmployee-List.xaml.cs">
+      <DependentUpon>ConstructionSiteEmployee-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSite-List-AddEdit.xaml.cs">
       <DependentUpon>ConstructionSite-List-AddEdit.xaml</DependentUpon>
@@ -365,7 +371,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List-Add.xaml">
+    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List-AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -374,6 +380,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSiteEmployee-List-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSiteEmployee-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

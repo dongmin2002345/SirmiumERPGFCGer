@@ -103,6 +103,7 @@
     <Compile Include="ViewModels\Common\OutputInvoices\OutputInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
     <Compile Include="ViewModels\Common\Professions\ProfessionViewModel.cs" />
+    <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

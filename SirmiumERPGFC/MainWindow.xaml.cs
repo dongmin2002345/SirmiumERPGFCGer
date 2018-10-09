@@ -31,6 +31,7 @@ using SirmiumERPGFC.Views.Sectors;
 using SirmiumERPGFC.Views.Profession;
 using SirmiumERPGFC.Views.Banks;
 using SirmiumERPGFC.Views.ConstructionSites;
+using SirmiumERPGFC.Views.Common;
 
 namespace SirmiumERPGFC
 {
@@ -410,6 +411,11 @@ namespace SirmiumERPGFC
         private void mniConstructionSite_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new ConstructionSite_List();
+        }
+
+        private void mniConstructionSiteEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ConstructionSiteEmployee_List();
         }
     }
 }
