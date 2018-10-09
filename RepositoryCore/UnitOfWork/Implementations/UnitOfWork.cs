@@ -27,6 +27,8 @@ using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Implementations.Employees;
+using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Implementations.Employees;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -59,6 +61,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
+		private ILicenceTypeRepository licenceTypeRepository;
+        private IAgencyRepository agencyRepository;
 
 
         private IFamilyMemberRepository familyMemberRepository;
@@ -167,6 +171,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return sectorRepository;
         }
 
+        public IAgencyRepository GetAgencyRepository()
+        {
+            if (agencyRepository == null)
+                agencyRepository = new AgencyRepository(context);
+            return agencyRepository;
+        }
+
         public IProfessionRepository GetProfessionRepository()
         {
             if (professionRepository == null)
@@ -181,6 +192,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
 			if (bankRepository == null)
 				bankRepository = new BankRepository(context);
 			return bankRepository;
+		}
+
+		public ILicenceTypeRepository GetLicenceTypeRepository()
+		{
+			if (licenceTypeRepository == null)
+				licenceTypeRepository = new LicenceTypeRepository(context);
+			return licenceTypeRepository;
 		}
 
 		#endregion

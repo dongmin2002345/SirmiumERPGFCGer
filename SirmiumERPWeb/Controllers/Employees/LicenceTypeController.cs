@@ -4,28 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using ServiceInterfaces.Abstractions.Banks;
-using ServiceInterfaces.Messages.Banks;
-using ServiceInterfaces.ViewModels.Banks;
+using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Messages.Employees;
+using ServiceInterfaces.ViewModels.Employees;
 
-namespace SirmiumERPWeb.Controllers.Banks
+namespace SirmiumERPWeb.Controllers.Employees
 {
-    public class BankController : Controller
+    public class LicenceTypeController : Controller
     {
-		IBankService bankService { get; set; }
+		ILicenceTypeService licenceTypeService { get; set; }
 
-		public BankController(IServiceProvider provider)
+		public LicenceTypeController(IServiceProvider provider)
 		{
-			bankService = provider.GetRequiredService<IBankService>();
+			licenceTypeService = provider.GetRequiredService<ILicenceTypeService>();
 		}
 
 		[HttpGet]
-		public JsonResult GetBanks(int companyId)
+		public JsonResult GetLicenceTypes(int companyId)
 		{
-			BankListResponse response = new BankListResponse();
+			LicenceTypeListResponse response = new LicenceTypeListResponse();
 			try
 			{
-				response = bankService.GetBanks(companyId);
+				response = licenceTypeService.GetLicenceTypes(companyId);
 			}
 			catch (Exception ex)
 			{
@@ -37,12 +37,12 @@ namespace SirmiumERPWeb.Controllers.Banks
 		}
 
 		[HttpGet]
-		public JsonResult GetBanksNewerThen(int companyId, DateTime? lastUpdateTime)
+		public JsonResult GetLicenceTypesNewerThen(int companyId, DateTime? lastUpdateTime)
 		{
-			BankListResponse response;
+			LicenceTypeListResponse response;
 			try
 			{
-				response = bankService.GetBanksNewerThen(companyId, lastUpdateTime);
+				response = licenceTypeService.GetLicenceTypesNewerThen(companyId, lastUpdateTime);
 			}
 			catch (Exception ex)
 			{
@@ -53,12 +53,12 @@ namespace SirmiumERPWeb.Controllers.Banks
 		}
 
 		[HttpPost]
-		public JsonResult Create([FromBody] BankViewModel c)
+		public JsonResult Create([FromBody] LicenceTypeViewModel c)
 		{
-			BankResponse response = new BankResponse();
+			LicenceTypeResponse response = new LicenceTypeResponse();
 			try
 			{
-				response = this.bankService.Create(c);
+				response = this.licenceTypeService.Create(c);
 			}
 			catch (Exception ex)
 			{
@@ -71,12 +71,12 @@ namespace SirmiumERPWeb.Controllers.Banks
 		}
 
 		[HttpPost]
-		public JsonResult Delete([FromBody]BankViewModel bank)
+		public JsonResult Delete([FromBody]LicenceTypeViewModel licenceType)
 		{
-			BankResponse response = new BankResponse();
+			LicenceTypeResponse response = new LicenceTypeResponse();
 			try
 			{
-				response = this.bankService.Delete(bank.Identifier);
+				response = this.licenceTypeService.Delete(licenceType.Identifier);
 			}
 			catch (Exception ex)
 			{
@@ -89,12 +89,12 @@ namespace SirmiumERPWeb.Controllers.Banks
 		}
 
 		[HttpPost]
-		public JsonResult Sync([FromBody] SyncBankRequest request)
+		public JsonResult Sync([FromBody] SyncLicenceTypeRequest request)
 		{
-			BankListResponse response = new BankListResponse();
+			LicenceTypeListResponse response = new LicenceTypeListResponse();
 			try
 			{
-				response = this.bankService.Sync(request);
+				response = this.licenceTypeService.Sync(request);
 			}
 			catch (Exception ex)
 			{

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181009085434_LicenceType_Nemanja")]
+    partial class LicenceType_Nemanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -516,45 +518,6 @@ namespace RepositoryCore.Migrations
                     b.ToTable("Professions");
                 });
 
-            modelBuilder.Entity("DomainCore.Common.Sectors.Agency", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Code");
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<int?>("CountryId");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<Guid>("Identifier");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int?>("SectorId");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("SectorId");
-
-                    b.ToTable("Agencies");
-                });
-
             modelBuilder.Entity("DomainCore.Common.Sectors.Sector", b =>
                 {
                     b.Property<int>("Id")
@@ -636,78 +599,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
-                });
-
-            modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSite", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Address");
-
-                    b.Property<int?>("CityId");
-
-                    b.Property<string>("Code");
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<DateTime>("ContractExpiration");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<Guid>("Identifier");
-
-                    b.Property<int>("MaxWorkers");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("ConstructionSites");
-                });
-
-            modelBuilder.Entity("DomainCore.Employees.FamilyMember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Code");
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<Guid>("Identifier");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("FamilyMembers");
                 });
 
             modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartner", b =>
@@ -848,25 +739,6 @@ namespace RepositoryCore.Migrations
                         .HasForeignKey("CreatedById");
                 });
 
-            modelBuilder.Entity("DomainCore.Common.Sectors.Agency", b =>
-                {
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("DomainCore.Common.Sectors.Sector", "Sector")
-                        .WithMany()
-                        .HasForeignKey("SectorId");
-                });
-
             modelBuilder.Entity("DomainCore.Common.Sectors.Sector", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
@@ -876,32 +748,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Locations.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-                });
-
-            modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSite", b =>
-                {
-                    b.HasOne("DomainCore.Common.Locations.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-                });
-
-            modelBuilder.Entity("DomainCore.Employees.FamilyMember", b =>
-                {
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
 
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()

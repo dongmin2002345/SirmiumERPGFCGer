@@ -12,6 +12,7 @@ using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Banks;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Abstractions.Employees;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
 {
@@ -34,9 +35,11 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         ICountryRepository GetCountryRepository();
 
         ISectorRepository GetSectorRepository();
+        IAgencyRepository GetAgencyRepository();
 
         IProfessionRepository GetProfessionRepository();
 		IBankRepository GetBankRepository();
+		ILicenceTypeRepository GetLicenceTypeRepository();
 
 
         IConstructionSiteRepository GetConstructionSiteRepository();

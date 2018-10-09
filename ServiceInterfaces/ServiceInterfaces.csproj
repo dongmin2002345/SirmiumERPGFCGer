@@ -55,10 +55,12 @@
     <Compile Include="Abstractions\Common\Locations\IMunicipalityService.cs" />
     <Compile Include="Abstractions\Common\Locations\IRegionService.cs" />
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceService.cs" />
+    <Compile Include="Abstractions\Common\Sectors\IAgencyService.cs" />
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
     <Compile Include="Abstractions\Common\Professions\IProfessionService.cs" />
     <Compile Include="Abstractions\ConstructionSites\IConstructionSiteService.cs" />
     <Compile Include="Abstractions\Employees\IFamilyMemberService.cs" />
+    <Compile Include="Abstractions\Employees\ILicenceTypeService.cs" />
     <Compile Include="InvoiceHelpers\InvoiceHelpers.cs" />
     <Compile Include="Messages\Banks\BankCodeResponse.cs" />
     <Compile Include="Messages\Banks\BankListResponse.cs" />
@@ -90,9 +92,12 @@
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceResponse.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionCodeResponse.cs" />
+    <Compile Include="Messages\Common\Sectors\AgencyListResponse.cs" />
+    <Compile Include="Messages\Common\Sectors\AgencyResponse.cs" />
     <Compile Include="Messages\Common\Sectors\SectorCodeResponse.cs" />
     <Compile Include="Messages\Common\Sectors\SectorListResponse.cs" />
     <Compile Include="Messages\Common\Sectors\SectorResponse.cs" />
+    <Compile Include="Messages\Common\Sectors\SyncAgencyRequest.cs" />
     <Compile Include="Messages\Common\Sectors\SyncSectorRequest.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionListResponse.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionResponse.cs" />
@@ -104,6 +109,10 @@
     <Compile Include="Messages\ConstructionSites\ConstructionSiteListResponse.cs" />
     <Compile Include="Messages\ConstructionSites\ConstructionSiteResponse.cs" />
     <Compile Include="Messages\ConstructionSites\SyncConstructionSiteRequest.cs" />
+    <Compile Include="Messages\Employees\LicenceTypeCodeResponse.cs" />
+    <Compile Include="Messages\Employees\LicenceTypeListResponse.cs" />
+    <Compile Include="Messages\Employees\LicenceTypeResponse.cs" />
+    <Compile Include="Messages\Employees\SyncLicenceTypeRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Banks\BankViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseEntityViewModel.cs" />
@@ -117,10 +126,12 @@
     <Compile Include="ViewModels\Common\Locations\MunicipalityViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\RegionViewModel.cs" />
     <Compile Include="ViewModels\Common\OutputInvoices\OutputInvoiceViewModel.cs" />
+    <Compile Include="ViewModels\Common\Sectors\AgencyViewModel.cs" />
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
     <Compile Include="ViewModels\Common\Professions\ProfessionViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
     <Compile Include="ViewModels\Employees\FamilyMemberViewModel.cs" />
+    <Compile Include="ViewModels\Employees\LicenceTypeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
