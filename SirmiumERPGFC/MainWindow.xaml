@@ -99,6 +99,11 @@
                             <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
+                    <Fluent:Button x:Name="mniConstructionSiteBusinessPartners" Click="mniConstructionSiteBusinessPartners_Click" Header="Firme po gradilištu" KeyTip="FPG" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="Gradilišta">
                     <Fluent:Button x:Name="mniConstructionSite" Click="mniConstructionSite_Click" Header="Gradilišta" KeyTip="SEK" Width="70">
