@@ -144,8 +144,6 @@ namespace SirmiumERPWeb
             services.AddScoped<IProfessionService, ProfessionService>();
 			services.AddScoped<IBankService, BankService>();
 
-		}
-
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
 
         }

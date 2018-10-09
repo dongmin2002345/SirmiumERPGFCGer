@@ -172,10 +172,8 @@ namespace SirmiumERPGFC.Repository.Common
 					createTable = new SqliteCommand(BankSQLiteRepository.BankTableCreatePart, db);
 					createTable.ExecuteReader();
 					#endregion
-				}
-			}
-                    #endregion
-
+				
+			
                     #region ConstructionSites
                     if (withTableDrop)
                     {
