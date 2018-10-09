@@ -62,6 +62,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
 		private ILicenceTypeRepository licenceTypeRepository;
+        private IAgencyRepository agencyRepository;
 
 
         private IFamilyMemberRepository familyMemberRepository;
@@ -168,6 +169,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (sectorRepository == null)
                 sectorRepository = new SectorRepository(context);
             return sectorRepository;
+        }
+
+        public IAgencyRepository GetAgencyRepository()
+        {
+            if (agencyRepository == null)
+                agencyRepository = new AgencyRepository(context);
+            return agencyRepository;
         }
 
         public IProfessionRepository GetProfessionRepository()

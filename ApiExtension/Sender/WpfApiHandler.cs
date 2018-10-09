@@ -107,6 +107,9 @@ namespace ApiExtension.Sender
                 { typeof(SectorViewModel), "Sector" },
 			    { typeof(List<SectorViewModel>), "Sector" },
 
+                { typeof(AgencyViewModel), "Agency" },
+                { typeof(List<AgencyViewModel>), "Agency" },
+
                 #endregion
 
                 #region Professions
