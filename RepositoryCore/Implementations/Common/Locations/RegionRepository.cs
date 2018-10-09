@@ -21,6 +21,7 @@ namespace RepositoryCore.Implementations.Common.Locations
         public List<Region> GetRegions(int companyId)
         {
             List<Region> Regions = context.Regions
+                 .Include(x => x.Country)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Active == true && x.CompanyId == companyId)
@@ -34,6 +35,7 @@ namespace RepositoryCore.Implementations.Common.Locations
         public List<Region> GetRegionsNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<Region> Regions = context.Regions
+                  .Include(x => x.Country)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
@@ -95,6 +97,7 @@ namespace RepositoryCore.Implementations.Common.Locations
 
                 if (dbEntry != null)
                 {
+                    dbEntry.CountryId = region.Country?.Id ?? null;
                     dbEntry.CompanyId = region.CompanyId ?? null;
                     dbEntry.CreatedById = region.CreatedById ?? null;
 

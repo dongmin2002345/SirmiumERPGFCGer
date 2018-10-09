@@ -126,6 +126,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="RegionCode" Header="Šifra" Binding="{Binding RegionCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Country.Name" Header="Drzava" Binding="{Binding Country.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

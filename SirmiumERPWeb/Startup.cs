@@ -30,6 +30,14 @@ using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceCore.Implementations.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceCore.Implementations.Common.Professions;
+using ServiceInterfaces.Abstractions.Banks;
+using ServiceCore.Implementations.Banks;
+using ServiceInterfaces.Abstractions.ConstructionSites;
+using ServiceCore.Implementations.ConstructionSites;
+using ServiceCore.Implementations.Employees;
+using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Abstractions.Employees;
+using ServiceCore.Implementations.Employees;
 
 namespace SirmiumERPWeb
 {
@@ -139,10 +147,18 @@ namespace SirmiumERPWeb
 			services.AddScoped<IAgencyService, AgencyService>();
 
             services.AddScoped<IProfessionService, ProfessionService>();
+
+            services.AddScoped<IFamilyMemberService, FamilyMemberService>();
+			services.AddScoped<IBankService, BankService>();
+			services.AddScoped<ILicenceTypeService, LicenceTypeService>();
+
+
+            services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
+
         }
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeedData seedData)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeedData seedData)
         {
             if (env.IsDevelopment())
             {

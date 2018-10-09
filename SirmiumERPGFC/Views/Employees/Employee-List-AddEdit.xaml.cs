@@ -27,12 +27,12 @@ using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
 
-namespace SirmiumERPGFC.Views.Individuals
+namespace SirmiumERPGFC.Views.Employees
 {
     /// <summary>
     /// Interaction logic for IndividualAddEdit.xaml
     /// </summary>
-    public partial class IndividualAddEdit : UserControl, INotifyPropertyChanged
+    public partial class Employee_List_AddEdit : UserControl, INotifyPropertyChanged
     {
         /// <summary>
         /// Event for handling individual create and update
@@ -73,7 +73,7 @@ namespace SirmiumERPGFC.Views.Individuals
         /// IndividualAddEdit constructor
         /// </summary>
         /// <param name="IndividualViewModel"></param>
-        public IndividualAddEdit(IndividualViewModel IndividualViewModel)
+        public Employee_List_AddEdit(IndividualViewModel IndividualViewModel)
         {
             // Initialize service
             this.individualService = DependencyResolver.Kernel.Get<IIndividualService>();

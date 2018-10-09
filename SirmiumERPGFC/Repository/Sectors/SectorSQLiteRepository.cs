@@ -38,7 +38,7 @@ namespace SirmiumERPGFC.Repository.Sectors
 			
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
-		public string SqlCommandInsertPart = "INSERT INTO Cities " +
+		public string SqlCommandInsertPart = "INSERT INTO Sectors " +
 			"(Id, ServerId, Identifier, Code, SecondCode, Name, " +
 			"CountryId, CountryIdentifier, CountryCode, CountryName, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
@@ -62,14 +62,14 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"FROM Sectors " +
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
-						//"AND (@Municipality IS NULL OR @Municipality = '' OR Municipality LIKE @Municipality) " +
-						"AND CompanyId = @CompanyId " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+                        "AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)sectorSearchObject.Search_Name) != null ? "%" + sectorSearchObject.Search_Name + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -100,14 +100,12 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"FROM Sectors " +
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
-						//"AND (@Municipality IS NULL OR @Municipality = '' OR Municipality LIKE @Municipality) " +
-						"AND CompanyId = @CompanyId " +
-						"ORDER BY IsSynced, Id DESC " +
-						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
+						"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+						"AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)sectorSearchObject.Search_Name) != null ? "%" + sectorSearchObject.Search_Name + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 

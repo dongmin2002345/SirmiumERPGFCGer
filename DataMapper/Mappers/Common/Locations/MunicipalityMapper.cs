@@ -31,6 +31,7 @@ namespace DataMapper.Mappers.Common.Locations
                 MunicipalityCode = municipality.MunicipalityCode,
                 Name = municipality.Name,
 
+                Country = municipality.Country?.ConvertToCountryViewModelLite(),
                 Region = municipality.Region?.ConvertToRegionViewModelLite(),
 
                 CreatedBy = municipality.CreatedBy?.ConvertToUserViewModelLite(),
@@ -70,6 +71,7 @@ namespace DataMapper.Mappers.Common.Locations
                 MunicipalityCode = municipalityViewModel.MunicipalityCode,
                 Name = municipalityViewModel.Name,
 
+                CountryId = municipalityViewModel.Country?.Id ?? null,
                 RegionId = municipalityViewModel.Region?.Id ?? null,
 
                 CreatedById = municipalityViewModel.CreatedBy?.Id ?? null,
