@@ -187,8 +187,8 @@ namespace SirmiumERPGFC.Repository.Common
 					createTable = new SqliteCommand(LicenceTypeSQLiteRepository.LicenceTypeTableCreatePart, db);
 					createTable.ExecuteReader();
 					#endregion
-				}
-			}
+				
+		
 				
 			
                     #region ConstructionSites
