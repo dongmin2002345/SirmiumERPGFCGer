@@ -244,7 +244,7 @@ namespace SirmiumERPGFC.Views.Sectors
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Gradovi ... ";
+			RefreshButtonContent = " Sektori ... ";
 			new SectorSQLiteRepository().Sync(sectorService);
 
 			DisplayData();
@@ -253,17 +253,17 @@ namespace SirmiumERPGFC.Views.Sectors
 			RefreshButtonEnabled = true;
 		}
 
-		#endregion
+        #endregion
 
 
-		#region Add city, edit city and delete city
+        #region Add sector, edit sector and delete sector
 
-		private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
 		{
-			SectorViewModel city = new SectorViewModel();
-			city.Identifier = Guid.NewGuid();
+			SectorViewModel sector = new SectorViewModel();
+			sector.Identifier = Guid.NewGuid();
 
-			Sector_AddEdit addEditForm = new Sector_AddEdit(city, true);
+			Sector_AddEdit addEditForm = new Sector_AddEdit(sector, true);
 			addEditForm.SectorCreatedUpdated += new SectorHandler(SyncData);
 			FlyoutHelper.OpenFlyout(this, "Podaci o sektrorima", 95, addEditForm);
 		}
@@ -292,7 +292,7 @@ namespace SirmiumERPGFC.Views.Sectors
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
 			// Create confirmation window
-			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("grad", CurrentSector.Code + " " + CurrentSector.Name);
+			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("sektor", CurrentSector.Code + " " + CurrentSector.Name);
 			var showDialog = deleteConfirmationForm.ShowDialog();
 			if (showDialog != null && showDialog.Value)
 			{
@@ -312,7 +312,7 @@ namespace SirmiumERPGFC.Views.Sectors
 					return;
 				}
 
-				MainWindow.SuccessMessage = "Grad je uspešno obrisan!";
+				MainWindow.SuccessMessage = "Sektor je uspešno obrisan!";
 
 				Thread displayThread = new Thread(() => SyncData());
 				displayThread.IsBackground = true;

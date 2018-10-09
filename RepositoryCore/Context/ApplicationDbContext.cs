@@ -12,6 +12,8 @@ using System.Diagnostics;
 using System.Text;
 using DomainCore.Common.Sectors;
 using DomainCore.Common.Professions;
+using DomainCore.Banks;
+using DomainCore.ConstructionSites;
 using DomainCore.Employees;
 
 namespace RepositoryCore.Context
@@ -79,10 +81,15 @@ namespace RepositoryCore.Context
 
         public DbSet<Profession> Professions { get; set; }
         public DbSet<FamilyMember> FamilyMembers { get; set; }
+        public DbSet<ConstructionSite> ConstructionSites { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		public DbSet<Bank> Banks { get; set; }
+
+
+		//protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             base.OnModelCreating(modelBuilder);

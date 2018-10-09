@@ -21,6 +21,10 @@ using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Implementations.Common.Sectors;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
+using RepositoryCore.Abstractions.Banks;
+using RepositoryCore.Implementations.Banks;
+using RepositoryCore.Abstractions.ConstructionSites;
+using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Implementations.Employees;
 
@@ -50,7 +54,12 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IProfessionRepository professionRepository;
 
+        private IConstructionSiteRepository constructionSiteRepository;
+
+
         private ISectorRepository sectorRepository;
+		private IBankRepository bankRepository;
+
 
         private IFamilyMemberRepository familyMemberRepository;
 
@@ -165,6 +174,24 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return professionRepository;
         }
 
+		
+
+		public IBankRepository GetBankRepository()
+		{
+			if (bankRepository == null)
+				bankRepository = new BankRepository(context);
+			return bankRepository;
+		}
+
+		#endregion
+
+		#region Save method
+        public IConstructionSiteRepository GetConstructionSiteRepository()
+        {
+            if (constructionSiteRepository == null)
+                constructionSiteRepository = new ConstructionSiteRepository(context);
+            return constructionSiteRepository;
+        }
         public IFamilyMemberRepository GetFamilyMemberRepository()
         {
             if (familyMemberRepository == null)
@@ -176,7 +203,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         #region Save method
 
-        public void Save()
+		public void Save()
         {
             context.SaveChanges();
         }
