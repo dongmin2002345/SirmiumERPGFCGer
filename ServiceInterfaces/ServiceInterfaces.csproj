@@ -57,6 +57,8 @@
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceService.cs" />
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
     <Compile Include="Abstractions\Common\Professions\IProfessionService.cs" />
+    <Compile Include="Abstractions\ConstructionSites\IConstructionSiteService.cs" />
+    <Compile Include="Abstractions\Employees\IFamilyMemberService.cs" />
     <Compile Include="Abstractions\Employees\ILicenceTypeService.cs" />
     <Compile Include="InvoiceHelpers\InvoiceHelpers.cs" />
     <Compile Include="Messages\Banks\BankCodeResponse.cs" />
@@ -95,6 +97,12 @@
     <Compile Include="Messages\Common\Professions\ProfessionListResponse.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionResponse.cs" />
     <Compile Include="Messages\Common\Professions\SyncProfessionRequest.cs" />
+    <Compile Include="Messages\Employees\FamilyMemberListResponse.cs" />
+    <Compile Include="Messages\Employees\FamilyMemberResponse.cs" />
+    <Compile Include="Messages\Employees\SyncFamilyMemberRequest.cs" />
+    <Compile Include="Messages\ConstructionSites\ConstructionSiteListResponse.cs" />
+    <Compile Include="Messages\ConstructionSites\ConstructionSiteResponse.cs" />
+    <Compile Include="Messages\ConstructionSites\SyncConstructionSiteRequest.cs" />
     <Compile Include="Messages\Employees\LicenceTypeCodeResponse.cs" />
     <Compile Include="Messages\Employees\LicenceTypeListResponse.cs" />
     <Compile Include="Messages\Employees\LicenceTypeResponse.cs" />
@@ -115,6 +123,7 @@
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
     <Compile Include="ViewModels\Common\Professions\ProfessionViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
+    <Compile Include="ViewModels\Employees\FamilyMemberViewModel.cs" />
     <Compile Include="ViewModels\Employees\LicenceTypeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

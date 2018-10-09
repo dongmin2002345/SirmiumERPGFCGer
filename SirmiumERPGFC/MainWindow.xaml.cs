@@ -422,6 +422,11 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new FamilyMember_List();
         }
+
+        private void mniConstructionSiteBusinessPartners_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ConstructionSiteBusinessPartner_List();
+        }
     }
 }
 

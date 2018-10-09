@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using SirmiumERPGFC.Repository.Sectors;
 using SirmiumERPGFC.Repository.Professions;
 using SirmiumERPGFC.Repository.Banks;
+using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
 
 namespace SirmiumERPGFC.Repository.Common
@@ -188,6 +189,24 @@ namespace SirmiumERPGFC.Repository.Common
 					#endregion
 				}
 			}
+				
+			
+                    #region ConstructionSites
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ConstructionSites", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ConstructionSiteSQLiteRepository.ConstructionSiteTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                }
+            }
 
             catch (SqliteException e)
             {

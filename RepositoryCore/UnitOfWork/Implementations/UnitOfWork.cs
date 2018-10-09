@@ -23,6 +23,10 @@ using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Abstractions.Banks;
 using RepositoryCore.Implementations.Banks;
+using RepositoryCore.Abstractions.ConstructionSites;
+using RepositoryCore.Implementations.ConstructionSites;
+using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Implementations.Employees;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Implementations.Employees;
 
@@ -52,13 +56,18 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IProfessionRepository professionRepository;
 
+        private IConstructionSiteRepository constructionSiteRepository;
+
+
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
 		private ILicenceTypeRepository licenceTypeRepository;
 
 
-		#endregion
+        private IFamilyMemberRepository familyMemberRepository;
 
+        #endregion
+        
 		#region Constructor
 
 		public UnitOfWork(bool useSql2005Compatibility = false)
@@ -187,6 +196,22 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		#endregion
 
 		#region Save method
+        public IConstructionSiteRepository GetConstructionSiteRepository()
+        {
+            if (constructionSiteRepository == null)
+                constructionSiteRepository = new ConstructionSiteRepository(context);
+            return constructionSiteRepository;
+        }
+        public IFamilyMemberRepository GetFamilyMemberRepository()
+        {
+            if (familyMemberRepository == null)
+                familyMemberRepository = new FamilyMemberRepository(context);
+            return familyMemberRepository;
+        }
+
+        #endregion
+
+        #region Save method
 
 		public void Save()
         {

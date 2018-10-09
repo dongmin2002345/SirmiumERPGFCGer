@@ -13,7 +13,7 @@ namespace ServiceInterfaces.Abstractions.Common.Professions
         ProfessionListResponse GetProfessions(int companyId);
         ProfessionListResponse GetProfessionsNewerThen(int companyId, DateTime? lastUpdateTime);
 
-        ProfessionResponse Create(ProfessionViewModel City);
+        ProfessionResponse Create(ProfessionViewModel Profession);
         ProfessionResponse Delete(Guid identifier);
 
         ProfessionListResponse Sync(SyncProfessionRequest request);
