@@ -197,8 +197,8 @@
     <Compile Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml.cs">
       <DependentUpon>BusinessPartnerAddEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List-Add.xaml.cs">
-      <DependentUpon>BusinessPartnerEmployee-List-Add.xaml</DependentUpon>
+    <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List-AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartnerEmployee-List-AddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml.cs">
       <DependentUpon>BusinessPartnerEmployee-List.xaml</DependentUpon>
@@ -206,11 +206,23 @@
     <Compile Include="Views\BusinessPartners\BusinessPartnerList.xaml.cs">
       <DependentUpon>BusinessPartnerList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSiteEmployee-List-AddEdit.xaml.cs">
+      <DependentUpon>ConstructionSiteEmployee-List-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSiteEmployee-List.xaml.cs">
+      <DependentUpon>ConstructionSiteEmployee-List.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSite-List-AddEdit.xaml.cs">
       <DependentUpon>ConstructionSite-List-AddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSite-List.xaml.cs">
       <DependentUpon>ConstructionSite-List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\FamilyMember-List-AddEdit.xaml.cs">
+      <DependentUpon>FamilyMember-List-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\FamilyMember-List.xaml.cs">
+      <DependentUpon>FamilyMember-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
@@ -228,11 +240,11 @@
     <Compile Include="Views\Home\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Individuals\IndividualAddEdit.xaml.cs">
-      <DependentUpon>IndividualAddEdit.xaml</DependentUpon>
+    <Compile Include="Views\Employees\Employee-List-AddEdit.xaml.cs">
+      <DependentUpon>Employee-List-AddEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Individuals\IndividualList.xaml.cs">
-      <DependentUpon>IndividualList.xaml</DependentUpon>
+    <Compile Include="Views\Employees\Employee-List.xaml.cs">
+      <DependentUpon>Employee-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\CountryAddEdit.xaml.cs">
       <DependentUpon>CountryAddEdit.xaml</DependentUpon>
@@ -366,7 +378,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List-Add.xaml">
+    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List-AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -378,11 +390,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSiteEmployee-List-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSiteEmployee-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConstructionSites\ConstructionSite-List-AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConstructionSites\ConstructionSite-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\FamilyMember-List-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\FamilyMember-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -406,11 +434,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Individuals\IndividualAddEdit.xaml">
+    <Page Include="Views\Employees\Employee-List-AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Individuals\IndividualList.xaml">
+    <Page Include="Views\Employees\Employee-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

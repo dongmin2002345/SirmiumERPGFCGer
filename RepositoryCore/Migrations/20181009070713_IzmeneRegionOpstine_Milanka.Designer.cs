@@ -3,56 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181009070713_IzmeneRegionOpstine_Milanka")]
+    partial class IzmeneRegionOpstine_Milanka
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DomainCore.Banks.Bank", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Code");
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<int?>("CountryId");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<Guid>("Identifier");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("Banks");
-                });
 
             modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartner", b =>
                 {
@@ -551,21 +518,6 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("Sectors");
-                });
-
-            modelBuilder.Entity("DomainCore.Banks.Bank", b =>
-                {
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
                 });
 
             modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartner", b =>
