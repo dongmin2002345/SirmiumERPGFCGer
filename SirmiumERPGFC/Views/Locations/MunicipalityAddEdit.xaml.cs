@@ -229,6 +229,7 @@ namespace SirmiumERPGFC.Views.Locations
                         );
                     }
                 }
+
             });
             th.IsBackground = true;
             th.Start();
