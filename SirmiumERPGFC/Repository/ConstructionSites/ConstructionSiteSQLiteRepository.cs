@@ -35,16 +35,16 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, Address, MaxWorkers, ContractExpiration " +
+            "SELECT ServerId, Identifier, Code, Name, Address, MaxWorkers, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSites " +
-            "(Id, ServerId, Identifier, Code, Name, Address, MaxWorkers, ContractExpiration " +
+            "(Id, ServerId, Identifier, Code, Name, Address, MaxWorkers, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @Address, @MaxWorkers, @ContractExpiration" +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @Address, @MaxWorkers, @ContractExpiration, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 

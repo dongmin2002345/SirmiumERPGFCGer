@@ -124,8 +124,17 @@ namespace ApiExtension.Sender
                 { typeof(FamilyMemberViewModel), "FamilyMember" },
                 { typeof(List<FamilyMemberViewModel>), "FamilyMember" },
 
-			#endregion
-#endregion
+			    #endregion
+                
+                #region ConstructionSites
+
+                { typeof(ConstructionSiteViewModel), "ConstructionSite" },
+                { typeof(List<ConstructionSiteViewModel>), "ConstructionSite" },
+
+			    #endregion
+
+
+            #endregion
 
 			#region Banks
 			{ typeof(BankViewModel), "Bank" },
