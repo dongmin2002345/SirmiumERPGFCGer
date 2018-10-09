@@ -30,6 +30,8 @@ using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceCore.Implementations.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceCore.Implementations.Common.Professions;
+using ServiceCore.Implementations.Employees;
+using ServiceInterfaces.Abstractions.Employees;
 
 namespace SirmiumERPWeb
 {
@@ -138,6 +140,8 @@ namespace SirmiumERPWeb
 			services.AddScoped<ISectorService, SectorService>();
 
             services.AddScoped<IProfessionService, ProfessionService>();
+
+            services.AddScoped<IFamilyMemberService, FamilyMemberService>();
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

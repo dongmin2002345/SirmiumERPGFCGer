@@ -21,6 +21,8 @@ using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Implementations.Common.Sectors;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
+using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Implementations.Employees;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -49,6 +51,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IProfessionRepository professionRepository;
 
         private ISectorRepository sectorRepository;
+
+        private IFamilyMemberRepository familyMemberRepository;
 
         #endregion
         
@@ -161,8 +165,15 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return professionRepository;
         }
 
+        public IFamilyMemberRepository GetFamilyMemberRepository()
+        {
+            if (familyMemberRepository == null)
+                familyMemberRepository = new FamilyMemberRepository(context);
+            return familyMemberRepository;
+        }
+
         #endregion
-        
+
         #region Save method
 
         public void Save()

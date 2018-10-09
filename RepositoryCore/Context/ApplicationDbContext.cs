@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Text;
 using DomainCore.Common.Sectors;
 using DomainCore.Common.Professions;
+using DomainCore.Employees;
 
 namespace RepositoryCore.Context
 {
@@ -77,6 +78,7 @@ namespace RepositoryCore.Context
         public DbSet<Sector> Sectors { get; set; }
 
         public DbSet<Profession> Professions { get; set; }
+        public DbSet<FamilyMember> FamilyMembers { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 
