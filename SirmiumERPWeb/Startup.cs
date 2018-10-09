@@ -34,6 +34,8 @@ using ServiceInterfaces.Abstractions.Banks;
 using ServiceCore.Implementations.Banks;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceCore.Implementations.ConstructionSites;
+using ServiceCore.Implementations.Employees;
+using ServiceInterfaces.Abstractions.Employees;
 
 namespace SirmiumERPWeb
 {
@@ -142,6 +144,8 @@ namespace SirmiumERPWeb
 			services.AddScoped<ISectorService, SectorService>();
 
             services.AddScoped<IProfessionService, ProfessionService>();
+
+            services.AddScoped<IFamilyMemberService, FamilyMemberService>();
 			services.AddScoped<IBankService, BankService>();
 
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();

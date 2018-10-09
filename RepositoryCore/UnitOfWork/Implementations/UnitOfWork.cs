@@ -25,6 +25,8 @@ using RepositoryCore.Abstractions.Banks;
 using RepositoryCore.Implementations.Banks;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Implementations.ConstructionSites;
+using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Implementations.Employees;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -59,8 +61,10 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		private IBankRepository bankRepository;
 
 
-		#endregion
+        private IFamilyMemberRepository familyMemberRepository;
 
+        #endregion
+        
 		#region Constructor
 
 		public UnitOfWork(bool useSql2005Compatibility = false)
@@ -188,6 +192,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
                 constructionSiteRepository = new ConstructionSiteRepository(context);
             return constructionSiteRepository;
         }
+        public IFamilyMemberRepository GetFamilyMemberRepository()
+        {
+            if (familyMemberRepository == null)
+                familyMemberRepository = new FamilyMemberRepository(context);
+            return familyMemberRepository;
+        }
+
         #endregion
 
         #region Save method

@@ -17,6 +17,7 @@ using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.ConstructionSites;
+using ServiceInterfaces.ViewModels.Employees;
 
 namespace ApiExtension.Sender
 {
@@ -114,14 +115,21 @@ namespace ApiExtension.Sender
 
 			#endregion
 
-			#endregion
+                #region Employees
 
-			#region Banks
+                { typeof(FamilyMemberViewModel), "FamilyMember" },
+                { typeof(List<FamilyMemberViewModel>), "FamilyMember" },
+
+                #endregion
+
+               #region Banks
 				 { typeof(BankViewModel), "Bank" },
-				{ typeof(List<BankViewModel>), "Bank" },
-#endregion
+                { typeof(List<BankViewModel>), "Bank" },
+                #endregion
 
-		};
+            #endregion
+        };
+			
 
         static WpfApiHandler()
         {
