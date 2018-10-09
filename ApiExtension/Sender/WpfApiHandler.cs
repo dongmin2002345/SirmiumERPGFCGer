@@ -122,16 +122,14 @@ namespace ApiExtension.Sender
 
                 #endregion
 
+               #region Banks
+				 { typeof(BankViewModel), "Bank" },
+                { typeof(List<BankViewModel>), "Bank" },
+                #endregion
+
             #endregion
         };
-			#endregion
-
-			#region Banks
-				 { typeof(BankViewModel), "Bank" },
-				{ typeof(List<BankViewModel>), "Bank" },
-#endregion
-
-		};
+			
 
         static WpfApiHandler()
         {
