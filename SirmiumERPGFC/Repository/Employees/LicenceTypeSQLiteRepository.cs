@@ -89,6 +89,8 @@ namespace SirmiumERPGFC.Repository.Employees
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@Name", ((object)licenceTypeSearchObject.Search_Name) != null ? "%" + licenceTypeSearchObject.Search_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
+					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
 
 					query = selectCommand.ExecuteReader();
 

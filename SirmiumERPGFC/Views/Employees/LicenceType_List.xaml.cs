@@ -1,10 +1,10 @@
 ﻿using Ninject;
-using ServiceInterfaces.Abstractions.Banks;
-using ServiceInterfaces.Messages.Banks;
-using ServiceInterfaces.ViewModels.Banks;
+using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Messages.Employees;
+using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
-using SirmiumERPGFC.Repository.Banks;
+using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
@@ -24,84 +24,83 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.Banks
+namespace SirmiumERPGFC.Views.Employees
 {
-	public delegate void BankHandler();
+	public delegate void LicenceTypeHandler(); 
 	/// <summary>
-	/// Interaction logic for Bank_List.xaml
+	/// Interaction logic for LicenceType_List.xaml
 	/// </summary>
-	public partial class Bank_List : UserControl, INotifyPropertyChanged
+	public partial class LicenceType_List : UserControl, INotifyPropertyChanged
 	{
-		
 		#region Attributes
 
 		#region Services
-		IBankService bankService;
+		ILicenceTypeService licenceTypeService;
 		#endregion
 
 		#region BanksFromDB
-		private ObservableCollection<BankViewModel> _BanksFromDB;
+		private ObservableCollection<LicenceTypeViewModel> _LicenceTypesFromDB;
 
-		public ObservableCollection<BankViewModel> BanksFromDB
+		public ObservableCollection<LicenceTypeViewModel> LicenceTypesFromDB
 		{
-			get { return _BanksFromDB; }
+			get { return _LicenceTypesFromDB; }
 			set
 			{
-				if (_BanksFromDB != value)
+				if (_LicenceTypesFromDB != value)
 				{
-					_BanksFromDB = value;
-					NotifyPropertyChanged("BanksFromDB");
+					_LicenceTypesFromDB = value;
+					NotifyPropertyChanged("LicenceTypesFromDB");
 				}
 			}
 		}
 		#endregion
 
-		#region CurrentBank
-		private BankViewModel _CurrentBank;
+		#region CurrentLicenceType
+		private LicenceTypeViewModel _CurrentLicenceType;
 
-		public BankViewModel CurrentBank
+		public LicenceTypeViewModel CurrentLicenceType
 		{
-			get { return _CurrentBank; }
+			get { return _CurrentLicenceType; }
 			set
 			{
-				if (_CurrentBank != value)
+				if (_CurrentLicenceType != value)
 				{
-					_CurrentBank = value;
-					NotifyPropertyChanged("CurrentBank");
+					_CurrentLicenceType = value;
+					NotifyPropertyChanged("CurrentLicenceType");
 				}
 			}
 		}
 		#endregion
 
-		#region BankSearchObject
-		private BankViewModel _BankSearchObject = new BankViewModel();
+		#region LicenceTypeSearchObject
+		private LicenceTypeViewModel _LicenceTypeSearchObject = new LicenceTypeViewModel();
 
-		public BankViewModel BankSearchObject
+		public LicenceTypeViewModel LicenceTypeSearchObject
 		{
-			get { return _BankSearchObject; }
+			get { return _LicenceTypeSearchObject; }
 			set
 			{
-				if (_BankSearchObject != value)
+				if (_LicenceTypeSearchObject != value)
 				{
-					_BankSearchObject = value;
-					NotifyPropertyChanged("BankSearchObject");
+					_LicenceTypeSearchObject = value;
+					NotifyPropertyChanged("LicenceTypeSearchObject");
 				}
 			}
 		}
 		#endregion
 
-		#region BankDataLoading
-		private bool _BankDataLoading = true;
+		#region LicenceTypeDataLoading
+		private bool _LicenceTypeDataLoading = true;
 
-		public bool BankDataLoading
+		public bool LicenceTypeDataLoading
 		{
-			get { return _BankDataLoading; }
+			get { return _LicenceTypeDataLoading; }
 			set
 			{
-				if (_BankDataLoading != value)
+				if (_LicenceTypeDataLoading != value)
 				{
-					_BankDataLoading = value;
-					NotifyPropertyChanged("BankDataLoading");
+					_LicenceTypeDataLoading = value;
+					NotifyPropertyChanged("LicenceTypeDataLoading");
 				}
 			}
 		}
@@ -170,10 +169,10 @@ namespace SirmiumERPGFC.Views.Banks
 
 		#region Constructor
 
-		public Bank_List()
+		public LicenceType_List()
 		{
 			// Get required services
-			this.bankService = DependencyResolver.Kernel.Get<IBankService>();
+			this.licenceTypeService = DependencyResolver.Kernel.Get<ILicenceTypeService>();
 
 			InitializeComponent();
 
@@ -213,19 +212,19 @@ namespace SirmiumERPGFC.Views.Banks
 
 		public void DisplayData()
 		{
-			BankDataLoading = true;
+			LicenceTypeDataLoading = true;
 
-			BankListResponse response = new BankSQLiteRepository()
-				.GetBanksByPage(MainWindow.CurrentCompanyId, BankSearchObject, currentPage, itemsPerPage);
+			LicenceTypeListResponse response = new LicenceTypeSQLiteRepository()
+				.GetLicenceTypesByPage(MainWindow.CurrentCompanyId, LicenceTypeSearchObject, currentPage, itemsPerPage);
 
 			if (response.Success)
 			{
-				BanksFromDB = new ObservableCollection<BankViewModel>(response.Banks ?? new List<BankViewModel>());
+				LicenceTypesFromDB = new ObservableCollection<LicenceTypeViewModel>(response.LicenceTypes ?? new List<LicenceTypeViewModel>());
 				totalItems = response.TotalItems;
 			}
 			else
 			{
-				BanksFromDB = new ObservableCollection<BankViewModel>();
+				LicenceTypesFromDB = new ObservableCollection<LicenceTypeViewModel>();
 				totalItems = 0;
 				MainWindow.ErrorMessage = response.Message;
 			}
@@ -235,7 +234,7 @@ namespace SirmiumERPGFC.Views.Banks
 
 			PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
 
-			BankDataLoading = false;
+			LicenceTypeDataLoading = false;
 		}
 
 		private void SyncData()
@@ -243,7 +242,7 @@ namespace SirmiumERPGFC.Views.Banks
 			RefreshButtonEnabled = false;
 
 			RefreshButtonContent = " Drzava ... ";
-			new BankSQLiteRepository().Sync(bankService);
+			new LicenceTypeSQLiteRepository().Sync(licenceTypeService);
 
 			DisplayData();
 
@@ -258,43 +257,43 @@ namespace SirmiumERPGFC.Views.Banks
 		private void btnAdd_Click(object sender, RoutedEventArgs e)
 		{
 
-			BankViewModel bank = new BankViewModel();
-			bank.Identifier = Guid.NewGuid();
+			LicenceTypeViewModel licenceType = new LicenceTypeViewModel();
+			licenceType.Identifier = Guid.NewGuid();
 
-			Bank_List_AddEdit addEditForm = new Bank_List_AddEdit(bank, true);
-			addEditForm.BankCreatedUpdated += new BankHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o bankama", 95, addEditForm);
+			LicenceType_List_AddEdit addEditForm = new LicenceType_List_AddEdit(licenceType, true);
+			addEditForm.LicenceTypeCreatedUpdated += new LicenceTypeHandler(SyncData);
+			FlyoutHelper.OpenFlyout(this, "Podaci o dozvolu", 95, addEditForm);
 		}
 
 		private void btnEdit_Click(object sender, RoutedEventArgs e)
 		{
-			if (CurrentBank == null)
+			if (CurrentLicenceType == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati banku za izmenu!";
+				MainWindow.WarningMessage = "Morate odabrati dozvolu za izmenu!";
 				return;
 			}
 
-			Bank_List_AddEdit addEditForm = new Bank_List_AddEdit(CurrentBank, false);
-			addEditForm.BankCreatedUpdated += new BankHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o banci", 95, addEditForm);
+			LicenceType_List_AddEdit addEditForm = new LicenceType_List_AddEdit(CurrentLicenceType, false);
+			addEditForm.LicenceTypeCreatedUpdated += new LicenceTypeHandler(SyncData);
+			FlyoutHelper.OpenFlyout(this, "Podaci o dozvoli", 95, addEditForm);
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
 		{
-			if (CurrentBank == null)
+			if (CurrentLicenceType == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati banku za brisanje!";
+				MainWindow.WarningMessage = "Morate odabrati dozvolu za brisanje!";
 				return;
 			}
 
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
 			// Create confirmation window
-			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("banka", CurrentBank.Name + CurrentBank.Code);
+			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dozvola", CurrentLicenceType.Name + CurrentLicenceType.Code);
 			var showDialog = deleteConfirmationForm.ShowDialog();
 			if (showDialog != null && showDialog.Value)
 			{
-				BankResponse response = bankService.Delete(CurrentBank.Identifier);
+				LicenceTypeResponse response = licenceTypeService.Delete(CurrentLicenceType.Identifier);
 				if (!response.Success)
 				{
 					MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
@@ -302,7 +301,7 @@ namespace SirmiumERPGFC.Views.Banks
 					return;
 				}
 
-				response = new BankSQLiteRepository().Delete(CurrentBank.Identifier);
+				response = new LicenceTypeSQLiteRepository().Delete(CurrentLicenceType.Identifier);
 				if (!response.Success)
 				{
 					MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
@@ -310,7 +309,7 @@ namespace SirmiumERPGFC.Views.Banks
 					return;
 				}
 
-				MainWindow.SuccessMessage = "Banka je uspešno obrisana!";
+				MainWindow.SuccessMessage = "Dozvola je uspešno obrisana!";
 
 				Thread displayThread = new Thread(() => SyncData());
 				displayThread.IsBackground = true;
