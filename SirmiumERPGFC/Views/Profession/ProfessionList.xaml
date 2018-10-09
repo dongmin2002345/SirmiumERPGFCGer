@@ -139,7 +139,7 @@
                           SelectedItem="{Binding Path=CurrentProfession, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                        <!--<DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />-->
                         <DataGridTextColumn SortMemberPath="SecondCode" Header="Šifra" Binding="{Binding SecondCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Naziv zanimanja" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Country.Name" Header="Drzava" Binding="{Binding Country.Name}" IsReadOnly="True" />
