@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Abstractions.Common.Professions;
+using RepositoryCore.Abstractions.Banks;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
 {
@@ -33,7 +34,9 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         ISectorRepository GetSectorRepository();
 
         IProfessionRepository GetProfessionRepository();
+		IBankRepository GetBankRepository();
 
-        void Save();
+
+		void Save();
     }
 }
