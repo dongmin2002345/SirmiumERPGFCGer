@@ -24,11 +24,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.Individuals
+namespace SirmiumERPGFC.Views.Employees
 {
     public delegate void IndividualHandler(IndividualViewModel individual);
 
-    public partial class IndividualList : UserControl, INotifyPropertyChanged
+    public partial class Employee_List : UserControl, INotifyPropertyChanged
     {
 
         #region Attributes
@@ -132,7 +132,7 @@ namespace SirmiumERPGFC.Views.Individuals
 
         #region Constructor
 
-        public IndividualList()
+        public Employee_List()
         {
             // Get required service
             this.individualService = DependencyResolver.Kernel.Get<IIndividualService>();
@@ -154,7 +154,7 @@ namespace SirmiumERPGFC.Views.Individuals
         private void btnAddIndividual_Click(object sender, RoutedEventArgs e)
         {
 
-            IndividualAddEdit addEditForm = new IndividualAddEdit(new IndividualViewModel());
+            Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(new IndividualViewModel());
             addEditForm.IndividualCreatedUpdated += new IndividualHandler((IndividualViewModel) => {
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
@@ -165,7 +165,7 @@ namespace SirmiumERPGFC.Views.Individuals
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
 
-            IndividualAddEdit addEditForm = new IndividualAddEdit(CurrentIndividual);
+            Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(CurrentIndividual);
             addEditForm.IndividualCreatedUpdated += new IndividualHandler((IndividualViewModel) => {
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;

@@ -30,6 +30,8 @@ using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceCore.Implementations.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceCore.Implementations.Common.Professions;
+using ServiceInterfaces.Abstractions.Banks;
+using ServiceCore.Implementations.Banks;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceCore.Implementations.ConstructionSites;
 
@@ -140,6 +142,9 @@ namespace SirmiumERPWeb
 			services.AddScoped<ISectorService, SectorService>();
 
             services.AddScoped<IProfessionService, ProfessionService>();
+			services.AddScoped<IBankService, BankService>();
+
+		}
 
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
 

@@ -21,6 +21,8 @@ namespace RepositoryCore.Implementations.Common.Locations
         public List<Municipality> GetMunicipalities(int companyId)
         {
             List<Municipality> Municipalities = context.Municipalities
+                .Include(x => x.Country)
+                .Include(x => x.Region)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Active == true && x.CompanyId == companyId)
@@ -34,6 +36,8 @@ namespace RepositoryCore.Implementations.Common.Locations
         public List<Municipality> GetMunicipalitiesNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<Municipality> Municipalities = context.Municipalities
+                .Include(x => x.Country)
+                .Include(x => x.Region)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
@@ -95,6 +99,8 @@ namespace RepositoryCore.Implementations.Common.Locations
 
                 if (dbEntry != null)
                 {
+                    dbEntry.CountryId = municipality.CountryId ?? null;
+                    dbEntry.RegionId = municipality.RegionId ?? null;
                     dbEntry.CompanyId = municipality.CompanyId ?? null;
                     dbEntry.CreatedById = municipality.CreatedById ?? null;
 

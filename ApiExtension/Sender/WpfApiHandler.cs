@@ -15,6 +15,7 @@ using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.Professions;
+using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 
 namespace ApiExtension.Sender
@@ -111,18 +112,16 @@ namespace ApiExtension.Sender
                 { typeof(ProfessionViewModel), "Profession" },
                 { typeof(List<ProfessionViewModel>), "Profession" },
 
-                #endregion
+			#endregion
 
-                #region ConstructionSites
+			#endregion
 
-                { typeof(ConstructionSiteViewModel), "ConstructionSite" },
-                { typeof(List<ConstructionSiteViewModel>), "ConstructionSite" },
+			#region Banks
+				 { typeof(BankViewModel), "Bank" },
+				{ typeof(List<BankViewModel>), "Bank" },
+#endregion
 
-                #endregion
-
-
-            #endregion
-        };
+		};
 
         static WpfApiHandler()
         {

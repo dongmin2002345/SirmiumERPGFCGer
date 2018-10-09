@@ -69,7 +69,7 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)sectorSearchObject.Search_Name) != null ? "%" + sectorSearchObject.Search_Name + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -107,7 +107,7 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)sectorSearchObject.Search_Name) != null ? "%" + sectorSearchObject.Search_Name + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 

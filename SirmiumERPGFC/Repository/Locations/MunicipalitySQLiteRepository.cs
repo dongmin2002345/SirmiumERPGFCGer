@@ -25,6 +25,10 @@ namespace SirmiumERPGFC.Repository.Locations
             "RegionIdentifier GUID NULL, " +
             "RegionCode NVARCHAR(48) NULL, " +
             "RegionName NVARCHAR(48) NULL, " +
+            "CountryId INTEGER NULL, " +
+            "CountryIdentifier GUID NULL, " +
+            "CountryCode NVARCHAR(2048) NULL, " +
+            "CountryName NVARCHAR(2048) NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -35,15 +39,18 @@ namespace SirmiumERPGFC.Repository.Locations
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, MunicipalityCode, Name, " +
             "RegionId, RegionIdentifier, RegionCode, RegionName, " +
+             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Municipalities " +
             "(Id, ServerId, Identifier, Code, MunicipalityCode, Name, " +
             "RegionId, RegionIdentifier, RegionCode, RegionName, " +
+             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @MunicipalityCode, @Name, " +
             "@RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
+             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public MunicipalityListResponse GetMunicipalitiesByPage(int companyId, MunicipalityViewModel MunicipalitySearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -80,6 +87,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         dbEntry.MunicipalityCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -149,6 +157,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         dbEntry.MunicipalityCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -199,6 +208,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         dbEntry.MunicipalityCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -297,6 +307,10 @@ namespace SirmiumERPGFC.Repository.Locations
                 insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)Municipality.Region?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@RegionCode", ((object)Municipality.Region?.RegionCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@RegionName", ((object)Municipality.Region?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryId", ((object)Municipality.Country?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)Municipality.Country?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)Municipality.Country?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryName", ((object)Municipality.Country?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", Municipality.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", Municipality.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

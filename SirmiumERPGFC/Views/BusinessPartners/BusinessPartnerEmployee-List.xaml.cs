@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.BusinessPartners
 {
-    /// <summary>
-    /// Interaction logic for BusinessPartnerEmployee_List.xaml
-    /// </summary>
     public partial class BusinessPartnerEmployee_List : UserControl, INotifyPropertyChanged
     {
         #region BusinessPartnersFromDB
@@ -89,7 +86,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.OpenFlyout(this, "Unos zaposlenih", 95, new BusinessPartnerEmployee_List_Add());
+            FlyoutHelper.OpenFlyout(this, "Unos zaposlenih", 95, new BusinessPartnerEmployee_List_AddEdit());
         }
 
         #region INotifyPropertyChanged implementation

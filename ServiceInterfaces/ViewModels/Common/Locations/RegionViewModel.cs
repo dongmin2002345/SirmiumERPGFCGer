@@ -61,6 +61,23 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
+        #region Country
+        private CountryViewModel _Country;
+
+        public CountryViewModel Country
+        {
+            get { return _Country; }
+            set
+            {
+                if (_Country != value)
+                {
+                    _Country = value;
+                    NotifyPropertyChanged("Country");
+                }
+            }
+        }
+        #endregion
+
         #region IsSynced
         private bool _IsSynced;
 
