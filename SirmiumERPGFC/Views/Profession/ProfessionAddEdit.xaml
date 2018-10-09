@@ -38,7 +38,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtCode"  Margin="2" Text="{Binding Path=CurrentProfession.Code}" IsEnabled="True" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtCode"  Margin="2" Text="{Binding Path=CurrentProfession.Code}" IsEnabled="False" />
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
                     <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtSecondCode"  Margin="2" Text="{Binding Path=CurrentProfession.SecondCode}" IsEnabled="True" />
@@ -48,7 +48,7 @@
 
                     <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
                     <popups:CountryPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCountry" 
-                                                CurrentCountry="{Binding Path=CurrentProfession.Region, Mode=TwoWay}"/>
+                                                CurrentCountry="{Binding Path=CurrentProfession.Country, Mode=TwoWay}"/>
 
                 </Grid>
             </GroupBox>
