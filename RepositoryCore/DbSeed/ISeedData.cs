@@ -7,5 +7,6 @@ namespace RepositoryCore.DbSeed
     public interface ISeedData
     {
         void SeedUserData();
+        void SeedCompanyData();
     }
 }

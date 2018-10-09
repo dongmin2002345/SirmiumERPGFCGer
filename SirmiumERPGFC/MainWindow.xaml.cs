@@ -29,6 +29,8 @@ using ToastNotifications.Messages;
 using ToastNotifications.Position;
 using SirmiumERPGFC.Views.Sectors;
 using SirmiumERPGFC.Views.Profession;
+using SirmiumERPGFC.Views.Banks;
+using SirmiumERPGFC.Views.ConstructionSites;
 
 namespace SirmiumERPGFC
 {
@@ -388,6 +390,26 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new ProfessionList();
             //OpenTab("Poslovni partneri", new ProfessionList());
+        }
+
+        private void mniBanks_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new Bank_List();
+        }
+
+        private void mniWorkActivity_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new WorkActivity_List();
+        }
+
+        private void mniBusinessPartnerEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new BusinessPartnerEmployee_List();
+        }
+
+        private void mniConstructionSite_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ConstructionSite_List();
         }
     }
 }

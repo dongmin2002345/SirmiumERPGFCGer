@@ -88,36 +88,6 @@ namespace SirmiumERPGFC.Identity.Views
 
             SQLiteInitializer.Initalize(false);
 
-            // Set company combobox
-            List<CompanyViewModel> companiesFromDb = new List<CompanyViewModel>();
-            try
-            {
-                companiesFromDb.Add(new CompanyViewModel() { CompanyName = "Odaberite firmu", CompanyCode = 0 });
-                CompanyListResponse response = new CompanySQLiteRepository().GetCompanies();//companyService.GetCompanies();
-                if (response.Success && response.Companies != null && response.Companies.Count > 0)
-                {
-                    companiesFromDb.AddRange(response.Companies.OrderBy(x => x.CompanyName));
-                }
-                else
-                {
-                    response = companyService.GetCompanies();
-                    if (response.Success)
-                    {
-                        var companyTmp = response.Companies.OrderBy(x => x.CompanyName).ToList();
-                        if (companyTmp != null && companyTmp.Count > 0)
-                            companiesFromDb.AddRange(companyTmp);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                companiesFromDb = new List<CompanyViewModel>();
-                companiesFromDb.Add(new CompanyViewModel() { CompanyName = "Greška u povezivanju sa bazom!", CompanyCode = 0 });
-            }
-
-            //cbxCompanies.ItemsSource = companiesFromDb;
-            //cbxCompanies.SelectedIndex = 0;
-
             // Set focus
             txtUsername.Focus();
 
@@ -167,6 +137,8 @@ namespace SirmiumERPGFC.Identity.Views
                     if (customPrincipal == null)
                         throw new ArgumentException("The application's default thread principal must be set to a CustomPrincipal object on startup.");
 
+                    CompanyViewModel company = companyService.GetCompanies().Companies.FirstOrDefault(x => x.CompanyCode == 1);
+
                     //Authenticate the user
                     customPrincipal.Identity = new CustomIdentity(
                         userViewModel.Id,
@@ -174,6 +146,9 @@ namespace SirmiumERPGFC.Identity.Views
                         userViewModel.LastName,
                         userViewModel.Identifier,
                         userViewModel.Email,
+                        company.Id,
+                        company.Identifier,
+                        company.CompanyName,
                         userViewModel.Roles);
 
                     MainWindow mainWindow = new MainWindow();

@@ -61,15 +61,26 @@
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="Firme" KeyTip="FIR">
-                <Fluent:RibbonGroupBox Header="Firme">
-                    <Fluent:Button Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" >
+                <Fluent:RibbonGroupBox>
+                    <Fluent:Button x:Name="mniBusinessPartnerEmployees" Click="mniBusinessPartnerEmployees_Click" Header="Radnici po firmama" KeyTip="RPF" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Sektori">
-                    <Fluent:Button Click="mniSector_Click" Header="Sektori" KeyTip="FIR" >
+                
+                <Fluent:RibbonGroupBox Header="Firme">
+                    <Fluent:Button Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button Click="mniSector_Click" Header="Sektori" KeyTip="SEK" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button x:Name="mniWorkActivity" Click="mniWorkActivity_Click" Header="Delatnosti" KeyTip="DEL" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
@@ -78,38 +89,53 @@
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">
-                
+                <Fluent:RibbonGroupBox>
+                    <Fluent:Button Click="mniConstructionSite_Click" Header="Radnici po gradilištu" KeyTip="SEK" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Gradilišta">
+                    <Fluent:Button x:Name="mniConstructionSite" Click="mniConstructionSite_Click" Header="Gradilišta" KeyTip="SEK" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="Kartoteka" KeyTip="KAR">
-                <Fluent:RibbonGroupBox Header="Države">
-                    <Fluent:Button x:Name="mniCountries" Click="mniCountries_Click" Header="Države" KeyTip="DRZ" >
+                <Fluent:RibbonGroupBox Header="Lokacije">
+                    <Fluent:Button x:Name="mniCountries" Click="mniCountries_Click" Header="Države" KeyTip="DRZ" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button x:Name="mniRegions" Click="mniRegions_Click" Header="Regioni" KeyTip="REG" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button Click="mniMunicipalities_Click" Header="Opstine" KeyTip="OPS" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button Click="mniCities_Click" Header="Gradovi" KeyTip="GRA" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Regioni">
-                    <Fluent:Button x:Name="mniRegions" Click="mniRegions_Click" Header="Regioni" KeyTip="REG" >
+
+                <Fluent:RibbonGroupBox Header="Banke">
+                    <Fluent:Button x:Name="mniBanks" Click="mniBanks_Click" Header="Banke" KeyTip="BAN" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Gradovi">
-                    <Fluent:Button Click="mniCities_Click" Header="Gradovi" KeyTip="GRA" >
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Opstine">
-                    <Fluent:Button Click="mniMunicipalities_Click" Header="Opstine" KeyTip="OPS" >
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\hotel.png" HorizontalAlignment="Center" Height="30" Width="30" />
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                </Fluent:RibbonGroupBox>
+                </Fluent:RibbonGroupBox>                
             </Fluent:RibbonTabItem>
             
             <Fluent:RibbonTabItem Header="Administracija" x:Name="mniAdministration" KeyTip="ADM">

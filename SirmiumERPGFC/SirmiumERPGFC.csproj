@@ -187,11 +187,29 @@
     <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
       <DependentUpon>RegionPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Banks\Bank-List-AddEdit.xaml.cs">
+      <DependentUpon>Bank-List-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Banks\Bank-List.xaml.cs">
+      <DependentUpon>Bank-List.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml.cs">
       <DependentUpon>BusinessPartnerAddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List-Add.xaml.cs">
+      <DependentUpon>BusinessPartnerEmployee-List-Add.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml.cs">
+      <DependentUpon>BusinessPartnerEmployee-List.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerList.xaml.cs">
       <DependentUpon>BusinessPartnerList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite-List-AddEdit.xaml.cs">
+      <DependentUpon>ConstructionSite-List-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite-List.xaml.cs">
+      <DependentUpon>ConstructionSite-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
@@ -250,6 +268,12 @@
     </Compile>
     <Compile Include="Views\Profession\ProfessionList.xaml.cs">
       <DependentUpon>ProfessionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sectors\WorkActivity-List-AddEdit.xaml.cs">
+      <DependentUpon>WorkActivity-List-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sectors\WorkActivity-List.xaml.cs">
+      <DependentUpon>WorkActivity-List.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -329,11 +353,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Banks\Bank-List-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Banks\Bank-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List-Add.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite-List-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -410,6 +458,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Profession\ProfessionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sectors\WorkActivity-List-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sectors\WorkActivity-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

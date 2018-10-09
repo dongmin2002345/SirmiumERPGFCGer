@@ -167,7 +167,7 @@ namespace SirmiumERPWeb
 
             seedData.SeedUserData();
             //var tmp1 = UnitOfWork.ContoShemeOptions;
-            //seedData.SeedCompanyData();
+            seedData.SeedCompanyData();
 
             //seedData.PopulateData();
         }

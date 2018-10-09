@@ -19,13 +19,17 @@ namespace SirmiumERPGFC.Identity
         public string CompanyName { get; private set; }
         public List<String> Roles { get; private set; }
 
-        public CustomIdentity(int id, string firstName, string lastName, Guid userIdentifier, string email, List<String> roles)
+        public CustomIdentity(int id, string firstName, string lastName, Guid userIdentifier, string email,
+            int companyId, Guid companyIdentifier, string companyName, List<String> roles)
         {
             Id = id;
             Name = firstName;
             LastName = lastName;
             UserIdentifier = userIdentifier;
             Email = email;
+            CompanyId = companyId;
+            CompanyIdentifier = companyIdentifier;
+            CompanyName = companyName;
             Roles = roles;
         }
 

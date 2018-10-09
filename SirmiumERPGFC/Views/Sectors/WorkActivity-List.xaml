@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.Locations.CityList"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Sectors.WorkActivity_List"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Locations"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Sectors"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
@@ -32,7 +31,6 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -44,27 +42,15 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Postanski broj"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByRemedyName" Grid.Column="1" 
-                         Text="{Binding Path=CitySearchObject.Search_ZipCode, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="Naziv banke"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByWorkActivityName" Grid.Column="1" 
+                         Text="{Binding Path=WorkActivitySearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Naziv grada"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="3" 
-                         Text="{Binding Path=CitySearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-
-                <TextBlock Text="Okrug"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
-                <TextBox x:Name="txtSearchByRegion" Grid.Column="1" Grid.Row="1" 
-                         Text="{Binding Path=CitySearchObject.Search_Region, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-
-                <TextBlock Text="Opstina"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
-                <TextBox x:Name="txtSearchByMunicipality" Grid.Column="3" Grid.Row="1" 
-                         Text="{Binding Path=CitySearchObject.Search_Municipality, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="Sektor" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchBySectorName" Grid.Column="3" 
+                         Text="{Binding Path=WorkActivitySearchObject.Search_SectorName, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
@@ -78,7 +64,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Gradovi" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
+        <GroupBox Header="Delatnosti" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -125,8 +111,8 @@
                 </StackPanel>
 
                 <!--Listing-->
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding CityDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgCities"
+                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding WorkActivityDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <DataGrid x:Name="dgWorkActivities"
                           Grid.Row="1"
                           Margin="5 5 5 0"
                           AutoGenerateColumns="False"
@@ -141,14 +127,14 @@
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
                           Style="{DynamicResource AzureDataGrid}"
-                          ItemsSource="{Binding Path=CitiesFromDB}"
-                          SelectedItem="{Binding Path=CurrentCity, Mode=TwoWay}">
+                          ItemsSource="{Binding Path=WorkActivitiesFromDB}"
+                          SelectedItem="{Binding Path=CurrentWorkActivity, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="ZipCode" Header="Postanski broj" Binding="{Binding ZipCode}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv grada" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Region.Name" Header="Region" Binding="{Binding Region.Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Municipality.Name" Header="Opština" Binding="{Binding Municipality.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv delatnosti" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Sector.Name" Header="Sektor" Binding="{Binding Sector.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

@@ -9,7 +9,8 @@ namespace SirmiumERPGFC.Identity
     public class AnonymousIdentity : CustomIdentity
     {
         public AnonymousIdentity()
-            : base(0, string.Empty, string.Empty, Guid.Empty, string.Empty, new List<String>())
+            : base(0, string.Empty, string.Empty, Guid.Empty, string.Empty,
+                  0, Guid.Empty, string.Empty, new List<String>())
         { }
     }
 }

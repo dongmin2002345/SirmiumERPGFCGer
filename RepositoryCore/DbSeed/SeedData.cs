@@ -1,4 +1,5 @@
-﻿using DomainCore.Common.Identity;
+﻿using DomainCore.Common.Companies;
+using DomainCore.Common.Identity;
 using RepositoryCore.Context;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,44 @@ namespace RepositoryCore.DbSeed
 
                     context.SaveChanges();
                 }
+            }
+        }
+
+        public void SeedCompanyData()
+        {
+            try
+            {
+                Company company = context.Companies.FirstOrDefault();
+
+                if (company == null)
+                {
+                    context.Companies.Add(new Company()
+                    {
+                        Code = 1,
+                        Identifier = Guid.NewGuid(),
+                        Name = "MS Accounting Office",
+                        PIBNumber = "000000",
+                        PDVNumber = "18",
+                        Address = "Primer adresa",
+                        BankAccountName = "Ime korisnika racuna",
+                        BankAccountNo = "111-123-1321",
+                        Email = "mail@firma.com",
+                        IndustryCode = "1001",
+                        IndustryName = "Farma",
+                        PIONumber = "1001010",
+                        WebSite = "http://farma.rs",
+                        IdentificationNumber = "313123123132131232",
+                        Active = true,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    });
+
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }
