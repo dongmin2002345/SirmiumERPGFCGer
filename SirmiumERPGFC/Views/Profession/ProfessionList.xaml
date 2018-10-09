@@ -119,7 +119,7 @@
                 </StackPanel>
 
                 <!--Listing-->
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding CityDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding ProfessionDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                 <DataGrid x:Name="dgProfessions"
                           Grid.Row="1"
                           Margin="5 5 5 0"
@@ -139,7 +139,8 @@
                           SelectedItem="{Binding Path=CurrentProfession, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="SecondCode" Header="Sifra" Binding="{Binding SecondCode}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SecondCode" Header="Šifra" Binding="{Binding SecondCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Naziv zanimanja" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Country.Name" Header="Drzava" Binding="{Binding Country.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >

@@ -20,7 +20,7 @@ namespace SirmiumERPWeb.Controllers.Banks
 		}
 
 		[HttpGet]
-		public JsonResult GetSectors(int companyId)
+		public JsonResult GetBanks(int companyId)
 		{
 			BankListResponse response = new BankListResponse();
 			try

@@ -144,6 +144,19 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Agencies", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(AgencySQLiteRepository.AgencyTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
 
                     #region Profession
@@ -173,6 +186,23 @@ namespace SirmiumERPGFC.Repository.Common
 					createTable = new SqliteCommand(BankSQLiteRepository.BankTableCreatePart, db);
 					createTable.ExecuteReader();
 					#endregion
+
+					#region LicenceType
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE LicenceTypes", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(LicenceTypeSQLiteRepository.LicenceTypeTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+				
+		
+				
 			
                     #region ConstructionSites
                     if (withTableDrop)

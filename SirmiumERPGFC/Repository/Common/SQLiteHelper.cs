@@ -2,6 +2,7 @@
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
 using System.Collections.Generic;
@@ -254,6 +255,23 @@ namespace SirmiumERPGFC.Repository.Common
             }
             else
                 return new CountryViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
+        public static SectorViewModel GetSector(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new SectorViewModel()
                 {
                     Id = query.GetInt32(counter++),
                     Identifier = query.GetGuid(counter++),

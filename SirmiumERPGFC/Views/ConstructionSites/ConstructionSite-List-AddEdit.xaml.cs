@@ -154,11 +154,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             #region Validation
 
-            if (CurrentConstructionSite.Code == null)
-            {
-                MainWindow.WarningMessage = "Obavezno polje: Sifra";
-                return;
-            }
+            //if (CurrentConstructionSite.Code == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Sifra";
+            //    return;
+            //}
 
             if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
             {
