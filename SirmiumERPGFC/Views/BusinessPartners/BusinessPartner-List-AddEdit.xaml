@@ -253,8 +253,8 @@
                                          CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Opština " Margin="5 0 5 0" />
-                        <!--<popups:MunicipalityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popMunicipality" 
-                                              CurrentMunicipality="{Binding Path=CurrentLocationForm.Municipality, Mode=TwoWay}"/>-->
+                        <popups:MunicipalityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popMunicipality" 
+                                              CurrentMunicipality="{Binding Path=CurrentLocationForm.Municipality, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Grad " Margin="5 0 5 0" />
                         <popups:CityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity" 
@@ -357,8 +357,8 @@
                                          CurrentCountry="{Binding Path=CurrentOrganizationUnitForm.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Opština " Margin="5 0 5 0" />
-                        <!--<popups:MunicipalityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popOrganizationUnitMunicipality" 
-                                              CurrentMunicipality="{Binding Path=CurrentOrganizationUnitForm.Municipality, Mode=TwoWay}"/>-->
+                        <popups:MunicipalityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popOrganizationUnitMunicipality" 
+                                              CurrentMunicipality="{Binding Path=CurrentOrganizationUnitForm.Municipality, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Grad " Margin="5 0 5 0" />
                         <popups:CityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popOrganizationUnitCity" 
