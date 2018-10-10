@@ -1,4 +1,5 @@
-﻿using DataMapper.Mappers.Common.Identity;
+﻿using DataMapper.Mappers.Common.Companies;
+using DataMapper.Mappers.Common.Identity;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
@@ -20,16 +21,6 @@ namespace DataMapper.Mappers.Common.BusinessPartners
             return businessPartnerViewModels;
         }
 
-        public static List<BusinessPartnerViewModel> ConvertToBusinessPartnerViewModelListLite(this IEnumerable<BusinessPartner> businessPartners)
-        {
-            List<BusinessPartnerViewModel> businessPartnerViewModels = new List<BusinessPartnerViewModel>();
-            foreach (BusinessPartner businessPartner in businessPartners)
-            {
-                businessPartnerViewModels.Add(businessPartner.ConvertToBusinessPartnerViewModelLite());
-            }
-            return businessPartnerViewModels;
-        }
-
         public static BusinessPartnerViewModel ConvertToBusinessPartnerViewModel(this BusinessPartner businessPartner)
         {
             BusinessPartnerViewModel businessPartnerViewModel = new BusinessPartnerViewModel()
@@ -40,28 +31,27 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Code = businessPartner.Code,
                 Name = businessPartner.Name,
 
-                Director = businessPartner.Director,
-
-                Address = businessPartner.Address,
-                InoAddress = businessPartner.InoAddress,
-
                 PIB = businessPartner.PIB,
-                MatCode = businessPartner.MatCode,
+                PIO = businessPartner.PIO,
+                PDV = businessPartner.PDV,
+                IndustryCode = businessPartner.IndustryCode,
+                IdentificationNumber = businessPartner.IdentificationNumber,
 
-                Mobile = businessPartner.Mobile,
-                Phone = businessPartner.Phone,
-                Email = businessPartner.Email,
+                Rebate = businessPartner.Rebate,
+                DueDate = businessPartner.DueDate,
 
-                ActivityCode = businessPartner.ActivityCode,
+                WebSite = businessPartner.WebSite,
+                ContactPerson = businessPartner.ContactPerson,
 
-                BankAccountNumber = businessPartner.BankAccountNumber,
+                IsInPDV = businessPartner.IsInPDV,
 
-                OpeningDate = businessPartner.OpeningDate,
-                BranchOpeningDate = businessPartner.BranchOpeningDate,
+                JBKJS = businessPartner.JBKJS,
+
+                CreatedBy = businessPartner.CreatedBy?.ConvertToUserViewModelLite(),
+                Company = businessPartner.Company?.ConvertToCompanyViewModelLite(),
 
                 UpdatedAt = businessPartner.UpdatedAt,
-                CreatedBy = businessPartner.CreatedBy?.ConvertToUserViewModelLite(),
-                CreatedAt = businessPartner.CreatedAt
+                CreatedAt = businessPartner.CreatedAt,
             };
 
             return businessPartnerViewModel;
@@ -77,27 +67,24 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Code = businessPartner.Code,
                 Name = businessPartner.Name,
 
-                Director = businessPartner.Director,
-
-                Address = businessPartner.Address,
-                InoAddress = businessPartner.InoAddress,
-
                 PIB = businessPartner.PIB,
-                MatCode = businessPartner.MatCode,
+                PIO = businessPartner.PIO,
+                PDV = businessPartner.PDV,
+                IndustryCode = businessPartner.IndustryCode,
+                IdentificationNumber = businessPartner.IdentificationNumber,
 
-                Mobile = businessPartner.Mobile,
-                Phone = businessPartner.Phone,
-                Email = businessPartner.Email,
+                Rebate = businessPartner.Rebate,
+                DueDate = businessPartner.DueDate,
 
-                ActivityCode = businessPartner.ActivityCode,
+                WebSite = businessPartner.WebSite,
+                ContactPerson = businessPartner.ContactPerson,
 
-                BankAccountNumber = businessPartner.BankAccountNumber,
+                IsInPDV = businessPartner.IsInPDV,
 
-                OpeningDate = businessPartner.OpeningDate,
-                BranchOpeningDate = businessPartner.BranchOpeningDate,
+                JBKJS = businessPartner.JBKJS,
 
                 UpdatedAt = businessPartner.UpdatedAt,
-                CreatedAt = businessPartner.CreatedAt
+                CreatedAt = businessPartner.CreatedAt,
             };
             return businessPartnerViewModel;
         }
@@ -112,30 +99,29 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Code = businessPartnerViewModel.Code,
                 Name = businessPartnerViewModel.Name,
 
-                Director = businessPartnerViewModel.Director,
-
-                Address = businessPartnerViewModel.Address,
-                InoAddress = businessPartnerViewModel.InoAddress,
-
                 PIB = businessPartnerViewModel.PIB,
-                MatCode = businessPartnerViewModel.MatCode,
+                PIO = businessPartnerViewModel.PIO,
+                PDV = businessPartnerViewModel.PDV,
+                IndustryCode = businessPartnerViewModel.IndustryCode,
+                IdentificationNumber = businessPartnerViewModel.IdentificationNumber,
 
-                Mobile = businessPartnerViewModel.Mobile,
-                Phone = businessPartnerViewModel.Phone,
-                Email = businessPartnerViewModel.Email,
+                Rebate = businessPartnerViewModel.Rebate,
+                DueDate = businessPartnerViewModel.DueDate,
 
-                ActivityCode = businessPartnerViewModel.ActivityCode,
+                WebSite = businessPartnerViewModel.WebSite,
+                ContactPerson = businessPartnerViewModel.ContactPerson,
 
-                BankAccountNumber = businessPartnerViewModel.BankAccountNumber,
-                
-                OpeningDate = businessPartnerViewModel.OpeningDate,
-                BranchOpeningDate = businessPartnerViewModel.BranchOpeningDate,
+                IsInPDV = businessPartnerViewModel.IsInPDV,
+
+                JBKJS = businessPartnerViewModel.JBKJS,
 
                 CreatedById = businessPartnerViewModel.CreatedBy?.Id ?? null,
-                CreatedAt = businessPartnerViewModel.CreatedAt
+                CompanyId = businessPartnerViewModel.Company?.Id ?? null,
+
+                UpdatedAt = businessPartnerViewModel.UpdatedAt,
+                CreatedAt = businessPartnerViewModel.CreatedAt,
             };
             return businessPartner;
-
         }
     }
 }

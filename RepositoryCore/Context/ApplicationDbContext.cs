@@ -68,6 +68,11 @@ namespace RepositoryCore.Context
         public DbSet<User> Users { get; set; }
 
         public DbSet<BusinessPartner> BusinessPartners { get; set; }
+        public DbSet<BusinessPartnerLocation> BusinessPartnerLocations { get; set; }
+        public DbSet<BusinessPartnerPhone> BusinessPartnerPhones { get; set; }
+        public DbSet<BusinessPartnerOrganizationUnit> BusinessPartnerOrganizationUnits { get; set; }
+        public DbSet<BusinessPartnerType> BusinessPartnerTypes { get; set; }
+        public DbSet<BusinessPartnerBusinessPartnerType> BusinessPartnerBusinessPartnerTypes { get; set; }
 
         public DbSet<Individual> Individuals { get; set; }
 
@@ -89,6 +94,7 @@ namespace RepositoryCore.Context
 		public DbSet<Bank> Banks { get; set; }
 		public DbSet<LicenceType> LicenceTypes { get; set; }
 
+        
 
 
 		//protected override void OnModelCreating(ModelBuilder modelBuilder)

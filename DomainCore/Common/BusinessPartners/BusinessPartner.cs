@@ -10,24 +10,25 @@ namespace DomainCore.Common.BusinessPartners
         public string Code { get; set; }
         public string Name { get; set; }
 
-        public string Director { get; set; }
-
-        public string Address { get; set; }
-        public string InoAddress { get; set; }
-
         public string PIB { get; set; }
-        public string MatCode { get; set; }
+        public string PIO { get; set; }
+        public string PDV { get; set; }
+        public string IndustryCode { get; set; } // Business partner industry code (srb. Sifra delatnosti)
+        public string IdentificationNumber { get; set; } // Business partner identification number (srb. Maticni broj)
 
-        public string Mobile { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        public decimal Rebate { get; set; }
+        public int DueDate { get; set; }
 
-        public string ActivityCode { get; set; }
+        public string WebSite { get; set; }
+        public string ContactPerson { get; set; }
 
-        public string BankAccountNumber { get; set; }
+        public bool IsInPDV { get; set; }
 
-        public DateTime OpeningDate { get; set; }
-        public DateTime? BranchOpeningDate { get; set; }
+        public string JBKJS { get; set; }
 
+        public List<BusinessPartnerLocation> Locations { get; set; }
+        public List<BusinessPartnerOrganizationUnit> OrganizationUnits { get; set; }
+        public List<BusinessPartnerPhone> Phones { get; set; }
+        public List<BusinessPartnerBusinessPartnerType> BusinessPartnerTypes { get; set; }
     }
 }

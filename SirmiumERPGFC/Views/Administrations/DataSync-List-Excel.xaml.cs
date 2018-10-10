@@ -32,7 +32,7 @@ namespace SirmiumERPGFC.Views.Administrations
         public static string BaseApiUrl = "http://localhost:5001/api";
 
         #region CountryButtonContent
-        private string _CountryButtonContent = " Tipovi artikala ";
+        private string _CountryButtonContent = " Države ";
 
         public string CountryButtonContent
         {
@@ -162,7 +162,7 @@ namespace SirmiumERPGFC.Views.Administrations
 
                 SendData(apiUrl, values);
 
-                CountryButtonContent = " Tipovi artikala ";
+                CountryButtonContent = " Države ";
                 CountryButtonEnabled = true;
             });
             th.IsBackground = true;

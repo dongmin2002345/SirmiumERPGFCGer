@@ -20,37 +20,37 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             this.context = context;
         }
 
-        public List<BusinessPartner> GetBusinessPartners()
+        public List<BusinessPartner> GetBusinessPartners(int companyId)
         {
-            List<BusinessPartner> BusinessPartners = context.BusinessPartners
-                .Include("CreatedBy")
-                .Where(x => x.Active == true)
+            List<BusinessPartner> businessPartners = context.BusinessPartners
+                .Include(x => x.Company)
+                .Include(x => x.CreatedBy)
+                .Where(x => x.Company.Id == companyId && x.Active == true)
+                .AsNoTracking()
+                .ToList();
+
+            return businessPartners;
+        }
+
+        public List<BusinessPartner> GetBusinessPartnersNewerThen(int companyId, DateTime lastUpdateTime)
+        {
+            List<BusinessPartner> businessPartners = context.BusinessPartners
+                .Include(x => x.Company)
+                .Include(x => x.CreatedBy)
+                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
                 .OrderByDescending(x => x.UpdatedAt)
                 .AsNoTracking()
                 .ToList();
 
-            return BusinessPartners;
-        }
-
-        public List<BusinessPartner> GetBusinessPartnersNewerThen(DateTime lastUpdateTime)
-        {
-            List<BusinessPartner> BusinessPartners = context.BusinessPartners
-                .Include(x => x.CreatedBy)
-                .Where(x => x.UpdatedAt > lastUpdateTime && x.Active == true)
-                .OrderBy(x => x.Code)
-                .Take(20)
-                .AsNoTracking()
-                .ToList();
-
-            return BusinessPartners;
+            return businessPartners;
         }
 
         public BusinessPartner GetBusinessPartner(int id)
         {
             return context.BusinessPartners
-                .Include("CreatedBy")
-                .OrderByDescending(x => x.UpdatedAt)
-                .FirstOrDefault(x => x.Id == id && x.Active == true);
+                .Include(x => x.Company)
+                .Include(x => x.CreatedBy)
+            .FirstOrDefault(x => x.Id == id && x.Active == true);
         }
 
         public BusinessPartner Create(BusinessPartner businessPartner)
@@ -66,37 +66,34 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             }
             else
             {
-                // Load businessPartner that will be updated
+                // Load item that will be updated
                 BusinessPartner dbEntry = context.BusinessPartners
-                .FirstOrDefault(x => x.Identifier == businessPartner.Identifier && x.Active == true);
+                    .FirstOrDefault(x => x.Identifier == businessPartner.Identifier && x.Active == true);
 
                 if (dbEntry != null)
                 {
+                    dbEntry.CompanyId = businessPartner.CompanyId ?? null;
                     dbEntry.CreatedById = businessPartner.CreatedById ?? null;
 
                     // Set properties
                     dbEntry.Code = businessPartner.Code;
                     dbEntry.Name = businessPartner.Name;
 
-                    dbEntry.Director = businessPartner.Director;
-
-                    dbEntry.Address = businessPartner.Address;
-                    dbEntry.InoAddress = businessPartner.InoAddress;
-
                     dbEntry.PIB = businessPartner.PIB;
-                    dbEntry.MatCode = businessPartner.MatCode;
+                    dbEntry.PIO = businessPartner.PIO;
+                    dbEntry.PDV = businessPartner.PDV;
+                    dbEntry.IndustryCode = businessPartner.IndustryCode;
+                    dbEntry.IdentificationNumber = businessPartner.IdentificationNumber;
 
-                    dbEntry.Mobile = businessPartner.Mobile;
-                    dbEntry.Phone = businessPartner.Phone;
-                    dbEntry.Email = businessPartner.Email;
+                    dbEntry.Rebate = businessPartner.Rebate;
+                    dbEntry.DueDate = businessPartner.DueDate;
 
-                    dbEntry.ActivityCode = businessPartner.ActivityCode;
+                    dbEntry.WebSite = businessPartner.WebSite;
+                    dbEntry.ContactPerson = businessPartner.ContactPerson;
 
-                    dbEntry.BankAccountNumber = businessPartner.BankAccountNumber;
+                    dbEntry.IsInPDV = businessPartner.IsInPDV;
 
-                    dbEntry.OpeningDate = businessPartner.OpeningDate;
-                    dbEntry.BranchOpeningDate = businessPartner.BranchOpeningDate;
-
+                    dbEntry.JBKJS = businessPartner.JBKJS;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -108,7 +105,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
         public BusinessPartner Delete(Guid identifier)
         {
-            // Load business partner that will be deleted
+            // Load BusinessPartner that will be deleted
             BusinessPartner dbEntry = context.BusinessPartners
                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
@@ -116,11 +113,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             {
                 // Set activity
                 dbEntry.Active = false;
-
                 // Set timestamp
                 dbEntry.UpdatedAt = DateTime.Now;
             }
-
             return dbEntry;
         }
     }

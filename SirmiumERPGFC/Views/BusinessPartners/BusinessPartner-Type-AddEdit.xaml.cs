@@ -1,16 +1,14 @@
-﻿using GlobalValidations;
-using Ninject;
+﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
+using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Common;
-using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.BusinessPartners;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -25,57 +23,36 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ToastNotifications;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Messages;
-using ToastNotifications.Position;
 
 namespace SirmiumERPGFC.Views.BusinessPartners
 {
     /// <summary>
-    /// Interaction logic for BusinessPartnerAddEdit.xaml
+    /// Interaction logic for BusinessPartner_Type_AddEdit.xaml
     /// </summary>
-    public partial class BusinessPartnerAddEdit : UserControl, INotifyPropertyChanged
+    public partial class BusinessPartner_Type_AddEdit : UserControl, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Event for handling business partner create and update
-        /// </summary>
-        public event BusinessPartnerHandler BusinessPartnerCreatedUpdated;
+        #region Attributes
 
-        /// <summary>
-        /// Service for accessing business partners
-        /// </summary>
-        IBusinessPartnerService businessPartnerService;
-
-        #region CurrentBusinessPartner
-        private BusinessPartnerViewModel _CurrentBusinessPartner;
-
-        public BusinessPartnerViewModel CurrentBusinessPartner
-        {
-            get { return _CurrentBusinessPartner; }
-            set
-            {
-                if (_CurrentBusinessPartner != value)
-                {
-                    _CurrentBusinessPartner = value;
-                    NotifyPropertyChanged("CurrentBusinessPartner");
-                }
-            }
-        }
+        #region Services
+        IBusinessPartnerTypeService businessPartnerTypeService;
         #endregion
 
-        #region IsCreateProcess
-        private bool _IsCreateProcess;
+        #region Events
+        public event BusinessPartnerTypeHandler BusinessPartnerTypeCreatedUpdated;
+        #endregion
 
-        public bool IsCreateProcess
+        #region CurrentBusinessPartnerType
+        private BusinessPartnerTypeViewModel _CurrentBusinessPartnerType;
+
+        public BusinessPartnerTypeViewModel CurrentBusinessPartnerType
         {
-            get { return _IsCreateProcess; }
+            get { return _CurrentBusinessPartnerType; }
             set
             {
-                if (_IsCreateProcess != value)
+                if (_CurrentBusinessPartnerType != value)
                 {
-                    _IsCreateProcess = value;
-                    NotifyPropertyChanged("IsCreateProcess");
+                    _CurrentBusinessPartnerType = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerType");
                 }
             }
         }
@@ -115,46 +92,86 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
-        /// <summary>
-        /// Notifier for displaying error and success messages
-        /// </summary>
-        Notifier notifier;
+        #region IsCreateProcess
+        private bool _IsCreateProcess;
+
+        public bool IsCreateProcess
+        {
+            get { return _IsCreateProcess; }
+            set
+            {
+                if (_IsCreateProcess != value)
+                {
+                    _IsCreateProcess = value;
+                    NotifyPropertyChanged("IsCreateProcess");
+                }
+            }
+        }
+        #endregion
+
+        #region SubmitButtonContent
+        private string _SubmitButtonContent = " Sačuvaj i proknjiži ";
+
+        public string SubmitButtonContent
+        {
+            get { return _SubmitButtonContent; }
+            set
+            {
+                if (_SubmitButtonContent != value)
+                {
+                    _SubmitButtonContent = value;
+                    NotifyPropertyChanged("SubmitButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SubmitButtonEnabled
+        private bool _SubmitButtonEnabled = true;
+
+        public bool SubmitButtonEnabled
+        {
+            get { return _SubmitButtonEnabled; }
+            set
+            {
+                if (_SubmitButtonEnabled != value)
+                {
+                    _SubmitButtonEnabled = value;
+                    NotifyPropertyChanged("SubmitButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+        #endregion
 
         #region Constructor
 
-        /// <summary>
-        /// BusinessPartnerAddEdit constructor
-        /// </summary>
-        /// <param name="businessPartnerViewModel"></param>
-        public BusinessPartnerAddEdit(BusinessPartnerViewModel businessPartnerViewModel, bool isCreateProcess)
+        public BusinessPartner_Type_AddEdit(BusinessPartnerTypeViewModel businessPartnerTypeViewModel, bool isCreateProcess)
         {
             // Initialize service
-            businessPartnerService = DependencyResolver.Kernel.Get<IBusinessPartnerService>();
+            this.businessPartnerTypeService = DependencyResolver.Kernel.Get<IBusinessPartnerTypeService>();
 
-            // Draw all components
             InitializeComponent();
 
             this.DataContext = this;
 
-            CurrentBusinessPartner = businessPartnerViewModel;
+            CurrentBusinessPartnerType = businessPartnerTypeViewModel;
             IsCreateProcess = isCreateProcess;
+
+            txtName.Focus();
         }
         #endregion
 
-        #region Cancel save button 
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            FlyoutHelper.CloseFlyout(this);
-        }
+        #region Save and Cancel button
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
-            if (String.IsNullOrEmpty(CurrentBusinessPartner.Mobile))
+            if (String.IsNullOrEmpty(CurrentBusinessPartnerType.Name))
             {
-                MainWindow.WarningMessage = "Morate uneti mobilni!";
+                MainWindow.WarningMessage = "Obavezno polje: Ime vrste";
                 return;
             }
 
@@ -165,13 +182,14 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 SaveButtonContent = " Čuvanje u toku... ";
                 SaveButtonEnabled = false;
 
-                CurrentBusinessPartner.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                CurrentBusinessPartnerType.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentBusinessPartnerType.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentBusinessPartner.IsSynced = false;
-                CurrentBusinessPartner.UpdatedAt = DateTime.Now;
+                CurrentBusinessPartnerType.IsSynced = false;
+                CurrentBusinessPartnerType.UpdatedAt = DateTime.Now;
 
-                BusinessPartnerResponse response = new BusinessPartnerSQLiteRepository().Delete(CurrentBusinessPartner.Identifier);
-                response = new BusinessPartnerSQLiteRepository().Create(CurrentBusinessPartner);
+                BusinessPartnerTypeResponse response = new BusinessPartnerTypeSQLiteRepository().Delete(CurrentBusinessPartnerType.Identifier);
+                response = new BusinessPartnerTypeSQLiteRepository().Create(CurrentBusinessPartnerType);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
@@ -180,7 +198,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     return;
                 }
 
-                response = businessPartnerService.Create(CurrentBusinessPartner);
+                response = businessPartnerTypeService.Create(CurrentBusinessPartnerType);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
@@ -190,18 +208,17 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
                 if (response.Success)
                 {
-                    new BusinessPartnerSQLiteRepository().UpdateSyncStatus(response.BusinessPartner.Identifier, response.BusinessPartner.Id, true);
+                    new BusinessPartnerTypeSQLiteRepository().UpdateSyncStatus(CurrentBusinessPartnerType.Identifier, CurrentBusinessPartnerType.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " Sačuvaj ";
                     SaveButtonEnabled = true;
 
-                    BusinessPartnerCreatedUpdated();
+                    BusinessPartnerTypeCreatedUpdated();
 
                     if (IsCreateProcess)
                     {
-                        CurrentBusinessPartner = new BusinessPartnerViewModel();
-                        CurrentBusinessPartner.Identifier = Guid.NewGuid();
-                        CurrentBusinessPartner.Code = new BusinessPartnerSQLiteRepository().GetNewCodeValue();
+                        CurrentBusinessPartnerType = new BusinessPartnerTypeViewModel();
+                        CurrentBusinessPartnerType.Identifier = Guid.NewGuid();
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
@@ -225,24 +242,12 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             });
             th.IsBackground = true;
             th.Start();
+            txtName.Focus();
         }
 
-        #endregion
-
-
-        #region Keyboard shortcuts
-
-        private void HandleKeyDownEvent(object sender, KeyEventArgs e)
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                FlyoutHelper.CloseFlyout(this);
-            }
-
-            if (e.Key == Key.S && (Keyboard.Modifiers & (ModifierKeys.Control)) == (ModifierKeys.Control))
-            {
-                btnSave_Click(sender, e);
-            }
+            FlyoutHelper.CloseFlyout(this);
         }
 
         #endregion
@@ -255,6 +260,5 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
         }
         #endregion
-
     }
 }

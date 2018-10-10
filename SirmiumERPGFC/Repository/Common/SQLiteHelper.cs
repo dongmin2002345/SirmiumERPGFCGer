@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Locations;
@@ -289,6 +290,40 @@ namespace SirmiumERPGFC.Repository.Common
             }
             else
                 return new FamilyMemberViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
+        public static BusinessPartnerViewModel GetBusinessPartner(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new BusinessPartnerViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
+        public static BusinessPartnerTypeViewModel GetBusinessPartnerType(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new BusinessPartnerTypeViewModel()
                 {
                     Id = query.GetInt32(counter++),
                     Identifier = query.GetGuid(counter++),

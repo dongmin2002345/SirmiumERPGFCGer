@@ -165,7 +165,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerBusinessPartnerTypeSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerLocationSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerOrganizationUnitSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\LicenceTypeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\FamilyMemberSQLiteRepository.cs" />
@@ -207,17 +212,23 @@
     <Compile Include="Views\Banks\Bank-List.xaml.cs">
       <DependentUpon>Bank-List.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml.cs">
-      <DependentUpon>BusinessPartnerAddEdit.xaml</DependentUpon>
+    <Compile Include="Views\BusinessPartners\BusinessPartner-List-AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner-List-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner-List.xaml.cs">
+      <DependentUpon>BusinessPartner-List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner-Type-AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner-Type-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner-Type-List.xaml.cs">
+      <DependentUpon>BusinessPartner-Type-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List-AddEdit.xaml.cs">
       <DependentUpon>BusinessPartnerEmployee-List-AddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml.cs">
       <DependentUpon>BusinessPartnerEmployee-List.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BusinessPartners\BusinessPartnerList.xaml.cs">
-      <DependentUpon>BusinessPartnerList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSiteBusinessPartner-List-AddEdit.xaml.cs">
       <DependentUpon>ConstructionSiteBusinessPartner-List-AddEdit.xaml</DependentUpon>
@@ -407,7 +418,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml">
+    <Page Include="Views\BusinessPartners\BusinessPartner-List-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner-Type-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner-Type-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -416,10 +439,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartnerList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
