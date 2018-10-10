@@ -70,6 +70,9 @@ namespace ApiExtension.Sender
                 { typeof(BusinessPartnerViewModel), "BusinessPartner" },
                 { typeof(List<BusinessPartnerViewModel>), "BusinessPartner" },
 
+                { typeof(BusinessPartnerTypeViewModel), "BusinessPartnerType" },
+                { typeof(List<BusinessPartnerTypeViewModel>), "BusinessPartnerType" },
+
                 #endregion
 
                 #region Individuals

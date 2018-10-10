@@ -162,7 +162,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerBusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\LicenceTypeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\FamilyMemberSQLiteRepository.cs" />
@@ -200,6 +202,12 @@
     </Compile>
     <Compile Include="Views\Banks\Bank-List.xaml.cs">
       <DependentUpon>Bank-List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner-Type-AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner-Type-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner-Type-List.xaml.cs">
+      <DependentUpon>BusinessPartner-Type-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerAddEdit.xaml.cs">
       <DependentUpon>BusinessPartnerAddEdit.xaml</DependentUpon>
@@ -394,6 +402,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Banks\Bank-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner-Type-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner-Type-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

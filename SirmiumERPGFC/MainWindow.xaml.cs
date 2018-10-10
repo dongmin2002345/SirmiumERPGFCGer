@@ -432,6 +432,11 @@ namespace SirmiumERPGFC
 		{
 			cntCtrl.Content = new LicenceType_List();
 		}
-	}
+
+        private void mniBusinessPartnerType_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new BusinessPartner_Type_List();
+        }
+    }
 }
 
