@@ -58,6 +58,7 @@ namespace ServiceWebApi.Implementations.Common.BusinessPartners
             try
             {
                 response = WpfApiHandler.SendToApi<BusinessPartnerViewModel, BusinessPartnerResponse>(businessPartnerViewModel, "Create");
+                response.Success = true;
             }
             catch (Exception ex)
             {
