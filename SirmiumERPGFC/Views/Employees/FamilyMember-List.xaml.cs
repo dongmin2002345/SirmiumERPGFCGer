@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Gradovi ... ";
+            RefreshButtonContent = " Clanovi porodice ... ";
             new FamilyMemberSQLiteRepository().Sync(familyMemberService);
 
             DisplayData();

@@ -207,7 +207,7 @@ namespace SirmiumERPGFC.Views.Employees
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtCode.Focus();
+                                txtName.Focus();
                             })
                         );
                     }
