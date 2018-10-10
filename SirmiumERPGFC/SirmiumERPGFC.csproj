@@ -236,6 +236,9 @@
     <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml.cs">
       <DependentUpon>BusinessPartnerEmployee-List.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Common\SubmitConfirmation.xaml.cs">
+      <DependentUpon>SubmitConfirmation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSiteBusinessPartner-List-AddEdit.xaml.cs">
       <DependentUpon>ConstructionSiteBusinessPartner-List-AddEdit.xaml</DependentUpon>
     </Compile>
@@ -449,6 +452,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Common\SubmitConfirmation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

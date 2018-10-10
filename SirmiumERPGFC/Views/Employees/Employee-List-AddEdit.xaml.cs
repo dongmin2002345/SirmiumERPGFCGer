@@ -1,13 +1,20 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.Individuals;
+using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Common.Individuals;
+using ServiceInterfaces.Messages.Employees;
+using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Individuals;
+using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.Employees;
+using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -29,254 +36,517 @@ using ToastNotifications.Position;
 
 namespace SirmiumERPGFC.Views.Employees
 {
-    /// <summary>
-    /// Interaction logic for IndividualAddEdit.xaml
-    /// </summary>
     public partial class Employee_List_AddEdit : UserControl, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Event for handling individual create and update
-        /// </summary>
-        public event IndividualHandler IndividualCreatedUpdated;
+        #region Attributes
 
-        /// <summary>
-        /// Service for accessing individual
-        /// </summary>
-        IIndividualService individualService;
+        #region Services
+        IEmployeeService EmployeeService;
+        #endregion
 
-        #region CurrentIndividual
-        private IndividualViewModel _CurrentIndividual;
+        #region Event
+        public event EmployeeHandler EmployeeCreated;
+        #endregion
 
-        public IndividualViewModel CurrentIndividual
+        #region CurrentEmployee
+        private EmployeeViewModel _CurrentEmployee = new EmployeeViewModel();
+
+        public EmployeeViewModel CurrentEmployee
         {
-            get { return _CurrentIndividual; }
+            get { return _CurrentEmployee; }
             set
             {
-                if (_CurrentIndividual != value)
+                if (_CurrentEmployee != value)
                 {
-                    _CurrentIndividual = value;
-                    NotifyPropertyChanged("CurrentIndividual");
+                    _CurrentEmployee = value;
+                    NotifyPropertyChanged("CurrentEmployee");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeItemsFromDB
+        private ObservableCollection<EmployeeItemViewModel> _EmployeeItemsFromDB;
+
+        public ObservableCollection<EmployeeItemViewModel> EmployeeItemsFromDB
+        {
+            get { return _EmployeeItemsFromDB; }
+            set
+            {
+                if (_EmployeeItemsFromDB != value)
+                {
+                    _EmployeeItemsFromDB = value;
+                    NotifyPropertyChanged("EmployeeItemsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeItemForm
+        private EmployeeItemViewModel _CurrentEmployeeItemForm = new EmployeeItemViewModel();
+
+        public EmployeeItemViewModel CurrentEmployeeItemForm
+        {
+            get { return _CurrentEmployeeItemForm; }
+            set
+            {
+                if (_CurrentEmployeeItemForm != value)
+                {
+                    _CurrentEmployeeItemForm = value;
+                    NotifyPropertyChanged("CurrentEmployeeItemForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeItemDG
+        private EmployeeItemViewModel _CurrentEmployeeItemDG;
+
+        public EmployeeItemViewModel CurrentEmployeeItemDG
+        {
+            get { return _CurrentEmployeeItemDG; }
+            set
+            {
+                if (_CurrentEmployeeItemDG != value)
+                {
+                    _CurrentEmployeeItemDG = value;
+                    NotifyPropertyChanged("CurrentEmployeeItemDG");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeItemDataLoading
+        private bool _EmployeeItemDataLoading;
+
+        public bool EmployeeItemDataLoading
+        {
+            get { return _EmployeeItemDataLoading; }
+            set
+            {
+                if (_EmployeeItemDataLoading != value)
+                {
+                    _EmployeeItemDataLoading = value;
+                    NotifyPropertyChanged("EmployeeItemDataLoading");
+                }
+            }
+        }
+        #endregion
+        
+
+        #region SaveButtonContent
+        private string _SaveButtonContent = " Sačuvaj ";
+
+        public string SaveButtonContent
+        {
+            get { return _SaveButtonContent; }
+            set
+            {
+                if (_SaveButtonContent != value)
+                {
+                    _SaveButtonContent = value;
+                    NotifyPropertyChanged("SaveButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SaveButtonEnabled
+        private bool _SaveButtonEnabled = true;
+
+        public bool SaveButtonEnabled
+        {
+            get { return _SaveButtonEnabled; }
+            set
+            {
+                if (_SaveButtonEnabled != value)
+                {
+                    _SaveButtonEnabled = value;
+                    NotifyPropertyChanged("SaveButtonEnabled");
                 }
             }
         }
         #endregion
 
 
-        /// <summary>
-        /// Notifier for displaying error and success messages
-        /// </summary>
-        Notifier notifier;
+        #region SubmitButtonContent
+        private string _SubmitButtonContent = " Sačuvaj i proknjiži ";
+
+        public string SubmitButtonContent
+        {
+            get { return _SubmitButtonContent; }
+            set
+            {
+                if (_SubmitButtonContent != value)
+                {
+                    _SubmitButtonContent = value;
+                    NotifyPropertyChanged("SubmitButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SubmitButtonEnabled
+        private bool _SubmitButtonEnabled = true;
+
+        public bool SubmitButtonEnabled
+        {
+            get { return _SubmitButtonEnabled; }
+            set
+            {
+                if (_SubmitButtonEnabled != value)
+                {
+                    _SubmitButtonEnabled = value;
+                    NotifyPropertyChanged("SubmitButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsCreateProcess
+        private bool _IsCreateProcess;
+
+        public bool IsCreateProcess
+        {
+            get { return _IsCreateProcess; }
+            set
+            {
+                if (_IsCreateProcess != value)
+                {
+                    _IsCreateProcess = value;
+                    NotifyPropertyChanged("IsCreateProcess");
+                }
+            }
+        }
+        #endregion
+
+        #region IsHeaderCreated
+        private bool _IsHeaderCreated;
+
+        public bool IsHeaderCreated
+        {
+            get { return _IsHeaderCreated; }
+            set
+            {
+                if (_IsHeaderCreated != value)
+                {
+                    _IsHeaderCreated = value;
+                    NotifyPropertyChanged("IsHeaderCreated");
+                }
+            }
+        }
+        #endregion
+
+        #region IsPopup
+        private bool _IsPopup;
+
+        public bool IsPopup
+        {
+            get { return _IsPopup; }
+            set
+            {
+                if (_IsPopup != value)
+                {
+                    _IsPopup = value;
+                    NotifyPropertyChanged("IsPopup");
+                }
+            }
+        }
+        #endregion
+
+        #endregion
 
         #region Constructor
 
-        /// <summary>
-        /// IndividualAddEdit constructor
-        /// </summary>
-        /// <param name="IndividualViewModel"></param>
-        public Employee_List_AddEdit(IndividualViewModel IndividualViewModel)
+        public Employee_List_AddEdit(EmployeeViewModel Employee, bool isCreateProcess, bool isPopup)
         {
-            // Initialize service
-            this.individualService = DependencyResolver.Kernel.Get<IIndividualService>();
+            // Load required services
+            EmployeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
 
-            // Draw all components
             InitializeComponent();
 
             this.DataContext = this;
 
-            // Initialize notifications
-            notifier = new Notifier(cfg =>
+            CurrentEmployee = Employee;
+            IsCreateProcess = isCreateProcess;
+            IsHeaderCreated = !isCreateProcess;
+            IsPopup = isPopup;
+
+            Thread displayThread = new Thread(() =>
             {
-                cfg.PositionProvider = new WindowPositionProvider(
-                    parentWindow: System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault(),
-                    corner: Corner.TopRight,
-                    offsetX: 10,
-                    offsetY: 10);
-
-                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                    notificationLifetime: TimeSpan.FromSeconds(3),
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(3));
-
-                cfg.Dispatcher = Application.Current.Dispatcher;
+                DisplayItemData();
             });
-
-            CurrentIndividual = IndividualViewModel;
-
-            if (CurrentIndividual.Code <= 0)
-                CurrentIndividual.Code = individualService.GetNewCodeValue().Code;
-
-            // Add handler for keyboard shortcuts
-            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
-
-            txtName.Focus();
+            displayThread.IsBackground = true;
+            displayThread.Start();
         }
+
         #endregion
 
-        private void cbxFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        #region Display data
+
+        private void DisplayItemData()
         {
-            //if (CurrentOutputInvoice.IsFinalInvoice == false)
-            //{
-            //    lblAdvanceOutputInvoice.Visibility = Visibility.Hidden;
-            //    advanceOutputInvoicePopup.Visibility = Visibility.Hidden;
-            //}
-            //else
-            //{
-            //    lblAdvanceOutputInvoice.Visibility = Visibility.Visible;
-            //    advanceOutputInvoicePopup.Visibility = Visibility.Visible;
-            //}
+            EmployeeItemDataLoading = true;
+
+            EmployeeItemListResponse response = new EmployeeItemSQLiteRepository()
+                .GetEmployeeItemsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>(
+                    response.EmployeeItems ?? new List<EmployeeItemViewModel>());
+            }
+            else
+            {
+                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
+            }
+
+            EmployeeItemDataLoading = false;
         }
 
-        #region Create, edit Item
+        #endregion
 
-        private void btnSaveItem_Click(object sender, RoutedEventArgs e)
+        #region Save header
+
+        private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
         {
-            
+            IsHeaderCreated = false;
+
+            //#region Validation
+
+            //if (CurrentEmployee.InputNoteDate == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Datum prijema";
+            //    return;
+            //}
+
+            //if (CurrentEmployee.Supplier == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Dobavljač";
+            //    return;
+            //}
+
+            //if (CurrentEmployee.Country == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Država";
+            //    return;
+            //}
+
+            //if (CurrentEmployee.ReceivedWeight == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Težina kod prijema";
+            //    return;
+            //}
+
+            //if (CurrentEmployee.FarmWeight == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Težina na farmi";
+            //    return;
+            //}
+
+            //if (CurrentEmployee.Quantity == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Količina / Broj grla";
+            //    return;
+            //}
+
+            //#endregion
+
+            CurrentEmployee.IsSynced = false;
+            CurrentEmployee.UpdatedAt = DateTime.Now;
+            CurrentEmployee.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentEmployee.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var sqLite = new EmployeeSQLiteRepository();
+            sqLite.Delete(CurrentEmployee.Identifier);
+            var response = sqLite.Create(CurrentEmployee);
+            if (response.Success)
+            {
+                MainWindow.SuccessMessage = "Zaglavlje je uspešno sačuvano!";
+                IsHeaderCreated = true;
+
+                txtName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        #endregion
+
+        #region Add, edit, delete and cancel item
+
+        private void btnAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            //#region Validation
+
+            //if (String.IsNullOrEmpty(CurrentEmployeeItemForm.Name))
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Ime";
+            //    return;
+            //}
+
+            //if (String.IsNullOrEmpty(CurrentEmployeeItemForm.EarTag))
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Ušna markica";
+            //    return;
+            //}
+
+            //if (CurrentEmployeeItemForm.DateOfBirth == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Datum rođenja";
+            //    return;
+            //}
+
+            //if (CurrentEmployeeItemForm.Gender == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Pol";
+            //    return;
+            //}
+
+            //#endregion
+
+            // IF update process, first delete item
+            new EmployeeItemSQLiteRepository().Delete(CurrentEmployeeItemForm.Identifier);
+
+            CurrentEmployeeItemForm.Employee = CurrentEmployee;
+            CurrentEmployeeItemForm.Identifier = Guid.NewGuid();
+            CurrentEmployeeItemForm.IsSynced = false;
+            CurrentEmployeeItemForm.UpdatedAt = DateTime.Now;
+            CurrentEmployeeItemForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentEmployeeItemForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new EmployeeItemSQLiteRepository().Create(CurrentEmployeeItemForm);
+            if (response.Success)
+            {
+                CurrentEmployeeItemForm = new EmployeeItemViewModel();
+
+                Thread displayThread = new Thread(() => DisplayItemData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeItemForm = CurrentEmployeeItemDG;
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new EmployeeItemSQLiteRepository().Delete(CurrentEmployeeItemDG.Identifier);
+
+                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => DisplayItemData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
         private void btnCancelItem_Click(object sender, RoutedEventArgs e)
         {
-            
+            CurrentEmployeeItemForm = new EmployeeItemViewModel();
         }
 
         #endregion
 
-        #region Cancel save button 
+        #region Submit and Cancel button
 
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-        /// <summary>
-        /// Cancel operation and close window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+            SubmitConfirmation submitConfirmationForm = new SubmitConfirmation();
+            var showDialog = submitConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                // Save header for any new change
+                btnSaveHeader_Click(sender, e);
+
+                #region Validation
+
+                if (!IsHeaderCreated)
+                {
+                    MainWindow.WarningMessage = "Zaglavlje nije sačuvano";
+                    return;
+                }
+
+                #endregion
+
+                Thread th = new Thread(() =>
+                {
+                    SubmitButtonContent = " Čuvanje u toku... ";
+                    SubmitButtonEnabled = false;
+
+                    CurrentEmployee.EmployeeItems = EmployeeItemsFromDB;
+
+                    EmployeeResponse response = EmployeeService.Create(CurrentEmployee);
+
+                    if (response.Success)
+                    {
+                        new EmployeeSQLiteRepository().UpdateSyncStatus(CurrentEmployee.Identifier, response.Employee.Id, true);
+                        MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                        SubmitButtonContent = " Proknjiži ";
+                        SubmitButtonEnabled = true;
+
+                        EmployeeCreated();
+
+                        CurrentEmployee = new EmployeeViewModel();
+                        CurrentEmployee.Identifier = Guid.NewGuid();
+
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                if (IsPopup)
+                                    FlyoutHelper.CloseFlyoutPopup(this);
+                                else
+                                    FlyoutHelper.CloseFlyout(this);
+                            })
+                        );
+                    }
+                    else
+                    {
+                        MainWindow.ErrorMessage = "Greška kod čuvanja na serveru!";
+
+                        SubmitButtonContent = " Proknjiži ";
+                        SubmitButtonEnabled = true;
+                    }
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.CloseFlyout(this);
-        }
+            EmployeeCreated();
 
-        /// <summary>
-        /// Create or update Individual
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-
-            CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
-            CurrentIndividual.CreatedBy = new UserViewModel() { Id = customPrincipal.Identity.Id };
-
-            //if (String.IsNullOrEmpty(CurrentIndividual.Mobile))
-            //{
-            //    MainWindow.WarningMessage = "Morate uneti mobilni!";
-            //    return;
-            //}
-
-            //int PIB = 0;
-            //Int32.TryParse(CurrentIndividual.PIB, out PIB);
-
-            IndividualResponse response;
-
-            //// If by any chance PIB exists in the database
-            //if (response.Success == false)
-            //{
-            //    if (CurrentIndividual.Id != response.Individual.Id)
-            //    {
-            //        notifier.ShowError("PIB mora biti jedinstven!");
-            //        return;
-            //    }
-            //}
-            if (CurrentIndividual.Id > 0)
-                response = individualService.Update(CurrentIndividual);
+            if (IsPopup)
+                FlyoutHelper.CloseFlyoutPopup(this);
             else
-                response = individualService.Create(CurrentIndividual);
-
-            if (response.Success)
-            {
-                IndividualCreatedUpdated(response.Individual);
                 FlyoutHelper.CloseFlyout(this);
-            }
-            else
-                notifier.ShowError(response.Message);
         }
 
         #endregion
 
+        #region Mouse wheel event 
 
-        #region Keyboard shortcuts
-
-        private void HandleKeyDownEvent(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                FlyoutHelper.CloseFlyout(this);
-            }
-
-            if (e.Key == Key.S && (Keyboard.Modifiers & (ModifierKeys.Control)) == (ModifierKeys.Control))
-            {
-                btnSave_Click(sender, e);
-            }
-        }
-
-        #endregion
-
-        //#region Validation
-
-        ///// <summary>
-        ///// Validation of input fields
-        ///// </summary>
-        ///// <returns></returns>
-        //private bool InputIsValid()
-        //{
-        //    bool isValid = true;
-
-        //    // Check is CompanyName entered
-        //    if (String.IsNullOrEmpty(txtName.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Ime kompanije je obavezno!");
-        //    }
-
-        //    // Check is address entered
-        //    if (String.IsNullOrEmpty(txtAddress.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Adresa je obavezna!");
-        //    }
-
-        //    // Check is phone entered
-        //    if (String.IsNullOrEmpty(txtPhone.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Telefon je obavezan!");
-        //    }
-
-        //    // Check is Code entered
-        //    if (String.IsNullOrEmpty(txtCode.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Sifra je obavezna!");
-        //    }
-
-        //    // Check is Code entered
-        //    if (String.IsNullOrEmpty(txtPIBNumber.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("PIB je obavezan!");
-        //    }
-
-        //    if(String.IsNullOrEmpty(txtDueDate.Text))
-        //    {
-        //        isValid = false;
-        //        notifier.ShowError("Valuta partnera je obavezna!");
-        //    }
-
-
-        //    return isValid;
-        //}
-
-        //#endregion
-
-        #region Mouse scroll events
-
-        private void dgFamilyItems_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void PreviewMouseWheelEv(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             if (!e.Handled)
             {
@@ -291,14 +561,17 @@ namespace SirmiumERPGFC.Views.Employees
 
         #endregion
 
-        #region INotifyPropertyChange implementation
+        #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(string inPropName = "") //[CallerMemberName]
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
     }
 }

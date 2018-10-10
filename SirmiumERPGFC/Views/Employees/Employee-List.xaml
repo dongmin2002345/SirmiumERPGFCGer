@@ -6,23 +6,30 @@
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Employees"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
 
-    <UserControl.Background>
+    <Control.Background>
         <SolidColorBrush Color="White" />
-    </UserControl.Background>
+    </Control.Background>
+    <UserControl.Resources>
+        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
+        <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
+        <syncedConverter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="Pretraga" IsExpanded="True" Grid.Row="0">
+        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="Pretraga" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -31,107 +38,96 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="98*" />
-                    <ColumnDefinition Width="99*" />
-                    <ColumnDefinition Width="89*" />
-                    <ColumnDefinition Width="97*" />
-                    <ColumnDefinition Width="109*" />
-                    <ColumnDefinition Width="92*" />
-                    <ColumnDefinition Width="105*" />
-                    <ColumnDefinition Width="99*" />
-
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
 
                 <TextBlock Text="Šifra lica"  Grid.Column="0" VerticalAlignment="Center" Margin="5" Height="16"/>
-                <TextBox x:Name="txtSearchByOutputInvoiceCode" Grid.Column="1" 
-                         Text="{Binding Path=IndividualFilterObject.SearchBy_Code, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="txtSearchByCode" Grid.Column="1" 
+                         Text="{Binding Path=EmployeeSearchObject.SearchBy_Code, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
                 <TextBlock Text="Ime" Grid.Column="2" VerticalAlignment="Center" Margin="5" Height="16"/>
-                <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="3" 
-                         Text="{Binding Path=IndividualFilterObject.SearchBy_Name, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="txtSearchByName" Grid.Column="3" 
+                         Text="{Binding Path=EmployeeSearchObject.SearchBy_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
 
-                <TextBlock Text="Prezime" Grid.Column="4" VerticalAlignment="Center" Margin="5" Height="16"/>
-                <TextBox x:Name="txtSearchByBusinessPartnerName1" Grid.Column="5" 
-                         Text="{Binding Path=IndividualFilterObject.SearchBy_SurName, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="Prezime" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" Height="16"/>
+                <TextBox x:Name="txtSearchBySurName" Grid.Column="1" Grid.Row="1" 
+                         Text="{Binding Path=EmployeeSearchObject.SearchBy_SurName, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Zanimanje" Grid.Column="6" VerticalAlignment="Center" Margin="5" Height="16"/>
-                <TextBox x:Name="txtSearchByBusinessPartnerName12" Grid.Column="7" 
-                         Text="{Binding Path=IndividualFilterObject.SearchBy_Interest, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="Zanimanje" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="5" Height="16"/>
+                <TextBox x:Name="txtSearchByInterest" Grid.Column="3" Grid.Row="1"
+                         Text="{Binding Path=EmployeeSearchObject.SearchBy_Interest, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Datum vize od"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Margin="5,6" Height="16"/>
-                <DatePicker x:Name="dtSearchByCalculationDateFrom" Grid.Column="1" Grid.Row="1" 
-                         SelectedDate="{Binding Path=IndividualFilterObject.SearchBy_VisaFrom}"
+                <TextBlock Text="Datum vize od"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Margin="5,6" Height="16"/>
+                <DatePicker x:Name="dtSearchByVisaFrom" Grid.Column="1" Grid.Row="2" 
+                         SelectedDate="{Binding Path=EmployeeSearchObject.SearchBy_VisaFrom}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Datum vize do"  Grid.Column="2" VerticalAlignment="Center" Grid.Row="1" Margin="5,6" Height="16"/>
-                <DatePicker x:Name="dtSearchByCalculationDateTo" Grid.Column="3" Grid.Row="1" 
-                         SelectedDate="{Binding Path=IndividualFilterObject.SearchBy_VisaTo}"
+                <TextBlock Text="Datum vize do"  Grid.Column="2" VerticalAlignment="Center" Grid.Row="2" Margin="5,6" Height="16"/>
+                <DatePicker x:Name="dtSearchByVisaTo" Grid.Column="3" Grid.Row="2" 
+                         SelectedDate="{Binding Path=EmployeeSearchObject.SearchBy_VisaTo}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Radna dozvola od"  Grid.Column="4" VerticalAlignment="Center" Grid.Row="1" Margin="5,6" Height="16"/>
-                <DatePicker x:Name="dtSearchByCalculationDateFrom1" Grid.Column="5" Grid.Row="1" 
-                         SelectedDate="{Binding Path=IndividualFilterObject.SearchBy_PermitFrom}"
+                <TextBlock Text="Radna dozvola od"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Margin="5,6" Height="16"/>
+                <DatePicker x:Name="dtSearchByPermitFrom" Grid.Column="1" Grid.Row="3" 
+                         SelectedDate="{Binding Path=EmployeeSearchObject.SearchBy_PermitFrom}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Radna dozvola do"  Grid.Column="6" VerticalAlignment="Center" Grid.Row="1" Margin="5,6" Height="16"/>
-                <DatePicker x:Name="dtSearchByCalculationDateTo2" Grid.Column="7" Grid.Row="1" 
-                         SelectedDate="{Binding Path=IndividualFilterObject.SearchBy_PermitTo}"
+                <TextBlock Text="Radna dozvola do"  Grid.Column="2" VerticalAlignment="Center" Grid.Row="3" Margin="5,6" Height="16"/>
+                <DatePicker x:Name="dtSearchByPermitTo" Grid.Column="3" Grid.Row="3" 
+                         SelectedDate="{Binding Path=EmployeeSearchObject.SearchBy_PermitTo}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="5,6" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2">
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="3" Grid.Column="4">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\search.png" HorizontalAlignment="Center" Height="16" Width="16" />
                         <TextBlock Text=" Prikaži " />
                     </StackPanel>
                 </Button>
-
             </Grid>
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Radnici" Margin="5,2,5,0" Grid.Row="1" >
+        <GroupBox Header="Radnici" Margin="2,1,2,1" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Button x:Name="btnAddIndividual" Click="btnAddIndividual_Click" HorizontalAlignment="Left" Margin="5" Width="200">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="0">
+                    <Button x:Name="btnAdd" Click="btnAdd_Click" HorizontalAlignment="Left" Margin="2" Width="150">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-
-                            <TextBlock Text=" Dodaj" />
+                            <TextBlock Text=" Dodaj " />
                         </StackPanel>
                     </Button>
-
-                    <Button x:Name="btnEdit" Click="btnEdit_Click" HorizontalAlignment="Left" Margin="5" Width="200">
+                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
-
-                            <TextBlock Text=" Izmeni" />
+                            <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" />
                         </StackPanel>
                     </Button>
-
                 </StackPanel>
 
-                <!-- Pagination -->
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
                     <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\chevron0.png" HorizontalAlignment="Center" Height="16" Width="16" />
@@ -154,10 +150,12 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding IndividualsLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgIndividuals"
-                              Grid.Row="2" Margin="0 5 0 0"
+
+                <!--Listing-->
+                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding EmployeeDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <DataGrid x:Name="dgEmployees"
+                              Grid.Row="1"
+                              Margin="0 5 0 0"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
@@ -165,38 +163,52 @@
                               CanUserResizeColumns="True"  
                               GridLinesVisibility="All"
                               HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
                               Style="{DynamicResource AzureDataGrid}"
-                              ItemsSource="{Binding Path=IndividualsFromDB}"
-                              SelectedItem="{Binding Path=CurrentIndividual}" >
+                              ItemsSource="{Binding Path=EmployeesFromDB}"
+                              SelectedItem="{Binding Path=CurrentEmployee}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="SurName" Header="Prezime" Binding="{Binding SurName}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rodjenja " Binding="{Binding DateOfBirth}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Interest" Header="Zanimanje" Binding="{Binding Interest}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="VisaFrom" Header="Datum vize od" Binding="{Binding VisaFrom}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="VisaTo" Header="Viza do" Binding="{Binding VisaTo}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="WorkPermitFrom" Header="Radna dozvola od" Binding="{Binding WorkPermitFrom}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="WorkPermitTo" Header="Dozvola do" Binding="{Binding WorkPermitTo}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="CreatedBy.Username" Header="Kreirao/promenio" Binding="{Binding CreatedBy.Username}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="UpdatedAt" Header="Vreme izmene" Binding="{Binding UpdatedAt}" Width="*" IsReadOnly="True"  />
-
+                        <DataGridTextColumn SortMemberPath="EmployeeCode" Header="Šifra" Binding="{Binding EmployeeCode}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SurName" Header="Prezime" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Passport" Header="Broj pasoša" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Interest" Header="Zanimanje" Binding="{Binding Interest}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="License" Header="Licenca" Binding="{Binding License}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="EmbassyDate" Header="Datum ambasade" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="VisaFrom" Header="Datum vize od" Binding="{Binding VisaFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="VisaTo" Header="Datum vise do" Binding="{Binding VisaTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="WorkPermitFrom" Header="Datum radne dozvole od" Binding="{Binding WorkPermitFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="WorkPermitTo" Header="Datum radne dozvole do" Binding="{Binding WorkPermitTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" >
+                                    <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="Margin" Value="2 0 2 0" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-
-                                        <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Obrši">
+                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="2 0 0 0" CommandParameter="{Binding}" IsEnabled="{Binding IsSynced, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Promeni">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                             </StackPanel>
                                         </Button>
-
-                                        <Button x:Name="btnExcel" Click="btnExportToExcel_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Excel">
+                                        <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 2 0" CommandParameter="{Binding}" IsEnabled="{Binding IsSynced, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Obriši">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                             </StackPanel>
                                         </Button>
                                     </StackPanel>
@@ -205,10 +217,37 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
             </Grid>
         </GroupBox>
 
-    </Grid>
+        <GridSplitter Grid.Row="2" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
 
+        <!--    Items container    -->
+        <GroupBox Header="Stavke radnika" Margin="2 1 2 2" Grid.Row="3">
+            <Grid>
+
+                <!--Listing-->
+                <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <DataGrid x:Name="dgInputAnimalItems"
+                        Grid.Row="0" Margin="0 5 0 0"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        CanUserResizeRows="False"
+                        GridLinesVisibility="All"
+                        HorizontalGridLinesBrush="Gray"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto"
+                        Style="{DynamicResource AzureDataGrid}"
+                        ItemsSource="{Binding Path=EmployeeItemsFromDB}"
+                        SelectedItem="{Binding Path=CurrentEmployeeItem}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Član porodice" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
 </UserControl>

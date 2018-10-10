@@ -136,9 +136,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@VisaFrom IS NULL OR @VisaFrom = '' OR DATE(VisaFrom) >= DATE(@VisaFrom)) " +
                         "AND (@WorkPermitFrom IS NULL OR @WorkPermitFrom = '' OR DATE(WorkPermitFrom) >= DATE(@WorkPermitFrom)) " +
                         "AND (@WorkPermitTo IS NULL OR @WorkPermitTo = '' OR DATE(WorkPermitTo) <= DATE(@WorkPermitTo)) " +
-                        "AND CompanyId = @CompanyId " +
-                        "ORDER BY IsSynced, Id DESC " +
-                        "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                        "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)EmployeeSearchObject.SearchBy_Code) != null ? "%" + EmployeeSearchObject.SearchBy_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
