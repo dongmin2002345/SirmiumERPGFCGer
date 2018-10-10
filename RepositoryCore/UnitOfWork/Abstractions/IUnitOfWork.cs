@@ -41,10 +41,10 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 		IBankRepository GetBankRepository();
 		ILicenceTypeRepository GetLicenceTypeRepository();
 
-
         IConstructionSiteRepository GetConstructionSiteRepository();
 
-
+        IEmployeeRepository GetEmployeeRepository();
+        IEmployeeItemRepository GetEmployeeItemRepository();
         IFamilyMemberRepository GetFamilyMemberRepository();
 
         void Save();

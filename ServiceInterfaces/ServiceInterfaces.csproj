@@ -59,6 +59,8 @@
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
     <Compile Include="Abstractions\Common\Professions\IProfessionService.cs" />
     <Compile Include="Abstractions\ConstructionSites\IConstructionSiteService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeItemService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeService.cs" />
     <Compile Include="Abstractions\Employees\IFamilyMemberService.cs" />
     <Compile Include="Abstractions\Employees\ILicenceTypeService.cs" />
     <Compile Include="InvoiceHelpers\InvoiceHelpers.cs" />
@@ -102,8 +104,14 @@
     <Compile Include="Messages\Common\Professions\ProfessionListResponse.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionResponse.cs" />
     <Compile Include="Messages\Common\Professions\SyncProfessionRequest.cs" />
+    <Compile Include="Messages\Employees\EmployeeItemListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeItemResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeResponse.cs" />
     <Compile Include="Messages\Employees\FamilyMemberListResponse.cs" />
     <Compile Include="Messages\Employees\FamilyMemberResponse.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeItemRequest.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeRequest.cs" />
     <Compile Include="Messages\Employees\SyncFamilyMemberRequest.cs" />
     <Compile Include="Messages\ConstructionSites\ConstructionSiteCodeResponse.cs" />
     <Compile Include="Messages\ConstructionSites\ConstructionSiteListResponse.cs" />
@@ -130,6 +138,8 @@
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
     <Compile Include="ViewModels\Common\Professions\ProfessionViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeItemViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Employees\FamilyMemberViewModel.cs" />
     <Compile Include="ViewModels\Employees\LicenceTypeViewModel.cs" />
   </ItemGroup>

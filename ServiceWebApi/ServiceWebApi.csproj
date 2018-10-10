@@ -55,6 +55,8 @@
     <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeItemService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeService.cs" />
     <Compile Include="Implementations\Employees\FamilyMemberService.cs" />
     <Compile Include="Implementations\Employees\LicenceTypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

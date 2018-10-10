@@ -200,9 +200,6 @@ namespace SirmiumERPGFC.Repository.Common
 					createTable = new SqliteCommand(LicenceTypeSQLiteRepository.LicenceTypeTableCreatePart, db);
 					createTable.ExecuteReader();
 					#endregion
-				
-		
-				
 			
                     #region ConstructionSites
                     if (withTableDrop)
@@ -216,6 +213,33 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(ConstructionSiteSQLiteRepository.ConstructionSiteTableCreatePart, db);
                     createTable.ExecuteReader();
+                    #endregion
+
+                    #region Employees
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Employees", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeSQLiteRepository.EmployeeTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeItems", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeItemSQLiteRepository.EmployeeItemTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
 
                     #region FamilyMembers

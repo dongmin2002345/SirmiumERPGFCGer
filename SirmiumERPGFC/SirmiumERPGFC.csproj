@@ -75,7 +75,8 @@
     <Reference Include="Microsoft.Data.Sqlite, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Sqlite.Core.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -167,6 +168,8 @@
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeItemSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\LicenceTypeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\FamilyMemberSQLiteRepository.cs" />
     <Compile Include="Repository\Locations\CitySQLiteRepository.cs" />
@@ -188,6 +191,9 @@
     </Compile>
     <Compile Include="ViewComponents\Popups\CountryPopup.xaml.cs">
       <DependentUpon>CountryPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\FamilyMemberPopup.xaml.cs">
+      <DependentUpon>FamilyMemberPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\MunicipalityPopup.xaml.cs">
       <DependentUpon>MunicipalityPopup.xaml</DependentUpon>
@@ -380,6 +386,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\CountryPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\FamilyMemberPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
