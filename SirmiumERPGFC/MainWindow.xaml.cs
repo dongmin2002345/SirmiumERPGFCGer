@@ -32,6 +32,7 @@ using SirmiumERPGFC.Views.Profession;
 using SirmiumERPGFC.Views.Banks;
 using SirmiumERPGFC.Views.ConstructionSites;
 using SirmiumERPGFC.Views.Common;
+using SirmiumERPGFC.Views.Administrations;
 
 namespace SirmiumERPGFC
 {
@@ -427,6 +428,11 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new ConstructionSiteBusinessPartner_List();
         }
+
+        private void mniExcelImport_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new DataSync_List_Excel();
+        }    
 
 		private void mniLicenceType_Click(object sender, RoutedEventArgs e)
 		{

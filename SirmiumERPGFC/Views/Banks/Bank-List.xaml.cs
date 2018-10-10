@@ -242,7 +242,7 @@ namespace SirmiumERPGFC.Views.Banks
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Drzava ... ";
+			RefreshButtonContent = " Banka ... ";
 			new BankSQLiteRepository().Sync(bankService);
 
 			DisplayData();

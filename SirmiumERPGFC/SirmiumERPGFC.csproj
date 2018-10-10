@@ -75,6 +75,9 @@
     <Reference Include="Microsoft.Data.Sqlite, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Sqlite.Core.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -196,6 +199,9 @@
     </Compile>
     <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
       <DependentUpon>RegionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Administrations\DataSync-List-Excel.xaml.cs">
+      <DependentUpon>DataSync-List-Excel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\SectorPopup.xaml.cs">
       <DependentUpon>SectorPopup.xaml</DependentUpon>
@@ -393,6 +399,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\RegionPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Administrations\DataSync-List-Excel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -633,6 +643,8 @@
     <Content Include="Resources\Icons\balance.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Banka Ikonica.png" />
+    <Resource Include="Resources\Icons\Banka_Ikonica.png" />
     <Content Include="Resources\Icons\barcode-tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -672,6 +684,8 @@
     <Content Include="Resources\Icons\chevron3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Clanovi Porodice.png" />
+    <Resource Include="Resources\Icons\Clanovi_Porodice.png" />
     <Content Include="Resources\Icons\coins.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -681,6 +695,7 @@
     <Content Include="Resources\Icons\credit-card.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Delatnost.png" />
     <Content Include="Resources\Icons\delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -693,6 +708,7 @@
     <Content Include="Resources\Icons\delivery-truck.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Drzava.png" />
     <Content Include="Resources\Icons\edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -702,6 +718,7 @@
     <Content Include="Resources\Icons\fat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Firme.png" />
     <Content Include="Resources\Icons\flag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -711,6 +728,9 @@
     <Content Include="Resources\Icons\garbage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Gradovi Ikonica.png" />
+    <Resource Include="Resources\Icons\Gradovi_Ikonica.png" />
+    <Resource Include="Resources\Icons\Gradiliste.png" />
     <Content Include="Resources\Icons\ham.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -756,6 +776,8 @@
     <Content Include="Resources\Icons\manager.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Opstina Ikonica.png" />
+    <Resource Include="Resources\Icons\Opstina_Ikonica.png" />
     <Content Include="Resources\Icons\organization.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -831,6 +853,7 @@
     <Content Include="Resources\Icons\process.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Radnik.png" />
     <Content Include="Resources\Icons\radniNalog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -843,6 +866,7 @@
     <Content Include="Resources\Icons\refresh.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Region.png" />
     <Content Include="Resources\Icons\requisition.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -867,6 +891,7 @@
     <Content Include="Resources\Icons\search.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Sektori.png" />
     <Content Include="Resources\Icons\seller.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -897,6 +922,8 @@
     <Content Include="Resources\Icons\time_management.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Tip Dozvole.png" />
+    <Resource Include="Resources\Icons\Tip_Dozvole.png" />
     <Content Include="Resources\Icons\toolbox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -918,6 +945,7 @@
     <Content Include="Resources\Icons\zacini.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Zanimanja.png" />
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>

@@ -43,8 +43,8 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Naziv dozvole"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByName" Grid.Column="1" 
-                         Text="{Binding Path=BankSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="txtSearchByName" Grid.Column="1"  Grid.ColumnSpan="2"
+                         Text="{Binding Path=LicenceTypeSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 

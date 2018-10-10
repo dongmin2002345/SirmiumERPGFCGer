@@ -84,13 +84,10 @@ namespace SirmiumERPGFC.Repository.Employees
 						"SELECT Count(*) " +
 						"FROM LicenceTypes " +
 						"WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND CompanyId = @CompanyId " +
-						"ORDER BY IsSynced, Id DESC " +
-						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
+						"AND CompanyId = @CompanyId ;", db);
 					selectCommand.Parameters.AddWithValue("@Name", ((object)licenceTypeSearchObject.Search_Name) != null ? "%" + licenceTypeSearchObject.Search_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
-					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
+			
 
 					query = selectCommand.ExecuteReader();
 

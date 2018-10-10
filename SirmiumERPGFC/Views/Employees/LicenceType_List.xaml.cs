@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Views.Employees
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Drzava ... ";
+			RefreshButtonContent = " Tip dozvole ... ";
 			new LicenceTypeSQLiteRepository().Sync(licenceTypeService);
 
 			DisplayData();
