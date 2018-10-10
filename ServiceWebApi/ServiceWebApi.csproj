@@ -51,8 +51,12 @@
     <Compile Include="Implementations\Common\Locations\MunicipalityService.cs" />
     <Compile Include="Implementations\Common\Locations\RegionService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceService.cs" />
+    <Compile Include="Implementations\Common\Sectors\AgencyService.cs" />
     <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
+    <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
+    <Compile Include="Implementations\Employees\FamilyMemberService.cs" />
+    <Compile Include="Implementations\Employees\LicenceTypeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

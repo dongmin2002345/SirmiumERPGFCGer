@@ -23,6 +23,12 @@ using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Abstractions.Banks;
 using RepositoryCore.Implementations.Banks;
+using RepositoryCore.Abstractions.ConstructionSites;
+using RepositoryCore.Implementations.ConstructionSites;
+using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Implementations.Employees;
+using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Implementations.Employees;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -50,12 +56,19 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IProfessionRepository professionRepository;
 
+        private IConstructionSiteRepository constructionSiteRepository;
+
+
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
+		private ILicenceTypeRepository licenceTypeRepository;
+        private IAgencyRepository agencyRepository;
 
 
-		#endregion
+        private IFamilyMemberRepository familyMemberRepository;
 
+        #endregion
+        
 		#region Constructor
 
 		public UnitOfWork(bool useSql2005Compatibility = false)
@@ -158,6 +171,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return sectorRepository;
         }
 
+        public IAgencyRepository GetAgencyRepository()
+        {
+            if (agencyRepository == null)
+                agencyRepository = new AgencyRepository(context);
+            return agencyRepository;
+        }
+
         public IProfessionRepository GetProfessionRepository()
         {
             if (professionRepository == null)
@@ -174,9 +194,32 @@ namespace RepositoryCore.UnitOfWork.Implementations
 			return bankRepository;
 		}
 
+		public ILicenceTypeRepository GetLicenceTypeRepository()
+		{
+			if (licenceTypeRepository == null)
+				licenceTypeRepository = new LicenceTypeRepository(context);
+			return licenceTypeRepository;
+		}
+
 		#endregion
 
 		#region Save method
+        public IConstructionSiteRepository GetConstructionSiteRepository()
+        {
+            if (constructionSiteRepository == null)
+                constructionSiteRepository = new ConstructionSiteRepository(context);
+            return constructionSiteRepository;
+        }
+        public IFamilyMemberRepository GetFamilyMemberRepository()
+        {
+            if (familyMemberRepository == null)
+                familyMemberRepository = new FamilyMemberRepository(context);
+            return familyMemberRepository;
+        }
+
+        #endregion
+
+        #region Save method
 
 		public void Save()
         {

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using SirmiumERPGFC.Repository.Sectors;
 using SirmiumERPGFC.Repository.Professions;
 using SirmiumERPGFC.Repository.Banks;
+using SirmiumERPGFC.Repository.ConstructionSites;
+using SirmiumERPGFC.Repository.Employees;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -142,6 +144,19 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(SectorSQLiteRepository.SectorTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Agencies", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(AgencySQLiteRepository.AgencyTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
 
                     #region Profession
@@ -171,8 +186,54 @@ namespace SirmiumERPGFC.Repository.Common
 					createTable = new SqliteCommand(BankSQLiteRepository.BankTableCreatePart, db);
 					createTable.ExecuteReader();
 					#endregion
-				}
-			}
+
+					#region LicenceType
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE LicenceTypes", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(LicenceTypeSQLiteRepository.LicenceTypeTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+				
+		
+				
+			
+                    #region ConstructionSites
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ConstructionSites", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ConstructionSiteSQLiteRepository.ConstructionSiteTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region FamilyMembers
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE FamilyMembers", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(FamilyMemberSQLiteRepository.FamilyMemberTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                }
+            }
 
             catch (SqliteException e)
             {

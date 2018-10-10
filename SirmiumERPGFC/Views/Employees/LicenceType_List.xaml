@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.Sectors.WorkActivity_List"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Employees.LicenceType_List"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Sectors"
-             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Employees"
+              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
@@ -42,17 +42,13 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Naziv banke"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByWorkActivityName" Grid.Column="1" 
-                         Text="{Binding Path=WorkActivitySearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="Naziv dozvole"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByName" Grid.Column="1"  Grid.ColumnSpan="2"
+                         Text="{Binding Path=LicenceTypeSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Sektor" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchBySectorName" Grid.Column="3" 
-                         Text="{Binding Path=WorkActivitySearchObject.Search_SectorName, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
+        
 
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="4">
                     <StackPanel Orientation="Horizontal">
@@ -64,7 +60,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Delatnosti" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
+        <GroupBox Header="Tip dozvole" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -111,8 +107,8 @@
                 </StackPanel>
 
                 <!--Listing-->
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding WorkActivityDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgWorkActivities"
+                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding LicenceTypeDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <DataGrid x:Name="dgLicenceTypes"
                           Grid.Row="1"
                           Margin="5 5 5 0"
                           AutoGenerateColumns="False"
@@ -127,14 +123,12 @@
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
                           Style="{DynamicResource AzureDataGrid}"
-                          ItemsSource="{Binding Path=WorkActivitiesFromDB}"
-                          SelectedItem="{Binding Path=CurrentWorkActivity, Mode=TwoWay}">
+                          ItemsSource="{Binding Path=LicenceTypesFromDB}"
+                          SelectedItem="{Binding Path=CurrentLicenceType, Mode=TwoWay}">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv delatnosti" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Sector.Name" Header="Sektor" Binding="{Binding Sector.Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

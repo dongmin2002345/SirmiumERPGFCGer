@@ -42,7 +42,7 @@ namespace SirmiumERPGFC.Repository.Professions
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code @SecondCode, @Name, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @SecondCode, @Name, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -59,15 +59,16 @@ namespace SirmiumERPGFC.Repository.Professions
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Professions " +
-                        "WHERE (@SecondCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
+                        "WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        //"AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
+                        //"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                    selectCommand.Parameters.AddWithValue("@ZipCode", ((object)professionSearchObject.Search_SecondCode) != null ? "%" + professionSearchObject.Search_SecondCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@SecondCode", ((object)professionSearchObject.Search_SecondCode) != null ? "%" + professionSearchObject.Search_SecondCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)professionSearchObject.Search_Name) != null ? "%" + professionSearchObject.Search_Name + "%" : "");
-                    //selectCommand.Parameters.AddWithValue("@Country", ((object)professionSearchObject.Search_Country) != null ? "%" + professionSearchObject.Search_Country + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Country", ((object)professionSearchObject.Search_Country) != null ? "%" + professionSearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -97,11 +98,13 @@ namespace SirmiumERPGFC.Repository.Professions
                         "FROM Professions " +
                         "WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        //"AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
+                        //"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@SecondCode", ((object)professionSearchObject.Search_SecondCode) != null ? "%" + professionSearchObject.Search_SecondCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)professionSearchObject.Search_Name) != null ? "%" + professionSearchObject.Search_Name + "%" : "");
-                    //selectCommand.Parameters.AddWithValue("@Country", ((object)professionSearchObject.Search_Country) != null ? "%" + professionSearchObject.Search_Country + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Country", ((object)professionSearchObject.Search_Country) != null ? "%" + professionSearchObject.Search_Country + "%" : "");
+
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -139,7 +142,8 @@ namespace SirmiumERPGFC.Repository.Professions
                         "FROM Professions " +
                         "WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                       // "AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
@@ -303,7 +307,7 @@ namespace SirmiumERPGFC.Repository.Professions
                 insertCommand.Parameters.AddWithValue("@ServerId", profession.Id);
                 insertCommand.Parameters.AddWithValue("@Identifier", profession.Identifier);
                 insertCommand.Parameters.AddWithValue("@Code", ((object)profession.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ZipCode", ((object)profession.SecondCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@SecondCode", ((object)profession.SecondCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", ((object)profession.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)profession.Country?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)profession.Country?.Identifier) ?? DBNull.Value);

@@ -13,6 +13,9 @@ using System.Text;
 using DomainCore.Common.Sectors;
 using DomainCore.Common.Professions;
 using DomainCore.Banks;
+using DomainCore.ConstructionSites;
+using DomainCore.Employees;
+using DomainCore.Employees;
 
 namespace RepositoryCore.Context
 {
@@ -76,10 +79,16 @@ namespace RepositoryCore.Context
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Sector> Sectors { get; set; }
+        public DbSet<Agency> Agencies { get; set; }
 
         public DbSet<Profession> Professions { get; set; }
+        public DbSet<FamilyMember> FamilyMembers { get; set; }
+        public DbSet<ConstructionSite> ConstructionSites { get; set; }
+
 
 		public DbSet<Bank> Banks { get; set; }
+		public DbSet<LicenceType> LicenceTypes { get; set; }
+
 
 
 		//protected override void OnModelCreating(ModelBuilder modelBuilder)

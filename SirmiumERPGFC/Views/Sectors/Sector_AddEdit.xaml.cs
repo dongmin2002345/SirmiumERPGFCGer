@@ -224,7 +224,10 @@ namespace SirmiumERPGFC.Views.Sectors
 							System.Windows.Threading.DispatcherPriority.Normal,
 							new Action(() =>
 							{
-							
+
+								if (IsPopup)
+									FlyoutHelper.CloseFlyoutPopup(this);
+								else
 									FlyoutHelper.CloseFlyout(this);
 							})
 						);
@@ -238,7 +241,10 @@ namespace SirmiumERPGFC.Views.Sectors
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
-		
+
+			if (IsPopup)
+				FlyoutHelper.CloseFlyoutPopup(this);
+			else
 				FlyoutHelper.CloseFlyout(this);
 		}
 

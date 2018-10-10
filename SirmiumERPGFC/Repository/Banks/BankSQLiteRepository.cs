@@ -37,13 +37,13 @@ namespace SirmiumERPGFC.Repository.Banks
 
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
-		public string SqlCommandInsertPart = "INSERT INTO Cities " +
+		public string SqlCommandInsertPart = "INSERT INTO Banks " +
 			"(Id, ServerId, Identifier, Code, Name, " +
 			"CountryId, CountryIdentifier, CountryCode, CountryName, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
 			"VALUES (NULL, @ServerId, @Identifier, @Code, @Name, " +
-			"@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
+				"@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 		public BankListResponse GetBanksByPage(int companyId, BankViewModel bankSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -60,8 +60,8 @@ namespace SirmiumERPGFC.Repository.Banks
 						SqlCommandSelectPart +
 						"FROM Banks " +
 						"WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
-						//"AND (@Municipality IS NULL OR @Municipality = '' OR Municipality LIKE @Municipality) " +
+					    "AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+						"AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -95,11 +95,9 @@ namespace SirmiumERPGFC.Repository.Banks
 						"SELECT Count(*) " +
 						"FROM Banks " +
 						"WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
-						//"AND (@Municipality IS NULL OR @Municipality = '' OR Municipality LIKE @Municipality) " +
-						"AND CompanyId = @CompanyId " +
-						"ORDER BY IsSynced, Id DESC " +
-						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
+					"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+						"AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+						"AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@Name", ((object)bankSearchObject.Search_Name) != null ? "%" + bankSearchObject.Search_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Country", ((object)bankSearchObject.Search_Country) != null ? "%" + bankSearchObject.Search_Country + "%" : "");
 

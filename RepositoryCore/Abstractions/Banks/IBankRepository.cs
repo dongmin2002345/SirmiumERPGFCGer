@@ -10,7 +10,7 @@ namespace RepositoryCore.Abstractions.Banks
 		List<Bank> GetBanks(int companyId);
 		List<Bank> GetBanksNewerThen(int companyId, DateTime lastUpdateTime);
 
-		Bank Create(Bank bankr);
+		Bank Create(Bank bank);
 		Bank Delete(Guid identifier);
 	}
 }

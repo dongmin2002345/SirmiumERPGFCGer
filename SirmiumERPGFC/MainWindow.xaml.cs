@@ -401,7 +401,7 @@ namespace SirmiumERPGFC
 
         private void mniWorkActivity_Click(object sender, RoutedEventArgs e)
         {
-            cntCtrl.Content = new WorkActivity_List();
+            cntCtrl.Content = new AgencyList();
         }
 
         private void mniBusinessPartnerEmployees_Click(object sender, RoutedEventArgs e)
@@ -432,7 +432,12 @@ namespace SirmiumERPGFC
         private void mniExcelImport_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new DataSync_List_Excel();
-        }
-    }
+        }    
+
+		private void mniLicenceType_Click(object sender, RoutedEventArgs e)
+		{
+			cntCtrl.Content = new LicenceType_List();
+		}
+	}
 }
 

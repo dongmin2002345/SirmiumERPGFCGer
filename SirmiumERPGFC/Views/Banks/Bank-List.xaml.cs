@@ -32,55 +32,7 @@ namespace SirmiumERPGFC.Views.Banks
 	/// </summary>
 	public partial class Bank_List : UserControl, INotifyPropertyChanged
 	{
-		//public Bank_List()
-		//{
-		//    InitializeComponent();
-		//}
-
-		//private void btnSearch_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnAdd_Click(object sender, RoutedEventArgs e)
-		//{
-		//    FlyoutHelper.OpenFlyout(this, "Podaci o bankama", 95, new Bank_List_AddEdit());
-		//}
-
-		//private void btnRefresh_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnFirstPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnPrevPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnNextPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnLastPage_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnEdit_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
-
-		//private void btnDelete_Click(object sender, RoutedEventArgs e)
-		//{
-
-		//}
+		
 		#region Attributes
 
 		#region Services
@@ -290,7 +242,7 @@ namespace SirmiumERPGFC.Views.Banks
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Drzava ... ";
+			RefreshButtonContent = " Banka ... ";
 			new BankSQLiteRepository().Sync(bankService);
 
 			DisplayData();
@@ -311,20 +263,20 @@ namespace SirmiumERPGFC.Views.Banks
 
 			Bank_List_AddEdit addEditForm = new Bank_List_AddEdit(bank, true);
 			addEditForm.BankCreatedUpdated += new BankHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o drzavama", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, "Podaci o bankama", 95, addEditForm);
 		}
 
 		private void btnEdit_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentBank == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati drzavu za izmenu!";
+				MainWindow.WarningMessage = "Morate odabrati banku za izmenu!";
 				return;
 			}
 
 			Bank_List_AddEdit addEditForm = new Bank_List_AddEdit(CurrentBank, false);
 			addEditForm.BankCreatedUpdated += new BankHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o drzavi", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, "Podaci o banci", 95, addEditForm);
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
