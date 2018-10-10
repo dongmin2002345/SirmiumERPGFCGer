@@ -131,7 +131,10 @@ namespace SirmiumERPWeb
             services.AddScoped<ICompanyService, CompanyService>();
 
             services.AddScoped<IBusinessPartnerService, BusinessPartnerService>();
+            services.AddScoped<IBusinessPartnerPhoneService, BusinessPartnerPhoneService>();
+            services.AddScoped<IBusinessPartnerOrganizationUnitService, BusinessPartnerOrganizationUnitService>();
             services.AddScoped<IBusinessPartnerTypeService, BusinessPartnerTypeService>();
+            services.AddScoped<IBusinessPartnerLocationService, BusinessPartnerLocationService>();
 
             services.AddScoped<IIndividualService, IndividualService>();
 

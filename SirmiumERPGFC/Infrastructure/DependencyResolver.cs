@@ -44,6 +44,9 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<IBusinessPartnerService>().To<BusinessPartnerService>();
                 Kernel.Bind<IBusinessPartnerTypeService>().To<BusinessPartnerTypeService>();
+                Kernel.Bind<IBusinessPartnerOrganizationUnitService>().To<BusinessPartnerOrganizationUnitService>();
+                Kernel.Bind<IBusinessPartnerPhoneService>().To<BusinessPartnerPhoneService>();
+                Kernel.Bind<IBusinessPartnerLocationService>().To<BusinessPartnerLocationService>();
 
                 Kernel.Bind<IIndividualService>().To<IndividualService>();
 

@@ -9,7 +9,9 @@ namespace ServiceInterfaces.Messages.Common.BusinessPartners
 {
     public class SyncBusinessPartnerRequest
     {
+        public int CompanyId { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
         public List<BusinessPartnerViewModel> UnSyncedBusinessPartners { get; set; }
     }
 }
+

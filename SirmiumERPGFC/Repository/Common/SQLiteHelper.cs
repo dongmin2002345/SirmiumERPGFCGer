@@ -298,6 +298,23 @@ namespace SirmiumERPGFC.Repository.Common
                 };
         }
 
+        public static BusinessPartnerViewModel GetBusinessPartner(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new BusinessPartnerViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
         public static BusinessPartnerTypeViewModel GetBusinessPartnerType(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))

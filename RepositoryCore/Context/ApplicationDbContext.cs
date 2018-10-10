@@ -68,6 +68,9 @@ namespace RepositoryCore.Context
         public DbSet<User> Users { get; set; }
 
         public DbSet<BusinessPartner> BusinessPartners { get; set; }
+        public DbSet<BusinessPartnerLocation> BusinessPartnerLocations { get; set; }
+        public DbSet<BusinessPartnerPhone> BusinessPartnerPhones { get; set; }
+        public DbSet<BusinessPartnerOrganizationUnit> BusinessPartnerOrganizationUnits { get; set; }
         public DbSet<BusinessPartnerType> BusinessPartnerTypes { get; set; }
         public DbSet<BusinessPartnerBusinessPartnerType> BusinessPartnerBusinessPartnerTypes { get; set; }
 

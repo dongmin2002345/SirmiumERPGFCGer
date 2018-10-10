@@ -12,33 +12,14 @@ namespace ServiceWebApi.Implementations.Common.BusinessPartners
 {
     public class BusinessPartnerService : IBusinessPartnerService
     {
-        public BusinessPartnerListResponse GetBusinessPartners()
+        public BusinessPartnerListResponse GetBusinessPartners(int companyId)
         {
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                response = WpfApiHandler.GetFromApi<List<BusinessPartnerViewModel>, BusinessPartnerListResponse>("GetBusinessPartners",
-                    new Dictionary<string, string>() {
-                    });
-            }
-            catch (Exception ex)
-            {
-                response.BusinessPartners = new List<BusinessPartnerViewModel>();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public BusinessPartnerListResponse GetBusinessPartnersNewerThen(DateTime? lastUpdateTime)
-        {
-            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
-            try
-            {
-                response = WpfApiHandler.GetFromApi<List<BusinessPartnerViewModel>, BusinessPartnerListResponse>("GetBusinessPartnersNewerThen", new Dictionary<string, string>()
+                response = WpfApiHandler.GetFromApi<List<BusinessPartnerViewModel>, BusinessPartnerListResponse>("GetBusinessPartners", new Dictionary<string, string>()
                 {
-                    { "LastUpdateTime", lastUpdateTime.ToString() }
+                    { "companyId", companyId.ToString() },
                 });
             }
             catch (Exception ex)
@@ -51,12 +32,32 @@ namespace ServiceWebApi.Implementations.Common.BusinessPartners
             return response;
         }
 
-        public BusinessPartnerResponse Create(BusinessPartnerViewModel businessPartner)
+        public BusinessPartnerListResponse GetBusinessPartnersNewerThen(int companyId, DateTime? lastUpdateTime)
+        {
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
+            try
+            {
+                response = WpfApiHandler.GetFromApi<List<BusinessPartnerViewModel>, BusinessPartnerListResponse>("GetBusinessPartnersNewerThen", new Dictionary<string, string>()
+                {
+                    { "CompanyId", companyId.ToString() },
+                    { "LastUpdateTime", lastUpdateTime.ToString() }
+                });
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public BusinessPartnerResponse Create(BusinessPartnerViewModel businessPartnerViewModel)
         {
             BusinessPartnerResponse response = new BusinessPartnerResponse();
             try
             {
-                response = WpfApiHandler.SendToApi<BusinessPartnerViewModel, BusinessPartnerResponse>(businessPartner, "Create");
+                response = WpfApiHandler.SendToApi<BusinessPartnerViewModel, BusinessPartnerResponse>(businessPartnerViewModel, "Create");
             }
             catch (Exception ex)
             {
@@ -64,7 +65,6 @@ namespace ServiceWebApi.Implementations.Common.BusinessPartners
                 response.Success = false;
                 response.Message = ex.Message;
             }
-
             return response;
         }
 
@@ -76,7 +76,6 @@ namespace ServiceWebApi.Implementations.Common.BusinessPartners
                 BusinessPartnerViewModel viewModel = new BusinessPartnerViewModel();
                 viewModel.Identifier = identifier;
                 response = WpfApiHandler.SendToApi<BusinessPartnerViewModel, BusinessPartnerResponse>(viewModel, "Delete");
-                response.Success = true;
             }
             catch (Exception ex)
             {
@@ -85,7 +84,7 @@ namespace ServiceWebApi.Implementations.Common.BusinessPartners
                 response.Message = ex.Message;
             }
 
-                return response;
+            return response;
         }
 
         public BusinessPartnerListResponse Sync(SyncBusinessPartnerRequest request)

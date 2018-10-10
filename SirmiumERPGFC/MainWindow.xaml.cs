@@ -338,7 +338,7 @@ namespace SirmiumERPGFC
 
         private void mniBusinessPartners_Click(object sender, RoutedEventArgs e)
         {
-            cntCtrl.Content = new BusinessPartnerList();
+            cntCtrl.Content = new BusinessPartner_List();
             //OpenTab("Poslovni partneri", new BusinessPartnerList());
         }
 
