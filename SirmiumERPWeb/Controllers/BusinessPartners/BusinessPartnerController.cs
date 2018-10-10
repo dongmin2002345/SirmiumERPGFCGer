@@ -12,21 +12,20 @@ namespace SirmiumERPWeb.Controllers.BusinessPartners
 {
     public class BusinessPartnerController : Controller
     {
-        IBusinessPartnerService businessPartnerService { get; set; }
+        IBusinessPartnerService businessPartnerService;
 
         public BusinessPartnerController(IServiceProvider provider)
         {
             businessPartnerService = provider.GetRequiredService<IBusinessPartnerService>();
-
         }
 
         [HttpGet]
-        public JsonResult GetBusinessPartners()
+        public JsonResult GetBusinessPartners(int companyId)
         {
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                response = businessPartnerService.GetBusinessPartners();
+                response = businessPartnerService.GetBusinessPartners(companyId);
             }
             catch (Exception ex)
             {
@@ -37,22 +36,23 @@ namespace SirmiumERPWeb.Controllers.BusinessPartners
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
+
         [HttpGet]
-        public JsonResult GetBusinessPartnersNewerThen(DateTime? lastUpdateTime)
+        public JsonResult GetBusinessPartnersNewerThen(int CompanyId, DateTime? lastUpdateTime)
         {
-            BusinessPartnerListResponse response;
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             try
             {
-                response = businessPartnerService.GetBusinessPartnersNewerThen(lastUpdateTime);
+                response = businessPartnerService.GetBusinessPartnersNewerThen(CompanyId, lastUpdateTime);
             }
             catch (Exception ex)
             {
-                response = null;
+                response.Success = false;
+                response.Message = ex.Message;
                 Console.WriteLine(ex.Message);
             }
-            return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
-
 
         [HttpPost]
         public JsonResult Create([FromBody] BusinessPartnerViewModel c)

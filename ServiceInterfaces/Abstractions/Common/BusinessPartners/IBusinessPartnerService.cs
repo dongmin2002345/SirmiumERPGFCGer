@@ -10,8 +10,8 @@ namespace ServiceInterfaces.Abstractions.Common.BusinessPartners
 {
     public interface IBusinessPartnerService
     {
-        BusinessPartnerListResponse GetBusinessPartners();
-        BusinessPartnerListResponse GetBusinessPartnersNewerThen(DateTime? lastUpdateTime);
+        BusinessPartnerListResponse GetBusinessPartners(int companyId);
+        BusinessPartnerListResponse GetBusinessPartnersNewerThen(int companyId, DateTime? lastUpdateTime);
 
         BusinessPartnerResponse Create(BusinessPartnerViewModel businessPartner);
         BusinessPartnerResponse Delete(Guid identifier);
@@ -19,3 +19,4 @@ namespace ServiceInterfaces.Abstractions.Common.BusinessPartners
         BusinessPartnerListResponse Sync(SyncBusinessPartnerRequest request);
     }
 }
+

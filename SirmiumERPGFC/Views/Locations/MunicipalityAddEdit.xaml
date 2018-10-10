@@ -46,14 +46,13 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv opštine" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentMunicipality.Name}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Region" />
-                    <popups:RegionPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" 
-                                        CurrentRegion="{Binding Path=CurrentMunicipality.Region,  Mode=TwoWay}" />
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Drzava" />
-                    <popups:CountryPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" 
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Drzava" />
+                    <popups:CountryPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" 
                                         CurrentCountry="{Binding Path=CurrentMunicipality.Country, Mode=TwoWay}" />
 
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Region" />
+                    <popups:RegionPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" 
+                                        CurrentRegion="{Binding Path=CurrentMunicipality.Region,  Mode=TwoWay}" />
 
                 </Grid>
             </GroupBox>

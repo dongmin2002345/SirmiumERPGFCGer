@@ -1,6 +1,7 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -44,73 +45,6 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
-        #region IsSynced
-        private bool _IsSynced;
-
-        public bool IsSynced
-        {
-            get { return _IsSynced; }
-            set
-            {
-                if (_IsSynced != value)
-                {
-                    _IsSynced = value;
-                    NotifyPropertyChanged("IsSynced");
-                }
-            }
-        }
-        #endregion
-
-        #region Director
-        private string _Director;
-
-        public string Director
-        {
-            get { return _Director; }
-            set
-            {
-                if (_Director != value)
-                {
-                    _Director = value;
-                    NotifyPropertyChanged("Director");
-                }
-            }
-        }
-        #endregion
-
-        #region Address
-        private string _Address;
-
-        public string Address
-        {
-            get { return _Address; }
-            set
-            {
-                if (_Address != value)
-                {
-                    _Address = value;
-                    NotifyPropertyChanged("Address");
-                }
-            }
-        }
-        #endregion
-
-        #region InoAddress
-        private string _InoAddress;
-
-        public string InoAddress
-        {
-            get { return _InoAddress; }
-            set
-            {
-                if (_InoAddress != value)
-                {
-                    _InoAddress = value;
-                    NotifyPropertyChanged("InoAddress");
-                }
-            }
-        }
-        #endregion
 
         #region PIB
         private string _PIB;
@@ -129,162 +63,301 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
-        #region MatCode
-        private string _MatCode;
+        #region PIO
+        private string _PIO;
 
-        public string MatCode
+        public string PIO
         {
-            get { return _MatCode; }
+            get { return _PIO; }
             set
             {
-                if (_MatCode != value)
+                if (_PIO != value)
                 {
-                    _MatCode = value;
-                    NotifyPropertyChanged("MatCode");
+                    _PIO = value;
+                    NotifyPropertyChanged("PIO");
                 }
             }
         }
         #endregion
 
-        #region Mobile
-        private string _Mobile;
+        #region PDV
+        private string _PDV;
 
-        public string Mobile
+        public string PDV
         {
-            get { return _Mobile; }
+            get { return _PDV; }
             set
             {
-                if (_Mobile != value)
+                if (_PDV != value)
                 {
-                    _Mobile = value;
-                    NotifyPropertyChanged("Mobile");
+                    _PDV = value;
+                    NotifyPropertyChanged("PDV");
                 }
             }
         }
         #endregion
 
-        #region Phone
-        private string _Phone;
+        #region IndustryCode
+        private string _IndustryCode;
 
-        public string Phone
+        public string IndustryCode
         {
-            get { return _Phone; }
+            get { return _IndustryCode; }
             set
             {
-                if (_Phone != value)
+                if (_IndustryCode != value)
                 {
-                    _Phone = value;
-                    NotifyPropertyChanged("Phone");
+                    _IndustryCode = value;
+                    NotifyPropertyChanged("IndustryCode");
                 }
             }
         }
         #endregion
 
-        #region Email
-        private string _Email;
+        #region IdentificationNumber
+        private string _IdentificationNumber;
 
-        public string Email
+        public string IdentificationNumber
         {
-            get { return _Email; }
+            get { return _IdentificationNumber; }
             set
             {
-                if (_Email != value)
+                if (_IdentificationNumber != value)
                 {
-                    _Email = value;
-                    NotifyPropertyChanged("Email");
-                }
-            }
-        }
-        #endregion
-
-        #region ActivityCode
-        private string _ActivityCode;
-
-        public string ActivityCode
-        {
-            get { return _ActivityCode; }
-            set
-            {
-                if (_ActivityCode != value)
-                {
-                    _ActivityCode = value;
-                    NotifyPropertyChanged("ActivityCode");
-                }
-            }
-        }
-        #endregion
-
-        #region BankAccountNumber
-        private string _BankAccountNumber;
-
-        public string BankAccountNumber
-        {
-            get { return _BankAccountNumber; }
-            set
-            {
-                if (_BankAccountNumber != value)
-                {
-                    _BankAccountNumber = value;
-                    NotifyPropertyChanged("BankAccountNumber");
-                }
-            }
-        }
-        #endregion
-
-        #region OpeningDate
-        private DateTime _OpeningDate = DateTime.Now;
-
-        public DateTime OpeningDate
-        {
-            get { return _OpeningDate; }
-            set
-            {
-                if (_OpeningDate != value)
-                {
-                    _OpeningDate = value;
-                    NotifyPropertyChanged("OpeningDate");
-                }
-            }
-        }
-        #endregion
-
-        #region BranchOpeningDate
-        private DateTime? _BranchOpeningDate;
-
-        public DateTime? BranchOpeningDate
-        {
-            get { return _BranchOpeningDate; }
-            set
-            {
-                if (_BranchOpeningDate != value)
-                {
-                    _BranchOpeningDate = value;
-                    NotifyPropertyChanged("BranchOpeningDate");
-                }
-            }
-        }
-        #endregion
-
-        #region Search
-
-        #region SearchBy_BusinessPartnerName
-        private string _SearchBy_BusinessPartnerName;
-
-        public string SearchBy_BusinessPartnerName
-        {
-            get { return _SearchBy_BusinessPartnerName; }
-            set
-            {
-                if (_SearchBy_BusinessPartnerName != value)
-                {
-                    _SearchBy_BusinessPartnerName = value;
-                    NotifyPropertyChanged("SearchBy_BusinessPartnerName");
+                    _IdentificationNumber = value;
+                    NotifyPropertyChanged("IdentificationNumber");
                 }
             }
         }
         #endregion
 
 
+        #region Rebate
+        private decimal _Rebate;
+
+        public decimal Rebate
+        {
+            get { return _Rebate; }
+            set
+            {
+                if (_Rebate != value)
+                {
+                    _Rebate = value;
+                    NotifyPropertyChanged("Rebate");
+                }
+            }
+        }
         #endregion
+
+        #region DueDate
+        private int _DueDate;
+
+        public int DueDate
+        {
+            get { return _DueDate; }
+            set
+            {
+                if (_DueDate != value)
+                {
+                    _DueDate = value;
+                    NotifyPropertyChanged("DueDate");
+                }
+            }
+        }
+        #endregion
+
+
+        #region WebSite
+        private string _WebSite;
+
+        public string WebSite
+        {
+            get { return _WebSite; }
+            set
+            {
+                if (_WebSite != value)
+                {
+                    _WebSite = value;
+                    NotifyPropertyChanged("WebSite");
+                }
+            }
+        }
+        #endregion
+
+        #region ContactPerson
+        private string _ContactPerson;
+
+        public string ContactPerson
+        {
+            get { return _ContactPerson; }
+            set
+            {
+                if (_ContactPerson != value)
+                {
+                    _ContactPerson = value;
+                    NotifyPropertyChanged("ContactPerson");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsInPDV
+        private bool _IsInPDV;
+
+        public bool IsInPDV
+        {
+            get { return _IsInPDV; }
+            set
+            {
+                if (_IsInPDV != value)
+                {
+                    _IsInPDV = value;
+                    NotifyPropertyChanged("IsInPDV");
+                }
+            }
+        }
+        #endregion
+
+
+        #region JBKJS
+        private string _JBKJS;
+
+        public string JBKJS
+        {
+            get { return _JBKJS; }
+            set
+            {
+                if (_JBKJS != value)
+                {
+                    _JBKJS = value;
+                    NotifyPropertyChanged("JBKJS");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Locations
+        private ObservableCollection<BusinessPartnerLocationViewModel> _Locations;
+
+        public ObservableCollection<BusinessPartnerLocationViewModel> Locations
+        {
+            get { return _Locations; }
+            set
+            {
+                if (_Locations != value)
+                {
+                    _Locations = value;
+                    NotifyPropertyChanged("Locations");
+                }
+            }
+        }
+        #endregion
+
+        #region OrganizationUnits
+        private ObservableCollection<BusinessPartnerOrganizationUnitViewModel> _OrganizationUnits;
+
+        public ObservableCollection<BusinessPartnerOrganizationUnitViewModel> OrganizationUnits
+        {
+            get { return _OrganizationUnits; }
+            set
+            {
+                if (_OrganizationUnits != value)
+                {
+                    _OrganizationUnits = value;
+                    NotifyPropertyChanged("OrganizationUnits");
+                }
+            }
+        }
+        #endregion
+
+        #region Phones
+        private ObservableCollection<BusinessPartnerPhoneViewModel> _Phones;
+
+        public ObservableCollection<BusinessPartnerPhoneViewModel> Phones
+        {
+            get { return _Phones; }
+            set
+            {
+                if (_Phones != value)
+                {
+                    _Phones = value;
+                    NotifyPropertyChanged("Phones");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerTypes
+        private ObservableCollection<BusinessPartnerTypeViewModel> _BusinessPartnerTypes;
+
+        public ObservableCollection<BusinessPartnerTypeViewModel> BusinessPartnerTypes
+        {
+            get { return _BusinessPartnerTypes; }
+            set
+            {
+                if (_BusinessPartnerTypes != value)
+                {
+                    _BusinessPartnerTypes = value;
+                    NotifyPropertyChanged("BusinessPartnerTypes");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsSynced
+        private bool _IsSynced;
+
+        public bool IsSynced
+        {
+            get { return _IsSynced; }
+            set
+            {
+                if (_IsSynced != value)
+                {
+                    _IsSynced = value;
+                    NotifyPropertyChanged("IsSynced");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Search_Name
+        private string _Search_Name;
+
+        public string Search_Name
+        {
+            get { return _Search_Name; }
+            set
+            {
+                if (_Search_Name != value)
+                {
+                    _Search_Name = value;
+                    NotifyPropertyChanged("Search_Name");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_PIB
+        private string _Search_PIB;
+
+        public string Search_PIB
+        {
+            get { return _Search_PIB; }
+            set
+            {
+                if (_Search_PIB != value)
+                {
+                    _Search_PIB = value;
+                    NotifyPropertyChanged("Search_PIB");
+                }
+            }
+        }
+        #endregion
+
     }
 }

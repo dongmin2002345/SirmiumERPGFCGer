@@ -45,6 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Banks\IBankService.cs" />
+    <Compile Include="Abstractions\Common\BusinessPartners\BusinessPartnerTypeService.cs" />
+    <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerLocationService.cs" />
+    <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerOrganizationUnitService.cs" />
+    <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerPhoneService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerService.cs" />
     <Compile Include="Abstractions\Common\Locations\ICityService.cs" />
     <Compile Include="Abstractions\Common\Companies\ICompanyService.cs" />
@@ -70,8 +74,20 @@
     <Compile Include="Messages\Banks\SyncBankRequest.cs" />
     <Compile Include="Messages\Base\BaseResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerListResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerLocationListResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerLocationResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerOrganizationUnitListResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerOrganizationUnitResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerPhoneListResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerPhoneResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerTypeListResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerTypeResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerLocationRequest.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerOrganizationUnitRequest.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerPhoneRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerRequest.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerTypeRequest.cs" />
     <Compile Include="Messages\Common\Locations\CityListResponse.cs" />
     <Compile Include="Messages\Common\Locations\CityResponse.cs" />
     <Compile Include="Messages\Common\Locations\MunicipalityListResponse.cs" />
@@ -124,6 +140,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Banks\BankViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseEntityViewModel.cs" />
+    <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerLocationViewModel.cs" />
+    <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerOrganizationUnitViewModel.cs" />
+    <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerPhoneViewModel.cs" />
+    <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerTypeViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\CityViewModel.cs" />
     <Compile Include="ViewModels\Common\Companies\CompanyViewModel.cs" />

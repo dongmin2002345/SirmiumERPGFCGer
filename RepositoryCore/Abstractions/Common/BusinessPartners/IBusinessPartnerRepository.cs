@@ -7,9 +7,8 @@ namespace RepositoryCore.Abstractions.Common.BusinessPartners
 {
     public interface IBusinessPartnerRepository
     {
-        List<BusinessPartner> GetBusinessPartners();
-
-        List<BusinessPartner> GetBusinessPartnersNewerThen(DateTime lastUpdateTime);
+        List<BusinessPartner> GetBusinessPartners(int companyId);
+        List<BusinessPartner> GetBusinessPartnersNewerThen(int companyId, DateTime lastUpdateTime);
 
         BusinessPartner GetBusinessPartner(int id);
 

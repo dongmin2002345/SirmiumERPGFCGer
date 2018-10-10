@@ -44,6 +44,11 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IUserRepository userRepository;
 
         private IBusinessPartnerRepository businessPartnerRepository;
+        private IBusinessPartnerLocationRepository businessPartnerLocationRepository;
+        private IBusinessPartnerPhoneRepository businessPartnerPhoneRepository;
+        private IBusinessPartnerOrganizationUnitRepository businessPartnerOrganizationUnitRepository;
+        private IBusinessPartnerTypeRepository businessPartnerTypeRepository;
+        private IBusinessPartnerBusinessPartnerTypeRepository businessPartnerBusinessPartnerTypeRepository;
 
         private IIndividualsRepository individualsRepository;
 
@@ -120,6 +125,41 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (businessPartnerRepository == null)
                 businessPartnerRepository = new BusinessPartnerRepository(context);
             return businessPartnerRepository;
+        }
+
+        public IBusinessPartnerLocationRepository GetBusinessPartnerLocationRepository()
+        {
+            if (businessPartnerLocationRepository == null)
+                businessPartnerLocationRepository = new BusinessPartnerLocationRepository(context);
+            return businessPartnerLocationRepository;
+        }
+
+        public IBusinessPartnerPhoneRepository GetBusinessPartnerPhoneRepository()
+        {
+            if (businessPartnerPhoneRepository == null)
+                businessPartnerPhoneRepository = new BusinessPartnerPhoneRepository(context);
+            return businessPartnerPhoneRepository;
+        }
+
+        public IBusinessPartnerOrganizationUnitRepository GetBusinessPartnerOrganizationUnitRepository()
+        {
+            if (businessPartnerOrganizationUnitRepository == null)
+                businessPartnerOrganizationUnitRepository = new BusinessPartnerOrganizationUnitRepository(context);
+            return businessPartnerOrganizationUnitRepository;
+        }
+
+        public IBusinessPartnerTypeRepository GetBusinessPartnerTypeRepository()
+        {
+            if (businessPartnerTypeRepository == null)
+                businessPartnerTypeRepository = new BusinessPartnerTypeRepository(context);
+            return businessPartnerTypeRepository;
+        }
+
+        public IBusinessPartnerBusinessPartnerTypeRepository GetBusinessPartnerBusinessPartnerTypeRepository()
+        {
+            if (businessPartnerBusinessPartnerTypeRepository == null)
+                businessPartnerBusinessPartnerTypeRepository = new BusinessPartnerBusinessPartnerTypeRepository(context);
+            return businessPartnerBusinessPartnerTypeRepository;
         }
 
         public IIndividualsRepository GetIndividualsRepository()
