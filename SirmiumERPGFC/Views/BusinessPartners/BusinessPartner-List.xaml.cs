@@ -164,6 +164,41 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
+
+        #region RefreshButtonContent
+        private string _RefreshButtonContent = " Osveži ";
+
+        public string RefreshButtonContent
+        {
+            get { return _RefreshButtonContent; }
+            set
+            {
+                if (_RefreshButtonContent != value)
+                {
+                    _RefreshButtonContent = value;
+                    NotifyPropertyChanged("RefreshButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region RefreshButtonEnabled
+        private bool _RefreshButtonEnabled = true;
+
+        public bool RefreshButtonEnabled
+        {
+            get { return _RefreshButtonEnabled; }
+            set
+            {
+                if (_RefreshButtonEnabled != value)
+                {
+                    _RefreshButtonEnabled = value;
+                    NotifyPropertyChanged("RefreshButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructor
@@ -194,9 +229,14 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             currentPage = 1;
 
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
+            Thread syncThread = new Thread(() =>
+            {
+                SyncData();
+
+                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+            });
+            syncThread.IsBackground = true;
+            syncThread.Start();
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -231,6 +271,19 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
 
             BusinessPartnerDataLoading = false;
+        }
+
+        private void SyncData()
+        {
+            RefreshButtonEnabled = false;
+
+            RefreshButtonContent = " Firme ... ";
+            new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
+
+            DisplayData();
+
+            RefreshButtonContent = " Osveži ";
+            RefreshButtonEnabled = true;
         }
 
         #endregion
