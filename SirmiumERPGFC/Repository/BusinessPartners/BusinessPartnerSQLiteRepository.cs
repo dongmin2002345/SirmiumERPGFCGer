@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
@@ -353,6 +354,26 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
             return "";
         }
+
+        public void Sync(IBusinessPartnerService bpService)
+        {
+            SyncBusinessPartnerRequest request = new SyncBusinessPartnerRequest();
+            request.CompanyId = MainWindow.CurrentCompanyId;
+            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+            BusinessPartnerListResponse response = bpService.Sync(request);
+            if (response.Success)
+            {
+                List<BusinessPartnerViewModel> businessPartnersFromDB = response.BusinessPartners;
+                foreach (var bp in businessPartnersFromDB.OrderBy(x => x.Id))
+                {
+                    Delete(bp.Identifier);
+                    bp.IsSynced = true;
+                    Create(bp);
+                }
+            }
+        }
+
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {

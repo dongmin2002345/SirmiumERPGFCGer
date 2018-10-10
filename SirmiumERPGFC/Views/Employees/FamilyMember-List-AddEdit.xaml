@@ -37,7 +37,7 @@
                 <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCode" Text="{Binding Path=CurrentFamilyMember.Code}" IsEnabled="False" />
 
                 <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Tip člana porodice *" />
-                <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentFamilyMember.Name}" />
+                <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentFamilyMember.Name}" />
 
             </Grid>
         </GroupBox>

@@ -82,16 +82,10 @@
                                 <TextBlock Text=" Dodaj " />
                             </StackPanel>
                         </Button>
-                        <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" Width="150">
+                        <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Osveži " />
-                            </StackPanel>
-                        </Button>
-                        <Button Margin="2" x:Name="btnSync" Click="btnSync_Click" IsEnabled="{Binding Path=BusinessPartnerButtonEnabled, Mode=TwoWay}" Width="250">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text="{Binding Path=BusinessPartnerButtonContent, Mode=TwoWay}" Foreground="Black" />
+                                <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
