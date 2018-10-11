@@ -49,8 +49,8 @@
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
                 <TextBlock Text="Država" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByCountryName" Grid.Column="3" 
-                         Text="{Binding Path=BankSearchObject.Search_CountryName, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="txtSearchByCountry" Grid.Column="3" 
+                         Text="{Binding Path=BankSearchObject.Search_Country, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
