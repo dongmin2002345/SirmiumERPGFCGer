@@ -83,7 +83,7 @@ namespace DataMapper.Mappers.Employees
 				Description = licenceTypeViewModel.Description,
 
 
-				CountryId = licenceTypeViewModel.Company?.Id ?? null,
+				CountryId = licenceTypeViewModel.Country?.Id ?? null,
 				CreatedById = licenceTypeViewModel.CreatedBy?.Id ?? null,
 				CompanyId = licenceTypeViewModel.Company?.Id ?? null,
 

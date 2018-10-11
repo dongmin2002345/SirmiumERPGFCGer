@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Employees
 
 				if (dbEntry != null)
 				{
-					dbEntry.CompanyId = licenceType.CompanyId ?? null;
+					dbEntry.CountryId = licenceType.CountryId ?? null;
 					dbEntry.CompanyId = licenceType.CompanyId ?? null;
 					dbEntry.CreatedById = licenceType.CreatedById ?? null;
 
