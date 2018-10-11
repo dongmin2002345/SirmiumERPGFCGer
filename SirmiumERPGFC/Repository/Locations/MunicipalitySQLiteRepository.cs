@@ -68,15 +68,15 @@ namespace SirmiumERPGFC.Repository.Locations
                         "FROM Municipalities " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@MunicipalityCode IS NULL OR @MunicipalityCode = '' OR MunicipalityCode LIKE @MunicipalityCode) " +
-                        "AND (@Region IS NULL OR @Region = '' OR Region LIKE @Region) " +
-                        "AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
+                        "AND (@RegionName IS NULL OR @RegionName = '' OR RegionName LIKE @RegionName) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)MunicipalitySearchObject.Search_Name) != null ? "%" + MunicipalitySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)MunicipalitySearchObject.Search_MunicipalityCode) != null ? "%" + MunicipalitySearchObject.Search_MunicipalityCode + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Region", ((object)MunicipalitySearchObject.Search_Region) != null ? "%" + MunicipalitySearchObject.Search_Region + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Country", ((object)MunicipalitySearchObject.Search_Country) != null ? "%" + MunicipalitySearchObject.Search_Country + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@RegionName", ((object)MunicipalitySearchObject.Search_Region) != null ? "%" + MunicipalitySearchObject.Search_Region + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)MunicipalitySearchObject.Search_Country) != null ? "%" + MunicipalitySearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -107,13 +107,13 @@ namespace SirmiumERPGFC.Repository.Locations
                         "FROM Municipalities " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@MunicipalityCode IS NULL OR @MunicipalityCode = '' OR MunicipalityCode LIKE @MunicipalityCode) " +
-                        "AND (@Region IS NULL OR @Region = '' OR Region LIKE @Region) " +
-                        "AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
+                        "AND (@RegionName IS NULL OR @RegionName = '' OR RegionName LIKE @RegionName) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)MunicipalitySearchObject.Search_Name) != null ? "%" + MunicipalitySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)MunicipalitySearchObject.Search_MunicipalityCode) != null ? "%" + MunicipalitySearchObject.Search_MunicipalityCode + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Region", ((object)MunicipalitySearchObject.Search_Region) != null ? "%" + MunicipalitySearchObject.Search_Region + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Country", ((object)MunicipalitySearchObject.Search_Country) != null ? "%" + MunicipalitySearchObject.Search_Country + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@RegionName", ((object)MunicipalitySearchObject.Search_Region) != null ? "%" + MunicipalitySearchObject.Search_Region + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)MunicipalitySearchObject.Search_Country) != null ? "%" + MunicipalitySearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -151,14 +151,14 @@ namespace SirmiumERPGFC.Repository.Locations
                         "FROM Municipalities " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name OR Code LIKE @Name) " +
                         "AND (@MunicipalityCode IS NULL OR @MunicipalityCode = '' OR MunicipalityCode LIKE @MunicipalityCode) " +
-                        "AND (@Region IS NULL OR @Region = '' OR Region LIKE @Region) " +
-                        "AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
+                        "AND (@RegionName IS NULL OR @RegionName = '' OR RegionName LIKE @RegionName) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Region", ((object)filterString) != null ? "%" + filterString + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Country", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@RegionName", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
