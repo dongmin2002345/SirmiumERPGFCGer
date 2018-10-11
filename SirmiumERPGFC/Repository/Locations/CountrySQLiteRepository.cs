@@ -59,7 +59,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         "AND (@Mark IS NULL OR @Mark = '' OR Mark LIKE @Mark) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND CompanyId = @CompanyId " +
-                        "ORDER BY IsSynced, Id DESC " +
+                        "ORDER BY IsSynced DESC, Name ASC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)countrySearchObject.Search_Name) != null ? "%" + countrySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@AlfaCode", ((object)countrySearchObject.Search_AlfaCode) != null ? "%" + countrySearchObject.Search_AlfaCode + "%" : "");
