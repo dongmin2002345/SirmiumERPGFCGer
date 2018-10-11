@@ -51,7 +51,7 @@
                               ItemsSource="{Binding Path=CountriesFromDB}"
                               SelectedItem="{Binding Path=CurrentCountry}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Mark" Header="Oznaka" Binding="{Binding Mark}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje porekla" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>

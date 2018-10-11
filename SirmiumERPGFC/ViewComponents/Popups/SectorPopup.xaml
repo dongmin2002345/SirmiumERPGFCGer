@@ -51,7 +51,7 @@
                               ItemsSource="{Binding Path=SectorsFromDB}"
                               SelectedItem="{Binding Path=CurrentSector}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="SecondCode" Header="Šifra" Binding="{Binding SecondCode}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>

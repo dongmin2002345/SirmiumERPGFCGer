@@ -52,7 +52,7 @@
                               ItemsSource="{Binding Path=MunicipalitysFromDB}"
                               SelectedItem="{Binding Path=CurrentMunicipality}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="MunicipalityCode" Header="Šifra" Binding="{Binding MunicipalityCode}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>

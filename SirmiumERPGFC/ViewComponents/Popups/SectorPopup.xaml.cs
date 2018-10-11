@@ -46,7 +46,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             SectorPopup popup = source as SectorPopup;
             SectorViewModel Sector = (SectorViewModel)e.NewValue;
-            popup.txtSector.Text = Sector != null ? Sector.Code + " (" + Sector.Name + ")" : "";
+            popup.txtSector.Text = Sector != null ? Sector.SecondCode + " (" + Sector.Name + ")" : "";
         }
         #endregion
 

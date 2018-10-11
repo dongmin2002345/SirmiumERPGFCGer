@@ -52,7 +52,7 @@
                               ItemsSource="{Binding Path=RegionsFromDB}"
                               SelectedItem="{Binding Path=CurrentRegion}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="RegionCode" Header="Šifra" Binding="{Binding RegionCode}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
