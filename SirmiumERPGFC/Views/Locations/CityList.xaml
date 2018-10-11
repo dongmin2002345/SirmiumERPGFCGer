@@ -56,13 +56,13 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Okrug"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <TextBlock Text="Region"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
                 <TextBox x:Name="txtSearchByRegion" Grid.Column="1" Grid.Row="1" 
                          Text="{Binding Path=CitySearchObject.Search_Region, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Opstina"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <TextBlock Text="Opština"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
                 <TextBox x:Name="txtSearchByMunicipality" Grid.Column="3" Grid.Row="1" 
                          Text="{Binding Path=CitySearchObject.Search_Municipality, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
