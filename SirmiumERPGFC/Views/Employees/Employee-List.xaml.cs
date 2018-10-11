@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Ninject;
-using ServiceInterfaces.Abstractions.Common.Individuals;
-using ServiceInterfaces.Messages.Common.Individuals;
-using ServiceInterfaces.ViewModels.Common.Individuals;
+using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Messages.Employees;
+using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
@@ -26,34 +27,134 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Employees
 {
-    public delegate void IndividualHandler(IndividualViewModel individual);
+    public delegate void EmployeeHandler();
 
     public partial class Employee_List : UserControl, INotifyPropertyChanged
     {
-
         #region Attributes
-        IIndividualService individualService;
 
-        #region IndividualsLoading
-        private bool _IndividualsLoading;
+        #region Services
+        IEmployeeService EmployeeService;
+        IEmployeeItemService EmployeeItemService;
+        #endregion
 
-        public bool IndividualsLoading
+        #region EmployeesFromDB
+        private ObservableCollection<EmployeeViewModel> _EmployeesFromDB;
+
+        public ObservableCollection<EmployeeViewModel> EmployeesFromDB
         {
-            get { return _IndividualsLoading; }
+            get { return _EmployeesFromDB; }
             set
             {
-                if (_IndividualsLoading != value)
+                if (_EmployeesFromDB != value)
                 {
-                    _IndividualsLoading = value;
-                    NotifyPropertyChanged("IndividualsLoading");
+                    _EmployeesFromDB = value;
+                    NotifyPropertyChanged("EmployeesFromDB");
                 }
             }
         }
         #endregion
 
+        #region CurrentEmployee
+        private EmployeeViewModel _CurrentEmployee;
+
+        public EmployeeViewModel CurrentEmployee
+        {
+            get { return _CurrentEmployee; }
+            set
+            {
+                if (_CurrentEmployee != value)
+                {
+                    _CurrentEmployee = value;
+                    NotifyPropertyChanged("CurrentEmployee");
+
+
+                    if (_CurrentEmployee != null)
+                    {
+                        Thread displayItemThread = new Thread(() => PopulateDataItems());
+                        displayItemThread.IsBackground = true;
+                        displayItemThread.Start();
+                    }
+                    else
+                        EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeSearchObject
+        private EmployeeViewModel _EmployeeSearchObject = new EmployeeViewModel();
+
+        public EmployeeViewModel EmployeeSearchObject
+        {
+            get { return _EmployeeSearchObject; }
+            set
+            {
+                if (_EmployeeSearchObject != value)
+                {
+                    _EmployeeSearchObject = value;
+                    NotifyPropertyChanged("EmployeeSearchObject");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeDataLoading
+        private bool _EmployeeDataLoading = true;
+
+        public bool EmployeeDataLoading
+        {
+            get { return _EmployeeDataLoading; }
+            set
+            {
+                if (_EmployeeDataLoading != value)
+                {
+                    _EmployeeDataLoading = value;
+                    NotifyPropertyChanged("EmployeeDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region EmployeeItemsFromDB
+        private ObservableCollection<EmployeeItemViewModel> _EmployeeItemsFromDB;
+
+        public ObservableCollection<EmployeeItemViewModel> EmployeeItemsFromDB
+        {
+            get { return _EmployeeItemsFromDB; }
+            set
+            {
+                if (_EmployeeItemsFromDB != value)
+                {
+                    _EmployeeItemsFromDB = value;
+                    NotifyPropertyChanged("EmployeeItemsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeItemDataLoading
+        private bool _EmployeeItemDataLoading;
+
+        public bool EmployeeItemDataLoading
+        {
+            get { return _EmployeeItemDataLoading; }
+            set
+            {
+                if (_EmployeeItemDataLoading != value)
+                {
+                    _EmployeeItemDataLoading = value;
+                    NotifyPropertyChanged("EmployeeItemDataLoading");
+                }
+            }
+        }
+        #endregion
+        
+
         #region Pagination data
         int currentPage = 1;
-        int itemsPerPage = 20;
+        int itemsPerPage = 50;
         int totalItems = 0;
 
         #region PaginationDisplay
@@ -74,55 +175,36 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
         #endregion
 
-        #region IndividualFilterObject
-        private IndividualViewModel _IndividualFilterObject = new IndividualViewModel();
 
-        public IndividualViewModel IndividualFilterObject
+        #region RefreshButtonContent
+        private string _RefreshButtonContent = " Osveži ";
+
+        public string RefreshButtonContent
         {
-            get { return _IndividualFilterObject; }
+            get { return _RefreshButtonContent; }
             set
             {
-                if (_IndividualFilterObject != value)
+                if (_RefreshButtonContent != value)
                 {
-                    _IndividualFilterObject = value;
-                    NotifyPropertyChanged("IndividualFilterObject");
+                    _RefreshButtonContent = value;
+                    NotifyPropertyChanged("RefreshButtonContent");
                 }
             }
         }
         #endregion
 
-        #region IndividualsFromDB
-        private ObservableCollection<IndividualViewModel> _IndividualsFromDB;
+        #region RefreshButtonEnabled
+        private bool _RefreshButtonEnabled = true;
 
-        public ObservableCollection<IndividualViewModel> IndividualsFromDB
+        public bool RefreshButtonEnabled
         {
-            get
-            {
-                return _IndividualsFromDB;
-            }
+            get { return _RefreshButtonEnabled; }
             set
             {
-                if (_IndividualsFromDB != value)
+                if (_RefreshButtonEnabled != value)
                 {
-                    _IndividualsFromDB = value;
-                    NotifyPropertyChanged("IndividualsFromDB");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentIndividual
-        private IndividualViewModel _CurrentIndividual;
-
-        public IndividualViewModel CurrentIndividual
-        {
-            get { return _CurrentIndividual; }
-            set
-            {
-                if (_CurrentIndividual != value)
-                {
-                    _CurrentIndividual = value;
-                    NotifyPropertyChanged("CurrentIndividual");
+                    _RefreshButtonEnabled = value;
+                    NotifyPropertyChanged("RefreshButtonEnabled");
                 }
             }
         }
@@ -135,91 +217,40 @@ namespace SirmiumERPGFC.Views.Employees
         public Employee_List()
         {
             // Get required service
-            this.individualService = DependencyResolver.Kernel.Get<IIndividualService>();
+            this.EmployeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
+            this.EmployeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
 
-            // Initialize form components
             InitializeComponent();
 
             this.DataContext = this;
 
-            Thread displayThread = new Thread(() => PopulateData());
+            Thread displayThread = new Thread(() => SyncData());
             displayThread.IsBackground = true;
             displayThread.Start();
         }
 
         #endregion
 
-        #region Add, Edit, Delete buttons click
+        #region Display data
 
-        private void btnAddIndividual_Click(object sender, RoutedEventArgs e)
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            currentPage = 1;
 
-            Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(new IndividualViewModel());
-            addEditForm.IndividualCreatedUpdated += new IndividualHandler((IndividualViewModel) => {
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            });
-            FlyoutHelper.OpenFlyout(this, "Podaci o radnicima", 70, addEditForm);
-        }
-        private void btnEdit_Click(object sender, RoutedEventArgs e)
-        {
-
-            Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(CurrentIndividual);
-            addEditForm.IndividualCreatedUpdated += new IndividualHandler((IndividualViewModel) => {
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            });
-            FlyoutHelper.OpenFlyout(this, "Podaci o radnicima", 70, addEditForm);
-        }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            // Check if any data is selected for delete
-            if (CurrentIndividual == null)
+            Thread syncThread = new Thread(() =>
             {
-                MainWindow.ErrorMessage = ("Morate odabrati radnika za brisanje!");
-                return;
-            }
+                SyncData();
 
-            // Show blur effects
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentIndividual.Name);
-
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
-                // Delete business partner
-                IndividualResponse response = individualService.Delete(CurrentIndividual.Id);
-
-                // Display data and notifications
-                if (response.Success)
-                {
-                    MainWindow.SuccessMessage = ("Podaci su uspešno obrisani!");
-                    Thread displayThread = new Thread(() => PopulateData());
-                    displayThread.IsBackground = true;
-                    displayThread.Start();
-                }
-                else
-                {
-                    MainWindow.ErrorMessage = (response.Message);
-                }
-            }
-
-            // Remove blur effects
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-
-            dgIndividuals.Focus();
+                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+            });
+            syncThread.IsBackground = true;
+            syncThread.Start();
         }
 
-        #endregion
-
-        #region Search buttons
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            currentPage = 1;
+
             Thread displayThread = new Thread(() => PopulateData());
             displayThread.IsBackground = true;
             displayThread.Start();
@@ -227,178 +258,130 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void PopulateData()
         {
-            IndividualsLoading = true;
+            EmployeeDataLoading = true;
 
-            string SearchObjectJson = JsonConvert.SerializeObject(IndividualFilterObject,
-                Formatting.Indented,
-                new JsonSerializerSettings
-                {
-                    DateTimeZoneHandling = DateTimeZoneHandling.Unspecified
-                });
+            EmployeeListResponse response = new EmployeeSQLiteRepository()
+                .GetEmployeesByPage(MainWindow.CurrentCompanyId, EmployeeSearchObject, currentPage, itemsPerPage);
 
-
-            var response = individualService.GetIndividualsByPage(currentPage, itemsPerPage, SearchObjectJson);
             if (response.Success)
             {
-                IndividualsFromDB = new ObservableCollection<IndividualViewModel>(response?.IndividualsByPage ?? new List<IndividualViewModel>());
-                totalItems = response?.TotalItems ?? 0;
-
-                int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
-                int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
-
-                PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+                EmployeesFromDB = new ObservableCollection<EmployeeViewModel>(response.Employees ?? new List<EmployeeViewModel>());
+                totalItems = response.TotalItems;
             }
             else
             {
-                IndividualsFromDB = new ObservableCollection<IndividualViewModel>(new List<IndividualViewModel>());
-                MainWindow.ErrorMessage = response.Message;
+                EmployeesFromDB = new ObservableCollection<EmployeeViewModel>();
                 totalItems = 0;
+                MainWindow.ErrorMessage = response.Message;
             }
-            IndividualsLoading = false;
+
+            int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+            int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
+
+            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+
+            EmployeeDataLoading = false;
         }
-        #endregion
 
-        #region Export to excel
-
-        /// <summary>
-        /// Export all data to excel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnExportToExcel_Click(object sender, RoutedEventArgs e)
+        private void PopulateDataItems()
         {
-            //try
-            //{
-            //    // Create excel workbook and sheet
-            //    Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            //    excel.Visible = true;
-            //    Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            //    Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
+            EmployeeItemDataLoading = true;
 
-            //    // Load data that will be exported to excel
-            //    List<IndividualViewModel> IndividualsForExport = IndividualsFromDB.ToList();
+            EmployeeItemListResponse response = new EmployeeItemSQLiteRepository()
+                .GetEmployeeItemsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
 
-            //    // Insert document headers
-            //    sheet1.Range[sheet1.Cells[1, 1], sheet1.Cells[1, 12]].Merge();
-            //    sheet1.Cells[1, 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-            //    sheet1.Cells[1, 1].Font.Bold = true;
-            //    sheet1.Cells[1, 1] = "Podaci o poslovnim partnerima";
+            if (response.Success)
+            {
+                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>(
+                    response.EmployeeItems ?? new List<EmployeeItemViewModel>());
+            }
+            else
+            {
+                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
+                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            }
 
-            //    // Insert row headers
-            //    sheet1.Rows[3].Font.Bold = true;
-            //    sheet1.Cells[3, 1] = "Šifra";
-            //    sheet1.Cells[3, 2] = "Ime poslovnog partnera";
-            //    sheet1.Cells[3, 3] = "Grad";
-            //    sheet1.Cells[3, 4] = "Država";
-            //    sheet1.Cells[3, 5] = "Adresa";
-            //    sheet1.Cells[3, 6] = "Broj bankovnog računa";
-            //    sheet1.Cells[3, 7] = "Naziv računa";
-            //    sheet1.Cells[3, 8] = "PIB";
-            //    sheet1.Cells[3, 9] = "PIO";
-            //    sheet1.Cells[3, 10] = "PDV";
-            //    sheet1.Cells[3, 11] = "Email";
-            //    sheet1.Cells[3, 12] = "Sajt";
+            EmployeeItemDataLoading = false;
+        }
 
-            //    // Insert data to excel
-            //    for (int i = 0; i < IndividualsForExport.Count; i++)
-            //    {
-            //        sheet1.Cells[i + 4, 1] = IndividualsForExport[i].Code;
-            //        sheet1.Cells[i + 4, 2] = IndividualsForExport[i].Name;
-            //        sheet1.Cells[i + 4, 3] = IndividualsForExport[i].City?.Name;
-            //        sheet1.Cells[i + 4, 4] = IndividualsForExport[i].Country?.Name;
-            //        sheet1.Cells[i + 4, 5] = IndividualsForExport[i].Address;
-            //        sheet1.Cells[i + 4, 6] = IndividualsForExport[i].BankAccountNumber;
-            //        sheet1.Cells[i + 4, 7] = IndividualsForExport[i].BankAccountName;
-            //        sheet1.Cells[i + 4, 8] = IndividualsForExport[i].PIB;
-            //        sheet1.Cells[i + 4, 9] = IndividualsForExport[i].PIO;
-            //        sheet1.Cells[i + 4, 10] = IndividualsForExport[i].PDV;
-            //        sheet1.Cells[i + 4, 11] = IndividualsForExport[i].Email;
-            //        sheet1.Cells[i + 4, 12] = IndividualsForExport[i].WebSite;
-            //    }
+        private void SyncData()
+        {
+            RefreshButtonEnabled = false;
 
-            //    // Set additional options
-            //    sheet1.Columns.AutoFit();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MainWindow.ErrorMessage = (ex.Message);
-            //}
+            RefreshButtonContent = " Radnici ... ";
+            new EmployeeSQLiteRepository().Sync(EmployeeService);
 
+            RefreshButtonContent = " Stavke ... ";
+            new EmployeeItemSQLiteRepository().Sync(EmployeeItemService);
+
+            PopulateData();
+
+            RefreshButtonContent = " Osveži ";
+            RefreshButtonEnabled = true;
         }
 
         #endregion
 
-        #region Additional options
+        #region Add, edit and delete methods
 
-        //private void btnIndividualPhones_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Show blur efects
-        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-        //    // Create business partner phones window
-        //    IndividualPhoneList IndividualPhoneListForm = new IndividualPhoneList(CurrentIndividual.Id);
-
-        //    // Display window
-        //    IndividualPhoneListForm.ShowDialog();
-
-        //    // Remove blur efects
-        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-
-        //    dgIndividuals.Focus();
-        //}
-
-        //private void btnBankAccounts_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Show blur efects
-        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-        //    // Create business partner bank accounts window
-        //    IndividualBankAccountList IndividualBankAccountListForm = new IndividualBankAccountList(CurrentIndividual.Id);
-
-        //    // Display window
-        //    IndividualBankAccountListForm.ShowDialog();
-
-        //    // Remove blur efects 
-        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        //}
-
-        //private void btnCities_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-        //    IndividualLocationList IndividualLocationListForm = new IndividualLocationList(CurrentIndividual.Id);
-        //    IndividualLocationListForm.ShowDialog();
-        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        //}
-
-        //private void btnDocuments_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-        //private void btnPrices_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //SiemiumERPVisualEffects.AddEffectOnDialogShow(this);
+            EmployeeViewModel Employee = new EmployeeViewModel();
+            Employee.Identifier = Guid.NewGuid();
 
-            //IndividualsReportForm IndividualsReportForm = new IndividualsReportForm();
-
-            //IndividualsReportForm.ShowDialog();
-
-            //SiemiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-
+            Employee_List_AddEdit EmployeeAddEditForm = new Employee_List_AddEdit(Employee, true, false);
+            EmployeeAddEditForm.EmployeeCreated += new EmployeeHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o radnicima", 95, EmployeeAddEditForm);
         }
 
-        private void btnExcelReport_Click(object sender, RoutedEventArgs e)
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati stavku za izmenu!";
+                return;
+            }
 
+            Employee_List_AddEdit EmployeeAddEditForm = new Employee_List_AddEdit(CurrentEmployee, false, false);
+            EmployeeAddEditForm.EmployeeCreated += new EmployeeHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o radnicima", 90, EmployeeAddEditForm);
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati stavku za brisanje!";
+                return;
+            }
+
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            // Create confirmation window
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku", CurrentEmployee.Code.ToString());
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                var result = new EmployeeSQLiteRepository().Delete(CurrentEmployee.Identifier);
+                if (result.Success)
+                {
+                    MainWindow.SuccessMessage = "Podaci su uspešno obrisani!";
+
+                    Thread displayThread = new Thread(() => PopulateData());
+                    displayThread.IsBackground = true;
+                    displayThread.Start();
+                }
+                else
+                {
+                    MainWindow.ErrorMessage = result.Message;
+                }
+            }
+
+            // Remove blur effects
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
         #endregion
-
 
         #region Pagination
 
@@ -407,6 +390,7 @@ namespace SirmiumERPGFC.Views.Employees
             if (currentPage > 1)
             {
                 currentPage = 1;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
@@ -418,6 +402,7 @@ namespace SirmiumERPGFC.Views.Employees
             if (currentPage > 1)
             {
                 currentPage--;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
@@ -429,6 +414,7 @@ namespace SirmiumERPGFC.Views.Employees
             if (currentPage < Math.Ceiling((double)this.totalItems / this.itemsPerPage))
             {
                 currentPage++;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
@@ -441,11 +427,13 @@ namespace SirmiumERPGFC.Views.Employees
             if (currentPage < lastPage)
             {
                 currentPage = lastPage;
+
                 Thread displayThread = new Thread(() => PopulateData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
         }
+
         #endregion
 
         #region INotifyPropertyChanged implementation
@@ -455,12 +443,11 @@ namespace SirmiumERPGFC.Views.Employees
         // This method is called by the Set accessor of each property.
         // The CallerMemberName attribute that is applied to the optional propertyName
         // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
+        public void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
     }
 }
 

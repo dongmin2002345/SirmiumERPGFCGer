@@ -173,6 +173,8 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeItemSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\LicenceTypeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\FamilyMemberSQLiteRepository.cs" />
     <Compile Include="Repository\Locations\CitySQLiteRepository.cs" />
@@ -194,6 +196,9 @@
     </Compile>
     <Compile Include="ViewComponents\Popups\CountryPopup.xaml.cs">
       <DependentUpon>CountryPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\FamilyMemberPopup.xaml.cs">
+      <DependentUpon>FamilyMemberPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\MunicipalityPopup.xaml.cs">
       <DependentUpon>MunicipalityPopup.xaml</DependentUpon>
@@ -230,6 +235,9 @@
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml.cs">
       <DependentUpon>BusinessPartnerEmployee-List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\SubmitConfirmation.xaml.cs">
+      <DependentUpon>SubmitConfirmation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSiteBusinessPartner-List-AddEdit.xaml.cs">
       <DependentUpon>ConstructionSiteBusinessPartner-List-AddEdit.xaml</DependentUpon>
@@ -395,6 +403,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ViewComponents\Popups\FamilyMemberPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewComponents\Popups\MunicipalityPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -440,6 +452,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Common\SubmitConfirmation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

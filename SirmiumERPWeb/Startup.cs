@@ -150,8 +150,11 @@ namespace SirmiumERPWeb
 
             services.AddScoped<IProfessionService, ProfessionService>();
 
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IEmployeeItemService, EmployeeItemService>();
             services.AddScoped<IFamilyMemberService, FamilyMemberService>();
-			services.AddScoped<IBankService, BankService>();
+
+            services.AddScoped<IBankService, BankService>();
 			services.AddScoped<ILicenceTypeService, LicenceTypeService>();
 
 

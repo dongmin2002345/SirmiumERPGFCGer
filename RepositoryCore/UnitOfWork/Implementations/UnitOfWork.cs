@@ -63,13 +63,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IConstructionSiteRepository constructionSiteRepository;
 
-
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
 		private ILicenceTypeRepository licenceTypeRepository;
         private IAgencyRepository agencyRepository;
 
-
+        private IEmployeeRepository employeeRepository;
+        private IEmployeeItemRepository employeeItemRepository;
         private IFamilyMemberRepository familyMemberRepository;
 
         #endregion
@@ -225,8 +225,6 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return professionRepository;
         }
 
-		
-
 		public IBankRepository GetBankRepository()
 		{
 			if (bankRepository == null)
@@ -241,15 +239,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
 			return licenceTypeRepository;
 		}
 
-		#endregion
-
-		#region Save method
         public IConstructionSiteRepository GetConstructionSiteRepository()
         {
             if (constructionSiteRepository == null)
                 constructionSiteRepository = new ConstructionSiteRepository(context);
             return constructionSiteRepository;
         }
+
         public IFamilyMemberRepository GetFamilyMemberRepository()
         {
             if (familyMemberRepository == null)
@@ -257,11 +253,25 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return familyMemberRepository;
         }
 
+        public IEmployeeRepository GetEmployeeRepository()
+        {
+            if (employeeRepository == null)
+                employeeRepository = new EmployeeRepository(context);
+            return employeeRepository;
+        }
+
+        public IEmployeeItemRepository GetEmployeeItemRepository()
+        {
+            if (employeeItemRepository == null)
+                employeeItemRepository = new EmployeeItemRepository(context);
+            return employeeItemRepository;
+        }
+
         #endregion
 
         #region Save method
 
-		public void Save()
+        public void Save()
         {
             context.SaveChanges();
         }

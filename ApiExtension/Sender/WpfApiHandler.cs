@@ -132,6 +132,12 @@ namespace ApiExtension.Sender
 			#endregion
 
                 #region Employees
+                
+                { typeof(EmployeeViewModel), "Employee" },
+                { typeof(List<EmployeeViewModel>), "Employee" },
+
+                { typeof(EmployeeItemViewModel), "EmployeeItem" },
+                { typeof(List<EmployeeItemViewModel>), "EmployeeItem" },
 
                 { typeof(FamilyMemberViewModel), "FamilyMember" },
                 { typeof(List<FamilyMemberViewModel>), "FamilyMember" },

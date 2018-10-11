@@ -88,6 +88,10 @@ namespace RepositoryCore.Context
 
         public DbSet<Profession> Professions { get; set; }
         public DbSet<FamilyMember> FamilyMembers { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeItem> EmployeeItems { get; set; }
+
         public DbSet<ConstructionSite> ConstructionSites { get; set; }
 
 
