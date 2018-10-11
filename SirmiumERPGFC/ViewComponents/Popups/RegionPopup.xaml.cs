@@ -50,6 +50,29 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         }
         #endregion
 
+        #region CurrentCountry
+        public CountryViewModel CurrentCountry
+        {
+            get { return (CountryViewModel)GetValue(CurrentCountryProperty); }
+            set { SetValueDp(CurrentCountryProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentCountryProperty = DependencyProperty.Register(
+            "CurrentCountry",
+            typeof(CountryViewModel),
+            typeof(RegionPopup),
+            new PropertyMetadata(OnCurrentCountryPropertyChanged));
+
+        private static void OnCurrentCountryPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            RegionPopup popup = source as RegionPopup;
+            CountryViewModel animalType = (CountryViewModel)e.NewValue;
+
+            popup.PopulateFromDb("");
+
+        }
+        #endregion
+
         #region RegionsFromDB
         private ObservableCollection<RegionViewModel> _RegionsFromDB;
 
@@ -93,9 +116,14 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    RegionListResponse regionResp = new RegionSQLiteRepository().GetRegionsForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (regionResp.Success)
-                        RegionsFromDB = new ObservableCollection<RegionViewModel>(regionResp.Regions ?? new List<RegionViewModel>());
+                    if (CurrentCountry != null)
+                    {
+                        RegionListResponse regionResp = new RegionSQLiteRepository().GetRegionsForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
+                        if (regionResp.Success)
+                            RegionsFromDB = new ObservableCollection<RegionViewModel>(regionResp.Regions ?? new List<RegionViewModel>());
+                        else
+                            RegionsFromDB = new ObservableCollection<RegionViewModel>();
+                    }
                     else
                         RegionsFromDB = new ObservableCollection<RegionViewModel>();
                 })

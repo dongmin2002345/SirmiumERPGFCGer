@@ -124,7 +124,7 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public RegionListResponse GetRegionsForPopup(int companyId, string filterString)
+        public RegionListResponse GetRegionsForPopup(int companyId, Guid countryIdentifier, string filterString)
         {
             RegionListResponse response = new RegionListResponse();
             List<RegionViewModel> Regions = new List<RegionViewModel>();
@@ -138,14 +138,16 @@ namespace SirmiumERPGFC.Repository.Locations
                         SqlCommandSelectPart +
                         "FROM Regions " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                         "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
+                        "AND CountryIdentifier = @CountryIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@RegionCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryIdentifier", countryIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
