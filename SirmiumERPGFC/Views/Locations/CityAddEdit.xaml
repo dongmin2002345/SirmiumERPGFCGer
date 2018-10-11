@@ -59,6 +59,7 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Opština *" />
                     <popups:MunicipalityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popLitter" 
+                                        CurrentRegion="{Binding Path=CurrentCity.Region, Mode=TwoWay}"
                                         CurrentMunicipality="{Binding Path=CurrentCity.Municipality, Mode=TwoWay}"/>
 
                 </Grid>

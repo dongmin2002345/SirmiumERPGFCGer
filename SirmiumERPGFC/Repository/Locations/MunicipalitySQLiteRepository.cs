@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public MunicipalityListResponse GetMunicipalitiesForPopup(int companyId, string filterString)
+        public MunicipalityListResponse GetMunicipalitiesForPopup(int companyId, Guid regionIdentifier, string filterString)
         {
             MunicipalityListResponse response = new MunicipalityListResponse();
             List<MunicipalityViewModel> Municipalities = new List<MunicipalityViewModel>();
@@ -153,12 +153,14 @@ namespace SirmiumERPGFC.Repository.Locations
                         "AND (@MunicipalityCode IS NULL OR @MunicipalityCode = '' OR MunicipalityCode LIKE @MunicipalityCode) " +
                         "AND (@RegionName IS NULL OR @RegionName = '' OR RegionName LIKE @RegionName) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
+                        "AND RegionIdentifier = @RegionIdentifier " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@RegionName", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@RegionIdentifier", regionIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 

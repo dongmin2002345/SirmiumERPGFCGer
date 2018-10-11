@@ -52,6 +52,7 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Region" />
                     <popups:RegionPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" 
+                                        CurrentCountry="{Binding Path=CurrentMunicipality.Country,  Mode=TwoWay}" 
                                         CurrentRegion="{Binding Path=CurrentMunicipality.Region,  Mode=TwoWay}" />
 
                 </Grid>

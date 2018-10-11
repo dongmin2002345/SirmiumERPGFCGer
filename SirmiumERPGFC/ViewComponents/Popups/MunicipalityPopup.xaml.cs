@@ -50,6 +50,29 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         }
         #endregion
 
+        #region CurrentRegion
+        public RegionViewModel CurrentRegion
+        {
+            get { return (RegionViewModel)GetValue(CurrentRegionProperty); }
+            set { SetValueDp(CurrentRegionProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentRegionProperty = DependencyProperty.Register(
+            "CurrentRegion",
+            typeof(RegionViewModel),
+            typeof(MunicipalityPopup),
+            new PropertyMetadata(OnCurrentRegionPropertyChanged));
+
+        private static void OnCurrentRegionPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            MunicipalityPopup popup = source as MunicipalityPopup;
+            RegionViewModel animalType = (RegionViewModel)e.NewValue;
+
+            popup.PopulateFromDb("");
+
+        }
+        #endregion
+
         #region MunicipalitysFromDB
         private ObservableCollection<MunicipalityViewModel> _MunicipalitysFromDB;
 
@@ -93,9 +116,14 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    MunicipalityListResponse municipalityResp = new MunicipalitySQLiteRepository().GetMunicipalitiesForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (municipalityResp.Success)
-                        MunicipalitysFromDB = new ObservableCollection<MunicipalityViewModel>(municipalityResp.Municipalities ?? new List<MunicipalityViewModel>());
+                    if (CurrentRegion != null)
+                    {
+                        MunicipalityListResponse municipalityResp = new MunicipalitySQLiteRepository().GetMunicipalitiesForPopup(MainWindow.CurrentCompanyId, CurrentRegion.Identifier, filterString);
+                        if (municipalityResp.Success)
+                            MunicipalitysFromDB = new ObservableCollection<MunicipalityViewModel>(municipalityResp.Municipalities ?? new List<MunicipalityViewModel>());
+                        else
+                            MunicipalitysFromDB = new ObservableCollection<MunicipalityViewModel>();
+                    }
                     else
                         MunicipalitysFromDB = new ObservableCollection<MunicipalityViewModel>();
                 })
