@@ -289,7 +289,7 @@ namespace SirmiumERPGFC.Views.Employees
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
 			// Create confirmation window
-			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dozvola", CurrentLicenceType.Name + CurrentLicenceType.Code);
+			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dozvola", CurrentLicenceType.Category + CurrentLicenceType.Code);
 			var showDialog = deleteConfirmationForm.ShowDialog();
 			if (showDialog != null && showDialog.Value)
 			{

@@ -43,12 +43,16 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Naziv dozvole"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByName" Grid.Column="1"  Grid.ColumnSpan="2"
-                         Text="{Binding Path=LicenceTypeSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="txtSearchByName" Grid.Column="1"  
+                         Text="{Binding Path=LicenceTypeSearchObject.Search_Category, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+                <TextBlock Text="Naziv zemlje"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByCountry" Grid.Column="3"  
+                         Text="{Binding Path=LicenceTypeSearchObject.Search_Country, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-        
 
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="4">
                     <StackPanel Orientation="Horizontal">
@@ -127,8 +131,10 @@
                           SelectedItem="{Binding Path=CurrentLicenceType, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <!--<DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />-->
+                        <DataGridTextColumn SortMemberPath="Category" Header="Kategorija" Binding="{Binding Category}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Description" Header="Opis" Binding="{Binding Description}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Country.Name" Header="Drzava" Binding="{Binding Country.Name}" Width="auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

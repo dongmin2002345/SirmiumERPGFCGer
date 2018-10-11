@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,23 +28,56 @@ namespace ServiceInterfaces.ViewModels.Employees
 		}
 		#endregion
 
-		#region Name
-		private string _Name;
+		#region Category
+		private string _Category;
 
-		public string Name
+		public string Category
 		{
-			get { return _Name; }
+			get { return _Category; }
 			set
 			{
-				if (_Name != value)
+				if (_Category != value)
 				{
-					_Name = value;
-					NotifyPropertyChanged("Name");
+					_Category = value;
+					NotifyPropertyChanged("Category");
 				}
 			}
 		}
 		#endregion
 
+		#region Description
+		private string _Description;
+
+		public string Description
+		{
+			get { return _Description; }
+			set
+			{
+				if (_Description != value)
+				{
+					_Description = value;
+					NotifyPropertyChanged("Description");
+				}
+			}
+		}
+		#endregion
+
+		#region Country
+		private CountryViewModel _Country;
+
+		public CountryViewModel Country
+		{
+			get { return _Country; }
+			set
+			{
+				if (_Country != value)
+				{
+					_Country = value;
+					NotifyPropertyChanged("Country");
+				}
+			}
+		}
+		#endregion
 
 		#region IsSynced
 		private bool _IsSynced;
@@ -62,22 +96,38 @@ namespace ServiceInterfaces.ViewModels.Employees
 		}
 		#endregion
 
-		#region Search_Name
-		private string _Search_Name;
+		#region Search_Category
+		private string _Search_Category;
 
-		public string Search_Name
+		public string Search_Category
 		{
-			get { return _Search_Name; }
+			get { return _Search_Category; }
 			set
 			{
-				if (_Search_Name != value)
+				if (_Search_Category != value)
 				{
-					_Search_Name = value;
-					NotifyPropertyChanged("Search_Name");
+					_Search_Category = value;
+					NotifyPropertyChanged("Search_Category");
 				}
 			}
 		}
 		#endregion
 
+		#region Search_Country
+		private string _Search_Country;
+
+		public string Search_Country
+		{
+			get { return _Search_Country; }
+			set
+			{
+				if (_Search_Country != value)
+				{
+					_Search_Country = value;
+					NotifyPropertyChanged("Search_Country");
+				}
+			}
+		}
+		#endregion
 	}
 }

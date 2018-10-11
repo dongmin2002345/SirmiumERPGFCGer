@@ -1,5 +1,6 @@
 ﻿using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
+using DataMapper.Mappers.Common.Locations;
 using DomainCore.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
@@ -28,8 +29,10 @@ namespace DataMapper.Mappers.Employees
 				Identifier = licenceType.Identifier,
 
 				Code = licenceType.Code,
-				Name = licenceType.Name,
+				Category = licenceType.Category,
+				Description = licenceType.Description,
 
+				Country = licenceType.Country?.ConvertToCountryViewModelLite(),
 				CreatedBy = licenceType.CreatedBy?.ConvertToUserViewModelLite(),
 				Company = licenceType.Company?.ConvertToCompanyViewModelLite(),
 
@@ -59,7 +62,8 @@ namespace DataMapper.Mappers.Employees
 				Identifier = licenceType.Identifier,
 
 				Code = licenceType.Code,
-				Name = licenceType.Name,
+				Category = licenceType.Category,
+				Description = licenceType.Description,
 
 				CreatedAt = licenceType.CreatedAt,
 				UpdatedAt = licenceType.UpdatedAt
@@ -75,8 +79,11 @@ namespace DataMapper.Mappers.Employees
 				Identifier = licenceTypeViewModel.Identifier,
 
 				Code = licenceTypeViewModel.Code,
-				Name = licenceTypeViewModel.Name,
+				Category = licenceTypeViewModel.Category,
+				Description = licenceTypeViewModel.Description,
 
+
+				CountryId = licenceTypeViewModel.Company?.Id ?? null,
 				CreatedById = licenceTypeViewModel.CreatedBy?.Id ?? null,
 				CompanyId = licenceTypeViewModel.Company?.Id ?? null,
 
