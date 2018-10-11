@@ -40,7 +40,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
 
-                    <ColumnDefinition Width="*" />
+                   
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Šifra sektora"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,7"/>
