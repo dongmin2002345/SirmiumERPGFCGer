@@ -160,7 +160,7 @@
             <Fluent:RibbonTabItem Header="Administracija" x:Name="mniAdministration" KeyTip="ADM">
 
                 <Fluent:RibbonGroupBox Header="Excel import">
-                    <Fluent:Button x:Name="mniExcelImport" Click="mniExcelImport_Click" Header="Excel import" KeyTip="EXC" >
+                    <Fluent:Button x:Name="mniExcelImport" Click="mniExcelImport_Click" Header="Excel import" KeyTip="EXC" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\excel.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
@@ -168,7 +168,7 @@
                 </Fluent:RibbonGroupBox>
 
                 <Fluent:RibbonGroupBox Header="Izlazni računi">
-                    <Fluent:Button Click="mniOutputInvoices_Click" Header="Izlazni računi" KeyTip="IZL" >
+                    <Fluent:Button Click="mniOutputInvoices_Click" Header="Izlazni računi" KeyTip="IZL" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\outputinvoice.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>

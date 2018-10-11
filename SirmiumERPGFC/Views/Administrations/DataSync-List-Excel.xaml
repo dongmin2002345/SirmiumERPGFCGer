@@ -24,11 +24,46 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="1" Grid.Column="0" Margin="2" x:Name="btnCountries_Insert" Click="btnCountries_Insert_Click" IsEnabled="{Binding Path=CountryButtonEnabled, Mode=TwoWay}"
-                        ToolTip="">
+        
+        <Button Grid.Row="0" Grid.Column="0" Margin="2" x:Name="btnCountries_Insert" Click="btnCountries_Insert_Click" IsEnabled="{Binding Path=CountryButtonEnabled, Mode=TwoWay}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
                 <TextBlock Text="{Binding Path=CountryButtonContent, Mode=TwoWay}" FontSize="20"  />
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="0" Grid.Column="1" Margin="2" x:Name="btnBanks_Insert" Click="btnBanks_Insert_Click" IsEnabled="{Binding Path=BankButtonEnabled, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                <TextBlock Text="{Binding Path=BankButtonContent, Mode=TwoWay}" FontSize="20"  />
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="1" Grid.Column="0" Margin="2" x:Name="btnCities_Insert" Click="btnCities_Insert_Click" IsEnabled="{Binding Path=CityButtonEnabled, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                <TextBlock Text="{Binding Path=CityButtonContent, Mode=TwoWay}" FontSize="20"  />
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="1" Grid.Column="1" Margin="2" x:Name="btnProfessions_Insert" Click="btnProfessions_Insert_Click" IsEnabled="{Binding Path=ProfessionButtonEnabled, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                <TextBlock Text="{Binding Path=ProfessionButtonContent, Mode=TwoWay}" FontSize="20"  />
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="0" Margin="2" x:Name="btnLicenceTypes_Insert" Click="btnLicenceTypes_Insert_Click" IsEnabled="{Binding Path=LicenceTypeButtonEnabled, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                <TextBlock Text="{Binding Path=LicenceTypeButtonContent, Mode=TwoWay}" FontSize="20"  />
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="2" Grid.Column="1" Margin="2" x:Name="btnSectors_Insert" Click="btnSectors_Insert_Click" IsEnabled="{Binding Path=SectorButtonEnabled, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                <TextBlock Text="{Binding Path=SectorButtonContent, Mode=TwoWay}" FontSize="20"  />
             </StackPanel>
         </Button>
 
