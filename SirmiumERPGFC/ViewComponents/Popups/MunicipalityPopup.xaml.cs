@@ -46,7 +46,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             MunicipalityPopup popup = source as MunicipalityPopup;
             MunicipalityViewModel municipality = (MunicipalityViewModel)e.NewValue;
-            popup.txtMunicipality.Text = municipality != null ? municipality.Code + " (" + municipality.Name + ")" : "";
+            popup.txtMunicipality.Text = municipality != null ? municipality.MunicipalityCode + " (" + municipality.Name + ")" : "";
         }
         #endregion
 

@@ -46,7 +46,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             RegionPopup popup = source as RegionPopup;
             RegionViewModel region = (RegionViewModel)e.NewValue;
-            popup.txtRegion.Text = region != null ? region.Code + " (" + region.Name + ")" : "";
+            popup.txtRegion.Text = region != null ? region.RegionCode + " (" + region.Name + ")" : "";
         }
         #endregion
 
