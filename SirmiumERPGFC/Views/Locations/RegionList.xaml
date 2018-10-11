@@ -50,7 +50,7 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Sifra opštine"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="Sifra regiona"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByRegionCode" Grid.Column="3" 
                          Text="{Binding Path=MunicipalitySearchObject.Search_RegionCode, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
