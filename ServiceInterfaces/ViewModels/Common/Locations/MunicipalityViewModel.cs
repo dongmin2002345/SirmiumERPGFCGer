@@ -129,5 +129,57 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
+        #region Search_MunicipalityCode
+        private string _Search_MunicipalityCode;
+
+        public string Search_MunicipalityCode
+        {
+            get { return _Search_MunicipalityCode; }
+            set
+            {
+                if (_Search_MunicipalityCode != value)
+                {
+                    _Search_MunicipalityCode = value;
+                    NotifyPropertyChanged("Search_MunicipalityCode");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Region
+        private string _Search_Region;
+
+        public string Search_Region
+        {
+            get { return _Search_Region; }
+            set
+            {
+                if (_Search_Region != value)
+                {
+                    _Search_Region = value;
+                    NotifyPropertyChanged("Search_Region");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Country
+        private string _Search_Country;
+
+        public string Search_Country
+        {
+            get { return _Search_Country; }
+            set
+            {
+                if (_Search_Country != value)
+                {
+                    _Search_Country = value;
+                    NotifyPropertyChanged("Search_Country");
+                }
+            }
+        }
+        #endregion
+
+
     }
 }

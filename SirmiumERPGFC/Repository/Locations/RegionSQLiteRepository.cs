@@ -60,10 +60,14 @@ namespace SirmiumERPGFC.Repository.Locations
                         SqlCommandSelectPart +
                         "FROM Regions " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)regionSearchObject.Search_Name) != null ? "%" + regionSearchObject.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@RegionCode", ((object)regionSearchObject.Search_RegionCode) != null ? "%" + regionSearchObject.Search_RegionCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Country", ((object)regionSearchObject.Search_Country) != null ? "%" + regionSearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -92,9 +96,12 @@ namespace SirmiumERPGFC.Repository.Locations
                         "SELECT Count(*) " +
                         "FROM Regions " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)regionSearchObject.Search_Name) != null ? "%" + regionSearchObject.Search_Name + "%" : "");
-
+                    selectCommand.Parameters.AddWithValue("@RegionCode", ((object)regionSearchObject.Search_RegionCode) != null ? "%" + regionSearchObject.Search_RegionCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Country", ((object)regionSearchObject.Search_Country) != null ? "%" + regionSearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -131,10 +138,14 @@ namespace SirmiumERPGFC.Repository.Locations
                         SqlCommandSelectPart +
                         "FROM Regions " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                         "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "AND (@Country IS NULL OR @Country = '' OR Country LIKE @Country) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@RegionCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Country", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 

@@ -112,6 +112,42 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
+        #region Search_RegionCode
+        private string _Search_RegionCode;
+
+        public string Search_RegionCode
+        {
+            get { return _Search_RegionCode; }
+            set
+            {
+                if (_Search_RegionCode != value)
+                {
+                    _Search_RegionCode = value;
+                    NotifyPropertyChanged("Search_RegionCode");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Country
+        private string _Search_Country;
+
+        public string Search_Country
+        {
+            get { return _Search_Country; }
+            set
+            {
+                if (_Search_Country != value)
+                {
+                    _Search_Country = value;
+                    NotifyPropertyChanged("Search_Country");
+                }
+            }
+        }
+        #endregion
+
+
+
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
