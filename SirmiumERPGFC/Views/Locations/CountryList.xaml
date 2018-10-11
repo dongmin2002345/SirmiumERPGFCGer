@@ -44,26 +44,25 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Pretraga po alfa šifri"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByAlfaCode" Grid.Column="1" Grid.Row="0" Margin="2"
-                         Text="{Binding Path=CountrySearchObject.Search_AlfaCode}"                         
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-
-                <TextBlock Text="Pretraga po numeričkoj šifri"  Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByNumericCode" Grid.Column="3" Grid.Row="0" Margin="2"
-                         Text="{Binding Path=CountrySearchObject.Search_NumericCode}"                         
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-
-                <TextBlock Text="Pretraga po oznaci države"  Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByMark" Grid.Column="1" Grid.Row="1" Margin="2"
+                <TextBlock Text="Pretraga po oznaci države"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByMark" Grid.Column="1" Grid.Row="0" Margin="2"
                          Text="{Binding Path=CountrySearchObject.Search_Mark}"                         
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Pretraga po nazivu"  Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByName" Grid.Column="3" Grid.Row="1" Margin="2"
+                <TextBlock Text="Pretraga po nazivu"  Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByName" Grid.Column="3" Grid.Row="0" Margin="2"
                          Text="{Binding Path=CountrySearchObject.Search_Name}"                         
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
+                <TextBlock Text="Pretraga po alfa šifri"  Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByAlfaCode" Grid.Column="1" Grid.Row="1" Margin="2"
+                         Text="{Binding Path=CountrySearchObject.Search_AlfaCode}"                         
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="Pretraga po numeričkoj šifri"  Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByNumericCode" Grid.Column="3" Grid.Row="1" Margin="2"
+                         Text="{Binding Path=CountrySearchObject.Search_NumericCode}"                         
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
 
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="4">
                     <StackPanel Orientation="Horizontal">
