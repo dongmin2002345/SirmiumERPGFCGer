@@ -59,14 +59,14 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Regions " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "WHERE (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                    selectCommand.Parameters.AddWithValue("@Name", ((object)regionSearchObject.Search_Name) != null ? "%" + regionSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@RegionCode", ((object)regionSearchObject.Search_RegionCode) != null ? "%" + regionSearchObject.Search_RegionCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)regionSearchObject.Search_Name) != null ? "%" + regionSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)regionSearchObject.Search_Country) != null ? "%" + regionSearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -95,12 +95,12 @@ namespace SirmiumERPGFC.Repository.Locations
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM Regions " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "WHERE (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId;", db);
-                    selectCommand.Parameters.AddWithValue("@Name", ((object)regionSearchObject.Search_Name) != null ? "%" + regionSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@RegionCode", ((object)regionSearchObject.Search_RegionCode) != null ? "%" + regionSearchObject.Search_RegionCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)regionSearchObject.Search_Name) != null ? "%" + regionSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)regionSearchObject.Search_Country) != null ? "%" + regionSearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
