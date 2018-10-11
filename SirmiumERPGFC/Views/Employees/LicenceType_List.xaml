@@ -47,9 +47,9 @@
                          Text="{Binding Path=LicenceTypeSearchObject.Search_Category, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
-                <TextBlock Text="Naziv zemlje"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="Opis"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByCountry" Grid.Column="3"  
-                         Text="{Binding Path=LicenceTypeSearchObject.Search_Country, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Path=LicenceTypeSearchObject.Search_Description, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 

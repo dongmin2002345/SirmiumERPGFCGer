@@ -113,18 +113,18 @@ namespace ServiceInterfaces.ViewModels.Employees
 		}
 		#endregion
 
-		#region Search_Country
-		private string _Search_Country;
+		#region Search_Description
+		private string _Search_Description;
 
-		public string Search_Country
+		public string Search_Description
 		{
-			get { return _Search_Country; }
+			get { return _Search_Description; }
 			set
 			{
-				if (_Search_Country != value)
+				if (_Search_Description != value)
 				{
-					_Search_Country = value;
-					NotifyPropertyChanged("Search_Country");
+					_Search_Description = value;
+					NotifyPropertyChanged("Search_Description");
 				}
 			}
 		}

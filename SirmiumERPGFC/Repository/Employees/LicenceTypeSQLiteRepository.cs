@@ -60,12 +60,12 @@ namespace SirmiumERPGFC.Repository.Employees
 						SqlCommandSelectPart +
 						"FROM LicenceTypes " +
 						"WHERE (@Category IS NULL OR @Category = '' OR Category LIKE @Category) " +
-						  "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+						  "AND (@Description IS NULL OR @Description = '' OR Description LIKE @Description) " +
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
-					selectCommand.Parameters.AddWithValue("@Country", ((object)licenceTypeSearchObject.Search_Country) != null ? "%" + licenceTypeSearchObject.Search_Country + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Description", ((object)licenceTypeSearchObject.Search_Description) != null ? "%" + licenceTypeSearchObject.Search_Description + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -96,10 +96,10 @@ namespace SirmiumERPGFC.Repository.Employees
 						"SELECT Count(*) " +
 						"FROM LicenceTypes " +
 						"WHERE (@Category IS NULL OR @Category = '' OR Category LIKE @Category) " +
-						  "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+						  "AND (@Description IS NULL OR @Description = '' OR Description LIKE @Description) " +
 						"AND CompanyId = @CompanyId ;", db);
 					selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
-					selectCommand.Parameters.AddWithValue("@Country", ((object)licenceTypeSearchObject.Search_Country) != null ? "%" + licenceTypeSearchObject.Search_Country + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Description", ((object)licenceTypeSearchObject.Search_Description) != null ? "%" + licenceTypeSearchObject.Search_Description + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 			
