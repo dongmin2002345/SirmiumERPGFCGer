@@ -86,17 +86,17 @@
                 <Fluent:RibbonGroupBox Header="Firme">
                     <Fluent:Button Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" Width="70">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                            <Image Source="Resources\Icons\Firme.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                     <Fluent:Button Click="mniSector_Click" Header="Sektori" KeyTip="SEK" Width="70">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                            <Image Source="Resources\Icons\Sektori.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                     <Fluent:Button x:Name="mniWorkActivity" Click="mniWorkActivity_Click" Header="Delatnosti" KeyTip="DEL" Width="70">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                            <Image Source="Resources\Icons\Delatnost.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
@@ -118,7 +118,7 @@
                 <Fluent:RibbonGroupBox Header="Gradilišta">
                     <Fluent:Button x:Name="mniConstructionSite" Click="mniConstructionSite_Click" Header="Gradilišta" KeyTip="SEK" Width="70">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" />
+                            <Image Source="Resources\Icons\Gradiliste.png" HorizontalAlignment="Center" Height="30" Width="30" />
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
