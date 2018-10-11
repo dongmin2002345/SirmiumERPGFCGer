@@ -637,7 +637,7 @@ namespace SirmiumERPGFC.Views.Administrations
                     {
                         LicenceTypeViewModel licenceType = new LicenceTypeViewModel();
                         licenceType.Code = xlRange.Cells[i, 1].Text;
-                        licenceType.Name = xlRange.Cells[i, 2].Text;
+                        licenceType.Category = xlRange.Cells[i, 2].Text;
 
                         licenceType.Identifier = Guid.NewGuid();
                         licenceType.IsSynced = false;

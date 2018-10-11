@@ -154,7 +154,7 @@ namespace SirmiumERPGFC.Views.Employees
 		{
 			#region Validation
 
-			if (String.IsNullOrEmpty(CurrentLicenceType.Name))
+			if (String.IsNullOrEmpty(CurrentLicenceType.Category))
 			{
 				MainWindow.WarningMessage = "Obavezno polje: Ime dozvole";
 				return;

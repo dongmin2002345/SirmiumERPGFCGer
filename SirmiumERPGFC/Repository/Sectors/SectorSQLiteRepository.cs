@@ -62,7 +62,7 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"FROM Sectors " +
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+                       // "AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
                         "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
                         "AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
@@ -100,7 +100,7 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"FROM Sectors " +
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+						//"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
                         "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
 						"AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");

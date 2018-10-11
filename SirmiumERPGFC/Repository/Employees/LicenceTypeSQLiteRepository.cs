@@ -19,7 +19,12 @@ namespace SirmiumERPGFC.Repository.Employees
 	  "ServerId INTEGER NULL, " +
 	  "Identifier GUID, " +
 	  "Code NAVCHAR(48) NULL, " +
-	  "Name NVARCHAR(48) NULL, " +
+	  "Category NVARCHAR(48) NULL, " +
+	  "Description NVARCHAR(48) NULL, " +
+	  "CountryId INTEGER NULL, " +
+	  "CountryIdentifier GUID NULL, " +
+	  "CountryCode NVARCHAR(2048) NULL, " +
+	  "CountryName NVARCHAR(2048) NULL, " +
 	  "IsSynced BOOL NULL, " +
 	  "UpdatedAt DATETIME NULL, " +
 	  "CreatedById INTEGER NULL, " +
@@ -28,15 +33,17 @@ namespace SirmiumERPGFC.Repository.Employees
 	  "CompanyName NVARCHAR(2048) NULL)";
 
 		public string SqlCommandSelectPart =
-			"SELECT ServerId, Identifier, Code, Name, " +
-
+			"SELECT ServerId, Identifier, Code, Category, Description, " +
+			  "CountryId, CountryIdentifier, CountryCode, CountryName, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
 		public string SqlCommandInsertPart = "INSERT INTO LicenceTypes " +
-			"(Id, ServerId, Identifier, Code, Name, " +
+			"(Id, ServerId, Identifier, Code, Category, Description,  " +
+			  "CountryId, CountryIdentifier, CountryCode, CountryName, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-			"VALUES (NULL, @ServerId, @Identifier, @Code, @Name, " +
+			"VALUES (NULL, @ServerId, @Identifier, @Code, @Category, @Description,  " +
+			 "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 		public LicenceTypeListResponse GetLicenceTypesByPage(int companyId, LicenceTypeViewModel licenceTypeSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -52,11 +59,14 @@ namespace SirmiumERPGFC.Repository.Employees
 					SqliteCommand selectCommand = new SqliteCommand(
 						SqlCommandSelectPart +
 						"FROM LicenceTypes " +
-						"WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+						"WHERE (@Category IS NULL OR @Category = '' OR Category LIKE @Category) " +
+						  "AND (@Description IS NULL OR @Description = '' OR Description LIKE @Description) " +
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
-					selectCommand.Parameters.AddWithValue("@Name", ((object)licenceTypeSearchObject.Search_Name) != null ? "%" + licenceTypeSearchObject.Search_Name + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Description", ((object)licenceTypeSearchObject.Search_Description) != null ? "%" + licenceTypeSearchObject.Search_Description + "%" : "");
+
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
 					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -70,7 +80,9 @@ namespace SirmiumERPGFC.Repository.Employees
 						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Category = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
 
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -83,9 +95,12 @@ namespace SirmiumERPGFC.Repository.Employees
 					selectCommand = new SqliteCommand(
 						"SELECT Count(*) " +
 						"FROM LicenceTypes " +
-						"WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+						"WHERE (@Category IS NULL OR @Category = '' OR Category LIKE @Category) " +
+						  "AND (@Description IS NULL OR @Description = '' OR Description LIKE @Description) " +
 						"AND CompanyId = @CompanyId ;", db);
-					selectCommand.Parameters.AddWithValue("@Name", ((object)licenceTypeSearchObject.Search_Name) != null ? "%" + licenceTypeSearchObject.Search_Name + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Description", ((object)licenceTypeSearchObject.Search_Description) != null ? "%" + licenceTypeSearchObject.Search_Description + "%" : "");
+
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 			
 
@@ -123,12 +138,12 @@ namespace SirmiumERPGFC.Repository.Employees
 						SqlCommandSelectPart +
 						"FROM LicenceTypes " +
 						"WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+						"AND (@Category IS NULL OR @Category = '' OR Category LIKE @Category) " +
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage;", db);
 					selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
-					selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
+					selectCommand.Parameters.AddWithValue("@Category", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
@@ -141,7 +156,10 @@ namespace SirmiumERPGFC.Repository.Employees
 						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Category = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+
 
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -190,7 +208,9 @@ namespace SirmiumERPGFC.Repository.Employees
 						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Category = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
 
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -284,7 +304,12 @@ namespace SirmiumERPGFC.Repository.Employees
 				insertCommand.Parameters.AddWithValue("@ServerId", licenceType.Id);
 				insertCommand.Parameters.AddWithValue("@Identifier", licenceType.Identifier);
 				insertCommand.Parameters.AddWithValue("@Code", ((object)licenceType.Code) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Name", ((object)licenceType.Name) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@Category", ((object)licenceType.Category) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@Description", ((object)licenceType.Description) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@CountryId", ((object)licenceType.Country?.Id) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)licenceType.Country?.Identifier) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@CountryCode", ((object)licenceType.Country?.Code) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@CountryName", ((object)licenceType.Country?.Name) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@IsSynced", licenceType.IsSynced);
 				insertCommand.Parameters.AddWithValue("@UpdatedAt", licenceType.UpdatedAt);
 				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

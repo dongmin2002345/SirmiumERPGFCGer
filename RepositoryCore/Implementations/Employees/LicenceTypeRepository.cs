@@ -21,6 +21,7 @@ namespace RepositoryCore.Implementations.Employees
 		public List<LicenceType> GetLicenceTypes(int companyId)
 		{
 			List<LicenceType> licenceTypes = context.LicenceTypes
+				.Include(x => x.Country)
 				.Include(x => x.Company)
 				.Include(x => x.CreatedBy)
 				.Where(x => x.Active == true && x.CompanyId == companyId)
@@ -34,6 +35,7 @@ namespace RepositoryCore.Implementations.Employees
 		public List<LicenceType> GetLicenceTypesNewerThen(int companyId, DateTime lastUpdateTime)
 		{
 			List<LicenceType> licenceTypes = context.LicenceTypes
+				.Include(x => x.Country)
 				.Include(x => x.Company)
 				.Include(x => x.CreatedBy)
 				.Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
@@ -95,12 +97,15 @@ namespace RepositoryCore.Implementations.Employees
 
 				if (dbEntry != null)
 				{
+					dbEntry.CountryId = licenceType.CountryId ?? null;
 					dbEntry.CompanyId = licenceType.CompanyId ?? null;
 					dbEntry.CreatedById = licenceType.CreatedById ?? null;
 
 					// Set properties
 					dbEntry.Code = licenceType.Code;
-					dbEntry.Name = licenceType.Name;
+					dbEntry.Category = licenceType.Category;
+
+					dbEntry.Description = licenceType.Description;
 
 					// Set timestamp
 					dbEntry.UpdatedAt = DateTime.Now;
