@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Common.Professions
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CountryId = profession.Country?.Id ?? null;
+                    dbEntry.CountryId = profession.CountryId ?? null;
                     dbEntry.CompanyId = profession.CompanyId ?? null;
                     dbEntry.CreatedById = profession.CreatedById ?? null;
 

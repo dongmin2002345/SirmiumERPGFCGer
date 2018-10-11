@@ -98,7 +98,7 @@ namespace RepositoryCore.Implementations.Banks
 
 				if (dbEntry != null)
 				{
-					dbEntry.CountryId = bank.Country?.Id ?? null;
+					dbEntry.CountryId = bank.CountryId ?? null;
 					dbEntry.CompanyId = bank.CompanyId ?? null;
 					dbEntry.CreatedById = bank.CreatedById ?? null;
 

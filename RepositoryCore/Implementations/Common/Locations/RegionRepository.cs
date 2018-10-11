@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Common.Locations
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CountryId = region.Country?.Id ?? null;
+                    dbEntry.CountryId = region.CountryId ?? null;
                     dbEntry.CompanyId = region.CompanyId ?? null;
                     dbEntry.CreatedById = region.CreatedById ?? null;
 

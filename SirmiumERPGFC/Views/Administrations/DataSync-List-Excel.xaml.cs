@@ -703,9 +703,9 @@ namespace SirmiumERPGFC.Views.Administrations
                         SectorButtonContent = i + " od " + rowCount;
 
                         SectorViewModel sector = new SectorViewModel(); 
-                        sector.Code = xlRange.Cells[i, 1].Text;
-                        sector.SecondCode = xlRange.Cells[i, 1].Text;
-                        sector.Name = xlRange.Cells[i, 2].Text;
+                        sector.Code = xlRange.Cells[i, 3].Text;
+                        sector.SecondCode = xlRange.Cells[i, 3].Text;
+                        sector.Name = xlRange.Cells[i, 4].Text;
                         sector.Country = new CountryViewModel() { Mark = xlRange.Cells[i, 5].Text };
 
                         sector.Identifier = Guid.NewGuid();
@@ -719,10 +719,10 @@ namespace SirmiumERPGFC.Views.Administrations
                             sectors.Add(sector);
 
                         AgencyViewModel agency = new AgencyViewModel();
-                        agency.Code = xlRange.Cells[i, 3].Text;
-                        agency.Name = xlRange.Cells[i, 4].Text;
+                        agency.Code = xlRange.Cells[i, 1].Text;
+                        agency.Name = xlRange.Cells[i, 2].Text;
                         agency.Country = new CountryViewModel() { Mark = xlRange.Cells[i, 5].Text };
-                        agency.Sector = new SectorViewModel() { SecondCode = xlRange.Cells[i, 1].Text };
+                        agency.Sector = new SectorViewModel() { SecondCode = xlRange.Cells[i, 3].Text };
 
                         agency.Identifier = Guid.NewGuid();
                         agency.IsSynced = false;

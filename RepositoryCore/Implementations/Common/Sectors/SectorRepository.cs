@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
 
 				if (dbEntry != null)
 				{
-                    dbEntry.CountryId = sector.Country?.Id ?? null;
+                    dbEntry.CountryId = sector.CountryId ?? null;
                     dbEntry.CompanyId = sector.CompanyId ?? null;
 					dbEntry.CreatedById = sector.CreatedById ?? null;
 

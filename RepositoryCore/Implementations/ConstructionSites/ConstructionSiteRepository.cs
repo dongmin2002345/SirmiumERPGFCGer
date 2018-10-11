@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CityId = constructionSite.City?.Id ?? null;
+                    dbEntry.CityId = constructionSite.CityId ?? null;
                     dbEntry.CompanyId = constructionSite.CompanyId ?? null;
                     dbEntry.CreatedById = constructionSite.CreatedById ?? null;
 

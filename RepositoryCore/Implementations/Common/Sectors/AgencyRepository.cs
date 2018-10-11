@@ -99,8 +99,8 @@ namespace RepositoryCore.Implementations.Common.Sectors
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CountryId = Agency.Country?.Id ?? null;
-                    dbEntry.SectorId = Agency.Sector?.Id ?? null;
+                    dbEntry.CountryId = Agency.CountryId ?? null;
+                    dbEntry.SectorId = Agency.SectorId ?? null;
                     dbEntry.CompanyId = Agency.CompanyId ?? null;
                     dbEntry.CreatedById = Agency.CreatedById ?? null;
 

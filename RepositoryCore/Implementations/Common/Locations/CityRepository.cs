@@ -101,9 +101,9 @@ namespace RepositoryCore.Implementations.Common.Locations
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CountryId = city.Country?.Id ?? null;
-                    dbEntry.RegionId = city.Region?.Id ?? null;
-                    dbEntry.MunicipalityId = city.Municipality?.Id ?? null;
+                    dbEntry.CountryId = city.CountryId ?? null;
+                    dbEntry.RegionId = city.RegionId ?? null;
+                    dbEntry.MunicipalityId = city.MunicipalityId ?? null;
                     dbEntry.CompanyId = city.CompanyId ?? null;
                     dbEntry.CreatedById = city.CreatedById ?? null;
 
