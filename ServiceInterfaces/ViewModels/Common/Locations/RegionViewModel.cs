@@ -78,6 +78,7 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
         }
         #endregion
 
+
         #region IsSynced
         private bool _IsSynced;
 
@@ -145,7 +146,6 @@ namespace ServiceInterfaces.ViewModels.Common.Locations
             }
         }
         #endregion
-
 
 
         #region INotifyPropertyChanged implementation
