@@ -39,7 +39,7 @@ namespace SirmiumERPGFC.Repository.Locations
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, MunicipalityCode, Name, " +
             "RegionId, RegionIdentifier, RegionCode, RegionName, " +
-             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Municipalities " +

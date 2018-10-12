@@ -106,6 +106,7 @@ namespace RepositoryCore.Implementations.Common.Locations
 
                     // Set properties
                     dbEntry.Code = municipality.Code;
+                    dbEntry.MunicipalityCode = municipality.MunicipalityCode;
                     dbEntry.Name = municipality.Name;
 
                     // Set timestamp
