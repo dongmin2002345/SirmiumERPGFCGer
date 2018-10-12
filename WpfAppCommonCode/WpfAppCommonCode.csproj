@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Converters\ComboBoxConverters.cs" />
     <Compile Include="Converters\Common\SyncedConverter.cs" />
+    <Compile Include="Converters\GenderConverter.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Helpers\CustomWebClient.cs">
       <SubType>Component</SubType>

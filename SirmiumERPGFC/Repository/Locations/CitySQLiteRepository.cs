@@ -142,7 +142,7 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public CityListResponse GetCitiesForPopup(int companyId, string filterString)
+        public CityListResponse GetCitiesForPopup(int companyId, Guid countryIdentifier, string filterString)
         {
             CityListResponse response = new CityListResponse();
             List<CityViewModel> Cities = new List<CityViewModel>();
@@ -157,11 +157,13 @@ namespace SirmiumERPGFC.Repository.Locations
                         "FROM Cities " +
                         "WHERE (@ZipCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND CountryIdentifier = @CountryIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@ZipCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryIdentifier", countryIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 

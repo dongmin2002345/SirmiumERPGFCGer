@@ -33,6 +33,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -132,7 +133,20 @@ namespace SirmiumERPGFC.Views.Employees
             }
         }
         #endregion
-        
+
+
+        #region GenderOptions
+        public ObservableCollection<String> GenderOptions
+        {
+            get
+            {
+                return new ObservableCollection<String>(new List<string>() {
+                           GenderConverter.Choose,
+                           GenderConverter.ChooseM,
+                           GenderConverter.ChooseF});
+            }
+        }
+        #endregion
 
         #region SaveButtonContent
         private string _SaveButtonContent = " Sačuvaj ";

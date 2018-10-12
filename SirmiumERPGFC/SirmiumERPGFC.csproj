@@ -200,8 +200,14 @@
     <Compile Include="ViewComponents\Popups\FamilyMemberPopup.xaml.cs">
       <DependentUpon>FamilyMemberPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewComponents\Popups\LicenceTypePopup.xaml.cs">
+      <DependentUpon>LicenceTypePopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Popups\MunicipalityPopup.xaml.cs">
       <DependentUpon>MunicipalityPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\ProfessionPopup.xaml.cs">
+      <DependentUpon>ProfessionPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
       <DependentUpon>RegionPopup.xaml</DependentUpon>
@@ -407,7 +413,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ViewComponents\Popups\LicenceTypePopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewComponents\Popups\MunicipalityPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\ProfessionPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

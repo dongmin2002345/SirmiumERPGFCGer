@@ -25,6 +25,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -42,18 +43,23 @@
                     <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv gradilišta *" />
                     <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtName"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Name}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad *" />
-                    <popups:CityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity" 
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
+                    <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
+                                        CurrentCountry="{Binding Path=CurrentConstructionSite.Country, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad *" />
+                    <popups:CityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity" 
+                                        CurrentCountry="{Binding Path=CurrentConstructionSite.Country, Mode=TwoWay}"
                                         CurrentCity="{Binding Path=CurrentConstructionSite.City, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresa *" />
-                    <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtAddress"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Address}" IsEnabled="True" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresa *" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtAddress"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Address}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Maksimalni broj radnika *" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtMaxNumOfEmployees"  Margin="2" Text="{Binding Path=CurrentConstructionSite.MaxWorkers}" IsEnabled="True" />
+                    <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Maksimalni broj radnika *" />
+                    <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtMaxNumOfEmployees"  Margin="2" Text="{Binding Path=CurrentConstructionSite.MaxWorkers}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Istek ugovora *" />
-                    <DatePicker Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Istek ugovora *" />
+                    <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
 
                 </Grid>
             </GroupBox>

@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="SirmiumERPGFC.ViewComponents.Popups.LicenceTypePopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <TextBox Grid.Row="8" Grid.Column="1" Margin="2" x:Name="txtLicenceType" IsReadOnly="True" GotFocus="txtLicenceType_GotFocus" MouseDoubleClick="txtLicenceType_MouseDoubleClick"/>
+        <Popup x:Name="popLicenceType" PlacementTarget = "{Binding ElementName = txtLicenceType}" Focusable="False" IsOpen="False">
+            <Border Height="Auto" HorizontalAlignment="Stretch" Background="{DynamicResource WhiteBrush}" BorderBrush="{DynamicResource ComboBoxPopupBorderBrush}" BorderThickness="2">
+                <Grid MinWidth="300" MaxHeight="210" Background="{DynamicResource WhiteBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Margin="2" Name="txtFilterLicenceType" TextChanged="txtFilterLicenceType_TextChanged" MinWidth="150" />
+                    <Button x:Name="btnChooseLicenceType" Click="btnChooseLicenceType_Click" Grid.Column="1" VerticalAlignment="Center" Margin="2">
+                        <Image Source="..\..\Resources\Icons\check.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                    </Button>
+                    <Button x:Name="btnCancleLicenceType" Click="btnCancleLicenceType_Click" Grid.Column="2" VerticalAlignment="Center" Margin="2">
+                        <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                    </Button>
+                    <Button x:Name="btnAddLicenceType" Click="btnAddLicenceType_Click" Grid.Column="3" VerticalAlignment="Center" Margin="2" LostFocus="btnAddLicenceType_LostFocus">
+                        <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                    </Button>
+
+                    <DataGrid x:Name="dgLicenceTypeList"
+                              MouseDoubleClick="dgLicenceTypeList_MouseDoubleClick" 
+                              Grid.Row="1" Grid.ColumnSpan="4" Margin="5" 
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False" 
+                              CanUserDeleteRows="False" 
+                              CanUserResizeRows="False" 
+                              GridLinesVisibility="Horizontal" 
+                              HorizontalGridLinesBrush="Gray" 
+                              VerticalAlignment="Stretch" 
+                              HorizontalScrollBarVisibility="Auto" 
+                              VerticalScrollBarVisibility="Auto" 
+                              Style="{DynamicResource AzureDataGrid}"
+                              ItemsSource="{Binding Path=LicenceTypesFromDB}"
+                              SelectedItem="{Binding Path=CurrentLicenceType}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Mark" Header="Oznaka" Binding="{Binding Mark}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje porekla" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="btnCloseLicenceTypePopup" Click="btnCloseLicenceTypePopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <TextBlock Text="Zatvori" Margin="5 0 5 0"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

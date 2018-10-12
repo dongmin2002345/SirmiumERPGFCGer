@@ -50,6 +50,29 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         }
         #endregion
 
+        #region CurrentCountry
+        public CountryViewModel CurrentCountry
+        {
+            get { return (CountryViewModel)GetValue(CurrentCountryProperty); }
+            set { SetValueDp(CurrentCountryProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentCountryProperty = DependencyProperty.Register(
+            "CurrentCountry",
+            typeof(CountryViewModel),
+            typeof(CityPopup),
+            new PropertyMetadata(OnCurrentCountryPropertyChanged));
+
+        private static void OnCurrentCountryPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            CityPopup popup = source as CityPopup;
+            CountryViewModel animalType = (CountryViewModel)e.NewValue;
+
+            popup.PopulateFromDb("");
+
+        }
+        #endregion
+
         #region CitiesFromDB
         private ObservableCollection<CityViewModel> _CitiesFromDB;
 
@@ -93,9 +116,14 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    CityListResponse cityResp = new CitySQLiteRepository().GetCitiesForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (cityResp.Success)
-                        CitiesFromDB = new ObservableCollection<CityViewModel>(cityResp.Cities ?? new List<CityViewModel>());
+                    if (CurrentCountry != null)
+                    {
+                        CityListResponse cityResp = new CitySQLiteRepository().GetCitiesForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
+                        if (cityResp.Success)
+                            CitiesFromDB = new ObservableCollection<CityViewModel>(cityResp.Cities ?? new List<CityViewModel>());
+                        else
+                            CitiesFromDB = new ObservableCollection<CityViewModel>();
+                    }
                     else
                         CitiesFromDB = new ObservableCollection<CityViewModel>();
                 })
