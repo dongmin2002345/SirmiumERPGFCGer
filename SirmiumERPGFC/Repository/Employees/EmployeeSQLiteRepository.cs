@@ -72,25 +72,17 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Employees " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code)  " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
+                        "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
                         "AND (@Interest IS NULL OR @Interest = '' OR Interest LIKE @Interest) " +
-                        "AND (@VisaTo IS NULL OR @VisaTo = '' OR DATE(VisaTo) <= DATE(@VisaTo)) " +
-                        "AND (@VisaFrom IS NULL OR @VisaFrom = '' OR DATE(VisaFrom) >= DATE(@VisaFrom)) " +
-                        "AND (@WorkPermitFrom IS NULL OR @WorkPermitFrom = '' OR DATE(WorkPermitFrom) >= DATE(@WorkPermitFrom)) " +
-                        "AND (@WorkPermitTo IS NULL OR @WorkPermitTo = '' OR DATE(WorkPermitTo) <= DATE(@WorkPermitTo)) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                    selectCommand.Parameters.AddWithValue("@Code", ((object)EmployeeSearchObject.SearchBy_Code) != null ? "%" + EmployeeSearchObject.SearchBy_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Interest", ((object)EmployeeSearchObject.SearchBy_Interest) != null ? "%" + EmployeeSearchObject.SearchBy_Interest + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@VisaTo", ((object)EmployeeSearchObject.SearchBy_VisaTo) ?? "");
-                    selectCommand.Parameters.AddWithValue("@VisaFrom", ((object)EmployeeSearchObject.SearchBy_VisaFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@WorkPermitFrom", ((object)EmployeeSearchObject.SearchBy_PermitFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@WorkPermitTo", ((object)EmployeeSearchObject.SearchBy_PermitTo) ?? "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -128,23 +120,15 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM Employees " +
-                       "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code)  " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                       "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
+                        "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
                         "AND (@Interest IS NULL OR @Interest = '' OR Interest LIKE @Interest) " +
-                        "AND (@VisaTo IS NULL OR @VisaTo = '' OR DATE(VisaTo) <= DATE(@VisaTo)) " +
-                        "AND (@VisaFrom IS NULL OR @VisaFrom = '' OR DATE(VisaFrom) >= DATE(@VisaFrom)) " +
-                        "AND (@WorkPermitFrom IS NULL OR @WorkPermitFrom = '' OR DATE(WorkPermitFrom) >= DATE(@WorkPermitFrom)) " +
-                        "AND (@WorkPermitTo IS NULL OR @WorkPermitTo = '' OR DATE(WorkPermitTo) <= DATE(@WorkPermitTo)) " +
                         "AND CompanyId = @CompanyId;", db);
-                    selectCommand.Parameters.AddWithValue("@Code", ((object)EmployeeSearchObject.SearchBy_Code) != null ? "%" + EmployeeSearchObject.SearchBy_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Interest", ((object)EmployeeSearchObject.SearchBy_Interest) != null ? "%" + EmployeeSearchObject.SearchBy_Interest + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@VisaTo", ((object)EmployeeSearchObject.SearchBy_VisaTo) ?? "");
-                    selectCommand.Parameters.AddWithValue("@VisaFrom", ((object)EmployeeSearchObject.SearchBy_VisaFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@WorkPermitFrom", ((object)EmployeeSearchObject.SearchBy_PermitFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@WorkPermitTo", ((object)EmployeeSearchObject.SearchBy_PermitTo) ?? "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();

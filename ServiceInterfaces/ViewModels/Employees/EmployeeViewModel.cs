@@ -287,24 +287,7 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
-
-        #region SearchBy_Code
-        private string _SearchBy_Code;
-
-        public string SearchBy_Code
-        {
-            get { return _SearchBy_Code; }
-            set
-            {
-                if (_SearchBy_Code != value)
-                {
-                    _SearchBy_Code = value;
-                    NotifyPropertyChanged("SearchBy_Code");
-                }
-            }
-        }
-        #endregion
-
+        
         #region SearchBy_Name
         private string _SearchBy_Name;
 
@@ -339,6 +322,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region SearchBy_Passport
+        private string _SearchBy_Passport;
+
+        public string SearchBy_Passport
+        {
+            get { return _SearchBy_Passport; }
+            set
+            {
+                if (_SearchBy_Passport != value)
+                {
+                    _SearchBy_Passport = value;
+                    NotifyPropertyChanged("SearchBy_Passport");
+                }
+            }
+        }
+        #endregion
+
         #region SearchBy_Interest
         private string _SearchBy_Interest;
 
@@ -351,74 +351,6 @@ namespace ServiceInterfaces.ViewModels.Employees
                 {
                     _SearchBy_Interest = value;
                     NotifyPropertyChanged("SearchBy_Interest");
-                }
-            }
-        }
-        #endregion
-
-        #region SearchBy_VisaFrom
-        private DateTime? _SearchBy_VisaFrom;
-
-        public DateTime? SearchBy_VisaFrom
-        {
-            get { return _SearchBy_VisaFrom; }
-            set
-            {
-                if (_SearchBy_VisaFrom != value)
-                {
-                    _SearchBy_VisaFrom = value;
-                    NotifyPropertyChanged("SearchBy_VisaFrom");
-                }
-            }
-        }
-        #endregion
-
-        #region SearchBy_VisaTo
-        private DateTime? _SearchBy_VisaTo;
-
-        public DateTime? SearchBy_VisaTo
-        {
-            get { return _SearchBy_VisaTo; }
-            set
-            {
-                if (_SearchBy_VisaTo != value)
-                {
-                    _SearchBy_VisaTo = value;
-                    NotifyPropertyChanged("SearchBy_VisaTo");
-                }
-            }
-        }
-        #endregion
-
-        #region SearchBy_PermitFrom
-        private DateTime? _SearchBy_PermitFrom;
-
-        public DateTime? SearchBy_PermitFrom
-        {
-            get { return _SearchBy_PermitFrom; }
-            set
-            {
-                if (_SearchBy_PermitFrom != value)
-                {
-                    _SearchBy_PermitFrom = value;
-                    NotifyPropertyChanged("SearchBy_PermitFrom");
-                }
-            }
-        }
-        #endregion
-
-        #region SearchBy_PermitTo
-        private DateTime? _SearchBy_PermitTo;
-
-        public DateTime? SearchBy_PermitTo
-        {
-            get { return _SearchBy_PermitTo; }
-            set
-            {
-                if (_SearchBy_PermitTo != value)
-                {
-                    _SearchBy_PermitTo = value;
-                    NotifyPropertyChanged("SearchBy_PermitTo");
                 }
             }
         }
