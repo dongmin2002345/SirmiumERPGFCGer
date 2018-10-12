@@ -47,6 +47,7 @@
 
                     <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Sektor" />
                     <popups:SectorPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" 
+                                         CurrentCountry="{Binding Path=CurrentAgency.Country, Mode=TwoWay}" 
                                          CurrentSector="{Binding Path=CurrentAgency.Sector, Mode=TwoWay}" />
 
                 </Grid>

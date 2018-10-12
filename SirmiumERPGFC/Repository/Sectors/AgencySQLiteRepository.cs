@@ -67,11 +67,13 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "FROM Agencies " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)AgencySearchObject.Search_Code) != null ? "%" + AgencySearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)AgencySearchObject.Search_Name) != null ? "%" + AgencySearchObject.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)AgencySearchObject.Search_Country) != null ? "%" + AgencySearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -101,9 +103,11 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "FROM Agencies " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)AgencySearchObject.Search_Code) != null ? "%" + AgencySearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)AgencySearchObject.Search_Name) != null ? "%" + AgencySearchObject.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)AgencySearchObject.Search_Country) != null ? "%" + AgencySearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -141,11 +145,13 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "FROM Agencies " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 

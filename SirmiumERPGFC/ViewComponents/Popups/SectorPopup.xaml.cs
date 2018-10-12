@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceInterfaces.Messages.Common.Sectors;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
@@ -50,6 +51,29 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         }
         #endregion
 
+        #region CurrentCountry
+        public CountryViewModel CurrentCountry
+        {
+            get { return (CountryViewModel)GetValue(CurrentCountryProperty); }
+            set { SetValueDp(CurrentCountryProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentCountryProperty = DependencyProperty.Register(
+            "CurrentCountry",
+            typeof(CountryViewModel),
+            typeof(SectorPopup),
+            new PropertyMetadata(OnCurrentCountryPropertyChanged));
+
+        private static void OnCurrentCountryPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            SectorPopup popup = source as SectorPopup;
+            CountryViewModel animalType = (CountryViewModel)e.NewValue;
+
+            popup.PopulateFromDb("");
+
+        }
+        #endregion
+
         #region SectorsFromDB
         private ObservableCollection<SectorViewModel> _SectorsFromDB;
 
@@ -93,9 +117,14 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    SectorListResponse SectorResp = new SectorSQLiteRepository().GetSectorsForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (SectorResp.Success)
-                        SectorsFromDB = new ObservableCollection<SectorViewModel>(SectorResp.Sectors ?? new List<SectorViewModel>());
+                    if (CurrentCountry != null)
+                    {
+                        SectorListResponse SectorResp = new SectorSQLiteRepository().GetSectorsForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
+                        if (SectorResp.Success)
+                            SectorsFromDB = new ObservableCollection<SectorViewModel>(SectorResp.Sectors ?? new List<SectorViewModel>());
+                        else
+                            SectorsFromDB = new ObservableCollection<SectorViewModel>();
+                    }
                     else
                         SectorsFromDB = new ObservableCollection<SectorViewModel>();
                 })

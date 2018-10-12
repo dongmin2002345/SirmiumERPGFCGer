@@ -62,15 +62,13 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"FROM Sectors " +
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                       // "AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
-                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)sectorSearchObject.Search_Name) != null ? "%" + sectorSearchObject.Search_Name + "%" : "");
-					selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
-
+					selectCommand.Parameters.AddWithValue("@CountryName", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
 					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -100,13 +98,12 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"FROM Sectors " +
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						//"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
 						"AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)sectorSearchObject.Search_Name) != null ? "%" + sectorSearchObject.Search_Name + "%" : "");
-					selectCommand.Parameters.AddWithValue("@Country", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
-
+					selectCommand.Parameters.AddWithValue("@CountryName", ((object)sectorSearchObject.Search_Country) != null ? "%" + sectorSearchObject.Search_Country + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
 					query = selectCommand.ExecuteReader();
@@ -129,7 +126,7 @@ namespace SirmiumERPGFC.Repository.Sectors
 			return response;
 		}
 
-		public SectorListResponse GetSectorsForPopup(int companyId, string filterString)
+		public SectorListResponse GetSectorsForPopup(int companyId, Guid countryIdentifier, string filterString)
 		{
 			SectorListResponse response = new SectorListResponse();
 			List<SectorViewModel> Sectors = new List<SectorViewModel>();
@@ -144,12 +141,16 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"FROM Sectors " +
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND CompanyId = @CompanyId " +
+                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
+                        "AND CountryIdentifier = @CountryIdentifier " +
+                        "AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
-					selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
+                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CountryIdentifier", countryIdentifier);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
 					SqliteDataReader query = selectCommand.ExecuteReader();

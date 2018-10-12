@@ -130,5 +130,22 @@ namespace ServiceInterfaces.ViewModels.Common.Sectors
             }
         }
         #endregion
+
+        #region Search_Country
+        private string _Search_Country;
+
+        public string Search_Country
+        {
+            get { return _Search_Country; }
+            set
+            {
+                if (_Search_Country != value)
+                {
+                    _Search_Country = value;
+                    NotifyPropertyChanged("Search_Country");
+                }
+            }
+        }
+        #endregion
     }
 }
