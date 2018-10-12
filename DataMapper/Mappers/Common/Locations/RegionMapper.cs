@@ -82,7 +82,7 @@ namespace DataMapper.Mappers.Common.Locations
                 Identifier = regionViewModel.Identifier,
 
                 Code = regionViewModel.Code,
-                RegionCode = regionViewModel.RegionCode,
+                RegionCode = regionViewModel.RegionCode ?? "",
                 Name = regionViewModel.Name,
 
                 CountryId = regionViewModel.Country?.Id ?? null,

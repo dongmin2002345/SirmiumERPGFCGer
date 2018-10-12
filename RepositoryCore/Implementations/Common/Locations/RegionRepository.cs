@@ -103,6 +103,7 @@ namespace RepositoryCore.Implementations.Common.Locations
 
                     // Set properties
                     dbEntry.Code = region.Code;
+                    dbEntry.RegionCode = region.RegionCode;
                     dbEntry.Name = region.Name;
 
                     // Set timestamp
