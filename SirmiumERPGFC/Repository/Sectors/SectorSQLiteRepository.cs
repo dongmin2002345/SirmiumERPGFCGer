@@ -99,7 +99,6 @@ namespace SirmiumERPGFC.Repository.Sectors
 						"WHERE (@SecondCode IS NULL OR @SecondCode = '' OR SecondCode LIKE @SecondCode) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
-                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
 						"AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@SecondCode", ((object)sectorSearchObject.Search_SecondCode) != null ? "%" + sectorSearchObject.Search_SecondCode + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)sectorSearchObject.Search_Name) != null ? "%" + sectorSearchObject.Search_Name + "%" : "");
