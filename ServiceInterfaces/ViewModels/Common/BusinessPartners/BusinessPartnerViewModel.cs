@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.Sectors;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -238,6 +239,113 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         #endregion
 
 
+            #region GER 
+
+                #region NameGer
+                private string _NameGer;
+
+                public string NameGer
+                {
+                    get { return _NameGer; }
+                    set
+                    {
+                        if (_NameGer != value)
+                        {
+                            _NameGer = value;
+                            NotifyPropertyChanged("NameGer");
+                        }
+                    }
+                }
+                #endregion
+
+                #region Sector
+                private SectorViewModel _Sector;
+
+                public SectorViewModel Sector
+                {
+                    get { return _Sector; }
+                    set
+                    {
+                        if (_Sector != value)
+                        {
+                            _Sector = value;
+                            NotifyPropertyChanged("Sector");
+                        }
+                    }
+                }
+                #endregion
+
+                #region Agency
+                private AgencyViewModel _Agency;
+
+                public AgencyViewModel Agency
+                {
+                    get { return _Agency; }
+                    set
+                    {
+                        if (_Agency != value)
+                        {
+                            _Agency = value;
+                            NotifyPropertyChanged("Agency");
+                        }
+                    }
+                }
+                #endregion
+
+                #region TaxNr
+                private string _TaxNr;
+
+                public string TaxNr
+                {
+                    get { return _TaxNr; }
+                    set
+                    {
+                        if (_TaxNr != value)
+                        {
+                            _TaxNr = value;
+                            NotifyPropertyChanged("TaxNr");
+                        }
+                    }
+                }
+                #endregion
+
+                #region CommercialNr
+                private string _CommercialNr;
+
+                public string CommercialNr
+                {
+                    get { return _CommercialNr; }
+                    set
+                    {
+                        if (_CommercialNr != value)
+                        {
+                            _CommercialNr = value;
+                            NotifyPropertyChanged("CommercialNr");
+                        }
+                    }
+                }
+        #endregion
+
+                #region ContactPersonGer
+                private string _ContactPersonGer;
+
+                public string ContactPersonGer
+                {
+                    get { return _ContactPersonGer; }
+                    set
+                    {
+                        if (_ContactPersonGer != value)
+                        {
+                            _ContactPersonGer = value;
+                            NotifyPropertyChanged("ContactPersonGer");
+                        }
+                    }
+                }
+                #endregion
+
+        #endregion
+
+
         #region Locations
         private ObservableCollection<BusinessPartnerLocationViewModel> _Locations;
 
@@ -256,20 +364,20 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         #endregion
 
         #region OrganizationUnits
-        private ObservableCollection<BusinessPartnerOrganizationUnitViewModel> _OrganizationUnits;
+        //private ObservableCollection<BusinessPartnerOrganizationUnitViewModel> _OrganizationUnits;
 
-        public ObservableCollection<BusinessPartnerOrganizationUnitViewModel> OrganizationUnits
-        {
-            get { return _OrganizationUnits; }
-            set
-            {
-                if (_OrganizationUnits != value)
-                {
-                    _OrganizationUnits = value;
-                    NotifyPropertyChanged("OrganizationUnits");
-                }
-            }
-        }
+        //public ObservableCollection<BusinessPartnerOrganizationUnitViewModel> OrganizationUnits
+        //{
+        //    get { return _OrganizationUnits; }
+        //    set
+        //    {
+        //        if (_OrganizationUnits != value)
+        //        {
+        //            _OrganizationUnits = value;
+        //            NotifyPropertyChanged("OrganizationUnits");
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Phones

@@ -1,5 +1,6 @@
 ﻿using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
+using DataMapper.Mappers.Common.Sectors;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
@@ -47,6 +48,13 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 JBKJS = businessPartner.JBKJS,
 
+                NameGer = businessPartner.NameGer,
+                Sector = businessPartner.Sector?.ConvertToSectorViewModelLite(),
+                Agency = businessPartner.Agency?.ConvertToAgencyViewModelLite(),
+                TaxNr = businessPartner.TaxNr,
+                CommercialNr = businessPartner.CommercialNr,
+                ContactPersonGer = businessPartner.ContactPersonGer,
+            
                 CreatedBy = businessPartner.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = businessPartner.Company?.ConvertToCompanyViewModelLite(),
 
@@ -83,6 +91,11 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 JBKJS = businessPartner.JBKJS,
 
+                NameGer = businessPartner.NameGer,
+                TaxNr = businessPartner.TaxNr,
+                CommercialNr = businessPartner.CommercialNr,
+                ContactPersonGer = businessPartner.ContactPersonGer,
+
                 UpdatedAt = businessPartner.UpdatedAt,
                 CreatedAt = businessPartner.CreatedAt,
             };
@@ -114,6 +127,13 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 IsInPDV = businessPartnerViewModel.IsInPDV,
 
                 JBKJS = businessPartnerViewModel.JBKJS,
+
+                NameGer = businessPartnerViewModel.NameGer,
+                SectorId = businessPartnerViewModel.Sector?.Id ?? null,
+                AgencyId = businessPartnerViewModel.Agency?.Id ?? null,
+                TaxNr = businessPartnerViewModel.TaxNr,
+                CommercialNr = businessPartnerViewModel.CommercialNr,
+                ContactPersonGer = businessPartnerViewModel.ContactPersonGer,
 
                 CreatedById = businessPartnerViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerViewModel.Company?.Id ?? null,

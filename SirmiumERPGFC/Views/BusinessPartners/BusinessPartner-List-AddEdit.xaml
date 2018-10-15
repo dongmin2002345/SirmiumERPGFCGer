@@ -111,8 +111,53 @@
                     </Grid>
                 </GroupBox>
 
+                <GroupBox Header="Podaci o nemackom poslovnom partneru" Margin="2 2 2 1" Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Naziv kompanije *" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNameGer" 
+                                 Text="{Binding Path=CurrentBusinessPartner.NameGer}"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Sektor *" Margin="5 0 5 0" />
+                        <popups:SectorPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
+                                         CurrentSector="{Binding Path=CurrentBusinessPartner.Sector}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Delatnost *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <!--<popups:AgencyPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgency" 
+                                         CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>-->
+
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="Poreski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
+                               Text="{Binding Path=CurrentBusinessPartner.TaxNr}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Registarski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCommercialNr" 
+                             Text="{Binding Path=CurrentBusinessPartner.CommercialNr}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPersonGer"  
+                             Text="{Binding Path=CurrentBusinessPartner.ContactPersonGer}"/>
+
+                    </Grid>
+                </GroupBox>
+
                 <!--    Save header button    -->
-                <Grid Grid.Row="1" Margin="2 2 2 2">
+                <Grid Grid.Row="2" Margin="2 2 2 2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="2*" />
@@ -327,7 +372,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Organizacione jedinice (maloprodaje)" Margin="2 1 2 1" Grid.Row="5" IsEnabled="{Binding Path=ItemsEnabled, Mode=TwoWay}">
+                <!--<GroupBox Header="Organizacione jedinice (maloprodaje)" Margin="2 1 2 1" Grid.Row="5" IsEnabled="{Binding Path=ItemsEnabled, Mode=TwoWay}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -443,7 +488,7 @@
                         </DataGrid>
 
                     </Grid>
-                </GroupBox>
+                </GroupBox>-->
 
                 <GroupBox Header="Tipovi posl. partnera" Margin="2 1 2 1" Grid.Row="6" IsEnabled="{Binding Path=ItemsEnabled, Mode=TwoWay}">
                     <Grid>

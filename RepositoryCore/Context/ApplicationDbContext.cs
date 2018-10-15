@@ -15,7 +15,6 @@ using DomainCore.Common.Professions;
 using DomainCore.Banks;
 using DomainCore.ConstructionSites;
 using DomainCore.Employees;
-using DomainCore.Employees;
 
 namespace RepositoryCore.Context
 {

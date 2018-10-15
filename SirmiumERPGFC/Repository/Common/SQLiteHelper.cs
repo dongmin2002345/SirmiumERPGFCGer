@@ -281,6 +281,23 @@ namespace SirmiumERPGFC.Repository.Common
                 };
         }
 
+        public static AgencyViewModel GetAgency(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new AgencyViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Name = query.GetString(counter++)
+                };
+        }
+
         public static FamilyMemberViewModel GetFamilyMember(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))

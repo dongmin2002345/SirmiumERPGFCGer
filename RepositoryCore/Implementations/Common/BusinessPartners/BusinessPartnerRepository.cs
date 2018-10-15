@@ -23,6 +23,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public List<BusinessPartner> GetBusinessPartners(int companyId)
         {
             List<BusinessPartner> businessPartners = context.BusinessPartners
+                .Include(x => x.Sector)
+                .Include(x => x.Agency)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Company.Id == companyId && x.Active == true)
@@ -35,6 +37,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public List<BusinessPartner> GetBusinessPartnersNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<BusinessPartner> businessPartners = context.BusinessPartners
+                .Include(x => x.Sector)
+                .Include(x => x.Agency)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
@@ -48,6 +52,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public BusinessPartner GetBusinessPartner(int id)
         {
             return context.BusinessPartners
+                .Include(x => x.Sector)
+                .Include(x => x.Agency)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
             .FirstOrDefault(x => x.Id == id && x.Active == true);
@@ -72,6 +78,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                 if (dbEntry != null)
                 {
+                    dbEntry.SectorId = businessPartner.SectorId ?? null;
+                    dbEntry.AgencyId = businessPartner.AgencyId ?? null;
                     dbEntry.CompanyId = businessPartner.CompanyId ?? null;
                     dbEntry.CreatedById = businessPartner.CreatedById ?? null;
 
@@ -84,6 +92,12 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.PDV = businessPartner.PDV;
                     dbEntry.IndustryCode = businessPartner.IndustryCode;
                     dbEntry.IdentificationNumber = businessPartner.IdentificationNumber;
+
+                    // Set GER properties
+                    dbEntry.NameGer = businessPartner.NameGer;
+                    dbEntry.TaxNr = businessPartner.TaxNr;
+                    dbEntry.CommercialNr = businessPartner.CommercialNr;
+                    dbEntry.ContactPersonGer = businessPartner.ContactPersonGer;
 
                     dbEntry.Rebate = businessPartner.Rebate;
                     dbEntry.DueDate = businessPartner.DueDate;

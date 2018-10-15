@@ -77,8 +77,8 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                 // Backup items
                 List<BusinessPartnerLocationViewModel> locations = businessPartnerViewModel.Locations?.ToList() ?? new List<BusinessPartnerLocationViewModel>();
                 businessPartnerViewModel.Locations = null;
-                List<BusinessPartnerOrganizationUnitViewModel> organizationUnits = businessPartnerViewModel.OrganizationUnits?.ToList() ?? new List<BusinessPartnerOrganizationUnitViewModel>();
-                businessPartnerViewModel.OrganizationUnits = null;
+                //List<BusinessPartnerOrganizationUnitViewModel> organizationUnits = businessPartnerViewModel.OrganizationUnits?.ToList() ?? new List<BusinessPartnerOrganizationUnitViewModel>();
+                //businessPartnerViewModel.OrganizationUnits = null;
                 List<BusinessPartnerPhoneViewModel> phones = businessPartnerViewModel.Phones?.ToList() ?? new List<BusinessPartnerPhoneViewModel>();
                 businessPartnerViewModel.Phones = null;
                 List<BusinessPartnerTypeViewModel> businessPartnerTypes = businessPartnerViewModel.BusinessPartnerTypes?.ToList() ?? new List<BusinessPartnerTypeViewModel>();
@@ -99,15 +99,15 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                     unitOfWork.GetBusinessPartnerLocationRepository().Create(item.ConvertToBusinessPartnerLocation());
                 }
 
-                var organizationUnitsFromDB = unitOfWork.GetBusinessPartnerOrganizationUnitRepository().GetBusinessPartnerOrganizationUnitsByBusinessPartner(createdBusinessPartner.Id);
-                foreach (var item in organizationUnitsFromDB)
-                    if (!organizationUnits.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetBusinessPartnerOrganizationUnitRepository().Delete(item.Identifier);
-                foreach (var item in organizationUnits)
-                {
-                    item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
-                    unitOfWork.GetBusinessPartnerOrganizationUnitRepository().Create(item.ConvertToBusinessPartnerOrganizationUnit());
-                }
+                //var organizationUnitsFromDB = unitOfWork.GetBusinessPartnerOrganizationUnitRepository().GetBusinessPartnerOrganizationUnitsByBusinessPartner(createdBusinessPartner.Id);
+                //foreach (var item in organizationUnitsFromDB)
+                //    if (!organizationUnits.Select(x => x.Identifier).Contains(item.Identifier))
+                //        unitOfWork.GetBusinessPartnerOrganizationUnitRepository().Delete(item.Identifier);
+                //foreach (var item in organizationUnits)
+                //{
+                //    item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
+                //    unitOfWork.GetBusinessPartnerOrganizationUnitRepository().Create(item.ConvertToBusinessPartnerOrganizationUnit());
+                //}
 
                 var phonesFromDB = unitOfWork.GetBusinessPartnerPhoneRepository().GetBusinessPartnerPhonesByBusinessPartner(createdBusinessPartner.Id);
                 foreach (var item in phonesFromDB)

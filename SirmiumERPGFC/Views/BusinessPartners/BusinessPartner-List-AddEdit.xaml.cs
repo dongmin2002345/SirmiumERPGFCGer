@@ -526,11 +526,11 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             #region Validation
 
-            if (String.IsNullOrEmpty(CurrentBusinessPartner.Name))
-            {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv poslovnog partnera!";
-                return;
-            }
+            //if (String.IsNullOrEmpty(CurrentBusinessPartner.Name))
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Naziv poslovnog partnera!";
+            //    return;
+            //}
 
             #endregion
 
@@ -687,68 +687,68 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #region Add, edit, delete and cancle organization unit
 
-        private void btnAddOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        {
-            #region Validation
+        //private void btnAddOrganizationUnit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Validation
 
-            if (CurrentOrganizationUnitForm.Name == null)
-            {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv!";
-                return;
-            }
+        //    if (CurrentOrganizationUnitForm.Name == null)
+        //    {
+        //        MainWindow.WarningMessage = "Obavezno polje: Naziv!";
+        //        return;
+        //    }
 
-            #endregion
+        //    #endregion
 
-            // If update process, first delete item
-            new BusinessPartnerOrganizationUnitSQLiteRepository().Delete(CurrentOrganizationUnitForm.Identifier);
+        //    // If update process, first delete item
+        //    new BusinessPartnerOrganizationUnitSQLiteRepository().Delete(CurrentOrganizationUnitForm.Identifier);
 
-            CurrentOrganizationUnitForm.BusinessPartner = CurrentBusinessPartner;
-            CurrentOrganizationUnitForm.Identifier = Guid.NewGuid();
+        //    CurrentOrganizationUnitForm.BusinessPartner = CurrentBusinessPartner;
+        //    CurrentOrganizationUnitForm.Identifier = Guid.NewGuid();
 
-            var response = new BusinessPartnerOrganizationUnitSQLiteRepository().Create(CurrentOrganizationUnitForm);
-            if (response.Success)
-            {
-                CurrentOrganizationUnitForm = new BusinessPartnerOrganizationUnitViewModel();
+        //    var response = new BusinessPartnerOrganizationUnitSQLiteRepository().Create(CurrentOrganizationUnitForm);
+        //    if (response.Success)
+        //    {
+        //        CurrentOrganizationUnitForm = new BusinessPartnerOrganizationUnitViewModel();
 
-                Thread displayThread = new Thread(() => PopulateOrganizationUnitData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
+        //        Thread displayThread = new Thread(() => PopulateOrganizationUnitData());
+        //        displayThread.IsBackground = true;
+        //        displayThread.Start();
 
-                txtOrganizationUnitCode.Focus();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
-        }
+        //        txtOrganizationUnitCode.Focus();
+        //    }
+        //    else
+        //        MainWindow.ErrorMessage = response.Message;
+        //}
 
-        private void btnEditOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentOrganizationUnitForm = CurrentOrganizationUnitDG;
-        }
+        //private void btnEditOrganizationUnit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentOrganizationUnitForm = CurrentOrganizationUnitDG;
+        //}
 
-        private void btnDeleteOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        {
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+        //private void btnDeleteOrganizationUnit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("organizacionu jedinicu", "");
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
-                new BusinessPartnerOrganizationUnitSQLiteRepository().Delete(CurrentOrganizationUnitDG.Identifier);
+        //    DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("organizacionu jedinicu", "");
+        //    var showDialog = deleteConfirmationForm.ShowDialog();
+        //    if (showDialog != null && showDialog.Value)
+        //    {
+        //        new BusinessPartnerOrganizationUnitSQLiteRepository().Delete(CurrentOrganizationUnitDG.Identifier);
 
-                MainWindow.SuccessMessage = "Organizaciona jedinica je uspešno obrisana!";
+        //        MainWindow.SuccessMessage = "Organizaciona jedinica je uspešno obrisana!";
 
-                Thread displayThread = new Thread(() => PopulateOrganizationUnitData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
+        //        Thread displayThread = new Thread(() => PopulateOrganizationUnitData());
+        //        displayThread.IsBackground = true;
+        //        displayThread.Start();
+        //    }
 
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        }
+        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        //}
 
-        private void btnCancelOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentOrganizationUnitForm = new BusinessPartnerOrganizationUnitViewModel();
-        }
+        //private void btnCancelOrganizationUnit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentOrganizationUnitForm = new BusinessPartnerOrganizationUnitViewModel();
+        //}
 
         #endregion
 
@@ -808,7 +808,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 CurrentBusinessPartner.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentBusinessPartner.Locations = LocationsFromDB;
-                CurrentBusinessPartner.OrganizationUnits = OrganizationUnitsFromDB;
+                //CurrentBusinessPartner.OrganizationUnits = OrganizationUnitsFromDB;
                 CurrentBusinessPartner.Phones = PhonesFromDB;
                 CurrentBusinessPartner.BusinessPartnerTypes = new ObservableCollection<BusinessPartnerTypeViewModel>(
                     new BusinessPartnerTypeSQLiteRepository()

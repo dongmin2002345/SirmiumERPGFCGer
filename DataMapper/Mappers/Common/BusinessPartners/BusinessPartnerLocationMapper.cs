@@ -35,7 +35,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Country = businessPartnerLocation.Country?.ConvertToCountryViewModelLite(),
                 City = businessPartnerLocation.City?.ConvertToCityViewModelLite(),
                 Municipality = businessPartnerLocation.Municipality?.ConvertToMunicipalityViewModelLite(),
-
+               
                 CreatedBy = businessPartnerLocation.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = businessPartnerLocation.Company?.ConvertToCompanyViewModelLite(),
 
@@ -74,7 +74,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 CountryId = businessPartnerLocationViewModel.Country?.Id ?? null,
                 CityId = businessPartnerLocationViewModel.City?.Id ?? null,
                 MunicipalityId = businessPartnerLocationViewModel.Municipality?.Id ?? null,
-
+              
                 CreatedById = businessPartnerLocationViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerLocationViewModel.Company?.Id ?? null,
 

@@ -31,6 +31,18 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                "ContactPerson NVARCHAR(2048) NULL, " +
                "IsInPdv BOOL NULL, " +
                "JBKJS NVARCHAR(48) NULL, " +
+               "NameGer NVARCHAR(2048) NULL, " +
+               "TaxNr NVARCHAR(2048) NULL, " +
+               "CommercialNr NVARCHAR(2048) NULL, " +
+               "ContactPersonGer NVARCHAR(2048) NULL, " +
+                "SectorId INTEGER NULL, " +
+                "SectorIdentifier GUID NULL, " +
+                "SectorCode NVARCHAR(48) NULL, " +
+                "SectorName NVARCHAR(2048) NULL, " +
+                "AgencyId INTEGER NULL, " +
+                "AgencyIdentifier GUID NULL, " +
+                "AgencyCode NVARCHAR(48) NULL, " +
+                "AgencyName NVARCHAR(2048) NULL, " +
                "IsSynced BOOL NULL, " +
                "UpdatedAt DATETIME NULL, " +
                "CreatedById INTEGER NULL, " +
@@ -41,15 +53,24 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, Name, PIB, PIO, PDV, IndustryCode, IdentificationNumber, " +
             "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
+            "NameGer, TaxNr, CommercialNr, ContactPersonGer, " +
+            "SectorId, SectorIdentifier, SectorCode, SectorName, " +
+            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
             "(Id, ServerId, Identifier, Code, Name, PIB, PIO, PDV, IndustryCode, IdentificationNumber, " +
             "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
+            "NameGer, TaxNr, CommercialNr, ContactPersonGer, " +
+            "SectorId, SectorIdentifier, SectorCode, SectorName, " +
+            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @PIB, @PIO, @PDV, @IndustryCode, @IdentificationNumber, " +
             "@Rebate, @DueDate, @WebSite, @ContactPerson, @IsInPdv, @JBKJS, " +
+            "@NameGer, @TaxNr, @CommercialNr, @ContactPersonGer, " +
+            "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
+            "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public BusinessPartnerListResponse GetBusinessPartnersByPage(int companyId, BusinessPartnerViewModel businessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -97,6 +118,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -177,6 +204,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -237,6 +270,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -297,6 +336,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -438,6 +483,18 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartner.ContactPerson) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsInPdv", ((object)businessPartner.IsInPDV) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@JBKJS", ((object)businessPartner.JBKJS) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@NameGer", ((object)businessPartner.NameGer) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@TaxNr", ((object)businessPartner.TaxNr) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CommercialNr", ((object)businessPartner.CommercialNr) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ContactPersonGer", ((object)businessPartner.ContactPersonGer) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@SectorId", ((object)businessPartner.Sector?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)businessPartner.Sector?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@SectorName", ((object)businessPartner.Sector?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@AgencyId", ((object)businessPartner.Agency?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@AgencyIdentifier", ((object)businessPartner.Agency?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@AgencyCode", ((object)businessPartner.Agency?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartner.Agency?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", businessPartner.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", businessPartner.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
