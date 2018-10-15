@@ -227,6 +227,9 @@
     <Compile Include="Views\Banks\Bank-List.xaml.cs">
       <DependentUpon>Bank-List.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner-Ger-List.xaml.cs">
+      <DependentUpon>BusinessPartner-Ger-List.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartner-List-AddEdit.xaml.cs">
       <DependentUpon>BusinessPartner-List-AddEdit.xaml</DependentUpon>
     </Compile>
@@ -244,6 +247,9 @@
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml.cs">
       <DependentUpon>BusinessPartnerEmployee-List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartners-List.xaml.cs">
+      <DependentUpon>BusinessPartners-List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Common\SubmitConfirmation.xaml.cs">
       <DependentUpon>SubmitConfirmation.xaml</DependentUpon>
@@ -452,6 +458,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner-Ger-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BusinessPartners\BusinessPartner-List-AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -473,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartners-List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -135,11 +135,11 @@
 
                         <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Sektor *" Margin="5 0 5 0" />
                         <popups:SectorPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
-                                         CurrentSector="{Binding Path=CurrentBusinessPartner.Sector}"/>
+                                         CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Delatnost *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <!--<popups:AgencyPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgency" 
-                                         CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>-->
+                        <popups:AgencyPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgency" 
+                                         CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="3" Text="Poreski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
@@ -250,7 +250,7 @@
                                 <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Path=Mobile}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Fax" Header="Fax" Binding="{Binding Path=Fax}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Path=Email}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ContactPerson" Header="Kontakt osoba" Binding="{Binding ContactPerson}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ContactPerson" Header="Kontakt osoba" Binding="{Binding ContactPerson}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Description" Header="Napomena" Binding="{Binding Description}" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
