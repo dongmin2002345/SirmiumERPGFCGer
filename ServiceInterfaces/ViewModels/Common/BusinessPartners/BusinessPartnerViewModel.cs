@@ -485,6 +485,24 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region Search_TaxNr
+        private string _Search_TaxNr;
+
+        public string Search_TaxNr
+        {
+            get { return _Search_TaxNr; }
+            set
+            {
+                if (_Search_TaxNr != value)
+                {
+                    _Search_TaxNr = value;
+                    NotifyPropertyChanged("Search_TaxNr");
+                }
+            }
+        }
+        #endregion
+
+
         #region Search_Agency
         private string _Search_Agency;
 

@@ -129,28 +129,31 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Naziv kompanije *" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNameGer" 
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Sifra *" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCodeGer" IsEnabled="False" Text="{Binding Path=CurrentBusinessPartner.Code}"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Naziv kompanije *" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtNameGer" 
                                  Text="{Binding Path=CurrentBusinessPartner.NameGer}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Sektor *" Margin="5 0 5 0" />
-                        <popups:SectorPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Sektor *" Margin="5 0 5 0" />
+                        <popups:SectorPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popSector"
                                          CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Delatnost *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <popups:AgencyPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgency" 
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="Delatnost *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <popups:AgencyPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popAgency" 
                                          CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" Text="Poreski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Poreski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
                                Text="{Binding Path=CurrentBusinessPartner.TaxNr}" />
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Registarski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCommercialNr" 
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Registarski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtCommercialNr" 
                              Text="{Binding Path=CurrentBusinessPartner.CommercialNr}" />
 
-                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPersonGer"  
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPersonGer"  
                              Text="{Binding Path=CurrentBusinessPartner.ContactPersonGer}"/>
 
                     </Grid>

@@ -90,7 +90,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
                         "AND (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
-                        "AND CompanyId = @CompanyId " +
+                        "AND CompanyId = @CompanyId AND Name IS NOT NULL AND Name != '' " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
@@ -142,10 +142,107 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
                         "AND (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-                        "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
-                        "AND CompanyId = @CompanyId;", db);
+                        //"AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
+                        "AND CompanyId = @CompanyId AND Name IS NOT NULL AND Name != '';", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", ((object)businessPartnerSearchObject?.Search_PIB) != null ? "%" + businessPartnerSearchObject?.Search_PIB + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerSearchObject?.Search_Code) != null ? "%" + businessPartnerSearchObject?.Search_Code + "%" : "");
+                    //selectCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartnerSearchObject?.Search_Agency) != null ? "%" + businessPartnerSearchObject?.Search_Agency + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    query = selectCommand.ExecuteReader();
+
+                    if (query.Read())
+                        response.TotalItems = query.GetInt32(0);
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.BusinessPartners = new List<BusinessPartnerViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.BusinessPartners = businessPartners;
+            return response;
+        }
+
+        public BusinessPartnerListResponse GetGermanyBusinessPartnersByPage(int companyId, BusinessPartnerViewModel businessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        {
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
+            List<BusinessPartnerViewModel> businessPartners = new List<BusinessPartnerViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM BusinessPartners " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@TaxNr IS NULL OR @TaxNr = '' OR TaxNr LIKE @TaxNr) " +
+                        "AND (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
+                        "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
+                        "AND CompanyId = @CompanyId AND NameGer IS NOT NULL AND NameGer != '' " +
+                        "ORDER BY IsSynced, Id DESC " +
+                        "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@TaxNr", ((object)businessPartnerSearchObject?.Search_TaxNr) != null ? "%" + businessPartnerSearchObject?.Search_TaxNr + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerSearchObject?.Search_Code) != null ? "%" + businessPartnerSearchObject?.Search_Code + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartnerSearchObject?.Search_Agency) != null ? "%" + businessPartnerSearchObject?.Search_Agency + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
+                    selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        int counter = 0;
+                        BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IndustryCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
+                        dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        businessPartners.Add(dbEntry);
+                    }
+
+
+                    selectCommand = new SqliteCommand(
+                        "SELECT Count(*) " +
+                        "FROM BusinessPartners " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@TaxNr IS NULL OR @TaxNr = '' OR TaxNr LIKE @TaxNr) " +
+                        "AND (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
+                        "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
+                        "AND CompanyId = @CompanyId AND NameGer IS NOT NULL AND NameGer != '';", db);
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@TaxNr", ((object)businessPartnerSearchObject?.Search_TaxNr) != null ? "%" + businessPartnerSearchObject?.Search_TaxNr + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerSearchObject?.Search_Code) != null ? "%" + businessPartnerSearchObject?.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartnerSearchObject?.Search_Agency) != null ? "%" + businessPartnerSearchObject?.Search_Agency + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);

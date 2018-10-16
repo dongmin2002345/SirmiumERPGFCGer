@@ -270,13 +270,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
                 //Use parameterized query to prevent SQL injection attacks
                 insertCommand.CommandText = SqlCommandInsertPart;
-
+                
                 insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerLocation.Id);
                 insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerLocation.Identifier);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerLocation.BusinessPartner.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerLocation.BusinessPartner.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerLocation.BusinessPartner.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerLocation.BusinessPartner.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerLocation.BusinessPartner.Name) ?? businessPartnerLocation.BusinessPartner.NameGer);
                 insertCommand.Parameters.AddWithValue("@Address", ((object)businessPartnerLocation.Address) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartnerLocation.Country?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartnerLocation.Country?.Identifier) ?? DBNull.Value);

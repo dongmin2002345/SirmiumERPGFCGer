@@ -250,7 +250,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             BusinessPartnerDataLoading = true;
 
-            var response = new BusinessPartnerSQLiteRepository().GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
+            var response = new BusinessPartnerSQLiteRepository().GetGermanyBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
             if (response.Success)
             {
                 BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());

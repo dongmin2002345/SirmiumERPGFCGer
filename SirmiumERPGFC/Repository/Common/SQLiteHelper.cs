@@ -328,7 +328,7 @@ namespace SirmiumERPGFC.Repository.Common
                     Id = query.GetInt32(counter++),
                     Identifier = query.GetGuid(counter++),
                     Code = query.GetString(counter++),
-                    Name = query.GetString(counter++)
+                    Name = query.GetString(counter++)//query.IsDBNull(counter++)? query.GetString(counter-1) : 
                 };
         }
 

@@ -526,11 +526,11 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             #region Validation
 
-            //if (String.IsNullOrEmpty(CurrentBusinessPartner.Name))
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Naziv poslovnog partnera!";
-            //    return;
-            //}
+            if (String.IsNullOrEmpty(CurrentBusinessPartner.Name) && String.IsNullOrEmpty(CurrentBusinessPartner.NameGer))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv poslovnog partnera!";
+                return;
+            }
 
             #endregion
 
@@ -789,7 +789,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             #region Validation
 
-            if (CurrentBusinessPartner.Name == null)
+            if (CurrentBusinessPartner.Name == null &&
+                CurrentBusinessPartner.NameGer == null)
             {
                 MainWindow.ErrorMessage = "Obavezno polje: Naziv!";
                 SubmitButtonContent = " Proknjiži ";
