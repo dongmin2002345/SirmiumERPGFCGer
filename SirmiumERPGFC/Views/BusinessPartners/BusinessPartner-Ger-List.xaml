@@ -68,7 +68,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Nemacki poslovni partneri" Margin="2,1,2,2" Grid.Row="1" >
+        <GroupBox Header="Poslovni partneri Nemacka" Margin="2,1,2,2" Grid.Row="1" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -139,7 +139,8 @@
                               SelectedItem="{Binding Path=CurrentBusinessPartner}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="NameGer" Header="Ime posl. partnera" Binding="{Binding NameGer}"  Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="NameGer" Header="Poslovni partneri Nemacka" Binding="{Binding NameGer}"  Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Poslovni partneri Srbija" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Sector.Name" Header="Sektor" Binding="{Binding Sector.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Agency.Name" Header="Delatnost" Binding="{Binding Agency.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="TaxNr" Header="Poreski broj" Binding="{Binding TaxNr}" IsReadOnly="True" />

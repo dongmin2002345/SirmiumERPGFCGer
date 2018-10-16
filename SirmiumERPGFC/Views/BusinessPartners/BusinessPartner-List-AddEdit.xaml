@@ -36,7 +36,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <GroupBox Header="Podaci o Poslovnom partneru" Margin="2 2 2 1" Grid.Row="0">
+                <GroupBox Header="Podaci o Poslovnom partneru Srbija" Margin="2 2 2 1" Grid.Row="0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -78,9 +78,9 @@
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPDVNumber"
                              Text="{Binding Path=CurrentBusinessPartner.PDV}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Šifra delatnosti" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtIndustryCode" 
-                             Text="{Binding Path=CurrentBusinessPartner.IndustryCode}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Delatnost" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <popups:AgencyPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgencySrb" 
+                             CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>
 
                         <TextBlock Grid.Row="3" Grid.Column="3" Text="Rabat" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
@@ -111,7 +111,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Podaci o nemackom poslovnom partneru" Margin="2 2 2 1" Grid.Row="1">
+                <GroupBox Header="Podaci o poslovnom partneru Nemacka" Margin="2 2 2 1" Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

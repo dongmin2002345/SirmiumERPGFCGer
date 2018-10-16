@@ -23,7 +23,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                "PIB NVARCHAR(48) NULL, " +
                "PIO NVARCHAR(48) NULL, " +
                "PDV NVARCHAR(48) NULL, " +
-               "IndustryCode NVARCHAR(48) NULL, " +
                "IdentificationNumber NVARCHAR(48) NULL, " +
                "Rebate DOUBLE NULL, " +
                "DueDate INTEGER NULL, " +
@@ -51,7 +50,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, PIB, PIO, PDV, IndustryCode, IdentificationNumber, " +
+            "SELECT ServerId, Identifier, Code, Name, PIB, PIO, PDV, IdentificationNumber, " +
             "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
             "NameGer, TaxNr, CommercialNr, ContactPersonGer, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
@@ -59,14 +58,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
-            "(Id, ServerId, Identifier, Code, Name, PIB, PIO, PDV, IndustryCode, IdentificationNumber, " +
+            "(Id, ServerId, Identifier, Code, Name, PIB, PIO, PDV, IdentificationNumber, " +
             "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
             "NameGer, TaxNr, CommercialNr, ContactPersonGer, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @PIB, @PIO, @PDV, @IndustryCode, @IdentificationNumber, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @PIB, @PIO, @PDV, @IdentificationNumber, " +
             "@Rebate, @DueDate, @WebSite, @ContactPerson, @IsInPdv, @JBKJS, " +
             "@NameGer, @TaxNr, @CommercialNr, @ContactPersonGer, " +
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
@@ -114,7 +113,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IndustryCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
@@ -142,12 +140,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
                         "AND (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-                        //"AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
+                        "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
                         "AND CompanyId = @CompanyId AND Name IS NOT NULL AND Name != '';", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", ((object)businessPartnerSearchObject?.Search_PIB) != null ? "%" + businessPartnerSearchObject?.Search_PIB + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerSearchObject?.Search_Code) != null ? "%" + businessPartnerSearchObject?.Search_Code + "%" : "");
-                    //selectCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartnerSearchObject?.Search_Agency) != null ? "%" + businessPartnerSearchObject?.Search_Agency + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartnerSearchObject?.Search_Agency) != null ? "%" + businessPartnerSearchObject?.Search_Agency + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -211,7 +209,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IndustryCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
@@ -301,7 +298,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IndustryCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
@@ -367,7 +363,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IndustryCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
@@ -433,7 +428,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IndustryCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
@@ -580,7 +574,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@PIB", ((object)businessPartner.PIB) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@PIO", ((object)businessPartner.PIO) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@PDV", ((object)businessPartner.PDV) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IndustryCode", ((object)businessPartner.IndustryCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IdentificationNumber", ((object)businessPartner.IdentificationNumber) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Rebate", ((object)businessPartner.Rebate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@DueDate", ((object)businessPartner.DueDate) ?? DBNull.Value);

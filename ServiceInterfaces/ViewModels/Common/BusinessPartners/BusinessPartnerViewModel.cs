@@ -98,23 +98,6 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
-        #region IndustryCode
-        private string _IndustryCode;
-
-        public string IndustryCode
-        {
-            get { return _IndustryCode; }
-            set
-            {
-                if (_IndustryCode != value)
-                {
-                    _IndustryCode = value;
-                    NotifyPropertyChanged("IndustryCode");
-                }
-            }
-        }
-        #endregion
-
         #region IdentificationNumber
         private string _IdentificationNumber;
 

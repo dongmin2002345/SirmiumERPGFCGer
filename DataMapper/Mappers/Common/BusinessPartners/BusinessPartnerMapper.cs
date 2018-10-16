@@ -35,7 +35,6 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 PIB = businessPartner.PIB,
                 PIO = businessPartner.PIO,
                 PDV = businessPartner.PDV,
-                IndustryCode = businessPartner.IndustryCode,
                 IdentificationNumber = businessPartner.IdentificationNumber,
 
                 Rebate = businessPartner.Rebate,
@@ -78,7 +77,6 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 PIB = businessPartner.PIB,
                 PIO = businessPartner.PIO,
                 PDV = businessPartner.PDV,
-                IndustryCode = businessPartner.IndustryCode,
                 IdentificationNumber = businessPartner.IdentificationNumber,
 
                 Rebate = businessPartner.Rebate,
@@ -115,7 +113,6 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 PIB = businessPartnerViewModel.PIB,
                 PIO = businessPartnerViewModel.PIO,
                 PDV = businessPartnerViewModel.PDV,
-                IndustryCode = businessPartnerViewModel.IndustryCode,
                 IdentificationNumber = businessPartnerViewModel.IdentificationNumber,
 
                 Rebate = businessPartnerViewModel.Rebate,

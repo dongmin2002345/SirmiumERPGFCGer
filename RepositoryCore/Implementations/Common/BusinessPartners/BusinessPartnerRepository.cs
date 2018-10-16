@@ -90,7 +90,6 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.PIB = businessPartner.PIB;
                     dbEntry.PIO = businessPartner.PIO;
                     dbEntry.PDV = businessPartner.PDV;
-                    dbEntry.IndustryCode = businessPartner.IndustryCode;
                     dbEntry.IdentificationNumber = businessPartner.IdentificationNumber;
 
                     // Set GER properties

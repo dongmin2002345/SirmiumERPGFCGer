@@ -54,9 +54,9 @@
                 <TextBox x:Name="txtSearchByBusinessPartnerCode" Grid.Column="1" Grid.Row="2" Margin="2" Controls:TextBoxHelper.ClearTextButton="True"
                          Text="{Binding Path=BusinessPartnerSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}" />
 
-                <!--<TextBlock Text="Pretraga po delatnosti " Grid.Row="1"  Grid.Column="2" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                <TextBlock Text="Pretraga po delatnosti " Grid.Row="1"  Grid.Column="2" VerticalAlignment="Center" Margin="5 0 5 0"/>
                 <TextBox x:Name="txtSearchByAgency" Grid.Column="3" Grid.Row="1" Margin="2" Controls:TextBoxHelper.ClearTextButton="True"
-                         Text="{Binding Path=BusinessPartnerSearchObject.Search_Agency, UpdateSourceTrigger=PropertyChanged}" />-->
+                         Text="{Binding Path=BusinessPartnerSearchObject.Search_Agency, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="4">
                     <StackPanel Orientation="Horizontal">
@@ -69,7 +69,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Poslovni partneri" Margin="2,1,2,2" Grid.Row="1" >
+        <GroupBox Header="Poslovni partneri Srbija" Margin="2,1,2,2" Grid.Row="1" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -141,7 +141,8 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Ime posl. partnera" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Poslovni partneri Srbija" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="NameGer" Header="Poslovni partneri Nemacka" Binding="{Binding NameGer}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PIB" Header="PIB" Binding="{Binding PIB}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DueDate" Header="Valuta" Binding="{Binding DueDate}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PDV" Header="PDV" Binding="{Binding PDV}" IsReadOnly="True" />

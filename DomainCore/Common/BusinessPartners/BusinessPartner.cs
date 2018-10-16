@@ -14,7 +14,6 @@ namespace DomainCore.Common.BusinessPartners
         public string PIB { get; set; }
         public string PIO { get; set; }
         public string PDV { get; set; }
-        public string IndustryCode { get; set; } // Business partner industry code (srb. Sifra delatnosti)
         public string IdentificationNumber { get; set; } // Business partner identification number (srb. Maticni broj)
 
         public decimal Rebate { get; set; }
