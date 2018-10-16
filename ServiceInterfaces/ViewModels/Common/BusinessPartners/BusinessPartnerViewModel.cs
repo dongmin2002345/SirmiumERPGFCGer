@@ -433,6 +433,24 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         #endregion
 
 
+
+        #region Search_Code
+        private string _Search_Code;
+
+        public string Search_Code
+        {
+            get { return _Search_Code; }
+            set
+            {
+                if (_Search_Code != value)
+                {
+                    _Search_Code = value;
+                    NotifyPropertyChanged("Search_Code");
+                }
+            }
+        }
+        #endregion
+
         #region Search_Name
         private string _Search_Name;
 
@@ -462,6 +480,23 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
                 {
                     _Search_PIB = value;
                     NotifyPropertyChanged("Search_PIB");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Agency
+        private string _Search_Agency;
+
+        public string Search_Agency
+        {
+            get { return _Search_Agency; }
+            set
+            {
+                if (_Search_Agency != value)
+                {
+                    _Search_Agency = value;
+                    NotifyPropertyChanged("Search_Agency");
                 }
             }
         }
