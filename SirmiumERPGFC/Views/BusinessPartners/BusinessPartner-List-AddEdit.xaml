@@ -255,7 +255,7 @@
                               SelectedItem="{Binding Path=CurrentPhoneDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="ContactPerson" Header="Kontakt osoba" Binding="{Binding ContactPerson}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ContactPerson" Header="Kontakt osoba" Binding="{Binding ContactPerson}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Description" Header="Napomena" Binding="{Binding Description}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Path=Mobile}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" IsReadOnly="True" />
@@ -355,8 +355,8 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Path=Country.Name}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Municipality.Name" Header="Opština" Binding="{Binding Path=Municipality.Name}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="City.Name" Header="Grad" Binding="{Binding Path=City.Name}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Path=Address}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="City.Name" Header="Grad" Binding="{Binding Path=City.Name}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Path=Address}" Width="*" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
