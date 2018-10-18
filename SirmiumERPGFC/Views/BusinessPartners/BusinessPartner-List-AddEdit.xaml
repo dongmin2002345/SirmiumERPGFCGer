@@ -8,7 +8,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
-             d:DesignHeight="1500" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Background>
         <SolidColorBrush Color="White" />
@@ -310,12 +310,16 @@
                         <popups:MunicipalityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popMunicipality" 
                                               CurrentMunicipality="{Binding Path=CurrentLocationForm.Municipality, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Grad " Margin="5 0 5 0" />
-                        <popups:CityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity" 
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Region " Margin="5 0 5 0" />
+                        <popups:RegionPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popRegion" 
+                                      CurrentRegion="{Binding Path=CurrentLocationForm.Region, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Grad " Margin="5 0 5 0" />
+                        <popups:CityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity" 
                                       CurrentCity="{Binding Path=CurrentLocationForm.City, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Adresa " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddress" Text="{Binding Path=CurrentLocationForm.Address, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Adresa " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddress" Text="{Binding Path=CurrentLocationForm.Address, Mode=TwoWay}"/>
 
                         <Button x:Name="btnAddLocation" Grid.Row="2" Grid.Column="4" Click="btnAddLocation_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
@@ -355,6 +359,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Path=Country.Name}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Municipality.Name" Header="Opština" Binding="{Binding Path=Municipality.Name}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Region.Name" Header="Region" Binding="{Binding Path=Region.Name}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="City.Name" Header="Grad" Binding="{Binding Path=City.Name}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Path=Address}" Width="*" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="" Width="Auto">

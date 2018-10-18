@@ -96,6 +96,22 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region Region
+        private RegionViewModel _Region;
+
+        public RegionViewModel Region
+        {
+            get { return _Region; }
+            set
+            {
+                if (_Region != value)
+                {
+                    _Region = value;
+                    NotifyPropertyChanged("Region");
+                }
+            }
+        }
+        #endregion
 
         #region IsSynced
         private bool _IsSynced;

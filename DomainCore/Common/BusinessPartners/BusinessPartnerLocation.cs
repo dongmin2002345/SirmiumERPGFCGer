@@ -19,6 +19,7 @@ namespace DomainCore.Common.BusinessPartners
         public City City { get; set; }
         public int? MunicipalityId { get; set; }
         public Municipality Municipality { get; set; }
-
+        public int? RegionId { get; set; }
+        public Region Region { get; set; }
     }
 }

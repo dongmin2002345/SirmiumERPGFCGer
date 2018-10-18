@@ -34,6 +34,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "MunicipalityIdentifier GUID NULL, " +
             "MunicipalityCode NVARCHAR(48) NULL, " +
             "MunicipalityName NVARCHAR(2048) NULL, " +
+               "RegionId INTEGER NULL, " +
+            "RegionIdentifier GUID NULL, " +
+            "RegionCode NVARCHAR(48) NULL, " +
+            "RegionName NVARCHAR(2048) NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -47,6 +51,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "Address, CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+            "RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerLocations " +
@@ -55,6 +60,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "Address, CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+              "RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
@@ -62,6 +68,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@Address, @CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, " +
+              "@RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public BusinessPartnerLocationListResponse GetBusinessPartnerLocationsByBusinessPartner(int companyId, Guid businessPartnerIdentifier)
@@ -96,6 +103,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -149,6 +157,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -201,6 +210,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -290,6 +300,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)businessPartnerLocation.Municipality?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)businessPartnerLocation.Municipality?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)businessPartnerLocation.Municipality?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionId", ((object)businessPartnerLocation.Region?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)businessPartnerLocation.Region?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionCode", ((object)businessPartnerLocation.Region?.RegionCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionName", ((object)businessPartnerLocation.Region?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerLocation.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", businessPartnerLocation.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

@@ -130,7 +130,7 @@ namespace SirmiumERPGFC.Repository.Sectors
             return response;
         }
 
-        public AgencyListResponse GetAgenciesForPopup(int companyId, string filterString)
+        public AgencyListResponse GetAgenciesForPopup(int companyId, Guid sectorIdentifier, string filterString)
         {
             AgencyListResponse response = new AgencyListResponse();
             List<AgencyViewModel> Agencies = new List<AgencyViewModel>();
@@ -146,12 +146,14 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
+                        "AND SectorIdentifier = @SectorIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@SectorIdentifier", sectorIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 

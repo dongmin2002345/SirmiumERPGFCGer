@@ -25,6 +25,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 .Include(x => x.Country)
                 .Include(x => x.City)
                 .Include(x => x.Municipality)
+                .Include(x => x.Region)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Active == true && x.CompanyId == companyId)
@@ -41,6 +42,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 .Include(x => x.Country)
                 .Include(x => x.City)
                 .Include(x => x.Municipality)
+                         .Include(x => x.Region)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.BusinessPartnerId == businessPartnerId && x.Active == true)
@@ -57,6 +59,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 .Include(x => x.Country)
                 .Include(x => x.City)
                 .Include(x => x.Municipality)
+                         .Include(x => x.Region)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
@@ -73,6 +76,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 .Include(x => x.Country)
                 .Include(x => x.City)
                 .Include(x => x.Municipality)
+                         .Include(x => x.Region)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .FirstOrDefault(x => x.Id == id && x.Active == true);
@@ -101,6 +105,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.CountryId = businessPartnerLocation.CountryId ?? null;
                     dbEntry.CityId = businessPartnerLocation.CityId ?? null;
                     dbEntry.MunicipalityId = businessPartnerLocation.MunicipalityId ?? null;
+                    dbEntry.RegionId = businessPartnerLocation.RegionId ?? null;
                     dbEntry.CompanyId = businessPartnerLocation.CompanyId ?? null;
                     dbEntry.CreatedById = businessPartnerLocation.CreatedById ?? null;
 

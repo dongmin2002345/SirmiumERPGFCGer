@@ -53,6 +53,29 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         }
         #endregion
 
+        #region CurrentSector
+        public SectorViewModel CurrentSector
+        {
+            get { return (SectorViewModel)GetValue(CurrentSectorProperty); }
+            set { SetValueDp(CurrentSectorProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentSectorProperty = DependencyProperty.Register(
+            "CurrentSector",
+            typeof(SectorViewModel),
+            typeof(AgencyPopup),
+            new PropertyMetadata(OnCurrentSectorPropertyChanged));
+
+        private static void OnCurrentSectorPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            AgencyPopup popup = source as AgencyPopup;
+            SectorViewModel sector = (SectorViewModel)e.NewValue;
+
+            popup.PopulateFromDb("");
+
+        }
+        #endregion
+
         #region AgenciesFromDB
         private ObservableCollection<AgencyViewModel> _AgenciesFromDB;
 
@@ -96,13 +119,16 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                   
-                        AgencyListResponse response = new AgencySQLiteRepository().GetAgenciesForPopup(MainWindow.CurrentCompanyId, filterString);
-                        if (response.Success)
-                            AgenciesFromDB = new ObservableCollection<AgencyViewModel>(response.Agencies ?? new List<AgencyViewModel>());
-                        else
-                            AgenciesFromDB = new ObservableCollection<AgencyViewModel>();
-              
+                    if (CurrentSector != null)
+                    {
+                            AgencyListResponse response = new AgencySQLiteRepository().GetAgenciesForPopup(MainWindow.CurrentCompanyId, CurrentSector.Identifier, filterString);
+                            if (response.Success)
+                                AgenciesFromDB = new ObservableCollection<AgencyViewModel>(response.Agencies ?? new List<AgencyViewModel>());
+                            else
+                                AgenciesFromDB = new ObservableCollection<AgencyViewModel>();
+                    }
+                    else
+                        AgenciesFromDB = new ObservableCollection<AgencyViewModel>();
                 })
             );
         }
