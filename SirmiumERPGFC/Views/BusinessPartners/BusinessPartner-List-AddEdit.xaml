@@ -138,11 +138,11 @@
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Drzava *" Margin="5 0 5 0" />
                         <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountryGer"
-                                         CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"/>
+                                         CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Sektor *" Margin="5 0 5 0" />
                         <popups:SectorPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
-                                         CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"
+                                         CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"
                                          CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="Delatnost *" VerticalAlignment="Center" Margin="5 0 5 0" />
@@ -308,13 +308,13 @@
                         <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
                                          CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Region " Margin="5 0 5 0" />
-                        <popups:RegionPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popRegion" 
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Region " Margin="5 0 5 0" />
+                        <popups:RegionPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popRegion" 
                                       CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"
                                       CurrentRegion="{Binding Path=CurrentLocationForm.Region, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Opština " Margin="5 0 5 0" />
-                        <popups:MunicipalityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popMunicipality" 
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Opština " Margin="5 0 5 0" />
+                        <popups:MunicipalityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popMunicipality" 
                                               CurrentRegion="{Binding Path=CurrentLocationForm.Region, Mode=TwoWay}"
                                               CurrentMunicipality="{Binding Path=CurrentLocationForm.Municipality, Mode=TwoWay}"/>
                       
