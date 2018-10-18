@@ -158,12 +158,14 @@ namespace SirmiumERPGFC.Repository.Locations
                         "WHERE (@ZipCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND CountryIdentifier = @CountryIdentifier " +
+                        //"AND MunicipalityIdentifier = @MunicipalityIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@ZipCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryIdentifier", countryIdentifier);
+                    //selectCommand.Parameters.AddWithValue("@MunicipalityIdentifier", municipalityIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
@@ -201,6 +203,67 @@ namespace SirmiumERPGFC.Repository.Locations
             response.Cities = Cities;
             return response;
         }
+
+        public CityListResponse GetCitiesForPopupBusinessPartner(int companyId, Guid municipalityIdentifier, string filterString)
+        {
+            CityListResponse response = new CityListResponse();
+            List<CityViewModel> Cities = new List<CityViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM Cities " +
+                        "WHERE (@ZipCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND MunicipalityIdentifier = @MunicipalityIdentifier " +
+                        "AND CompanyId = @CompanyId " +
+                        "ORDER BY IsSynced, Id DESC " +
+                        "LIMIT @ItemsPerPage;", db);
+                    selectCommand.Parameters.AddWithValue("@ZipCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@MunicipalityIdentifier", municipalityIdentifier);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
+                    selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        int counter = 0;
+                        CityViewModel dbEntry = new CityViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.ZipCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        Cities.Add(dbEntry);
+                    }
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.Cities = new List<CityViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.Cities = Cities;
+            return response;
+        }
+
 
         public CityResponse GetCity(Guid identifier)
         {

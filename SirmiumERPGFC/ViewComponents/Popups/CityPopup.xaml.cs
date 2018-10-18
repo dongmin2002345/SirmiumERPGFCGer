@@ -73,6 +73,29 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         }
         #endregion
 
+        #region CurrentMunicipality
+        public MunicipalityViewModel CurrentMunicipality
+        {
+            get { return (MunicipalityViewModel)GetValue(CurrentMunicipalityProperty); }
+            set { SetValueDp(CurrentMunicipalityProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentMunicipalityProperty = DependencyProperty.Register(
+            "CurrentMunicipality",
+            typeof(MunicipalityViewModel),
+            typeof(CityPopup),
+            new PropertyMetadata(OnCurrentMunicipalityPropertyChanged));
+
+        private static void OnCurrentMunicipalityPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            CityPopup popup = source as CityPopup;
+            MunicipalityViewModel animalType = (MunicipalityViewModel)e.NewValue;
+
+            popup.PopulateFromDb("");
+
+        }
+        #endregion
+
         #region CitiesFromDB
         private ObservableCollection<CityViewModel> _CitiesFromDB;
 
@@ -118,7 +141,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentCountry != null)
                     {
-                        CityListResponse cityResp = new CitySQLiteRepository().GetCitiesForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
+                        CityListResponse cityResp = new CitySQLiteRepository().GetCitiesForPopupBusinessPartner(MainWindow.CurrentCompanyId, CurrentMunicipality.Identifier, filterString);
                         if (cityResp.Success)
                             CitiesFromDB = new ObservableCollection<CityViewModel>(cityResp.Cities ?? new List<CityViewModel>());
                         else
