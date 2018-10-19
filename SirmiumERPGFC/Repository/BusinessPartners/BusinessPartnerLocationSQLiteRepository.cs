@@ -313,7 +313,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {

@@ -125,11 +125,11 @@ namespace SirmiumERPGFC.Identity.Views
                     if (userResponse.Success && userResponse.User != null)
                     {
                         userResponse = authenticationService.Authenticate(username, CalculateHash(password, username));
-                        if (!userResponse.Success || userResponse.User == null)
-                            throw new UnauthorizedAccessException();
 
                         userViewModel = userResponse.User;
                     }
+                    if (!userResponse.Success || userResponse.User == null)
+                        throw new UnauthorizedAccessException();
 
 
                     //Get the current principal object

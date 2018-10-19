@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -164,6 +165,24 @@ namespace ServiceInterfaces.ViewModels.Employees
             }
         }
         #endregion
+
+        #region Country
+        private CountryViewModel _Country;
+
+        public CountryViewModel Country
+        {
+            get { return _Country; }
+            set
+            {
+                if (_Country != value)
+                {
+                    _Country = value;
+                    NotifyPropertyChanged("Country");
+                }
+            }
+        }
+        #endregion
+
 
 
         #region EmbassyDate

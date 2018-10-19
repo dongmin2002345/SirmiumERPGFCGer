@@ -8,7 +8,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1562" d:DesignWidth="829">
 
     <UserControl.Background>
         <SolidColorBrush Color="White" />
@@ -78,35 +78,35 @@
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPDVNumber"
                              Text="{Binding Path=CurrentBusinessPartner.PDV}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Delatnost" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <!--<TextBlock Grid.Row="3" Grid.Column="0" Text="Delatnost" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <popups:AgencyPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgencySrb" 
-                             CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>
+                             CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>-->
 
-                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Rabat" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Rabat" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
                              Text="{Binding Path=CurrentBusinessPartner.Rebate}"/>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Valuta" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtDueDate"
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Valuta" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtDueDate"
                              Text="{Binding Path=CurrentBusinessPartner.DueDate}" />
 
-                        <TextBlock Grid.Row="4" Grid.Column="3" Text="JBKJS" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtJBKJS" 
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="JBKJS" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtJBKJS" 
                              Text="{Binding Path=CurrentBusinessPartner.JBKJS}" />
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Obveznik PDV-a " VerticalAlignment="Center" Margin="5 0 5 0"/>
-                        <ComboBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2"
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="Obveznik PDV-a " VerticalAlignment="Center" Margin="5 0 5 0"/>
+                        <ComboBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2"
                         SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
                         ItemsSource="{Binding Path=IsInPdvOptions}">
                         </ComboBox>
 
-                        <TextBlock Grid.Row="5" Grid.Column="3" Text="Sajt" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Sajt" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
                              Text="{Binding Path=CurrentBusinessPartner.WebSite}" />
 
-                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <!--<TextBlock Grid.Row="6" Grid.Column="0" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPerson"  
-                             Text="{Binding Path=CurrentBusinessPartner.ContactPerson}"/>
+                             Text="{Binding Path=CurrentBusinessPartner.ContactPerson}"/>-->
 
                     </Grid>
                 </GroupBox>
@@ -213,14 +213,14 @@
 
                         <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Telefon " Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhone" Text="{Binding Path=CurrentPhoneForm.Phone, Mode=TwoWay}"/>
-                     
+
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Fax " Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtFax" Text="{Binding Path=CurrentPhoneForm.Fax, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Email " Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtEmail" Text="{Binding Path=CurrentPhoneForm.Email, Mode=TwoWay}"/>
 
-                     
+
                         <Button x:Name="btnPhone" Grid.Row="3" Grid.Column="4" Click="btnPhone_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
@@ -263,7 +263,7 @@
                                 <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Fax" Header="Fax" Binding="{Binding Path=Fax}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
-                                 <DataGridTemplateColumn Header="" Width="Auto">
+                                <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -317,10 +317,10 @@
                         <popups:MunicipalityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popMunicipality" 
                                               CurrentRegion="{Binding Path=CurrentLocationForm.Region, Mode=TwoWay}"
                                               CurrentMunicipality="{Binding Path=CurrentLocationForm.Municipality, Mode=TwoWay}"/>
-                      
+
                         <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Grad " Margin="5 0 5 0" />
                         <popups:CityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity" 
-                                      CurrentMunicipality="{Binding Path=CurrentLocationForm.Municipality, Mode=TwoWay}"
+                                      CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"
                                       CurrentCity="{Binding Path=CurrentLocationForm.City, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Adresa " Margin="5 0 5 0" />
