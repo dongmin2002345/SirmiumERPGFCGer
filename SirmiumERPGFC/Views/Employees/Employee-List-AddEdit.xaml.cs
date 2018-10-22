@@ -587,5 +587,15 @@ namespace SirmiumERPGFC.Views.Employees
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private void btnAddProfessionItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCancelProfessionItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

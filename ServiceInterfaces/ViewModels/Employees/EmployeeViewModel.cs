@@ -97,70 +97,18 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region Gender
+        private int _Gender;
 
-        #region Address
-        private string _Address;
-
-        public string Address
+        public int Gender
         {
-            get { return _Address; }
+            get { return _Gender; }
             set
             {
-                if (_Address != value)
+                if (_Gender != value)
                 {
-                    _Address = value;
-                    NotifyPropertyChanged("Address");
-                }
-            }
-        }
-        #endregion
-
-        #region Passport
-        private string _Passport;
-
-        public string Passport
-        {
-            get { return _Passport; }
-            set
-            {
-                if (_Passport != value)
-                {
-                    _Passport = value;
-                    NotifyPropertyChanged("Passport");
-                }
-            }
-        }
-        #endregion
-
-        #region Interest
-        private string _Interest;
-
-        public string Interest
-        {
-            get { return _Interest; }
-            set
-            {
-                if (_Interest != value)
-                {
-                    _Interest = value;
-                    NotifyPropertyChanged("Interest");
-                }
-            }
-        }
-        #endregion
-
-        #region License
-        private string _License;
-
-        public string License
-        {
-            get { return _License; }
-            set
-            {
-                if (_License != value)
-                {
-                    _License = value;
-                    NotifyPropertyChanged("License");
+                    _Gender = value;
+                    NotifyPropertyChanged("Gender");
                 }
             }
         }
@@ -183,20 +131,121 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region Region
+        private RegionViewModel _Region;
 
-
-        #region EmbassyDate
-        private DateTime? _EmbassyDate = DateTime.Now;
-
-        public DateTime? EmbassyDate
+        public RegionViewModel Region
         {
-            get { return _EmbassyDate; }
+            get { return _Region; }
             set
             {
-                if (_EmbassyDate != value)
+                if (_Region != value)
                 {
-                    _EmbassyDate = value;
-                    NotifyPropertyChanged("EmbassyDate");
+                    _Region = value;
+                    NotifyPropertyChanged("Region");
+                }
+            }
+        }
+        #endregion
+
+        #region Municipality
+        private MunicipalityViewModel _Municipality;
+
+        public MunicipalityViewModel Municipality
+        {
+            get { return _Municipality; }
+            set
+            {
+                if (_Municipality != value)
+                {
+                    _Municipality = value;
+                    NotifyPropertyChanged("Municipality");
+                }
+            }
+        }
+        #endregion
+
+        #region City
+        private CityViewModel _City;
+
+        public CityViewModel City
+        {
+            get { return _City; }
+            set
+            {
+                if (_City != value)
+                {
+                    _City = value;
+                    NotifyPropertyChanged("City");
+                }
+            }
+        }
+        #endregion
+
+        #region Address
+        private string _Address;
+
+        public string Address
+        {
+            get { return _Address; }
+            set
+            {
+                if (_Address != value)
+                {
+                    _Address = value;
+                    NotifyPropertyChanged("Address");
+                }
+            }
+        }
+        #endregion
+
+
+        #region PassportCountry
+        private CountryViewModel _PassportCountry;
+
+        public CountryViewModel PassportCountry
+        {
+            get { return _PassportCountry; }
+            set
+            {
+                if (_PassportCountry != value)
+                {
+                    _PassportCountry = value;
+                    NotifyPropertyChanged("PassportCountry");
+                }
+            }
+        }
+        #endregion
+
+        #region PassportCity
+        private CityViewModel _PassportCity;
+
+        public CityViewModel PassportCity
+        {
+            get { return _PassportCity; }
+            set
+            {
+                if (_PassportCity != value)
+                {
+                    _PassportCity = value;
+                    NotifyPropertyChanged("PassportCity");
+                }
+            }
+        }
+        #endregion
+
+        #region Passport
+        private string _Passport;
+
+        public string Passport
+        {
+            get { return _Passport; }
+            set
+            {
+                if (_Passport != value)
+                {
+                    _Passport = value;
+                    NotifyPropertyChanged("Passport");
                 }
             }
         }
@@ -236,6 +285,95 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region ResidenceCity
+        private CityViewModel _ResidenceCity;
+
+        public CityViewModel ResidenceCity
+        {
+            get { return _ResidenceCity; }
+            set
+            {
+                if (_ResidenceCity != value)
+                {
+                    _ResidenceCity = value;
+                    NotifyPropertyChanged("ResidenceCity");
+                }
+            }
+        }
+        #endregion
+
+        #region ResidenceAddress
+        private string _ResidenceAddress;
+
+        public string ResidenceAddress
+        {
+            get { return _ResidenceAddress; }
+            set
+            {
+                if (_ResidenceAddress != value)
+                {
+                    _ResidenceAddress = value;
+                    NotifyPropertyChanged("ResidenceAddress");
+                }
+            }
+        }
+        #endregion
+
+
+
+        #region Interest
+        private string _Interest;
+
+        public string Interest
+        {
+            get { return _Interest; }
+            set
+            {
+                if (_Interest != value)
+                {
+                    _Interest = value;
+                    NotifyPropertyChanged("Interest");
+                }
+            }
+        }
+        #endregion
+
+        #region License
+        private string _License;
+
+        public string License
+        {
+            get { return _License; }
+            set
+            {
+                if (_License != value)
+                {
+                    _License = value;
+                    NotifyPropertyChanged("License");
+                }
+            }
+        }
+        #endregion
+
+
+
+        #region EmbassyDate
+        private DateTime? _EmbassyDate = DateTime.Now;
+
+        public DateTime? EmbassyDate
+        {
+            get { return _EmbassyDate; }
+            set
+            {
+                if (_EmbassyDate != value)
+                {
+                    _EmbassyDate = value;
+                    NotifyPropertyChanged("EmbassyDate");
+                }
+            }
+        }
+        #endregion
+
         #region WorkPermitFrom
         private DateTime? _WorkPermitFrom = DateTime.Now;
 
@@ -269,7 +407,6 @@ namespace ServiceInterfaces.ViewModels.Employees
             }
         }
         #endregion
-
 
         #region EmployeeItems
         private ObservableCollection<EmployeeItemViewModel>  _EmployeeItems;

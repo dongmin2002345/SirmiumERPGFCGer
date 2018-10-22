@@ -204,7 +204,7 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public CityListResponse GetCitiesForPopupBusinessPartner(int companyId, Guid countryIdentifier, string filterString)
+        public CityListResponse GetCitiesForPopupBusinessPartner(int companyId, Guid? countryIdentifier, string filterString)
         {
             CityListResponse response = new CityListResponse();
             List<CityViewModel> Cities = new List<CityViewModel>();
@@ -217,15 +217,15 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Cities " +
-                        "WHERE (@ZipCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND CountryIdentifier = @CountryIdentifier " +
+                        "WHERE ((@ZipCode IS NULL OR @ZipCode = '' OR ZipCode LIKE @ZipCode) " +
+                        "OR (@Name IS NULL OR @Name = '' OR Name LIKE @Name)) " +
+                        "AND (@CountryIdentifier IS NULL OR @CountryIdentifier = '' OR CountryIdentifier = @CountryIdentifier) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     selectCommand.Parameters.AddWithValue("@ZipCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@CountryIdentifier", countryIdentifier);
+                    selectCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)countryIdentifier) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
