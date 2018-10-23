@@ -231,8 +231,8 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeItem.Employee.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@FamilyMemberId", ((object)EmployeeItem.FamilyMember.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@FamilyMemberIdentifier", ((object)EmployeeItem.Employee.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@FamilyMemberCode", ((object)EmployeeItem.Employee.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@FamilyMemberName", ((object)EmployeeItem.Employee.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@FamilyMemberCode", ((object)EmployeeItem.FamilyMember.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@FamilyMemberName", ((object)EmployeeItem.FamilyMember.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", EmployeeItem.Name);
                 insertCommand.Parameters.AddWithValue("@DateOfBirth", ((object)EmployeeItem.DateOfBirth) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);

@@ -22,16 +22,53 @@ namespace SirmiumERPGFC.Repository.Employees
             "EmployeeCode NVARCHAR(2048) NULL, " +
             "Name NVARCHAR(2048) NULL, " +
             "SurName NVARCHAR(2048) NULL, " +
+
             "DateOfBirth DATETIME NULL, " +
+            "Gender INTEGER NOT NULL, " +
+            "CountryId INTEGER NULL, " +
+            "CountryIdentifier GUID, " +
+            "CountryCode NVARCHAR(2048) NULL, " +
+            "CountryName NVARCHAR(2048) NULL, " +
+            "RegionId INTEGER NULL, " +
+            "RegionIdentifier GUID, " +
+            "RegionCode NVARCHAR(2048) NULL, " +
+            "RegionName NVARCHAR(2048) NULL, " +
+            "MunicipalityId INTEGER NULL, " +
+            "MunicipalityIdentifier GUID, " +
+            "MunicipalityCode NVARCHAR(2048) NULL, " +
+            "MunicipalityName NVARCHAR(2048) NULL, " +
+            "CityId INTEGER NULL, " +
+            "CityIdentifier GUID, " +
+            "CityCode NVARCHAR(2048) NULL, " +
+            "CityName NVARCHAR(2048) NULL, " +
             "Address NVARCHAR(2048) NULL, " +
+
+            "PassportCountryId INTEGER NULL, " +
+            "PassportCountryIdentifier GUID, " +
+            "PassportCountryCode NVARCHAR(2048) NULL, " +
+            "PassportCountryName NVARCHAR(2048) NULL, " +
+            "PassportCityId INTEGER NULL, " +
+            "PassportCityIdentifier GUID, " +
+            "PassportCityCode NVARCHAR(2048) NULL, " +
+            "PassportCityName NVARCHAR(2048) NULL, " +
             "Passport NVARCHAR(2048) NULL, " +
-            "Interest NVARCHAR(2048) NULL, " +
-            "License NVARCHAR(2048) NULL, " +
-            "EmbassyDate DATETIME NULL, " +
             "VisaFrom DATETIME NULL, " +
             "VisaTo DATETIME NULL, " +
+
+            "ResidenceCityId INTEGER NULL, " +
+            "ResidenceCityIdentifier GUID, " +
+            "ResidenceCityCode NVARCHAR(2048) NULL, " +
+            "ResidenceCityName NVARCHAR(2048) NULL, " +
+            "ResidenceAddress NVARCHAR(2048) NULL, " +
+
+
+            "EmbassyDate DATETIME NULL, " +
+            "VisaDate DATETIME NULL, " +
+            "VisaValidFrom DATETIME NULL, " +
+            "VisaValidTo DATETIME NULL, " +
             "WorkPermitFrom DATETIME NULL, " +
             "WorkPermitTo DATETIME NULL, " +
+
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -40,23 +77,35 @@ namespace SirmiumERPGFC.Repository.Employees
             "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, EmployeeCode, " +
-            "Name, SurName, DateOfBirth, Address, " +
-            "Passport, Interest, License, EmbassyDate, " +
-            "VisaFrom, VisaTo, WorkPermitFrom, WorkPermitTo, " +
+            "SELECT ServerId, Identifier, " +
+            "Code, EmployeeCode, Name, SurName, " +
+            "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
+            "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
+            "Passport, VisaFrom, VisaTo, " +
+            "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, ResidenceAddress, " +
+            "EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Employees " +
-            "(Id, ServerId, Identifier, Code, EmployeeCode, " +
-            "Name, SurName, DateOfBirth, Address, " +
-            "Passport, Interest, License, EmbassyDate, " +
-            "VisaFrom, VisaTo, WorkPermitFrom, WorkPermitTo, " +
+            "(Id, ServerId, Identifier, " +
+            "Code, EmployeeCode, Name, SurName, " +
+            "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
+            "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
+            "Passport, VisaFrom, VisaTo, " +
+            "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, ResidenceAddress, " +
+            "EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @EmployeeCode, " +
-            "@Name, @SurName, @DateOfBirth, @Address, " +
-            "@Passport, @Interest, @License, @EmbassyDate, " +
-            "@VisaFrom, @VisaTo, @WorkPermitFrom, @WorkPermitTo, " +
+            "VALUES (NULL, @ServerId, @Identifier, " +
+            "@Code, @EmployeeCode, @Name, @SurName, " +
+            "@DateOfBirth, @Gender, @CountryId, @CountryIdentifier, @CountryCode, @CountryName, @RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
+            "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, @CityId, @CityIdentifier, @CityCode, @CityName, @Address, " +
+            "@PassportCountryId, @PassportCountryIdentifier, @PassportCountryCode, @PassportCountryName, @PassportCityId, @PassportCityIdentifier, @PassportCityCode, @PassportCityName, " +
+            "@Passport, @VisaFrom, @VisaTo, " +
+            "@ResidenceCityId, @ResidenceCityIdentifier, @ResidenceCityCode, @ResidenceCityName, @ResidenceAddress, " +
+            "@EmbassyDate, @VisaDate, @VisaValidFrom, @VisaValidTo, @WorkPermitFrom, @WorkPermitTo, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public EmployeeListResponse GetEmployeesByPage(int companyId, EmployeeViewModel EmployeeSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -75,14 +124,14 @@ namespace SirmiumERPGFC.Repository.Employees
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
-                        "AND (@Interest IS NULL OR @Interest = '' OR Interest LIKE @Interest) " +
+                        //"AND (@Interest IS NULL OR @Interest = '' OR Interest LIKE @Interest) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Interest", ((object)EmployeeSearchObject.SearchBy_Interest) != null ? "%" + EmployeeSearchObject.SearchBy_Interest + "%" : "");
+                    //selectCommand.Parameters.AddWithValue("@Interest", ((object)EmployeeSearchObject.SearchBy_Interest) != null ? "%" + EmployeeSearchObject.SearchBy_Interest + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -99,16 +148,30 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.EmployeeCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
+
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+
+                        dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Interest = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.License = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
+
+                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.VisaValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.VisaValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
+
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -116,6 +179,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         Employees.Add(dbEntry);
                     }
 
+                    response.Employees = Employees;
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
@@ -123,12 +187,10 @@ namespace SirmiumERPGFC.Repository.Employees
                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
-                        "AND (@Interest IS NULL OR @Interest = '' OR Interest LIKE @Interest) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Interest", ((object)EmployeeSearchObject.SearchBy_Interest) != null ? "%" + EmployeeSearchObject.SearchBy_Interest + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -179,16 +241,33 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.EmployeeCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
+
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+
+                        dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Interest = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.License = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
+
+                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+
+                        dbEntry.VisaValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.VisaValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
+
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -278,22 +357,60 @@ namespace SirmiumERPGFC.Repository.Employees
                 //Use parameterized query to prevent SQL injection attacks
                 insertCommand.CommandText = SqlCommandInsertPart;
 
+
                 insertCommand.Parameters.AddWithValue("@ServerId", Employee.Id);
                 insertCommand.Parameters.AddWithValue("@Identifier", Employee.Identifier);
                 insertCommand.Parameters.AddWithValue("@Code", ((object)Employee.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)Employee.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", ((object)Employee.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@SurName", ((object)Employee.SurName) ?? DBNull.Value);
+
                 insertCommand.Parameters.AddWithValue("@DateOfBirth", ((object)Employee.DateOfBirth) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@Gender", ((object)Employee.Gender) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryId", ((object)Employee.Country?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)Employee.Country?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)Employee.Country?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryName", ((object)Employee.Country?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionId", ((object)Employee.Region?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)Employee.Region?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionCode", ((object)Employee.Region?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RegionName", ((object)Employee.Region?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)Employee.Municipality?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)Employee.Municipality?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)Employee.Municipality?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)Employee.Municipality?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CityId", ((object)Employee.City?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)Employee.City?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CityCode", ((object)Employee.City?.ZipCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CityName", ((object)Employee.City?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Address", ((object)Employee.Address) ?? DBNull.Value);
+
+
+                insertCommand.Parameters.AddWithValue("@PassportCountryId", ((object)Employee.PassportCountry?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportCountryIdentifier", ((object)Employee.PassportCountry?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportCountryCode", ((object)Employee.PassportCountry?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportCountryName", ((object)Employee.PassportCountry?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportCityId", ((object)Employee.PassportCity?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportCityIdentifier", ((object)Employee.PassportCity?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportCityCode", ((object)Employee.PassportCity?.ZipCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportCityName", ((object)Employee.PassportCity?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Passport", ((object)Employee.Passport) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Interest", ((object)Employee.Interest) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@License", ((object)Employee.License) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmbassyDate", ((object)Employee.EmbassyDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@VisaFrom", ((object)Employee.VisaFrom) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@VisaTo", ((object)Employee.VisaTo) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ResidenceCityId", ((object)Employee.ResidenceCity?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ResidenceCityIdentifier", ((object)Employee.ResidenceCity?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ResidenceCityCode", ((object)Employee.ResidenceCity?.ZipCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ResidenceCityName", ((object)Employee.ResidenceCity?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ResidenceAddress", ((object)Employee.ResidenceAddress) ?? DBNull.Value);
+
+
+                insertCommand.Parameters.AddWithValue("@EmbassyDate", ((object)Employee.EmbassyDate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@VisaDate", ((object)Employee.VisaDate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@VisaValidFrom", ((object)Employee.VisaValidFrom) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@VisaValidTo", ((object)Employee.VisaValidTo) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@WorkPermitFrom", ((object)Employee.WorkPermitFrom) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@WorkPermitTo", ((object)Employee.WorkPermitTo) ?? DBNull.Value);
+
                 insertCommand.Parameters.AddWithValue("@IsSynced", Employee.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", Employee.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

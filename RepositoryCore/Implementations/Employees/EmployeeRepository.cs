@@ -25,6 +25,13 @@ namespace RepositoryCore.Implementations.Employees
             return context.Employees
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
+                .Include(x => x.Country)
+                .Include(x => x.Region)
+                .Include(x => x.Municipality)
+                .Include(x => x.City)
+                .Include(x => x.PassportCountry)
+                .Include(x => x.PassportCity)
+                .Include(x => x.ResidenceCity)
                 .Where(x => x.Company.Id == companyId && x.Active == true)
                 .AsNoTracking()
                 .ToList();
@@ -35,6 +42,13 @@ namespace RepositoryCore.Implementations.Employees
             return context.Employees
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
+                .Include(x => x.Country)
+                .Include(x => x.Region)
+                .Include(x => x.Municipality)
+                .Include(x => x.City)
+                .Include(x => x.PassportCountry)
+                .Include(x => x.PassportCity)
+                .Include(x => x.ResidenceCity)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
                 .AsNoTracking()
                 .ToList();
@@ -105,15 +119,27 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.SurName = Employee.SurName;
 
                     dbEntry.DateOfBirth = Employee.DateOfBirth;
-
+                    dbEntry.Gender = Employee.Gender;
+                    dbEntry.CountryId = Employee.CountryId;
+                    dbEntry.RegionId = Employee.RegionId;
+                    dbEntry.MunicipalityId = Employee.MunicipalityId;
+                    dbEntry.CityId = Employee.CityId;
                     dbEntry.Address = Employee.Address;
-                    dbEntry.Passport = Employee.Passport;
-                    dbEntry.Interest = Employee.Interest;
-                    dbEntry.License = Employee.License;
 
-                    dbEntry.EmbassyDate = Employee.EmbassyDate;
+                    dbEntry.Passport = Employee.Passport;
                     dbEntry.VisaFrom = Employee.VisaFrom;
                     dbEntry.VisaTo = Employee.VisaTo;
+
+                    dbEntry.PassportCountryId = Employee.PassportCountryId;
+                    dbEntry.PassportCityId = Employee.PassportCityId;
+
+                    dbEntry.ResidenceCityId = Employee.ResidenceCityId;
+                    dbEntry.ResidenceAddress = Employee.ResidenceAddress;
+
+                    dbEntry.EmbassyDate = Employee.EmbassyDate;
+                    dbEntry.VisaDate = Employee.VisaDate;
+                    dbEntry.VisaValidFrom = Employee.VisaValidFrom;
+                    dbEntry.VisaValidTo = Employee.VisaValidTo;
                     dbEntry.WorkPermitFrom = Employee.WorkPermitFrom;
                     dbEntry.WorkPermitTo = Employee.WorkPermitTo;
 

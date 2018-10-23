@@ -321,42 +321,6 @@ namespace ServiceInterfaces.ViewModels.Employees
 
 
 
-        #region Interest
-        private string _Interest;
-
-        public string Interest
-        {
-            get { return _Interest; }
-            set
-            {
-                if (_Interest != value)
-                {
-                    _Interest = value;
-                    NotifyPropertyChanged("Interest");
-                }
-            }
-        }
-        #endregion
-
-        #region License
-        private string _License;
-
-        public string License
-        {
-            get { return _License; }
-            set
-            {
-                if (_License != value)
-                {
-                    _License = value;
-                    NotifyPropertyChanged("License");
-                }
-            }
-        }
-        #endregion
-
-
-
         #region EmbassyDate
         private DateTime? _EmbassyDate = DateTime.Now;
 
@@ -369,6 +333,57 @@ namespace ServiceInterfaces.ViewModels.Employees
                 {
                     _EmbassyDate = value;
                     NotifyPropertyChanged("EmbassyDate");
+                }
+            }
+        }
+        #endregion
+
+        #region VisaDate
+        private DateTime? _VisaDate;
+
+        public DateTime? VisaDate
+        {
+            get { return _VisaDate; }
+            set
+            {
+                if (_VisaDate != value)
+                {
+                    _VisaDate = value;
+                    NotifyPropertyChanged("VisaDate");
+                }
+            }
+        }
+        #endregion
+
+        #region VisaValidFrom
+        private DateTime? _VisaValidFrom;
+
+        public DateTime? VisaValidFrom
+        {
+            get { return _VisaValidFrom; }
+            set
+            {
+                if (_VisaValidFrom != value)
+                {
+                    _VisaValidFrom = value;
+                    NotifyPropertyChanged("VisaValidFrom");
+                }
+            }
+        }
+        #endregion
+
+        #region VisaValidTo
+        private DateTime? _VisaValidTo;
+
+        public DateTime? VisaValidTo
+        {
+            get { return _VisaValidTo; }
+            set
+            {
+                if (_VisaValidTo != value)
+                {
+                    _VisaValidTo = value;
+                    NotifyPropertyChanged("VisaValidTo");
                 }
             }
         }
@@ -420,6 +435,40 @@ namespace ServiceInterfaces.ViewModels.Employees
                 {
                     _EmployeeItems = value;
                     NotifyPropertyChanged("EmployeeItems");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeProfessions
+        private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessions;
+
+        public ObservableCollection<EmployeeProfessionItemViewModel> EmployeeProfessions
+        {
+            get { return _EmployeeProfessions; }
+            set
+            {
+                if (_EmployeeProfessions != value)
+                {
+                    _EmployeeProfessions = value;
+                    NotifyPropertyChanged("EmployeeProfessions");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeLicences
+        private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicences;
+
+        public ObservableCollection<EmployeeLicenceItemViewModel> EmployeeLicences
+        {
+            get { return _EmployeeLicences; }
+            set
+            {
+                if (_EmployeeLicences != value)
+                {
+                    _EmployeeLicences = value;
+                    NotifyPropertyChanged("EmployeeLicences");
                 }
             }
         }

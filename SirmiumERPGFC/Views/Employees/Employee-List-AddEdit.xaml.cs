@@ -283,6 +283,9 @@ namespace SirmiumERPGFC.Views.Employees
             this.DataContext = this;
 
             CurrentEmployee = Employee;
+            if(CurrentEmployee.Identifier == Guid.Empty)
+                CurrentEmployee.Identifier = new Guid();
+
             IsCreateProcess = isCreateProcess;
             IsHeaderCreated = !isCreateProcess;
             IsPopup = isPopup;
@@ -594,6 +597,16 @@ namespace SirmiumERPGFC.Views.Employees
         }
 
         private void btnCancelProfessionItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddDItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCancelDItem_Click(object sender, RoutedEventArgs e)
         {
 
         }

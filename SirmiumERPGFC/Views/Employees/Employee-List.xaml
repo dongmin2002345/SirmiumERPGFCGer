@@ -152,11 +152,9 @@
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="Broj pasoša" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Interest" Header="Zanimanje" Binding="{Binding Interest}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="License" Header="Licenca" Binding="{Binding License}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="EmbassyDate" Header="Datum ambasade" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="VisaFrom" Header="Datum vize od" Binding="{Binding VisaFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="VisaTo" Header="Datum vise do" Binding="{Binding VisaTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="VisaValidFrom" Header="Datum vize od" Binding="{Binding VisaValidFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="VisaValidTo" Header="Datum vise do" Binding="{Binding VisaValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="WorkPermitFrom" Header="Datum radne dozvole od" Binding="{Binding WorkPermitFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="WorkPermitTo" Header="Datum radne dozvole do" Binding="{Binding WorkPermitTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
@@ -197,13 +195,20 @@
 
         <GridSplitter Grid.Row="2" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
 
-        <!--    Items container    -->
-        <GroupBox Header="Stavke radnika" Margin="2 1 2 2" Grid.Row="3">
-            <Grid>
+        <Grid Grid.Row="3" Margin="2 1 2 2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <!--Listing-->
-                <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgInputAnimalItems"
+            <!--Listing-->
+            <GroupBox Header="Članovi porodice" Grid.Column="0">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgFamilyMembers"
                         Grid.Row="0" Margin="0 5 0 0"
                         AutoGenerateColumns="False"
                         CanUserAddRows="False"
@@ -216,13 +221,67 @@
                         Style="{DynamicResource AzureDataGrid}"
                         ItemsSource="{Binding Path=EmployeeItemsFromDB}"
                         SelectedItem="{Binding Path=CurrentEmployeeItem}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Član porodice" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-        </GroupBox>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Član porodice" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+            <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="1" />
+
+            <!--Listing-->
+            <GroupBox Header="Zanimanja" Grid.Column="2">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgProfessions"
+                        Grid.Row="0" Margin="0 5 0 0"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        CanUserResizeRows="False"
+                        GridLinesVisibility="All"
+                        HorizontalGridLinesBrush="Gray"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto"
+                        Style="{DynamicResource AzureDataGrid}"
+                        ItemsSource="{Binding Path=EmployeeItemsFromDB}"
+                        SelectedItem="{Binding Path=CurrentEmployeeItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Zanimanje" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Država" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+            <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="3" />
+
+            <!--Listing-->
+            <GroupBox Header="Dozvole " Grid.Column="4">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dg"
+                        Grid.Row="0" Margin="0 5 0 0"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        CanUserResizeRows="False"
+                        GridLinesVisibility="All"
+                        HorizontalGridLinesBrush="Gray"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto"
+                        Style="{DynamicResource AzureDataGrid}"
+                        ItemsSource="{Binding Path=EmployeeItemsFromDB}"
+                        SelectedItem="{Binding Path=CurrentEmployeeItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Šifra" Binding="{Binding FamilyMember.Name}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Dozvola" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Država" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

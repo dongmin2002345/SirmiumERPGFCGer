@@ -216,7 +216,7 @@ namespace SirmiumERPGFC.Repository.Common
         {
             if (query.IsDBNull(counter))
             {
-                counter += 2;
+                counter += 4;
                 return null;
             }
             else
@@ -234,7 +234,7 @@ namespace SirmiumERPGFC.Repository.Common
         {
             if (query.IsDBNull(counter))
             {
-                counter += 2;
+                counter += 4;
                 return null;
             }
             else

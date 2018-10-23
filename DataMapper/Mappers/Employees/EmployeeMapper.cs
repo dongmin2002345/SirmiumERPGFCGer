@@ -1,5 +1,6 @@
 ﻿using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
+using DataMapper.Mappers.Common.Locations;
 using DomainCore.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
@@ -31,17 +32,30 @@ namespace DataMapper.Mappers.Employees
                 EmployeeCode = Employee.EmployeeCode,
                 Name = Employee.Name,
                 SurName = Employee.SurName,
-                
+
                 DateOfBirth = Employee.DateOfBirth,
+                Gender = Employee.Gender,
+
+                Country = Employee.Country?.ConvertToCountryViewModelLite(),
+                Region = Employee.Region?.ConvertToRegionViewModelLite(),
+                Municipality = Employee.Municipality?.ConvertToMunicipalityViewModelLite(),
+                City = Employee.City?.ConvertToCityViewModelLite(),
 
                 Address = Employee.Address,
-                Passport = Employee.Passport,
-                Interest = Employee.Interest,
-                License = Employee.License,
 
-                EmbassyDate = Employee.EmbassyDate,
+                PassportCountry = Employee.PassportCountry?.ConvertToCountryViewModelLite(),
+                PassportCity = Employee.PassportCity?.ConvertToCityViewModelLite(),
+                Passport = Employee.Passport,
                 VisaFrom = Employee.VisaFrom,
                 VisaTo = Employee.VisaTo,
+
+                ResidenceCity = Employee.ResidenceCity?.ConvertToCityViewModelLite(),
+                ResidenceAddress = Employee.ResidenceAddress,
+                
+                EmbassyDate = Employee.EmbassyDate,
+                VisaDate = Employee.VisaDate,
+                VisaValidFrom = Employee.VisaValidFrom,
+                VisaValidTo = Employee.VisaValidTo,
                 WorkPermitFrom = Employee.WorkPermitFrom,
                 WorkPermitTo = Employee.WorkPermitTo,
 
@@ -71,8 +85,6 @@ namespace DataMapper.Mappers.Employees
 
                 Address = Employee.Address,
                 Passport = Employee.Passport,
-                Interest = Employee.Interest,
-                License = Employee.License,
 
                 EmbassyDate = Employee.EmbassyDate,
                 VisaFrom = Employee.VisaFrom,
@@ -100,15 +112,27 @@ namespace DataMapper.Mappers.Employees
                 SurName = EmployeeViewModel.SurName,
 
                 DateOfBirth = (DateTime)EmployeeViewModel.DateOfBirth,
-
+                Gender = EmployeeViewModel.Gender,
+                CountryId = EmployeeViewModel?.Country?.Id ?? null,
+                RegionId = EmployeeViewModel?.Region?.Id ?? null,
+                MunicipalityId = EmployeeViewModel?.Municipality?.Id ?? null,
+                CityId = EmployeeViewModel?.City?.Id ?? null,
                 Address = EmployeeViewModel.Address,
-                Passport = EmployeeViewModel.Passport,
-                Interest = EmployeeViewModel.Interest,
-                License = EmployeeViewModel.License,
 
-                EmbassyDate = (DateTime)EmployeeViewModel.EmbassyDate,
+                PassportCountryId = EmployeeViewModel?.PassportCountry?.Id ?? null,
+                PassportCityId = EmployeeViewModel?.PassportCity?.Id ?? null,
+
+                Passport = EmployeeViewModel.Passport,
                 VisaFrom = (DateTime)EmployeeViewModel.VisaFrom,
                 VisaTo = (DateTime)EmployeeViewModel.VisaTo,
+
+                ResidenceCityId = EmployeeViewModel?.ResidenceCity?.Id ?? null,
+                ResidenceAddress = EmployeeViewModel.ResidenceAddress,
+
+                EmbassyDate = (DateTime)EmployeeViewModel.EmbassyDate,
+                VisaDate = (DateTime)EmployeeViewModel.VisaDate,
+                VisaValidFrom = (DateTime)EmployeeViewModel.VisaValidFrom,
+                VisaValidTo = (DateTime)EmployeeViewModel.VisaValidTo,
                 WorkPermitFrom = (DateTime)EmployeeViewModel.WorkPermitFrom,
                 WorkPermitTo = (DateTime)EmployeeViewModel.WorkPermitTo,
 

@@ -156,6 +156,8 @@
     <Compile Include="ViewModels\Common\Professions\ProfessionViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeItemViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeLicenceItemViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeProfessionItemViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Employees\FamilyMemberViewModel.cs" />
     <Compile Include="ViewModels\Employees\LicenceTypeViewModel.cs" />
