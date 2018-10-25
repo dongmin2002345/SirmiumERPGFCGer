@@ -137,8 +137,8 @@ namespace SirmiumERPGFC.Repository.Employees
 					SqliteCommand selectCommand = new SqliteCommand(
 						SqlCommandSelectPart +
 						"FROM LicenceTypes " +
-						"WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-						"AND (@Category IS NULL OR @Category = '' OR Category LIKE @Category) " +
+                        "WHERE ((@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
+                        "OR (@Category IS NULL OR @Category = '' OR Category LIKE @Category)) " +
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage;", db);

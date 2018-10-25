@@ -88,9 +88,9 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -140,9 +140,9 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
