@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
-    public class EmployeeProfessionItemSQLiteRepository
+    public class EmployeeLicenceItemSQLiteRepository
     {
         public static string EmployeeItemTableCreatePart =
-               "CREATE TABLE IF NOT EXISTS EmployeeProfessionItems " +
+               "CREATE TABLE IF NOT EXISTS EmployeeLicenceItems " +
                "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                "ServerId INTEGER NULL, " +
                "Identifier GUID, " +
@@ -21,10 +21,12 @@ namespace SirmiumERPGFC.Repository.Employees
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode NVARCHAR(48) NULL, " +
                "EmployeeName NVARCHAR(48) NULL, " +
-               "ProfessionId INTEGER NULL, " +
-               "ProfessionIdentifier GUID NULL, " +
-               "ProfessionCode NVARCHAR(48) NULL, " +
-               "ProfessionName NVARCHAR(48) NULL, " +
+               "LicenceId INTEGER NULL, " +
+               "LicenceIdentifier GUID NULL, " +
+               "LicenceCode NVARCHAR(48) NULL, " +
+               "LicenceDescription NVARCHAR(48) NULL, " +
+               "ValidFrom DATETIME NULL, " +
+               "ValidTo DATETIME NULL, " +
                "CountryId INTEGER NULL, " +
                "CountryIdentifier GUID NULL, " +
                "CountryCode NVARCHAR(48) NULL, " +
@@ -38,29 +40,29 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, ProfessionId, ProfessionIdentifier, " +
-            "ProfessionCode, ProfessionName, CountryId, CountryIdentifier, " +
+            "EmployeeCode, EmployeeName, LicenceId, LicenceIdentifier, " +
+            "LicenceCode, LicenceDescription, ValidFrom, ValidTo, CountryId, CountryIdentifier, " +
             "CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
-        public string SqlCommandInsertPart = "INSERT INTO EmployeeProfessionItems " +
+        public string SqlCommandInsertPart = "INSERT INTO EmployeeLicenceItems " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, ProfessionId, ProfessionIdentifier, " +
-            "ProfessionCode, ProfessionName, CountryId, CountryIdentifier, " +
+            "EmployeeCode, EmployeeName, LicenceId, LicenceIdentifier, " +
+            "LicenceCode, LicenceDescription, ValidFrom, ValidTo, CountryId, CountryIdentifier, " +
             "CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @ProfessionId, @ProfessionIdentifier, " +
-            "@ProfessionCode, @ProfessionName, @CountryId, @CountryIdentifier, " +
+            "@EmployeeCode, @EmployeeName, @LicenceId, @LicenceIdentifier, " +
+            "@LicenceCode, @LicenceDescription, @ValidFrom, @ValidTo, @CountryId, @CountryIdentifier, " +
             "@CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 
-        public EmployeeProfessionItemListResponse GetEmployeeProfessionsByEmployee(int companyId, Guid EmployeeIdentifier)
+        public EmployeeLicenceItemListResponse GetEmployeeLicencesByEmployee(int companyId, Guid EmployeeIdentifier)
         {
-            EmployeeProfessionItemListResponse response = new EmployeeProfessionItemListResponse();
-            List<EmployeeProfessionItemViewModel>  EmployeeProfessionItems = new List<EmployeeProfessionItemViewModel>();
+            EmployeeLicenceItemListResponse response = new EmployeeLicenceItemListResponse();
+            List<EmployeeLicenceItemViewModel> EmployeeLicenceItems = new List<EmployeeLicenceItemViewModel>();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -69,7 +71,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        "FROM  EmployeeProfessionItems " +
+                        "FROM  EmployeeLicenceItems " +
                         "WHERE EmployeeIdentifier = @EmployeeIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
@@ -81,17 +83,19 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         int counter = 0;
-                        EmployeeProfessionItemViewModel dbEntry = new EmployeeProfessionItemViewModel();
+                        EmployeeLicenceItemViewModel dbEntry = new EmployeeLicenceItemViewModel();
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Profession = SQLiteHelper.GetProfession(query, ref counter);
+                        dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
                         dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        EmployeeProfessionItems.Add(dbEntry);
+                        EmployeeLicenceItems.Add(dbEntry);
                     }
 
                 }
@@ -100,20 +104,20 @@ namespace SirmiumERPGFC.Repository.Employees
                     MainWindow.ErrorMessage = error.Message;
                     response.Success = false;
                     response.Message = error.Message;
-                    response.EmployeeProfessionItems = new List<EmployeeProfessionItemViewModel>();
+                    response.EmployeeLicenceItems = new List<EmployeeLicenceItemViewModel>();
                     return response;
                 }
                 db.Close();
             }
             response.Success = true;
-            response.EmployeeProfessionItems = EmployeeProfessionItems;
+            response.EmployeeLicenceItems = EmployeeLicenceItems;
             return response;
         }
 
-        public EmployeeProfessionItemResponse GetEmployeeProfessionItem(Guid identifier)
+        public EmployeeLicenceItemResponse GetEmployeeLicenceItem(Guid identifier)
         {
-            EmployeeProfessionItemResponse response = new EmployeeProfessionItemResponse();
-            EmployeeProfessionItemViewModel EmployeeItem = new EmployeeProfessionItemViewModel();
+            EmployeeLicenceItemResponse response = new EmployeeLicenceItemResponse();
+            EmployeeLicenceItemViewModel EmployeeItem = new EmployeeLicenceItemViewModel();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -122,7 +126,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        "FROM  EmployeeProfessionItems " +
+                        "FROM  EmployeeLicenceItems " +
                         "WHERE Identifier = @Identifier;", db);
                     selectCommand.Parameters.AddWithValue("@Identifier", identifier);
 
@@ -131,12 +135,14 @@ namespace SirmiumERPGFC.Repository.Employees
                     if (query.Read())
                     {
                         int counter = 0;
-                        EmployeeProfessionItemViewModel dbEntry = new EmployeeProfessionItemViewModel();
+                        EmployeeLicenceItemViewModel dbEntry = new EmployeeLicenceItemViewModel();
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Profession = SQLiteHelper.GetProfession(query, ref counter);
+                        dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -149,13 +155,13 @@ namespace SirmiumERPGFC.Repository.Employees
                     MainWindow.ErrorMessage = error.Message;
                     response.Success = false;
                     response.Message = error.Message;
-                    response.EmployeeProfessionItem = new EmployeeProfessionItemViewModel();
+                    response.EmployeeLicenceItem = new EmployeeLicenceItemViewModel();
                     return response;
                 }
                 db.Close();
             }
             response.Success = true;
-            response.EmployeeProfessionItem = EmployeeItem;
+            response.EmployeeLicenceItem = EmployeeItem;
             return response;
         }
 
@@ -185,7 +191,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 db.Open();
                 try
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from  EmployeeProfessionItems WHERE CompanyId = @CompanyId", db);
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from  EmployeeLicenceItems WHERE CompanyId = @CompanyId", db);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     SqliteDataReader query = selectCommand.ExecuteReader();
                     int count = query.Read() ? query.GetInt32(0) : 0;
@@ -194,7 +200,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         return null;
                     else
                     {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from  EmployeeProfessionItems WHERE CompanyId = @CompanyId", db);
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from  EmployeeLicenceItems WHERE CompanyId = @CompanyId", db);
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
@@ -212,9 +218,9 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
-        public EmployeeProfessionItemResponse Create(EmployeeProfessionItemViewModel EmployeeItem)
+        public EmployeeLicenceItemResponse Create(EmployeeLicenceItemViewModel EmployeeItem)
         {
-            EmployeeProfessionItemResponse response = new EmployeeProfessionItemResponse();
+            EmployeeLicenceItemResponse response = new EmployeeLicenceItemResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -232,14 +238,16 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeItem.Employee.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeItem.Employee.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeItem.Employee.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionId", ((object)EmployeeItem.Profession.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionIdentifier", ((object)EmployeeItem.Profession.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)EmployeeItem.Profession.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionName", ((object)EmployeeItem.Profession.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@LicenceId", ((object)EmployeeItem.Licence.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@LicenceIdentifier", ((object)EmployeeItem.Licence.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@LicenceCode", ((object)EmployeeItem.Licence.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@LicenceDescription", ((object)EmployeeItem.Licence.Description) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeItem.Country.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ValidFrom", ((object)EmployeeItem.ValidFrom) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ValidTo", ((object)EmployeeItem.ValidTo) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", EmployeeItem.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -265,9 +273,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeProfessionItemResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public EmployeeLicenceItemResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
         {
-            EmployeeProfessionItemResponse response = new EmployeeProfessionItemResponse();
+            EmployeeLicenceItemResponse response = new EmployeeLicenceItemResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -276,7 +284,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 SqliteCommand insertCommand = new SqliteCommand();
                 insertCommand.Connection = db;
 
-                insertCommand.CommandText = "UPDATE EmployeeProfessionItems SET " +
+                insertCommand.CommandText = "UPDATE EmployeeLicenceItems SET " +
                     "IsSynced = @IsSynced, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
@@ -303,9 +311,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeProfessionItemResponse Delete(Guid identifier)
+        public EmployeeLicenceItemResponse Delete(Guid identifier)
         {
-            EmployeeProfessionItemResponse response = new EmployeeProfessionItemResponse();
+            EmployeeLicenceItemResponse response = new EmployeeLicenceItemResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -316,7 +324,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
                 //Use parameterized query to prevent SQL injection attacks
                 insertCommand.CommandText =
-                    "DELETE FROM  EmployeeProfessionItems WHERE Identifier = @Identifier";
+                    "DELETE FROM  EmployeeLicenceItems WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 try
                 {
@@ -336,9 +344,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeProfessionItemResponse DeleteAll()
+        public EmployeeLicenceItemResponse DeleteAll()
         {
-            EmployeeProfessionItemResponse response = new EmployeeProfessionItemResponse();
+            EmployeeLicenceItemResponse response = new EmployeeLicenceItemResponse();
 
             try
             {
@@ -351,7 +359,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     insertCommand.Connection = db;
 
                     //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM EmployeeProfessionItems";
+                    insertCommand.CommandText = "DELETE FROM EmployeeLicenceItems";
                     try
                     {
                         insertCommand.ExecuteReader();

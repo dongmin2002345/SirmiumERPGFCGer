@@ -51,8 +51,8 @@
                               ItemsSource="{Binding Path=LicenceTypesFromDB}"
                               SelectedItem="{Binding Path=CurrentLicenceType}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Mark" Header="Oznaka" Binding="{Binding Mark}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje porekla" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="Mark" Header="Oznaka" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje porekla" Binding="{Binding Description}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseLicenceTypePopup" Click="btnCloseLicenceTypePopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2">

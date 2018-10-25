@@ -276,11 +276,11 @@
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Drzava *" />
                         <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity3" 
-                                        CurrentCountry="{Binding Path=CurrentEmployeeProfessionForm.Country, Mode=TwoWay}"/>
+                                        CurrentCountry="{Binding Path=CurrentEmployeeProfessionItemForm.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Zanimanje *" />
                         <popups1:ProfessionPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popProfession" 
-                                        CurrentProfession="{Binding Path=CurrentEmployeeProfessionForm.Profession, Mode=TwoWay}"/>
+                                        CurrentProfession="{Binding Path=CurrentEmployeeProfessionItemForm.Profession, Mode=TwoWay}"/>
 
                         <Button x:Name="btnAddProfessionItem" Grid.Row="1" Grid.Column="4" Click="btnAddProfessionItem_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
@@ -296,7 +296,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="6" IsActive="{Binding EmployeeItemDDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <Controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="6" IsActive="{Binding LoadingProfessionItems, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgProfessionItems"
                               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="5" MinHeight="200"
@@ -312,8 +312,8 @@
                               VerticalScrollBarVisibility="Auto"
                               Style="{DynamicResource AzureDataGrid}"
                               PreviewMouseWheel="PreviewMouseWheelEv"
-                              ItemsSource="{Binding Path=ProfessionItemsFromDB}"
-                              SelectedItem="{Binding Path=CurrentProfessionFromDB, Mode=TwoWay}">
+                              ItemsSource="{Binding Path=EmployeeProfessionItemsFromDB}"
+                              SelectedItem="{Binding Path=CurrentProfessionDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True" />
@@ -322,12 +322,12 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button x:Name="btnEdit" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEdit_Click">
+                                                <Button x:Name="btnEditProfession" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditProfession_Click">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                <Button x:Name="btnDeleteProfession" Click="btnDeleteProfession_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
@@ -361,19 +361,19 @@
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
                         <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry3" 
-                                      CurrentCountry="{Binding Path=CurrentEmployeeLicenceForm.Country, Mode=TwoWay}"/>
+                                      CurrentCountry="{Binding Path=CurrentEmployeeLicenceItemForm.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Text="Dozvola " VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <popups1:LicenceTypePopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popLicenceType" 
-                                      CurrentLicenceType="{Binding Path=CurrentEmployeeLicenceForm.LicenceType, Mode=TwoWay}"/>
+                        <popups1:LicenceTypePopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popLicenceType" 
+                                      CurrentLicenceType="{Binding Path=CurrentEmployeeLicenceItemForm.Licence, Mode=TwoWay}"/>
                         
                         <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Važi od " />
                         <DatePicker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
-                                    Text="{Binding Path=CurrentEmployeeLicenceForm.ValidFrom,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    Text="{Binding Path=CurrentEmployeeLicenceItemForm.ValidFrom,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                         <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Važi do " />
                         <DatePicker Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
-                                    Text="{Binding Path=CurrentEmployeeLicenceForm.ValidTo,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    Text="{Binding Path=CurrentEmployeeLicenceItemForm.ValidTo,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                         <Button x:Name="btnAddDItem" Grid.Row="2" Grid.Column="4" Click="btnAddDItem_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
@@ -389,7 +389,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Controls:ProgressRing Grid.Row="3" Grid.ColumnSpan="6" IsActive="{Binding EmployeeItemDDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <Controls:ProgressRing Grid.Row="3" Grid.ColumnSpan="6" IsActive="{Binding LoadingLicenceItems, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgEmployeeDItems"
                               Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="5" MinHeight="200"
@@ -405,8 +405,8 @@
                               VerticalScrollBarVisibility="Auto"
                               Style="{DynamicResource AzureDataGrid}"
                               PreviewMouseWheel="PreviewMouseWheelEv"
-                              ItemsSource="{Binding Path=EmployeeItemsFromDB}"
-                              SelectedItem="{Binding Path=CurrentEmployeeItemDG, Mode=TwoWay}">
+                              ItemsSource="{Binding Path=EmployeeLicenceItemsFromDB}"
+                              SelectedItem="{Binding Path=CurrentLicenceDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True" />
@@ -415,12 +415,12 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button x:Name="btnEdit" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEdit_Click">
+                                                <Button x:Name="btnEditLicence" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditLicence_Click">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                <Button x:Name="btnDeleteLicence" Click="btnDeleteLicence_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>

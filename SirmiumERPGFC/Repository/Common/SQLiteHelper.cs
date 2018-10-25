@@ -383,6 +383,23 @@ namespace SirmiumERPGFC.Repository.Common
                     Name = query.GetString(counter++)
                 };
         }
+
+        public static LicenceTypeViewModel GetLicence(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new LicenceTypeViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Description = query.GetString(counter++)
+                };
+        }
     }
 }
 

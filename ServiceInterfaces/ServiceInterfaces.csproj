@@ -120,7 +120,9 @@
     <Compile Include="Messages\Employees\EmployeeItemListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeItemResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeLicenceItemListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeProfessionItemListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeLicenceItemResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeProfessionItemResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeResponse.cs" />
     <Compile Include="Messages\Employees\FamilyMemberListResponse.cs" />

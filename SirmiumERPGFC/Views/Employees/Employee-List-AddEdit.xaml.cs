@@ -135,6 +135,143 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
 
+        #region EmployeeProfessionItemsFromDB
+        private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessionItemsFromDB;
+
+        public ObservableCollection<EmployeeProfessionItemViewModel> EmployeeProfessionItemsFromDB
+        {
+            get { return _EmployeeProfessionItemsFromDB; }
+            set
+            {
+                if (_EmployeeProfessionItemsFromDB != value)
+                {
+                    _EmployeeProfessionItemsFromDB = value;
+                    NotifyPropertyChanged("EmployeeProfessionItemsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeProfessionItemForm
+        private EmployeeProfessionItemViewModel _CurrentEmployeeProfessionItemForm;
+
+        public EmployeeProfessionItemViewModel CurrentEmployeeProfessionItemForm
+        {
+            get { return _CurrentEmployeeProfessionItemForm; }
+            set
+            {
+                if (_CurrentEmployeeProfessionItemForm != value)
+                {
+                    _CurrentEmployeeProfessionItemForm = value;
+                    NotifyPropertyChanged("CurrentEmployeeProfessionItemForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentProfessionDG
+        private EmployeeProfessionItemViewModel _CurrentProfessionDG;
+
+        public EmployeeProfessionItemViewModel CurrentProfessionDG
+        {
+            get { return _CurrentProfessionDG; }
+            set
+            {
+                if (_CurrentProfessionDG != value)
+                {
+                    _CurrentProfessionDG = value;
+                    NotifyPropertyChanged("CurrentProfessionDG");
+                }
+            }
+        }
+        #endregion
+
+        #region LoadingProfessionItems
+        private bool _LoadingProfessionItems;
+
+        public bool LoadingProfessionItems
+        {
+            get { return _LoadingProfessionItems; }
+            set
+            {
+                if (_LoadingProfessionItems != value)
+                {
+                    _LoadingProfessionItems = value;
+                    NotifyPropertyChanged("LoadingProfessionItems");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeLicenceItemsFromDB
+        private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicenceItemsFromDB;
+
+        public ObservableCollection<EmployeeLicenceItemViewModel> EmployeeLicenceItemsFromDB
+        {
+            get { return _EmployeeLicenceItemsFromDB; }
+            set
+            {
+                if (_EmployeeLicenceItemsFromDB != value)
+                {
+                    _EmployeeLicenceItemsFromDB = value;
+                    NotifyPropertyChanged("EmployeeLicenceItemsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeLicenceItemForm
+        private EmployeeLicenceItemViewModel _CurrentEmployeeLicenceItemForm;
+
+        public EmployeeLicenceItemViewModel CurrentEmployeeLicenceItemForm
+        {
+            get { return _CurrentEmployeeLicenceItemForm; }
+            set
+            {
+                if (_CurrentEmployeeLicenceItemForm != value)
+                {
+                    _CurrentEmployeeLicenceItemForm = value;
+                    NotifyPropertyChanged("CurrentEmployeeLicenceItemForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentLicenceDG
+        private EmployeeLicenceItemViewModel _CurrentLicenceDG;
+
+        public EmployeeLicenceItemViewModel CurrentLicenceDG
+        {
+            get { return _CurrentLicenceDG; }
+            set
+            {
+                if (_CurrentLicenceDG != value)
+                {
+                    _CurrentLicenceDG = value;
+                    NotifyPropertyChanged("CurrentLicenceDG");
+                }
+            }
+        }
+        #endregion
+
+        #region LoadingLicenceItems
+        private bool _LoadingLicenceItems;
+
+        public bool LoadingLicenceItems
+        {
+            get { return _LoadingLicenceItems; }
+            set
+            {
+                if (_LoadingLicenceItems != value)
+                {
+                    _LoadingLicenceItems = value;
+                    NotifyPropertyChanged("LoadingLicenceItems");
+                }
+            }
+        }
+        #endregion
+
+
         #region GenderOptions
         public ObservableCollection<String> GenderOptions
         {
@@ -286,6 +423,10 @@ namespace SirmiumERPGFC.Views.Employees
             if(CurrentEmployee.Identifier == Guid.Empty)
                 CurrentEmployee.Identifier = new Guid();
 
+            CurrentEmployeeItemForm = new EmployeeItemViewModel();
+            CurrentEmployeeProfessionItemForm = new EmployeeProfessionItemViewModel();
+            CurrentEmployeeLicenceItemForm = new EmployeeLicenceItemViewModel();
+
             IsCreateProcess = isCreateProcess;
             IsHeaderCreated = !isCreateProcess;
             IsPopup = isPopup;
@@ -296,6 +437,20 @@ namespace SirmiumERPGFC.Views.Employees
             });
             displayThread.IsBackground = true;
             displayThread.Start();
+
+            Thread displayThread2 = new Thread(() =>
+            {
+                DisplayProfessionItemData();
+            });
+            displayThread2.IsBackground = true;
+            displayThread2.Start();
+
+            Thread displayThread3 = new Thread(() =>
+            {
+                DisplayLicenceItemData();
+            });
+            displayThread3.IsBackground = true;
+            displayThread3.Start();
         }
 
         #endregion
@@ -320,6 +475,48 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             EmployeeItemDataLoading = false;
+        }
+
+
+        private void DisplayProfessionItemData()
+        {
+            LoadingProfessionItems = true;
+
+            EmployeeProfessionItemListResponse response = new EmployeeProfessionItemSQLiteRepository()
+                .GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeProfessionItemsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>(
+                    response.EmployeeProfessionItems ?? new List<EmployeeProfessionItemViewModel>());
+            }
+            else
+            {
+                EmployeeProfessionItemsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
+            }
+
+            LoadingProfessionItems = false;
+        }
+
+
+        private void DisplayLicenceItemData()
+        {
+            LoadingLicenceItems = true;
+
+            EmployeeLicenceItemListResponse response = new EmployeeLicenceItemSQLiteRepository()
+                .GetEmployeeLicencesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeLicenceItemsFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>(
+                    response.EmployeeLicenceItems ?? new List<EmployeeLicenceItemViewModel>());
+            }
+            else
+            {
+                EmployeeLicenceItemsFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>();
+            }
+
+            LoadingLicenceItems = false;
         }
 
         #endregion
@@ -593,22 +790,147 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void btnAddProfessionItem_Click(object sender, RoutedEventArgs e)
         {
+            // IF update process, first delete item
+            new EmployeeProfessionItemSQLiteRepository().Delete(CurrentEmployeeProfessionItemForm.Identifier);
 
+            CurrentEmployeeProfessionItemForm.Employee = CurrentEmployee;
+            CurrentEmployeeProfessionItemForm.Identifier = Guid.NewGuid();
+            CurrentEmployeeProfessionItemForm.IsSynced = false;
+            CurrentEmployeeProfessionItemForm.UpdatedAt = DateTime.Now;
+            CurrentEmployeeProfessionItemForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentEmployeeProfessionItemForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new EmployeeProfessionItemSQLiteRepository().Create(CurrentEmployeeProfessionItemForm);
+            if (response.Success)
+            {
+                CurrentEmployeeProfessionItemForm = new EmployeeProfessionItemViewModel();
+
+                Thread displayThread = new Thread(() => DisplayProfessionItemData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
         }
 
         private void btnCancelProfessionItem_Click(object sender, RoutedEventArgs e)
         {
-
+            CurrentEmployeeProfessionItemForm = new EmployeeProfessionItemViewModel();
         }
 
         private void btnAddDItem_Click(object sender, RoutedEventArgs e)
         {
+            // IF update process, first delete item
+            new EmployeeLicenceItemSQLiteRepository().Delete(CurrentEmployeeLicenceItemForm.Identifier);
 
+            CurrentEmployeeLicenceItemForm.Employee = CurrentEmployee;
+            CurrentEmployeeLicenceItemForm.Identifier = Guid.NewGuid();
+            CurrentEmployeeLicenceItemForm.IsSynced = false;
+            CurrentEmployeeLicenceItemForm.UpdatedAt = DateTime.Now;
+            CurrentEmployeeLicenceItemForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentEmployeeLicenceItemForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new EmployeeLicenceItemSQLiteRepository().Create(CurrentEmployeeLicenceItemForm);
+            if (response.Success)
+            {
+                CurrentEmployeeLicenceItemForm = new EmployeeLicenceItemViewModel();
+
+                Thread displayThread = new Thread(() => DisplayLicenceItemData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
         }
 
         private void btnCancelDItem_Click(object sender, RoutedEventArgs e)
         {
+            CurrentEmployeeLicenceItemForm = new EmployeeLicenceItemViewModel();
+        }
 
+        private void btnEditProfession_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeProfessionItemForm = new EmployeeProfessionItemViewModel() {
+                Company = CurrentProfessionDG.Company,
+                Country = CurrentProfessionDG.Country,
+                CreatedAt = CurrentProfessionDG.CreatedAt,
+                CreatedBy = CurrentProfessionDG.CreatedBy,
+                Employee = CurrentProfessionDG.Employee,
+                Id = CurrentProfessionDG.Id,
+                Identifier = CurrentProfessionDG.Identifier,
+                IsActive = CurrentProfessionDG.IsActive,
+                IsSynced = CurrentProfessionDG.IsSynced,
+                Profession = CurrentProfessionDG.Profession,
+                UpdatedAt = CurrentProfessionDG.UpdatedAt
+            };
+        }
+
+        private void btnDeleteProfession_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentProfessionDG == null)
+                return;
+
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new EmployeeProfessionItemSQLiteRepository().Delete(CurrentProfessionDG.Identifier);
+
+                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => DisplayProfessionItemData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        private void btnEditLicence_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeLicenceItemForm = new EmployeeLicenceItemViewModel()
+            {
+                Company = CurrentLicenceDG.Company,
+                Country = CurrentLicenceDG.Country,
+                CreatedAt = CurrentLicenceDG.CreatedAt,
+                CreatedBy = CurrentLicenceDG.CreatedBy,
+                Employee = CurrentLicenceDG.Employee,
+                Id = CurrentLicenceDG.Id,
+                Identifier = CurrentLicenceDG.Identifier,
+                IsActive = CurrentLicenceDG.IsActive,
+                IsSynced = CurrentLicenceDG.IsSynced,
+                Licence = CurrentLicenceDG.Licence,
+                UpdatedAt = CurrentLicenceDG.UpdatedAt
+            };
+        }
+
+        private void btnDeleteLicence_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentLicenceDG == null)
+                return;
+
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new EmployeeLicenceItemSQLiteRepository().Delete(CurrentLicenceDG.Identifier);
+
+                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => DisplayLicenceItemData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
     }
 }
