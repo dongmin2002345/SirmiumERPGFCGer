@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
@@ -24,6 +25,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "LicenceId INTEGER NULL, " +
                "LicenceIdentifier GUID NULL, " +
                "LicenceCode NVARCHAR(48) NULL, " +
+               "LicenceCategory NVARCHAR(48) NULL, " +
                "LicenceDescription NVARCHAR(48) NULL, " +
                "ValidFrom DATETIME NULL, " +
                "ValidTo DATETIME NULL, " +
@@ -41,20 +43,20 @@ namespace SirmiumERPGFC.Repository.Employees
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, LicenceId, LicenceIdentifier, " +
-            "LicenceCode, LicenceDescription, ValidFrom, ValidTo, CountryId, CountryIdentifier, " +
+            "LicenceCode, LicenceCategory, LicenceDescription, ValidFrom, ValidTo, CountryId, CountryIdentifier, " +
             "CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeLicenceItems " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, LicenceId, LicenceIdentifier, " +
-            "LicenceCode, LicenceDescription, ValidFrom, ValidTo, CountryId, CountryIdentifier, " +
+            "LicenceCode, LicenceCategory, LicenceDescription, ValidFrom, ValidTo, CountryId, CountryIdentifier, " +
             "CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
             "@EmployeeCode, @EmployeeName, @LicenceId, @LicenceIdentifier, " +
-            "@LicenceCode, @LicenceDescription, @ValidFrom, @ValidTo, @CountryId, @CountryIdentifier, " +
+            "@LicenceCode, @LicenceCategory, @LicenceDescription, @ValidFrom, @ValidTo, @CountryId, @CountryIdentifier, " +
             "@CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -165,24 +167,79 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        //public void Sync(IEmployeeItemService EmployeeItemService)
-        //{
-        //    SyncEmployeeItemRequest request = new SyncEmployeeItemRequest();
-        //    request.CompanyId = MainWindow.CurrentCompanyId;
-        //    request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public EmployeeLicenceItemListResponse GetUnSyncedItems(int companyId)
+        {
+            EmployeeLicenceItemListResponse response = new EmployeeLicenceItemListResponse();
+            List<EmployeeLicenceItemViewModel> viewModels = new List<EmployeeLicenceItemViewModel>();
 
-        //    EmployeeItemListResponse response = EmployeeItemService.Sync(request);
-        //    if (response.Success)
-        //    {
-        //        List<EmployeeItemViewModel> EmployeeItemsFromDB = response.EmployeeItems;
-        //        foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
-        //        {
-        //            Delete(EmployeeItem.Identifier);
-        //            EmployeeItem.IsSynced = true;
-        //            Create(EmployeeItem);
-        //        }
-        //    }
-        //}
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM  EmployeeLicenceItems " +
+                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
+                        "ORDER BY Id DESC;", db);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        int counter = 0;
+                        EmployeeLicenceItemViewModel dbEntry = new EmployeeLicenceItemViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+                        dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
+                        dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        viewModels.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.EmployeeLicenceItems = new List<EmployeeLicenceItemViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.EmployeeLicenceItems = viewModels;
+            return response;
+        }
+
+        public void Sync(IEmployeeLicenceService EmployeeItemService)
+        {
+            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
+            SyncEmployeeLicenceItemRequest request = new SyncEmployeeLicenceItemRequest();
+            request.CompanyId = MainWindow.CurrentCompanyId;
+            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+            request.UnSyncedEmployeeLicenceItems = unSynced?.EmployeeLicenceItems ?? new List<EmployeeLicenceItemViewModel>();
+
+            EmployeeLicenceItemListResponse response = EmployeeItemService.Sync(request);
+            if (response.Success)
+            {
+                List<EmployeeLicenceItemViewModel> EmployeeItemsFromDB = response.EmployeeLicenceItems;
+                foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
+                {
+                    Delete(EmployeeItem.Identifier);
+                    EmployeeItem.IsSynced = true;
+                    Create(EmployeeItem);
+                }
+            }
+        }
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {
@@ -241,6 +298,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@LicenceId", ((object)EmployeeItem.Licence.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@LicenceIdentifier", ((object)EmployeeItem.Licence.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@LicenceCode", ((object)EmployeeItem.Licence.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@LicenceCategory", ((object)EmployeeItem.Licence.Category) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@LicenceDescription", ((object)EmployeeItem.Licence.Description) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country.Identifier) ?? DBNull.Value);

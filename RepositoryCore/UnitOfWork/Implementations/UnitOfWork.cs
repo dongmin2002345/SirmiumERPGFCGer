@@ -70,6 +70,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IEmployeeRepository employeeRepository;
         private IEmployeeItemRepository employeeItemRepository;
+        private IEmployeeLicenceRepository employeeLicenceRepository;
+        private IEmployeeProfessionRepository employeeProfessionRepository;
         private IFamilyMemberRepository familyMemberRepository;
 
         #endregion
@@ -258,6 +260,20 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (employeeRepository == null)
                 employeeRepository = new EmployeeRepository(context);
             return employeeRepository;
+        }
+
+        public IEmployeeProfessionRepository GetEmployeeProfessionRepository()
+        {
+            if (employeeProfessionRepository == null)
+                employeeProfessionRepository = new EmployeeProfessionRepository(context);
+            return employeeProfessionRepository;
+        }
+
+        public IEmployeeLicenceRepository GetEmployeeLicenceRepository()
+        {
+            if (employeeLicenceRepository == null)
+                employeeLicenceRepository = new EmployeeLicenceRepository(context);
+            return employeeLicenceRepository;
         }
 
         public IEmployeeItemRepository GetEmployeeItemRepository()

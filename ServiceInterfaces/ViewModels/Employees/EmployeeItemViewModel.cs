@@ -77,6 +77,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region Passport
+        private string _Passport;
+
+        public string Passport
+        {
+            get { return _Passport; }
+            set
+            {
+                if (_Passport != value)
+                {
+                    _Passport = value;
+                    NotifyPropertyChanged("Passport");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

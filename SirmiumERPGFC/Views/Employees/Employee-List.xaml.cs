@@ -36,6 +36,8 @@ namespace SirmiumERPGFC.Views.Employees
         #region Services
         IEmployeeService EmployeeService;
         IEmployeeItemService EmployeeItemService;
+        IEmployeeLicenceService EmployeeLicenceService;
+        IEmployeeProfessionService EmployeeProfessionService;
         #endregion
 
         #region EmployeesFromDB
@@ -74,6 +76,14 @@ namespace SirmiumERPGFC.Views.Employees
                         Thread displayItemThread = new Thread(() => PopulateDataItems());
                         displayItemThread.IsBackground = true;
                         displayItemThread.Start();
+
+                        Thread displayItemThread2 = new Thread(() => DisplayProfessionItemData());
+                        displayItemThread2.IsBackground = true;
+                        displayItemThread2.Start();
+
+                        Thread displayItemThread3 = new Thread(() => DisplayLicenceItemData());
+                        displayItemThread3.IsBackground = true;
+                        displayItemThread3.Start();
                     }
                     else
                         EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
@@ -150,7 +160,74 @@ namespace SirmiumERPGFC.Views.Employees
             }
         }
         #endregion
+
+        #region EmployeeProfessionItemsFromDB
+        private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessionItemsFromDB;
+
+        public ObservableCollection<EmployeeProfessionItemViewModel> EmployeeProfessionItemsFromDB
+        {
+            get { return _EmployeeProfessionItemsFromDB; }
+            set
+            {
+                if (_EmployeeProfessionItemsFromDB != value)
+                {
+                    _EmployeeProfessionItemsFromDB = value;
+                    NotifyPropertyChanged("EmployeeProfessionItemsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region LoadingProfessionItems
+        private bool _LoadingProfessionItems;
+
+        public bool LoadingProfessionItems
+        {
+            get { return _LoadingProfessionItems; }
+            set
+            {
+                if (_LoadingProfessionItems != value)
+                {
+                    _LoadingProfessionItems = value;
+                    NotifyPropertyChanged("LoadingProfessionItems");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeLicenceItemsFromDB
+        private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicenceItemsFromDB;
+
+        public ObservableCollection<EmployeeLicenceItemViewModel> EmployeeLicenceItemsFromDB
+        {
+            get { return _EmployeeLicenceItemsFromDB; }
+            set
+            {
+                if (_EmployeeLicenceItemsFromDB != value)
+                {
+                    _EmployeeLicenceItemsFromDB = value;
+                    NotifyPropertyChanged("EmployeeLicenceItemsFromDB");
+                }
+            }
+        }
+        #endregion
         
+        #region LoadingLicenceItems
+        private bool _LoadingLicenceItems;
+
+        public bool LoadingLicenceItems
+        {
+            get { return _LoadingLicenceItems; }
+            set
+            {
+                if (_LoadingLicenceItems != value)
+                {
+                    _LoadingLicenceItems = value;
+                    NotifyPropertyChanged("LoadingLicenceItems");
+                }
+            }
+        }
+        #endregion
 
         #region Pagination data
         int currentPage = 1;
@@ -219,6 +296,8 @@ namespace SirmiumERPGFC.Views.Employees
             // Get required service
             this.EmployeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
             this.EmployeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
+            this.EmployeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
+            this.EmployeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
 
             InitializeComponent();
 
@@ -304,6 +383,47 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeItemDataLoading = false;
         }
 
+        private void DisplayProfessionItemData()
+        {
+            LoadingProfessionItems = true;
+
+            EmployeeProfessionItemListResponse response = new EmployeeProfessionItemSQLiteRepository()
+                .GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeProfessionItemsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>(
+                    response.EmployeeProfessionItems ?? new List<EmployeeProfessionItemViewModel>());
+            }
+            else
+            {
+                EmployeeProfessionItemsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
+            }
+
+            LoadingProfessionItems = false;
+        }
+
+
+        private void DisplayLicenceItemData()
+        {
+            LoadingLicenceItems = true;
+
+            EmployeeLicenceItemListResponse response = new EmployeeLicenceItemSQLiteRepository()
+                .GetEmployeeLicencesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeLicenceItemsFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>(
+                    response.EmployeeLicenceItems ?? new List<EmployeeLicenceItemViewModel>());
+            }
+            else
+            {
+                EmployeeLicenceItemsFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>();
+            }
+
+            LoadingLicenceItems = false;
+        }
+
         private void SyncData()
         {
             RefreshButtonEnabled = false;
@@ -313,6 +433,8 @@ namespace SirmiumERPGFC.Views.Employees
 
             RefreshButtonContent = " Stavke ... ";
             new EmployeeItemSQLiteRepository().Sync(EmployeeItemService);
+            new EmployeeLicenceItemSQLiteRepository().Sync(EmployeeLicenceService);
+            new EmployeeProfessionItemSQLiteRepository().Sync(EmployeeProfessionService);
 
             PopulateData();
 

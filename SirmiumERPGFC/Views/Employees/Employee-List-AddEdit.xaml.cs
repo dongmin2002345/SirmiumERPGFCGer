@@ -706,6 +706,8 @@ namespace SirmiumERPGFC.Views.Employees
                     SubmitButtonEnabled = false;
 
                     CurrentEmployee.EmployeeItems = EmployeeItemsFromDB;
+                    CurrentEmployee.EmployeeLicences = EmployeeLicenceItemsFromDB;
+                    CurrentEmployee.EmployeeProfessions = EmployeeProfessionItemsFromDB;
 
                     EmployeeResponse response = EmployeeService.Create(CurrentEmployee);
 

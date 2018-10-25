@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
@@ -159,24 +160,78 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        //public void Sync(IEmployeeItemService EmployeeItemService)
-        //{
-        //    SyncEmployeeItemRequest request = new SyncEmployeeItemRequest();
-        //    request.CompanyId = MainWindow.CurrentCompanyId;
-        //    request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public EmployeeProfessionItemListResponse GetUnSyncedItems(int companyId)
+        {
+            EmployeeProfessionItemListResponse response = new EmployeeProfessionItemListResponse();
+            List<EmployeeProfessionItemViewModel> viewModels = new List<EmployeeProfessionItemViewModel>();
 
-        //    EmployeeItemListResponse response = EmployeeItemService.Sync(request);
-        //    if (response.Success)
-        //    {
-        //        List<EmployeeItemViewModel> EmployeeItemsFromDB = response.EmployeeItems;
-        //        foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
-        //        {
-        //            Delete(EmployeeItem.Identifier);
-        //            EmployeeItem.IsSynced = true;
-        //            Create(EmployeeItem);
-        //        }
-        //    }
-        //}
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM  EmployeeProfessionItems " +
+                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
+                        "ORDER BY Id DESC;", db);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        int counter = 0;
+                        EmployeeProfessionItemViewModel dbEntry = new EmployeeProfessionItemViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+                        dbEntry.Profession = SQLiteHelper.GetProfession(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        viewModels.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.EmployeeProfessionItems = new List<EmployeeProfessionItemViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.EmployeeProfessionItems = viewModels;
+            return response;
+        }
+
+        public void Sync(IEmployeeProfessionService EmployeeItemService)
+        {
+            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
+            SyncEmployeeProfessionItemRequest request = new SyncEmployeeProfessionItemRequest();
+            request.CompanyId = MainWindow.CurrentCompanyId;
+            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+            request.UnSyncedEmployeeProfessionItems = unSynced?.EmployeeProfessionItems ?? new List<EmployeeProfessionItemViewModel>();
+
+
+            EmployeeProfessionItemListResponse response = EmployeeItemService.Sync(request);
+            if (response.Success)
+            {
+                List<EmployeeProfessionItemViewModel> EmployeeItemsFromDB = response.EmployeeProfessionItems;
+                foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
+                {
+                    Delete(EmployeeItem.Identifier);
+                    EmployeeItem.IsSynced = true;
+                    Create(EmployeeItem);
+                }
+            }
+        }
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {

@@ -142,6 +142,12 @@ namespace ApiExtension.Sender
                 { typeof(FamilyMemberViewModel), "FamilyMember" },
                 { typeof(List<FamilyMemberViewModel>), "FamilyMember" },
 
+                { typeof(EmployeeLicenceItemViewModel), "EmployeeLicence" },
+                { typeof(List<EmployeeLicenceItemViewModel>), "EmployeeLicence" },
+
+                { typeof(EmployeeProfessionItemViewModel), "EmployeeProfession" },
+                { typeof(List<EmployeeProfessionItemViewModel>), "EmployeeProfession" },
+
 			    #endregion
                 
                 #region ConstructionSites

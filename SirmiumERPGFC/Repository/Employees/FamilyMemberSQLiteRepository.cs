@@ -83,8 +83,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM FamilyMembers " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR Name LIKE @Code) " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +            
+                        "WHERE ((@Code IS NULL OR @Code = '' OR Name LIKE @Code) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name)) " +            
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)familyMemberSearchObject.Search_Code) != null ? "%" + familyMemberSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)familyMemberSearchObject.Search_Name) != null ? "%" + familyMemberSearchObject.Search_Name + "%" : "");
@@ -123,8 +123,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM FamilyMembers " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "WHERE ((@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
+                        "OR (@Name IS NULL OR @Name = '' OR Name LIKE @Name)) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);

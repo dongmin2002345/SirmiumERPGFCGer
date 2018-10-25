@@ -192,7 +192,7 @@
                                         CurrentCity="{Binding Path=CurrentEmployee.ResidenceCity, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresa *" />
-                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.ResidencAddress}"  />
+                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.ResidenceAddress}"  />
 
                     </Grid>
                 </GroupBox>
@@ -410,7 +410,7 @@
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Category.Name" Header="Dozvola" Binding="{Binding Category.Name}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn SortMemberPath="Licence.Description" Header="Dozvola" Binding="{Binding Licence.Description}" Width="*" IsReadOnly="True"/>
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -466,7 +466,7 @@
 
                         <TextBlock Grid.Row="1" Grid.Column="3" Text="Broj pasoša " VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPassportNumber"
-                             Text="{Binding Path=CurrentEmployeeItemForm.Name, Mode=TwoWay}"/>
+                             Text="{Binding Path=CurrentEmployeeItemForm.Passport, Mode=TwoWay}"/>
 
                         <Button x:Name="btnAddItem" Grid.Row="2" Grid.Column="4" Click="btnAddItem_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">

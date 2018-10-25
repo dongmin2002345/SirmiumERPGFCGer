@@ -246,11 +246,10 @@
                         HorizontalScrollBarVisibility="Auto"
                         VerticalScrollBarVisibility="Auto"
                         Style="{DynamicResource AzureDataGrid}"
-                        ItemsSource="{Binding Path=EmployeeItemsFromDB}"
-                        SelectedItem="{Binding Path=CurrentEmployeeItem}">
+                        ItemsSource="{Binding Path=EmployeeProfessionItemsFromDB}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Zanimanje" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Država" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
+                            <DataGridTextColumn SortMemberPath="Profession.Name" Header="Zanimanje" Binding="{Binding Profession.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True"  />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -272,12 +271,11 @@
                         HorizontalScrollBarVisibility="Auto"
                         VerticalScrollBarVisibility="Auto"
                         Style="{DynamicResource AzureDataGrid}"
-                        ItemsSource="{Binding Path=EmployeeItemsFromDB}"
-                        SelectedItem="{Binding Path=CurrentEmployeeItem}">
+                        ItemsSource="{Binding Path=EmployeeLicenceItemsFromDB}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Šifra" Binding="{Binding FamilyMember.Name}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Dozvola" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Država" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
+                            <DataGridTextColumn SortMemberPath="Licence.Category" Header="Kategorija" Binding="{Binding Licence.Category}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Licence.Description" Header="Dozvola" Binding="{Binding Licence.Description}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True"  />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

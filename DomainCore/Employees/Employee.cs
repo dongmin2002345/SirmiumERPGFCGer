@@ -52,5 +52,7 @@ namespace DomainCore.Employees
         public DateTime WorkPermitTo { get; set; }
 
         public List<EmployeeItem> EmployeeItems { get; set; }
+        public List<EmployeeLicence> EmployeeLicences { get; set; }
+        public List<EmployeeProfession> EmployeeProfessions { get; set; }
     }
 }

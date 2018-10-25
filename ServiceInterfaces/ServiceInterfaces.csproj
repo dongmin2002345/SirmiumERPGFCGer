@@ -60,6 +60,8 @@
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
     <Compile Include="Abstractions\Common\Professions\IProfessionService.cs" />
     <Compile Include="Abstractions\ConstructionSites\IConstructionSiteService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeLicenceService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeProfessionService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeItemService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeService.cs" />
     <Compile Include="Abstractions\Employees\IFamilyMemberService.cs" />
@@ -127,6 +129,8 @@
     <Compile Include="Messages\Employees\EmployeeResponse.cs" />
     <Compile Include="Messages\Employees\FamilyMemberListResponse.cs" />
     <Compile Include="Messages\Employees\FamilyMemberResponse.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeLicenceItemRequest.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeProfessionItemRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeItemRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeRequest.cs" />
     <Compile Include="Messages\Employees\SyncFamilyMemberRequest.cs" />

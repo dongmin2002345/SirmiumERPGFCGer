@@ -28,6 +28,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "FamilyMemberName NVARCHAR(48) NULL, " +
                "Name NVARCHAR(2048), " +
                "DateOfBirth DATETIME NULL, " +
+               "Passport NVARCHAR(2048) NULL, " +
                "IsSynced BOOL NULL, " +
                "UpdatedAt DATETIME NULL, " +
                "CreatedById INTEGER NULL, " +
@@ -38,18 +39,18 @@ namespace SirmiumERPGFC.Repository.Employees
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, FamilyMemberId, FamilyMemberIdentifier, " +
-            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth," +
+            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, Passport, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeItems " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, FamilyMemberId, FamilyMemberIdentifier, " +
-            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth," +
+            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth,Passport, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
             "@EmployeeCode, @EmployeeName, @FamilyMemberId, @FamilyMemberIdentifier, " +
-            "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth," +
+            "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @Passport, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public EmployeeItemListResponse GetEmployeeItemsByEmployee(int companyId, Guid EmployeeIdentifier)
@@ -83,6 +84,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.FamilyMember = SQLiteHelper.GetFamilyMember(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -134,6 +136,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.FamilyMember = SQLiteHelper.GetFamilyMember(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -156,11 +159,67 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
+        public EmployeeItemListResponse GetUnSyncedItems(int companyId)
+        {
+            EmployeeItemListResponse response = new EmployeeItemListResponse();
+            List<EmployeeItemViewModel> viewModels = new List<EmployeeItemViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM  EmployeeItems " +
+                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
+                        "ORDER BY Id DESC;", db);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        int counter = 0;
+                        EmployeeItemViewModel dbEntry = new EmployeeItemViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+                        dbEntry.FamilyMember = SQLiteHelper.GetFamilyMember(query, ref counter);
+                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        viewModels.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.EmployeeItems = new List<EmployeeItemViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.EmployeeItems = viewModels;
+            return response;
+        }
+
         public void Sync(IEmployeeItemService EmployeeItemService)
         {
+            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
             SyncEmployeeItemRequest request = new SyncEmployeeItemRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+            request.UnSyncedEmployeeItems = unSynced?.EmployeeItems ?? new List<EmployeeItemViewModel>();
+
 
             EmployeeItemListResponse response = EmployeeItemService.Sync(request);
             if (response.Success)
@@ -235,6 +294,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@FamilyMemberName", ((object)EmployeeItem.FamilyMember.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", EmployeeItem.Name);
                 insertCommand.Parameters.AddWithValue("@DateOfBirth", ((object)EmployeeItem.DateOfBirth) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeItem.Passport) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", EmployeeItem.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
