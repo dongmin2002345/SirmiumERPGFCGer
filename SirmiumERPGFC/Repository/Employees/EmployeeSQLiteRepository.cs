@@ -295,7 +295,7 @@ namespace SirmiumERPGFC.Repository.Employees
             EmployeeListResponse response = new EmployeeListResponse();
             List<EmployeeViewModel> viewModels = new List<EmployeeViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try

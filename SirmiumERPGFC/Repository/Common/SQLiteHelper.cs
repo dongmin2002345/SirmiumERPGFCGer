@@ -358,13 +358,16 @@ namespace SirmiumERPGFC.Repository.Common
                 return null;
             }
             else
-                return new EmployeeViewModel()
-                {
-                    Id = query.GetInt32(counter++),
-                    Identifier = query.GetGuid(counter++),
-                    Code = query.GetString(counter++),
-                    Name = query.GetString(counter++)
-                };
+            {
+                var viewModel = new EmployeeViewModel();
+                viewModel.Id = query.GetInt32(counter++);
+                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter-1);
+                viewModel.Name = query.GetString(counter++);
+
+
+                return viewModel;
+            }
         }
 
         public static ProfessionViewModel GetProfession(SqliteDataReader query, ref int counter)

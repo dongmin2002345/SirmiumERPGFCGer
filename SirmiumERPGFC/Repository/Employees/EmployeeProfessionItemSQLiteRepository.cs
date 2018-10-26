@@ -165,7 +165,7 @@ namespace SirmiumERPGFC.Repository.Employees
             EmployeeProfessionItemListResponse response = new EmployeeProfessionItemListResponse();
             List<EmployeeProfessionItemViewModel> viewModels = new List<EmployeeProfessionItemViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -283,18 +283,18 @@ namespace SirmiumERPGFC.Repository.Employees
 
                 insertCommand.Parameters.AddWithValue("@ServerId", EmployeeItem.Id);
                 insertCommand.Parameters.AddWithValue("@Identifier", EmployeeItem.Identifier);
-                insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)EmployeeItem.Employee.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeItem.Employee.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeItem.Employee.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeItem.Employee.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionId", ((object)EmployeeItem.Profession.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionIdentifier", ((object)EmployeeItem.Profession.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)EmployeeItem.Profession.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionName", ((object)EmployeeItem.Profession.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeItem.Country.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)EmployeeItem.Employee?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeItem.Employee?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeItem.Employee?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeItem.Employee?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionId", ((object)EmployeeItem.Profession?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionIdentifier", ((object)EmployeeItem.Profession?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)EmployeeItem.Profession?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionName", ((object)EmployeeItem.Profession?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeItem.Country?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", EmployeeItem.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
