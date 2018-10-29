@@ -18,7 +18,6 @@ using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
-using ServiceInterfaces.ViewModels.Employees;
 
 namespace ApiExtension.Sender
 {
@@ -117,7 +116,7 @@ namespace ApiExtension.Sender
 			    #region Sectors
 
                 { typeof(SectorViewModel), "Sector" },
-			    { typeof(List<SectorViewModel>), "Sector" },
+                { typeof(List<SectorViewModel>), "Sector" },
 
                 { typeof(AgencyViewModel), "Agency" },
                 { typeof(List<AgencyViewModel>), "Agency" },
@@ -167,7 +166,7 @@ namespace ApiExtension.Sender
 
 			#region LicenceTypes
 				 { typeof(LicenceTypeViewModel), "LicenceType" },
-				{ typeof(List<LicenceTypeViewModel>), "LicenceType" },
+                { typeof(List<LicenceTypeViewModel>), "LicenceType" },
 #endregion
 		};
 

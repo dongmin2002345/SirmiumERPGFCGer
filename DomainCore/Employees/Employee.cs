@@ -37,19 +37,19 @@ namespace DomainCore.Employees
         public City PassportCity { get; set; }
 
         public string Passport { get; set; }
-        public DateTime VisaFrom { get; set; }
-        public DateTime VisaTo { get; set; }
+        public DateTime? VisaFrom { get; set; }
+        public DateTime? VisaTo { get; set; }
 
         public int? ResidenceCityId { get; set; }
         public City ResidenceCity { get; set; }
         public string ResidenceAddress { get; set; }
 
-        public DateTime EmbassyDate { get; set; }
-        public DateTime VisaDate { get; set; }
-        public DateTime VisaValidFrom { get; set; }
-        public DateTime VisaValidTo { get; set; }
-        public DateTime WorkPermitFrom { get; set; }
-        public DateTime WorkPermitTo { get; set; }
+        public DateTime? EmbassyDate { get; set; }
+        public DateTime? VisaDate { get; set; }
+        public DateTime? VisaValidFrom { get; set; }
+        public DateTime? VisaValidTo { get; set; }
+        public DateTime? WorkPermitFrom { get; set; }
+        public DateTime? WorkPermitTo { get; set; }
 
         public List<EmployeeItem> EmployeeItems { get; set; }
         public List<EmployeeLicence> EmployeeLicences { get; set; }

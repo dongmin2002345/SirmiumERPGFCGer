@@ -85,7 +85,8 @@ namespace ServiceCore.Implementations.Employees
             return response;
         }
 
-        public EmployeeProfessionItemListResponse Sync(SyncEmployeeProfessionItemRequest request)
+        public EmployeeProfessionItemListResponse 
+            Sync(SyncEmployeeProfessionItemRequest request)
         {
             EmployeeProfessionItemListResponse response = new EmployeeProfessionItemListResponse();
             try
@@ -104,6 +105,17 @@ namespace ServiceCore.Implementations.Employees
                         .GetEmployeeItems(request.CompanyId)
                         ?.ConvertToEmployeeProfessionViewModelList() ?? new List<EmployeeProfessionItemViewModel>());
                 }
+
+                List<EmployeeProfession> added = new List<EmployeeProfession>();
+                foreach (var item in request.UnSyncedEmployeeProfessionItems)
+                {
+                    if (item.Id == 0)
+                        added.Add(unitOfWork.GetEmployeeProfessionRepository().Create(item.ConvertToEmployeeProfession()));
+                    ////else
+                    ////    added.Add(unitOfWork.GetEmployeeRepository().Update(item.ConvertToFoodInputHay()));
+                }
+
+                unitOfWork.Save();
 
                 response.Success = true;
             }

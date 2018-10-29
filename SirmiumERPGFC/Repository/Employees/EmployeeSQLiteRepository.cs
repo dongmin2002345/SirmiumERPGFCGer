@@ -372,7 +372,6 @@ namespace SirmiumERPGFC.Repository.Employees
             SyncEmployeeRequest request = new SyncEmployeeRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-            request.UnSyncedEmployees = unSynced?.Employees ?? new List<EmployeeViewModel>();
 
             EmployeeListResponse response = EmployeeService.Sync(request);
             if (response.Success)

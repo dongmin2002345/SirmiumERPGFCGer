@@ -123,18 +123,18 @@ namespace DataMapper.Mappers.Employees
                 PassportCityId = EmployeeViewModel?.PassportCity?.Id ?? null,
 
                 Passport = EmployeeViewModel.Passport,
-                VisaFrom = (DateTime)EmployeeViewModel.VisaFrom,
-                VisaTo = (DateTime)EmployeeViewModel.VisaTo,
+                VisaFrom = EmployeeViewModel.VisaFrom,
+                VisaTo = EmployeeViewModel.VisaTo,
 
                 ResidenceCityId = EmployeeViewModel?.ResidenceCity?.Id ?? null,
                 ResidenceAddress = EmployeeViewModel.ResidenceAddress,
 
-                EmbassyDate = (DateTime)EmployeeViewModel.EmbassyDate,
-                VisaDate = (DateTime)EmployeeViewModel.VisaDate,
-                VisaValidFrom = (DateTime)EmployeeViewModel.VisaValidFrom,
-                VisaValidTo = (DateTime)EmployeeViewModel.VisaValidTo,
-                WorkPermitFrom = (DateTime)EmployeeViewModel.WorkPermitFrom,
-                WorkPermitTo = (DateTime)EmployeeViewModel.WorkPermitTo,
+                EmbassyDate = EmployeeViewModel.EmbassyDate,
+                VisaDate = EmployeeViewModel.VisaDate,
+                VisaValidFrom = EmployeeViewModel.VisaValidFrom,
+                VisaValidTo = EmployeeViewModel.VisaValidTo,
+                WorkPermitFrom = EmployeeViewModel.WorkPermitFrom,
+                WorkPermitTo = EmployeeViewModel.WorkPermitTo,
 
                 CreatedById = EmployeeViewModel.CreatedBy?.Id ?? null,
                 CompanyId = EmployeeViewModel.Company?.Id ?? null,

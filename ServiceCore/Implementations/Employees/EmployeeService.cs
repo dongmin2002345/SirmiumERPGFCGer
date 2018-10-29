@@ -159,22 +159,6 @@ namespace ServiceCore.Implementations.Employees
                         ?.ConvertToEmployeeViewModelList() ?? new List<EmployeeViewModel>());
                 }
 
-                List<Employee> added = new List<Employee>();
-                foreach (var item in request.UnSyncedEmployees)
-                {
-                    if (item.Id == 0)
-                        added.Add(unitOfWork.GetEmployeeRepository().Create(item.ConvertToEmployee()));
-                    ////else
-                    ////    added.Add(unitOfWork.GetEmployeeRepository().Update(item.ConvertToFoodInputHay()));
-                }
-
-                unitOfWork.Save();
-
-                ////foreach (var item in added)
-                ////{
-                ////    response.Employees.Add(unitOfWork.GetEmployeeRepository().GetEmployees(item.Identifier).C());
-                ////}
-
                 response.Success = true;
             }
             catch (Exception ex)

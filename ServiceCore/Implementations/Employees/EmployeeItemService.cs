@@ -105,6 +105,17 @@ namespace ServiceCore.Implementations.Employees
                         ?.ConvertToEmployeeItemViewModelList() ?? new List<EmployeeItemViewModel>());
                 }
 
+                List<EmployeeItem> added = new List<EmployeeItem>();
+                foreach (var item in request.UnSyncedEmployeeItems)
+                {
+                    if (item.Id == 0)
+                        added.Add(unitOfWork.GetEmployeeItemRepository().Create(item.ConvertToEmployeeItem()));
+                    ////else
+                    ////    added.Add(unitOfWork.GetEmployeeRepository().Update(item.ConvertToFoodInputHay()));
+                }
+
+                unitOfWork.Save();
+
                 response.Success = true;
             }
             catch (Exception ex)

@@ -11,6 +11,5 @@ namespace ServiceInterfaces.Messages.Employees
     {
         public int CompanyId { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
-        public List<EmployeeViewModel> UnSyncedEmployees { get; set; }
     }
 }
