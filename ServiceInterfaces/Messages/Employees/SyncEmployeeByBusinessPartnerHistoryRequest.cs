@@ -9,6 +9,6 @@ namespace ServiceInterfaces.Messages.Employees
     public class SyncEmployeeByBusinessPartnerHistoryRequest
     {
         public int CompanyId { get; set; }
-        public DateTime? LastUpdateAt { get; set; }
+        public DateTime? LastUpdatedAt { get; set; }
     }
 }
