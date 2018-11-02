@@ -144,9 +144,10 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2 0 0 0" CommandParameter="{Binding}" IsEnabled="{Binding IsSynced, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Poveži radnike sa firmom">
+                                        <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Poveži radnike sa firmom">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                <TextBlock Text=" Poveži radnike sa firmom " />
                                             </StackPanel>
                                         </Button>
                                     </StackPanel>

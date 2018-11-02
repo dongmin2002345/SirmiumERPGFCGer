@@ -50,7 +50,6 @@
     <Compile Include="Implementations\Common\Companies\CompanyService.cs" />
     <Compile Include="Implementations\Common\Identity\AuthenticationService.cs" />
     <Compile Include="Implementations\Common\Identity\UserService.cs" />
-    <Compile Include="Implementations\Common\Individuals\IndividualService.cs" />
     <Compile Include="Implementations\Common\Locations\CountryService.cs" />
     <Compile Include="Implementations\Common\Locations\MunicipalityService.cs" />
     <Compile Include="Implementations\Common\Locations\RegionService.cs" />
@@ -59,6 +58,8 @@
     <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeByConstructionSiteHistoryService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeByConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeProfessionService.cs" />
     <Compile Include="Implementations\Employees\EmployeeLicenceService.cs" />
     <Compile Include="Implementations\Employees\EmployeeItemService.cs" />

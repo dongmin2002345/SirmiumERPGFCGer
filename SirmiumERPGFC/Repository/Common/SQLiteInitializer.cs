@@ -336,6 +336,32 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(EmployeeLicenceItemSQLiteRepository.EmployeeItemTableCreatePart, db);
                     createTable.ExecuteReader();
 
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeByConstructionSite", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeByConstructionSiteSQLiteRepository.EmployeeByConstructionSiteTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+                    //if (withTableDrop)
+                    //{
+                    //    try
+                    //    {
+                    //        SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeByConstructionSiteHistory", db);
+                    //        dropTable.ExecuteNonQuery();
+                    //    }
+                    //    catch (Exception ex) { }
+                    //}
+                    //createTable = new SqliteCommand(EmployeeByConstructionSiteHistorySQLiteRepository.EmployeeByConstructionSiteHistoryTableCreatePart, db);
+                    //createTable.ExecuteReader();
+
                     #endregion
 
                     #region FamilyMembers

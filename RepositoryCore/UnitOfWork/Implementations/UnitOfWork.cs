@@ -1,34 +1,28 @@
 ﻿using Configurator;
 using Microsoft.EntityFrameworkCore;
+using RepositoryCore.Abstractions.Banks;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
-using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
-using RepositoryCore.Abstractions.Common.Individuals;
 using RepositoryCore.Abstractions.Common.Invoices;
+using RepositoryCore.Abstractions.Common.Locations;
+using RepositoryCore.Abstractions.Common.Professions;
+using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.ConstructionSites;
+using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
+using RepositoryCore.Implementations.Banks;
 using RepositoryCore.Implementations.Common.BusinessPartners;
-using RepositoryCore.Implementations.Common.Locations;
 using RepositoryCore.Implementations.Common.Companies;
 using RepositoryCore.Implementations.Common.Identity;
-using RepositoryCore.Implementations.Common.Individuals;
 using RepositoryCore.Implementations.Common.Invoices;
+using RepositoryCore.Implementations.Common.Locations;
+using RepositoryCore.Implementations.Common.Professions;
+using RepositoryCore.Implementations.Common.Sectors;
+using RepositoryCore.Implementations.ConstructionSites;
+using RepositoryCore.Implementations.Employees;
 using RepositoryCore.UnitOfWork.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using RepositoryCore.Abstractions.Common.Sectors;
-using RepositoryCore.Implementations.Common.Sectors;
-using RepositoryCore.Abstractions.Common.Professions;
-using RepositoryCore.Implementations.Common.Professions;
-using RepositoryCore.Abstractions.Banks;
-using RepositoryCore.Implementations.Banks;
-using RepositoryCore.Abstractions.ConstructionSites;
-using RepositoryCore.Implementations.ConstructionSites;
-using RepositoryCore.Abstractions.Employees;
-using RepositoryCore.Implementations.Employees;
-using RepositoryCore.Abstractions.Employees;
-using RepositoryCore.Implementations.Employees;
 
 namespace RepositoryCore.UnitOfWork.Implementations
 {
@@ -50,8 +44,6 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerTypeRepository businessPartnerTypeRepository;
         private IBusinessPartnerBusinessPartnerTypeRepository businessPartnerBusinessPartnerTypeRepository;
 
-        private IIndividualsRepository individualsRepository;
-
         private IOutputInvoiceRepository outputInvoiceRepository;
 
         private ICityRepository cityRepository;
@@ -70,15 +62,23 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IEmployeeRepository employeeRepository;
         private IEmployeeItemRepository employeeItemRepository;
-        private IEmployeeLicenceRepository employeeLicenceRepository;
+        private IEmployeeLicenceRepository employeeLicenceRepository; 
         private IEmployeeProfessionRepository employeeProfessionRepository;
+        private IEmployeeByConstructionSiteRepository employeeByConstructionSiteRepository;
+        private IEmployeeByConstructionSiteHistoryRepository employeeByConstructionSiteHistoryRepository;
         private IFamilyMemberRepository familyMemberRepository;
 
-        #endregion
-        
-		#region Constructor
+        private IEmployeeByBusinessPartnerRepository employeeByBusinessPartnerRepository;
+        private IEmployeeByBusinessPartnerHistoryRepository employeeByBusinessPartnerHistoryRepository;
 
-		public UnitOfWork(bool useSql2005Compatibility = false)
+        private IBusinessPartnerByConstructionSiteRepository businessPartnerByConstructionSiteRepository;
+        private IBusinessPartnerByConstructionSiteHistoryRepository businessPartnerByConstructionSiteHistoryRepository;
+
+        #endregion
+
+        #region Constructor
+
+        public UnitOfWork(bool useSql2005Compatibility = false)
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             if (useSql2005Compatibility)
@@ -162,13 +162,6 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (businessPartnerBusinessPartnerTypeRepository == null)
                 businessPartnerBusinessPartnerTypeRepository = new BusinessPartnerBusinessPartnerTypeRepository(context);
             return businessPartnerBusinessPartnerTypeRepository;
-        }
-
-        public IIndividualsRepository GetIndividualsRepository()
-        {
-            if (individualsRepository == null)
-                individualsRepository = new IndividualRepository(context);
-            return individualsRepository;
         }
 
         public IOutputInvoiceRepository GetOutputInvoiceRepository()
@@ -281,6 +274,48 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (employeeItemRepository == null)
                 employeeItemRepository = new EmployeeItemRepository(context);
             return employeeItemRepository;
+        }
+
+        public IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository()
+        {
+            if (employeeByConstructionSiteRepository == null)
+                employeeByConstructionSiteRepository = new EmployeeByConstructionSiteRepository(context);
+            return employeeByConstructionSiteRepository;
+        }
+
+        public IEmployeeByConstructionSiteHistoryRepository GetEmployeeByConstructionSiteHistoryRepository()
+        {
+            if (employeeByConstructionSiteHistoryRepository == null)
+                employeeByConstructionSiteHistoryRepository = new EmployeeByConstructionSiteHistoryRepository(context);
+            return employeeByConstructionSiteHistoryRepository;
+        }
+
+        public IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository()
+        {
+            if (employeeByBusinessPartnerRepository == null)
+                employeeByBusinessPartnerRepository = new EmployeeByBusinessPartnerRepository(context);
+            return employeeByBusinessPartnerRepository;
+        }
+
+        public IEmployeeByBusinessPartnerHistoryRepository GetEmployeeByBusinessPartnerHistoryRepository()
+        {
+            if (employeeByBusinessPartnerHistoryRepository == null)
+                employeeByBusinessPartnerHistoryRepository = new EmployeeByBusinessPartnerHistoryRepository(context);
+            return employeeByBusinessPartnerHistoryRepository;
+        }
+
+        public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
+        {
+            if (businessPartnerByConstructionSiteRepository == null)
+                businessPartnerByConstructionSiteRepository = new BusinessPartnerByConstructionSiteRepository(context);
+            return businessPartnerByConstructionSiteRepository;
+        }
+
+        public IBusinessPartnerByConstructionSiteHistoryRepository GetBusinessPartnerByConstructionSiteHistoryRepository()
+        {
+            if (businessPartnerByConstructionSiteHistoryRepository == null)
+                businessPartnerByConstructionSiteHistoryRepository = new BusinessPartnerByConstructionSiteHistoryRepository(context);
+            return businessPartnerByConstructionSiteHistoryRepository;
         }
 
         #endregion

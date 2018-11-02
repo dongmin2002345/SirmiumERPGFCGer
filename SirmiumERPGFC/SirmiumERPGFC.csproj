@@ -173,6 +173,8 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeByConstructionSiteHistorySQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeByConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeItemSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeLicenceItemSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeProfessionItemSQLiteRepository.cs" />
@@ -699,6 +701,7 @@
     </Content>
     <Resource Include="Resources\Icons\Banka Ikonica.png" />
     <Resource Include="Resources\Icons\Banka_Ikonica.png" />
+    <Resource Include="Resources\Icons\bank.png" />
     <Content Include="Resources\Icons\barcode-tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -740,6 +743,7 @@
     </Content>
     <Resource Include="Resources\Icons\Clanovi Porodice.png" />
     <Resource Include="Resources\Icons\Clanovi_Porodice.png" />
+    <Resource Include="Resources\Icons\cityscape.png" />
     <Content Include="Resources\Icons\coins.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -763,6 +767,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Drzava.png" />
+    <Resource Include="Resources\Icons\Dodavanje_Drzave1.png" />
     <Content Include="Resources\Icons\edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -832,6 +837,7 @@
     </Content>
     <Resource Include="Resources\Icons\Opstina Ikonica.png" />
     <Resource Include="Resources\Icons\Opstina_Ikonica.png" />
+    <Resource Include="Resources\Icons\Opstine.png" />
     <Content Include="Resources\Icons\organization.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -921,6 +927,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Region.png" />
+    <Resource Include="Resources\Icons\Regioni.png" />
     <Content Include="Resources\Icons\requisition.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

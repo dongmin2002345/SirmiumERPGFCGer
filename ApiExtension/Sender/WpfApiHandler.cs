@@ -1,23 +1,20 @@
 ﻿using Newtonsoft.Json;
+using ServiceInterfaces.ViewModels.Banks;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.OutputInvoices;
+using ServiceInterfaces.ViewModels.Common.Professions;
+using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.ConstructionSites;
+using ServiceInterfaces.ViewModels.Employees;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
-using ServiceInterfaces.ViewModels.Common.BusinessPartners;
-using ServiceInterfaces.ViewModels.Common.Individuals;
-using ServiceInterfaces.ViewModels.Common.OutputInvoices;
-using ServiceInterfaces.ViewModels.Common.Locations;
-using ServiceInterfaces.ViewModels.Common.Sectors;
-using ServiceInterfaces.ViewModels.Common.Professions;
-using ServiceInterfaces.ViewModels.Banks;
-using ServiceInterfaces.ViewModels.ConstructionSites;
-using ServiceInterfaces.ViewModels.Employees;
 
 namespace ApiExtension.Sender
 {
@@ -83,13 +80,6 @@ namespace ApiExtension.Sender
 
                 #endregion
 
-                #region Individuals
-
-                { typeof(IndividualViewModel), "Individual" },
-                { typeof(List<IndividualViewModel>), "Individual" },
-
-                #endregion
-
                 #region OutputInvoices
 
                 { typeof(OutputInvoiceViewModel), "OutputInvoice" },
@@ -146,6 +136,12 @@ namespace ApiExtension.Sender
 
                 { typeof(EmployeeProfessionItemViewModel), "EmployeeProfession" },
                 { typeof(List<EmployeeProfessionItemViewModel>), "EmployeeProfession" },
+
+                { typeof(EmployeeByConstructionSiteViewModel), "EmployeeByConstructionSite" },
+                { typeof(List<EmployeeByConstructionSiteViewModel>), "EmployeeByConstructionSite" },
+
+                { typeof(EmployeeByConstructionSiteHistoryViewModel), "EmployeeByConstructionSiteHistory" },
+                { typeof(List<EmployeeByConstructionSiteHistoryViewModel>), "EmployeeByConstructionSiteHistory" },
 
 			    #endregion
                 

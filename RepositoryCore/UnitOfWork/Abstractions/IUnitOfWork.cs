@@ -1,17 +1,12 @@
-﻿using RepositoryCore.Abstractions.Common.BusinessPartners;
-using RepositoryCore.Abstractions.Common.Locations;
+﻿using RepositoryCore.Abstractions.Banks;
+using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
-using RepositoryCore.Abstractions.Common.Individuals;
 using RepositoryCore.Abstractions.Common.Invoices;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Professions;
-using RepositoryCore.Abstractions.Banks;
+using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Abstractions.ConstructionSites;
-using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Abstractions.Employees;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
@@ -29,8 +24,6 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IBusinessPartnerOrganizationUnitRepository GetBusinessPartnerOrganizationUnitRepository();
         IBusinessPartnerTypeRepository GetBusinessPartnerTypeRepository();
         IBusinessPartnerBusinessPartnerTypeRepository GetBusinessPartnerBusinessPartnerTypeRepository();
-
-        IIndividualsRepository GetIndividualsRepository();
 
         IOutputInvoiceRepository GetOutputInvoiceRepository();
 
@@ -52,7 +45,15 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IEmployeeItemRepository GetEmployeeItemRepository();
         IEmployeeLicenceRepository GetEmployeeLicenceRepository();
         IEmployeeProfessionRepository GetEmployeeProfessionRepository();
+        IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository();
+        IEmployeeByConstructionSiteHistoryRepository GetEmployeeByConstructionSiteHistoryRepository();
         IFamilyMemberRepository GetFamilyMemberRepository();
+
+        IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository();
+        IEmployeeByBusinessPartnerHistoryRepository GetEmployeeByBusinessPartnerHistoryRepository();
+
+        IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository();
+        IBusinessPartnerByConstructionSiteHistoryRepository GetBusinessPartnerByConstructionSiteHistoryRepository();
 
         void Save();
     }
