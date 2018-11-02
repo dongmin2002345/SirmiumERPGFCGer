@@ -51,7 +51,6 @@
     <Compile Include="Abstractions\Common\Companies\ICompanyService.cs" />
     <Compile Include="Abstractions\Common\Identity\IAuthenticationService.cs" />
     <Compile Include="Abstractions\Common\Identity\IUserService.cs" />
-    <Compile Include="Abstractions\Common\Individuals\IIndividualService.cs" />
     <Compile Include="Abstractions\Common\Locations\ICountryService.cs" />
     <Compile Include="Abstractions\Common\Locations\IMunicipalityService.cs" />
     <Compile Include="Abstractions\Common\Locations\IRegionService.cs" />
@@ -60,6 +59,8 @@
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
     <Compile Include="Abstractions\Common\Professions\IProfessionService.cs" />
     <Compile Include="Abstractions\ConstructionSites\IConstructionSiteService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeByConstructionSiteHistoryService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeByConstructionSiteService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeLicenceService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeProfessionService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeItemService.cs" />
@@ -100,9 +101,6 @@
     <Compile Include="Messages\Common\Companies\CompanyResponse.cs" />
     <Compile Include="Messages\Common\Identity\UserListResponse.cs" />
     <Compile Include="Messages\Common\Identity\UserResponse.cs" />
-    <Compile Include="Messages\Common\Individuals\IndividualCodeResponse.cs" />
-    <Compile Include="Messages\Common\Individuals\IndividualListResponse.cs" />
-    <Compile Include="Messages\Common\Individuals\IndividualResponse.cs" />
     <Compile Include="Messages\Common\Locations\SyncMunicipalityRequest.cs" />
     <Compile Include="Messages\Common\Locations\SyncRegionRequest.cs" />
     <Compile Include="Messages\Common\Locations\SyncCountryRequest.cs" />
@@ -119,6 +117,10 @@
     <Compile Include="Messages\Common\Professions\ProfessionListResponse.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionResponse.cs" />
     <Compile Include="Messages\Common\Professions\SyncProfessionRequest.cs" />
+    <Compile Include="Messages\Employees\EmployeeByConstructionSiteHistoryListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeByConstructionSiteHistoryResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeByConstructionSiteListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeByConstructionSiteResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeItemListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeItemResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeListResponse.cs" />
@@ -129,6 +131,8 @@
     <Compile Include="Messages\Employees\EmployeeResponse.cs" />
     <Compile Include="Messages\Employees\FamilyMemberListResponse.cs" />
     <Compile Include="Messages\Employees\FamilyMemberResponse.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeByConstructionSiteHistoryRequest.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeByConstructionSiteRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeLicenceItemRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeProfessionItemRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeItemRequest.cs" />
@@ -154,7 +158,6 @@
     <Compile Include="ViewModels\Common\Companies\CompanyViewModel.cs" />
     <Compile Include="ViewModels\Common\Identity\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\Common\Identity\UserViewModel.cs" />
-    <Compile Include="ViewModels\Common\Individuals\IndividualViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\CountryViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\MunicipalityViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\RegionViewModel.cs" />
@@ -163,6 +166,8 @@
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
     <Compile Include="ViewModels\Common\Professions\ProfessionViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeByConstructionSiteHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeByConstructionSiteViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeItemViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeLicenceItemViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeProfessionItemViewModel.cs" />

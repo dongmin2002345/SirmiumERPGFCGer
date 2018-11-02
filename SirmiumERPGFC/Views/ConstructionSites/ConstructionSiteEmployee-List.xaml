@@ -45,13 +45,13 @@
 
                 <TextBlock Text="Šifra gradilišta"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByCode" Grid.Column="1" 
-                         Text="{Binding Path=ConstructionSiteEmployeeSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Path=ConstructionSiteSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
                 <TextBlock Text="Ime gradilišta"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByName" Grid.Column="3" Grid.Row="0"
-                         Text="{Binding Path=ConstructionSiteEmployeeSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Path=ConstructionSiteSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 

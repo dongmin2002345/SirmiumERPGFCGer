@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Configurator;
-using Microsoft.AspNetCore.Authentication;
+﻿using Configurator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,28 +8,27 @@ using RepositoryCore.Context;
 using RepositoryCore.DbSeed;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
+using ServiceCore.Implementations.Banks;
 using ServiceCore.Implementations.Common.BusinessPartners;
-using ServiceCore.Implementations.Common.Locations;
 using ServiceCore.Implementations.Common.Companies;
 using ServiceCore.Implementations.Common.Identity;
-using ServiceCore.Implementations.Common.Individuals;
+using ServiceCore.Implementations.Common.Locations;
 using ServiceCore.Implementations.Common.OutputInvoices;
-using ServiceInterfaces.Abstractions.Common.BusinessPartners;
-using ServiceInterfaces.Abstractions.Common.Locations;
-using ServiceInterfaces.Abstractions.Common.Companies;
-using ServiceInterfaces.Abstractions.Common.Identity;
-using ServiceInterfaces.Abstractions.Common.Individuals;
-using ServiceInterfaces.Abstractions.Common.OutputInvoices;
-using ServiceInterfaces.Abstractions.Common.Sectors;
-using ServiceCore.Implementations.Common.Sectors;
-using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceCore.Implementations.Common.Professions;
-using ServiceInterfaces.Abstractions.Banks;
-using ServiceCore.Implementations.Banks;
-using ServiceInterfaces.Abstractions.ConstructionSites;
+using ServiceCore.Implementations.Common.Sectors;
 using ServiceCore.Implementations.ConstructionSites;
 using ServiceCore.Implementations.Employees;
+using ServiceInterfaces.Abstractions.Banks;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Abstractions.Common.Companies;
+using ServiceInterfaces.Abstractions.Common.Identity;
+using ServiceInterfaces.Abstractions.Common.Locations;
+using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Professions;
+using ServiceInterfaces.Abstractions.Common.Sectors;
+using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
+using System;
 
 namespace SirmiumERPWeb
 {
@@ -136,8 +129,6 @@ namespace SirmiumERPWeb
             services.AddScoped<IBusinessPartnerTypeService, BusinessPartnerTypeService>();
             services.AddScoped<IBusinessPartnerLocationService, BusinessPartnerLocationService>();
 
-            services.AddScoped<IIndividualService, IndividualService>();
-
             services.AddScoped<IOutputInvoiceService, OutputInvoiceService>();
 
             services.AddScoped<ICityService, CityService>();
@@ -154,6 +145,8 @@ namespace SirmiumERPWeb
             services.AddScoped<IEmployeeItemService, EmployeeItemService>();
             services.AddScoped<IEmployeeLicenceService, EmployeeLicenceService>();
             services.AddScoped<IEmployeeProfessionService, EmployeeProfessionService>();
+            services.AddScoped<IEmployeeByConstructionSiteService, EmployeeByConstructionSiteService>();
+            services.AddScoped<IEmployeeByConstructionSiteHistoryService, EmployeeByConstructionSiteHistoryService>();
             services.AddScoped<IFamilyMemberService, FamilyMemberService>();
 
             services.AddScoped<IBankService, BankService>();

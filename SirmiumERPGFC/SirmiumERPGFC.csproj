@@ -173,6 +173,8 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeByConstructionSiteHistorySQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeByConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeItemSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeLicenceItemSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeProfessionItemSQLiteRepository.cs" />

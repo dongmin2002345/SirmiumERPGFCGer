@@ -1,20 +1,17 @@
-﻿using DomainCore.Common.BusinessPartners;
-using DomainCore.Common.Locations;
+﻿using DomainCore.Banks;
+using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
-using DomainCore.Common.Individuals;
+using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
+using DomainCore.Common.Professions;
+using DomainCore.Common.Sectors;
+using DomainCore.ConstructionSites;
+using DomainCore.Employees;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using DomainCore.Common.Sectors;
-using DomainCore.Common.Professions;
-using DomainCore.Banks;
-using DomainCore.ConstructionSites;
-using DomainCore.Employees;
 
 namespace RepositoryCore.Context
 {
@@ -73,8 +70,6 @@ namespace RepositoryCore.Context
         public DbSet<BusinessPartnerType> BusinessPartnerTypes { get; set; }
         public DbSet<BusinessPartnerBusinessPartnerType> BusinessPartnerBusinessPartnerTypes { get; set; }
 
-        public DbSet<Individual> Individuals { get; set; }
-
         public DbSet<OutputInvoice> OutputInvoices { get; set; }
 
         public DbSet<City> Cities { get; set; }
@@ -92,6 +87,8 @@ namespace RepositoryCore.Context
         public DbSet<EmployeeItem> EmployeeItems { get; set; }
         public DbSet<EmployeeLicence> EmployeeLicences { get; set; }
         public DbSet<EmployeeProfession> EmployeeProfessions { get; set; }
+        public DbSet<EmployeeByConstructionSite> EmployeeByConstructionSites { get; set; }
+        public DbSet<EmployeeByConstructionSiteHistory> EmployeeByConstructionSiteHistories { get; set; }
 
         public DbSet<ConstructionSite> ConstructionSites { get; set; }
 

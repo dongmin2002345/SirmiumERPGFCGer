@@ -5,6 +5,7 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
 using System.Collections.Generic;
@@ -363,6 +364,26 @@ namespace SirmiumERPGFC.Repository.Common
                 viewModel.Id = query.GetInt32(counter++);
                 viewModel.Identifier = query.GetGuid(counter++);
                 viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter-1);
+                viewModel.Name = query.GetString(counter++);
+
+
+                return viewModel;
+            }
+        }
+
+        public static ConstructionSiteViewModel GetConstructionSite(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+            {
+                var viewModel = new ConstructionSiteViewModel();
+                viewModel.Id = query.GetInt32(counter++);
+                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
                 viewModel.Name = query.GetString(counter++);
 
 
