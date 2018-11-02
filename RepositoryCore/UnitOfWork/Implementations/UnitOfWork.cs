@@ -68,11 +68,17 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IEmployeeByConstructionSiteHistoryRepository employeeByConstructionSiteHistoryRepository;
         private IFamilyMemberRepository familyMemberRepository;
 
-        #endregion
-        
-		#region Constructor
+        private IEmployeeByBusinessPartnerRepository employeeByBusinessPartnerRepository;
+        private IEmployeeByBusinessPartnerHistoryRepository employeeByBusinessPartnerHistoryRepository;
 
-		public UnitOfWork(bool useSql2005Compatibility = false)
+        private IBusinessPartnerByConstructionSiteRepository businessPartnerByConstructionSiteRepository;
+        private IBusinessPartnerByConstructionSiteHistoryRepository businessPartnerByConstructionSiteHistoryRepository;
+
+        #endregion
+
+        #region Constructor
+
+        public UnitOfWork(bool useSql2005Compatibility = false)
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             if (useSql2005Compatibility)
@@ -282,6 +288,34 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (employeeByConstructionSiteHistoryRepository == null)
                 employeeByConstructionSiteHistoryRepository = new EmployeeByConstructionSiteHistoryRepository(context);
             return employeeByConstructionSiteHistoryRepository;
+        }
+
+        public IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository()
+        {
+            if (employeeByBusinessPartnerRepository == null)
+                employeeByBusinessPartnerRepository = new EmployeeByBusinessPartnerRepository(context);
+            return employeeByBusinessPartnerRepository;
+        }
+
+        public IEmployeeByBusinessPartnerHistoryRepository GetEmployeeByBusinessPartnerHistoryRepository()
+        {
+            if (employeeByBusinessPartnerHistoryRepository == null)
+                employeeByBusinessPartnerHistoryRepository = new EmployeeByBusinessPartnerHistoryRepository(context);
+            return employeeByBusinessPartnerHistoryRepository;
+        }
+
+        public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
+        {
+            if (businessPartnerByConstructionSiteRepository == null)
+                businessPartnerByConstructionSiteRepository = new BusinessPartnerByConstructionSiteRepository(context);
+            return businessPartnerByConstructionSiteRepository;
+        }
+
+        public IBusinessPartnerByConstructionSiteHistoryRepository GetBusinessPartnerByConstructionSiteHistoryRepository()
+        {
+            if (businessPartnerByConstructionSiteHistoryRepository == null)
+                businessPartnerByConstructionSiteHistoryRepository = new BusinessPartnerByConstructionSiteHistoryRepository(context);
+            return businessPartnerByConstructionSiteHistoryRepository;
         }
 
         #endregion

@@ -49,6 +49,12 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IEmployeeByConstructionSiteHistoryRepository GetEmployeeByConstructionSiteHistoryRepository();
         IFamilyMemberRepository GetFamilyMemberRepository();
 
+        IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository();
+        IEmployeeByBusinessPartnerHistoryRepository GetEmployeeByBusinessPartnerHistoryRepository();
+
+        IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository();
+        IBusinessPartnerByConstructionSiteHistoryRepository GetBusinessPartnerByConstructionSiteHistoryRepository();
+
         void Save();
     }
 }
