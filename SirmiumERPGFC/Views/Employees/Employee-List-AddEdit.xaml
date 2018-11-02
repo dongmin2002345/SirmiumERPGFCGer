@@ -275,7 +275,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
-                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity3" 
+                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry2" 
                                         CurrentCountry="{Binding Path=CurrentEmployeeProfessionItemForm.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Zanimanje *" />

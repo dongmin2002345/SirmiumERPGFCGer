@@ -208,9 +208,9 @@ namespace SirmiumERPGFC.Repository.Common
                 return new CityViewModel()
                 {
                     Id = query.GetInt32(counter++),
-                    Identifier = query.GetGuid(counter++),
-                    ZipCode = query.GetString(counter++),
-                    Name = query.GetString(counter++)
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    ZipCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 
@@ -225,9 +225,9 @@ namespace SirmiumERPGFC.Repository.Common
                 return new RegionViewModel()
                 {
                     Id = query.GetInt32(counter++),
-                    Identifier = query.GetGuid(counter++),
-                    RegionCode = query.GetString(counter++),
-                    Name = query.GetString(counter++)
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    RegionCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 
@@ -243,9 +243,9 @@ namespace SirmiumERPGFC.Repository.Common
                 return new MunicipalityViewModel()
                 {
                     Id = query.GetInt32(counter++),
-                    Identifier = query.GetGuid(counter++),
-                    MunicipalityCode = query.GetString(counter++),
-                    Name = query.GetString(counter++)
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    MunicipalityCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 
@@ -260,9 +260,9 @@ namespace SirmiumERPGFC.Repository.Common
                 return new CountryViewModel()
                 {
                     Id = query.GetInt32(counter++),
-                    Identifier = query.GetGuid(counter++),
-                    Code = query.GetString(counter++),
-                    Name = query.GetString(counter++)
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 

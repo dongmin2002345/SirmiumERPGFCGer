@@ -563,7 +563,7 @@ namespace SirmiumERPGFC.Views.Employees
                 MainWindow.SuccessMessage = "Zaglavlje je uspešno sačuvano!";
                 IsHeaderCreated = true;
 
-                txtName.Focus();
+                popCountry2.txtCountry.Focus();
             }
             else
                 MainWindow.ErrorMessage = response.Message;
@@ -610,7 +610,7 @@ namespace SirmiumERPGFC.Views.Employees
                 displayThread.IsBackground = true;
                 displayThread.Start();
 
-                txtName.Focus();
+                popFamilyMember.txtFamilyMember.Focus();
             }
             else
                 MainWindow.ErrorMessage = response.Message;
@@ -797,7 +797,7 @@ namespace SirmiumERPGFC.Views.Employees
                 displayThread.IsBackground = true;
                 displayThread.Start();
 
-                txtName.Focus();
+                popCountry2.txtCountry.Focus();
             }
             else
                 MainWindow.ErrorMessage = response.Message;
@@ -844,7 +844,7 @@ namespace SirmiumERPGFC.Views.Employees
                 displayThread.IsBackground = true;
                 displayThread.Start();
 
-                txtName.Focus();
+                popCountry3.txtCountry.Focus();
             }
             else
                 MainWindow.ErrorMessage = response.Message;
