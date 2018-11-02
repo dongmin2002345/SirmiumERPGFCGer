@@ -150,9 +150,9 @@ namespace SirmiumERPGFC.Repository.Locations
                         SqlCommandSelectPart +
                         "FROM Municipalities " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name OR Code LIKE @Name) " +
-                        "AND (@MunicipalityCode IS NULL OR @MunicipalityCode = '' OR MunicipalityCode LIKE @MunicipalityCode) " +
-                        "AND (@RegionName IS NULL OR @RegionName = '' OR RegionName LIKE @RegionName) " +
-                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
+                        "OR (@MunicipalityCode IS NULL OR @MunicipalityCode = '' OR MunicipalityCode LIKE @MunicipalityCode) " +
+                        "OR (@RegionName IS NULL OR @RegionName = '' OR RegionName LIKE @RegionName) " +
+                        "OR (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND RegionIdentifier = @RegionIdentifier " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);

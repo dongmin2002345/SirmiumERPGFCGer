@@ -51,7 +51,7 @@
                               ItemsSource="{Binding Path=ProfessionsFromDB}"
                               SelectedItem="{Binding Path=CurrentProfession}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Mark" Header="Oznaka" Binding="{Binding Mark}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="SecondCode" Header="Oznaka" Binding="{Binding SecondCode}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje porekla" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>

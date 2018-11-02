@@ -592,33 +592,21 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (String.IsNullOrEmpty(CurrentEmployeeItemForm.Name))
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Ime";
-            //    return;
-            //}
+            if (String.IsNullOrEmpty(CurrentEmployeeItemForm.Name))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Ime";
+                return;
+            }
 
-            //if (String.IsNullOrEmpty(CurrentEmployeeItemForm.EarTag))
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Ušna markica";
-            //    return;
-            //}
+            if (CurrentEmployeeItemForm.DateOfBirth == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Datum rođenja";
+                return;
+            }
 
-            //if (CurrentEmployeeItemForm.DateOfBirth == null)
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Datum rođenja";
-            //    return;
-            //}
-
-            //if (CurrentEmployeeItemForm.Gender == null)
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Pol";
-            //    return;
-            //}
-
-            //#endregion
+            #endregion
 
             // IF update process, first delete item
             new EmployeeItemSQLiteRepository().Delete(CurrentEmployeeItemForm.Identifier);
@@ -792,6 +780,21 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void btnAddProfessionItem_Click(object sender, RoutedEventArgs e)
         {
+            #region Validation
+
+            if (CurrentEmployeeProfessionItemForm.Profession == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Zanimanje";
+                return;
+            }
+
+            if (CurrentEmployeeProfessionItemForm.Country == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Država";
+                return;
+            }
+
+            #endregion
             // IF update process, first delete item
             new EmployeeProfessionItemSQLiteRepository().Delete(CurrentEmployeeProfessionItemForm.Identifier);
 
@@ -824,6 +827,21 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void btnAddDItem_Click(object sender, RoutedEventArgs e)
         {
+            #region Validation
+
+            if (CurrentEmployeeLicenceItemForm.Licence == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Vrsta dozvole";
+                return;
+            }
+
+            if (CurrentEmployeeLicenceItemForm.Country == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Država";
+                return;
+            }
+
+            #endregion
             // IF update process, first delete item
             new EmployeeLicenceItemSQLiteRepository().Delete(CurrentEmployeeLicenceItemForm.Identifier);
 
@@ -903,6 +921,8 @@ namespace SirmiumERPGFC.Views.Employees
                 CreatedAt = CurrentLicenceDG.CreatedAt,
                 CreatedBy = CurrentLicenceDG.CreatedBy,
                 Employee = CurrentLicenceDG.Employee,
+                ValidFrom = CurrentLicenceDG.ValidFrom,
+                ValidTo = CurrentLicenceDG.ValidTo,
                 Id = CurrentLicenceDG.Id,
                 Identifier = CurrentLicenceDG.Identifier,
                 IsActive = CurrentLicenceDG.IsActive,

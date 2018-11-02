@@ -51,7 +51,7 @@
                               ItemsSource="{Binding Path=LicenceTypesFromDB}"
                               SelectedItem="{Binding Path=CurrentLicenceType}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Mark" Header="Oznaka" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Code" Header="Oznaka" Binding="{Binding Code}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje porekla" Binding="{Binding Description}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
