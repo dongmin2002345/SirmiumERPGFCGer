@@ -289,7 +289,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeItem.Employee?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionId", ((object)EmployeeItem.Profession?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionIdentifier", ((object)EmployeeItem.Profession?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)EmployeeItem.Profession?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)EmployeeItem.Profession?.SecondCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionName", ((object)EmployeeItem.Profession?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country?.Identifier) ?? DBNull.Value);

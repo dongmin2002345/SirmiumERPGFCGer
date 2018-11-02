@@ -274,8 +274,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Drzava *" />
-                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity3" 
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
+                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry2" 
                                         CurrentCountry="{Binding Path=CurrentEmployeeProfessionItemForm.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Zanimanje *" />
@@ -316,7 +316,9 @@
                               SelectedItem="{Binding Path=CurrentProfessionDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Country.Code" Header="Šifra države" Binding="{Binding Country.Code}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Profession.SecondCode" Header="Šifra zanimanja" Binding="{Binding Profession.SecondCode}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Profession.Name" Header="Zanimanje" Binding="{Binding Profession.Name}" Width="*" IsReadOnly="True"/>
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -409,8 +411,12 @@
                               SelectedItem="{Binding Path=CurrentLicenceDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Country.Code" Header="Šifra države" Binding="{Binding Country.Code}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Licence.Code" Header="Šifra dozvole" Binding="{Binding Licence.Code}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Licence.Description" Header="Dozvola" Binding="{Binding Licence.Description}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn SortMemberPath="ValidFrom" Header="Važi od" Binding="{Binding ValidFrom}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn SortMemberPath="ValidTo" Header="Važi do" Binding="{Binding ValidTo}" Width="*" IsReadOnly="True"/>
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

@@ -51,8 +51,8 @@
                               ItemsSource="{Binding Path=CountriesFromDB}"
                               SelectedItem="{Binding Path=CurrentCountry}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Mark" Header="Oznaka" Binding="{Binding Mark}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje porekla" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="Code" Header="Oznaka" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="Ime zemlje" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseCountryPopup" Click="btnCloseCountryPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2">

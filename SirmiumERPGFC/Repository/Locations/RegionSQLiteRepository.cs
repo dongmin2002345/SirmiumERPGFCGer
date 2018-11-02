@@ -138,8 +138,8 @@ namespace SirmiumERPGFC.Repository.Locations
                         SqlCommandSelectPart +
                         "FROM Regions " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
-                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
+                        "OR (@RegionCode IS NULL OR @RegionCode = '' OR RegionCode LIKE @RegionCode) " +
+                        "OR (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CountryIdentifier = @CountryIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +

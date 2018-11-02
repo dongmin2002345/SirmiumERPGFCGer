@@ -222,7 +222,7 @@
                         ItemsSource="{Binding Path=EmployeeItemsFromDB}"
                         SelectedItem="{Binding Path=CurrentEmployeeItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" Width="2*" />
                             <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Član porodice" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
                         </DataGrid.Columns>
@@ -248,6 +248,7 @@
                         Style="{DynamicResource AzureDataGrid}"
                         ItemsSource="{Binding Path=EmployeeProfessionItemsFromDB}">
                         <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Profession.SecondCode" Header="Šifra zanimanja" Binding="{Binding Profession.SecondCode}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Profession.Name" Header="Zanimanje" Binding="{Binding Profession.Name}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True"  />
                         </DataGrid.Columns>
@@ -273,9 +274,11 @@
                         Style="{DynamicResource AzureDataGrid}"
                         ItemsSource="{Binding Path=EmployeeLicenceItemsFromDB}">
                         <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Licence.Code" Header="Šifra" Binding="{Binding Licence.Code}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Licence.Category" Header="Kategorija" Binding="{Binding Licence.Category}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Licence.Description" Header="Dozvola" Binding="{Binding Licence.Description}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Country.Name}" IsReadOnly="True"  />
+                            <DataGridTextColumn SortMemberPath="ValidTo" Header="Ističe" Binding="{Binding ValidTo}" IsReadOnly="True"  />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
