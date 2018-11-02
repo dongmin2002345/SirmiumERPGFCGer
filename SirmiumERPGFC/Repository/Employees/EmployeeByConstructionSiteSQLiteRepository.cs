@@ -54,76 +54,12 @@ namespace SirmiumERPGFC.Repository.Employees
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 
-        public EmployeeByConstructionSiteListResponse GetDistinctConstructionSitesByPage(int companyId, EmployeeByConstructionSiteViewModel constructionSiteSearchObject, int currentPage = 1, int itemsPerPage = 50)
-        {
-            EmployeeByConstructionSiteListResponse response = new EmployeeByConstructionSiteListResponse();
-            List<EmployeeByConstructionSiteViewModel> employeeByConstructionSites = new List<EmployeeByConstructionSiteViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        "SELECT DISTINCT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
-                        "IsSynced, CompanyId, CompanyName " +
-                        "FROM EmployeeByConstructionSites " +
-                        "WHERE (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR ConstructionSiteName = @ConstructionSiteName) " +
-                        "AND CompanyId = @CompanyId " +
-                        "ORDER BY IsSynced, Id DESC " +
-                        "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                    selectCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)constructionSiteSearchObject.Search_Employee?.Name) ?? "");
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-                    selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
-                    selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeByConstructionSiteViewModel dbEntry = new EmployeeByConstructionSiteViewModel();
-                        dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        employeeByConstructionSites.Add(dbEntry);
-                    }
-
-
-                    selectCommand = new SqliteCommand(
-                        "SELECT Count(*) " +
-                        "FROM EmployeeByConstructionSites " +
-                        "WHERE (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR ConstructionSiteName = @ConstructionSiteName) " +
-                        "AND CompanyId = @CompanyId;", db);
-                    selectCommand.Parameters.AddWithValue("@EmployeeName", ((object)constructionSiteSearchObject.Search_Employee?.Name) ?? "");
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    query = selectCommand.ExecuteReader();
-
-                    if (query.Read())
-                        response.TotalItems = query.GetInt32(0);
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.EmployeeByConstructionSites = new List<EmployeeByConstructionSiteViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.EmployeeByConstructionSites = employeeByConstructionSites;
-            return response;
-        }
-
         public EmployeeByConstructionSiteListResponse GetByConstructionSite(Guid constructionSiteIdentifier)
         {
             EmployeeByConstructionSiteListResponse response = new EmployeeByConstructionSiteListResponse();
             List<EmployeeByConstructionSiteViewModel> employeeByConstructionSites = new List<EmployeeByConstructionSiteViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -180,7 +116,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 List<EmployeeByConstructionSiteViewModel> employeeByConstructionSiteFromDB = response.EmployeeByConstructionSites;
                 foreach (var employeeByConstructionSite in employeeByConstructionSiteFromDB.OrderBy(x => x.Id))
                 {
-                    Delete(employeeByConstructionSite.Identifier);
+                    Delete(employeeByConstructionSite.Employee.Identifier, employeeByConstructionSite.ConstructionSite.Identifier);
                     employeeByConstructionSite.IsSynced = true;
                     Create(employeeByConstructionSite);
                 }
@@ -189,7 +125,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -225,7 +161,7 @@ namespace SirmiumERPGFC.Repository.Employees
         {
             EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -276,7 +212,7 @@ namespace SirmiumERPGFC.Repository.Employees
         {
             EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -310,11 +246,11 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeByConstructionSiteResponse Delete(Guid identifier)
+        public EmployeeByConstructionSiteResponse Delete(Guid employeeIdentifier, Guid constructionSiteIdentifier)
         {
             EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -323,8 +259,9 @@ namespace SirmiumERPGFC.Repository.Employees
 
                 //Use parameterized query to prevent SQL injection attacks
                 insertCommand.CommandText =
-                    "DELETE FROM EmployeeByConstructionSites WHERE Identifier = @Identifier";
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                    "DELETE FROM EmployeeByConstructionSites WHERE EmployeeIdentifier = @EmployeeIdentifier AND ConstructionSiteIdentifier = @ConstructionSiteIdentifier";
+                insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", employeeIdentifier);
+                insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                 try
                 {
                     insertCommand.ExecuteReader();
@@ -349,7 +286,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPFarmDB.db"))
+                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                 {
                     db.Open();
                     db.EnableExtensions(true);

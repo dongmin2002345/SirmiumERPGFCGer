@@ -1,28 +1,20 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.ConstructionSites
 {
@@ -37,9 +29,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
         #region ConstructionSitesFromDB
-        private ObservableCollection<EmployeeByConstructionSiteViewModel> _ConstructionSitesFromDB;
+        private ObservableCollection<ConstructionSiteViewModel> _ConstructionSitesFromDB;
 
-        public ObservableCollection<EmployeeByConstructionSiteViewModel> ConstructionSitesFromDB
+        public ObservableCollection<ConstructionSiteViewModel> ConstructionSitesFromDB
         {
             get { return _ConstructionSitesFromDB; }
             set
@@ -54,9 +46,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
         #region CurrentConstructionSite
-        private EmployeeByConstructionSiteViewModel _CurrentConstructionSite;
+        private ConstructionSiteViewModel _CurrentConstructionSite;
 
-        public EmployeeByConstructionSiteViewModel CurrentConstructionSite
+        public ConstructionSiteViewModel CurrentConstructionSite
         {
             get { return _CurrentConstructionSite; }
             set
@@ -71,9 +63,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
         #region ConstructionSiteSearchObject
-        private EmployeeByConstructionSiteViewModel _ConstructionSiteSearchObject = new EmployeeByConstructionSiteViewModel();
+        private ConstructionSiteViewModel _ConstructionSiteSearchObject = new ConstructionSiteViewModel();
 
-        public EmployeeByConstructionSiteViewModel ConstructionSiteSearchObject
+        public ConstructionSiteViewModel ConstructionSiteSearchObject
         {
             get { return _ConstructionSiteSearchObject; }
             set
@@ -99,6 +91,58 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _ConstructionSiteDataLoading = value;
                     NotifyPropertyChanged("ConstructionSiteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region EmployeesFromDB
+        private ObservableCollection<EmployeeViewModel> _EmployeesFromDB;
+
+        public ObservableCollection<EmployeeViewModel> EmployeesFromDB
+        {
+            get { return _EmployeesFromDB; }
+            set
+            {
+                if (_EmployeesFromDB != value)
+                {
+                    _EmployeesFromDB = value;
+                    NotifyPropertyChanged("EmployeesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployee
+        private EmployeeViewModel _CurrentEmployee;
+
+        public EmployeeViewModel CurrentEmployee
+        {
+            get { return _CurrentEmployee; }
+            set
+            {
+                if (_CurrentEmployee != value)
+                {
+                    _CurrentEmployee = value;
+                    NotifyPropertyChanged("CurrentEmployee");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeDataLoading
+        private bool _EmployeeDataLoading;
+
+        public bool EmployeeDataLoading
+        {
+            get { return _EmployeeDataLoading; }
+            set
+            {
+                if (_EmployeeDataLoading != value)
+                {
+                    _EmployeeDataLoading = value;
+                    NotifyPropertyChanged("EmployeeDataLoading");
                 }
             }
         }
@@ -211,17 +255,17 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             ConstructionSiteDataLoading = true;
 
-            EmployeeByConstructionSiteListResponse response = new EmployeeByConstructionSiteSQLiteRepository()
-                .GetDistinctConstructionSitesByPage(MainWindow.CurrentCompanyId, ConstructionSiteSearchObject, currentPage, itemsPerPage);
+            ConstructionSiteListResponse response = new ConstructionSiteSQLiteRepository()
+                .GetConstructionSitesByPage(MainWindow.CurrentCompanyId, ConstructionSiteSearchObject, currentPage, itemsPerPage);
 
             if (response.Success)
             {
-                ConstructionSitesFromDB = new ObservableCollection<EmployeeByConstructionSiteViewModel>(response?.EmployeeByConstructionSites ?? new List<EmployeeByConstructionSiteViewModel>());
+                ConstructionSitesFromDB = new ObservableCollection<ConstructionSiteViewModel>(response?.ConstructionSites ?? new List<ConstructionSiteViewModel>());
                 totalItems = response.TotalItems;
             }
             else
             {
-                ConstructionSitesFromDB = new ObservableCollection<EmployeeByConstructionSiteViewModel>();
+                ConstructionSitesFromDB = new ObservableCollection<ConstructionSiteViewModel>();
                 totalItems = 0;
                 MainWindow.ErrorMessage = response.Message;
             }
@@ -320,7 +364,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.OpenFlyout(this, "Radnici po gradilištu", 95, new ConstructionSiteEmployee_List_AddEdit());
+            FlyoutHelper.OpenFlyout(this, "Radnici po gradilištu", 95, new ConstructionSiteEmployee_List_AddEdit(CurrentConstructionSite));
         }
 
         #region INotifyPropertyChanged implementation
