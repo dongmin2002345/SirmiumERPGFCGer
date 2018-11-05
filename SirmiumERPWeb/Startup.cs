@@ -9,6 +9,7 @@ using RepositoryCore.DbSeed;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
 using ServiceCore.Implementations.Banks;
+using ServiceCore.Implementations.Common;
 using ServiceCore.Implementations.Common.BusinessPartners;
 using ServiceCore.Implementations.Common.Companies;
 using ServiceCore.Implementations.Common.Identity;
@@ -148,6 +149,12 @@ namespace SirmiumERPWeb
             services.AddScoped<IEmployeeByConstructionSiteService, EmployeeByConstructionSiteService>();
             services.AddScoped<IEmployeeByConstructionSiteHistoryService, EmployeeByConstructionSiteHistoryService>();
             services.AddScoped<IFamilyMemberService, FamilyMemberService>();
+
+            services.AddScoped<IEmployeeByBusinessPartnerService, EmployeeByBusinessPartnerService>();
+            services.AddScoped<IEmployeeByBusinessPartnerHistoryService, EmployeeByBusinessPartnerHistoryService>();
+
+            services.AddScoped<IBusinessPartnerByConstructionSiteService, BusinessPartnerByConstructionSiteService>();
+            services.AddScoped<IBusinessPartnerByConstructionSiteHistoryService, BusinessPartnerByConstructionSiteHistoryService>();
 
             services.AddScoped<IBankService, BankService>();
 			services.AddScoped<ILicenceTypeService, LicenceTypeService>();

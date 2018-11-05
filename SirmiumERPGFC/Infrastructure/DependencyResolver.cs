@@ -68,6 +68,12 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IEmployeeByConstructionSiteHistoryService>().To<EmployeeByConstructionSiteHistoryService>();
                 Kernel.Bind<IFamilyMemberService>().To<FamilyMemberService>();
 
+                Kernel.Bind<IEmployeeByBusinessPartnerService>().To<IEmployeeByBusinessPartnerService>();
+                Kernel.Bind<IEmployeeByBusinessPartnerHistoryService>().To<EmployeeByBusinessPartnerHistoryService>();
+
+                Kernel.Bind<IBusinessPartnerByConstructionSiteService>().To<BusinessPartnerByConstructionSiteService>();
+                Kernel.Bind<IBusinessPartnerByConstructionSiteHistoryService>().To<BusinessPartnerByConstructionSiteHistoryService>();
+
                 Kernel.Bind<IConstructionSiteService>().To<ConstructionSiteService>();
 
             }

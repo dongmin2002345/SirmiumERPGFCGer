@@ -167,12 +167,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBusinessPartnerTypeSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerByConstructionSiteHistorySQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerByConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerLocationSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerOrganizationUnitSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeByBusinessPartnerHistorySQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeByBusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByConstructionSiteHistorySQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeItemSQLiteRepository.cs" />
