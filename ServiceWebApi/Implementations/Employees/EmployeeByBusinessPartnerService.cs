@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ServiceWebApi.Implementations.Employees
 {
-    public class EmployeeBusinessPartnerService : IEmployeeByBusinessPartnerService
+    public class EmployeeByBusinessPartnerService : IEmployeeByBusinessPartnerService
     {
         public EmployeeByBusinessPartnerListResponse GetEmployeeByBusinessPartners(int companyId)
         {
