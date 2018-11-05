@@ -222,7 +222,7 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         #endregion
 
 
-            #region GER 
+        #region GER 
 
                 #region NameGer
                 private string _NameGer;

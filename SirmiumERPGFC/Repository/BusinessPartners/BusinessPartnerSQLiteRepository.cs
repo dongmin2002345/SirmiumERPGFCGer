@@ -168,6 +168,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
+
         public BusinessPartnerListResponse GetGermanyBusinessPartnersByPage(int companyId, BusinessPartnerViewModel businessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
@@ -398,6 +399,95 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.BusinessPartners = businessPartners;
             return response;
         }
+
+
+        public BusinessPartnerListResponse GetBusinessPartnersOnConstructionSiteByPage(int companyId, Guid businessPartnerIdentifier, BusinessPartnerViewModel BusinessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        {
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
+            List<BusinessPartnerViewModel> BusinessPartners = new List<BusinessPartnerViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM BusinessPartners " +
+                        "WHERE Identifier IN (SELECT BusinessPartnerIdentifier FROM BusinessPartnerByConstructionSites WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
+                        "AND CompanyId = @CompanyId " +
+                        "ORDER BY IsSynced, Id DESC " +
+                        "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)BusinessPartnerSearchObject.Search_Name) != null ? "%" + BusinessPartnerSearchObject.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@PIB", ((object)BusinessPartnerSearchObject.Search_PIB) != null ? "%" + BusinessPartnerSearchObject.Search_PIB + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
+                    selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        int counter = 0;
+                        BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
+                        dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        BusinessPartners.Add(dbEntry);
+                    }
+
+                    response.BusinessPartners = BusinessPartners;
+
+                    selectCommand = new SqliteCommand(
+                        "SELECT Count(*) " +
+                        "FROM BusinessPartners " +
+                        "WHERE Identifier IN (SELECT BusinessPartnerIdentifier FROM BusinessPartnerByConstructionSites WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier) " +
+                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
+                        "AND CompanyId = @CompanyId;", db);
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)BusinessPartnerSearchObject.Search_Name) != null ? "%" + BusinessPartnerSearchObject.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@PIB", ((object)BusinessPartnerSearchObject.Search_PIB) != null ? "%" + BusinessPartnerSearchObject.Search_PIB + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    query = selectCommand.ExecuteReader();
+
+                    if (query.Read())
+                        response.TotalItems = query.GetInt32(0);
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.BusinessPartners = new List<BusinessPartnerViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.BusinessPartners = BusinessPartners;
+            return response;
+        }
+
 
         public BusinessPartnerResponse GetBusinessPartner(Guid identifier)
         {
