@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementations\Banks\BankService.cs" />
+    <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerByConstructionSiteHistoryService.cs" />
+    <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerByConstructionSiteService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerLocationService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerOrganizationUnitService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerPhoneService.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeBusinessPartnerService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeByBusinessPartnerHistoryService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByConstructionSiteHistoryService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeProfessionService.cs" />
