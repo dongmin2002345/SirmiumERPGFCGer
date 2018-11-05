@@ -142,7 +142,6 @@
                         <DataGridTextColumn SortMemberPath="City.Name" Header="Grad" Binding="{Binding City.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="MaxWorkers" Header="Max br radnika" Binding="{Binding MaxWorkers}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ContractExpiration" Header="Istek ugovora" Binding="{Binding ContractExpiration, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

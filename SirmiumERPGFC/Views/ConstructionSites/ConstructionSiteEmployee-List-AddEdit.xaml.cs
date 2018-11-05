@@ -1,4 +1,5 @@
 ﻿using Ninject;
+using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Common.Companies;
@@ -7,7 +8,9 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
+using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +38,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #region 
         IEmployeeByConstructionSiteService employeeByConstructionSiteService;
         IEmployeeByConstructionSiteHistoryService employeeByConstructionSiteHistoryService;
+        IEmployeeService employeeService;
+        IConstructionSiteService constructionSiteService;
         #endregion
 
         #region CurrentConstructionSite
@@ -251,6 +256,40 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
 
+        #region SyncButtonContent
+        private string _SyncButtonContent = " Sinhronizuj ";
+
+        public string SyncButtonContent
+        {
+            get { return _SyncButtonContent; }
+            set
+            {
+                if (_SyncButtonContent != value)
+                {
+                    _SyncButtonContent = value;
+                    NotifyPropertyChanged("SyncButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SyncButtonEnabled
+        private bool _SyncButtonEnabled = true;
+
+        public bool SyncButtonEnabled
+        {
+            get { return _SyncButtonEnabled; }
+            set
+            {
+                if (_SyncButtonEnabled != value)
+                {
+                    _SyncButtonEnabled = value;
+                    NotifyPropertyChanged("SyncButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructor
@@ -259,6 +298,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();
             employeeByConstructionSiteHistoryService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteHistoryService>();
+            employeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
+            constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
 
             InitializeComponent();
 
@@ -268,8 +309,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             Thread displayThread = new Thread(() =>
             {
-                DisplayEmployeesNotOnConstructionSiteData();
-                DisplayEmployeesOnConstructionSiteData();
+                Sync();
             });
             displayThread.IsBackground = true;
             displayThread.Start();
@@ -338,6 +378,38 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             EmployeeNotOnConstructionSiteDataLoading = false;
         }
 
+        private void Sync()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Radnici ... ";
+            new EmployeeSQLiteRepository().Sync(employeeService);
+
+            SyncButtonContent = " Gradilišta ... ";
+            new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
+
+            SyncButtonContent = " Rad. na gradilistu ... ";
+            new EmployeeByConstructionSiteSQLiteRepository().Sync(employeeByConstructionSiteService);
+
+            DisplayEmployeesNotOnConstructionSiteData();
+            DisplayEmployeesOnConstructionSiteData();
+
+            SyncButtonContent = " Osveži ";
+            SyncButtonEnabled = true;
+        }
+
+        private void btnSync_Click(object sender, RoutedEventArgs e)
+        {
+            Thread th = new Thread(() =>
+            {
+                Sync();
+            })
+            {
+                IsBackground = true
+            };
+            th.Start();
+        }
+
         #endregion
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -378,6 +450,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     return;
                 }
 
+                MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
 
                 DisplayEmployeesNotOnConstructionSiteData();
                 DisplayEmployeesOnConstructionSiteData();
@@ -398,42 +471,47 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             #endregion
 
-            Thread th = new Thread(() =>
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            // Create confirmation window
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentEmployeeOnConstructionSite.Name + " " + CurrentEmployeeOnConstructionSite.SurName);
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
             {
-                EmployeeByConstructionSiteListResponse listResponse = new EmployeeByConstructionSiteSQLiteRepository().GetByConstructionSite(CurrentConstructionSite.Identifier);
-                EmployeeByConstructionSiteViewModel employeeByConstructionSite = listResponse.EmployeeByConstructionSites.FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnConstructionSite.Identifier);
-                EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(employeeByConstructionSite.Identifier);
-                if (!response.Success)
+                Thread th = new Thread(() =>
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
-                    return;
-                }
+                    EmployeeByConstructionSiteListResponse listResponse = new EmployeeByConstructionSiteSQLiteRepository().GetByConstructionSite(CurrentConstructionSite.Identifier);
+                    EmployeeByConstructionSiteViewModel employeeByConstructionSite = listResponse.EmployeeByConstructionSites.FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnConstructionSite.Identifier);
+                    EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(employeeByConstructionSite.Identifier);
+                    if (!response.Success)
+                    {
+                        MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                        return;
+                    }
 
-                response = new EmployeeByConstructionSiteSQLiteRepository().Delete(CurrentEmployeeOnConstructionSite.Identifier, CurrentConstructionSite.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
-                    return;
-                }
+                    response = new EmployeeByConstructionSiteSQLiteRepository().Delete(CurrentEmployeeOnConstructionSite.Identifier, CurrentConstructionSite.Identifier);
+                    if (!response.Success)
+                    {
+                        MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                        return;
+                    }
 
-                //response = employeeByConstructionSiteService.Create(employeeByConstructionSite);
-                //if (!response.Success)
-                //{
-                //    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                //    return;
-                //}
+                    //response = employeeByConstructionSiteService.Create(employeeByConstructionSite);
+                    //if (!response.Success)
+                    //{
+                    //    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    //    return;
+                    //}
 
 
-                DisplayEmployeesNotOnConstructionSiteData();
-                DisplayEmployeesOnConstructionSiteData();
-            });
-            th.IsBackground = true;
-            th.Start();
-        }
+                    DisplayEmployeesNotOnConstructionSiteData();
+                    DisplayEmployeesOnConstructionSiteData();
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
 
-        private void btnSubmit_Click(object sender, RoutedEventArgs e)
-        {
-
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

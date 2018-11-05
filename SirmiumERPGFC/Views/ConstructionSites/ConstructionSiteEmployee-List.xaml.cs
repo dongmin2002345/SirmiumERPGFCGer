@@ -57,6 +57,17 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _CurrentConstructionSite = value;
                     NotifyPropertyChanged("CurrentConstructionSite");
+
+                    if (_CurrentConstructionSite != null)
+                    {
+                        var response = new EmployeeSQLiteRepository().GetEmployeesOnConstructionSiteByPage(MainWindow.CurrentCompanyId, _CurrentConstructionSite.Identifier, new EmployeeViewModel(), 1, Int32.MaxValue);
+                        if (response.Success)
+                        {
+                            EmployeesFromDB = new ObservableCollection<EmployeeViewModel>(response.Employees ?? new List<EmployeeViewModel>());
+                        }
+                    }
+                    else
+                        EmployeesFromDB = new ObservableCollection<EmployeeViewModel>();
                 }
             }
         }

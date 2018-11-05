@@ -184,11 +184,10 @@
                         SelectedItem="{Binding Path=CurrentEmployee}">
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="FirstName" Header="Ime " Binding="{Binding FirstName}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="LastName" Header="Prezime " Binding="{Binding LastName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Ime " Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SurName" Header="Prezime " Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="Pasoš" Binding="{Binding Passport}" IsReadOnly="True"  />
-                        <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="Firma" Binding="{Binding BusinessPartner.Name}" IsReadOnly="True"  />
-                        <DataGridTextColumn SortMemberPath="ContractExpirationDate" Header="Ugovor ističe" Binding="{Binding ContractExpirationDate}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ContractExpirationDate" Header="Ugovor ističe" Binding="{Binding ContractExpirationDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
 
                     </DataGrid.Columns>
                 </DataGrid>
