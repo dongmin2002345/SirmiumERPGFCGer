@@ -6,6 +6,7 @@ using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
 using DomainCore.Common.Professions;
 using DomainCore.Common.Sectors;
+using DomainCore.Common.ToDos;
 using DomainCore.ConstructionSites;
 using DomainCore.Employees;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +63,8 @@ namespace RepositoryCore.Context
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<ToDo> ToDos { get; set; }
 
         public DbSet<BusinessPartner> BusinessPartners { get; set; }
         public DbSet<BusinessPartnerLocation> BusinessPartnerLocations { get; set; }

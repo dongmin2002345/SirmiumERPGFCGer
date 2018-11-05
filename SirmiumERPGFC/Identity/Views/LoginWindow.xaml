@@ -7,7 +7,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:SirmiumERPGFC.Identity.Views"
         mc:Ignorable="d"
-        Title="Logovanje" Height="175" Width="800"
+        Title="Logovanje" Height="145" Width="800"
         BorderBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="2"
         WindowStartupLocation="CenterScreen"

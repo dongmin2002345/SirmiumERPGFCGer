@@ -59,6 +59,7 @@
     <Compile Include="Implementations\Common\Sectors\AgencyService.cs" />
     <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
+    <Compile Include="Implementations\Common\ToDos\ToDoService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeBusinessPartnerService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByBusinessPartnerHistoryService.cs" />

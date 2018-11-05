@@ -6,6 +6,7 @@ using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
 
@@ -17,6 +18,8 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         IAuthenticationRepository GetAuthenticationRepository();
         IUserRepository GetUserRepository();
+
+        IToDoRepository GetToDoRepository();
 
         IBusinessPartnerRepository GetBusinessPartnerRepository();
         IBusinessPartnerLocationRepository GetBusinessPartnerLocationRepository();

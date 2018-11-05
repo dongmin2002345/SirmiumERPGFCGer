@@ -195,6 +195,7 @@
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
+    <Compile Include="Repository\ToDos\ToDoSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="ViewComponents\Popups\AgencyPopup.xaml.cs">
       <DependentUpon>AgencyPopup.xaml</DependentUpon>
@@ -291,6 +292,9 @@
     </Compile>
     <Compile Include="Views\Employees\LicenceType_List_AddEdit.xaml.cs">
       <DependentUpon>LicenceType_List_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\ToDoAddEdit.xaml.cs">
+      <DependentUpon>ToDoAddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
@@ -542,6 +546,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Home\ToDoAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Locations\CityAddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -649,6 +657,9 @@
     <Content Include="Resources\Backgrounds\dj.png" />
     <Content Include="Resources\Backgrounds\food-inc.jpg" />
     <Content Include="Resources\Entypo-license.txt" />
+    <Resource Include="Resources\erp8.png" />
+    <Resource Include="Resources\Farm01.png" />
+    <Resource Include="Resources\GFC.png" />
     <Content Include="Resources\Icons\001-error.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

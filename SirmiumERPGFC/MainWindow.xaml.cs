@@ -260,7 +260,7 @@ namespace SirmiumERPGFC
             };
 
             // First page to display is Home page
-            //cntCtrl.Content = new Home();
+            cntCtrl.Content = new Home();
 
             //OpenTab("Početna", new Home());
         }

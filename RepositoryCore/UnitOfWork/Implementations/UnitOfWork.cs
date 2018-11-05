@@ -8,6 +8,7 @@ using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
@@ -19,6 +20,7 @@ using RepositoryCore.Implementations.Common.Invoices;
 using RepositoryCore.Implementations.Common.Locations;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Implementations.Common.Sectors;
+using RepositoryCore.Implementations.Common.ToDos;
 using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Implementations.Employees;
 using RepositoryCore.UnitOfWork.Abstractions;
@@ -33,6 +35,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
         #region Repository variables
 
         private ICompanyRepository companyRepository;
+
+        private IToDoRepository toDoRepository;
 
         private IAuthenticationRepository authenticationRepository;
         private IUserRepository userRepository;
@@ -106,6 +110,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (companyRepository == null)
                 companyRepository = new CompanyRepository(context);
             return companyRepository;
+        }
+
+        public IToDoRepository GetToDoRepository()
+        {
+            if (toDoRepository == null)
+                toDoRepository = new ToDoRepository(context);
+            return toDoRepository;
         }
 
         public IAuthenticationRepository GetAuthenticationRepository()

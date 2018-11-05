@@ -34,16 +34,6 @@
 
         <Fluent:Ribbon Grid.Row="0">
 
-            <Fluent:RibbonTabItem Header="Početna" x:Name="mniHome" KeyTip="POC">
-                <Fluent:RibbonGroupBox Header="Početna">
-                    <Fluent:Button Click="btnHome_Click" Header="Početna" KeyTip="POC" >
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\organization.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
-
             <Fluent:RibbonTabItem Header="Radnici" KeyTip="RAD">
                 <Fluent:RibbonGroupBox Header="Radnici">
                     <Fluent:Button Click="mniIndividuals_Click" Header="Radnici" KeyTip="RAD" Width="70">

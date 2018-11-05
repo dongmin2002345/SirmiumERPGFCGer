@@ -60,6 +60,7 @@
     <Compile Include="Abstractions\Common\Sectors\IAgencyService.cs" />
     <Compile Include="Abstractions\Common\Sectors\ISectorService.cs" />
     <Compile Include="Abstractions\Common\Professions\IProfessionService.cs" />
+    <Compile Include="Abstractions\Common\ToDos\IToDoService.cs" />
     <Compile Include="Abstractions\ConstructionSites\IConstructionSiteService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeByBusinessPartnerHistoryService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeByBusinessPartnerService.cs" />
@@ -127,6 +128,9 @@
     <Compile Include="Messages\Common\Professions\ProfessionListResponse.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionResponse.cs" />
     <Compile Include="Messages\Common\Professions\SyncProfessionRequest.cs" />
+    <Compile Include="Messages\Common\ToDos\SyncToDoRequest.cs" />
+    <Compile Include="Messages\Common\ToDos\ToDoListResponse.cs" />
+    <Compile Include="Messages\Common\ToDos\ToDoResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeByBusinessPartnerHistoryListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeByBusinessPartnerHistoryResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeByBusinessPartnerListResponse.cs" />
@@ -183,6 +187,7 @@
     <Compile Include="ViewModels\Common\Sectors\AgencyViewModel.cs" />
     <Compile Include="ViewModels\Common\Sectors\SectorViewModel.cs" />
     <Compile Include="ViewModels\Common\Professions\ProfessionViewModel.cs" />
+    <Compile Include="ViewModels\Common\ToDos\ToDoViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeByBusinessPartnerHistoryViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeByBusinessPartnerViewModel.cs" />

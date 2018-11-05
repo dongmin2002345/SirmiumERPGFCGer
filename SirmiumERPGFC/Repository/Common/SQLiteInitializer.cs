@@ -13,6 +13,7 @@ using SirmiumERPGFC.Repository.Professions;
 using SirmiumERPGFC.Repository.Banks;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
+using SirmiumERPGFC.Repository.ToDos;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -42,6 +43,20 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
                     #endregion
 
+                    #endregion
+
+                    #region ToDos
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ToDos", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    SqliteCommand createTableToDo = new SqliteCommand(ToDoSQLiteRepository.ToDoTableCreatePart, db);
+                    createTableToDo.ExecuteReader();
                     #endregion
 
                     #region Users
