@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181106075301_IzmeneNaRadnicimaPoFirmama_Zdravko1")]
+    partial class IzmeneNaRadnicimaPoFirmama_Zdravko1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1101,8 +1103,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int?>("BusinessPartnerId");
-
                     b.Property<string>("Code");
 
                     b.Property<int?>("CompanyId");
@@ -1124,8 +1124,6 @@ namespace RepositoryCore.Migrations
                     b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BusinessPartnerId");
 
                     b.HasIndex("CompanyId");
 
@@ -1800,10 +1798,6 @@ namespace RepositoryCore.Migrations
 
             modelBuilder.Entity("DomainCore.Employees.EmployeeByConstructionSite", b =>
                 {
-                    b.HasOne("DomainCore.Common.BusinessPartners.BusinessPartner", "BusinessPartner")
-                        .WithMany()
-                        .HasForeignKey("BusinessPartnerId");
-
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");

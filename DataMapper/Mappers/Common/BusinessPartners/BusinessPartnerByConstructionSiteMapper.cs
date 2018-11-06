@@ -31,6 +31,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Code = businessPartnerByConstructionSite.Code,
 
                 StartDate = businessPartnerByConstructionSite.StartDate,
+                EndDate = businessPartnerByConstructionSite.EndDate,
+
+                MaxNumOfEmployees = businessPartnerByConstructionSite.MaxNumOfEmployees,
 
                 BusinessPartner = businessPartnerByConstructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
                 ConstructionSite = businessPartnerByConstructionSite.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
@@ -57,6 +60,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Code = businessPartnerByConstructionSite.Code,
 
                 StartDate = businessPartnerByConstructionSite.StartDate,
+                EndDate = businessPartnerByConstructionSite.EndDate,
+
+                MaxNumOfEmployees = businessPartnerByConstructionSite.MaxNumOfEmployees,
 
                 UpdatedAt = businessPartnerByConstructionSite.UpdatedAt,
                 CreatedAt = businessPartnerByConstructionSite.CreatedAt
@@ -75,6 +81,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 Code = businessPartnerByConstructionSiteViewModel.Code,
                 StartDate = businessPartnerByConstructionSiteViewModel.StartDate,
+                EndDate = businessPartnerByConstructionSiteViewModel.EndDate,
+
+                MaxNumOfEmployees = businessPartnerByConstructionSiteViewModel.MaxNumOfEmployees,
 
                 BusinessPartnerId = businessPartnerByConstructionSiteViewModel.BusinessPartner?.Id ?? null,
                 ConstructionSiteId = businessPartnerByConstructionSiteViewModel.ConstructionSite?.Id ?? null,

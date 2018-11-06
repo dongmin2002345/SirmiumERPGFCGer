@@ -536,6 +536,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             var sqLite = new BusinessPartnerSQLiteRepository();
             sqLite.Delete(CurrentBusinessPartner.Identifier);
+
+            CurrentBusinessPartner.UpdatedAt = DateTime.Now;
             var response = sqLite.Create(CurrentBusinessPartner);
             if (response.Success)
             {
@@ -807,6 +809,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
                 CurrentBusinessPartner.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentBusinessPartner.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                CurrentBusinessPartner.UpdatedAt = DateTime.Now;
 
                 CurrentBusinessPartner.Locations = LocationsFromDB;
                 //CurrentBusinessPartner.OrganizationUnits = OrganizationUnitsFromDB;

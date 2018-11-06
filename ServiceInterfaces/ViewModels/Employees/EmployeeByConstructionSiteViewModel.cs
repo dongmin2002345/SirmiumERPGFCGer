@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,24 @@ namespace ServiceInterfaces.ViewModels.Employees
             }
         }
         #endregion
+
+        #region BusinessPartner
+        private BusinessPartnerViewModel _BusinessPartner;
+
+        public BusinessPartnerViewModel BusinessPartner
+        {
+            get { return _BusinessPartner; }
+            set
+            {
+                if (_BusinessPartner != value)
+                {
+                    _BusinessPartner = value;
+                    NotifyPropertyChanged("BusinessPartner");
+                }
+            }
+        }
+        #endregion
+
 
         #region ConstructionSite
         private ConstructionSiteViewModel _ConstructionSite;

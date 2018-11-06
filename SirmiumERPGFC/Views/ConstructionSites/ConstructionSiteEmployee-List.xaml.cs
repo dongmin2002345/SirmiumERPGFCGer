@@ -1,11 +1,14 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.Messages.Employees;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
 using System;
@@ -60,14 +63,14 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                     if (_CurrentConstructionSite != null)
                     {
-                        var response = new EmployeeSQLiteRepository().GetEmployeesOnConstructionSiteByPage(MainWindow.CurrentCompanyId, _CurrentConstructionSite.Identifier, new EmployeeViewModel(), 1, Int32.MaxValue);
-                        if (response.Success)
-                        {
-                            EmployeesFromDB = new ObservableCollection<EmployeeViewModel>(response.Employees ?? new List<EmployeeViewModel>());
-                        }
+                        DisplayBusinessPartnersOnConstructionSiteData();
+                        DisplayEmployeesOnConstructionSiteData();
                     }
                     else
-                        EmployeesFromDB = new ObservableCollection<EmployeeViewModel>();
+                    {
+                        EmployeesOnConstructionSiteFromDB = new ObservableCollection<EmployeeByConstructionSiteViewModel>();
+                        BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>();
+                    }
                 }
             }
         }
@@ -106,54 +109,106 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             }
         }
         #endregion
+        
 
+        #region BusinessPartnersOnConstructionSiteFromDB
+        private ObservableCollection<BusinessPartnerByConstructionSiteViewModel> _BusinessPartnersOnConstructionSiteFromDB;
 
-        #region EmployeesFromDB
-        private ObservableCollection<EmployeeViewModel> _EmployeesFromDB;
-
-        public ObservableCollection<EmployeeViewModel> EmployeesFromDB
+        public ObservableCollection<BusinessPartnerByConstructionSiteViewModel> BusinessPartnersOnConstructionSiteFromDB
         {
-            get { return _EmployeesFromDB; }
+            get { return _BusinessPartnersOnConstructionSiteFromDB; }
             set
             {
-                if (_EmployeesFromDB != value)
+                if (_BusinessPartnersOnConstructionSiteFromDB != value)
                 {
-                    _EmployeesFromDB = value;
-                    NotifyPropertyChanged("EmployeesFromDB");
+                    _BusinessPartnersOnConstructionSiteFromDB = value;
+                    NotifyPropertyChanged("BusinessPartnersOnConstructionSiteFromDB");
                 }
             }
         }
         #endregion
 
-        #region CurrentEmployee
-        private EmployeeViewModel _CurrentEmployee;
+        #region CurrentBusinessPartnerOnConstructionSite
+        private BusinessPartnerByConstructionSiteViewModel _CurrentBusinessPartnerOnConstructionSite;
 
-        public EmployeeViewModel CurrentEmployee
+        public BusinessPartnerByConstructionSiteViewModel CurrentBusinessPartnerOnConstructionSite
         {
-            get { return _CurrentEmployee; }
+            get { return _CurrentBusinessPartnerOnConstructionSite; }
             set
             {
-                if (_CurrentEmployee != value)
+                if (_CurrentBusinessPartnerOnConstructionSite != value)
                 {
-                    _CurrentEmployee = value;
-                    NotifyPropertyChanged("CurrentEmployee");
+                    _CurrentBusinessPartnerOnConstructionSite = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerOnConstructionSite");
                 }
             }
         }
         #endregion
 
-        #region EmployeeDataLoading
-        private bool _EmployeeDataLoading;
+        #region BusinessPartnerOnConstructionSiteDataLoading
+        private bool _BusinessPartnerOnConstructionSiteDataLoading;
 
-        public bool EmployeeDataLoading
+        public bool BusinessPartnerOnConstructionSiteDataLoading
         {
-            get { return _EmployeeDataLoading; }
+            get { return _BusinessPartnerOnConstructionSiteDataLoading; }
             set
             {
-                if (_EmployeeDataLoading != value)
+                if (_BusinessPartnerOnConstructionSiteDataLoading != value)
                 {
-                    _EmployeeDataLoading = value;
-                    NotifyPropertyChanged("EmployeeDataLoading");
+                    _BusinessPartnerOnConstructionSiteDataLoading = value;
+                    NotifyPropertyChanged("BusinessPartnerOnConstructionSiteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region EmployeesOnConstructionSiteFromDB
+        private ObservableCollection<EmployeeByConstructionSiteViewModel> _EmployeesOnConstructionSiteFromDB;
+
+        public ObservableCollection<EmployeeByConstructionSiteViewModel> EmployeesOnConstructionSiteFromDB
+        {
+            get { return _EmployeesOnConstructionSiteFromDB; }
+            set
+            {
+                if (_EmployeesOnConstructionSiteFromDB != value)
+                {
+                    _EmployeesOnConstructionSiteFromDB = value;
+                    NotifyPropertyChanged("EmployeesOnConstructionSiteFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeOnConstructionSite
+        private EmployeeByConstructionSiteViewModel _CurrentEmployeeOnConstructionSite;
+
+        public EmployeeByConstructionSiteViewModel CurrentEmployeeOnConstructionSite
+        {
+            get { return _CurrentEmployeeOnConstructionSite; }
+            set
+            {
+                if (_CurrentEmployeeOnConstructionSite != value)
+                {
+                    _CurrentEmployeeOnConstructionSite = value;
+                    NotifyPropertyChanged("CurrentEmployeeOnConstructionSite");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeOnConstructionSiteDataLoading
+        private bool _EmployeeOnConstructionSiteDataLoading;
+
+        public bool EmployeeOnConstructionSiteDataLoading
+        {
+            get { return _EmployeeOnConstructionSiteDataLoading; }
+            set
+            {
+                if (_EmployeeOnConstructionSiteDataLoading != value)
+                {
+                    _EmployeeOnConstructionSiteDataLoading = value;
+                    NotifyPropertyChanged("EmployeeOnConstructionSiteDataLoading");
                 }
             }
         }
@@ -289,6 +344,53 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteDataLoading = false;
         }
 
+        public void DisplayBusinessPartnersOnConstructionSiteData()
+        {
+            BusinessPartnerOnConstructionSiteDataLoading = true;
+
+            BusinessPartnerByConstructionSiteListResponse response = new BusinessPartnerByConstructionSiteSQLiteRepository()
+                .GetByConstructionSite(CurrentConstructionSite.Identifier);
+
+            if (response.Success)
+            {
+                BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>(response?.BusinessPartnerByConstructionSites ?? new List<BusinessPartnerByConstructionSiteViewModel>());
+                totalItems = response.TotalItems;
+            }
+            else
+            {
+                BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>();
+                totalItems = 0;
+                MainWindow.ErrorMessage = response.Message;
+            }
+
+            int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+            int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
+
+            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+
+            BusinessPartnerOnConstructionSiteDataLoading = false;
+        }
+
+        public void DisplayEmployeesOnConstructionSiteData()
+        {
+            EmployeeOnConstructionSiteDataLoading = true;
+
+            EmployeeByConstructionSiteListResponse response = new EmployeeByConstructionSiteSQLiteRepository()
+                .GetByConstructionSiteAndBusinessPartner(CurrentConstructionSite.Identifier, CurrentBusinessPartnerOnConstructionSite?.BusinessPartner?.Identifier);
+
+            if (response.Success)
+            {
+                EmployeesOnConstructionSiteFromDB = new ObservableCollection<EmployeeByConstructionSiteViewModel>(response?.EmployeeByConstructionSites ?? new List<EmployeeByConstructionSiteViewModel>());
+            }
+            else
+            {
+                EmployeesOnConstructionSiteFromDB = new ObservableCollection<EmployeeByConstructionSiteViewModel>();
+                MainWindow.ErrorMessage = response.Message;
+            }
+
+            EmployeeOnConstructionSiteDataLoading = false;
+        }
+
         private void SyncData()
         {
             RefreshButtonEnabled = false;
@@ -354,7 +456,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.OpenFlyout(this, "Radnici po gradilištu", 95, new ConstructionSiteEmployee_List_AddEdit(CurrentConstructionSite));
+            FlyoutHelper.OpenFlyout(this, "Radnici po gradilištu", 95, new ConstructionSiteEmployee_List_AddEdit(CurrentConstructionSite, CurrentBusinessPartnerOnConstructionSite.BusinessPartner));
         }
 
         #region INotifyPropertyChanged implementation

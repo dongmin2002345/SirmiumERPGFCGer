@@ -2,6 +2,7 @@
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.ConstructionSites;
@@ -45,6 +46,23 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _CurrentConstructionSite = value;
                     NotifyPropertyChanged("CurrentConstructionSite");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBusinessPartner
+        private BusinessPartnerViewModel _CurrentBusinessPartner;
+
+        public BusinessPartnerViewModel CurrentBusinessPartner
+        {
+            get { return _CurrentBusinessPartner; }
+            set
+            {
+                if (_CurrentBusinessPartner != value)
+                {
+                    _CurrentBusinessPartner = value;
+                    NotifyPropertyChanged("CurrentBusinessPartner");
                 }
             }
         }
@@ -172,9 +190,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
         #region CurrentEmployeeOnConstructionSite
-        private EmployeeViewModel _CurrentEmployeeOnConstructionSite;
+        private EmployeeByConstructionSiteViewModel _CurrentEmployeeOnConstructionSite;
 
-        public EmployeeViewModel CurrentEmployeeOnConstructionSite
+        public EmployeeByConstructionSiteViewModel CurrentEmployeeOnConstructionSite
         {
             get { return _CurrentEmployeeOnConstructionSite; }
             set
@@ -285,7 +303,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #region Constructor
 
-        public ConstructionSiteEmployee_List_AddEdit(ConstructionSiteViewModel constructionSiteViewModel)
+        public ConstructionSiteEmployee_List_AddEdit(ConstructionSiteViewModel constructionSiteViewModel, BusinessPartnerViewModel businessPartnerViewModel)
         {
             employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();
             employeeByConstructionSiteHistoryService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteHistoryService>();
@@ -297,6 +315,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             this.DataContext = this;
 
             CurrentConstructionSite = constructionSiteViewModel;
+            CurrentBusinessPartner = businessPartnerViewModel;
 
             Thread displayThread = new Thread(() =>
             {
@@ -320,7 +339,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             EmployeeOnConstructionSiteDataLoading = true;
 
             EmployeeByConstructionSiteListResponse response = new EmployeeByConstructionSiteSQLiteRepository()
-                .GetByConstructionSite(CurrentConstructionSite.Identifier);
+                .GetByConstructionSiteAndBusinessPartner(CurrentConstructionSite.Identifier, CurrentBusinessPartner?.Identifier);
 
             if (response.Success)
             {
@@ -347,7 +366,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             EmployeeNotOnConstructionSiteDataLoading = true;
 
             EmployeeListResponse response = new EmployeeSQLiteRepository()
-                .GetEmployeesNotOnConstructionSiteByPage(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier, EmployeeOnConstructionSiteSearchObject, currentPage, itemsPerPage);
+                .GetEmployeesNotOnConstructionSiteByPage(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier, CurrentBusinessPartner.Identifier, EmployeeOnConstructionSiteSearchObject, currentPage, itemsPerPage);
 
             if (response.Success)
             {
@@ -424,6 +443,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     Identifier = Guid.NewGuid(),
                     Employee = CurrentEmployeeNotOnConstructionSite,
                     ConstructionSite = CurrentConstructionSite,
+                    BusinessPartner = CurrentBusinessPartner,
                     StartDate = ContractStartDate,
                     EndDate = ContractEndDate, 
                     Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
@@ -468,23 +488,21 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
             // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentEmployeeOnConstructionSite.Name + " " + CurrentEmployeeOnConstructionSite.SurName);
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentEmployeeOnConstructionSite.Employee?.Name + " " + CurrentEmployeeOnConstructionSite.Employee?.SurName);
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 Thread th = new Thread(() =>
                 {
-                    EmployeeByConstructionSiteListResponse listResponse = new EmployeeByConstructionSiteSQLiteRepository().GetByConstructionSite(CurrentConstructionSite.Identifier);
-                    EmployeeByConstructionSiteViewModel employeeByConstructionSite = listResponse.EmployeeByConstructionSites
-                        .FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnConstructionSite.Identifier);
-                    EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(employeeByConstructionSite.Identifier);
+                    EmployeeByConstructionSiteListResponse listResponse = new EmployeeByConstructionSiteSQLiteRepository().GetByConstructionSiteAndBusinessPartner(CurrentConstructionSite.Identifier, CurrentBusinessPartner?.Identifier);
+                    EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(CurrentEmployeeOnConstructionSite.Identifier);
                     if (!response.Success)
                     {
                         MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
                         return;
                     }
 
-                    response = new EmployeeByConstructionSiteSQLiteRepository().Delete(CurrentEmployeeOnConstructionSite.Identifier, CurrentConstructionSite.Identifier);
+                    response = new EmployeeByConstructionSiteSQLiteRepository().Delete(CurrentEmployeeOnConstructionSite.Identifier);
                     if (!response.Success)
                     {
                         MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";

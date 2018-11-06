@@ -45,6 +45,41 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region EndDate
+        private DateTime _EndDate;
+
+        public DateTime EndDate
+        {
+            get { return _EndDate; }
+            set
+            {
+                if (_EndDate != value)
+                {
+                    _EndDate = value;
+                    NotifyPropertyChanged("EndDate");
+                }
+            }
+        }
+        #endregion
+
+
+        #region MaxNumOfEmployees
+        private int _MaxNumOfEmployees;
+
+        public int MaxNumOfEmployees
+        {
+            get { return _MaxNumOfEmployees; }
+            set
+            {
+                if (_MaxNumOfEmployees != value)
+                {
+                    _MaxNumOfEmployees = value;
+                    NotifyPropertyChanged("MaxNumOfEmployees");
+                }
+            }
+        }
+        #endregion
+
 
         #region BusinessPartner
         private BusinessPartnerViewModel _BusinessPartner;

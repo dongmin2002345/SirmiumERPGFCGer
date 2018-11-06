@@ -16,18 +16,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.ConstructionSites
 {
@@ -93,6 +84,23 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
+        #region MaxNumOfEmployees
+        private int _MaxNumOfEmployees;
+
+        public int MaxNumOfEmployees
+        {
+            get { return _MaxNumOfEmployees; }
+            set
+            {
+                if (_MaxNumOfEmployees != value)
+                {
+                    _MaxNumOfEmployees = value;
+                    NotifyPropertyChanged("MaxNumOfEmployees");
+                }
+            }
+        }
+        #endregion
+        
 
         #region BusinessPartnersFromDB
         private ObservableCollection<BusinessPartnerViewModel> _BusinessPartnersFromDB;
@@ -335,6 +343,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>(response?.BusinessPartnerByConstructionSites ?? new List<BusinessPartnerByConstructionSiteViewModel>());
                 totalItems = response.TotalItems;
+
+                DisplayBusinessPartnersData(BusinessPartnersOnConstructionSiteFromDB);
             }
             else
             {
@@ -351,7 +361,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             BusinessPartnerOnConstructionSiteDataLoading = false;
         }
 
-        public void DisplayBusinessPartnersData()
+        public void DisplayBusinessPartnersData(ObservableCollection<BusinessPartnerByConstructionSiteViewModel> businessPartnersOnConstructionSites)
         {
             BusinessPartnerDataLoading = true;
 
@@ -360,8 +370,13 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (response.Success)
             {
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response?.BusinessPartners ?? new List<BusinessPartnerViewModel>());
-                totalItems = response.TotalItems;
+                List<BusinessPartnerViewModel> bps = response.BusinessPartners;
+                foreach (var item in businessPartnersOnConstructionSites)
+                {
+                    bps.RemoveAll(x => x.Identifier == item.BusinessPartner.Identifier);
+                }
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(bps);
+                totalItems = BusinessPartnersFromDB.Count;
             }
             else
             {
@@ -391,7 +406,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             SyncButtonContent = " Firme. na gradilistu ... ";
             new BusinessPartnerByConstructionSiteSQLiteRepository().Sync(businessPartnerByConstructionSiteService);
 
-            DisplayBusinessPartnersData();
             DisplayBusinessPartnersOnConstructionSiteData();
 
             SyncButtonContent = " Osveži ";
@@ -434,7 +448,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     BusinessPartner = CurrentBusinessPartner,
                     ConstructionSite = CurrentConstructionSite,
                     StartDate = ContractStartDate,
-                    //EndDate = ContractEndDate,
+                    EndDate = ContractEndDate,
+                    MaxNumOfEmployees = MaxNumOfEmployees,
                     Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
                     CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
                 };
@@ -455,7 +470,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                 MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
 
-                DisplayBusinessPartnersData();
                 DisplayBusinessPartnersOnConstructionSiteData();
             });
             th.IsBackground = true;
@@ -500,7 +514,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                         return;
                     }
 
-                    DisplayBusinessPartnersData();
                     DisplayBusinessPartnersOnConstructionSiteData();
                 });
                 th.IsBackground = true;

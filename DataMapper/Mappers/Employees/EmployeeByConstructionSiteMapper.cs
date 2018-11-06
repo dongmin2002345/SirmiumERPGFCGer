@@ -1,4 +1,5 @@
-﻿using DataMapper.Mappers.Common.Companies;
+﻿using DataMapper.Mappers.Common.BusinessPartners;
+using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
 using DataMapper.Mappers.ConstructionSites;
 using DomainCore.Employees;
@@ -34,6 +35,7 @@ namespace DataMapper.Mappers.Employees
                 EndDate = employeeByConstructionSite.EndDate,
 
                 Employee = employeeByConstructionSite.Employee?.ConvertToEmployeeViewModelLite(),
+                BusinessPartner = employeeByConstructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModel(), 
                 ConstructionSite = employeeByConstructionSite.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
 
                 CreatedBy = employeeByConstructionSite.CreatedBy?.ConvertToUserViewModelLite(),
@@ -80,6 +82,7 @@ namespace DataMapper.Mappers.Employees
                 EndDate = employeeByConstructionSiteViewModel.EndDate,
 
                 EmployeeId = employeeByConstructionSiteViewModel.Employee?.Id ?? null,
+                BusinessPartnerId = employeeByConstructionSiteViewModel.BusinessPartner?.Id ?? null, 
                 ConstructionSiteId = employeeByConstructionSiteViewModel.ConstructionSite?.Id ?? null,
 
                 CreatedById = employeeByConstructionSiteViewModel.CreatedBy?.Id ?? null,

@@ -142,7 +142,6 @@
                           SelectedItem="{Binding Path=CurrentEmployeeOnConstructionSite, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Employee.Name" Header="Ime" Binding="{Binding Employee.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Employee.SurName" Header="Prezime" Binding="{Binding Employee.SurName}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Employee.Passport" Header="Pasoš" Binding="{Binding Employee.Passport}" IsReadOnly="True" />

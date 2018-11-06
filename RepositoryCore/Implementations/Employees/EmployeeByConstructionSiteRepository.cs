@@ -22,6 +22,7 @@ namespace RepositoryCore.Implementations.Employees
         {
             List<EmployeeByConstructionSite> EmployeeByConstructionSites = context.EmployeeByConstructionSites
                 .Include(x => x.Employee)
+                .Include(x => x.BusinessPartner)
                 .Include(x => x.ConstructionSite)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
@@ -37,6 +38,7 @@ namespace RepositoryCore.Implementations.Employees
         {
             List<EmployeeByConstructionSite> EmployeeByConstructionSites = context.EmployeeByConstructionSites
                 .Include(x => x.Employee)
+                .Include(x => x.BusinessPartner)
                 .Include(x => x.ConstructionSite)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
@@ -100,6 +102,7 @@ namespace RepositoryCore.Implementations.Employees
                 if (dbEntry != null)
                 {
                     dbEntry.EmployeeId = employeeByConstructionSite.EmployeeId ?? null;
+                    dbEntry.BusinessPartnerId = employeeByConstructionSite.BusinessPartnerId ?? null;
                     dbEntry.ConstructionSiteId = employeeByConstructionSite.ConstructionSiteId ?? null;
                     dbEntry.CompanyId = employeeByConstructionSite.CompanyId ?? null;
                     dbEntry.CreatedById = employeeByConstructionSite.CreatedById ?? null;

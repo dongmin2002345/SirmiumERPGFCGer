@@ -20,6 +20,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "Identifier GUID, " +
                "Code NVARCHAR(48) NULL, " +
                "StartDate DATETIME NULL, " +
+               "EndDate DATETIME NULL, " +
                "EmployeeId INTEGER NULL, " +
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode INTEGER NULL, " +
@@ -36,18 +37,18 @@ namespace SirmiumERPGFC.Repository.Employees
                "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-           "SELECT ServerId, Identifier, Code, StartDate, " +
+           "SELECT ServerId, Identifier, Code, StartDate, EndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeByBusinessPartners " +
-           "(Id, ServerId, Identifier, Code, StartDate, " +
+           "(Id, ServerId, Identifier, Code, StartDate, EndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, " +
+           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, " +
            "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName,  " +
            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -79,6 +80,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
@@ -174,6 +176,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@Identifier", employeeByBusinessPartner.Identifier);
                 insertCommand.Parameters.AddWithValue("@Code", ((object)employeeByBusinessPartner.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@StartDate", ((object)employeeByBusinessPartner.StartDate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EndDate", ((object)employeeByBusinessPartner.EndDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)employeeByBusinessPartner.Employee?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByBusinessPartner.Employee?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByBusinessPartner.Employee?.Code) ?? DBNull.Value);

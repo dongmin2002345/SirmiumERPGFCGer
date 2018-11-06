@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     .Select(x => x.Entity as BusinessPartnerByConstructionSite))
                 .Where(x => x.CompanyId == companyId).Count();
             if (count == 0)
-                return "EMP-BY-CS-00001";
+                return "BP-BY-CS-00001";
             else
             {
                 string activeCode = context.BusinessPartnerByConstructionSites
@@ -68,8 +68,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     .Code;
                 if (!String.IsNullOrEmpty(activeCode))
                 {
-                    int intValue = Int32.Parse(activeCode.Replace("EMP-BY-CS-", ""));
-                    return "EMP-BY-CS-" + (intValue + 1).ToString("00000");
+                    int intValue = Int32.Parse(activeCode.Replace("BP-BY-CS-", ""));
+                    return "BP-BY-CS-" + (intValue + 1).ToString("00000");
                 }
                 else
                     return "";
@@ -107,6 +107,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     // Set properties
                     dbEntry.Code = businessPartnerByConstructionSite.Code;
                     dbEntry.StartDate = businessPartnerByConstructionSite.StartDate;
+                    dbEntry.EndDate = businessPartnerByConstructionSite.EndDate;
+                    dbEntry.MaxNumOfEmployees = businessPartnerByConstructionSite.MaxNumOfEmployees;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

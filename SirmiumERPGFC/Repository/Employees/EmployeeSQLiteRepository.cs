@@ -213,7 +213,7 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public EmployeeListResponse GetEmployeesNotOnConstructionSiteByPage(int companyId, Guid constructionSiteIdentifier, EmployeeViewModel EmployeeSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        public EmployeeListResponse GetEmployeesNotOnConstructionSiteByPage(int companyId, Guid constructionSiteIdentifier, Guid businessPartnerIdentifier, EmployeeViewModel EmployeeSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             EmployeeListResponse response = new EmployeeListResponse();
             List<EmployeeViewModel> Employees = new List<EmployeeViewModel>();
@@ -228,6 +228,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "FROM Employees " +
                         //"WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier) " +
                         "WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites) " + 
+                        "AND Identifier IN (Select EmployeeIdentifier FROM EmployeeByBusinessPartners WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
@@ -235,6 +236,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
@@ -444,7 +446,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Employees " +
-                        "WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByBusinessPartners WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
+                        "WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByBusinessPartners) " +
+                        //"WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByBusinessPartners WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
