@@ -107,6 +107,7 @@ namespace RepositoryCore.Implementations.Employees
                     // Set properties
                     dbEntry.Code = employeeByBusinessPartner.Code;
                     dbEntry.StartDate = employeeByBusinessPartner.StartDate;
+                    dbEntry.EndDate = employeeByBusinessPartner.EndDate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

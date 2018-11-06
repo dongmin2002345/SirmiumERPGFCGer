@@ -21,6 +21,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "Identifier GUID, " +
                "Code NVARCHAR(48) NULL, " +
                "StartDate DATETIME NULL, " +
+               "EndDate DATETIME NULL, " +
                "EmployeeId INTEGER NULL, " +
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode INTEGER NULL, " +
@@ -37,18 +38,18 @@ namespace SirmiumERPGFC.Repository.Employees
                "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-           "SELECT ServerId, Identifier, Code, StartDate, " +
+           "SELECT ServerId, Identifier, Code, StartDate, EndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeByConstructionSites " +
-           "(Id, ServerId, Identifier, Code, StartDate, " +
+           "(Id, ServerId, Identifier, Code, StartDate, EndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, " +
+           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, " +
            "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName,  " +
            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -65,9 +66,12 @@ namespace SirmiumERPGFC.Repository.Employees
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM EmployeeByConstructionSites " +
-                        "WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier;", db);
+                        "SELECT ecs.ServerId, ecs.Identifier, ecs.Code, ecs.StartDate, ecs.EndDate, " +
+                        "ecs.EmployeeId, ecs.EmployeeIdentifier, ecs.EmployeeCode, ecs.EmployeeName,  e.SurName, e.Passport, " +
+                        "ecs.ConstructionSiteId, ecs.ConstructionSiteIdentifier, ecs.ConstructionSiteCode, ecs.ConstructionSiteName,  " +
+                        "ecs.IsSynced, ecs.UpdatedAt, ecs.CreatedById, ecs.CreatedByName, ecs.CompanyId, ecs.CompanyName " +
+                        "FROM EmployeeByConstructionSites ecs, Employees e " +
+                        "WHERE ecs.ConstructionSiteIdentifier = @ConstructionSiteIdentifier;", db);
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
@@ -80,7 +84,10 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+                        dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter); 
+                        dbEntry.Employee.Passport = SQLiteHelper.GetString(query, ref counter); 
                         dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -175,6 +182,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@Identifier", employeeByConstructionSite.Identifier);
                 insertCommand.Parameters.AddWithValue("@Code", ((object)employeeByConstructionSite.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@StartDate", ((object)employeeByConstructionSite.StartDate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EndDate", ((object)employeeByConstructionSite.EndDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)employeeByConstructionSite.Employee?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByConstructionSite.Employee?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByConstructionSite.Employee?.Code) ?? DBNull.Value);

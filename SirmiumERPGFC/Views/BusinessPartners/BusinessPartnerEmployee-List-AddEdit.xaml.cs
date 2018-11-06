@@ -31,9 +31,6 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.BusinessPartners
 {
-    /// <summary>
-    /// Interaction logic for BusinessPartnerEmployee_List_Add.xaml
-    /// </summary>
     public partial class BusinessPartnerEmployee_List_AddEdit : UserControl, INotifyPropertyChanged
     {
         #region Atributes
@@ -405,7 +402,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         }
 
-        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        private void btnSync_Click(object sender, RoutedEventArgs e)
         {
             Thread th = new Thread(() =>
             {
@@ -506,13 +503,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                         return;
                     }
 
-                    //response = employeeByBusinessPartnerService.Create(employeeByBusinessPartner);
-                    //if (!response.Success)
-                    //{
-                    //    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    //    return;
-                    //}
-
                     DisplayEmployeesNotOnBusinessPartnerData();
                     DisplayEmployeesOnBusinessPartnerData();
                 });
@@ -521,9 +511,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
 
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-
         }
-
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {

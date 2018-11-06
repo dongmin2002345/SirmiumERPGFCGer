@@ -68,28 +68,16 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     _CurrentBusinessPartner = value;
                     NotifyPropertyChanged("CurrentBusinessPartner");
 
-                    //if (_CurrentBusinessPartner != null)
-                    //{
-                    //    var response = new EmployeeSQLiteRepository().GetEmployeesOnConstructionSiteByPage(MainWindow.CurrentCompanyId, _CurrentBusinessPartner.Identifier, new ServiceInterfaces.ViewModels.Employees.EmployeeViewModel(), 1, Int32.MaxValue);
-                    //    if (response.Success)
-                    //    {
-                    //        EmployeesFromDB = new ObservableCollection<EmployeeViewModel>(response.Employees ?? new List<EmployeeViewModel>());
-                    //    }
-                    //}
-                    //else
-                    //    EmployeesFromDB = new ObservableCollection<EmployeeViewModel>();
-
-
                     if (_CurrentBusinessPartner != null)
                     {
-                        var response = new BusinessPartnerSQLiteRepository().GetBusinessPartnersOnConstructionSiteByPage(MainWindow.CurrentCompanyId, _CurrentBusinessPartner.Identifier,new ServiceInterfaces.ViewModels.Common.BusinessPartners.BusinessPartnerViewModel(), 1, Int32.MaxValue);
+                        var response = new EmployeeSQLiteRepository().GetEmployeesOnBusinessPartnerByPage(MainWindow.CurrentCompanyId, _CurrentBusinessPartner.Identifier,new EmployeeViewModel(), 1, Int32.MaxValue);
                         if (response.Success)
                         {
-                            BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());
+                            EmployeesFromDB = new ObservableCollection<EmployeeViewModel>(response.Employees ?? new List<EmployeeViewModel>());
                         }
                     }
                     else
-                        BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
+                        EmployeesFromDB = new ObservableCollection<EmployeeViewModel>();
                 }
             }
         }
@@ -128,6 +116,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
         }
         #endregion
+
 
         #region EmployeesFromDB
         private ObservableCollection<EmployeeViewModel> _EmployeesFromDB;
@@ -257,15 +246,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             Thread displayThread = new Thread(() => SyncData());
             displayThread.IsBackground = true;
             displayThread.Start();
-
-            //BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>()
-            //{
-            //    new BusinessPartnerViewModel()
-            //    {
-            //        Code = "123",
-            //        Name = "SirmiumERP d.o.o."
-            //    }
-            //};
         }
 
         #endregion
@@ -324,33 +304,11 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDataLoading = false;
         }
 
-
-        private void PopulateDataItems()
-        {
-            BusinessPartnerDataLoading = true;
-
-            EmployeeByBusinessPartnerListResponse response = new EmployeeByBusinessPartnerSQLiteRepository()
-                .GetByBusinessPartner(CurrentBusinessPartner.Identifier);
-
-            //if (response.Success)
-            //{
-            //    FoodInputNoteItemsFromDB = new ObservableCollection<FoodInputNoteItemViewModel>(
-            //        response.FoodInputNoteItems ?? new List<FoodInputNoteItemViewModel>());
-            //}
-            //else
-            //{
-            //    FoodInputNoteItemsFromDB = new ObservableCollection<FoodInputNoteItemViewModel>();
-            //    MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
-            //}
-
-            BusinessPartnerDataLoading = false;
-        }
-
         private void SyncData()
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Firme ... ";
+            RefreshButtonContent = " Radnici ... ";
             new EmployeeByBusinessPartnerSQLiteRepository().Sync(employeeByBusinessPartnerService);
 
             DisplayData();

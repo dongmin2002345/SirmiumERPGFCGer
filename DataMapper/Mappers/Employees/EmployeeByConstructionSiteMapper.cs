@@ -31,6 +31,7 @@ namespace DataMapper.Mappers.Employees
                 Code = employeeByConstructionSite.Code,
 
                 StartDate = employeeByConstructionSite.StartDate,
+                EndDate = employeeByConstructionSite.EndDate,
 
                 Employee = employeeByConstructionSite.Employee?.ConvertToEmployeeViewModelLite(),
                 ConstructionSite = employeeByConstructionSite.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
@@ -57,6 +58,7 @@ namespace DataMapper.Mappers.Employees
                 Code = employeeByConstructionSite.Code,
 
                 StartDate = employeeByConstructionSite.StartDate,
+                EndDate = employeeByConstructionSite.EndDate,
 
                 UpdatedAt = employeeByConstructionSite.UpdatedAt,
                 CreatedAt = employeeByConstructionSite.CreatedAt
@@ -75,6 +77,7 @@ namespace DataMapper.Mappers.Employees
 
                 Code = employeeByConstructionSiteViewModel.Code,
                 StartDate = employeeByConstructionSiteViewModel.StartDate,
+                EndDate = employeeByConstructionSiteViewModel.EndDate,
 
                 EmployeeId = employeeByConstructionSiteViewModel.Employee?.Id ?? null,
                 ConstructionSiteId = employeeByConstructionSiteViewModel.ConstructionSite?.Id ?? null,

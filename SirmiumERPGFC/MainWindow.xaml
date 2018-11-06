@@ -66,7 +66,7 @@
                             <Image Source="Resources\Icons\Radnici_Na_Firmama.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button x:Name="mniBusinessPartnerType" Click="mniBusinessPartnerType_Click" Header="Tip poslovnog partnera" KeyTip="RNP" Width="70">
+                    <Fluent:Button x:Name="mniBusinessPartnerType" Click="mniBusinessPartnerType_Click" Header="Tip poslovnog partnera" KeyTip="RNP" Width="85">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\TIP_PP.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>

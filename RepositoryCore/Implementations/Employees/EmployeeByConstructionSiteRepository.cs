@@ -107,6 +107,7 @@ namespace RepositoryCore.Implementations.Employees
                     // Set properties
                     dbEntry.Code = employeeByConstructionSite.Code;
                     dbEntry.StartDate = employeeByConstructionSite.StartDate;
+                    dbEntry.EndDate = employeeByConstructionSite.EndDate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

@@ -289,27 +289,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteDataLoading = false;
         }
 
-        private void PopulateDataItems()
-        {
-            ConstructionSiteDataLoading = true;
-
-            EmployeeByConstructionSiteListResponse response = new EmployeeByConstructionSiteSQLiteRepository()
-                .GetByConstructionSite(CurrentConstructionSite.Identifier);
-
-            //if (response.Success)
-            //{
-            //    FoodInputNoteItemsFromDB = new ObservableCollection<FoodInputNoteItemViewModel>(
-            //        response.FoodInputNoteItems ?? new List<FoodInputNoteItemViewModel>());
-            //}
-            //else
-            //{
-            //    FoodInputNoteItemsFromDB = new ObservableCollection<FoodInputNoteItemViewModel>();
-            //    MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
-            //}
-
-            ConstructionSiteDataLoading = false;
-        }
-
         private void SyncData()
         {
             RefreshButtonEnabled = false;

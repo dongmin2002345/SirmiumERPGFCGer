@@ -155,9 +155,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region EmployeesOnConstructionSiteFromDB
-        private ObservableCollection<EmployeeViewModel> _EmployeesOnConstructionSiteFromDB;
+        private ObservableCollection<EmployeeByConstructionSiteViewModel> _EmployeesOnConstructionSiteFromDB;
 
-        public ObservableCollection<EmployeeViewModel> EmployeesOnConstructionSiteFromDB
+        public ObservableCollection<EmployeeByConstructionSiteViewModel> EmployeesOnConstructionSiteFromDB
         {
             get { return _EmployeesOnConstructionSiteFromDB; }
             set
@@ -319,17 +319,17 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             EmployeeOnConstructionSiteDataLoading = true;
 
-            EmployeeListResponse response = new EmployeeSQLiteRepository()
-                .GetEmployeesOnConstructionSiteByPage(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier, EmployeeOnConstructionSiteSearchObject, currentPage, itemsPerPage);
+            EmployeeByConstructionSiteListResponse response = new EmployeeByConstructionSiteSQLiteRepository()
+                .GetByConstructionSite(CurrentConstructionSite.Identifier);
 
             if (response.Success)
             {
-                EmployeesOnConstructionSiteFromDB = new ObservableCollection<EmployeeViewModel>(response?.Employees ?? new List<EmployeeViewModel>());
+                EmployeesOnConstructionSiteFromDB = new ObservableCollection<EmployeeByConstructionSiteViewModel>(response?.EmployeeByConstructionSites ?? new List<EmployeeByConstructionSiteViewModel>());
                 totalItems = response.TotalItems;
             }
             else
             {
-                EmployeesOnConstructionSiteFromDB = new ObservableCollection<EmployeeViewModel>();
+                EmployeesOnConstructionSiteFromDB = new ObservableCollection<EmployeeByConstructionSiteViewModel>();
                 totalItems = 0;
                 MainWindow.ErrorMessage = response.Message;
             }
@@ -403,6 +403,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #endregion
 
+        #region Add, delete and cancel
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
@@ -423,6 +425,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     Employee = CurrentEmployeeNotOnConstructionSite,
                     ConstructionSite = CurrentConstructionSite,
                     StartDate = ContractStartDate,
+                    EndDate = ContractEndDate, 
                     Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
                     CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
                 };
@@ -472,7 +475,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 Thread th = new Thread(() =>
                 {
                     EmployeeByConstructionSiteListResponse listResponse = new EmployeeByConstructionSiteSQLiteRepository().GetByConstructionSite(CurrentConstructionSite.Identifier);
-                    EmployeeByConstructionSiteViewModel employeeByConstructionSite = listResponse.EmployeeByConstructionSites.FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnConstructionSite.Identifier);
+                    EmployeeByConstructionSiteViewModel employeeByConstructionSite = listResponse.EmployeeByConstructionSites
+                        .FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnConstructionSite.Identifier);
                     EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(employeeByConstructionSite.Identifier);
                     if (!response.Success)
                     {
@@ -486,14 +490,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                         MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
                         return;
                     }
-
-                    //response = employeeByConstructionSiteService.Create(employeeByConstructionSite);
-                    //if (!response.Success)
-                    //{
-                    //    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    //    return;
-                    //}
-
 
                     DisplayEmployeesNotOnConstructionSiteData();
                     DisplayEmployeesOnConstructionSiteData();
@@ -509,6 +505,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             FlyoutHelper.CloseFlyout(this);
         }
+
+        #endregion
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

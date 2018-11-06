@@ -401,7 +401,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         }
 
 
-        public BusinessPartnerListResponse GetBusinessPartnersOnConstructionSiteByPage(int companyId, Guid businessPartnerIdentifier, BusinessPartnerViewModel BusinessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        public BusinessPartnerListResponse GetBusinessPartnersOnConstructionSiteByPage(int companyId, Guid constructionSiteIdentifier, BusinessPartnerViewModel BusinessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             List<BusinessPartnerViewModel> BusinessPartners = new List<BusinessPartnerViewModel>();
@@ -420,7 +420,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                    selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
+                    selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)BusinessPartnerSearchObject.Search_Name) != null ? "%" + BusinessPartnerSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", ((object)BusinessPartnerSearchObject.Search_PIB) != null ? "%" + BusinessPartnerSearchObject.Search_PIB + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
@@ -463,7 +463,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
                         "AND CompanyId = @CompanyId;", db);
-                    selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
+                    selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)BusinessPartnerSearchObject.Search_Name) != null ? "%" + BusinessPartnerSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", ((object)BusinessPartnerSearchObject.Search_PIB) != null ? "%" + BusinessPartnerSearchObject.Search_PIB + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
