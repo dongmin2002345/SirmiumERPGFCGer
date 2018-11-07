@@ -125,19 +125,6 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                         ?.ConvertToBusinessPartnerPhoneViewModelList() ?? new List<BusinessPartnerPhoneViewModel>());
                 }
 
-                List<BusinessPartnerPhone> addedBusinessPartnerPhones = new List<BusinessPartnerPhone>();
-                foreach (var box in request.UnSyncedBusinessPartnerPhones)
-                {
-                    addedBusinessPartnerPhones.Add(unitOfWork.GetBusinessPartnerPhoneRepository().Create(box.ConvertToBusinessPartnerPhone()));
-                }
-
-                unitOfWork.Save();
-
-                foreach (var item in addedBusinessPartnerPhones)
-                {
-                    response.BusinessPartnerPhones.Add(unitOfWork.GetBusinessPartnerPhoneRepository().GetBusinessPartnerPhone(item.Id).ConvertToBusinessPartnerPhoneViewModel());
-                }
-
                 response.Success = true;
             }
             catch (Exception ex)

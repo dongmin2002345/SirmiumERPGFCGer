@@ -125,19 +125,6 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                         ?.ConvertToBusinessPartnerLocationViewModelList() ?? new List<BusinessPartnerLocationViewModel>());
                 }
 
-                List<BusinessPartnerLocation> addedBusinessPartnerLocations = new List<BusinessPartnerLocation>();
-                foreach (var businessPartnerLocation in request.UnSyncedBusinessPartnerLocations)
-                {
-                    addedBusinessPartnerLocations.Add(unitOfWork.GetBusinessPartnerLocationRepository().Create(businessPartnerLocation.ConvertToBusinessPartnerLocation()));
-                }
-
-                unitOfWork.Save();
-
-                foreach (var item in addedBusinessPartnerLocations)
-                {
-                    response.BusinessPartnerLocations.Add(unitOfWork.GetBusinessPartnerLocationRepository().GetBusinessPartnerLocation(item.Id).ConvertToBusinessPartnerLocationViewModel());
-                }
-
                 response.Success = true;
             }
             catch (Exception ex)

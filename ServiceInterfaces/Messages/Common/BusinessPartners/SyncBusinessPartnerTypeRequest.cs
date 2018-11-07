@@ -11,6 +11,5 @@ namespace ServiceInterfaces.Messages.Common.BusinessPartners
     {
         public int CompanyId { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
-        public List<BusinessPartnerTypeViewModel> UnSyncedBusinessPartnerTypes { get; set; }
     }
 }

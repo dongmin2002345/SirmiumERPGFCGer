@@ -28,9 +28,6 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.BusinessPartners
 {
-    /// <summary>
-    /// Interaction logic for BusinessPartner_List_AddEdit.xaml
-    /// </summary>
     public partial class BusinessPartner_List_AddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes
@@ -148,6 +145,76 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
+
+        #region BanksFromDB
+        private ObservableCollection<BusinessPartnerBankViewModel> _BanksFromDB;
+
+        public ObservableCollection<BusinessPartnerBankViewModel> BanksFromDB
+        {
+            get { return _BanksFromDB; }
+            set
+            {
+                if (_BanksFromDB != value)
+                {
+                    _BanksFromDB = value;
+                    NotifyPropertyChanged("BanksFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBankForm
+        private BusinessPartnerBankViewModel _CurrentBankForm = new BusinessPartnerBankViewModel();
+
+        public BusinessPartnerBankViewModel CurrentBankForm
+        {
+            get { return _CurrentBankForm; }
+            set
+            {
+                if (_CurrentBankForm != value)
+                {
+                    _CurrentBankForm = value;
+                    NotifyPropertyChanged("CurrentBankForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBankDG
+        private BusinessPartnerBankViewModel _CurrentBankDG;
+
+        public BusinessPartnerBankViewModel CurrentBankDG
+        {
+            get { return _CurrentBankDG; }
+            set
+            {
+                if (_CurrentBankDG != value)
+                {
+                    _CurrentBankDG = value;
+                    NotifyPropertyChanged("CurrentBankDG");
+                }
+            }
+        }
+        #endregion
+
+        #region BankDataLoading
+        private bool _BankDataLoading;
+
+        public bool BankDataLoading
+        {
+            get { return _BankDataLoading; }
+            set
+            {
+                if (_BankDataLoading != value)
+                {
+                    _BankDataLoading = value;
+                    NotifyPropertyChanged("BankDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region LocationsFromDB
         private ObservableCollection<BusinessPartnerLocationViewModel> _LocationsFromDB;
 
@@ -215,6 +282,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
         }
         #endregion
+
 
         #region OrganizationUnitsFromDB
         private ObservableCollection<BusinessPartnerOrganizationUnitViewModel> _OrganizationUnitsFromDB;
@@ -421,6 +489,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 PopulateLocationData();
                 PopulateOrganizationUnitData();
                 PopulatePhoneData();
+                PopulateBankData();
             });
             displayThread.IsBackground = true;
             displayThread.Start();
@@ -488,6 +557,26 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
 
             PhoneDataLoading = false;
+        }
+
+        private void PopulateBankData()
+        {
+            BankDataLoading = true;
+
+            BusinessPartnerBankListResponse response = new BusinessPartnerBankSQLiteRepository()
+                .GetBusinessPartnerBanksByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+            if (response.Success)
+            {
+                BanksFromDB = new ObservableCollection<BusinessPartnerBankViewModel>(
+                    response.BusinessPartnerBanks ?? new List<BusinessPartnerBankViewModel>());
+            }
+            else
+            {
+                BanksFromDB = new ObservableCollection<BusinessPartnerBankViewModel>();
+                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            }
+
+            BankDataLoading = false;
         }
 
         private void PopulateBusinessPartnerTypeData()
@@ -619,6 +708,85 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
 
         #endregion
+
+        #region Add, edit, delete and cancel phone
+        
+        private void btnBank_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBankForm.Country == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Država";
+                return;
+            }
+
+            if (CurrentBankForm.Bank == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Banka";
+                return;
+            }
+
+            if (String.IsNullOrEmpty(CurrentBankForm.AccountNumber))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Broj računa";
+                return;
+            }
+
+            #endregion
+
+            // If update process, first delete item
+            new BusinessPartnerBankSQLiteRepository().Delete(CurrentBankForm.Identifier);
+
+            CurrentBankForm.BusinessPartner = CurrentBusinessPartner;
+            CurrentBankForm.Identifier = Guid.NewGuid();
+
+            var response = new BusinessPartnerBankSQLiteRepository().Create(CurrentBankForm);
+            if (response.Success)
+            {
+                CurrentBankForm = new BusinessPartnerBankViewModel();
+
+                Thread displayThread = new Thread(() => PopulateBankData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                popBankCountry.txtCountry.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnEditBank_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentBankForm = CurrentBankDG;
+        }
+
+        private void btnDeleteBank_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("banku", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new BusinessPartnerBankSQLiteRepository().Delete(CurrentBankDG.Identifier);
+
+                MainWindow.SuccessMessage = "Banka je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => PopulateBankData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        private void btnCancelBank_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentBankForm = new BusinessPartnerBankViewModel();
+        }
+
+        #endregion 
 
         #region Add, edit, delete and cancel location
 
@@ -814,6 +982,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 CurrentBusinessPartner.Locations = LocationsFromDB;
                 //CurrentBusinessPartner.OrganizationUnits = OrganizationUnitsFromDB;
                 CurrentBusinessPartner.Phones = PhonesFromDB;
+                CurrentBusinessPartner.Banks = BanksFromDB;
                 CurrentBusinessPartner.BusinessPartnerTypes = new ObservableCollection<BusinessPartnerTypeViewModel>(
                     new BusinessPartnerTypeSQLiteRepository()
                     .GetBusinessPartnerTypesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerTypes
@@ -878,6 +1047,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
         }
-        #endregion        
+        #endregion
     }
 }

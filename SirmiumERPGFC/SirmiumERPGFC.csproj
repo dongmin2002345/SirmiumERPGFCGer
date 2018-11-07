@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerBankSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerByConstructionSiteHistorySQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerByConstructionSiteSQLiteRepository.cs" />
@@ -213,6 +214,9 @@
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="ViewComponents\Popups\AgencyPopup.xaml.cs">
       <DependentUpon>AgencyPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\BankPopup.xaml.cs">
+      <DependentUpon>BankPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\CityPopup.xaml.cs">
       <DependentUpon>CityPopup.xaml</DependentUpon>
@@ -434,6 +438,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ViewComponents\Popups\AgencyPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\BankPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

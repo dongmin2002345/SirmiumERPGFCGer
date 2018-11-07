@@ -31,6 +31,8 @@ namespace DataMapper.Mappers.Common.ToDos
                 Description = toDo.Description,
                 ToDoDate = toDo.ToDoDate,
 
+                IsActive = toDo.Active,
+
                 CreatedBy = toDo.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = toDo.Company?.ConvertToCompanyViewModelLite(),
 
@@ -63,6 +65,8 @@ namespace DataMapper.Mappers.Common.ToDos
                 Name = toDo.Name,
                 Description = toDo.Description,
                 ToDoDate = toDo.ToDoDate,
+
+                IsActive = toDo.Active,
 
                 UpdatedAt = toDo.UpdatedAt,
                 CreatedAt = toDo.CreatedAt

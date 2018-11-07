@@ -125,19 +125,6 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                         ?.ConvertToBusinessPartnerOrganizationUnitViewModelList() ?? new List<BusinessPartnerOrganizationUnitViewModel>());
                 }
 
-                List<BusinessPartnerOrganizationUnit> addedBusinessPartnerOrganizationUnits = new List<BusinessPartnerOrganizationUnit>();
-                foreach (var businessPartnerOrganizationUnit in request.UnSyncedBusinessPartnerOrganizationUnits)
-                {
-                    addedBusinessPartnerOrganizationUnits.Add(unitOfWork.GetBusinessPartnerOrganizationUnitRepository().Create(businessPartnerOrganizationUnit.ConvertToBusinessPartnerOrganizationUnit()));
-                }
-
-                unitOfWork.Save();
-
-                foreach (var item in addedBusinessPartnerOrganizationUnits)
-                {
-                    response.BusinessPartnerOrganizationUnits.Add(unitOfWork.GetBusinessPartnerOrganizationUnitRepository().GetBusinessPartnerOrganizationUnit(item.Id).ConvertToBusinessPartnerOrganizationUnitViewModel());
-                }
-
                 response.Success = true;
             }
             catch (Exception ex)

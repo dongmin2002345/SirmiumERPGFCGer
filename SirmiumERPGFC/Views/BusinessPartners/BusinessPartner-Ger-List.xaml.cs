@@ -368,7 +368,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     SyncBusinessPartnerRequest request = new SyncBusinessPartnerRequest();
                     request.CompanyId = MainWindow.CurrentCompanyId;
-                    request.UnSyncedBusinessPartners = sqlLite.GetUnSyncedBusinessPartners(MainWindow.CurrentCompanyId).BusinessPartners.Take(100).ToList();
                     request.LastUpdatedAt = sqlLite.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
                     BusinessPartnerListResponse response = businessPartnerService.Sync(request);
@@ -394,7 +393,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     SyncBusinessPartnerLocationRequest bankAccountRequest = new SyncBusinessPartnerLocationRequest();
                     bankAccountRequest.CompanyId = MainWindow.CurrentCompanyId;
-                    bankAccountRequest.UnSyncedBusinessPartnerLocations = sqlLiteLocation.GetUnSyncedBusinessPartnerLocations(MainWindow.CurrentCompanyId).BusinessPartnerLocations.Take(100).ToList();
                     bankAccountRequest.LastUpdatedAt = sqlLiteLocation.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
                     BusinessPartnerLocationListResponse bankAccountRespose = businessPartnerLocationService.Sync(bankAccountRequest);
@@ -420,7 +418,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     SyncBusinessPartnerPhoneRequest bankAccountRequest = new SyncBusinessPartnerPhoneRequest();
                     bankAccountRequest.CompanyId = MainWindow.CurrentCompanyId;
-                    bankAccountRequest.UnSyncedBusinessPartnerPhones = sqlLitePhone.GetUnSyncedBusinessPartnerPhones(MainWindow.CurrentCompanyId).BusinessPartnerPhones.Take(100).ToList();
                     bankAccountRequest.LastUpdatedAt = sqlLitePhone.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
                     BusinessPartnerPhoneListResponse bankAccountRespose = businessPartnerPhoneService.Sync(bankAccountRequest);

@@ -191,6 +191,20 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
                     #endregion
 
+                    #region BusinessPartnerBank
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE BusinessPartnerBanks", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(BusinessPartnerBankSQLiteRepository.BusinessPartnerBankTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #region BusinessPartnerType
                     if (withTableDrop)
                     {

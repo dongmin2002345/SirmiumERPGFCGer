@@ -150,8 +150,11 @@ namespace SirmiumERPGFC.Repository.ToDos
                 foreach (var toDo in toDosFromDB.OrderBy(x => x.Id))
                 {
                     Delete(toDo.Identifier);
-                    toDo.IsSynced = true;
-                    Create(toDo);
+                    if (toDo.IsActive)
+                    {
+                        toDo.IsSynced = true;
+                        Create(toDo);
+                    }
                 }
             }
         }

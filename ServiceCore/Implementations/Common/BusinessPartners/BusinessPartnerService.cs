@@ -179,21 +179,6 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                         ?.ConvertToBusinessPartnerViewModelList() ?? new List<BusinessPartnerViewModel>());
                 }
 
-                List<BusinessPartner> addedBusinessPartners = new List<BusinessPartner>();
-                foreach (var businessPartner in request.UnSyncedBusinessPartners)
-                {
-                    addedBusinessPartners.Add(unitOfWork.GetBusinessPartnerRepository().Create(businessPartner.ConvertToBusinessPartner()));
-                }
-
-                unitOfWork.Save();
-
-                foreach (var item in addedBusinessPartners)
-                {
-                    response.BusinessPartners.Add(unitOfWork.GetBusinessPartnerRepository()
-                        .GetBusinessPartner(item.Id)
-                        .ConvertToBusinessPartnerViewModel());
-                }
-
                 response.Success = true;
             }
             catch (Exception ex)
