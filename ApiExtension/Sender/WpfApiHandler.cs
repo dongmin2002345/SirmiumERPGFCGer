@@ -36,9 +36,9 @@ namespace ApiExtension.Sender
         //public static string BaseApiUrl = "http://192.168.0.250:5001/api";
         //public static string BaseApiUrl = "http://192.168.0.250:5002/api";// for 2018
         //public static string BaseApiUrl = "http://192.168.0.10:5002/api";// for 2018
-        //private static string BaseApiUrl = "http://212.200.54.246:5001/api";
+        private static string BaseApiUrl = "http://212.200.54.246:5001/api";
 
-        public static string BaseApiUrl = "http://localhost:5001/api";
+        //public static string BaseApiUrl = "http://localhost:5001/api";
         
         //private static string BaseApiUrl = "http://localhost:22632/api";// Zeljko Tepic localhost address
 
