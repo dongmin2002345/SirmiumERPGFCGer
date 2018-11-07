@@ -43,6 +43,23 @@ namespace ServiceInterfaces.ViewModels.Common.ToDos
         }
         #endregion
 
+        #region ToDoDate
+        private DateTime _ToDoDate;
+
+        public DateTime ToDoDate
+        {
+            get { return _ToDoDate; }
+            set
+            {
+                if (_ToDoDate != value)
+                {
+                    _ToDoDate = value;
+                    NotifyPropertyChanged("ToDoDate");
+                }
+            }
+        }
+        #endregion
+        
 
         #region IsSynced
         private bool _IsSynced;

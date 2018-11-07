@@ -10,6 +10,9 @@ namespace DomainCore.Banks
     {
 		public string Code { get; set; }
 		public string Name { get; set; }
+
+        public string Swift { get; set; }
+
 		public int? CountryId { get; set; }
 		public Country Country { get; set; }
 	}

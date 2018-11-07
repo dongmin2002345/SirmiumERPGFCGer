@@ -57,6 +57,8 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     SqliteCommand createTableToDo = new SqliteCommand(ToDoSQLiteRepository.ToDoTableCreatePart, db);
                     createTableToDo.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "ToDoDate", "DATETIME NULL");
                     #endregion
 
                     #region Users
@@ -270,10 +272,12 @@ namespace SirmiumERPGFC.Repository.Common
 					}
 					createTable = new SqliteCommand(BankSQLiteRepository.BankTableCreatePart, db);
 					createTable.ExecuteReader();
-					#endregion
 
-					#region LicenceType
-					if (withTableDrop)
+                    SQLiteHelper.AddColumnIfNotExists("Banks", "Swift", "NVARCHAR(2048) NULL");
+                    #endregion
+
+                    #region LicenceType
+                    if (withTableDrop)
 					{
 						try
 						{

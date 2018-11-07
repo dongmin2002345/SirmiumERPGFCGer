@@ -30,8 +30,11 @@ namespace DataMapper.Mappers.Banks
 
 				Code = bank.Code,
 				Name = bank.Name,
+                Swift = bank.Swift,
 
 				Country = bank.Country?.ConvertToCountryViewModelLite(),
+
+                IsActive = bank.Active,
 
 				CreatedBy = bank.CreatedBy?.ConvertToUserViewModelLite(),
 				Company = bank.Company?.ConvertToCompanyViewModelLite(),
@@ -63,8 +66,11 @@ namespace DataMapper.Mappers.Banks
 
 				Code = bank.Code,
 				Name = bank.Name,
+                Swift = bank.Swift,
 
-				CreatedAt = bank.CreatedAt,
+                IsActive = bank.Active,
+
+                CreatedAt = bank.CreatedAt,
 				UpdatedAt = bank.UpdatedAt
 			};
 			return bankViewModel;
@@ -79,8 +85,9 @@ namespace DataMapper.Mappers.Banks
 
 				Code = bankViewModel.Code,
 				Name = bankViewModel.Name,
+                Swift = bankViewModel.Swift,
 
-				CountryId = bankViewModel.Country?.Id ?? null,
+                CountryId = bankViewModel.Country?.Id ?? null,
 
 				CreatedById = bankViewModel.CreatedBy?.Id ?? null,
 				CompanyId = bankViewModel.Company?.Id ?? null,

@@ -201,6 +201,7 @@ namespace SirmiumERPGFC.Views.Home
                     {
                         CurrentToDo = new ToDoViewModel();
                         CurrentToDo.Identifier = Guid.NewGuid();
+                        CurrentToDo.ToDoDate = DateTime.Now;
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,

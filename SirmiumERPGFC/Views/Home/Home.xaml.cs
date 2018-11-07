@@ -153,7 +153,7 @@ namespace SirmiumERPGFC.Views.Home
 
             if (response.Success)
             {
-                ToDosFromDB = new ObservableCollection<ToDoViewModel>(response.ToDos ?? new List<ToDoViewModel>());
+                ToDosFromDB = new ObservableCollection<ToDoViewModel>(response.ToDos?.OrderBy(x => x.ToDoDate)?.ToList() ?? new List<ToDoViewModel>());
             }
             else
             {
@@ -237,6 +237,7 @@ namespace SirmiumERPGFC.Views.Home
 
             ToDoViewModel toDo = new ToDoViewModel();
             toDo.Identifier = Guid.NewGuid();
+            toDo.ToDoDate = DateTime.Now;
 
             ToDoAddEdit addEditForm = new ToDoAddEdit(toDo, true);
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);

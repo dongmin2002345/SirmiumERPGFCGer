@@ -5,12 +5,18 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Home"
+             xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Control.Background>
         <SolidColorBrush Color="White" />
     </Control.Background>
+    <UserControl.Resources>
+        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
+        <cbxConverters:ToDoDateConverter x:Key="ToDoDateConverter" />
+    </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -82,6 +88,7 @@
                           SelectedItem="{Binding Path=CurrentToDo, Mode=TwoWay}">
 
                         <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="ToDoDate" Header="Datum" Binding="{Binding ToDoDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="CreatedBy.FullName" Header="Kreirao" Binding="{Binding CreatedBy.FullName}" IsReadOnly="True" />
 
@@ -99,6 +106,12 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
+
+                        <DataGrid.RowStyle>
+                            <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Background" Value="{Binding ToDoDate, Converter={StaticResource ToDoDateConverter}}"  />
+                            </Style>
+                        </DataGrid.RowStyle>
                     </DataGrid>
                 </Grid>
             </GroupBox>

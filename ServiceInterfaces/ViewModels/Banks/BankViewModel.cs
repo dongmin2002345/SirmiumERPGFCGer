@@ -43,10 +43,27 @@ namespace ServiceInterfaces.ViewModels.Banks
 				}
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Country
-		private CountryViewModel _Country;
+        #region Swift
+        private string _Swift;
+
+        public string Swift
+        {
+            get { return _Swift; }
+            set
+            {
+                if (_Swift != value)
+                {
+                    _Swift = value;
+                    NotifyPropertyChanged("Swift");
+                }
+            }
+        }
+        #endregion
+
+        #region Country
+        private CountryViewModel _Country;
 
 		public CountryViewModel Country
 		{

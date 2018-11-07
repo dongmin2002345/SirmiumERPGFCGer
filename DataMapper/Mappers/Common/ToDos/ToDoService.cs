@@ -29,6 +29,7 @@ namespace DataMapper.Mappers.Common.ToDos
 
                 Name = toDo.Name,
                 Description = toDo.Description,
+                ToDoDate = toDo.ToDoDate,
 
                 CreatedBy = toDo.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = toDo.Company?.ConvertToCompanyViewModelLite(),
@@ -61,6 +62,7 @@ namespace DataMapper.Mappers.Common.ToDos
 
                 Name = toDo.Name,
                 Description = toDo.Description,
+                ToDoDate = toDo.ToDoDate,
 
                 UpdatedAt = toDo.UpdatedAt,
                 CreatedAt = toDo.CreatedAt
@@ -79,6 +81,7 @@ namespace DataMapper.Mappers.Common.ToDos
 
                 Name = toDoViewModel.Name,
                 Description = toDoViewModel.Description,
+                ToDoDate = toDoViewModel.ToDoDate,
 
                 CreatedById = toDoViewModel.CreatedBy?.Id ?? null,
                 CompanyId = toDoViewModel.Company?.Id ?? null,

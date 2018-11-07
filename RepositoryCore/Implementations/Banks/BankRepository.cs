@@ -39,7 +39,7 @@ namespace RepositoryCore.Implementations.Banks
 				.Include(x => x.Country)
 				.Include(x => x.Company)
 				.Include(x => x.CreatedBy)
-				.Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
+				.Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
 				.OrderByDescending(x => x.UpdatedAt)
 				.AsNoTracking()
 				.ToList();
@@ -105,6 +105,7 @@ namespace RepositoryCore.Implementations.Banks
 					// Set properties
 					dbEntry.Code = bank.Code;
 					dbEntry.Name = bank.Name;
+                    dbEntry.Swift = bank.Swift;
 
 					// Set timestamp
 					dbEntry.UpdatedAt = DateTime.Now;

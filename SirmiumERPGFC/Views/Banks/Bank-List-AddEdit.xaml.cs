@@ -211,7 +211,7 @@ namespace SirmiumERPGFC.Views.Banks
 							System.Windows.Threading.DispatcherPriority.Normal,
 							new Action(() =>
 							{
-								txtName.Focus();
+								txtSwift.Focus();
 							})
 						);
 					}

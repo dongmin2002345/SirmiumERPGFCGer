@@ -32,17 +32,17 @@ namespace SirmiumERPGFC.Repository.Banks
 		  "CompanyName NVARCHAR(2048) NULL)";
 
 		public string SqlCommandSelectPart =
-			"SELECT ServerId, Identifier, Code, Name, " +
+			"SELECT ServerId, Identifier, Code, Name, Swift, " +
 			"CountryId, CountryIdentifier, CountryCode, CountryName, " +
 
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
 		public string SqlCommandInsertPart = "INSERT INTO Banks " +
-			"(Id, ServerId, Identifier, Code, Name, " +
+            "(Id, ServerId, Identifier, Code, Name, Swift, " +
 			"CountryId, CountryIdentifier, CountryCode, CountryName, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-			"VALUES (NULL, @ServerId, @Identifier, @Code, @Name, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @Swift, " +
 				"@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -81,6 +81,7 @@ namespace SirmiumERPGFC.Repository.Banks
 						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Swift = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -154,7 +155,8 @@ namespace SirmiumERPGFC.Repository.Banks
 						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Swift = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -203,7 +205,8 @@ namespace SirmiumERPGFC.Repository.Banks
 						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
 						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Swift = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -239,8 +242,11 @@ namespace SirmiumERPGFC.Repository.Banks
 				foreach (var bank in banksFromDB.OrderBy(x => x.Id))
 				{
 					Delete(bank.Identifier);
-					bank.IsSynced = true;
-					Create(bank);
+                    if (bank.IsActive)
+                    {
+                        bank.IsSynced = true;
+                        Create(bank);
+                    }
 				}
 			}
 		}
@@ -297,6 +303,7 @@ namespace SirmiumERPGFC.Repository.Banks
 				insertCommand.Parameters.AddWithValue("@Identifier", bank.Identifier);
 				insertCommand.Parameters.AddWithValue("@Code", ((object)bank.Code) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@Name", ((object)bank.Name) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@Swift", ((object)bank.Swift) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CountryId", ((object)bank.Country?.Id) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)bank.Country?.Identifier) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CountryCode", ((object)bank.Country?.Code) ?? DBNull.Value);

@@ -78,6 +78,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
                     // Set properties
                     dbEntry.Name = toDo.Name;
                     dbEntry.Description = toDo.Description;
+                    dbEntry.ToDoDate = toDo.ToDoDate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
