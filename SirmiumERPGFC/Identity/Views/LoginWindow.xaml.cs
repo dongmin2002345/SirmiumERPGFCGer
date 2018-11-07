@@ -239,7 +239,7 @@ namespace SirmiumERPGFC.Identity.Views
         {
             if (!Debugger.IsAttached)
             {
-                AutoUpdater.Start("http://sirmiumerp.com/erp/Updates/Djurdjevic/Production/currentversion.xml");
+                AutoUpdater.Start("http://sirmiumerp.com/Shared/Updates/SirmiumERPGCF/currentversion.xml");
             }
         }
     }
