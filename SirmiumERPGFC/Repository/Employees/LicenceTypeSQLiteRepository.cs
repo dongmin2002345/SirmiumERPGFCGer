@@ -247,8 +247,11 @@ namespace SirmiumERPGFC.Repository.Employees
 				foreach (var licenceType in licenceTypesFromDB.OrderBy(x => x.Id))
 				{
 					Delete(licenceType.Identifier);
-					licenceType.IsSynced = true;
-					Create(licenceType);
+                    if (licenceType.IsActive)
+                    {
+                        licenceType.IsSynced = true;
+                        Create(licenceType);
+                    }
 				}
 			}
 		}

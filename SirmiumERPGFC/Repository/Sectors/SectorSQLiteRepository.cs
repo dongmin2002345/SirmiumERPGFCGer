@@ -249,8 +249,11 @@ namespace SirmiumERPGFC.Repository.Sectors
 				foreach (var sector in sectorsFromDB.OrderBy(x => x.Id))
 				{
 					Delete(sector.Identifier);
-					sector.IsSynced = true;
-					Create(sector);
+                    if (sector.IsActive)
+                    {
+                        sector.IsSynced = true;
+                        Create(sector);
+                    }
 				}
 			}
 		}

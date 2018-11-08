@@ -818,8 +818,11 @@ namespace SirmiumERPGFC.Repository.Employees
                 foreach (var Employee in EmployeesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(Employee.Identifier);
-                    Employee.IsSynced = true;
-                    Create(Employee);
+                    if (Employee.IsActive)
+                    {
+                        Employee.IsSynced = true;
+                        Create(Employee);
+                    }
                 }
             }
         }

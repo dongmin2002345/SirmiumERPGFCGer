@@ -263,8 +263,11 @@ namespace SirmiumERPGFC.Repository.Locations
                 foreach (var municipality in municipalitiesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(municipality.Identifier);
-                    municipality.IsSynced = true;
-                    Create(municipality);
+                    if (municipality.IsActive)
+                    {
+                        municipality.IsSynced = true;
+                        Create(municipality);
+                    }
                 }
             }
         }

@@ -147,6 +147,12 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerSQLiteRepository.BusinessPartnerTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "InternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryId", "INTEGER NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryIdentifier", "GUID NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryName", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region BusinessPartnerLocation
@@ -189,6 +195,9 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerPhoneSQLiteRepository.BusinessPartnerPhoneTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "ContactPersonFirstName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "ContactPersonLastName", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region BusinessPartnerBank

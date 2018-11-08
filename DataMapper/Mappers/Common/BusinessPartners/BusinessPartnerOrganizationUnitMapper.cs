@@ -43,6 +43,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Phone = businessPartnerOrganizationUnit.Phone,
                 Mobile = businessPartnerOrganizationUnit.Mobile,
 
+                IsActive = businessPartnerOrganizationUnit.Active,
+
                 CreatedBy = businessPartnerOrganizationUnit.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = businessPartnerOrganizationUnit.Company?.ConvertToCompanyViewModelLite(),
 
@@ -67,6 +69,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 ContactPerson = businessPartnerOrganizationUnit.ContactPerson,
                 Phone = businessPartnerOrganizationUnit.Phone,
                 Mobile = businessPartnerOrganizationUnit.Mobile,
+
+                IsActive = businessPartnerOrganizationUnit.Active,
 
                 UpdatedAt = businessPartnerOrganizationUnit.UpdatedAt,
                 CreatedAt = businessPartnerOrganizationUnit.CreatedAt,

@@ -139,6 +139,7 @@
                               SelectedItem="{Binding Path=CurrentBusinessPartner}" >
 
                     <DataGrid.Columns>
+                        <DataGridTextColumn SortMemberPath="InternalCode" Header="Šifra" Binding="{Binding InternalCode}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="NameGer" Header="Poslovni partneri Nemacka" Binding="{Binding NameGer}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Poslovni partneri Srbija" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Sector.Name" Header="Sektor" Binding="{Binding Sector.Name}" IsReadOnly="True" />

@@ -95,18 +95,35 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
-        #region ContactPerson
-        private string _ContactPerson;
+        #region ContactPersonFirstName
+        private string _ContactPersonFirstName;
 
-        public string ContactPerson
+        public string ContactPersonFirstName
         {
-            get { return _ContactPerson; }
+            get { return _ContactPersonFirstName; }
             set
             {
-                if (_ContactPerson != value)
+                if (_ContactPersonFirstName != value)
                 {
-                    _ContactPerson = value;
-                    NotifyPropertyChanged("ContactPerson");
+                    _ContactPersonFirstName = value;
+                    NotifyPropertyChanged("ContactPersonFirstName");
+                }
+            }
+        }
+        #endregion
+
+        #region ContactPersonLastName
+        private string _ContactPersonLastName;
+
+        public string ContactPersonLastName
+        {
+            get { return _ContactPersonLastName; }
+            set
+            {
+                if (_ContactPersonLastName != value)
+                {
+                    _ContactPersonLastName = value;
+                    NotifyPropertyChanged("ContactPersonLastName");
                 }
             }
         }

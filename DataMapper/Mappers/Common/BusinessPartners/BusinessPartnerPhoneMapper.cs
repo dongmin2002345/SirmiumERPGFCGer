@@ -33,9 +33,12 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Mobile = businessPartnerPhone.Mobile,
                 Fax = businessPartnerPhone.Fax,
                 Email = businessPartnerPhone.Email,
-                ContactPerson = businessPartnerPhone.ContactPerson,
+                ContactPersonFirstName = businessPartnerPhone.ContactPersonFirstName,
+                ContactPersonLastName = businessPartnerPhone.ContactPersonLastName,
 
                 Description = businessPartnerPhone.Description,
+
+                IsActive = businessPartnerPhone.Active,
 
                 CreatedBy = businessPartnerPhone.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = businessPartnerPhone.Company?.ConvertToCompanyViewModelLite(),
@@ -57,9 +60,12 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Mobile = businessPartnerPhone.Mobile,
                 Fax = businessPartnerPhone.Fax,
                 Email = businessPartnerPhone.Email,
-                ContactPerson = businessPartnerPhone.ContactPerson,
+                ContactPersonFirstName = businessPartnerPhone.ContactPersonFirstName,
+                ContactPersonLastName = businessPartnerPhone.ContactPersonLastName,
 
                 Description = businessPartnerPhone.Description,
+
+                IsActive = businessPartnerPhone.Active,
 
                 UpdatedAt = businessPartnerPhone.UpdatedAt,
                 CreatedAt = businessPartnerPhone.CreatedAt,
@@ -80,7 +86,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Mobile = businessPartnerPhoneViewModel.Mobile,
                 Fax = businessPartnerPhoneViewModel.Fax,
                 Email = businessPartnerPhoneViewModel.Email,
-                ContactPerson = businessPartnerPhoneViewModel.ContactPerson,
+                ContactPersonFirstName = businessPartnerPhoneViewModel.ContactPersonFirstName,
+                ContactPersonLastName = businessPartnerPhoneViewModel.ContactPersonLastName,
 
                 Description = businessPartnerPhoneViewModel.Description,
 

@@ -34,6 +34,8 @@ namespace DataMapper.Mappers.Common.Sectors
                 Country = Agency.Country?.ConvertToCountryViewModelLite(),
                 Sector = Agency.Sector?.ConvertToSectorViewModelLite(),
 
+                IsActive = Agency.Active,
+
                 CreatedBy = Agency.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = Agency.Company?.ConvertToCompanyViewModelLite(),
 
@@ -64,6 +66,8 @@ namespace DataMapper.Mappers.Common.Sectors
 
                 Code = Agency.Code,
                 Name = Agency.Name,
+
+                IsActive = Agency.Active,
 
                 CreatedAt = Agency.CreatedAt,
                 UpdatedAt = Agency.UpdatedAt

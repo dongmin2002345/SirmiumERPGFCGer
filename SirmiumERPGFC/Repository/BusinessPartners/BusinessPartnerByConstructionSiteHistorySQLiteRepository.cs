@@ -116,8 +116,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 foreach (var businessPartnerByConstructionSiteHistory in businessPartnerByConstructionSiteHistoryFromDB.OrderBy(x => x.Id))
                 {
                     Delete(businessPartnerByConstructionSiteHistory.BusinessPartner.Identifier, businessPartnerByConstructionSiteHistory.ConstructionSite.Identifier);
-                    businessPartnerByConstructionSiteHistory.IsSynced = true;
-                    Create(businessPartnerByConstructionSiteHistory);
+
+                    if (businessPartnerByConstructionSiteHistory.IsActive)
+                    {
+                        businessPartnerByConstructionSiteHistory.IsSynced = true;
+                        Create(businessPartnerByConstructionSiteHistory);
+                    }
                 }
             }
         }

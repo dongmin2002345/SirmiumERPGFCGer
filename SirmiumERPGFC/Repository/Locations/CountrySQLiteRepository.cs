@@ -244,8 +244,11 @@ namespace SirmiumERPGFC.Repository.Locations
                 foreach (var country in countriesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(country.Identifier);
-                    country.IsSynced = true;
-                    Create(country);
+                    if (country.IsActive)
+                    {
+                        country.IsSynced = true;
+                        Create(country);
+                    }
                 }
             }
         }
@@ -330,7 +333,7 @@ namespace SirmiumERPGFC.Repository.Locations
             }
         }
 
-        public CountryResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public CountryResponse UpdateSyncStatus(Guid identifier, int serverId, string code, bool isSynced)
         {
             CountryResponse response = new CountryResponse();
 
@@ -343,11 +346,13 @@ namespace SirmiumERPGFC.Repository.Locations
 
                 insertCommand.CommandText = "UPDATE Countries SET " +
                     "IsSynced = @IsSynced, " +
-                    "ServerId = @ServerId " +
+                    "ServerId = @ServerId, " +
+                    "Code = @Code " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+                insertCommand.Parameters.AddWithValue("@Code", code);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
                 try

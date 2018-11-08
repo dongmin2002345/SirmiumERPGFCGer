@@ -25,7 +25,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "Mobile NVARCHAR(2048) NULL, " +
             "Fax NVARCHAR(2048) NULL, " +
             "Email NVARCHAR(2048) NULL, " +
-            "ContactPerson NVARCHAR(2048) NULL, " +
+            "ContactPersonFirstName NVARCHAR(2048) NULL, " +
+            "ContactPersonLastName NVARCHAR(2048) NULL, " +
             "Description NVARCHAR(2048) NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
@@ -36,16 +37,16 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-            "Phone, Mobile, Fax, Email, ContactPerson, Description, " +
+            "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Description, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerPhones " +
             "(Id, ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-            "Phone, Mobile, Fax, Email, ContactPerson, Description, " +
+            "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Description, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
-            "@Phone, @Mobile, @Fax, @Email, @ContactPerson, @Description, " +
+            "@Phone, @Mobile, @Fax, @Email, @ContactPersonFirstName, @ContactPersonLastName, @Description, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public BusinessPartnerPhoneListResponse GetBusinessPartnerPhonesByBusinessPartner(int companyId, Guid businessPartnerIdentifier)
@@ -80,7 +81,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Mobile = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonFirstName = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonLastName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -135,7 +137,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Mobile = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonFirstName = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonLastName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -189,7 +192,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Mobile = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonFirstName = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ContactPersonLastName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -271,7 +275,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@Mobile", ((object)businessPartnerPhone.Mobile) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Fax", ((object)businessPartnerPhone.Fax) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Email", ((object)businessPartnerPhone.Email) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartnerPhone.ContactPerson) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ContactPersonFirstName", ((object)businessPartnerPhone.ContactPersonFirstName) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ContactPersonLastName", ((object)businessPartnerPhone.ContactPersonLastName) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Description", ((object)businessPartnerPhone.Description) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerPhone.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", businessPartnerPhone.UpdatedAt);

@@ -50,7 +50,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 .Include(x => x.BusinessPartner)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
-                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
+                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
                 .AsNoTracking()
                 .ToList();
 
@@ -94,7 +94,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Mobile = businessPartnerPhone.Mobile;
                     dbEntry.Fax = businessPartnerPhone.Fax;
                     dbEntry.Email = businessPartnerPhone.Email;
-                    dbEntry.ContactPerson = businessPartnerPhone.ContactPerson;
+                    dbEntry.ContactPersonFirstName = businessPartnerPhone.ContactPersonFirstName;
+                    dbEntry.ContactPersonLastName = businessPartnerPhone.ContactPersonLastName;
 
                     dbEntry.Description = businessPartnerPhone.Description;
 

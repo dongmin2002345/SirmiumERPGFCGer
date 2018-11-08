@@ -35,6 +35,8 @@ namespace DataMapper.Mappers.Common.Locations
                 Region = city.Region?.ConvertToRegionViewModelLite(),
                 Municipality = city.Municipality?.ConvertToMunicipalityViewModelLite(),
 
+                IsActive = city.Active,
+
                 CreatedBy = city.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = city.Company?.ConvertToCompanyViewModelLite(),
 
@@ -66,6 +68,8 @@ namespace DataMapper.Mappers.Common.Locations
                 Code = city.Code,
                 ZipCode = city.ZipCode,
                 Name = city.Name,
+
+                IsActive = city.Active,
 
                 CreatedAt = city.CreatedAt,
                 UpdatedAt = city.UpdatedAt

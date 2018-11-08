@@ -279,8 +279,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 foreach (var businessPartnerType in businessPartnerTypesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(businessPartnerType.Identifier);
-                    businessPartnerType.IsSynced = true;
-                    Create(businessPartnerType);
+                    if (businessPartnerType.IsActive)
+                    {
+                        businessPartnerType.IsSynced = true;
+                        Create(businessPartnerType);
+                    }
                 }
             }
         }

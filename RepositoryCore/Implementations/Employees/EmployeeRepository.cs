@@ -49,7 +49,7 @@ namespace RepositoryCore.Implementations.Employees
                 .Include(x => x.PassportCountry)
                 .Include(x => x.PassportCity)
                 .Include(x => x.ResidenceCity)
-                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
+                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
                 .AsNoTracking()
                 .ToList();
         }

@@ -56,52 +56,55 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Sifra *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Šifra *" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCode" IsEnabled="False" Text="{Binding Path=CurrentBusinessPartner.Code}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Naziv kompanije *" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentBusinessPartner.Name}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Interna šifra *" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtInternalCode" Text="{Binding Path=CurrentBusinessPartner.InternalCode}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Matični broj" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtIdentificationNumber" 
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Naziv kompanije *" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentBusinessPartner.Name}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="Matični broj" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtIdentificationNumber" 
                              Text="{Binding Path=CurrentBusinessPartner.IdentificationNumber}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" Text="Poreski broj (PIB/JMBG) " VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPIBNumber" 
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Poreski broj (PIB/JMBG) " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPIBNumber" 
                              Text="{Binding Path=CurrentBusinessPartner.PIB}" />
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Registarski broj (PIO)" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPIONumber" 
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Registarski broj (PIO)" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPIONumber" 
                              Text="{Binding Path=CurrentBusinessPartner.PIO}" />
 
-                        <TextBlock Grid.Row="2" Grid.Column="3" Text="PDV broj" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPDVNumber"
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="PDV broj" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPDVNumber"
                              Text="{Binding Path=CurrentBusinessPartner.PDV}"/>
 
                         <!--<TextBlock Grid.Row="3" Grid.Column="0" Text="Delatnost" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <popups:AgencyPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgencySrb" 
                              CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>-->
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Rabat" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Rabat" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
                              Text="{Binding Path=CurrentBusinessPartner.Rebate}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Valuta" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtDueDate"
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Valuta" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtDueDate"
                              Text="{Binding Path=CurrentBusinessPartner.DueDate}" />
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="JBKJS" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtJBKJS" 
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="JBKJS" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtJBKJS" 
                              Text="{Binding Path=CurrentBusinessPartner.JBKJS}" />
 
-                        <TextBlock Grid.Row="4" Grid.Column="3" Text="Obveznik PDV-a " VerticalAlignment="Center" Margin="5 0 5 0"/>
-                        <ComboBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2"
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Obveznik PDV-a " VerticalAlignment="Center" Margin="5 0 5 0"/>
+                        <ComboBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2"
                         SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
                         ItemsSource="{Binding Path=IsInPdvOptions}">
                         </ComboBox>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Sajt" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
+                        <TextBlock Grid.Row="5" Grid.Column="3" Text="Sajt" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
                              Text="{Binding Path=CurrentBusinessPartner.WebSite}" />
 
                         <!--<TextBlock Grid.Row="6" Grid.Column="0" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
@@ -138,11 +141,11 @@
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Drzava *" Margin="5 0 5 0" />
                         <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountryGer"
-                                         CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"/>
+                                         CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Sektor *" Margin="5 0 5 0" />
                         <popups:SectorPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
-                                         CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"
+                                         CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"
                                          CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="Delatnost *" VerticalAlignment="Center" Margin="5 0 5 0" />
@@ -202,11 +205,11 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Kontakt osoba " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneContactPerson" Text="{Binding Path=CurrentPhoneForm.ContactPerson, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Kontakt osoba - Ime" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneContactPersonFirstName" Text="{Binding Path=CurrentPhoneForm.ContactPersonFirstName, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Napomena " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentPhoneForm.Description, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Kontakt osoba - Prezime" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneContactPersonLastName" Text="{Binding Path=CurrentPhoneForm.ContactPersonLastName, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Mobilni " Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtMobile" Text="{Binding Path=CurrentPhoneForm.Mobile, Mode=TwoWay}"/>
@@ -220,15 +223,18 @@
                         <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Email " Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtEmail" Text="{Binding Path=CurrentPhoneForm.Email, Mode=TwoWay}"/>
 
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Napomena " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentPhoneForm.Description, Mode=TwoWay}"/>
 
-                        <Button x:Name="btnPhone" Grid.Row="3" Grid.Column="4" Click="btnPhone_Click" Margin="2" >
+
+                        <Button x:Name="btnPhone" Grid.Row="4" Grid.Column="4" Click="btnPhone_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                 <TextBlock Text=" Sačuvaj stavku " />
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="btnCancelPhone" Grid.Row="3" Grid.Column="5" Click="btnCancelPhone_Click" Margin="2" >
+                        <Button x:Name="btnCancelPhone" Grid.Row="4" Grid.Column="5" Click="btnCancelPhone_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                 <TextBlock Text=" Odustani " />
@@ -236,9 +242,9 @@
                         </Button>
 
 
-                        <Controls:ProgressRing Grid.Row="4" Grid.ColumnSpan="6" IsActive="{Binding PhoneDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <Controls:ProgressRing Grid.Row="5" Grid.ColumnSpan="6" IsActive="{Binding PhoneDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgPhones"
-                              Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6"
+                              Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="2 5 2 5"
                               MinHeight="200"
                               AutoGenerateColumns="False"
@@ -252,12 +258,12 @@
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto"
                               PreviewMouseWheel="PreviewMouseWheel"
-                              Style="{DynamicResource AzureDataGrid}"
                               ItemsSource="{Binding Path=PhonesFromDB}"
                               SelectedItem="{Binding Path=CurrentPhoneDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="ContactPerson" Header="Kontakt osoba" Binding="{Binding ContactPerson}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ContactPersonFirstName" Header="Ime" Binding="{Binding ContactPersonFirstName}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ContactPersonLastName" Header="Prezime" Binding="{Binding ContactPersonLastName}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Description" Header="Napomena" Binding="{Binding Description}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Path=Mobile}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />

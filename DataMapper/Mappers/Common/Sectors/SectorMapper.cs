@@ -34,6 +34,8 @@ namespace DataMapper.Mappers.Common.Sectors
 
                 Country = sector.Country?.ConvertToCountryViewModelLite(),
 
+                IsActive = sector.Active,
+
                 CreatedBy = sector.CreatedBy?.ConvertToUserViewModelLite(),
 				Company = sector.Company?.ConvertToCompanyViewModelLite(),
 
@@ -66,7 +68,9 @@ namespace DataMapper.Mappers.Common.Sectors
 				SecondCode = sector.SecondCode,
 				Name = sector.Name,
 
-				CreatedAt = sector.CreatedAt,
+                IsActive = sector.Active,
+
+                CreatedAt = sector.CreatedAt,
 				UpdatedAt = sector.UpdatedAt
 			};
 			return sectorViewModel;

@@ -1,5 +1,6 @@
 ﻿using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
+using DataMapper.Mappers.Common.Locations;
 using DataMapper.Mappers.Common.Sectors;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Identity;
@@ -30,6 +31,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Identifier = businessPartner.Identifier,
 
                 Code = businessPartner.Code,
+                InternalCode = businessPartner.InternalCode,
                 Name = businessPartner.Name,
 
                 PIB = businessPartner.PIB,
@@ -48,12 +50,15 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 JBKJS = businessPartner.JBKJS,
 
                 NameGer = businessPartner.NameGer,
+                Country = businessPartner.Country?.ConvertToCountryViewModelLite(),
                 Sector = businessPartner.Sector?.ConvertToSectorViewModelLite(),
                 Agency = businessPartner.Agency?.ConvertToAgencyViewModelLite(),
                 TaxNr = businessPartner.TaxNr,
                 CommercialNr = businessPartner.CommercialNr,
                 ContactPersonGer = businessPartner.ContactPersonGer,
-            
+
+                IsActive = businessPartner.Active,
+
                 CreatedBy = businessPartner.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = businessPartner.Company?.ConvertToCompanyViewModelLite(),
 
@@ -72,6 +77,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Identifier = businessPartner.Identifier,
 
                 Code = businessPartner.Code,
+                InternalCode = businessPartner.InternalCode,
                 Name = businessPartner.Name,
 
                 PIB = businessPartner.PIB,
@@ -94,6 +100,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 CommercialNr = businessPartner.CommercialNr,
                 ContactPersonGer = businessPartner.ContactPersonGer,
 
+                IsActive = businessPartner.Active,
+
                 UpdatedAt = businessPartner.UpdatedAt,
                 CreatedAt = businessPartner.CreatedAt,
             };
@@ -108,6 +116,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Identifier = businessPartnerViewModel.Identifier,
 
                 Code = businessPartnerViewModel.Code,
+                InternalCode = businessPartnerViewModel.InternalCode,
                 Name = businessPartnerViewModel.Name,
 
                 PIB = businessPartnerViewModel.PIB,
@@ -126,6 +135,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 JBKJS = businessPartnerViewModel.JBKJS,
 
                 NameGer = businessPartnerViewModel.NameGer,
+                CountryId = businessPartnerViewModel.Country?.Id ?? null,
                 SectorId = businessPartnerViewModel.Sector?.Id ?? null,
                 AgencyId = businessPartnerViewModel.Agency?.Id ?? null,
                 TaxNr = businessPartnerViewModel.TaxNr,

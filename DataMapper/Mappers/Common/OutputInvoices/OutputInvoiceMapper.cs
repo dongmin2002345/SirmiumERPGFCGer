@@ -47,9 +47,7 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 PDV = outputInvoice.PDV,
                 Total = outputInvoice.Total,
 
-                //Status = outputInvoice.Status,
-                //IsLocked = outputInvoice.IsLocked,
-                //LockedDate = outputInvoice.LockedDate,
+                IsActive = outputInvoice.Active,
 
                 Company = outputInvoice.Company?.ConvertToCompanyViewModelLite(),
 
@@ -107,9 +105,7 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 PDV = outputInvoice.PDV,
                 Total = outputInvoice.Total,
 
-                //Status = outputInvoice.Status,
-                //IsLocked = outputInvoice.IsLocked,
-                //LockedDate = outputInvoice.LockedDate,
+                IsActive = outputInvoice.Active,
 
                 Company = outputInvoice.Company?.ConvertToCompanyViewModelLite(),
 

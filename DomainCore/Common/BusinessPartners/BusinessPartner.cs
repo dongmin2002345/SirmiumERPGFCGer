@@ -1,4 +1,5 @@
 ﻿using DomainCore.Base;
+using DomainCore.Common.Locations;
 using DomainCore.Common.Sectors;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace DomainCore.Common.BusinessPartners
     public class BusinessPartner : BaseEntity
     {
         public string Code { get; set; }
+        public string InternalCode { get; set; }
         public string Name { get; set; }
 
         public string PIB { get; set; }
@@ -30,6 +32,8 @@ namespace DomainCore.Common.BusinessPartners
 
         public string NameGer { get; set; }
 
+        public int? CountryId { get; set; }
+        public Country Country { get; set; }
         public int? SectorId { get; set; }
         public Sector Sector { get; set; }
         public int? AgencyId { get; set; }
@@ -43,8 +47,8 @@ namespace DomainCore.Common.BusinessPartners
         #endregion
 
         public List<BusinessPartnerLocation> Locations { get; set; }
-        //public List<BusinessPartnerOrganizationUnit> OrganizationUnits { get; set; }
         public List<BusinessPartnerPhone> Phones { get; set; }
+        public List<BusinessPartnerBank> Banks { get; set; }
         public List<BusinessPartnerBusinessPartnerType> BusinessPartnerTypes { get; set; }
     }
 }

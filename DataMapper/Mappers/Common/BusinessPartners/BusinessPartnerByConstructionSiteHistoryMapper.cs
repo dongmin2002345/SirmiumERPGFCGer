@@ -36,6 +36,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 BusinessPartner = businessPartnerByConstructionSiteHistory.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
                 ConstructionSite = businessPartnerByConstructionSiteHistory.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
 
+                IsActive = businessPartnerByConstructionSiteHistory.Active,
+
                 CreatedBy = businessPartnerByConstructionSiteHistory.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = businessPartnerByConstructionSiteHistory.Company?.ConvertToCompanyViewModelLite(),
 
@@ -59,6 +61,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 StartDate = businessPartnerByConstructionSiteHistory.StartDate,
                 EndDate = businessPartnerByConstructionSiteHistory.EndDate,
+
+                IsActive = businessPartnerByConstructionSiteHistory.Active,
 
                 UpdatedAt = businessPartnerByConstructionSiteHistory.UpdatedAt,
                 CreatedAt = businessPartnerByConstructionSiteHistory.CreatedAt

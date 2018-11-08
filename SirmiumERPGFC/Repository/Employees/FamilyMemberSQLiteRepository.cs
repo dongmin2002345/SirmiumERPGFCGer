@@ -226,8 +226,11 @@ namespace SirmiumERPGFC.Repository.Employees
                 foreach (var FamilyMember in familyMembersFromDB.OrderBy(x => x.Id))
                 {
                     Delete(FamilyMember.Identifier);
-                    FamilyMember.IsSynced = true;
-                    Create(FamilyMember);
+                    if (FamilyMember.IsActive)
+                    {
+                        FamilyMember.IsSynced = true;
+                        Create(FamilyMember);
+                    }
                 }
             }
         }

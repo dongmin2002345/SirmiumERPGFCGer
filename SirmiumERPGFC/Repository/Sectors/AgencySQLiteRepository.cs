@@ -254,8 +254,11 @@ namespace SirmiumERPGFC.Repository.Sectors
                 foreach (var Agency in AgenciesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(Agency.Identifier);
-                    Agency.IsSynced = true;
-                    Create(Agency);
+                    if (Agency.IsActive)
+                    {
+                        Agency.IsSynced = true;
+                        Create(Agency);
+                    }
                 }
             }
         }

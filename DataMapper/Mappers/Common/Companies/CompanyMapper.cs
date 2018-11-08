@@ -54,6 +54,8 @@ namespace DataMapper.Mappers.Common.Companies
                 WebSite = company.WebSite,
                 UpdatedAt = company.UpdatedAt,
 
+                IsActive = company.Active,
+
                 CreatedBy = company.CreatedBy?.ConvertToUserViewModelLite(),
                 CreatedAt = company.CreatedAt
             };
@@ -79,6 +81,9 @@ namespace DataMapper.Mappers.Common.Companies
                 IndustryName = company.IndustryName,
                 Email = company.Email,
                 WebSite = company.WebSite,
+
+                IsActive = company.Active,
+
                 UpdatedAt = company.UpdatedAt,
                 CreatedAt = company.CreatedAt
             };

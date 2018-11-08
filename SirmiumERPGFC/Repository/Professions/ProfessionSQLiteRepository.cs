@@ -249,8 +249,11 @@ namespace SirmiumERPGFC.Repository.Professions
                 foreach (var profession in professionsFromDB.OrderBy(x => x.Id))
                 {
                     Delete(profession.Identifier);
-                    profession.IsSynced = true;
-                    Create(profession);
+                    if (profession.IsActive)
+                    {
+                        profession.IsSynced = true;
+                        Create(profession);
+                    }
                 }
             }
         }

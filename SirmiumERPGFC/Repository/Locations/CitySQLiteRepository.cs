@@ -329,8 +329,11 @@ namespace SirmiumERPGFC.Repository.Locations
                 foreach (var city in citiesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(city.Identifier);
-                    city.IsSynced = true;
-                    Create(city);
+                    if (city.IsActive)
+                    {
+                        city.IsSynced = true;
+                        Create(city);
+                    }
                 }
             }
         }

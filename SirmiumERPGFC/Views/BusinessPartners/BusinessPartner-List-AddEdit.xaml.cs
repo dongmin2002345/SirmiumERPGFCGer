@@ -482,8 +482,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             ItemsEnabled = itemsEnabled;
             IsPopup = isPopup;
 
-            //txtName.Focus();
-
             Thread displayThread = new Thread(() => {
                 PopulateBusinessPartnerTypeData();
                 PopulateLocationData();
@@ -709,7 +707,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
-        #region Add, edit, delete and cancel phone
+        #region Add, edit, delete and cancel bank
         
         private void btnBank_Click(object sender, RoutedEventArgs e)
         {

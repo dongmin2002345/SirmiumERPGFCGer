@@ -33,6 +33,8 @@ namespace DataMapper.Mappers.Common.Locations
                 Mark = country.Mark,
                 Name = country.Name,
 
+                IsActive = country.Active,
+
                 CreatedBy = country.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = country.Company?.ConvertToCompanyViewModelLite(),
 
@@ -67,6 +69,8 @@ namespace DataMapper.Mappers.Common.Locations
                 NumericCode = country.NumericCode,
                 Mark = country.Mark,
                 Name = country.Name,
+
+                IsActive = country.Active,
 
                 UpdatedAt = country.UpdatedAt,
                 CreatedAt = country.CreatedAt

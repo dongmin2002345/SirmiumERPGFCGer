@@ -53,7 +53,7 @@ namespace RepositoryCore.Implementations.Employees
                 .Include(x => x.FamilyMember)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
-                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
+                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
                 .AsNoTracking()
                 .ToList();
 

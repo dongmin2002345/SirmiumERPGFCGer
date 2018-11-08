@@ -33,6 +33,9 @@ namespace DataMapper.Mappers.Common.Locations
                 Name = region.Name,
 
                 Country = region.Country?.ConvertToCountryViewModelLite(),
+
+                IsActive = region.Active,
+
                 CreatedBy = region.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = region.Company?.ConvertToCompanyViewModelLite(),
 
@@ -65,6 +68,8 @@ namespace DataMapper.Mappers.Common.Locations
                 Code = region.Code,
                 RegionCode = region.RegionCode,
                 Name = region.Name,
+
+                IsActive = region.Active,
 
                 UpdatedAt = region.UpdatedAt,
                 CreatedAt = region.CreatedAt

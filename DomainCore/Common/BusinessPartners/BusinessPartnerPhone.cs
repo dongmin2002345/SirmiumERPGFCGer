@@ -14,7 +14,9 @@ namespace DomainCore.Common.BusinessPartners
         public string Mobile { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
-        public string ContactPerson { get; set; }
+
+        public string ContactPersonFirstName { get; set; }
+        public string ContactPersonLastName { get; set; }
 
         public string Description { get; set; }
     }

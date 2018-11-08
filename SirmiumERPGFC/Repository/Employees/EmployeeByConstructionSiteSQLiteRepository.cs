@@ -136,8 +136,11 @@ namespace SirmiumERPGFC.Repository.Employees
                 foreach (var employeeByConstructionSite in employeeByConstructionSiteFromDB.OrderBy(x => x.Id))
                 {
                     Delete(employeeByConstructionSite.Identifier);
-                    employeeByConstructionSite.IsSynced = true;
-                    Create(employeeByConstructionSite);
+                    if (employeeByConstructionSite.IsActive)
+                    {
+                        employeeByConstructionSite.IsSynced = true;
+                        Create(employeeByConstructionSite);
+                    }
                 }
             }
         }

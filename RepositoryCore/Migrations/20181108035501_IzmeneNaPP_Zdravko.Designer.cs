@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181108035501_IzmeneNaPP_Zdravko")]
+    partial class IzmeneNaPP_Zdravko
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,8 +78,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("ContactPersonGer");
 
-                    b.Property<int?>("CountryId");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<int?>("CreatedById");
@@ -87,8 +87,6 @@ namespace RepositoryCore.Migrations
                     b.Property<string>("IdentificationNumber");
 
                     b.Property<Guid>("Identifier");
-
-                    b.Property<string>("InternalCode");
 
                     b.Property<bool>("IsInPDV");
 
@@ -119,8 +117,6 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("AgencyId");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("CreatedById");
 
@@ -1446,10 +1442,6 @@ namespace RepositoryCore.Migrations
                         .WithMany()
                         .HasForeignKey("CompanyId");
 
-                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -1466,7 +1458,7 @@ namespace RepositoryCore.Migrations
                         .HasForeignKey("BankId");
 
                     b.HasOne("DomainCore.Common.BusinessPartners.BusinessPartner", "BusinessPartner")
-                        .WithMany("Banks")
+                        .WithMany()
                         .HasForeignKey("BusinessPartnerId");
 
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")

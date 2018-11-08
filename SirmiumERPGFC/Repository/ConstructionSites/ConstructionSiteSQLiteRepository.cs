@@ -258,8 +258,11 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 foreach (var constructionSite in constructionSitesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(constructionSite.Identifier);
-                    constructionSite.IsSynced = true;
-                    Create(constructionSite);
+                    if (constructionSite.IsActive)
+                    {
+                        constructionSite.IsSynced = true;
+                        Create(constructionSite);
+                    }
                 }
             }
         }

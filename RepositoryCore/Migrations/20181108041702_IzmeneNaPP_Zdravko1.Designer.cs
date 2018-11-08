@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181108041702_IzmeneNaPP_Zdravko1")]
+    partial class IzmeneNaPP_Zdravko1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,8 +78,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("ContactPersonGer");
 
-                    b.Property<int?>("CountryId");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<int?>("CreatedById");
@@ -119,8 +119,6 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("AgencyId");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("CreatedById");
 
@@ -1445,10 +1443,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
 
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()

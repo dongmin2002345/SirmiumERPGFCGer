@@ -293,7 +293,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         private void btnAddBusinessPartner_Click(object sender, RoutedEventArgs e)
         {
             BusinessPartnerViewModel businessPartnerViewModel = new BusinessPartnerViewModel();
-            businessPartnerViewModel.Code = new BusinessPartnerSQLiteRepository().GetNewCodeValue(MainWindow.CurrentCompanyId);
             businessPartnerViewModel.Identifier = Guid.NewGuid();
 
             BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(businessPartnerViewModel, false);

@@ -23,6 +23,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public List<BusinessPartner> GetBusinessPartners(int companyId)
         {
             List<BusinessPartner> businessPartners = context.BusinessPartners
+                .Include(x => x.Country)
                 .Include(x => x.Sector)
                 .Include(x => x.Agency)
                 .Include(x => x.Company)
@@ -37,11 +38,12 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public List<BusinessPartner> GetBusinessPartnersNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<BusinessPartner> businessPartners = context.BusinessPartners
+                .Include(x => x.Country)
                 .Include(x => x.Sector)
                 .Include(x => x.Agency)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
-                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime && x.Active == true)
+                .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
                 .OrderByDescending(x => x.UpdatedAt)
                 .AsNoTracking()
                 .ToList();
@@ -52,6 +54,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public BusinessPartner GetBusinessPartner(int id)
         {
             return context.BusinessPartners
+                .Include(x => x.Country)
                 .Include(x => x.Sector)
                 .Include(x => x.Agency)
                 .Include(x => x.Company)
@@ -78,6 +81,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                 if (dbEntry != null)
                 {
+                    dbEntry.CountryId = businessPartner.CountryId ?? null;
                     dbEntry.SectorId = businessPartner.SectorId ?? null;
                     dbEntry.AgencyId = businessPartner.AgencyId ?? null;
                     dbEntry.CompanyId = businessPartner.CompanyId ?? null;
@@ -85,6 +89,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                     // Set properties
                     dbEntry.Code = businessPartner.Code;
+                    dbEntry.InternalCode = businessPartner.InternalCode;
                     dbEntry.Name = businessPartner.Name;
 
                     dbEntry.PIB = businessPartner.PIB;

@@ -248,8 +248,11 @@ namespace SirmiumERPGFC.Repository.Locations
                 foreach (var region in regionsFromDB.OrderBy(x => x.Id))
                 {
                     Delete(region.Identifier);
-                    region.IsSynced = true;
-                    Create(region);
+                    if (region.IsActive)
+                    {
+                        region.IsSynced = true;
+                        Create(region);
+                    }
                 }
             }
         }

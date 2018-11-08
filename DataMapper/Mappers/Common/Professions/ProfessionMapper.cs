@@ -34,6 +34,8 @@ namespace DataMapper.Mappers.Common.Professions
 
                 Country = profession.Country?.ConvertToCountryViewModelLite(),
 
+                IsActive = profession.Active,
+
                 CreatedBy = profession.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = profession.Company?.ConvertToCompanyViewModelLite(),
 
@@ -65,6 +67,8 @@ namespace DataMapper.Mappers.Common.Professions
                 Code = profession.Code,
                 SecondCode = profession.SecondCode,
                 Name = profession.Name,
+
+                IsActive = profession.Active,
 
                 CreatedAt = profession.CreatedAt,
                 UpdatedAt = profession.UpdatedAt
