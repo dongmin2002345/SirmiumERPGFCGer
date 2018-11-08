@@ -166,7 +166,7 @@
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Važi do *" />
                         <DatePicker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
-                                    Text="{Binding Path=CurrentEmployee.VisaFrom,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    Text="{Binding Path=CurrentEmployee.VisaTo,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                     </Grid>
                 </GroupBox>
@@ -187,12 +187,17 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad *" />
-                        <popups1:CityPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity2" 
-                                        CurrentCity="{Binding Path=CurrentEmployee.ResidenceCity, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
+                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountryForGermanCity" 
+                                        CurrentCountry="{Binding Path=CurrentEmployee.ResidenceCountry, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresa *" />
-                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.ResidenceAddress}"  />
+                        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad *" />
+                        <popups1:CityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity2" 
+                                           CurrentCity="{Binding Path=CurrentEmployee.ResidenceCity, Mode=TwoWay}"
+                                           CurrentCountry="{Binding Path=CurrentEmployee.ResidenceCountry}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresa *" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.ResidenceAddress}"  />
 
                     </Grid>
                 </GroupBox>

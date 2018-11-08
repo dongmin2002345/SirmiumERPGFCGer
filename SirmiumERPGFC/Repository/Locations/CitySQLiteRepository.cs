@@ -204,7 +204,7 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public CityListResponse GetCitiesForPopupBusinessPartner(int companyId, Guid? countryIdentifier, string filterString)
+        public CityListResponse GetCitiesForPopupCountry(int companyId, Guid? countryIdentifier, string filterString)
         {
             CityListResponse response = new CityListResponse();
             List<CityViewModel> Cities = new List<CityViewModel>();

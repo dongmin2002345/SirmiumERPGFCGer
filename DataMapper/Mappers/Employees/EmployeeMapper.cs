@@ -59,6 +59,8 @@ namespace DataMapper.Mappers.Employees
                 WorkPermitFrom = Employee.WorkPermitFrom,
                 WorkPermitTo = Employee.WorkPermitTo,
 
+                IsActive = Employee.Active,
+
                 CreatedBy = Employee.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = Employee.Company?.ConvertToCompanyViewModelLite(),
 
@@ -91,6 +93,8 @@ namespace DataMapper.Mappers.Employees
                 VisaTo = Employee.VisaTo,
                 WorkPermitFrom = Employee.WorkPermitFrom,
                 WorkPermitTo = Employee.WorkPermitTo,
+
+                IsActive = Employee.Active,
 
                 UpdatedAt = Employee.UpdatedAt,
                 CreatedAt = Employee.CreatedAt

@@ -29,12 +29,18 @@ namespace DataMapper.Mappers.ConstructionSites
                 Identifier = constructionSite.Identifier,
 
                 Code = constructionSite.Code,
+                InternalCode = constructionSite.InternalCode,
+
                 Name = constructionSite.Name,
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
+
+                ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
 
                 City = constructionSite.City?.ConvertToCityViewModelLite(),
+
+                IsActive = constructionSite.Active,
 
                 CreatedBy = constructionSite.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = constructionSite.Company?.ConvertToCompanyViewModelLite(),
@@ -65,10 +71,16 @@ namespace DataMapper.Mappers.ConstructionSites
                 Identifier = constructionSite.Identifier,
 
                 Code = constructionSite.Code,
+                InternalCode = constructionSite.InternalCode, 
+
                 Name = constructionSite.Name,
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
+
+                ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
+
+                IsActive = constructionSite.Active,
 
                 CreatedAt = constructionSite.CreatedAt,
                 UpdatedAt = constructionSite.UpdatedAt
@@ -84,9 +96,13 @@ namespace DataMapper.Mappers.ConstructionSites
                 Identifier = constructionSiteViewModel.Identifier,
 
                 Code = constructionSiteViewModel.Code,
+                InternalCode = constructionSiteViewModel.InternalCode, 
+
                 Address = constructionSiteViewModel.Address,
                 Name = constructionSiteViewModel.Name,
                 MaxWorkers = constructionSiteViewModel.MaxWorkers,
+
+                ContractStart = constructionSiteViewModel.ContractStart,
                 ContractExpiration = constructionSiteViewModel.ContractExpiration,
 
                 CityId = constructionSiteViewModel.City?.Id ?? null,

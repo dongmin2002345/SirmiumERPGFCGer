@@ -652,8 +652,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
                 insertCommand.Parameters.AddWithValue("@ServerId", businessPartner.Id);
                 insertCommand.Parameters.AddWithValue("@Identifier", businessPartner.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", businessPartner.Code);
-                insertCommand.Parameters.AddWithValue("@InternalCode", businessPartner.InternalCode);
+                insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartner.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@InternalCode", ((object)businessPartner.InternalCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", ((object)businessPartner.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@PIB", ((object)businessPartner.PIB) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@PIO", ((object)businessPartner.PIO) ?? DBNull.Value);

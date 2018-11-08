@@ -79,6 +79,7 @@ namespace ServiceInterfaces.ViewModels.Banks
 		}
 		#endregion
 
+
 		#region IsSynced
 		private bool _IsSynced;
 
@@ -94,10 +95,27 @@ namespace ServiceInterfaces.ViewModels.Banks
 				}
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Search_Name
-		private string _Search_Name;
+        #region Search_Swift
+        private string _Search_Swift;
+
+        public string Search_Swift
+        {
+            get { return _Search_Swift; }
+            set
+            {
+                if (_Search_Swift != value)
+                {
+                    _Search_Swift = value;
+                    NotifyPropertyChanged("Search_Swift");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Name
+        private string _Search_Name;
 
 		public string Search_Name
 		{

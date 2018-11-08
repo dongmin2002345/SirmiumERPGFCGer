@@ -327,7 +327,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
                 }
 
                 response = new BusinessPartnerSQLiteRepository().Delete(CurrentBusinessPartner.Identifier);

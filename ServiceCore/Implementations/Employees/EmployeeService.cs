@@ -139,6 +139,26 @@ namespace ServiceCore.Implementations.Employees
 
         }
 
+        public EmployeeResponse Delete(Guid identifier)
+        {
+            EmployeeResponse response = new EmployeeResponse();
+            try
+            {
+                response.Employee = unitOfWork.GetEmployeeRepository().Delete(identifier)?.ConvertToEmployeeViewModel();
+                unitOfWork.Save();
+
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Employee = new EmployeeViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
         public EmployeeListResponse Sync(SyncEmployeeRequest request)
         {
             EmployeeListResponse response = new EmployeeListResponse();

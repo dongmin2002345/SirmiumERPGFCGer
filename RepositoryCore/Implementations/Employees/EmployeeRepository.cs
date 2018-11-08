@@ -151,6 +151,23 @@ namespace RepositoryCore.Implementations.Employees
             }
         }
 
+        public Employee Delete(Guid identifier)
+        {
+            // Load Employee that will be deleted
+            Employee dbEntry = context.Employees
+                .FirstOrDefault(x => x.Identifier == identifier);
+
+            if (dbEntry != null)
+            {
+                // Set activity
+                dbEntry.Active = false;
+                // Set timestamp
+                dbEntry.UpdatedAt = DateTime.Now;
+            }
+
+            return dbEntry;
+        }
+
         #endregion
     }
 }

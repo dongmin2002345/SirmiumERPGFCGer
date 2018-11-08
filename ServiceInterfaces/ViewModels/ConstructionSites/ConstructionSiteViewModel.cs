@@ -1,17 +1,6 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ServiceInterfaces.ViewModels.Base;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceInterfaces.ViewModels.ConstructionSites
 {
@@ -33,6 +22,24 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
             }
         }
         #endregion
+
+        #region InternalCode
+        private string _InternalCode;
+
+        public string InternalCode
+        {
+            get { return _InternalCode; }
+            set
+            {
+                if (_InternalCode != value)
+                {
+                    _InternalCode = value;
+                    NotifyPropertyChanged("InternalCode");
+                }
+            }
+        }
+        #endregion
+
 
         #region Address
         private string _Address = null;
@@ -97,6 +104,24 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
                 {
                     _MaxWorkers = value;
                     NotifyPropertyChanged("MaxWorkers");
+                }
+            }
+        }
+        #endregion
+
+
+        #region ContractStart
+        private DateTime _ContractStart;
+
+        public DateTime ContractStart
+        {
+            get { return _ContractStart; }
+            set
+            {
+                if (_ContractStart != value)
+                {
+                    _ContractStart = value;
+                    NotifyPropertyChanged("ContractStart");
                 }
             }
         }

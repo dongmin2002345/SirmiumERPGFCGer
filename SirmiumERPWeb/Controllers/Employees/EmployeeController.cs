@@ -69,6 +69,23 @@ namespace SirmiumERPWeb.Controllers.Employees
         }
 
         [HttpPost]
+        public JsonResult Delete([FromBody] Guid identifier)
+        {
+            EmployeeResponse response;
+            try
+            {
+                response = this.EmployeeService.Delete(identifier);
+            }
+            catch (Exception ex)
+            {
+                response = null;
+                Console.WriteLine(ex.Message);
+            }
+
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        }
+
+        [HttpPost]
         public JsonResult Sync([FromBody] SyncEmployeeRequest request)
         {
             EmployeeListResponse response = new EmployeeListResponse();

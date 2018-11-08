@@ -103,9 +103,11 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
                     // Set properties
                     dbEntry.Code = constructionSite.Code;
+                    dbEntry.InternalCode = constructionSite.InternalCode;
                     dbEntry.Name = constructionSite.Name;
                     dbEntry.Address = constructionSite.Address;
                     dbEntry.MaxWorkers = constructionSite.MaxWorkers;
+                    dbEntry.ContractStart = constructionSite.ContractStart;
                     dbEntry.ContractExpiration = constructionSite.ContractExpiration;
 
 

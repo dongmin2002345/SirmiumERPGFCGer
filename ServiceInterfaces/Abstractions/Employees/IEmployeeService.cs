@@ -14,6 +14,7 @@ namespace ServiceInterfaces.Abstractions.Employees
         EmployeeListResponse GetEmployeesNewerThen(int companyId, DateTime? lastUpdateTime);
 
         EmployeeResponse Create(EmployeeViewModel Employee);
+        EmployeeResponse Delete(Guid identifier);
 
         EmployeeListResponse Sync(SyncEmployeeRequest request);
     }

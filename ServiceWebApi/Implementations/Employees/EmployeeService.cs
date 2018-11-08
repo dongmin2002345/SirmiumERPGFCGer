@@ -68,6 +68,24 @@ namespace ServiceWebApi.Implementations.Employees
 
         }
 
+        public EmployeeResponse Delete(Guid identifier)
+        {
+            EmployeeResponse response = new EmployeeResponse();
+            try
+            {
+                response = WpfApiHandler.SendToApi<Guid, EmployeeViewModel, EmployeeResponse>(identifier, "Delete");
+            }
+            catch (Exception ex)
+            {
+                response.Employee = new EmployeeViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+
+        }
+
         public EmployeeListResponse Sync(SyncEmployeeRequest request)
         {
             EmployeeListResponse response = new EmployeeListResponse();

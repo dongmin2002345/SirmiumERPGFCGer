@@ -34,11 +34,12 @@ namespace SirmiumERPGFC.Views.Employees
         #region Attributes
 
         #region Services
-        IEmployeeService EmployeeService;
-        IEmployeeItemService EmployeeItemService;
-        IEmployeeLicenceService EmployeeLicenceService;
-        IEmployeeProfessionService EmployeeProfessionService;
+        IEmployeeService employeeService;
+        IEmployeeItemService employeeItemService;
+        IEmployeeLicenceService employeeLicenceService;
+        IEmployeeProfessionService employeeProfessionService;
         #endregion
+
 
         #region EmployeesFromDB
         private ObservableCollection<EmployeeViewModel> _EmployeesFromDB;
@@ -294,10 +295,10 @@ namespace SirmiumERPGFC.Views.Employees
         public Employee_List()
         {
             // Get required service
-            this.EmployeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
-            this.EmployeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
-            this.EmployeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
-            this.EmployeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
+            this.employeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
+            this.employeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
+            this.employeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
+            this.employeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
 
             InitializeComponent();
 
@@ -429,12 +430,12 @@ namespace SirmiumERPGFC.Views.Employees
             RefreshButtonEnabled = false;
 
             RefreshButtonContent = " Radnici ... ";
-            new EmployeeSQLiteRepository().Sync(EmployeeService);
+            new EmployeeSQLiteRepository().Sync(employeeService);
 
             RefreshButtonContent = " Stavke ... ";
-            new EmployeeItemSQLiteRepository().Sync(EmployeeItemService);
-            new EmployeeLicenceItemSQLiteRepository().Sync(EmployeeLicenceService);
-            new EmployeeProfessionItemSQLiteRepository().Sync(EmployeeProfessionService);
+            new EmployeeItemSQLiteRepository().Sync(employeeItemService);
+            new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService);
+            new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService);
 
             PopulateData();
 
@@ -450,6 +451,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             EmployeeViewModel Employee = new EmployeeViewModel();
             Employee.Identifier = Guid.NewGuid();
+            Employee.Gender = 1;
 
             Employee_List_AddEdit EmployeeAddEditForm = new Employee_List_AddEdit(Employee, true, false);
             EmployeeAddEditForm.EmployeeCreated += new EmployeeHandler(SyncData);
@@ -484,6 +486,13 @@ namespace SirmiumERPGFC.Views.Employees
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
+                EmployeeResponse response = employeeService.Delete(CurrentEmployee.Identifier);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+                }
+
                 var result = new EmployeeSQLiteRepository().Delete(CurrentEmployee.Identifier);
                 if (result.Success)
                 {

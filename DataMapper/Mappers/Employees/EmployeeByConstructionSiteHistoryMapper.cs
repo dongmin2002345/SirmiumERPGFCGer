@@ -36,6 +36,8 @@ namespace DataMapper.Mappers.Employees
                 Employee = employeeByConstructionSiteHistory.Employee?.ConvertToEmployeeViewModelLite(),
                 ConstructionSite = employeeByConstructionSiteHistory.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
 
+                IsActive = employeeByConstructionSiteHistory.Active,
+
                 CreatedBy = employeeByConstructionSiteHistory.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = employeeByConstructionSiteHistory.Company?.ConvertToCompanyViewModelLite(),
 
@@ -59,6 +61,8 @@ namespace DataMapper.Mappers.Employees
 
                 StartDate = employeeByConstructionSiteHistory.StartDate,
                 EndDate = employeeByConstructionSiteHistory.EndDate,
+
+                IsActive = employeeByConstructionSiteHistory.Active,
 
                 UpdatedAt = employeeByConstructionSiteHistory.UpdatedAt,
                 CreatedAt = employeeByConstructionSiteHistory.CreatedAt

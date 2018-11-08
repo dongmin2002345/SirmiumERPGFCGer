@@ -30,6 +30,8 @@ namespace DataMapper.Mappers.Employees
                 Code = familyMember.Code,
                 Name = familyMember.Name,
 
+                IsActive = familyMember.Active,
+
                 CreatedBy = familyMember.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = familyMember.Company?.ConvertToCompanyViewModelLite(),
 
@@ -60,6 +62,8 @@ namespace DataMapper.Mappers.Employees
 
                 Code = familyMember.Code,
                 Name = familyMember.Name,
+
+                IsActive = familyMember.Active,
 
                 CreatedAt = familyMember.CreatedAt,
                 UpdatedAt = familyMember.UpdatedAt

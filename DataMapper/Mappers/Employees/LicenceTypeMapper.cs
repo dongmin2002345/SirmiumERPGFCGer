@@ -33,7 +33,10 @@ namespace DataMapper.Mappers.Employees
 				Description = licenceType.Description,
 
 				Country = licenceType.Country?.ConvertToCountryViewModelLite(),
-				CreatedBy = licenceType.CreatedBy?.ConvertToUserViewModelLite(),
+
+                IsActive = licenceType.Active,
+
+                CreatedBy = licenceType.CreatedBy?.ConvertToUserViewModelLite(),
 				Company = licenceType.Company?.ConvertToCompanyViewModelLite(),
 
 				UpdatedAt = licenceType.UpdatedAt,

@@ -403,8 +403,6 @@ namespace SirmiumERPGFC.Views.Employees
             this.DataContext = this;
 
             CurrentEmployee = Employee;
-            if(CurrentEmployee.Identifier == Guid.Empty)
-                CurrentEmployee.Identifier = new Guid();
 
             CurrentEmployeeItemForm = new EmployeeItemViewModel();
             CurrentEmployeeProfessionItemForm = new EmployeeProfessionItemViewModel();

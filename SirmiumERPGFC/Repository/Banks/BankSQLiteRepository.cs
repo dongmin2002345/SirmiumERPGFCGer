@@ -60,13 +60,14 @@ namespace SirmiumERPGFC.Repository.Banks
 						SqlCommandSelectPart +
 						"FROM Banks " +
 						"WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+                        "AND (@Swift IS NULL OR @Swift = '' OR Swift LIKE @Swift) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@Name", ((object)bankSearchObject.Search_Name) != null ? "%" + bankSearchObject.Search_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Country", ((object)bankSearchObject.Search_Country) != null ? "%" + bankSearchObject.Search_Country + "%" : "");
-
+					selectCommand.Parameters.AddWithValue("@Swift", ((object)bankSearchObject.Search_Swift) != null ? "%" + bankSearchObject.Search_Swift + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
 					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -95,12 +96,13 @@ namespace SirmiumERPGFC.Repository.Banks
 						"SELECT Count(*) " +
 						"FROM Banks " +
 						"WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-						"AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
+                        "AND (@Swift IS NULL OR @Swift = '' OR Swift LIKE @Swift) " +
+                        "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
 						"AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@Name", ((object)bankSearchObject.Search_Name) != null ? "%" + bankSearchObject.Search_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Country", ((object)bankSearchObject.Search_Country) != null ? "%" + bankSearchObject.Search_Country + "%" : "");
-
-					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    selectCommand.Parameters.AddWithValue("@Swift", ((object)bankSearchObject.Search_Swift) != null ? "%" + bankSearchObject.Search_Swift + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
 					query = selectCommand.ExecuteReader();
 

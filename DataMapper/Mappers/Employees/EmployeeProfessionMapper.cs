@@ -32,7 +32,9 @@ namespace DataMapper.Mappers.Employees
                 Employee = EmployeeItem.Employee?.ConvertToEmployeeViewModelLite(),
                 Profession = EmployeeItem.Profession?.ConvertToProfessionViewModelLite(),
                 Country = EmployeeItem.Country?.ConvertToCountryViewModelLite(),
-                
+
+                IsActive = EmployeeItem.Active,
+
                 CreatedBy = EmployeeItem.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = EmployeeItem.Company?.ConvertToCompanyViewModelLite(),
 
@@ -49,6 +51,8 @@ namespace DataMapper.Mappers.Employees
             {
                 Id = EmployeeItem.Id,
                 Identifier = EmployeeItem.Identifier,
+
+                IsActive = EmployeeItem.Active,
 
                 UpdatedAt = EmployeeItem.UpdatedAt,
                 CreatedAt = EmployeeItem.CreatedAt

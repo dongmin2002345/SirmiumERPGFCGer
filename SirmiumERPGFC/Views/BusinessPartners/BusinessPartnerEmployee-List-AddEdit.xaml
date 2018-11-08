@@ -145,10 +145,11 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="SurName" Header="Prezime" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Passport" Header="Pasoš" Binding="{Binding Passport}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="EndDate" Header="Istek ugovora" Binding="{Binding EndDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Employee.Name" Header="Ime" Binding="{Binding Employee.Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Employee.SurName" Header="Prezime" Binding="{Binding Employee.SurName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Employee.Passport" Header="Pasoš" Binding="{Binding Employee.Passport}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="StartDate" Header="Ugovor od" Binding="{Binding StartDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="EndDate" Header="Ugovor do" Binding="{Binding EndDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                     </DataGrid.Columns>
                 </DataGrid>
 

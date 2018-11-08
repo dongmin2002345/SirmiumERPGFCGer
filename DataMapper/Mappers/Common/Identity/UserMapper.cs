@@ -32,6 +32,8 @@ namespace DataMapper.Mappers.Common.Identity
                 LastName = user.LastName,
                 Password = user.PasswordHash,
                 Email = user.Email,
+                IsActive = user.Active,
+
                 UpdatedAt = user.UpdatedAt,
                 CreatedAt = user.CreatedAt
             };
@@ -49,6 +51,7 @@ namespace DataMapper.Mappers.Common.Identity
                 LastName = user.LastName,
                 Password = user.PasswordHash,
                 Email = user.Email,
+                IsActive = user.Active,
                 UpdatedAt = user.UpdatedAt,
                 CreatedAt = user.CreatedAt
             };

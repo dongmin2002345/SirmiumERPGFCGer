@@ -165,9 +165,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
 
         #region EmployeesOnBusinessPartnereFromDB
-        private ObservableCollection<EmployeeViewModel> _EmployeesOnBusinessPartnerFromDB;
+        private ObservableCollection<EmployeeByBusinessPartnerViewModel> _EmployeesOnBusinessPartnerFromDB;
 
-        public ObservableCollection<EmployeeViewModel> EmployeesOnBusinessPartnerFromDB
+        public ObservableCollection<EmployeeByBusinessPartnerViewModel> EmployeesOnBusinessPartnerFromDB
         {
             get { return _EmployeesOnBusinessPartnerFromDB; }
             set
@@ -182,9 +182,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
         #region CurrentEmployeeOnBusinessPartner
-        private EmployeeViewModel _CurrentEmployeeOnBusinessPartner;
+        private EmployeeByBusinessPartnerViewModel _CurrentEmployeeOnBusinessPartner;
 
-        public EmployeeViewModel CurrentEmployeeOnBusinessPartner
+        public EmployeeByBusinessPartnerViewModel CurrentEmployeeOnBusinessPartner
         {
             get { return _CurrentEmployeeOnBusinessPartner; }
             set
@@ -331,17 +331,17 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             EmployeeOnBusinessPartnerDataLoading = true;
 
-            EmployeeListResponse response = new EmployeeSQLiteRepository()
-                .GetEmployeesOnBusinessPartnerByPage(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier, EmployeeOnBusinessPartnerSearchObject, currentPage, itemsPerPage);
+            EmployeeByBusinessPartnerListResponse response = new EmployeeByBusinessPartnerSQLiteRepository()
+                .GetByBusinessPartner(CurrentBusinessPartner.Identifier);
 
             if (response.Success)
             {
-                EmployeesOnBusinessPartnerFromDB = new ObservableCollection<EmployeeViewModel>(response?.Employees ?? new List<EmployeeViewModel>());
+                EmployeesOnBusinessPartnerFromDB = new ObservableCollection<EmployeeByBusinessPartnerViewModel>(response?.EmployeeByBusinessPartners ?? new List<EmployeeByBusinessPartnerViewModel>());
                 totalItems = response.TotalItems;
             }
             else
             {
-                EmployeesOnBusinessPartnerFromDB = new ObservableCollection<EmployeeViewModel>();
+                EmployeesOnBusinessPartnerFromDB = new ObservableCollection<EmployeeByBusinessPartnerViewModel>();
                 totalItems = 0;
                 MainWindow.ErrorMessage = response.Message;
             }
@@ -437,6 +437,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     Employee = CurrentEmployeeNotOnBusinessPartner,
                     BusinessPartner = CurrentBusinessPartner,
                     StartDate = ContractStartDate,
+                    EndDate = ContractEndDate,
                     Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
                     CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
                 };
@@ -456,6 +457,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 }
 
                 MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
+
+                ContractStartDate = DateTime.Now;
+                ContractEndDate = DateTime.Now;
 
                 DisplayEmployeesNotOnBusinessPartnerData();
                 DisplayEmployeesOnBusinessPartnerData();
@@ -481,7 +485,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
             // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentEmployeeOnBusinessPartner.Name + " " + CurrentEmployeeOnBusinessPartner.SurName);
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentEmployeeOnBusinessPartner.Employee.Name + " " + CurrentEmployeeOnBusinessPartner.Employee.SurName);
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
@@ -489,7 +493,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     EmployeeByBusinessPartnerListResponse listResponse = new EmployeeByBusinessPartnerSQLiteRepository().GetByBusinessPartner(CurrentBusinessPartner.Identifier);
                     EmployeeByBusinessPartnerViewModel employeeByBusinessPartner = listResponse.EmployeeByBusinessPartners.FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnBusinessPartner.Identifier);
-                    EmployeeByBusinessPartnerResponse response = employeeByBusinessPartnerService.Delete(employeeByBusinessPartner.Identifier);
+                    EmployeeByBusinessPartnerResponse response = employeeByBusinessPartnerService.Delete(employeeByBusinessPartner?.Identifier ?? Guid.NewGuid());
                     if (!response.Success)
                     {
                         MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";

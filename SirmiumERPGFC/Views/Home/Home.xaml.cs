@@ -195,9 +195,8 @@ namespace SirmiumERPGFC.Views.Home
                 ToDoResponse response = toDoService.Delete(CurrentToDo.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
+                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
                 }
 
                 response = new ToDoSQLiteRepository().Delete(CurrentToDo.Identifier);

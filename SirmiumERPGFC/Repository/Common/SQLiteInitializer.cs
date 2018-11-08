@@ -325,6 +325,9 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(ConstructionSiteSQLiteRepository.ConstructionSiteTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "InternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "ContractStart", "DATETIME NULL");
                     #endregion
 
                     #region Employees

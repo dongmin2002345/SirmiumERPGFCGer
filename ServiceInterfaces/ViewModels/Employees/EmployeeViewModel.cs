@@ -285,6 +285,24 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+
+        #region ResidenceCountry
+        private CountryViewModel _ResidenceCountry;
+
+        public CountryViewModel ResidenceCountry
+        {
+            get { return _ResidenceCountry; }
+            set
+            {
+                if (_ResidenceCountry != value)
+                {
+                    _ResidenceCountry = value;
+                    NotifyPropertyChanged("ResidenceCountry");
+                }
+            }
+        }
+        #endregion
+        
         #region ResidenceCity
         private CityViewModel _ResidenceCity;
 

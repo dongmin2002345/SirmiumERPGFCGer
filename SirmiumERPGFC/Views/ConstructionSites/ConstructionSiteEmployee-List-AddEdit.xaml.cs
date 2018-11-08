@@ -466,6 +466,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                 MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
 
+                ContractStartDate = DateTime.Now;
+                ContractEndDate = DateTime.Now;
+
                 DisplayEmployeesNotOnConstructionSiteData();
                 DisplayEmployeesOnConstructionSiteData();
             });

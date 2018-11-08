@@ -65,14 +65,18 @@ namespace SirmiumERPGFC.Repository.Employees
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM EmployeeByBusinessPartners " +
-                        "WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier;", db);
+                        "SELECT ebp.ServerId, ebp.Identifier, ebp.Code, ebp.StartDate, ebp.EndDate, " +
+                        "ebp.EmployeeId, ebp.EmployeeIdentifier, ebp.EmployeeCode, ebp.EmployeeName, e.SurName, e.Passport,  " +
+                        "ebp.BusinessPartnerId, ebp.BusinessPartnerIdentifier, ebp.BusinessPartnerCode, ebp.BusinessPartnerName,  " +
+                        "ebp.IsSynced, ebp.UpdatedAt, ebp.CreatedById, ebp.CreatedByName, ebp.CompanyId, ebp.CompanyName " +
+                        "FROM EmployeeByBusinessPartners ebp, Employees e " +
+                        "WHERE ebp.BusinessPartnerIdentifier = @BusinessPartnerIdentifier " + 
+                        "AND ebp.EmployeeIdentifier = e.Identifier", db);
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
-                    if (query.Read())
+                    while (query.Read())
                     {
                         int counter = 0;
                         EmployeeByBusinessPartnerViewModel dbEntry = new EmployeeByBusinessPartnerViewModel();
@@ -82,6 +86,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+                        dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Employee.Passport = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);

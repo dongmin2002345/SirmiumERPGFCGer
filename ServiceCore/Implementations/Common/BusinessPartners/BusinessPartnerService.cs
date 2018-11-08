@@ -146,6 +146,8 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
             {
                 BusinessPartner deletedBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Delete(identifier);
 
+                unitOfWork.Save();
+
                 response.BusinessPartner = deletedBusinessPartner.ConvertToBusinessPartnerViewModel();
                 response.Success = true;
             }

@@ -96,7 +96,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
         {
             // Load Remedy that will be deleted
             ToDo dbEntry = context.ToDos
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

@@ -99,7 +99,7 @@ namespace ServiceCore.Implementations.Common.ToDos
 
                 unitOfWork.Save();
 
-                response.ToDo = deletedToDo.ConvertToToDoViewModel();
+                response.ToDo = deletedToDo?.ConvertToToDoViewModel();
                 response.Success = true;
             }
             catch (Exception ex)

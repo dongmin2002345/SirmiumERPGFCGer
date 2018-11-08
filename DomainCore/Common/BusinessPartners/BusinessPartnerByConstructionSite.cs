@@ -15,6 +15,7 @@ namespace DomainCore.Common.BusinessPartners
         public DateTime EndDate { get; set; }
 
         public int MaxNumOfEmployees { get; set; }
+        //public int CurrentNumOfEmployees { get; set; }
 
         public int? BusinessPartnerId { get; set; }
         public BusinessPartner BusinessPartner { get; set; }

@@ -33,7 +33,9 @@ namespace DataMapper.Mappers.Employees
                 Name = EmployeeItem.Name,
                 
                 DateOfBirth = EmployeeItem.DateOfBirth,
-                
+
+                IsActive = EmployeeItem.Active,
+
                 CreatedBy = EmployeeItem.CreatedBy?.ConvertToUserViewModelLite(),
                 Company = EmployeeItem.Company?.ConvertToCompanyViewModelLite(),
 
@@ -54,6 +56,8 @@ namespace DataMapper.Mappers.Employees
                 Name = EmployeeItem.Name,
 
                 DateOfBirth = EmployeeItem.DateOfBirth,
+
+                IsActive = EmployeeItem.Active,
 
                 UpdatedAt = EmployeeItem.UpdatedAt,
                 CreatedAt = EmployeeItem.CreatedAt

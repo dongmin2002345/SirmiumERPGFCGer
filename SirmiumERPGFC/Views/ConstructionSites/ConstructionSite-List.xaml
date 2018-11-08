@@ -137,7 +137,7 @@
                           SelectedItem="{Binding Path=CurrentConstructionSite, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="InternalCode" Header="Šifra" Binding="{Binding InternalCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Naziv gradilišta" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="City.Name" Header="Grad" Binding="{Binding City.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" IsReadOnly="True" />

@@ -121,7 +121,7 @@ namespace RepositoryCore.Implementations.Employees
         {
             // Load EmployeeByBusinessPartner that will be deleted
             EmployeeByBusinessPartner dbEntry = context.EmployeeByBusinessPartners
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

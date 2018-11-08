@@ -31,6 +31,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -42,14 +43,20 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Naziv banke"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByBankName" Grid.Column="1" 
+                <TextBlock Text="BIC/SWIFT"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchBySwift" Grid.Column="1" 
+                         Text="{Binding Path=BankSearchObject.Search_Swift, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="Naziv banke"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByBankName" Grid.Column="3" 
                          Text="{Binding Path=BankSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Država" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
-                <TextBox x:Name="txtSearchByCountry" Grid.Column="3" 
+                <TextBlock Text="Država" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByCountry" Grid.Row="1" Grid.Column="1" 
                          Text="{Binding Path=BankSearchObject.Search_Country, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
