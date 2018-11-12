@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="SirmiumERPGFC.Views.ConstructionSites.ConstructionSite_List_Calculation_Add"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.ConstructionSites"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Control.Background>
+        <SolidColorBrush Color="White" />
+    </Control.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Unos radnika i cena za gradilište" Margin="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Broj radnika koji dolaze" />
+                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNumOfEmployees" Text="{Binding Path=CurrentConstructionSiteCalculation.NumOfEmployees}"  />
+
+                <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Cena po radniku *" />
+                <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculation.EmployeePrice}"  />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Broj meseci *" />
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculation.NumOfMonths}"  />
+
+            </Grid>
+        </GroupBox>
+
+        <Separator Grid.Row="1" />
+
+        <!-- Cancel and Save buttons    -->
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnSave" Click="btnSave_Click" Margin="5 0 0 0" Grid.Column="2" IsEnabled="{Binding Path=SaveButtonEnabled, Mode=TwoWay}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                    <TextBlock FontSize="20" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                    <TextBlock Text=" Zatvori " FontSize="20" />
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

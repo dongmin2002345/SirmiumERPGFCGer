@@ -59,6 +59,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IProfessionRepository professionRepository;
 
         private IConstructionSiteRepository constructionSiteRepository;
+        private IConstructionSiteCalculationRepository constructionSiteCalculationRepository;
 
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
@@ -258,6 +259,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (constructionSiteRepository == null)
                 constructionSiteRepository = new ConstructionSiteRepository(context);
             return constructionSiteRepository;
+        }
+
+        public IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository()
+        {
+            if (constructionSiteCalculationRepository == null)
+                constructionSiteCalculationRepository = new ConstructionSiteCalculationRepository(context);
+            return constructionSiteCalculationRepository;
         }
 
         public IFamilyMemberRepository GetFamilyMemberRepository()

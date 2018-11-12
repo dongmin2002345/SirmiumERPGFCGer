@@ -101,9 +101,10 @@ namespace RepositoryCore.Context
         public DbSet<BusinessPartnerByConstructionSiteHistory> BusinessPartnerByConstructionSiteHistories { get; set; }
 
         public DbSet<ConstructionSite> ConstructionSites { get; set; }
+        public DbSet<ConstructionSiteCalculation> ConstructionSiteCalculations { get; set; }
 
 
-		public DbSet<Bank> Banks { get; set; }
+        public DbSet<Bank> Banks { get; set; }
 		public DbSet<LicenceType> LicenceTypes { get; set; }
 
         

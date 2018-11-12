@@ -11,6 +11,5 @@ namespace ServiceInterfaces.Messages.ConstructionSites
     {
         public int CompanyId { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
-        public List<ConstructionSiteViewModel> UnSyncedConstructionSites { get; set; }
     }
 }

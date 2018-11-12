@@ -166,6 +166,7 @@ namespace SirmiumERPWeb
 
 
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
+            services.AddScoped<IConstructionSiteCalculationService, ConstructionSiteCalculationService>();
 
         }
 

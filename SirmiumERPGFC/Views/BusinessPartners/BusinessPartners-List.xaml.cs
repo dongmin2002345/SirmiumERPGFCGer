@@ -25,9 +25,26 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             InitializeComponent();
         }
 
+        public static bool ShowBusinessPartnerSerbia = true;
+        public static bool ShowBusinessPartnerGermany = false;
+
         private void BusinessPartner_List_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabBusinessPartner != null && tabBusinessPartnerSerbia.IsSelected)
+            {
+                ShowBusinessPartnerSerbia = true;
+                ShowBusinessPartnerGermany = false;
+            }
+            if (tabBusinessPartner != null && tabBusinessPartnerGermany.IsSelected)
+            {
+                ShowBusinessPartnerGermany = true;
+                ShowBusinessPartnerSerbia = false;
+            }
         }
     }
 }

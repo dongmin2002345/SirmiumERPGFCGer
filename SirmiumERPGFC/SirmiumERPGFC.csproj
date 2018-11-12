@@ -189,6 +189,7 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
+    <Compile Include="Repository\ConstructionSites\ConstructionSiteCalculationSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByBusinessPartnerHistorySQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByBusinessPartnerSQLiteRepository.cs" />
@@ -280,6 +281,12 @@
     </Compile>
     <Compile Include="Views\Common\SubmitConfirmation.xaml.cs">
       <DependentUpon>SubmitConfirmation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite-List-Calculation-Add.xaml.cs">
+      <DependentUpon>ConstructionSite-List-Calculation-Add.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite-List-Calculation-Remove.xaml.cs">
+      <DependentUpon>ConstructionSite-List-Calculation-Remove.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSiteBusinessPartner-List-AddEdit.xaml.cs">
       <DependentUpon>ConstructionSiteBusinessPartner-List-AddEdit.xaml</DependentUpon>
@@ -526,6 +533,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Common\SubmitConfirmation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite-List-Calculation-Add.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite-List-Calculation-Remove.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

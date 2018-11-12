@@ -21,130 +21,136 @@ namespace DataMapper.Mappers.Employees
             return EmployeeViewModels;
         }
 
-        public static EmployeeViewModel ConvertToEmployeeViewModel(this Employee Employee)
+        public static EmployeeViewModel ConvertToEmployeeViewModel(this Employee employee)
         {
             EmployeeViewModel EmployeeViewModel = new EmployeeViewModel()
             {
-                Id = Employee.Id,
-                Identifier = Employee.Identifier,
+                Id = employee.Id,
+                Identifier = employee.Identifier,
 
-                Code = Employee.Code,
-                EmployeeCode = Employee.EmployeeCode,
-                Name = Employee.Name,
-                SurName = Employee.SurName,
+                Code = employee.Code,
+                EmployeeCode = employee.EmployeeCode,
+                Name = employee.Name,
+                SurName = employee.SurName,
 
-                DateOfBirth = Employee.DateOfBirth,
-                Gender = Employee.Gender,
+                ConstructionSiteCode = employee.ConstructionSiteCode,
 
-                Country = Employee.Country?.ConvertToCountryViewModelLite(),
-                Region = Employee.Region?.ConvertToRegionViewModelLite(),
-                Municipality = Employee.Municipality?.ConvertToMunicipalityViewModelLite(),
-                City = Employee.City?.ConvertToCityViewModelLite(),
+                DateOfBirth = employee.DateOfBirth,
+                Gender = employee.Gender,
 
-                Address = Employee.Address,
+                Country = employee.Country?.ConvertToCountryViewModelLite(),
+                Region = employee.Region?.ConvertToRegionViewModelLite(),
+                Municipality = employee.Municipality?.ConvertToMunicipalityViewModelLite(),
+                City = employee.City?.ConvertToCityViewModelLite(),
 
-                PassportCountry = Employee.PassportCountry?.ConvertToCountryViewModelLite(),
-                PassportCity = Employee.PassportCity?.ConvertToCityViewModelLite(),
-                Passport = Employee.Passport,
-                VisaFrom = Employee.VisaFrom,
-                VisaTo = Employee.VisaTo,
+                Address = employee.Address,
 
-                ResidenceCity = Employee.ResidenceCity?.ConvertToCityViewModelLite(),
-                ResidenceAddress = Employee.ResidenceAddress,
+                PassportCountry = employee.PassportCountry?.ConvertToCountryViewModelLite(),
+                PassportCity = employee.PassportCity?.ConvertToCityViewModelLite(),
+                Passport = employee.Passport,
+                VisaFrom = employee.VisaFrom,
+                VisaTo = employee.VisaTo,
+
+                ResidenceCity = employee.ResidenceCity?.ConvertToCityViewModelLite(),
+                ResidenceAddress = employee.ResidenceAddress,
                 
-                EmbassyDate = Employee.EmbassyDate,
-                VisaDate = Employee.VisaDate,
-                VisaValidFrom = Employee.VisaValidFrom,
-                VisaValidTo = Employee.VisaValidTo,
-                WorkPermitFrom = Employee.WorkPermitFrom,
-                WorkPermitTo = Employee.WorkPermitTo,
+                EmbassyDate = employee.EmbassyDate,
+                VisaDate = employee.VisaDate,
+                VisaValidFrom = employee.VisaValidFrom,
+                VisaValidTo = employee.VisaValidTo,
+                WorkPermitFrom = employee.WorkPermitFrom,
+                WorkPermitTo = employee.WorkPermitTo,
 
-                IsActive = Employee.Active,
+                IsActive = employee.Active,
 
-                CreatedBy = Employee.CreatedBy?.ConvertToUserViewModelLite(),
-                Company = Employee.Company?.ConvertToCompanyViewModelLite(),
+                CreatedBy = employee.CreatedBy?.ConvertToUserViewModelLite(),
+                Company = employee.Company?.ConvertToCompanyViewModelLite(),
 
-                UpdatedAt = Employee.UpdatedAt,
-                CreatedAt = Employee.CreatedAt
+                UpdatedAt = employee.UpdatedAt,
+                CreatedAt = employee.CreatedAt
             };
 
             return EmployeeViewModel;
         }
 
-        public static EmployeeViewModel ConvertToEmployeeViewModelLite(this Employee Employee)
+        public static EmployeeViewModel ConvertToEmployeeViewModelLite(this Employee employee)
         {
             EmployeeViewModel EmployeeViewModel = new EmployeeViewModel()
             {
-                Id = Employee.Id,
-                Identifier = Employee.Identifier,
+                Id = employee.Id,
+                Identifier = employee.Identifier,
 
-                Code = Employee.Code,
-                EmployeeCode = Employee.EmployeeCode,
-                Name = Employee.Name,
-                SurName = Employee.SurName,
+                Code = employee.Code,
+                EmployeeCode = employee.EmployeeCode,
+                Name = employee.Name,
+                SurName = employee.SurName,
 
-                DateOfBirth = Employee.DateOfBirth,
+                ConstructionSiteCode = employee.ConstructionSiteCode,
 
-                Address = Employee.Address,
-                Passport = Employee.Passport,
+                DateOfBirth = employee.DateOfBirth,
 
-                EmbassyDate = Employee.EmbassyDate,
-                VisaFrom = Employee.VisaFrom,
-                VisaTo = Employee.VisaTo,
-                WorkPermitFrom = Employee.WorkPermitFrom,
-                WorkPermitTo = Employee.WorkPermitTo,
+                Address = employee.Address,
+                Passport = employee.Passport,
 
-                IsActive = Employee.Active,
+                EmbassyDate = employee.EmbassyDate,
+                VisaFrom = employee.VisaFrom,
+                VisaTo = employee.VisaTo,
+                WorkPermitFrom = employee.WorkPermitFrom,
+                WorkPermitTo = employee.WorkPermitTo,
 
-                UpdatedAt = Employee.UpdatedAt,
-                CreatedAt = Employee.CreatedAt
+                IsActive = employee.Active,
+
+                UpdatedAt = employee.UpdatedAt,
+                CreatedAt = employee.CreatedAt
             };
 
             return EmployeeViewModel;
         }
 
-        public static Employee ConvertToEmployee(this EmployeeViewModel EmployeeViewModel)
+        public static Employee ConvertToEmployee(this EmployeeViewModel employeeViewModel)
         {
             Employee Employee = new Employee()
             {
-                Id = EmployeeViewModel.Id,
-                Identifier = EmployeeViewModel.Identifier,
+                Id = employeeViewModel.Id,
+                Identifier = employeeViewModel.Identifier,
 
-                Code = EmployeeViewModel.Code,
-                EmployeeCode = EmployeeViewModel.EmployeeCode,
-                Name = EmployeeViewModel.Name,
-                SurName = EmployeeViewModel.SurName,
+                Code = employeeViewModel.Code,
+                EmployeeCode = employeeViewModel.EmployeeCode,
+                Name = employeeViewModel.Name,
+                SurName = employeeViewModel.SurName,
 
-                DateOfBirth = (DateTime)EmployeeViewModel.DateOfBirth,
-                Gender = EmployeeViewModel.Gender,
-                CountryId = EmployeeViewModel?.Country?.Id ?? null,
-                RegionId = EmployeeViewModel?.Region?.Id ?? null,
-                MunicipalityId = EmployeeViewModel?.Municipality?.Id ?? null,
-                CityId = EmployeeViewModel?.City?.Id ?? null,
-                Address = EmployeeViewModel.Address,
+                ConstructionSiteCode = employeeViewModel.ConstructionSiteCode,
 
-                PassportCountryId = EmployeeViewModel?.PassportCountry?.Id ?? null,
-                PassportCityId = EmployeeViewModel?.PassportCity?.Id ?? null,
+                DateOfBirth = (DateTime)employeeViewModel.DateOfBirth,
+                Gender = employeeViewModel.Gender,
+                CountryId = employeeViewModel?.Country?.Id ?? null,
+                RegionId = employeeViewModel?.Region?.Id ?? null,
+                MunicipalityId = employeeViewModel?.Municipality?.Id ?? null,
+                CityId = employeeViewModel?.City?.Id ?? null,
+                Address = employeeViewModel.Address,
 
-                Passport = EmployeeViewModel.Passport,
-                VisaFrom = EmployeeViewModel.VisaFrom,
-                VisaTo = EmployeeViewModel.VisaTo,
+                PassportCountryId = employeeViewModel?.PassportCountry?.Id ?? null,
+                PassportCityId = employeeViewModel?.PassportCity?.Id ?? null,
 
-                ResidenceCityId = EmployeeViewModel?.ResidenceCity?.Id ?? null,
-                ResidenceAddress = EmployeeViewModel.ResidenceAddress,
+                Passport = employeeViewModel.Passport,
+                VisaFrom = employeeViewModel.VisaFrom,
+                VisaTo = employeeViewModel.VisaTo,
 
-                EmbassyDate = EmployeeViewModel.EmbassyDate,
-                VisaDate = EmployeeViewModel.VisaDate,
-                VisaValidFrom = EmployeeViewModel.VisaValidFrom,
-                VisaValidTo = EmployeeViewModel.VisaValidTo,
-                WorkPermitFrom = EmployeeViewModel.WorkPermitFrom,
-                WorkPermitTo = EmployeeViewModel.WorkPermitTo,
+                ResidenceCityId = employeeViewModel?.ResidenceCity?.Id ?? null,
+                ResidenceAddress = employeeViewModel.ResidenceAddress,
 
-                CreatedById = EmployeeViewModel.CreatedBy?.Id ?? null,
-                CompanyId = EmployeeViewModel.Company?.Id ?? null,
+                EmbassyDate = employeeViewModel.EmbassyDate,
+                VisaDate = employeeViewModel.VisaDate,
+                VisaValidFrom = employeeViewModel.VisaValidFrom,
+                VisaValidTo = employeeViewModel.VisaValidTo,
+                WorkPermitFrom = employeeViewModel.WorkPermitFrom,
+                WorkPermitTo = employeeViewModel.WorkPermitTo,
 
-                CreatedAt = EmployeeViewModel.CreatedAt,
-                UpdatedAt = EmployeeViewModel.UpdatedAt
+                CreatedById = employeeViewModel.CreatedBy?.Id ?? null,
+                CompanyId = employeeViewModel.Company?.Id ?? null,
+
+                CreatedAt = employeeViewModel.CreatedAt,
+                UpdatedAt = employeeViewModel.UpdatedAt
             };
 
             return Employee;

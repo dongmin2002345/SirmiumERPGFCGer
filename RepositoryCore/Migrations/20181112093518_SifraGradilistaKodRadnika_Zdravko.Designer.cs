@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181112093518_SifraGradilistaKodRadnika_Zdravko")]
+    partial class SifraGradilistaKodRadnika_Zdravko
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -979,51 +981,6 @@ namespace RepositoryCore.Migrations
                     b.ToTable("ConstructionSites");
                 });
 
-            modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSiteCalculation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<int?>("ConstructionSiteId");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<decimal>("EmployeePrice");
-
-                    b.Property<Guid>("Identifier");
-
-                    b.Property<decimal>("NewValue");
-
-                    b.Property<int>("NumOfEmployees");
-
-                    b.Property<int>("NumOfMonths");
-
-                    b.Property<decimal>("OldValue");
-
-                    b.Property<string>("PlusMinus");
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.Property<decimal>("ValueDifference");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("ConstructionSiteId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("ConstructionSiteCalculations");
-                });
-
             modelBuilder.Entity("DomainCore.Employees.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -1846,21 +1803,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-                });
-
-            modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSiteCalculation", b =>
-                {
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.ConstructionSites.ConstructionSite", "ConstructionSite")
-                        .WithMany()
-                        .HasForeignKey("ConstructionSiteId");
 
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()

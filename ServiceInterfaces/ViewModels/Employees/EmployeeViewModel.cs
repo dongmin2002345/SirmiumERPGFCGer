@@ -80,6 +80,24 @@ namespace ServiceInterfaces.ViewModels.Employees
         #endregion
 
 
+        #region ConstructionSiteCode
+        private string _ConstructionSiteCode;
+
+        public string ConstructionSiteCode
+        {
+            get { return _ConstructionSiteCode; }
+            set
+            {
+                if (_ConstructionSiteCode != value)
+                {
+                    _ConstructionSiteCode = value;
+                    NotifyPropertyChanged("ConstructionSiteCode");
+                }
+            }
+        }
+        #endregion
+
+
         #region DateOfBirth
         private DateTime? _DateOfBirth = DateTime.Now;
 

@@ -32,6 +32,17 @@ namespace RepositoryCore.Implementations.ConstructionSites
             return constructionSites;
         }
 
+        public ConstructionSite GetConstructionSite(int constructionSiteId)
+        {
+            ConstructionSite constructionSite = context.ConstructionSites
+                .Include(x => x.City)
+                .Include(x => x.Company)
+                .Include(x => x.CreatedBy)
+                .FirstOrDefault(x => x.Id == constructionSiteId);
+
+            return constructionSite;
+        }
+
         public List<ConstructionSite> GetConstructionSitesNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<ConstructionSite> constructionSites = context.ConstructionSites

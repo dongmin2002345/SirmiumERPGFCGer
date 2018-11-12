@@ -80,7 +80,7 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IBusinessPartnerByConstructionSiteHistoryService>().To<BusinessPartnerByConstructionSiteHistoryService>();
 
                 Kernel.Bind<IConstructionSiteService>().To<ConstructionSiteService>();
-
+                Kernel.Bind<IConstructionSiteCalculationService>().To<ConstructionSiteCalculationService>();
             }
         }
     }

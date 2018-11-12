@@ -27,16 +27,15 @@ using System.Windows.Shapes;
 namespace SirmiumERPGFC.Views.ConstructionSites
 {
     public delegate void ConstructionSiteHandler();
+    public delegate void ConstructionSiteCalculationHandler();
 
-    /// <summary>
-    /// Interaction logic for ConstructionSite_List.xaml
-    /// </summary>
     public partial class ConstructionSite_List : UserControl, INotifyPropertyChanged
     {
         #region Attributes
 
         #region Services
         IConstructionSiteService constructionSiteService;
+        IConstructionSiteCalculationService constructionSiteCalculationService;
         #endregion
 
 
@@ -69,6 +68,13 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _CurrentConstructionSite = value;
                     NotifyPropertyChanged("CurrentConstructionSite");
+
+                    if (_CurrentConstructionSite != null)
+                    {
+                        Thread th = new Thread(() => DisplayConstructionSiteCalculationData());
+                        th.IsBackground = true;
+                        th.Start();
+                    }
                 }
             }
         }
@@ -134,6 +140,58 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
 
+        #region ConstructionSiteCalculationsFromDB
+        private ObservableCollection<ConstructionSiteCalculationViewModel> _ConstructionSiteCalculationsFromDB;
+
+        public ObservableCollection<ConstructionSiteCalculationViewModel> ConstructionSiteCalculationsFromDB
+        {
+            get { return _ConstructionSiteCalculationsFromDB; }
+            set
+            {
+                if (_ConstructionSiteCalculationsFromDB != value)
+                {
+                    _ConstructionSiteCalculationsFromDB = value;
+                    NotifyPropertyChanged("ConstructionSiteCalculationsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteCalculation
+        private ConstructionSiteCalculationViewModel _CurrentConstructionSiteCalculation;
+
+        public ConstructionSiteCalculationViewModel CurrentConstructionSiteCalculation
+        {
+            get { return _CurrentConstructionSiteCalculation; }
+            set
+            {
+                if (_CurrentConstructionSiteCalculation != value)
+                {
+                    _CurrentConstructionSiteCalculation = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteCalculation");
+                }
+            }
+        }
+        #endregion
+
+        #region ConstructionSiteCalculationDataLoading
+        private bool _ConstructionSiteCalculationDataLoading;
+
+        public bool ConstructionSiteCalculationDataLoading
+        {
+            get { return _ConstructionSiteCalculationDataLoading; }
+            set
+            {
+                if (_ConstructionSiteCalculationDataLoading != value)
+                {
+                    _ConstructionSiteCalculationDataLoading = value;
+                    NotifyPropertyChanged("ConstructionSiteCalculationDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region RefreshButtonContent
         private string _RefreshButtonContent = " Osveži ";
 
@@ -176,6 +234,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             // Get required services
             constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
+            constructionSiteCalculationService = DependencyResolver.Kernel.Get<IConstructionSiteCalculationService>();
 
             // Initialize form components
             InitializeComponent();
@@ -209,12 +268,12 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             currentPage = 1;
 
-            Thread displayThread = new Thread(() => DisplayData());
+            Thread displayThread = new Thread(() => DisplayConstructionSiteData());
             displayThread.IsBackground = true;
             displayThread.Start();
         }
 
-        public void DisplayData()
+        public void DisplayConstructionSiteData()
         {
             ConstructionSiteDataLoading = true;
 
@@ -241,14 +300,37 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteDataLoading = false;
         }
 
+        private void DisplayConstructionSiteCalculationData()
+        {
+            ConstructionSiteCalculationDataLoading = true;
+
+            ConstructionSiteCalculationListResponse response = new ConstructionSiteCalculationSQLiteRepository()
+                .GetConstructionSiteCalculationsByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
+
+            if (response.Success)
+            {
+                ConstructionSiteCalculationsFromDB = new ObservableCollection<ConstructionSiteCalculationViewModel>(response.ConstructionSiteCalculations ?? new List<ConstructionSiteCalculationViewModel>());
+            }
+            else
+            {
+                ConstructionSiteCalculationsFromDB = new ObservableCollection<ConstructionSiteCalculationViewModel>();
+                MainWindow.ErrorMessage = response.Message;
+            }
+
+            ConstructionSiteCalculationDataLoading = false;
+        }
+
         private void SyncData()
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Gradovi ... ";
+            RefreshButtonContent = " Gradilišta ... ";
             new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
 
-            DisplayData();
+            RefreshButtonContent = " Kalkulacije ... ";
+            new ConstructionSiteCalculationSQLiteRepository().Sync(constructionSiteCalculationService);
+
+            DisplayConstructionSiteData();
 
             RefreshButtonContent = " Osveži ";
             RefreshButtonEnabled = true;
@@ -331,7 +413,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage = 1;
 
-                Thread displayThread = new Thread(() => DisplayData());
+                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -343,7 +425,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage--;
 
-                Thread displayThread = new Thread(() => DisplayData());
+                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -355,7 +437,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage++;
 
-                Thread displayThread = new Thread(() => DisplayData());
+                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -368,7 +450,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage = lastPage;
 
-                Thread displayThread = new Thread(() => DisplayData());
+                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -389,5 +471,43 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
 
         #endregion
+
+        private void btnAddEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentConstructionSite == null)
+            {
+                MainWindow.WarningMessage = "Nije odabrano gradilište!";
+                return;
+            }
+
+            ConstructionSiteCalculationViewModel constructionSiteCalculation = new ConstructionSiteCalculationViewModel();
+            constructionSiteCalculation.Identifier = Guid.NewGuid();
+            constructionSiteCalculation.ConstructionSite = CurrentConstructionSite;
+            constructionSiteCalculation.EmployeePrice = 75M;
+            constructionSiteCalculation.PlusMinus = "+";
+
+            ConstructionSite_List_Calculation_Add addForm = new ConstructionSite_List_Calculation_Add(constructionSiteCalculation);
+            addForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, addForm);
+        }
+
+        private void btnRemoveEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentConstructionSite == null)
+            {
+                MainWindow.WarningMessage = "Nije odabrano gradilište!";
+                return;
+            }
+
+            ConstructionSiteCalculationViewModel constructionSiteCalculation = new ConstructionSiteCalculationViewModel();
+            constructionSiteCalculation.Identifier = Guid.NewGuid();
+            constructionSiteCalculation.ConstructionSite = CurrentConstructionSite;
+            constructionSiteCalculation.EmployeePrice = 75M;
+            constructionSiteCalculation.PlusMinus = "-";
+
+            ConstructionSite_List_Calculation_Remove removeForm = new ConstructionSite_List_Calculation_Remove(constructionSiteCalculation);
+            removeForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, removeForm);
+        }
     }
 }

@@ -149,6 +149,7 @@
                         <DataGridTextColumn SortMemberPath="EmployeeCode" Header="Šifra" Binding="{Binding EmployeeCode}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SurName" Header="Prezime" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ConstructionSiteCode" Header="Gradilište" Binding="{Binding ConstructionSiteCode}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="Broj pasoša" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />

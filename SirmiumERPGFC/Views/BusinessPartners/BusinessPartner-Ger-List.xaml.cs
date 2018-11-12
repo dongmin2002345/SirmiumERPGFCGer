@@ -213,15 +213,21 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             InitializeComponent();
 
             this.DataContext = this;
-
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
         }
 
         #endregion
 
         #region Display data
+
+        private void PopulateInitialData()
+        {
+            if (BusinessPartners_List.ShowBusinessPartnerGermany)
+            {
+                Thread displayThread = new Thread(() => SyncData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
@@ -508,5 +514,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            PopulateInitialData();
+        }
     }
 }

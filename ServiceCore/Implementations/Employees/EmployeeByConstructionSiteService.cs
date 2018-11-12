@@ -1,4 +1,5 @@
 ﻿using DataMapper.Mappers.Employees;
+using DomainCore.ConstructionSites;
 using DomainCore.Employees;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.Employees;
@@ -72,6 +73,12 @@ namespace ServiceCore.Implementations.Employees
             EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteResponse();
             try
             {
+                ConstructionSite constructionSite = unitOfWork.GetConstructionSiteRepository().GetConstructionSite(re.ConstructionSite.Id);
+
+                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee(re.Employee.Id);
+                employee.ConstructionSiteCode = constructionSite.InternalCode;
+                employee.UpdatedAt = DateTime.Now;
+
                 EmployeeByConstructionSite addedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Create(re.ConvertToEmployeeByConstructionSite());
                 unitOfWork.Save();
 

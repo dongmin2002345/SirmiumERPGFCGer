@@ -44,6 +44,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 		ILicenceTypeRepository GetLicenceTypeRepository();
 
         IConstructionSiteRepository GetConstructionSiteRepository();
+        IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository();
 
         IEmployeeRepository GetEmployeeRepository();
         IEmployeeItemRepository GetEmployeeItemRepository();

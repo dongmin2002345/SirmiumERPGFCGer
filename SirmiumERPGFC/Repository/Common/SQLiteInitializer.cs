@@ -330,6 +330,20 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "ContractStart", "DATETIME NULL");
                     #endregion
 
+                    #region ConstructionSiteCalculations
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ConstructionSiteCalculations", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ConstructionSiteCalculationSQLiteRepository.ConstructionSiteCalculationTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #region Employees
                     if (withTableDrop)
                     {
@@ -342,6 +356,8 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(EmployeeSQLiteRepository.EmployeeTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("Employees", "ConstructionSiteCode", "NVARCHAR(2048) NULL");
 
                     if (withTableDrop)
                     {

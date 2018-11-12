@@ -492,7 +492,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 Thread th = new Thread(() =>
                 {
                     EmployeeByBusinessPartnerListResponse listResponse = new EmployeeByBusinessPartnerSQLiteRepository().GetByBusinessPartner(CurrentBusinessPartner.Identifier);
-                    EmployeeByBusinessPartnerViewModel employeeByBusinessPartner = listResponse.EmployeeByBusinessPartners.FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnBusinessPartner.Identifier);
+                    EmployeeByBusinessPartnerViewModel employeeByBusinessPartner = listResponse.EmployeeByBusinessPartners.FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnBusinessPartner.Employee.Identifier);
                     EmployeeByBusinessPartnerResponse response = employeeByBusinessPartnerService.Delete(employeeByBusinessPartner?.Identifier ?? Guid.NewGuid());
                     if (!response.Success)
                     {

@@ -100,11 +100,13 @@
                         <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad *" />
                         <popups1:CityPopup Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2"
                                              CurrentCountry="{Binding Path=CurrentEmployee.Country, Mode=TwoWay}" 
-                                             CurrentCity="{Binding Path=CurrentEmployee.City, Mode=TwoWay}" 
-                                             />
+                                             CurrentCity="{Binding Path=CurrentEmployee.City, Mode=TwoWay}" />
 
                         <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresa *" />
                         <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.Address}"  />
+
+                        <TextBlock Grid.Row="5" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Gradilište *" />
+                        <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.ConstructionSiteCode}" IsEnabled="False" />
 
                         <!--
 
@@ -540,6 +542,7 @@
                 </GroupBox>
             </Grid>
         </ScrollViewer>
+        
         <Separator Grid.Row="1" />
 
         <!-- Cancel and Save buttons    -->

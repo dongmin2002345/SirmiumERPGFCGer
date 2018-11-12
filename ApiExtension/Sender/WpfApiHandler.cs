@@ -168,6 +168,9 @@ namespace ApiExtension.Sender
                 { typeof(ConstructionSiteViewModel), "ConstructionSite" },
                 { typeof(List<ConstructionSiteViewModel>), "ConstructionSite" },
 
+                { typeof(ConstructionSiteCalculationViewModel), "ConstructionSiteCalculation" },
+                { typeof(List<ConstructionSiteCalculationViewModel>), "ConstructionSiteCalculation" },
+
 			    #endregion
                                 
              { typeof(ToDoViewModel), "ToDo" },
