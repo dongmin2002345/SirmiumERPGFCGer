@@ -118,6 +118,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentRegion != null)
                     {
+                        new MunicipalitySQLiteRepository().Sync(municipalityService);
+
                         MunicipalityListResponse municipalityResp = new MunicipalitySQLiteRepository().GetMunicipalitiesForPopup(MainWindow.CurrentCompanyId, CurrentRegion.Identifier, filterString);
                         if (municipalityResp.Success)
                             MunicipalitysFromDB = new ObservableCollection<MunicipalityViewModel>(municipalityResp.Municipalities ?? new List<MunicipalityViewModel>());

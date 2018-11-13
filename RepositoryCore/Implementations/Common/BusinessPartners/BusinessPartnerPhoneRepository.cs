@@ -74,6 +74,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                 businessPartnerPhone.Active = true;
 
+                businessPartnerPhone.CreatedAt = DateTime.Now;
+                businessPartnerPhone.UpdatedAt = DateTime.Now;
+
                 context.BusinessPartnerPhones.Add(businessPartnerPhone);
                 return businessPartnerPhone;
             }
@@ -96,6 +99,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Email = businessPartnerPhone.Email;
                     dbEntry.ContactPersonFirstName = businessPartnerPhone.ContactPersonFirstName;
                     dbEntry.ContactPersonLastName = businessPartnerPhone.ContactPersonLastName;
+                    dbEntry.Birthday = businessPartnerPhone.Birthday;
 
                     dbEntry.Description = businessPartnerPhone.Description;
 

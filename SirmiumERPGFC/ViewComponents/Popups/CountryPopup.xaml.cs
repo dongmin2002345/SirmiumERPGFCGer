@@ -93,6 +93,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
+                    new CountrySQLiteRepository().Sync(countryService);
+
                     CountryListResponse countryResp = new CountrySQLiteRepository().GetCountriesForPopup(MainWindow.CurrentCompanyId, filterString);
                     if (countryResp.Success)
                         CountriesFromDB = new ObservableCollection<CountryViewModel>(countryResp.Countries ?? new List<CountryViewModel>());

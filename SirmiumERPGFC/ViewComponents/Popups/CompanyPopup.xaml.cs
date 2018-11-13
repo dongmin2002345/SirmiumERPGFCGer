@@ -4,6 +4,7 @@ using ServiceInterfaces.Messages.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.Companies;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -105,10 +106,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                     System.Windows.Threading.DispatcherPriority.Normal,
                     new Action(() =>
                     {
-                        // Take current company from logged user
-                        CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
-                        int currentCompanyId = customPrincipal.Identity.CompanyId;
-
                         CompanyListResponse response = companyService.GetCompanies();
                         if (response.Success)
                             CompaniesFromDB = new ObservableCollection<CompanyViewModel>(response.Companies ?? new List<CompanyViewModel>());

@@ -143,7 +143,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         businessPartners.Add(dbEntry);
                     }
 
-
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM BusinessPartners " +

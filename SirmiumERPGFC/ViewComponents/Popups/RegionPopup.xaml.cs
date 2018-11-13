@@ -118,6 +118,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentCountry != null)
                     {
+                        new RegionSQLiteRepository().Sync(regionService);
+
                         RegionListResponse regionResp = new RegionSQLiteRepository().GetRegionsForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
                         if (regionResp.Success)
                             RegionsFromDB = new ObservableCollection<RegionViewModel>(regionResp.Regions ?? new List<RegionViewModel>());

@@ -198,6 +198,7 @@ namespace SirmiumERPGFC.Repository.Common
 
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "ContactPersonFirstName", "NVARCHAR(2048) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "ContactPersonLastName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "Birthday", "DATETIME NULL");
                     #endregion
 
                     #region BusinessPartnerBank

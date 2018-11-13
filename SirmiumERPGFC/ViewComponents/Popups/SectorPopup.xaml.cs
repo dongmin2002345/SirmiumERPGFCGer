@@ -119,6 +119,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentCountry != null)
                     {
+                        new SectorSQLiteRepository().Sync(SectorService);
+
                         SectorListResponse SectorResp = new SectorSQLiteRepository().GetSectorsForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
                         if (SectorResp.Success)
                             SectorsFromDB = new ObservableCollection<SectorViewModel>(SectorResp.Sectors ?? new List<SectorViewModel>());

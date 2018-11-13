@@ -121,11 +121,13 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentSector != null)
                     {
-                            AgencyListResponse response = new AgencySQLiteRepository().GetAgenciesForPopup(MainWindow.CurrentCompanyId, CurrentSector.Identifier, filterString);
-                            if (response.Success)
-                                AgenciesFromDB = new ObservableCollection<AgencyViewModel>(response.Agencies ?? new List<AgencyViewModel>());
-                            else
-                                AgenciesFromDB = new ObservableCollection<AgencyViewModel>();
+                        new AgencySQLiteRepository().Sync(agencyService);
+
+                        AgencyListResponse response = new AgencySQLiteRepository().GetAgenciesForPopup(MainWindow.CurrentCompanyId, CurrentSector.Identifier, filterString);
+                        if (response.Success)
+                            AgenciesFromDB = new ObservableCollection<AgencyViewModel>(response.Agencies ?? new List<AgencyViewModel>());
+                        else
+                            AgenciesFromDB = new ObservableCollection<AgencyViewModel>();
                     }
                     else
                         AgenciesFromDB = new ObservableCollection<AgencyViewModel>();

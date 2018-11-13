@@ -93,6 +93,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
+                    new ProfessionSQLiteRepository().Sync(ProfessionService);
+
                     ProfessionListResponse ProfessionResp = new ProfessionSQLiteRepository().GetProfessionsForPopup(MainWindow.CurrentCompanyId, filterString);
                     if (ProfessionResp.Success)
                         ProfessionsFromDB = new ObservableCollection<ProfessionViewModel>(ProfessionResp.Professions ?? new List<ProfessionViewModel>());

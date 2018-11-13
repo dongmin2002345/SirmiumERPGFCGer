@@ -93,6 +93,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
+                    new FamilyMemberSQLiteRepository().Sync(FamilyMemberService);
+
                     FamilyMemberListResponse FamilyMemberResp = new FamilyMemberSQLiteRepository().GetFamilyMembersForPopup(MainWindow.CurrentCompanyId, filterString);
                     if (FamilyMemberResp.Success)
                         FamilyMembersFromDB = new ObservableCollection<FamilyMemberViewModel>(FamilyMemberResp.FamilyMembers ?? new List<FamilyMemberViewModel>());

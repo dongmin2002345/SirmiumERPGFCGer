@@ -18,6 +18,8 @@ namespace DomainCore.Common.BusinessPartners
         public string ContactPersonFirstName { get; set; }
         public string ContactPersonLastName { get; set; }
 
+        public DateTime? Birthday { get; set; }
+
         public string Description { get; set; }
     }
 }

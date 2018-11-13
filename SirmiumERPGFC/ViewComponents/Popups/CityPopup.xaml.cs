@@ -139,6 +139,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
+                    new CitySQLiteRepository().Sync(cityService);
+
                     CityListResponse cityResp = new CitySQLiteRepository().GetCitiesForPopupCountry(MainWindow.CurrentCompanyId, CurrentCountry?.Identifier ?? null, filterString);
                     if (cityResp.Success)
                         CitiesFromDB = new ObservableCollection<CityViewModel>(cityResp.Cities ?? new List<CityViewModel>());

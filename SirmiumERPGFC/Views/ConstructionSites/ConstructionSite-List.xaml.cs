@@ -344,6 +344,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             ConstructionSiteViewModel constructionSite = new ConstructionSiteViewModel();
             constructionSite.Identifier = Guid.NewGuid();
+            constructionSite.ContractStart = DateTime.Now;
 
             ConstructionSite_List_AddEdit addEditForm = new ConstructionSite_List_AddEdit(constructionSite, true);
             addEditForm.ConstructionSiteCreatedUpdated += new ConstructionSiteHandler(SyncData);

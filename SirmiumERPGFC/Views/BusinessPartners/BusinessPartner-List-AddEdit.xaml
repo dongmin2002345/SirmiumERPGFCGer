@@ -8,13 +8,14 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
-             d:DesignHeight="1562" d:DesignWidth="829">
+             d:DesignHeight="2562" d:DesignWidth="829">
 
     <UserControl.Background>
         <SolidColorBrush Color="White" />
     </UserControl.Background>
     <UserControl.Resources>
         <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
+        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -223,8 +224,11 @@
                         <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Email " Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtEmail" Text="{Binding Path=CurrentPhoneForm.Email, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Napomena " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentPhoneForm.Description, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Rodjendan " Margin="5 0 5 0" />
+                        <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtBirthday" SelectedDate="{Binding Path=CurrentPhoneForm.Birthday, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Text="Napomena " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentPhoneForm.Description, Mode=TwoWay}"/>
 
 
                         <Button x:Name="btnPhone" Grid.Row="4" Grid.Column="4" Click="btnPhone_Click" Margin="2" >
@@ -269,6 +273,7 @@
                                 <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Fax" Header="Fax" Binding="{Binding Path=Fax}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Birthday" Header="Rodjendan" Binding="{Binding Path=Birthday, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

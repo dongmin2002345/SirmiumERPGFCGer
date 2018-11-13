@@ -36,6 +36,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 ContactPersonFirstName = businessPartnerPhone.ContactPersonFirstName,
                 ContactPersonLastName = businessPartnerPhone.ContactPersonLastName,
 
+                Birthday = businessPartnerPhone.Birthday,
+
                 Description = businessPartnerPhone.Description,
 
                 IsActive = businessPartnerPhone.Active,
@@ -63,6 +65,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 ContactPersonFirstName = businessPartnerPhone.ContactPersonFirstName,
                 ContactPersonLastName = businessPartnerPhone.ContactPersonLastName,
 
+                Birthday = businessPartnerPhone.Birthday, 
+
                 Description = businessPartnerPhone.Description,
 
                 IsActive = businessPartnerPhone.Active,
@@ -88,6 +92,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Email = businessPartnerPhoneViewModel.Email,
                 ContactPersonFirstName = businessPartnerPhoneViewModel.ContactPersonFirstName,
                 ContactPersonLastName = businessPartnerPhoneViewModel.ContactPersonLastName,
+
+                Birthday = businessPartnerPhoneViewModel.Birthday, 
 
                 Description = businessPartnerPhoneViewModel.Description,
 

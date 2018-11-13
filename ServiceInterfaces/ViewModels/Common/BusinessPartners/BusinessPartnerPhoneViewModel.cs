@@ -130,6 +130,24 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         #endregion
 
 
+        #region Birthday
+        private DateTime? _Birthday;
+
+        public DateTime? Birthday
+        {
+            get { return _Birthday; }
+            set
+            {
+                if (_Birthday != value)
+                {
+                    _Birthday = value;
+                    NotifyPropertyChanged("Birthday");
+                }
+            }
+        }
+        #endregion
+
+
         #region Description
         private string _Description;
 

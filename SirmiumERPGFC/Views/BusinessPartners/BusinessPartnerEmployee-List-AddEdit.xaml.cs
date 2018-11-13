@@ -507,8 +507,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                         return;
                     }
 
-                    DisplayEmployeesNotOnBusinessPartnerData();
-                    DisplayEmployeesOnBusinessPartnerData();
+                    Sync();
                 });
                 th.IsBackground = true;
                 th.Start();

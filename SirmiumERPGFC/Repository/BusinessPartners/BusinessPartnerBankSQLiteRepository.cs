@@ -273,7 +273,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@BankId", ((object)businessPartnerBank.Bank.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BankIdentifier", ((object)businessPartnerBank.Bank.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BankCode", ((object)businessPartnerBank.Bank.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankName", ((object)businessPartnerBank.Bank.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BankName", ((object)(businessPartnerBank.Bank.Name + ", Swift:" + businessPartnerBank.Bank.Swift)) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartnerBank.Country.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartnerBank.Country.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartnerBank.Country.Code) ?? DBNull.Value);

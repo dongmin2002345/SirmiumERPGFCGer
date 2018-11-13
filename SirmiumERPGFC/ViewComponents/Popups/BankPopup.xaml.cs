@@ -28,7 +28,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 {
     public partial class BankPopup : UserControl, INotifyPropertyChanged
     {
-        IBankService regionService;
+        IBankService bankService;
 
         #region CurrentBanks
         public BankViewModel CurrentBank
@@ -101,7 +101,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         public BankPopup()
         {
-            regionService = DependencyResolver.Kernel.Get<IBankService>();
+            bankService = DependencyResolver.Kernel.Get<IBankService>();
 
             InitializeComponent();
 
@@ -119,6 +119,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentCountry != null)
                     {
+                        new BankSQLiteRepository().Sync(bankService);
+
                         BankListResponse regionResp = new BankSQLiteRepository().GetBanksForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
                         if (regionResp.Success)
                             BanksFromDB = new ObservableCollection<BankViewModel>(regionResp.Banks ?? new List<BankViewModel>());

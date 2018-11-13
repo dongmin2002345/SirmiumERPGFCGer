@@ -93,6 +93,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
+                    new LicenceTypeSQLiteRepository().Sync(LicenceTypeService);
+
                     LicenceTypeListResponse LicenceTypeResp = new LicenceTypeSQLiteRepository().GetLicenceTypesForPopup(MainWindow.CurrentCompanyId, filterString);
                     if (LicenceTypeResp.Success)
                         LicenceTypesFromDB = new ObservableCollection<LicenceTypeViewModel>(LicenceTypeResp.LicenceTypes ?? new List<LicenceTypeViewModel>());
