@@ -6,27 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
-using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 
 namespace SirmiumERPWeb.Controllers.BusinessPartners
 {
-    public class BusinessPartnerPhoneController : Controller
+    public class BusinessPartnerInstitutionController : Controller
     {
-        IBusinessPartnerPhoneService businessPartnerPhoneService { get; set; }
+        IBusinessPartnerInstitutionService businessPartnerInstitutionService { get; set; }
 
-        public BusinessPartnerPhoneController(IServiceProvider provider)
+        public BusinessPartnerInstitutionController(IServiceProvider provider)
         {
-            businessPartnerPhoneService = provider.GetRequiredService<IBusinessPartnerPhoneService>();
-
+            businessPartnerInstitutionService = provider.GetRequiredService<IBusinessPartnerInstitutionService>();
         }
 
         [HttpPost]
-        public JsonResult Sync([FromBody] SyncBusinessPartnerPhoneRequest request)
+        public JsonResult Sync([FromBody] SyncBusinessPartnerInstitutionRequest request)
         {
-            BusinessPartnerPhoneListResponse response = new BusinessPartnerPhoneListResponse();
+            BusinessPartnerInstitutionListResponse response = new BusinessPartnerInstitutionListResponse();
             try
             {
-                response = this.businessPartnerPhoneService.Sync(request);
+                response = this.businessPartnerInstitutionService.Sync(request);
             }
             catch (Exception ex)
             {

@@ -44,6 +44,7 @@
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerBankService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerByConstructionSiteHistoryService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerByConstructionSiteService.cs" />
+    <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerInstitutionService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerLocationService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerOrganizationUnitService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerPhoneService.cs" />

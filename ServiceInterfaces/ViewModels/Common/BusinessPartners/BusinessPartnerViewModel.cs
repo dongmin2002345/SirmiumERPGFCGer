@@ -398,6 +398,23 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region Institutions
+        private ObservableCollection<BusinessPartnerInstitutionViewModel> _Institutions;
+
+        public ObservableCollection<BusinessPartnerInstitutionViewModel> Institutions
+        {
+            get { return _Institutions; }
+            set
+            {
+                if (_Institutions != value)
+                {
+                    _Institutions = value;
+                    NotifyPropertyChanged("Institutions");
+                }
+            }
+        }
+        #endregion
+
         #region Banks
         private ObservableCollection<BusinessPartnerBankViewModel> _Banks;
 

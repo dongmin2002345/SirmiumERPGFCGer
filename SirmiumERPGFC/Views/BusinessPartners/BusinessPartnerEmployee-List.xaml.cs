@@ -282,7 +282,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDataLoading = true;
 
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
+                .GetSerbianBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
 
             if (response.Success)
             {

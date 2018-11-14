@@ -18,6 +18,7 @@
         <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
         <cbxConverters1:BoolStringConverter x:Key="BoolStringConverter" />
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
+        <cbxConverters1:PlusMinusConverter x:Key="PlusMinusConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -221,7 +222,6 @@
                           VerticalAlignment="Stretch"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
-                          Style="{DynamicResource AzureDataGrid}"
                           ItemsSource="{Binding Path=ConstructionSiteCalculationsFromDB}">
 
                     <DataGrid.Columns>
@@ -231,6 +231,12 @@
                         <DataGridTextColumn SortMemberPath="NewValue" Header="Ukupna vrednost" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ValueDifference" Header="Razlika vrednosti" Binding="{Binding ValueDifference}" Width="*" IsReadOnly="True" />
                     </DataGrid.Columns>
+
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Background" Value="{Binding PlusMinus, Converter={StaticResource PlusMinusConverter}}"  />
+                        </Style>
+                    </DataGrid.RowStyle>
                 </DataGrid>
             </Grid>
         </GroupBox>

@@ -1,7 +1,9 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.ConstructionSites;
+using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
+using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
@@ -10,6 +12,7 @@ using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Repository.ConstructionSites;
+using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
@@ -31,6 +34,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         IBusinessPartnerByConstructionSiteHistoryService businessPartnerByConstructionSiteHistoryService;
         IBusinessPartnerService businessPartnerService;
         IConstructionSiteService constructionSiteService;
+        IEmployeeByConstructionSiteService employeeByConstructionSiteService;
         #endregion
 
         #region CurrentConstructionSite
@@ -308,6 +312,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             businessPartnerByConstructionSiteHistoryService = DependencyResolver.Kernel.Get<IBusinessPartnerByConstructionSiteHistoryService>();
             businessPartnerService = DependencyResolver.Kernel.Get<IBusinessPartnerService>();
             constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
+            employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();
 
             InitializeComponent();
 
@@ -366,7 +371,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             BusinessPartnerDataLoading = true;
 
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerOnConstructionSiteSearchObject, currentPage, itemsPerPage);
+                .GetAllBusinessPartners(MainWindow.CurrentCompanyId, BusinessPartnerOnConstructionSiteSearchObject);
 
             if (response.Success)
             {
@@ -486,7 +491,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (CurrentBusinessPartnerOnConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Radnik na odabranom gradilištu";
+                MainWindow.WarningMessage = "Obavezno polje: Poslovni partner na odabranom gradilištu";
                 return;
             }
 
@@ -501,15 +506,26 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 Thread th = new Thread(() =>
                 {
-                    BusinessPartnerByConstructionSiteListResponse listResponse = new BusinessPartnerByConstructionSiteSQLiteRepository().GetByConstructionSite(CurrentConstructionSite.Identifier);
-                    BusinessPartnerByConstructionSiteViewModel businessPartnerByConstructionSite = listResponse.BusinessPartnerByConstructionSites
-                        .FirstOrDefault(x => x.BusinessPartner.Identifier == CurrentBusinessPartnerOnConstructionSite.BusinessPartner.Identifier);
-                    BusinessPartnerByConstructionSiteResponse response = businessPartnerByConstructionSiteService.Delete(businessPartnerByConstructionSite.Identifier);
+                    // Remove business partner on construction site
+                    BusinessPartnerByConstructionSiteResponse response = businessPartnerByConstructionSiteService.Delete(CurrentBusinessPartnerOnConstructionSite.Identifier);
                     if (!response.Success)
                     {
                         MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
                         return;
                     }
+
+                    // Remove employees on that construction site from that business partner
+                    EmployeeByConstructionSiteListResponse employeesResponse = new EmployeeByConstructionSiteSQLiteRepository()
+                    .GetByConstructionSiteAndBusinessPartner(
+                        CurrentBusinessPartnerOnConstructionSite.ConstructionSite.Identifier,
+                        CurrentBusinessPartnerOnConstructionSite.BusinessPartner.Identifier);
+
+                    foreach (var item in employeesResponse.EmployeeByConstructionSites)
+                    {
+                        EmployeeByConstructionSiteResponse employeeResponse = employeeByConstructionSiteService.Delete(item.Identifier);
+                        new EmployeeByConstructionSiteSQLiteRepository().Delete(item.Identifier);
+                    }                  
+
 
                     response = new BusinessPartnerByConstructionSiteSQLiteRepository().Delete(CurrentBusinessPartnerOnConstructionSite.BusinessPartner.Identifier, CurrentConstructionSite.Identifier);
                     if (!response.Success)

@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.ConstructionSites;
@@ -67,10 +68,18 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                     if (_CurrentConstructionSite != null)
                     {
-                        var response = new BusinessPartnerSQLiteRepository().GetBusinessPartnersOnConstructionSiteByPage(MainWindow.CurrentCompanyId, _CurrentConstructionSite.Identifier, new BusinessPartnerViewModel(), 1, Int32.MaxValue);
+                        BusinessPartnerByConstructionSiteListResponse response = new BusinessPartnerByConstructionSiteSQLiteRepository()
+                            .GetByConstructionSite(CurrentConstructionSite.Identifier);
+
                         if (response.Success)
                         {
-                            BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());
+                            BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>(response?.BusinessPartnerByConstructionSites ?? new List<BusinessPartnerByConstructionSiteViewModel>());
+                            DisplayBusinessPartnersData(BusinessPartnersOnConstructionSiteFromDB);
+                        }
+                        else
+                        {
+                            BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>();
+                            MainWindow.ErrorMessage = response.Message;
                         }
                     }
                     else
@@ -109,6 +118,25 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _ConstructionSiteDataLoading = value;
                     NotifyPropertyChanged("ConstructionSiteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+
+        #region BusinessPartnersOnConstructionSiteFromDB
+        private ObservableCollection<BusinessPartnerByConstructionSiteViewModel> _BusinessPartnersOnConstructionSiteFromDB;
+
+        public ObservableCollection<BusinessPartnerByConstructionSiteViewModel> BusinessPartnersOnConstructionSiteFromDB
+        {
+            get { return _BusinessPartnersOnConstructionSiteFromDB; }
+            set
+            {
+                if (_BusinessPartnersOnConstructionSiteFromDB != value)
+                {
+                    _BusinessPartnersOnConstructionSiteFromDB = value;
+                    NotifyPropertyChanged("BusinessPartnersOnConstructionSiteFromDB");
                 }
             }
         }
@@ -295,6 +323,31 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSiteDataLoading = false;
         }
+
+
+        public void DisplayBusinessPartnersData(ObservableCollection<BusinessPartnerByConstructionSiteViewModel> businessPartnersOnConstructionSites)
+        {
+            BusinessPartnerDataLoading = true;
+
+            BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
+                .GetAllBusinessPartners(MainWindow.CurrentCompanyId, new BusinessPartnerViewModel());
+
+            if (response.Success)
+            {
+                List<BusinessPartnerViewModel> bps = response.BusinessPartners
+                    .Where(x => businessPartnersOnConstructionSites.Select(y => y.BusinessPartner.Identifier).Contains(x.Identifier))
+                    .ToList();
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(bps);
+            }
+            else
+            {
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
+                MainWindow.ErrorMessage = response.Message;
+            }
+
+            BusinessPartnerDataLoading = false;
+        }
+
 
         private void SyncData()
         {

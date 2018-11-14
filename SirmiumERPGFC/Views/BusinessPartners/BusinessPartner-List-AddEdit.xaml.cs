@@ -146,6 +146,75 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
 
+        #region InstitutionsFromDB
+        private ObservableCollection<BusinessPartnerInstitutionViewModel> _InstitutionsFromDB;
+
+        public ObservableCollection<BusinessPartnerInstitutionViewModel> InstitutionsFromDB
+        {
+            get { return _InstitutionsFromDB; }
+            set
+            {
+                if (_InstitutionsFromDB != value)
+                {
+                    _InstitutionsFromDB = value;
+                    NotifyPropertyChanged("InstitutionsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentInstitutionForm
+        private BusinessPartnerInstitutionViewModel _CurrentInstitutionForm = new BusinessPartnerInstitutionViewModel();
+
+        public BusinessPartnerInstitutionViewModel CurrentInstitutionForm
+        {
+            get { return _CurrentInstitutionForm; }
+            set
+            {
+                if (_CurrentInstitutionForm != value)
+                {
+                    _CurrentInstitutionForm = value;
+                    NotifyPropertyChanged("CurrentInstitutionForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentInstitutionDG
+        private BusinessPartnerInstitutionViewModel _CurrentInstitutionDG;
+
+        public BusinessPartnerInstitutionViewModel CurrentInstitutionDG
+        {
+            get { return _CurrentInstitutionDG; }
+            set
+            {
+                if (_CurrentInstitutionDG != value)
+                {
+                    _CurrentInstitutionDG = value;
+                    NotifyPropertyChanged("CurrentInstitutionDG");
+                }
+            }
+        }
+        #endregion
+
+        #region InstitutionDataLoading
+        private bool _InstitutionDataLoading;
+
+        public bool InstitutionDataLoading
+        {
+            get { return _InstitutionDataLoading; }
+            set
+            {
+                if (_InstitutionDataLoading != value)
+                {
+                    _InstitutionDataLoading = value;
+                    NotifyPropertyChanged("InstitutionDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region BanksFromDB
         private ObservableCollection<BusinessPartnerBankViewModel> _BanksFromDB;
 
@@ -283,76 +352,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
-
-        #region OrganizationUnitsFromDB
-        private ObservableCollection<BusinessPartnerOrganizationUnitViewModel> _OrganizationUnitsFromDB;
-
-        public ObservableCollection<BusinessPartnerOrganizationUnitViewModel> OrganizationUnitsFromDB
-        {
-            get { return _OrganizationUnitsFromDB; }
-            set
-            {
-                if (_OrganizationUnitsFromDB != value)
-                {
-                    _OrganizationUnitsFromDB = value;
-                    NotifyPropertyChanged("OrganizationUnitsFromDB");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentOrganizationUnitForm
-        private BusinessPartnerOrganizationUnitViewModel _CurrentOrganizationUnitForm = new BusinessPartnerOrganizationUnitViewModel();
-
-        public BusinessPartnerOrganizationUnitViewModel CurrentOrganizationUnitForm
-        {
-            get { return _CurrentOrganizationUnitForm; }
-            set
-            {
-                if (_CurrentOrganizationUnitForm != value)
-                {
-                    _CurrentOrganizationUnitForm = value;
-                    NotifyPropertyChanged("CurrentOrganizationUnitForm");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentOrganizationUnitDG
-        private BusinessPartnerOrganizationUnitViewModel _CurrentOrganizationUnitDG;
-
-        public BusinessPartnerOrganizationUnitViewModel CurrentOrganizationUnitDG
-        {
-            get { return _CurrentOrganizationUnitDG; }
-            set
-            {
-                if (_CurrentOrganizationUnitDG != value)
-                {
-                    _CurrentOrganizationUnitDG = value;
-                    NotifyPropertyChanged("CurrentOrganizationUnitDG");
-                }
-            }
-        }
-        #endregion
-
-        #region OrganizationUnitDataLoading
-        private bool _OrganizationUnitDataLoading;
-
-        public bool OrganizationUnitDataLoading
-        {
-            get { return _OrganizationUnitDataLoading; }
-            set
-            {
-                if (_OrganizationUnitDataLoading != value)
-                {
-                    _OrganizationUnitDataLoading = value;
-                    NotifyPropertyChanged("OrganizationUnitDataLoading");
-                }
-            }
-        }
-        #endregion
-
-
+        
         #region BusinessPartnerTypesFromDB
         private ObservableCollection<BusinessPartnerTypeViewModel> _BusinessPartnerTypesFromDB;
 
@@ -485,7 +485,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             Thread displayThread = new Thread(() => {
                 PopulateBusinessPartnerTypeData();
                 PopulateLocationData();
-                PopulateOrganizationUnitData();
+                PopulateInstitutionData();
                 PopulatePhoneData();
                 PopulateBankData();
             });
@@ -517,24 +517,24 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             LocationDataLoading = false;
         }
 
-        private void PopulateOrganizationUnitData()
+        private void PopulateInstitutionData()
         {
-            OrganizationUnitDataLoading = true;
+            InstitutionDataLoading = true;
 
-            BusinessPartnerOrganizationUnitListResponse response = new BusinessPartnerOrganizationUnitSQLiteRepository()
-                .GetBusinessPartnerOrganizationUnitsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+            BusinessPartnerInstitutionListResponse response = new BusinessPartnerInstitutionSQLiteRepository()
+                .GetBusinessPartnerInstitutionsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
             if (response.Success)
             {
-                OrganizationUnitsFromDB = new ObservableCollection<BusinessPartnerOrganizationUnitViewModel>(
-                    response.BusinessPartnerOrganizationUnits ?? new List<BusinessPartnerOrganizationUnitViewModel>());
+                InstitutionsFromDB = new ObservableCollection<BusinessPartnerInstitutionViewModel>(
+                    response.BusinessPartnerInstitutions ?? new List<BusinessPartnerInstitutionViewModel>());
             }
             else
             {
-                OrganizationUnitsFromDB = new ObservableCollection<BusinessPartnerOrganizationUnitViewModel>();
+                InstitutionsFromDB = new ObservableCollection<BusinessPartnerInstitutionViewModel>();
                 MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
             }
 
-            OrganizationUnitDataLoading = false;
+            InstitutionDataLoading = false;
         }
 
         private void PopulatePhoneData()
@@ -855,68 +855,68 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #region Add, edit, delete and cancle organization unit
 
-        //private void btnAddOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    #region Validation
+        private void btnAddInstitution_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
 
-        //    if (CurrentOrganizationUnitForm.Name == null)
-        //    {
-        //        MainWindow.WarningMessage = "Obavezno polje: Naziv!";
-        //        return;
-        //    }
+            if (CurrentInstitutionForm.Institution == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv!";
+                return;
+            }
 
-        //    #endregion
+            #endregion
 
-        //    // If update process, first delete item
-        //    new BusinessPartnerOrganizationUnitSQLiteRepository().Delete(CurrentOrganizationUnitForm.Identifier);
+            // If update process, first delete item
+            new BusinessPartnerInstitutionSQLiteRepository().Delete(CurrentInstitutionForm.Identifier);
 
-        //    CurrentOrganizationUnitForm.BusinessPartner = CurrentBusinessPartner;
-        //    CurrentOrganizationUnitForm.Identifier = Guid.NewGuid();
+            CurrentInstitutionForm.BusinessPartner = CurrentBusinessPartner;
+            CurrentInstitutionForm.Identifier = Guid.NewGuid();
 
-        //    var response = new BusinessPartnerOrganizationUnitSQLiteRepository().Create(CurrentOrganizationUnitForm);
-        //    if (response.Success)
-        //    {
-        //        CurrentOrganizationUnitForm = new BusinessPartnerOrganizationUnitViewModel();
+            var response = new BusinessPartnerInstitutionSQLiteRepository().Create(CurrentInstitutionForm);
+            if (response.Success)
+            {
+                CurrentInstitutionForm = new BusinessPartnerInstitutionViewModel();
 
-        //        Thread displayThread = new Thread(() => PopulateOrganizationUnitData());
-        //        displayThread.IsBackground = true;
-        //        displayThread.Start();
+                Thread displayThread = new Thread(() => PopulateInstitutionData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
 
-        //        txtOrganizationUnitCode.Focus();
-        //    }
-        //    else
-        //        MainWindow.ErrorMessage = response.Message;
-        //}
+                txtInstitution.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
 
-        //private void btnEditOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    CurrentOrganizationUnitForm = CurrentOrganizationUnitDG;
-        //}
+        private void btnEditInstitution_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentInstitutionForm = CurrentInstitutionDG;
+        }
 
-        //private void btnDeleteOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+        private void btnDeleteInstitution_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-        //    DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("organizacionu jedinicu", "");
-        //    var showDialog = deleteConfirmationForm.ShowDialog();
-        //    if (showDialog != null && showDialog.Value)
-        //    {
-        //        new BusinessPartnerOrganizationUnitSQLiteRepository().Delete(CurrentOrganizationUnitDG.Identifier);
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("organizacionu jedinicu", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new BusinessPartnerInstitutionSQLiteRepository().Delete(CurrentInstitutionDG.Identifier);
 
-        //        MainWindow.SuccessMessage = "Organizaciona jedinica je uspešno obrisana!";
+                MainWindow.SuccessMessage = "Organizaciona jedinica je uspešno obrisana!";
 
-        //        Thread displayThread = new Thread(() => PopulateOrganizationUnitData());
-        //        displayThread.IsBackground = true;
-        //        displayThread.Start();
-        //    }
+                Thread displayThread = new Thread(() => PopulateInstitutionData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
 
-        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        //}
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
 
-        //private void btnCancelOrganizationUnit_Click(object sender, RoutedEventArgs e)
-        //{
-        //    CurrentOrganizationUnitForm = new BusinessPartnerOrganizationUnitViewModel();
-        //}
+        private void btnCancelInstitution_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentInstitutionForm = new BusinessPartnerInstitutionViewModel();
+        }
 
         #endregion
 
@@ -978,7 +978,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 CurrentBusinessPartner.UpdatedAt = DateTime.Now;
 
                 CurrentBusinessPartner.Locations = LocationsFromDB;
-                //CurrentBusinessPartner.OrganizationUnits = OrganizationUnitsFromDB;
+                CurrentBusinessPartner.Institutions = InstitutionsFromDB;
                 CurrentBusinessPartner.Phones = PhonesFromDB;
                 CurrentBusinessPartner.Banks = BanksFromDB;
                 CurrentBusinessPartner.BusinessPartnerTypes = new ObservableCollection<BusinessPartnerTypeViewModel>(

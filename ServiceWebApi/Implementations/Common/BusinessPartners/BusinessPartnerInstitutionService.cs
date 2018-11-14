@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace ServiceWebApi.Implementations.Common.BusinessPartners
 {
-    public class BusinessPartnerPhoneService : IBusinessPartnerPhoneService
+    public class BusinessPartnerInstitutionService : IBusinessPartnerInstitutionService
     {
-        public BusinessPartnerPhoneListResponse Sync(SyncBusinessPartnerPhoneRequest request)
+        public BusinessPartnerInstitutionListResponse Sync(SyncBusinessPartnerInstitutionRequest request)
         {
-            BusinessPartnerPhoneListResponse response = new BusinessPartnerPhoneListResponse();
+            BusinessPartnerInstitutionListResponse response = new BusinessPartnerInstitutionListResponse();
             try
             {
-                response = WpfApiHandler.SendToApi<SyncBusinessPartnerPhoneRequest, BusinessPartnerPhoneViewModel, BusinessPartnerPhoneListResponse>(request, "Sync");
+                response = WpfApiHandler.SendToApi<SyncBusinessPartnerInstitutionRequest, BusinessPartnerInstitutionViewModel, BusinessPartnerInstitutionListResponse>(request, "Sync");
             }
             catch (Exception ex)
             {
-                response.BusinessPartnerPhones = new List<BusinessPartnerPhoneViewModel>();
+                response.BusinessPartnerInstitutions = new List<BusinessPartnerInstitutionViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }

@@ -44,6 +44,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerRepository businessPartnerRepository;
         private IBusinessPartnerLocationRepository businessPartnerLocationRepository;
         private IBusinessPartnerPhoneRepository businessPartnerPhoneRepository;
+        private IBusinessPartnerInstitutionRepository businessPartnerInstitutionRepository;
         private IBusinessPartnerBankRepository businessPartnerBankRepository;
         private IBusinessPartnerOrganizationUnitRepository businessPartnerOrganizationUnitRepository;
         private IBusinessPartnerTypeRepository businessPartnerTypeRepository;
@@ -154,6 +155,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (businessPartnerPhoneRepository == null)
                 businessPartnerPhoneRepository = new BusinessPartnerPhoneRepository(context);
             return businessPartnerPhoneRepository;
+        }
+
+        public IBusinessPartnerInstitutionRepository GetBusinessPartnerInstitutionRepository()
+        {
+            if (businessPartnerInstitutionRepository == null)
+                businessPartnerInstitutionRepository = new BusinessPartnerInstitutionRepository(context);
+            return businessPartnerInstitutionRepository;
         }
 
         public IBusinessPartnerBankRepository GetBusinessPartnerBankRepository()

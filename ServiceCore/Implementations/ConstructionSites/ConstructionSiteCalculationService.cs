@@ -72,7 +72,7 @@ namespace ServiceCore.Implementations.ConstructionSites
             try
             {
                 ConstructionSiteCalculation lastConstructionSiteCalculation = unitOfWork.GetConstructionSiteCalculationRepository()
-                    .GetLastConstructionSiteCalculation(constructionSiteCalculationViewModel.Company.Id);
+                    .GetLastConstructionSiteCalculation(constructionSiteCalculationViewModel.Company.Id, constructionSiteCalculationViewModel.ConstructionSite.Id);
 
                 if (constructionSiteCalculationViewModel.PlusMinus == "+")
                 {

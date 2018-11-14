@@ -46,6 +46,7 @@
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerBankService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerByConstructionSiteHistoryService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerByConstructionSiteService.cs" />
+    <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerInstitutionService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerLocationService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerOrganizationUnitService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerPhoneService.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerByConstructionSiteHistoryResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerByConstructionSiteListResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerByConstructionSiteResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerInstitutionListResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerInstitutionResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerListResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerLocationListResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerLocationResponse.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerBankRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerByConstructionSiteHistoryRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerByConstructionSiteRequest.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerInstitutionRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerLocationRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerOrganizationUnitRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerPhoneRequest.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerBankViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerByConstructionSiteHistoryViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerByConstructionSiteViewModel.cs" />
+    <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerInstitutionViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerLocationViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerOrganizationUnitViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerPhoneViewModel.cs" />

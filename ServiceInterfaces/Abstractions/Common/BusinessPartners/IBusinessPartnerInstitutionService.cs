@@ -1,5 +1,4 @@
 ﻿using ServiceInterfaces.Messages.Common.BusinessPartners;
-using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ServiceInterfaces.Abstractions.Common.BusinessPartners
 {
-    public interface IBusinessPartnerPhoneService
+    public interface IBusinessPartnerInstitutionService
     {
-        BusinessPartnerPhoneListResponse Sync(SyncBusinessPartnerPhoneRequest request);
+        BusinessPartnerInstitutionListResponse Sync(SyncBusinessPartnerInstitutionRequest request);
     }
 }

@@ -184,6 +184,7 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerByConstructionSiteHistorySQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerByConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerInstitutionSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerLocationSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerOrganizationUnitSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />

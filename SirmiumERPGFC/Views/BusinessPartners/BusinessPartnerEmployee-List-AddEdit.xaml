@@ -129,18 +129,18 @@
                 </Grid.RowDefinitions>
 
                 <DataGrid x:Name="dgCompanyEmployees"    
-                              Grid.Row="1" Grid.ColumnSpan="6"
-                              Margin="2"
-                              AutoGenerateColumns="False"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              GridLinesVisibility="All"
-                              HorizontalGridLinesBrush="Gray"
-                              VerticalAlignment="Stretch"
-                              HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Auto"
-                              ItemsSource="{Binding Path=EmployeesOnBusinessPartnerFromDB}"
+                            Grid.Row="1" Grid.ColumnSpan="6"
+                            Margin="2"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            CanUserResizeRows="False"
+                            GridLinesVisibility="All"
+                            HorizontalGridLinesBrush="Gray"
+                            VerticalAlignment="Stretch"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto"
+                            ItemsSource="{Binding Path=EmployeesOnBusinessPartnerFromDB}"
                           SelectedItem="{Binding Path=CurrentEmployeeOnBusinessPartner, Mode=TwoWay}">
 
                     <DataGrid.Columns>

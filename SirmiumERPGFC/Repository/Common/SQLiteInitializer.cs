@@ -201,6 +201,21 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "Birthday", "DATETIME NULL");
                     #endregion
 
+                    #region BusinessPartnerInstitution
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE BusinessPartnerInstitutions", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(BusinessPartnerInstitutionSQLiteRepository.BusinessPartnerInstitutionTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    #endregion
+
                     #region BusinessPartnerBank
                     if (withTableDrop)
                     {

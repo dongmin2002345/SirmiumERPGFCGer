@@ -80,7 +80,65 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-        public BusinessPartnerListResponse GetBusinessPartnersByPage(int companyId, BusinessPartnerViewModel businessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        public BusinessPartnerListResponse GetAllBusinessPartners(int companyId, BusinessPartnerViewModel businessPartnerSearchObject)
+        {
+            BusinessPartnerListResponse response = new BusinessPartnerListResponse();
+            List<BusinessPartnerViewModel> businessPartners = new List<BusinessPartnerViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB " +
+                        "FROM BusinessPartners " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
+                        "AND CompanyId = @CompanyId AND Name IS NOT NULL AND Name != '' " +
+                        "UNION " +
+                        "SELECT ServerId, Identifier, Code, InternalCode, NameGer AS NAME, TaxNr AS PIB " +
+                        "FROM BusinessPartners " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR NameGer LIKE @Name) " +
+                        "AND (@PIB IS NULL OR @PIB = '' OR TaxNr LIKE @PIB) " +
+                        "AND CompanyId = @CompanyId AND NameGer IS NOT NULL AND NameGer != '' " +
+                        "ORDER BY ServerId DESC;", db);
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@PIB", ((object)businessPartnerSearchObject?.Search_PIB) != null ? "%" + businessPartnerSearchObject?.Search_PIB + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        int counter = 0;
+                        BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
+                        businessPartners.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.BusinessPartners = new List<BusinessPartnerViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.BusinessPartners = businessPartners;
+            return response;
+        }
+
+        public BusinessPartnerListResponse GetSerbianBusinessPartnersByPage(int companyId, BusinessPartnerViewModel businessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
             List<BusinessPartnerViewModel> businessPartners = new List<BusinessPartnerViewModel>();

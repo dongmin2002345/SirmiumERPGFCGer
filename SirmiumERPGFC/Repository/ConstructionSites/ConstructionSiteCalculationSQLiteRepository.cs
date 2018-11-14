@@ -331,7 +331,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             }
         }
 
-        public ConstructionSiteCalculationResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public ConstructionSiteCalculationResponse UpdateSyncStatus(Guid identifier, int serverId, decimal valueDifference, decimal newValue, bool isSynced)
         {
             ConstructionSiteCalculationResponse response = new ConstructionSiteCalculationResponse();
 
@@ -344,10 +344,14 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
                 insertCommand.CommandText = "UPDATE ConstructionSiteCalculations SET " +
                     "IsSynced = @IsSynced, " +
+                    "NewValue = @NewValue, " +
+                    "ValueDifference = @ValueDifference, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@NewValue", newValue);
+                insertCommand.Parameters.AddWithValue("@ValueDifference", valueDifference);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 

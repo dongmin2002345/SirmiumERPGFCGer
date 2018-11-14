@@ -24,6 +24,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IBusinessPartnerRepository GetBusinessPartnerRepository();
         IBusinessPartnerLocationRepository GetBusinessPartnerLocationRepository();
         IBusinessPartnerPhoneRepository GetBusinessPartnerPhoneRepository();
+        IBusinessPartnerInstitutionRepository GetBusinessPartnerInstitutionRepository();
         IBusinessPartnerBankRepository GetBusinessPartnerBankRepository();
         IBusinessPartnerOrganizationUnitRepository GetBusinessPartnerOrganizationUnitRepository();
         IBusinessPartnerTypeRepository GetBusinessPartnerTypeRepository();

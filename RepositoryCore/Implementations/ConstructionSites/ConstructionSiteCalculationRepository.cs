@@ -57,12 +57,14 @@ namespace RepositoryCore.Implementations.ConstructionSites
             return ConstructionSites;
         }
 
-        public ConstructionSiteCalculation GetLastConstructionSiteCalculation(int companyId)
+        public ConstructionSiteCalculation GetLastConstructionSiteCalculation(int companyId, int constructionSiteId)
         {
             ConstructionSiteCalculation constructionSite = context.ConstructionSiteCalculations
-                .Where(x => x.Company.Id == companyId)
+                .Where(x => x.Company.Id == companyId && x.ConstructionSiteId == constructionSiteId)
                 .OrderByDescending(x => x.Id)
                 .FirstOrDefault();
+
+            Console.WriteLine("NOVO");
 
             return constructionSite;
         }

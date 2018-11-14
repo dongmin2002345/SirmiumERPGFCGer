@@ -498,7 +498,7 @@
                     </Grid>
                 </GroupBox>
 
-                <!--<GroupBox Header="Organizacione jedinice (maloprodaje)" Margin="2 1 2 1" Grid.Row="5" IsEnabled="{Binding Path=ItemsEnabled, Mode=TwoWay}">
+                <GroupBox Header="Institucije" Margin="2 1 2 1" Grid.Row="6" IsEnabled="{Binding Path=ItemsEnabled, Mode=TwoWay}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -517,44 +517,42 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Šifra " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtOrganizationUnitCode" Text="{Binding Path=CurrentOrganizationUnitForm.Code, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Institucija " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtInstitution" 
+                                 Text="{Binding Path=CurrentInstitutionForm.Institution, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Naziv " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtOrganizationUnitName" Text="{Binding Path=CurrentOrganizationUnitForm.Name, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Korisničko ime " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
+                                 Text="{Binding Path=CurrentInstitutionForm.Username, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Država " Margin="5 0 5 0" />
-                        <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popOrganizationUnitCountry" 
-                                         CurrentCountry="{Binding Path=CurrentOrganizationUnitForm.Country, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Lozinka " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
+                                 Text="{Binding Path=CurrentInstitutionForm.Password, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Opština " Margin="5 0 5 0" />
-                        <popups:MunicipalityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popOrganizationUnitMunicipality" 
-                                              CurrentMunicipality="{Binding Path=CurrentOrganizationUnitForm.Municipality, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Kontakt osoba " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
+                                 Text="{Binding Path=CurrentInstitutionForm.ContactPerson, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Grad " Margin="5 0 5 0" />
-                        <popups:CityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popOrganizationUnitCity" 
-                                      CurrentCity="{Binding Path=CurrentOrganizationUnitForm.City, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Telefon " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
+                                 Text="{Binding Path=CurrentInstitutionForm.Phone, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Adresa " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtOrganizationUnitAddress" Text="{Binding Path=CurrentOrganizationUnitForm.Address, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Fax " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
+                                 Text="{Binding Path=CurrentInstitutionForm.Fax, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Telefon " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtOrganizationUnitPhone" Text="{Binding Path=CurrentOrganizationUnitForm.Phone, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Email " Margin="5 0 5 0" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
+                                 Text="{Binding Path=CurrentInstitutionForm.Email, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Text="Mobilni " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtOrganizationUnitMobile" Text="{Binding Path=CurrentOrganizationUnitForm.Mobile, Mode=TwoWay}"/>
-
-                        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Kontakt osoba " Margin="5 0 5 0" />
-                        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtOrganizationUnitContactPerson" Text="{Binding Path=CurrentOrganizationUnitForm.ContactPerson, Mode=TwoWay}"/>
-
-                        <Button x:Name="btnAddOrganizationUnit" Grid.Row="4" Grid.Column="4" Click="btnAddOrganizationUnit_Click" Margin="2" >
+                        <Button x:Name="btnAddInstitution" Grid.Row="3" Grid.Column="4" Click="btnAddInstitution_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                 <TextBlock Text=" Sačuvaj stavku " />
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="btnCancelOrganizationUnit" Grid.Row="4" Grid.Column="5" Click="btnCancelOrganizationUnit_Click" Margin="2" >
+                        <Button x:Name="btnCancelInstitution" Grid.Row="3" Grid.Column="5" Click="btnCancelInstitution_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                 <TextBlock Text=" Odustani " />
@@ -562,8 +560,8 @@
                         </Button>
 
 
-                        <Controls:ProgressRing Grid.Row="5" Grid.ColumnSpan="6" IsActive="{Binding OrganizationUnitDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                        <DataGrid x:Name="dgOrganizationUnits"
+                        <Controls:ProgressRing Grid.Row="5" Grid.ColumnSpan="6" IsActive="{Binding InstitutionDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgInstitutions"
                               Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" 
                               Margin="2 5 2 5"
                               MinHeight="200"
@@ -578,30 +576,27 @@
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto"
                               PreviewMouseWheel="PreviewMouseWheel"
-                              Style="{DynamicResource AzureDataGrid}"
-                              ItemsSource="{Binding Path=OrganizationUnitsFromDB}"
-                              SelectedItem="{Binding Path=CurrentOrganizationUnitDG, Mode=TwoWay}">
+                              ItemsSource="{Binding Path=InstitutionsFromDB}"
+                              SelectedItem="{Binding Path=CurrentInstitutionDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="Code" Header="Šifra " Binding="{Binding Path=Code}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Name" Header="Naziv " Binding="{Binding Path=Name}" Width="*" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Country.Name" Header="Država" Binding="{Binding Path=Country.Name}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Municipality.Name" Header="Opština" Binding="{Binding Path=Municipality.Name}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="City.Name" Header="Grad" Binding="{Binding Path=City.Name}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Path=Address}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Path=Mobile}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Institution" Header="Institucija " Binding="{Binding Path=Institution}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Username" Header="Korisničko ime " Binding="{Binding Path=Username}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Password" Header="Lozinka" Binding="{Binding Path=Password}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ContactPerson" Header="Kontakt osoba" Binding="{Binding Path=ContactPerson}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Fax" Header="Fax" Binding="{Binding Path=Fax}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Path=Email}" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button x:Name="btnEditOrganizationUnit" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditOrganizationUnit_Click">
+                                                <Button x:Name="btnEditInstitution" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditInstitution_Click">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button x:Name="btnDeleteOrganizationUnit" Click="btnDeleteOrganizationUnit_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                <Button x:Name="btnDeleteInstitution" Click="btnDeleteInstitution_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
@@ -614,9 +609,9 @@
                         </DataGrid>
 
                     </Grid>
-                </GroupBox>-->
+                </GroupBox>
 
-                <GroupBox Header="Tipovi posl. partnera" Margin="2 1 2 1" Grid.Row="6" IsEnabled="{Binding Path=ItemsEnabled, Mode=TwoWay}">
+                <GroupBox Header="Tipovi posl. partnera" Margin="2 1 2 1" Grid.Row="7" IsEnabled="{Binding Path=ItemsEnabled, Mode=TwoWay}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
