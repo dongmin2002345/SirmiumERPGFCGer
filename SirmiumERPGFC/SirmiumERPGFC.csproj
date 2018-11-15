@@ -202,6 +202,7 @@
     <Compile Include="Repository\Employees\EmployeeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\LicenceTypeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\FamilyMemberSQLiteRepository.cs" />
+    <Compile Include="Repository\InputInvoices\InputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Locations\CitySQLiteRepository.cs" />
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
     <Compile Include="Repository\Common\SQLiteInitializer.cs" />

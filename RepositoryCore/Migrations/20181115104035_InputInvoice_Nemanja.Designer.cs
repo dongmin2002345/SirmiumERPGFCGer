@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181115104035_InputInvoice_Nemanja")]
+    partial class InputInvoice_Nemanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -849,49 +851,43 @@ namespace RepositoryCore.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<string>("Address");
+                    b.Property<decimal>("Base");
 
-                    b.Property<decimal>("AmountGross");
+                    b.Property<string>("BusinessPartner");
 
-                    b.Property<decimal>("AmountNet");
-
-                    b.Property<int?>("BusinessPartnerId");
-
-                    b.Property<string>("Code");
+                    b.Property<int>("Code");
 
                     b.Property<int?>("CompanyId");
+
+                    b.Property<string>("Construction");
 
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<int?>("CreatedById");
 
-                    b.Property<decimal>("Currency");
-
-                    b.Property<DateTime>("DateOfPayment");
-
-                    b.Property<string>("Description");
-
                     b.Property<Guid>("Identifier");
 
                     b.Property<DateTime>("InvoiceDate");
 
-                    b.Property<string>("InvoiceNumber");
+                    b.Property<string>("InvoiceType");
 
-                    b.Property<decimal>("Pdv");
+                    b.Property<decimal>("PDV");
 
-                    b.Property<int>("PdvPercent");
+                    b.Property<decimal>("Price");
 
-                    b.Property<string>("Status");
+                    b.Property<decimal>("Quantity");
 
-                    b.Property<DateTime>("StatusDate");
+                    b.Property<decimal>("Rebate");
 
-                    b.Property<string>("Supplier");
+                    b.Property<decimal>("RebateValue");
+
+                    b.Property<decimal>("Total");
+
+                    b.Property<DateTime>("TrafficDate");
 
                     b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BusinessPartnerId");
 
                     b.HasIndex("CompanyId");
 
@@ -1910,10 +1906,6 @@ namespace RepositoryCore.Migrations
 
             modelBuilder.Entity("DomainCore.Common.OutputInvoices.OutputInvoice", b =>
                 {
-                    b.HasOne("DomainCore.Common.BusinessPartners.BusinessPartner", "BusinessPartner")
-                        .WithMany()
-                        .HasForeignKey("BusinessPartnerId");
-
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
