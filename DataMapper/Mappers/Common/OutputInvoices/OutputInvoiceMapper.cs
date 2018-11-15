@@ -1,4 +1,6 @@
-﻿using DataMapper.Mappers.Common.Companies;
+﻿using DataMapper.Mappers.Common.BusinessPartners;
+using DataMapper.Mappers.Common.Companies;
+using DataMapper.Mappers.Common.Identity;
 using DomainCore.Common.Identity;
 using DomainCore.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
@@ -25,31 +27,34 @@ namespace DataMapper.Mappers.Common.OutputInvoices
             OutputInvoiceViewModel outputInvoiceViewModel = new OutputInvoiceViewModel()
             {
                 Id = outputInvoice.Id,
-
+                Identifier = outputInvoice.Identifier,
                 Code = outputInvoice.Code,
 
-                Construction = outputInvoice.Construction,
-
+                Supplier = outputInvoice.Supplier,
+                Address = outputInvoice.Address,
+                InvoiceNumber = outputInvoice.InvoiceNumber,
                 InvoiceDate = outputInvoice.InvoiceDate,
 
-                BusinessPartner = outputInvoice.BusinessPartner,
+                AmountNet = outputInvoice.AmountNet,
 
-                InvoiceType = outputInvoice.InvoiceType,
+                PdvPercent = outputInvoice.PdvPercent,
 
-                Quantity = outputInvoice.Quantity,
+                Pdv = outputInvoice.Pdv,
 
-                TrafficDate = outputInvoice.TrafficDate,
+                AmountGross = outputInvoice.AmountGross,
 
-                Price = outputInvoice.Price,
-                Rebate = outputInvoice.Rebate,
-                RebateValue = outputInvoice.RebateValue,
-                Base = outputInvoice.Base,
-                PDV = outputInvoice.PDV,
-                Total = outputInvoice.Total,
+                DateOfPayment = outputInvoice.DateOfPayment,
+                Status = outputInvoice.Status,
+                StatusDate = outputInvoice.StatusDate,
+                //Base = outputInvoice.Base,
+                //PDV = outputInvoice.PDV,
+                //Total = outputInvoice.Total,
 
-                IsActive = outputInvoice.Active,
+                //IsActive = outputInvoice.Active,
 
                 Company = outputInvoice.Company?.ConvertToCompanyViewModelLite(),
+                CreatedBy = outputInvoice.CreatedBy?.ConvertToUserViewModelLite(),
+                BusinessPartner = outputInvoice.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
 
                 UpdatedAt = outputInvoice.UpdatedAt,
                 CreatedAt = outputInvoice.CreatedAt,
@@ -83,31 +88,27 @@ namespace DataMapper.Mappers.Common.OutputInvoices
             OutputInvoiceViewModel outputInvoiceViewModel = new OutputInvoiceViewModel()
             {
                 Id = outputInvoice.Id,
-
+                Identifier = outputInvoice.Identifier,
                 Code = outputInvoice.Code,
 
-                Construction = outputInvoice.Construction,
-
+                Supplier = outputInvoice.Supplier,
+                Address = outputInvoice.Address,
+                InvoiceNumber = outputInvoice.InvoiceNumber,
                 InvoiceDate = outputInvoice.InvoiceDate,
 
-                BusinessPartner = outputInvoice.BusinessPartner,
+                AmountNet = outputInvoice.AmountNet,
 
-                InvoiceType = outputInvoice.InvoiceType,
+                PdvPercent = outputInvoice.PdvPercent,
 
-                Quantity = outputInvoice.Quantity,
+                Pdv = outputInvoice.Pdv,
 
-                TrafficDate = outputInvoice.TrafficDate,
+                AmountGross = outputInvoice.AmountGross,
 
-                Price = outputInvoice.Price,
-                Rebate = outputInvoice.Rebate,
-                RebateValue = outputInvoice.RebateValue,
-                Base = outputInvoice.Base,
-                PDV = outputInvoice.PDV,
-                Total = outputInvoice.Total,
+                DateOfPayment = outputInvoice.DateOfPayment,
+                Status = outputInvoice.Status,
+                StatusDate = outputInvoice.StatusDate,
 
-                IsActive = outputInvoice.Active,
-
-                Company = outputInvoice.Company?.ConvertToCompanyViewModelLite(),
+                //Company = outputInvoice.Company?.ConvertToCompanyViewModelLite(),
 
                 UpdatedAt = outputInvoice.UpdatedAt,
                 CreatedAt = outputInvoice.CreatedAt,
@@ -122,38 +123,44 @@ namespace DataMapper.Mappers.Common.OutputInvoices
             OutputInvoice outputinvoice = new OutputInvoice()
             {
                 Id = outputInvoiceViewModel.Id,
-
+                Identifier = outputInvoiceViewModel.Identifier,
                 Code = outputInvoiceViewModel.Code,
 
-                Construction = outputInvoiceViewModel.Construction,
-
+                Supplier = outputInvoiceViewModel.Supplier,
+                Address = outputInvoiceViewModel.Address,
+                InvoiceNumber = outputInvoiceViewModel.InvoiceNumber,
                 InvoiceDate = outputInvoiceViewModel.InvoiceDate,
 
-                BusinessPartner = outputInvoiceViewModel.BusinessPartner,
+                AmountNet = outputInvoiceViewModel.AmountNet,
 
-                InvoiceType = outputInvoiceViewModel.InvoiceType,
+                PdvPercent = outputInvoiceViewModel.PdvPercent,
 
-                Quantity = outputInvoiceViewModel.Quantity,
+                Pdv = outputInvoiceViewModel.Pdv,
 
-                TrafficDate = outputInvoiceViewModel.TrafficDate,
+                AmountGross = outputInvoiceViewModel.AmountGross,
 
-                Price = outputInvoiceViewModel.Price,
-                Rebate = outputInvoiceViewModel.Rebate,
-                RebateValue = outputInvoiceViewModel.RebateValue,
-                Base = outputInvoiceViewModel.Base,
-                PDV = outputInvoiceViewModel.PDV,
-                Total = outputInvoiceViewModel.Total,
+                DateOfPayment = outputInvoiceViewModel.DateOfPayment,
+                Status = outputInvoiceViewModel.Status,
+                StatusDate = outputInvoiceViewModel.StatusDate,
+
+
+                BusinessPartnerId = outputInvoiceViewModel.BusinessPartner?.Id ?? null,
+                CreatedById = outputInvoiceViewModel.CreatedBy?.Id ?? null,
+                CompanyId = outputInvoiceViewModel.Company?.Id ?? null,
+
+                CreatedAt = outputInvoiceViewModel.CreatedAt,
+                UpdatedAt = outputInvoiceViewModel.UpdatedAt
 
                 //IsLocked = outputInvoiceViewModel.IsLocked,
                 //LockedDate = outputInvoiceViewModel.LockedDate,
 
-                CreatedBy = new User() { Id = outputInvoiceViewModel.CreatedBy?.Id ?? 0 },
+                //CreatedBy = new User() { Id = outputInvoiceViewModel.CreatedBy?.Id ?? 0 },
 
                 //InvoiceItems = outputInvoiceViewModel.OutputInvoiceSubItems?.ConvertToOutputInvoiceSubItemList(),
 
                 //Status = 0,
 
-                CreatedAt = outputInvoiceViewModel.CreatedAt,
+                //CreatedAt = outputInvoiceViewModel.CreatedAt,
                 //IsCancelItem = outputInvoiceViewModel.IsCancelItem
             };
 

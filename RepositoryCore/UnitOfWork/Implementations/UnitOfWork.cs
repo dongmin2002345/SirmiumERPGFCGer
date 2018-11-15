@@ -51,8 +51,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerBusinessPartnerTypeRepository businessPartnerBusinessPartnerTypeRepository;
 
         private IOutputInvoiceRepository outputInvoiceRepository;
+		private IInputInvoiceRepository inputInvoiceRepository;
 
-        private ICityRepository cityRepository;
+		private ICityRepository cityRepository;
         private IRegionRepository regionRepository;
         private IMunicipalityRepository municipalityRepository;
         private ICountryRepository countryRepository;
@@ -200,7 +201,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return outputInvoiceRepository;
         }
 
-        public ICountryRepository GetCountryRepository()
+		public IInputInvoiceRepository GetInputInvoiceRepository()
+		{
+			if (inputInvoiceRepository == null)
+				inputInvoiceRepository = new InputInvoiceRepository(context);
+			return inputInvoiceRepository;
+		}
+
+		public ICountryRepository GetCountryRepository()
         {
             if (countryRepository == null)
                 countryRepository = new CountryRepository(context);

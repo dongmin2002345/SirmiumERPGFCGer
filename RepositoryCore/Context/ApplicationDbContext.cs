@@ -2,6 +2,7 @@
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
+using DomainCore.Common.InputInvoices;
 using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
 using DomainCore.Common.Professions;
@@ -76,8 +77,9 @@ namespace RepositoryCore.Context
         public DbSet<BusinessPartnerBusinessPartnerType> BusinessPartnerBusinessPartnerTypes { get; set; }
 
         public DbSet<OutputInvoice> OutputInvoices { get; set; }
+		public DbSet<InputInvoice> InputInvoices { get; set; }
 
-        public DbSet<City> Cities { get; set; }
+		public DbSet<City> Cities { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
         public DbSet<Country> Countries { get; set; }

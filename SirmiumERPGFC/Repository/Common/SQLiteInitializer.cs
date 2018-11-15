@@ -14,6 +14,7 @@ using SirmiumERPGFC.Repository.Banks;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Repository.ToDos;
+using SirmiumERPGFC.Repository.OutputInvoices;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -481,6 +482,21 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(FamilyMemberSQLiteRepository.FamilyMemberTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
+
+                    //#region OutputInvoices
+                    //if (withTableDrop)
+                    //{
+                    //    try
+                    //    {
+                    //        SqliteCommand dropTable = new SqliteCommand("DROP TABLE OutputInvoices", db);
+                    //        dropTable.ExecuteNonQuery();
+                    //    }
+                    //    catch (Exception ex) { }
+                    //}
+                    //createTable = new SqliteCommand(OutputInvoiceSQLiteRepository.OutputInvoiceTableCreatePart, db);
+                    //createTable.ExecuteReader();
+                    //#endregion
+
 
                 }
             }

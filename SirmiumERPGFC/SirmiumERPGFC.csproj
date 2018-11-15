@@ -203,6 +203,7 @@
     <Compile Include="Repository\Employees\EmployeeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\LicenceTypeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\FamilyMemberSQLiteRepository.cs" />
+    <Compile Include="Repository\InputInvoices\InputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Locations\CitySQLiteRepository.cs" />
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
     <Compile Include="Repository\Common\SQLiteInitializer.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Repository\Locations\CountrySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
+    <Compile Include="Repository\OutputInvoices\OutputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />

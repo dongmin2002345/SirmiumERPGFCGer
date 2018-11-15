@@ -3,6 +3,7 @@ using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Professions;
@@ -100,6 +101,13 @@ namespace ApiExtension.Sender
 
                 { typeof(OutputInvoiceViewModel), "OutputInvoice" },
                 { typeof(List<OutputInvoiceViewModel>), "OutputInvoice" },
+
+                #endregion
+
+				#region IntputInvoices
+
+                { typeof(InputInvoiceViewModel), "InputInvoice" },
+				{ typeof(List<InputInvoiceViewModel>), "InputInvoice" },
 
                 #endregion
 

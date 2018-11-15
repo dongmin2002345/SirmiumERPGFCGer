@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +12,9 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
     public class OutputInvoiceViewModel : BaseEntityViewModel, INotifyPropertyChanged
     {
         #region Code
-        private int _Code;
+        private string _Code;
 
-        public int Code
+        public string Code
         {
             get { return _Code; }
             set
@@ -27,22 +28,89 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         }
         #endregion
 
-        #region Construction
-        private string _Construction;
+        #region BusinessPartner
+        private BusinessPartnerViewModel _BusinessPartner;
 
-        public string Construction
+        public BusinessPartnerViewModel BusinessPartner
         {
-            get { return _Construction; }
+            get { return _BusinessPartner; }
             set
             {
-                if (_Construction != value)
+                if (_BusinessPartner != value)
                 {
-                    _Construction = value;
-                    NotifyPropertyChanged("Construction");
+                    _BusinessPartner = value;
+                    NotifyPropertyChanged("BusinessPartner");
                 }
             }
         }
         #endregion
+
+        #region Supplier
+        private string _Supplier;
+
+        public string Supplier
+        {
+            get { return _Supplier; }
+            set
+            {
+                if (_Supplier != value)
+                {
+                    _Supplier = value;
+                    NotifyPropertyChanged("Supplier");
+                }
+            }
+        }
+        #endregion
+
+        #region Address
+        private string _Address;
+
+        public string Address
+        {
+            get { return Address; }
+            set
+            {
+                if (_Address != value)
+                {
+                    _Address = value;
+                    NotifyPropertyChanged("Address");
+                }
+            }
+        }
+        #endregion
+
+        #region InvoiceNumber
+        private string _InvoiceNumber;
+
+        public string InvoiceNumber
+        {
+            get { return _InvoiceNumber; }
+            set
+            {
+                if (_InvoiceNumber != value)
+                {
+                    _InvoiceNumber = value;
+                    NotifyPropertyChanged("InvoiceNumber");
+                }
+            }
+        }
+        #endregion
+        //#region Construction
+        //private string _Construction;
+
+        //public string Construction
+        //{
+        //    get { return _Construction; }
+        //    set
+        //    {
+        //        if (_Construction != value)
+        //        {
+        //            _Construction = value;
+        //            NotifyPropertyChanged("Construction");
+        //        }
+        //    }
+        //}
+        //#endregion
 
         #region InvoiceDate
         private DateTime _InvoiceDate = DateTime.Now;
@@ -61,211 +129,347 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         }
         #endregion
 
-        #region BusinessPartner
-        private string _BusinessPartner;
+        //#region InvoiceType
+        //private string _InvoiceType;
 
-        public string BusinessPartner
+        //public string InvoiceType
+        //{
+        //    get { return _InvoiceType; }
+        //    set
+        //    {
+        //        if (_InvoiceType != value)
+        //        {
+        //            _InvoiceType = value;
+        //            NotifyPropertyChanged("InvoiceType");
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        #region AmountNet
+        private decimal _AmountNet;
+
+        public decimal AmountNet
         {
-            get { return _BusinessPartner; }
+            get { return _AmountNet; }
             set
             {
-                if (_BusinessPartner != value)
+                if (_AmountNet != value)
                 {
-                    _BusinessPartner = value;
-                    NotifyPropertyChanged("BusinessPartner");
+                    _AmountNet = value;
+                    NotifyPropertyChanged("AmountNet");
                 }
             }
         }
         #endregion
 
-        #region InvoiceType
-        private string _InvoiceType;
+        #region PdvPercent
+        private int _PdvPercent;
 
-        public string InvoiceType
+        public int PdvPercent
         {
-            get { return _InvoiceType; }
+            get { return _PdvPercent; }
             set
             {
-                if (_InvoiceType != value)
+                if (_PdvPercent != value)
                 {
-                    _InvoiceType = value;
-                    NotifyPropertyChanged("InvoiceType");
+                    _PdvPercent = value;
+                    NotifyPropertyChanged("PdvPercent");
                 }
             }
         }
         #endregion
 
-        #region Quantity
-        private decimal _Quantity;
+        #region Pdv
+        private decimal _Pdv;
 
-        public decimal Quantity
+        public decimal Pdv
         {
-            get { return _Quantity; }
+            get { return _Pdv; }
             set
             {
-                if (_Quantity != value)
+                if (_Pdv != value)
                 {
-                    _Quantity = value;
-                    NotifyPropertyChanged("Quantity");
+                    _Pdv = value;
+                    NotifyPropertyChanged("Pdv");
                 }
             }
         }
         #endregion
 
-        #region TrafficDate
-        private DateTime _TrafficDate = DateTime.Now;
+        #region AmountGross
+        private decimal _AmountGross;
 
-        public DateTime TrafficDate
+        public decimal AmountGross
         {
-            get { return _TrafficDate; }
+            get { return _AmountGross; }
             set
             {
-                if (_TrafficDate != value)
+                if (_AmountGross != value)
                 {
-                    _TrafficDate = value;
-                    NotifyPropertyChanged("TrafficDate");
+                    _AmountGross = value;
+                    NotifyPropertyChanged("AmountGross");
                 }
             }
         }
         #endregion
 
-        #region Price
-        private decimal _Price;
+        #region Currency
+        private decimal _Currency;
 
-        public decimal Price
+        public decimal Currency
         {
-            get { return _Price; }
+            get { return _Currency; }
             set
             {
-                if (_Price != value)
+                if (_Currency != value)
                 {
-                    _Price = value;
-                    NotifyPropertyChanged("Price");
+                    _Currency = value;
+                    NotifyPropertyChanged("Currency");
                 }
             }
         }
         #endregion
 
-        #region Rebate
-        private decimal _Rebate;
+        #region DateOfPayment
+        private DateTime _DateOfPayment;
 
-        public decimal Rebate
+        public DateTime DateOfPayment
         {
-            get { return _Rebate; }
+            get { return _DateOfPayment; }
             set
             {
-                if (_Rebate != value)
+                if (_DateOfPayment != value)
                 {
-                    _Rebate = value;
-                    NotifyPropertyChanged("Rebate");
+                    _DateOfPayment = value;
+                    NotifyPropertyChanged("DateOfPayment");
                 }
             }
         }
         #endregion
 
-        #region RebateValue
-        private decimal _RebateValue;
+        #region Status
+        private string _Status;
 
-        public decimal RebateValue
+        public string Status
         {
-            get { return _RebateValue; }
+            get { return _Status; }
             set
             {
-                if (_RebateValue != value)
+                if (_Status != value)
                 {
-                    _RebateValue = value;
-                    NotifyPropertyChanged("RebateValue");
+                    _Status = value;
+                    NotifyPropertyChanged("Status");
                 }
             }
         }
         #endregion
 
-        #region Base
-        private decimal _Base;
+        #region StatusDate
+        private DateTime _StatusDate;
 
-        public decimal Base
+        public DateTime StatusDate
         {
-            get { return _Base; }
+            get { return _StatusDate; }
             set
             {
-                if (_Base != value)
+                if (_StatusDate != value)
                 {
-                    _Base = value;
-                    NotifyPropertyChanged("Base");
+                    _StatusDate = value;
+                    NotifyPropertyChanged("StatusDate");
                 }
             }
         }
         #endregion
 
-        #region PDV
-        private decimal _PDV;
+        #region Description
+        private string _Description;
 
-        public decimal PDV
+        public string Description
         {
-            get { return _PDV; }
+            get { return _Description; }
             set
             {
-                if (_PDV != value)
+                if (_Description != value)
                 {
-                    _PDV = value;
-                    NotifyPropertyChanged("PDV");
+                    _Description = value;
+                    NotifyPropertyChanged("Description");
                 }
             }
         }
         #endregion
 
-        #region Total
-        private decimal _Total;
+        #region IsSynced
+        private bool _IsSynced;
 
-        public decimal Total
+        public bool IsSynced
         {
-            get { return _Total; }
+            get { return _IsSynced; }
             set
             {
-                if (_Total != value)
+                if (_IsSynced != value)
                 {
-                    _Total = value;
-                    NotifyPropertyChanged("Total");
+                    _IsSynced = value;
+                    NotifyPropertyChanged("IsSynced");
                 }
             }
         }
         #endregion
+
+        //#region TrafficDate
+        //private DateTime _TrafficDate = DateTime.Now;
+
+        //public DateTime TrafficDate
+        //{
+        //    get { return _TrafficDate; }
+        //    set
+        //    {
+        //        if (_TrafficDate != value)
+        //        {
+        //            _TrafficDate = value;
+        //            NotifyPropertyChanged("TrafficDate");
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        //#region Price
+        //private decimal _Price;
+
+        //public decimal Price
+        //{
+        //    get { return _Price; }
+        //    set
+        //    {
+        //        if (_Price != value)
+        //        {
+        //            _Price = value;
+        //            NotifyPropertyChanged("Price");
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        //#region Rebate
+        //private decimal _Rebate;
+
+        //public decimal Rebate
+        //{
+        //    get { return _Rebate; }
+        //    set
+        //    {
+        //        if (_Rebate != value)
+        //        {
+        //            _Rebate = value;
+        //            NotifyPropertyChanged("Rebate");
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        //#region RebateValue
+        //private decimal _RebateValue;
+
+        //public decimal RebateValue
+        //{
+        //    get { return _RebateValue; }
+        //    set
+        //    {
+        //        if (_RebateValue != value)
+        //        {
+        //            _RebateValue = value;
+        //            NotifyPropertyChanged("RebateValue");
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        //#region Base
+        //private decimal _Base;
+
+        //public decimal Base
+        //{
+        //    get { return _Base; }
+        //    set
+        //    {
+        //        if (_Base != value)
+        //        {
+        //            _Base = value;
+        //            NotifyPropertyChanged("Base");
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        //#region PDV
+        //private decimal _PDV;
+
+        //public decimal PDV
+        //{
+        //    get { return _PDV; }
+        //    set
+        //    {
+        //        if (_PDV != value)
+        //        {
+        //            _PDV = value;
+        //            NotifyPropertyChanged("PDV");
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        //#region Total
+        //private decimal _Total;
+
+        //public decimal Total
+        //{
+        //    get { return _Total; }
+        //    set
+        //    {
+        //        if (_Total != value)
+        //        {
+        //            _Total = value;
+        //            NotifyPropertyChanged("Total");
+        //        }
+        //    }
+        //}
+        //#endregion
 
         #region Search
 
-        #region SearchBy_Code
-        private string _SearchBy_Code;
+        #region SearchBy_Supplier
+        private string _SearchBy_Supplier;
 
-        public string SearchBy_Code
+        public string SearchBy_Supplier
         {
-            get { return _SearchBy_Code; }
+            get { return _SearchBy_Supplier; }
             set
             {
-                if (_SearchBy_Code != value)
+                if (_SearchBy_Supplier != value)
                 {
-                    _SearchBy_Code = value;
-                    NotifyPropertyChanged("SearchBy_Code");
+                    _SearchBy_Supplier = value;
+                    NotifyPropertyChanged("SearchBy_Supplier");
                 }
             }
         }
         #endregion
 
-        #region SearchBy_Construction
-        private string _SearchBy_Construction;
+        //#region SearchBy_Construction
+        //private string _SearchBy_Construction;
 
-        public string SearchBy_Construction
-        {
-            get { return _SearchBy_Construction; }
-            set
-            {
-                if (_SearchBy_Construction != value)
-                {
-                    _SearchBy_Construction = value;
-                    NotifyPropertyChanged("SearchBy_Construction");
-                }
-            }
-        }
-        #endregion
+        //public string SearchBy_Construction
+        //{
+        //    get { return _SearchBy_Construction; }
+        //    set
+        //    {
+        //        if (_SearchBy_Construction != value)
+        //        {
+        //            _SearchBy_Construction = value;
+        //            NotifyPropertyChanged("SearchBy_Construction");
+        //        }
+        //    }
+        //}
+        //#endregion
 
         #region SearchBy_BusinessPartner
         private string _SearchBy_BusinessPartner;
@@ -284,35 +488,86 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         }
         #endregion
 
-        #region SearchBy_DateFrom
-        private DateTime? _SearchBy_DateFrom;
+        #region SearchBy_InvoiceNumber
+        private string _SearchBy_InvoiceNumber;
 
-        public DateTime? SearchBy_DateFrom
+        public string SearchBy_InvoiceNumber
         {
-            get { return _SearchBy_DateFrom; }
+            get { return _SearchBy_InvoiceNumber; }
             set
             {
-                if (_SearchBy_DateFrom != value)
+                if (_SearchBy_InvoiceNumber != value)
                 {
-                    _SearchBy_DateFrom = value;
-                    NotifyPropertyChanged("SearchBy_DateFrom");
+                    _SearchBy_InvoiceNumber = value;
+                    NotifyPropertyChanged("SearchBy_InvoiceNumber");
+                }
+            }
+        }
+        #endregion
+
+        #region SearchBy_DateFrom
+        private DateTime? _SearchBy_InvoiceDateFrom;
+
+        public DateTime? SearchBy_InvoiceDateFrom
+        {
+            get { return _SearchBy_InvoiceDateFrom; }
+            set
+            {
+                if (_SearchBy_InvoiceDateFrom != value)
+                {
+                    _SearchBy_InvoiceDateFrom = value;
+                    NotifyPropertyChanged("SearchBy_InvoiceDateFrom");
                 }
             }
         }
         #endregion
 
         #region SearchBy_DateTo
-        private DateTime? _SearchBy_DateTo;
+        private DateTime? _SearchBy_InvoiceDateTo;
 
-        public DateTime? SearchBy_DateTo
+        public DateTime? SearchBy_InvoiceDateTo
         {
-            get { return _SearchBy_DateTo; }
+            get { return _SearchBy_InvoiceDateTo; }
             set
             {
-                if (_SearchBy_DateTo != value)
+                if (_SearchBy_InvoiceDateTo != value)
                 {
-                    _SearchBy_DateTo = value;
-                    NotifyPropertyChanged("SearchBy_DateTo");
+                    _SearchBy_InvoiceDateTo = value;
+                    NotifyPropertyChanged("SearchBy_InvoiceDateTo");
+                }
+            }
+        }
+        #endregion
+
+        #region SearchBy_DateFrom
+        private DateTime? _SearchBy_DateOfPaymentFrom;
+
+        public DateTime? SearchBy_DateOfPaymentFrom
+        {
+            get { return _SearchBy_DateOfPaymentFrom; }
+            set
+            {
+                if (_SearchBy_DateOfPaymentFrom != value)
+                {
+                    _SearchBy_DateOfPaymentFrom = value;
+                    NotifyPropertyChanged("SearchBy_DateOfPaymentFrom");
+                }
+            }
+        }
+        #endregion
+
+        #region SearchBy_DateTo
+        private DateTime? _SearchBy_DateOfPaymentTo;
+
+        public DateTime? SearchBy_DateOfPaymentTo
+        {
+            get { return _SearchBy_DateOfPaymentTo; }
+            set
+            {
+                if (_SearchBy_DateOfPaymentTo != value)
+                {
+                    _SearchBy_DateOfPaymentTo = value;
+                    NotifyPropertyChanged("SearchBy_DateOfPaymentTo");
                 }
             }
         }

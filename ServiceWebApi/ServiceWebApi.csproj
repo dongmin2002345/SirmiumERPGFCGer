@@ -50,6 +50,7 @@
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerPhoneService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerTypeService.cs" />
+    <Compile Include="Implementations\Common\InputInvoices\InputInvoiceService.cs" />
     <Compile Include="Implementations\Common\Locations\CityService.cs" />
     <Compile Include="Implementations\Common\Companies\CompanyService.cs" />
     <Compile Include="Implementations\Common\Identity\AuthenticationService.cs" />

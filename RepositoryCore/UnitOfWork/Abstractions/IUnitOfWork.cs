@@ -31,8 +31,9 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IBusinessPartnerBusinessPartnerTypeRepository GetBusinessPartnerBusinessPartnerTypeRepository();
 
         IOutputInvoiceRepository GetOutputInvoiceRepository();
+		IInputInvoiceRepository GetInputInvoiceRepository();
 
-        ICityRepository GetCityRepository();
+		ICityRepository GetCityRepository();
         IRegionRepository GetRegionRepository();
         IMunicipalityRepository GetMunicipalityRepository();
         ICountryRepository GetCountryRepository();
