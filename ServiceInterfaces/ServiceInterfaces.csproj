@@ -51,6 +51,7 @@
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerOrganizationUnitService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerPhoneService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerService.cs" />
+    <Compile Include="Abstractions\Common\InputInvoices\IInputInvoiceService.cs" />
     <Compile Include="Abstractions\Common\Locations\ICityService.cs" />
     <Compile Include="Abstractions\Common\Companies\ICompanyService.cs" />
     <Compile Include="Abstractions\Common\Identity\IAuthenticationService.cs" />
@@ -108,6 +109,9 @@
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerPhoneRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerTypeRequest.cs" />
+    <Compile Include="Messages\Common\InputInvoices\InputInvoiceListResponse.cs" />
+    <Compile Include="Messages\Common\InputInvoices\InputInvoiceResponse.cs" />
+    <Compile Include="Messages\Common\InputInvoices\SyncInputInvoiceRequest.cs" />
     <Compile Include="Messages\Common\Locations\CityListResponse.cs" />
     <Compile Include="Messages\Common\Locations\CityResponse.cs" />
     <Compile Include="Messages\Common\Locations\MunicipalityListResponse.cs" />
@@ -189,6 +193,7 @@
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerPhoneViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerTypeViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerViewModel.cs" />
+    <Compile Include="ViewModels\Common\InputInvoices\InputInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\CityViewModel.cs" />
     <Compile Include="ViewModels\Common\Companies\CompanyViewModel.cs" />
     <Compile Include="ViewModels\Common\Identity\AuthenticationViewModel.cs" />
