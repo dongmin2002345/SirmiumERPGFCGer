@@ -19,35 +19,13 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
             this.unitOfWork = unitOfWork;
         }
 
-        public OutputInvoiceListResponse GetOutputInvoicesByPage(int currentPage = 1, int itemsPerPage = 50, string filterString = "")
+        public OutputInvoiceListResponse GetOutputInvoices(int companyId)
         {
             OutputInvoiceListResponse response = new OutputInvoiceListResponse();
             try
             {
-                response.OutputInvoicesByPage = unitOfWork.GetOutputInvoiceRepository()
-                    .GetOutputInvoicesByPages(currentPage, itemsPerPage, filterString)
-                    .ConvertToOutputInvoiceViewModelList();
-                response.TotalItems = unitOfWork.GetOutputInvoiceRepository().GetOutputInvoicesCount(filterString);
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.OutputInvoicesByPage = new List<OutputInvoiceViewModel>();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public OutputInvoiceListResponse GetOutputInvoicesForPopup(string filterString)
-        {
-            OutputInvoiceListResponse response = new OutputInvoiceListResponse();
-            try
-            {
-                response.OutputInvoices = unitOfWork.GetOutputInvoiceRepository()
-                    .GetOutputInvoicesForPopup(filterString)
-                    .ConvertToOutputInvoiceViewModelList();
+                response.OutputInvoices = unitOfWork.GetOutputInvoiceRepository().GetOutputInvoices(companyId)
+               .ConvertToOutputInvoiceViewModelList();
                 response.Success = true;
             }
             catch (Exception ex)
@@ -60,18 +38,28 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
             return response;
         }
 
-        public OutputInvoiceResponse GetOutputInvoice(int id)
+        public OutputInvoiceListResponse GetOutputInvoicesNewerThan(int companyId, DateTime? lastUpdateTime)
         {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
+            OutputInvoiceListResponse response = new OutputInvoiceListResponse();
             try
             {
-                response.OutputInvoice = unitOfWork.GetOutputInvoiceRepository().GetOutputInvoice(id)
-                    .ConvertToOutputInvoiceViewModel();
+                if (lastUpdateTime != null)
+                {
+                    response.OutputInvoices = unitOfWork.GetOutputInvoiceRepository()
+                        .GetOutputInvoicesNewerThan(companyId, (DateTime)lastUpdateTime)
+                        .ConvertToOutputInvoiceViewModelList();
+                }
+                else
+                {
+                    response.OutputInvoices = unitOfWork.GetOutputInvoiceRepository()
+                        .GetOutputInvoices(companyId)
+                        .ConvertToOutputInvoiceViewModelList();
+                }
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.OutputInvoice = new OutputInvoiceViewModel();
+                response.OutputInvoices = new List<OutputInvoiceViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }
@@ -79,42 +67,14 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
             return response;
         }
 
-        public OutputInvoiceResponse GetNewCodeValue()
+        public OutputInvoiceResponse Create(OutputInvoiceViewModel re)
         {
             OutputInvoiceResponse response = new OutputInvoiceResponse();
             try
             {
-                response.OutputInvoiceCode = unitOfWork.GetOutputInvoiceRepository().GetNewCodeValue();
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.OutputInvoice = new OutputInvoiceViewModel();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public OutputInvoiceResponse Create(OutputInvoiceViewModel oi)
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            try
-            {
-                //List<OutputInvoiceItem> outputInvoiceItems = oi.ConvertToOutputInvoice().InvoiceItems;
-                //oi.SumOfBase = outputInvoiceItems.Sum(x => x.Base);
-                //oi.SumOfPdvValue = outputInvoiceItems.Sum(x => x.Pdv);
-                //oi.SumOfTotalValue = outputInvoiceItems.Sum(x => x.TotalPrice);
-                //oi.OutputInvoiceSubItems = null;
-
-                OutputInvoice addedOutPutInvoice = unitOfWork.GetOutputInvoiceRepository().Create(oi.ConvertToOutputInvoice());
-
-                //unitOfWork.GetOutputInvoiceItemRepository().UpdateOutputInvoiceItems(outputInvoiceItems ?? new List<OutputInvoiceItem>(), addedOutPutInvoice);
-
+                OutputInvoice addedOutputInvoice = unitOfWork.GetOutputInvoiceRepository().Create(re.ConvertToOutputInvoice());
                 unitOfWork.Save();
-
-                response.OutputInvoice = addedOutPutInvoice.ConvertToOutputInvoiceViewModel();
+                response.OutputInvoice = addedOutputInvoice.ConvertToOutputInvoiceViewModel();
                 response.Success = true;
             }
             catch (Exception ex)
@@ -127,62 +87,12 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
             return response;
         }
 
-        public OutputInvoiceResponse Update(OutputInvoiceViewModel oi)
+        public OutputInvoiceResponse Delete(Guid identifier)
         {
             OutputInvoiceResponse response = new OutputInvoiceResponse();
             try
             {
-                //List<OutputInvoiceItem> outputInvoiceItems = oi.ConvertToOutputInvoice().InvoiceItems;
-                //oi.SumOfBase = outputInvoiceItems.Sum(x => x.Base);
-                //oi.SumOfPdvValue = outputInvoiceItems.Sum(x => x.Pdv);
-                //oi.SumOfTotalValue = outputInvoiceItems.Sum(x => x.TotalPrice);
-                //oi.OutputInvoiceSubItems = null;
-
-                OutputInvoice updatedOutputInvoice = unitOfWork.GetOutputInvoiceRepository().Update(oi.ConvertToOutputInvoice());
-
-                //unitOfWork.GetOutputInvoiceItemRepository().UpdateOutputInvoiceItems(outputInvoiceItems ?? new List<OutputInvoiceItem>(), updatedOutputInvoice);
-
-                unitOfWork.Save();
-
-                response.OutputInvoice = updatedOutputInvoice.ConvertToOutputInvoiceViewModel();
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.OutputInvoice = new OutputInvoiceViewModel();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public OutputInvoiceResponse SetInvoiceLock(int id, bool locked)
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            try
-            {
-                response.OutputInvoice = unitOfWork.GetOutputInvoiceRepository().SetInvoiceLock(id, locked)
-                    .ConvertToOutputInvoiceViewModel();
-                unitOfWork.Save();
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.OutputInvoice = new OutputInvoiceViewModel();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public OutputInvoiceResponse Delete(int id)
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            try
-            {
-                OutputInvoice deletedOutputInvoice = unitOfWork.GetOutputInvoiceRepository().Delete(id);
+                OutputInvoice deletedOutputInvoice = unitOfWork.GetOutputInvoiceRepository().Delete(identifier);
 
                 unitOfWork.Save();
 
@@ -199,27 +109,239 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
             return response;
         }
 
-        public OutputInvoiceResponse CancelOutputInvoice(int id)
+        public OutputInvoiceListResponse Sync(SyncOutputInvoiceRequest request)
         {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
+            OutputInvoiceListResponse response = new OutputInvoiceListResponse();
             try
             {
-                OutputInvoice outputInvoice = unitOfWork.GetOutputInvoiceRepository().CancelOutputInvoice(id);
-                if (outputInvoice != null && outputInvoice.Active != false)
-                    unitOfWork.Save();
+                response.OutputInvoices = new List<OutputInvoiceViewModel>();
 
-                response.OutputInvoice = outputInvoice.ConvertToOutputInvoiceViewModel();
+                if (request.LastUpdatedAt != null)
+                {
+                    response.OutputInvoices.AddRange(unitOfWork.GetOutputInvoiceRepository()
+                        .GetOutputInvoicesNewerThan(request.CompanyId, (DateTime)request.LastUpdatedAt)
+                        ?.ConvertToOutputInvoiceViewModelList() ?? new List<OutputInvoiceViewModel>());
+                }
+                else
+                {
+                    response.OutputInvoices.AddRange(unitOfWork.GetOutputInvoiceRepository()
+                        .GetOutputInvoices(request.CompanyId)
+                        ?.ConvertToOutputInvoiceViewModelList() ?? new List<OutputInvoiceViewModel>());
+                }
+
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.OutputInvoice = new OutputInvoiceViewModel();
+                response.OutputInvoices = new List<OutputInvoiceViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }
 
             return response;
         }
+
+        //public OutputInvoiceListResponse GetOutputInvoicesByPage(int currentPage = 1, int itemsPerPage = 50, string filterString = "")
+        //{
+        //    OutputInvoiceListResponse response = new OutputInvoiceListResponse();
+        //    try
+        //    {
+        //        response.OutputInvoicesByPage = unitOfWork.GetOutputInvoiceRepository()
+        //            .GetOutputInvoicesByPages(currentPage, itemsPerPage, filterString)
+        //            .ConvertToOutputInvoiceViewModelList();
+        //        response.TotalItems = unitOfWork.GetOutputInvoiceRepository().GetOutputInvoicesCount(filterString);
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoicesByPage = new List<OutputInvoiceViewModel>();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceListResponse GetOutputInvoicesForPopup(string filterString)
+        //{
+        //    OutputInvoiceListResponse response = new OutputInvoiceListResponse();
+        //    try
+        //    {
+        //        response.OutputInvoices = unitOfWork.GetOutputInvoiceRepository()
+        //            .GetOutputInvoicesForPopup(filterString)
+        //            .ConvertToOutputInvoiceViewModelList();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoices = new List<OutputInvoiceViewModel>();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceResponse GetOutputInvoice(int id)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response.OutputInvoice = unitOfWork.GetOutputInvoiceRepository().GetOutputInvoice(id)
+        //            .ConvertToOutputInvoiceViewModel();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoice = new OutputInvoiceViewModel();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceResponse GetNewCodeValue()
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response.OutputInvoiceCode = unitOfWork.GetOutputInvoiceRepository().GetNewCodeValue();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoice = new OutputInvoiceViewModel();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceResponse Create(OutputInvoiceViewModel oi)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        //List<OutputInvoiceItem> outputInvoiceItems = oi.ConvertToOutputInvoice().InvoiceItems;
+        //        //oi.SumOfBase = outputInvoiceItems.Sum(x => x.Base);
+        //        //oi.SumOfPdvValue = outputInvoiceItems.Sum(x => x.Pdv);
+        //        //oi.SumOfTotalValue = outputInvoiceItems.Sum(x => x.TotalPrice);
+        //        //oi.OutputInvoiceSubItems = null;
+
+        //        OutputInvoice addedOutPutInvoice = unitOfWork.GetOutputInvoiceRepository().Create(oi.ConvertToOutputInvoice());
+
+        //        //unitOfWork.GetOutputInvoiceItemRepository().UpdateOutputInvoiceItems(outputInvoiceItems ?? new List<OutputInvoiceItem>(), addedOutPutInvoice);
+
+        //        unitOfWork.Save();
+
+        //        response.OutputInvoice = addedOutPutInvoice.ConvertToOutputInvoiceViewModel();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoice = new OutputInvoiceViewModel();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceResponse Update(OutputInvoiceViewModel oi)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        //List<OutputInvoiceItem> outputInvoiceItems = oi.ConvertToOutputInvoice().InvoiceItems;
+        //        //oi.SumOfBase = outputInvoiceItems.Sum(x => x.Base);
+        //        //oi.SumOfPdvValue = outputInvoiceItems.Sum(x => x.Pdv);
+        //        //oi.SumOfTotalValue = outputInvoiceItems.Sum(x => x.TotalPrice);
+        //        //oi.OutputInvoiceSubItems = null;
+
+        //        OutputInvoice updatedOutputInvoice = unitOfWork.GetOutputInvoiceRepository().Update(oi.ConvertToOutputInvoice());
+
+        //        //unitOfWork.GetOutputInvoiceItemRepository().UpdateOutputInvoiceItems(outputInvoiceItems ?? new List<OutputInvoiceItem>(), updatedOutputInvoice);
+
+        //        unitOfWork.Save();
+
+        //        response.OutputInvoice = updatedOutputInvoice.ConvertToOutputInvoiceViewModel();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoice = new OutputInvoiceViewModel();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceResponse SetInvoiceLock(int id, bool locked)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response.OutputInvoice = unitOfWork.GetOutputInvoiceRepository().SetInvoiceLock(id, locked)
+        //            .ConvertToOutputInvoiceViewModel();
+        //        unitOfWork.Save();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoice = new OutputInvoiceViewModel();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceResponse Delete(int id)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        OutputInvoice deletedOutputInvoice = unitOfWork.GetOutputInvoiceRepository().Delete(id);
+
+        //        unitOfWork.Save();
+
+        //        response.OutputInvoice = deletedOutputInvoice.ConvertToOutputInvoiceViewModel();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoice = new OutputInvoiceViewModel();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
+
+        //public OutputInvoiceResponse CancelOutputInvoice(int id)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        OutputInvoice outputInvoice = unitOfWork.GetOutputInvoiceRepository().CancelOutputInvoice(id);
+        //        if (outputInvoice != null && outputInvoice.Active != false)
+        //            unitOfWork.Save();
+
+        //        response.OutputInvoice = outputInvoice.ConvertToOutputInvoiceViewModel();
+        //        response.Success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.OutputInvoice = new OutputInvoiceViewModel();
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //    }
+
+        //    return response;
+        //}
     }
 }
 

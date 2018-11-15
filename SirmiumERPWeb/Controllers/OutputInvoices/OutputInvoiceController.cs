@@ -23,12 +23,12 @@ namespace SirmiumERPWeb.Controllers.OutputInvoices
         }
 
         [HttpGet]
-        public JsonResult GetOutputInvoicesByPage(int currentPage = 1, int itemsPerPage = 50, string filterString = "")
+        public JsonResult GetOutputInvoices(int companyId)
         {
             OutputInvoiceListResponse response = new OutputInvoiceListResponse();
             try
             {
-                response = outputInvoiceService.GetOutputInvoicesByPage(currentPage, itemsPerPage, filterString);
+                response = outputInvoiceService.GetOutputInvoices(companyId);
             }
             catch (Exception ex)
             {
@@ -40,71 +40,19 @@ namespace SirmiumERPWeb.Controllers.OutputInvoices
         }
 
         [HttpGet]
-        public JsonResult GetOutputInvoicesForPopup(string filterString)
+        public JsonResult GetOutputInvoicesNewerThan(int companyId, DateTime? lastUpdateTime)
         {
-            OutputInvoiceListResponse response = new OutputInvoiceListResponse();
+            OutputInvoiceListResponse response;
             try
             {
-                response = outputInvoiceService.GetOutputInvoicesForPopup(filterString);
+                response = outputInvoiceService.GetOutputInvoicesNewerThan(companyId, lastUpdateTime);
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult GetOutputInvoice(int id)
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            try
-            {
-                response = outputInvoiceService.GetOutputInvoice(id);
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult GetNewCodeValue()
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            try
-            {
-                response = outputInvoiceService.GetNewCodeValue();
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
+                response = null;
                 Console.WriteLine(ex.Message);
             }
             return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult SetInvoiceLock(int id, bool locked)
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            try
-            {
-                response = outputInvoiceService.SetInvoiceLock(id, locked);
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
         [HttpPost]
@@ -126,12 +74,12 @@ namespace SirmiumERPWeb.Controllers.OutputInvoices
         }
 
         [HttpPost]
-        public JsonResult Update([FromBody] OutputInvoiceViewModel c)
+        public JsonResult Delete([FromBody]OutputInvoiceViewModel outputInvoice)
         {
             OutputInvoiceResponse response = new OutputInvoiceResponse();
             try
             {
-                response = this.outputInvoiceService.Update(c);
+                response = this.outputInvoiceService.Delete(outputInvoice.Identifier);
             }
             catch (Exception ex)
             {
@@ -144,60 +92,197 @@ namespace SirmiumERPWeb.Controllers.OutputInvoices
         }
 
         [HttpPost]
-        public JsonResult Delete([FromBody]OutputInvoiceViewModel inOI)
+        public JsonResult Sync([FromBody] SyncOutputInvoiceRequest request)
         {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
+            OutputInvoiceListResponse response = new OutputInvoiceListResponse();
             try
             {
-                if (inOI != null && inOI.Id > 0)
-                {
-                    response = this.outputInvoiceService.Delete(inOI.Id);
-                }
-                else
-                {
-                    response.Success = false;
-                    string errorMessage = "Prilikom brisanja izlaznog racuna id nije prosledjen.";
-                    response.Message = errorMessage;
-                    Console.WriteLine(errorMessage);
-                }
+                response = this.outputInvoiceService.Sync(request);
             }
             catch (Exception ex)
             {
                 response.Success = false;
                 response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
             }
 
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
+        //[HttpGet]
+        //public JsonResult GetOutputInvoicesByPage(int currentPage = 1, int itemsPerPage = 50, string filterString = "")
+        //{
+        //    OutputInvoiceListResponse response = new OutputInvoiceListResponse();
+        //    try
+        //    {
+        //        response = outputInvoiceService.GetOutputInvoicesByPage(currentPage, itemsPerPage, filterString);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
 
-        [HttpPost]
-        public JsonResult CancelOutputInvoice([FromBody]OutputInvoiceViewModel inOI)
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            try
-            {
-                if (inOI != null && inOI.Id > 0)
-                {
-                    response = this.outputInvoiceService.CancelOutputInvoice(inOI.Id);
-                }
-                else
-                {
-                    response.Success = false;
-                    string errorMessage = "Prilikom storniranja izlaznog racuna id nije prosledjen.";
-                    response.Message = errorMessage;
-                    Console.WriteLine(errorMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
+        //[HttpGet]
+        //public JsonResult GetOutputInvoicesForPopup(string filterString)
+        //{
+        //    OutputInvoiceListResponse response = new OutputInvoiceListResponse();
+        //    try
+        //    {
+        //        response = outputInvoiceService.GetOutputInvoicesForPopup(filterString);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
 
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
+        //[HttpGet]
+        //public JsonResult GetOutputInvoice(int id)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response = outputInvoiceService.GetOutputInvoice(id);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
+
+        //[HttpGet]
+        //public JsonResult GetNewCodeValue()
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response = outputInvoiceService.GetNewCodeValue();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
+
+        //[HttpGet]
+        //public JsonResult SetInvoiceLock(int id, bool locked)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response = outputInvoiceService.SetInvoiceLock(id, locked);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
+
+        //[HttpPost]
+        //public JsonResult Create([FromBody] OutputInvoiceViewModel c)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response = this.outputInvoiceService.Create(c);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
+
+        //[HttpPost]
+        //public JsonResult Update([FromBody] OutputInvoiceViewModel c)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        response = this.outputInvoiceService.Update(c);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
+
+        //[HttpPost]
+        //public JsonResult Delete([FromBody]OutputInvoiceViewModel inOI)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        if (inOI != null && inOI.Id > 0)
+        //        {
+        //            response = this.outputInvoiceService.Delete(inOI.Id);
+        //        }
+        //        else
+        //        {
+        //            response.Success = false;
+        //            string errorMessage = "Prilikom brisanja izlaznog racuna id nije prosledjen.";
+        //            response.Message = errorMessage;
+        //            Console.WriteLine(errorMessage);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
+
+        //[HttpPost]
+        //public JsonResult CancelOutputInvoice([FromBody]OutputInvoiceViewModel inOI)
+        //{
+        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        //    try
+        //    {
+        //        if (inOI != null && inOI.Id > 0)
+        //        {
+        //            response = this.outputInvoiceService.CancelOutputInvoice(inOI.Id);
+        //        }
+        //        else
+        //        {
+        //            response.Success = false;
+        //            string errorMessage = "Prilikom storniranja izlaznog racuna id nije prosledjen.";
+        //            response.Message = errorMessage;
+        //            Console.WriteLine(errorMessage);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Message;
+        //        Console.WriteLine(ex.Message);
+        //    }
+
+        //    return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        //}
 
     }
 }

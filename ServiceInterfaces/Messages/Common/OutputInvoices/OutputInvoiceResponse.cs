@@ -11,6 +11,6 @@ namespace ServiceInterfaces.Messages.Common.OutputInvoices
     public class OutputInvoiceResponse : BaseResponse
     {
         public OutputInvoiceViewModel OutputInvoice { get; set; }
-        public int OutputInvoiceCode { get; set; }
+        //public int OutputInvoiceCode { get; set; }
     }
 }

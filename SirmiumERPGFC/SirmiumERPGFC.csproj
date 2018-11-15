@@ -209,6 +209,7 @@
     <Compile Include="Repository\Locations\CountrySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
+    <Compile Include="Repository\OutputInvoices\OutputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />

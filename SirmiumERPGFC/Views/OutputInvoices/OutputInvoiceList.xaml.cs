@@ -193,20 +193,20 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             if (showDialog != null && showDialog.Value)
             {
                 // Delete business partner
-                OutputInvoiceResponse response = outputInvoiceService.Delete(CurrentOutputInvoice.Id);
+                //OutputInvoiceResponse response = outputInvoiceService.Delete(CurrentOutputInvoice.Id);
 
-                // Display data and notifications
-                if (response.Success)
-                {
-                    MainWindow.SuccessMessage = ("Podaci su uspešno obrisani!");
-                    Thread displayThread = new Thread(() => PopulateData());
-                    displayThread.IsBackground = true;
-                    displayThread.Start();
-                }
-                else
-                {
-                    MainWindow.ErrorMessage = (response.Message);
-                }
+                //// Display data and notifications
+                //if (response.Success)
+                //{
+                //    MainWindow.SuccessMessage = ("Podaci su uspešno obrisani!");
+                //    Thread displayThread = new Thread(() => PopulateData());
+                //    displayThread.IsBackground = true;
+                //    displayThread.Start();
+                //}
+                //else
+                //{
+                //    MainWindow.ErrorMessage = (response.Message);
+                //}
             }
 
             // Remove blur effects
@@ -237,24 +237,24 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 });
 
 
-            var response = outputInvoiceService.GetOutputInvoicesByPage(currentPage, itemsPerPage, SearchObjectJson);
-            if (response.Success)
-            {
-                OutputInvoicesFromDB = new ObservableCollection<OutputInvoiceViewModel>(response?.OutputInvoicesByPage ?? new List<OutputInvoiceViewModel>());
-                totalItems = response?.TotalItems ?? 0;
+           // var response = outputInvoiceService.GetOutputInvoicesByPage(currentPage, itemsPerPage, SearchObjectJson);
+            //if (response.Success)
+            //{
+            //    OutputInvoicesFromDB = new ObservableCollection<OutputInvoiceViewModel>(response?.OutputInvoicesByPage ?? new List<OutputInvoiceViewModel>());
+            //    totalItems = response?.TotalItems ?? 0;
 
-                int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
-                int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
+            //    int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+            //    int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
 
-                PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
-            }
-            else
-            {
-                OutputInvoicesFromDB = new ObservableCollection<OutputInvoiceViewModel>(new List<OutputInvoiceViewModel>());
-                MainWindow.ErrorMessage = response.Message;
-                totalItems = 0;
-            }
-            OutputInvoicesLoading = false;
+            //    PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+            //}
+            //else
+            //{
+            //    OutputInvoicesFromDB = new ObservableCollection<OutputInvoiceViewModel>(new List<OutputInvoiceViewModel>());
+            //    MainWindow.ErrorMessage = response.Message;
+            //    totalItems = 0;
+            //}
+            //OutputInvoicesLoading = false;
         }
         #endregion
 

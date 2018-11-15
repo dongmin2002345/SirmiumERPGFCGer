@@ -10,19 +10,27 @@ namespace ServiceInterfaces.Abstractions.Common.OutputInvoices
 {
     public interface IOutputInvoiceService
     {
-        OutputInvoiceListResponse GetOutputInvoicesByPage(int currentPage = 1, int itemsPerPage = 50, string filterString = "");
+        OutputInvoiceListResponse GetOutputInvoices(int companyId);
+        OutputInvoiceListResponse GetOutputInvoicesNewerThan(int companyId, DateTime? lastUpdateTime);
 
-        OutputInvoiceListResponse GetOutputInvoicesForPopup(string filterString);
+        OutputInvoiceResponse Create(OutputInvoiceViewModel outputInvoice);
+        OutputInvoiceResponse Delete(Guid identifier);
 
-        OutputInvoiceResponse GetOutputInvoice(int id);
+        OutputInvoiceListResponse Sync(SyncOutputInvoiceRequest request);
 
-        OutputInvoiceResponse GetNewCodeValue();
+        //OutputInvoiceListResponse GetOutputInvoicesByPage(int currentPage = 1, int itemsPerPage = 50, string filterString = "");
 
-        OutputInvoiceResponse CancelOutputInvoice(int id);
+        //OutputInvoiceListResponse GetOutputInvoicesForPopup(string filterString);
 
-        OutputInvoiceResponse Create(OutputInvoiceViewModel outputinvoice);
-        OutputInvoiceResponse Update(OutputInvoiceViewModel outputinvoice);
-        OutputInvoiceResponse SetInvoiceLock(int id, bool locked);
-        OutputInvoiceResponse Delete(int id);
+        //OutputInvoiceResponse GetOutputInvoice(int id);
+
+        //OutputInvoiceResponse GetNewCodeValue();
+
+        //OutputInvoiceResponse CancelOutputInvoice(int id);
+
+        //OutputInvoiceResponse Create(OutputInvoiceViewModel outputinvoice);
+        //OutputInvoiceResponse Update(OutputInvoiceViewModel outputinvoice);
+        //OutputInvoiceResponse SetInvoiceLock(int id, bool locked);
+        //OutputInvoiceResponse Delete(int id);
     }
 }

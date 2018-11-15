@@ -100,8 +100,8 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             CurrentOutputInvoice = OutputInvoiceViewModel;
 
-            if (CurrentOutputInvoice.Code <= 0)
-                CurrentOutputInvoice.Code = outputInvoiceService.GetNewCodeValue().OutputInvoiceCode;
+            //if (CurrentOutputInvoice.Code <= 0)
+            //    CurrentOutputInvoice.Code = outputInvoiceService.GetNewCodeValue().OutputInvoiceCode;
 
             // Add handler for keyboard shortcuts
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
@@ -154,18 +154,18 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             //        return;
             //    }
             //}
-            if (CurrentOutputInvoice.Id > 0)
-                response = outputInvoiceService.Update(CurrentOutputInvoice);
-            else
-                response = outputInvoiceService.Create(CurrentOutputInvoice);
+            //if (CurrentOutputInvoice.Id > 0)
+            //    response = outputInvoiceService.Update(CurrentOutputInvoice);
+            //else
+            //    response = outputInvoiceService.Create(CurrentOutputInvoice);
 
-            if (response.Success)
-            {
-                OutputInvoiceCreatedUpdated(response.OutputInvoice);
-                FlyoutHelper.CloseFlyout(this);
-            }
-            else
-                notifier.ShowError(response.Message);
+            //if (response.Success)
+            //{
+            //    OutputInvoiceCreatedUpdated(response.OutputInvoice);
+            //    FlyoutHelper.CloseFlyout(this);
+            //}
+            //else
+            //    notifier.ShowError(response.Message);
         }
 
         #endregion

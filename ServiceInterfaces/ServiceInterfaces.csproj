@@ -126,6 +126,7 @@
     <Compile Include="Messages\Common\Locations\SyncCountryRequest.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceResponse.cs" />
+    <Compile Include="Messages\Common\OutputInvoices\SyncOutputInvoiceRequest.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionCodeResponse.cs" />
     <Compile Include="Messages\Common\Sectors\AgencyListResponse.cs" />
     <Compile Include="Messages\Common\Sectors\AgencyResponse.cs" />

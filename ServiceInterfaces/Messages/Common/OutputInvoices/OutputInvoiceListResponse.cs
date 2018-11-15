@@ -11,7 +11,6 @@ namespace ServiceInterfaces.Messages.Common.OutputInvoices
     public class OutputInvoiceListResponse : BaseResponse
     {
         public List<OutputInvoiceViewModel> OutputInvoices { get; set; }
-        public List<OutputInvoiceViewModel> OutputInvoicesByPage { get; set; }
         public int TotalItems { get; set; }
     }
 }
