@@ -77,6 +77,7 @@ namespace ServiceCore.Implementations.Employees
 
                 Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee(re.Employee.Id);
                 employee.ConstructionSiteCode = constructionSite.InternalCode;
+                employee.ConstructionSiteName = constructionSite.Name;
                 employee.UpdatedAt = DateTime.Now;
 
                 EmployeeByConstructionSite addedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Create(re.ConvertToEmployeeByConstructionSite());
@@ -101,6 +102,11 @@ namespace ServiceCore.Implementations.Employees
             try
             {
                 EmployeeByConstructionSite deletedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(identifier);
+
+                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee((int)deletedEmployeeByConstructionSite.EmployeeId);
+                employee.ConstructionSiteCode = "";
+                employee.ConstructionSiteName = "";
+                employee.UpdatedAt = DateTime.Now;
 
                 unitOfWork.Save();
 

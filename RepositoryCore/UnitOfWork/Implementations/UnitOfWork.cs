@@ -69,6 +69,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IEmployeeRepository employeeRepository;
         private IEmployeeItemRepository employeeItemRepository;
+        private IEmployeeDocumentRepository employeeDocumentRepository;
         private IEmployeeLicenceRepository employeeLicenceRepository; 
         private IEmployeeProfessionRepository employeeProfessionRepository;
         private IEmployeeByConstructionSiteRepository employeeByConstructionSiteRepository;
@@ -309,6 +310,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (employeeItemRepository == null)
                 employeeItemRepository = new EmployeeItemRepository(context);
             return employeeItemRepository;
+        }
+
+        public IEmployeeDocumentRepository GetEmployeeDocumentRepository()
+        {
+            if (employeeDocumentRepository == null)
+                employeeDocumentRepository = new EmployeeDocumentRepository(context);
+            return employeeDocumentRepository;
         }
 
         public IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository()

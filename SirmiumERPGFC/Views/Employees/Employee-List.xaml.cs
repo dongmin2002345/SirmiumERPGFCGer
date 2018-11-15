@@ -38,6 +38,7 @@ namespace SirmiumERPGFC.Views.Employees
         IEmployeeItemService employeeItemService;
         IEmployeeLicenceService employeeLicenceService;
         IEmployeeProfessionService employeeProfessionService;
+        IEmployeeDocumentService employeeDocumentService;
         #endregion
 
 
@@ -74,17 +75,15 @@ namespace SirmiumERPGFC.Views.Employees
 
                     if (_CurrentEmployee != null)
                     {
-                        Thread displayItemThread = new Thread(() => PopulateDataItems());
+                        Thread displayItemThread = new Thread(() =>
+                        {
+                            DisplayEmployeeItemData();
+                            DisplayProfessionItemData();
+                            DisplayLicenceItemData();
+                            DisplayDocumentData();
+                        });
                         displayItemThread.IsBackground = true;
                         displayItemThread.Start();
-
-                        Thread displayItemThread2 = new Thread(() => DisplayProfessionItemData());
-                        displayItemThread2.IsBackground = true;
-                        displayItemThread2.Start();
-
-                        Thread displayItemThread3 = new Thread(() => DisplayLicenceItemData());
-                        displayItemThread3.IsBackground = true;
-                        displayItemThread3.Start();
                     }
                     else
                         EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
@@ -162,6 +161,7 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
+
         #region EmployeeProfessionItemsFromDB
         private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessionItemsFromDB;
 
@@ -196,6 +196,7 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
+
         #region EmployeeLicenceItemsFromDB
         private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicenceItemsFromDB;
 
@@ -229,6 +230,59 @@ namespace SirmiumERPGFC.Views.Employees
             }
         }
         #endregion
+
+
+        #region EmployeeDocumentsFromDB
+        private ObservableCollection<EmployeeDocumentViewModel> _EmployeeDocumentsFromDB;
+
+        public ObservableCollection<EmployeeDocumentViewModel> EmployeeDocumentsFromDB
+        {
+            get { return _EmployeeDocumentsFromDB; }
+            set
+            {
+                if (_EmployeeDocumentsFromDB != value)
+                {
+                    _EmployeeDocumentsFromDB = value;
+                    NotifyPropertyChanged("EmployeeDocumentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeDocument
+        private EmployeeDocumentViewModel _CurrentEmployeeDocument;
+
+        public EmployeeDocumentViewModel CurrentEmployeeDocument
+        {
+            get { return _CurrentEmployeeDocument; }
+            set
+            {
+                if (_CurrentEmployeeDocument != value)
+                {
+                    _CurrentEmployeeDocument = value;
+                    NotifyPropertyChanged("CurrentEmployeeDocument");
+                }
+            }
+        }
+        #endregion
+        
+        #region EmployeeDocumentDataLoading
+        private bool _EmployeeDocumentDataLoading;
+
+        public bool EmployeeDocumentDataLoading
+        {
+            get { return _EmployeeDocumentDataLoading; }
+            set
+            {
+                if (_EmployeeDocumentDataLoading != value)
+                {
+                    _EmployeeDocumentDataLoading = value;
+                    NotifyPropertyChanged("EmployeeDocumentDataLoading");
+                }
+            }
+        }
+        #endregion
+
 
         #region Pagination data
         int currentPage = 1;
@@ -299,6 +353,7 @@ namespace SirmiumERPGFC.Views.Employees
             this.employeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
             this.employeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
             this.employeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
+            this.employeeDocumentService = DependencyResolver.Kernel.Get<IEmployeeDocumentService>();
 
             InitializeComponent();
 
@@ -363,7 +418,7 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeDataLoading = false;
         }
 
-        private void PopulateDataItems()
+        private void DisplayEmployeeItemData()
         {
             EmployeeItemDataLoading = true;
 
@@ -404,7 +459,6 @@ namespace SirmiumERPGFC.Views.Employees
             LoadingProfessionItems = false;
         }
 
-
         private void DisplayLicenceItemData()
         {
             LoadingLicenceItems = true;
@@ -425,6 +479,26 @@ namespace SirmiumERPGFC.Views.Employees
             LoadingLicenceItems = false;
         }
 
+        private void DisplayDocumentData()
+        {
+            EmployeeDocumentDataLoading = true;
+
+            EmployeeDocumentListResponse response = new EmployeeDocumentSQLiteRepository()
+                .GetEmployeeDocumentsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeDocumentsFromDB = new ObservableCollection<EmployeeDocumentViewModel>(
+                    response.EmployeeDocuments ?? new List<EmployeeDocumentViewModel>());
+            }
+            else
+            {
+                EmployeeDocumentsFromDB = new ObservableCollection<EmployeeDocumentViewModel>();
+            }
+
+            EmployeeDocumentDataLoading = false;
+        }
+
         private void SyncData()
         {
             RefreshButtonEnabled = false;
@@ -436,6 +510,7 @@ namespace SirmiumERPGFC.Views.Employees
             new EmployeeItemSQLiteRepository().Sync(employeeItemService);
             new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService);
             new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService);
+            new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService);
 
             PopulateData();
 
@@ -510,6 +585,26 @@ namespace SirmiumERPGFC.Views.Employees
 
             // Remove blur effects
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        #endregion
+
+        #region Display documents
+
+        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentEmployeeDocument.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         #endregion

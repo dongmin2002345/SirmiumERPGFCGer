@@ -14,6 +14,7 @@ namespace DomainCore.Employees
         public string SurName { get; set; }
 
         public string ConstructionSiteCode { get; set; }
+        public string ConstructionSiteName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
         public int Gender { get; set; }

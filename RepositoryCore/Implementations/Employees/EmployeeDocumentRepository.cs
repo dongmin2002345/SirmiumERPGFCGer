@@ -9,34 +9,32 @@ using System.Text;
 
 namespace RepositoryCore.Implementations.Employees
 {
-    public class EmployeeItemRepository : IEmployeeItemRepository
+    public class EmployeeDocumentRepository : IEmployeeDocumentRepository
     {
         ApplicationDbContext context;
 
-        public EmployeeItemRepository(ApplicationDbContext context)
+        public EmployeeDocumentRepository(ApplicationDbContext context)
         {
             this.context = context;
         }
 
-        public List<EmployeeItem> GetEmployeeItems(int companyId)
+        public List<EmployeeDocument> GetEmployeeDocuments(int companyId)
         {
-            List<EmployeeItem> EmployeeItems = context.EmployeeItems
+            List<EmployeeDocument> EmployeeDocuments = context.EmployeeDocuments
                 .Include(x => x.Employee)
-                .Include(x => x.FamilyMember)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Active == true && x.CompanyId == companyId)
                 .AsNoTracking()
                 .ToList();
 
-            return EmployeeItems;
+            return EmployeeDocuments;
         }
 
-        public List<EmployeeItem> GetEmployeeItemsByEmployee(int EmployeeId)
+        public List<EmployeeDocument> GetEmployeeDocumentsByEmployee(int EmployeeId)
         {
-            List<EmployeeItem> Employees = context.EmployeeItems
+            List<EmployeeDocument> Employees = context.EmployeeDocuments
                 .Include(x => x.Employee)
-                .Include(x => x.FamilyMember)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.EmployeeId == EmployeeId && x.Active == true)
@@ -46,11 +44,10 @@ namespace RepositoryCore.Implementations.Employees
             return Employees;
         }
 
-        public List<EmployeeItem> GetEmployeeItemsNewerThen(int companyId, DateTime lastUpdateTime)
+        public List<EmployeeDocument> GetEmployeeDocumentsNewerThen(int companyId, DateTime lastUpdateTime)
         {
-            List<EmployeeItem> Employees = context.EmployeeItems
+            List<EmployeeDocument> Employees = context.EmployeeDocuments
                 .Include(x => x.Employee)
-                .Include(x => x.FamilyMember)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
@@ -60,33 +57,32 @@ namespace RepositoryCore.Implementations.Employees
             return Employees;
         }
 
-        public EmployeeItem Create(EmployeeItem EmployeeItem)
+        public EmployeeDocument Create(EmployeeDocument EmployeeDocument)
         {
-            if (context.EmployeeItems.Where(x => x.Identifier != null && x.Identifier == EmployeeItem.Identifier).Count() == 0)
+            if (context.EmployeeDocuments.Where(x => x.Identifier != null && x.Identifier == EmployeeDocument.Identifier).Count() == 0)
             {
-                EmployeeItem.Id = 0;
+                EmployeeDocument.Id = 0;
 
-                EmployeeItem.Active = true;
+                EmployeeDocument.Active = true;
 
-                context.EmployeeItems.Add(EmployeeItem);
-                return EmployeeItem;
+                context.EmployeeDocuments.Add(EmployeeDocument);
+                return EmployeeDocument;
             }
             else
             {
                 // Load item that will be updated
-                EmployeeItem dbEntry = context.EmployeeItems
-                    .FirstOrDefault(x => x.Identifier == EmployeeItem.Identifier && x.Active == true);
+                EmployeeDocument dbEntry = context.EmployeeDocuments
+                    .FirstOrDefault(x => x.Identifier == EmployeeDocument.Identifier && x.Active == true);
 
                 if (dbEntry != null)
                 {
-                    dbEntry.FamilyMemberId = EmployeeItem.FamilyMemberId ?? null;
-                    dbEntry.CompanyId = EmployeeItem.CompanyId ?? null;
-                    dbEntry.CreatedById = EmployeeItem.CreatedById ?? null;
+                    dbEntry.CompanyId = EmployeeDocument.CompanyId ?? null;
+                    dbEntry.CreatedById = EmployeeDocument.CreatedById ?? null;
 
                     // Set properties
-                    dbEntry.Name = EmployeeItem.Name;
-                    dbEntry.DateOfBirth = EmployeeItem.DateOfBirth;
-                    dbEntry.EmbassyDate = EmployeeItem.EmbassyDate;
+                    dbEntry.Name = EmployeeDocument.Name;
+                    dbEntry.CreateDate = EmployeeDocument.CreateDate;
+                    dbEntry.Path = EmployeeDocument.Path;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -96,9 +92,9 @@ namespace RepositoryCore.Implementations.Employees
             }
         }
 
-        public EmployeeItem Delete(Guid identifier)
+        public EmployeeDocument Delete(Guid identifier)
         {
-            EmployeeItem dbEntry = context.EmployeeItems
+            EmployeeDocument dbEntry = context.EmployeeDocuments
                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)

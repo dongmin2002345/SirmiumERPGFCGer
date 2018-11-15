@@ -374,6 +374,7 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ConstructionSiteCode", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("Employees", "ConstructionSiteName", "NVARCHAR(2048) NULL");
 
                     if (withTableDrop)
                     {
@@ -385,6 +386,21 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeItemSQLiteRepository.EmployeeItemTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeItems", "EmbassyDate", "DATETIME NULL");
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeDocumentSQLiteRepository.EmployeeDocumentTableCreatePart, db);
                     createTable.ExecuteReader();
 
 

@@ -23,6 +23,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -64,9 +66,9 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Zanimanje" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="5" Height="16"/>
+                <TextBlock Text="Šifra (gradilište) " Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="5" Height="16"/>
                 <TextBox x:Name="txtSearchByInterest" Grid.Column="3" Grid.Row="1"
-                         Text="{Binding Path=EmployeeSearchObject.SearchBy_Interest, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Path=EmployeeSearchObject.Search_ConstructionSite, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
@@ -149,7 +151,19 @@
                         <DataGridTextColumn SortMemberPath="EmployeeCode" Header="Šifra" Binding="{Binding EmployeeCode}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SurName" Header="Prezime" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ConstructionSiteCode" Header="Gradilište" Binding="{Binding ConstructionSiteCode}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ConstructionSiteCode" Header="Šifra (Gradilište)" IsReadOnly="True">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} ( {1} )">
+                                    <Binding Path="ConstructionSiteCode" />
+                                    <Binding Path="ConstructionSiteName" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="Broj pasoša" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
@@ -196,7 +210,60 @@
 
         <GridSplitter Grid.Row="2" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
 
-        <Grid Grid.Row="3" Margin="2 1 2 2">
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0" Header="Istorija radnika">
+                
+            </GroupBox>
+
+            <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="1" />
+
+            <GroupBox Grid.Column="2" Header="Fajlovi za radnika">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgEmployeeDocumentDataLoading"
+                            Grid.Row="0" Margin="0 5 0 0"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            CanUserResizeRows="False"
+                            GridLinesVisibility="All"
+                            HorizontalGridLinesBrush="Gray"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto"
+                            Style="{DynamicResource AzureDataGrid}"
+                            ItemsSource="{Binding Path=EmployeeDocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentEmployeeDocument, Mode=TwoWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                            <DataGridTextColumn SortMemberPath="CreateDate" Header="Datum krerianja" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                            <DataGridTemplateColumn Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        
+        <GridSplitter Grid.Row="4" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
+
+        <Grid Grid.Row="5" Margin="2 1 2 2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -219,17 +286,18 @@
                         HorizontalGridLinesBrush="Gray"
                         HorizontalScrollBarVisibility="Auto"
                         VerticalScrollBarVisibility="Auto"
-                        Style="{DynamicResource AzureDataGrid}"
                         ItemsSource="{Binding Path=EmployeeItemsFromDB}"
                         SelectedItem="{Binding Path=CurrentEmployeeItem}">
                         <DataGrid.Columns>
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" Width="2*" />
                             <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="Član porodice" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
+                            <DataGridTextColumn SortMemberPath="EmbassyDate" Header="Ambasada" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </GroupBox>
+            
             <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="1" />
 
             <!--Listing-->

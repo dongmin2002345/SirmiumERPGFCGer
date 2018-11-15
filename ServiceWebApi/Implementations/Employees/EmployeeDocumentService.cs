@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace ServiceWebApi.Implementations.Employees
 {
-    public class EmployeeItemService : IEmployeeItemService
+    public class EmployeeDocumentService : IEmployeeDocumentService
     {
-        public EmployeeItemListResponse Sync(SyncEmployeeItemRequest request)
+        public EmployeeDocumentListResponse Sync(SyncEmployeeDocumentRequest request)
         {
-            EmployeeItemListResponse response = new EmployeeItemListResponse();
+            EmployeeDocumentListResponse response = new EmployeeDocumentListResponse();
             try
             {
-                response = WpfApiHandler.SendToApi<SyncEmployeeItemRequest, EmployeeItemViewModel, EmployeeItemListResponse>(request, "Sync");
+                response = WpfApiHandler.SendToApi<SyncEmployeeDocumentRequest, EmployeeDocumentViewModel, EmployeeDocumentListResponse>(request, "Sync");
             }
             catch (Exception ex)
             {
-                response.EmployeeItems = new List<EmployeeItemViewModel>();
+                response.EmployeeDocuments = new List<EmployeeDocumentViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }

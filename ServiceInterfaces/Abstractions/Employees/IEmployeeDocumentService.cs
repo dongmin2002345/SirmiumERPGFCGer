@@ -1,5 +1,4 @@
 ﻿using ServiceInterfaces.Messages.Employees;
-using ServiceInterfaces.ViewModels.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ServiceInterfaces.Abstractions.Employees
 {
-    public interface IEmployeeItemService
+    public interface IEmployeeDocumentService
     {
-        EmployeeItemListResponse Sync(SyncEmployeeItemRequest request);
+        EmployeeDocumentListResponse Sync(SyncEmployeeDocumentRequest request);
     }
 }

@@ -97,6 +97,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region ConstructionSiteName
+        private string _ConstructionSiteName;
+
+        public string ConstructionSiteName
+        {
+            get { return _ConstructionSiteName; }
+            set
+            {
+                if (_ConstructionSiteName != value)
+                {
+                    _ConstructionSiteName = value;
+                    NotifyPropertyChanged("ConstructionSiteName");
+                }
+            }
+        }
+        #endregion
+
 
         #region DateOfBirth
         private DateTime? _DateOfBirth = DateTime.Now;
@@ -459,6 +476,7 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+
         #region EmployeeItems
         private ObservableCollection<EmployeeItemViewModel>  _EmployeeItems;
 
@@ -505,6 +523,23 @@ namespace ServiceInterfaces.ViewModels.Employees
                 {
                     _EmployeeLicences = value;
                     NotifyPropertyChanged("EmployeeLicences");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeDocuments
+        private ObservableCollection<EmployeeDocumentViewModel> _EmployeeDocuments;
+
+        public ObservableCollection<EmployeeDocumentViewModel> EmployeeDocuments
+        {
+            get { return _EmployeeDocuments; }
+            set
+            {
+                if (_EmployeeDocuments != value)
+                {
+                    _EmployeeDocuments = value;
+                    NotifyPropertyChanged("EmployeeDocuments");
                 }
             }
         }
@@ -596,5 +631,23 @@ namespace ServiceInterfaces.ViewModels.Employees
             }
         }
         #endregion
+
+        #region Search_ConstructionSite
+        private string _Search_ConstructionSite;
+
+        public string Search_ConstructionSite
+        {
+            get { return _Search_ConstructionSite; }
+            set
+            {
+                if (_Search_ConstructionSite != value)
+                {
+                    _Search_ConstructionSite = value;
+                    NotifyPropertyChanged("Search_ConstructionSite");
+                }
+            }
+        }
+        #endregion
+
     }
 }

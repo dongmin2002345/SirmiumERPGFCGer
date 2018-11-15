@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceInterfaces.ViewModels.Employees
 {
-    public class EmployeeItemViewModel : BaseEntityViewModel
+    public class EmployeeDocumentViewModel : BaseEntityViewModel
     {
         #region Employee
         private EmployeeViewModel _Employee;
@@ -21,23 +21,6 @@ namespace ServiceInterfaces.ViewModels.Employees
                 {
                     _Employee = value;
                     NotifyPropertyChanged("Employee");
-                }
-            }
-        }
-        #endregion
-
-        #region FamilyMember
-        private FamilyMemberViewModel _FamilyMember;
-
-        public FamilyMemberViewModel FamilyMember
-        {
-            get { return _FamilyMember; }
-            set
-            {
-                if (_FamilyMember != value)
-                {
-                    _FamilyMember = value;
-                    NotifyPropertyChanged("FamilyMember");
                 }
             }
         }
@@ -60,52 +43,35 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
-        #region DateOfBirth
-        private DateTime? _DateOfBirth = DateTime.Now;
+        #region CreateDate
+        private DateTime? _CreateDate;
 
-        public DateTime? DateOfBirth
+        public DateTime? CreateDate
         {
-            get { return _DateOfBirth; }
+            get { return _CreateDate; }
             set
             {
-                if (_DateOfBirth != value)
+                if (_CreateDate != value)
                 {
-                    _DateOfBirth = value;
-                    NotifyPropertyChanged("DateOfBirth");
+                    _CreateDate = value;
+                    NotifyPropertyChanged("CreateDate");
                 }
             }
         }
         #endregion
 
-        #region Passport
-        private string _Passport;
+        #region Path
+        private string _Path;
 
-        public string Passport
+        public string Path
         {
-            get { return _Passport; }
+            get { return _Path; }
             set
             {
-                if (_Passport != value)
+                if (_Path != value)
                 {
-                    _Passport = value;
-                    NotifyPropertyChanged("Passport");
-                }
-            }
-        }
-        #endregion
-
-        #region EmbassyDate
-        private DateTime? _EmpassyDate;
-
-        public DateTime? EmbassyDate
-        {
-            get { return _EmpassyDate; }
-            set
-            {
-                if (_EmpassyDate != value)
-                {
-                    _EmpassyDate = value;
-                    NotifyPropertyChanged("EmbassyDate");
+                    _Path = value;
+                    NotifyPropertyChanged("Path");
                 }
             }
         }
@@ -128,5 +94,6 @@ namespace ServiceInterfaces.ViewModels.Employees
             }
         }
         #endregion
+
     }
 }
