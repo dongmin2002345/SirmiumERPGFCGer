@@ -76,10 +76,10 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						"WHERE (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
 						"AND (@Supplier IS NULL OR @Supplier = '' OR Supplier LIKE @Supplier)  " +
 						"AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber)  " +
-						//"AND (@InvoiceDateTo IS NULL OR @InvoiceDateTo = '' OR DATE(InvoiceDate) <= DATE(@InvoiceDateTo)) " +
-						//"AND (@InvoiceDateFrom IS NULL OR @InvoiceDateFrom = '' OR DATE(InvoiceDate) >= DATE(@InvoiceDateFrom)) " +
-						//"AND (@DateOfPaymetTo IS NULL OR @DateOfPaymetTo = '' OR DATE(DateOfPaymet) <= DATE(@DateOfPaymetTo)) " +
-						//"AND (@DateOfPaymetFrom IS NULL OR @DateOfPaymetFrom = '' OR DATE(DateOfPaymet) >= DATE(@DateOfPaymetFrom)) " +
+						"AND (@InvoiceDateTo IS NULL OR @InvoiceDateTo = '' OR DATE(InvoiceDate) <= DATE(@InvoiceDateTo)) " +
+						"AND (@InvoiceDateFrom IS NULL OR @InvoiceDateFrom = '' OR DATE(InvoiceDate) >= DATE(@InvoiceDateFrom)) " +
+						"AND (@DateOfPaymetTo IS NULL OR @DateOfPaymetTo = '' OR DATE(DateOfPaymet) <= DATE(@DateOfPaymetTo)) " +
+						"AND (@DateOfPaymetFrom IS NULL OR @DateOfPaymetFrom = '' OR DATE(DateOfPaymet) >= DATE(@DateOfPaymetFrom)) " +
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -87,11 +87,11 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 					selectCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + InputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateFrom + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateTo + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@DateDateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@DateDateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_BusinessPartnerName) != null ? "%" + InputInvoiceSearchObject.SearchBy_BusinessPartnerName + "%" : "");
-					
+					selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateFrom + "%" : "");
+					selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateTo + "%" : "");
+					selectCommand.Parameters.AddWithValue("@DateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom + "%" : "");
+					selectCommand.Parameters.AddWithValue("@DateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetTo + "%" : "");
+
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
 					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -133,19 +133,19 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						"WHERE (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
 						"AND (@Supplier IS NULL OR @Supplier = '' OR Supplier LIKE @Supplier)  " +
 						"AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber)  " +
-						//"AND (@InvoiceDateTo IS NULL OR @InvoiceDateTo = '' OR DATE(InvoiceDate) <= DATE(@InvoiceDateTo)) " +
-						//"AND (@InvoiceDateFrom IS NULL OR @InvoiceDateFrom = '' OR DATE(InvoiceDate) >= DATE(@InvoiceDateFrom)) " +
-						//"AND (@DateOfPaymetTo IS NULL OR @DateOfPaymetTo = '' OR DATE(DateOfPaymet) <= DATE(@DateOfPaymetTo)) " +
-						//"AND (@DateOfPaymetFrom IS NULL OR @DateOfPaymetFrom = '' OR DATE(DateOfPaymet) >= DATE(@DateOfPaymetFrom)) " +
+						"AND (@InvoiceDateTo IS NULL OR @InvoiceDateTo = '' OR DATE(InvoiceDate) <= DATE(@InvoiceDateTo)) " +
+						"AND (@InvoiceDateFrom IS NULL OR @InvoiceDateFrom = '' OR DATE(InvoiceDate) >= DATE(@InvoiceDateFrom)) " +
+						"AND (@DateOfPaymetTo IS NULL OR @DateOfPaymetTo = '' OR DATE(DateOfPaymet) <= DATE(@DateOfPaymetTo)) " +
+						"AND (@DateOfPaymetFrom IS NULL OR @DateOfPaymetFrom = '' OR DATE(DateOfPaymet) >= DATE(@DateOfPaymetFrom)) " +
 						"AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoiceSearchObject.SearchBy_BusinessPartnerName) != null ? "%" + InputInvoiceSearchObject.SearchBy_BusinessPartnerName + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + InputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateFrom + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateTo + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@DateDateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom + "%" : "");
-					//selectCommand.Parameters.AddWithValue("@DateDateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetTo + "%" : "");
+					selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateFrom + "%" : "");
+					selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateTo + "%" : "");
+					selectCommand.Parameters.AddWithValue("@DateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom + "%" : "");
+					selectCommand.Parameters.AddWithValue("@DateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetTo + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
