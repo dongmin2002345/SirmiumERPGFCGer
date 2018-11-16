@@ -15,6 +15,7 @@ using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Repository.ToDos;
 using SirmiumERPGFC.Repository.OutputInvoices;
+using SirmiumERPGFC.Repository.InputInvoices;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -375,6 +376,7 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ConstructionSiteCode", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("Employees", "ConstructionSiteName", "NVARCHAR(2048) NULL");
 
                     if (withTableDrop)
                     {
@@ -386,6 +388,34 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeItemSQLiteRepository.EmployeeItemTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeItems", "EmbassyDate", "DATETIME NULL");
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeDocumentSQLiteRepository.EmployeeDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeCards", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeCardSQLiteRepository.EmployeeCardTableCreatePart, db);
                     createTable.ExecuteReader();
 
 
@@ -465,8 +495,23 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(FamilyMemberSQLiteRepository.FamilyMemberTableCreatePart, db);
                     createTable.ExecuteReader();
-                    #endregion
+					#endregion
 
+					#region Invoices
+
+					//#region OutputInvoices
+					//if (withTableDrop)
+					//{
+					//    try
+					//    {
+					//        SqliteCommand dropTable = new SqliteCommand("DROP TABLE OutputInvoices", db);
+					//        dropTable.ExecuteNonQuery();
+					//    }
+					//    catch (Exception ex) { }
+					//}
+					//createTable = new SqliteCommand(OutputInvoiceSQLiteRepository.OutputInvoiceTableCreatePart, db);
+					//createTable.ExecuteReader();
+					//#endregion
                     #region OutputInvoices
                     if (withTableDrop)
                     {
@@ -481,9 +526,23 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
                     #endregion
 
+					#region InputInvoices
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE InputInvoices", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(InputInvoiceSQLiteRepository.InputInvoiceTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
 
-                }
-            }
+					#endregion
+				}
+			}
 
             catch (SqliteException e)
             {

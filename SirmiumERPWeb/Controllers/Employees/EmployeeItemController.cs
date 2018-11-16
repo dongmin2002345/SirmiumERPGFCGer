@@ -20,59 +20,6 @@ namespace SirmiumERPWeb.Controllers.Employees
 
         }
 
-        [HttpGet]
-        public JsonResult GetEmployeeItems(int CompanyId)
-        {
-            EmployeeItemListResponse response = new EmployeeItemListResponse();
-            try
-            {
-                response = EmployeeItemService.GetEmployeeItems(CompanyId);
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-
-        [HttpGet]
-        public JsonResult GetEmployeeItemsNewerThen(int CompanyId, DateTime? lastUpdateTime)
-        {
-            EmployeeItemListResponse response = new EmployeeItemListResponse();
-            try
-            {
-                response = EmployeeItemService.GetEmployeeItemsNewerThen(CompanyId, lastUpdateTime);
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpPost]
-        public JsonResult Create([FromBody] EmployeeItemViewModel c)
-        {
-            EmployeeItemResponse response = new EmployeeItemResponse();
-            try
-            {
-                response = this.EmployeeItemService.Create(c);
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
-
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
         [HttpPost]
         public JsonResult Sync([FromBody] SyncEmployeeItemRequest request)
         {

@@ -23,6 +23,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "Name NVARCHAR(2048) NULL, " +
             "SurName NVARCHAR(2048) NULL, " +
             "ConstructionSiteCode NVARCHAR(2048) NULL, " +
+            "ConstructionSiteName NVARCHAR(2048) NULL, " +
 
             "DateOfBirth DATETIME NULL, " +
             "Gender INTEGER NOT NULL, " +
@@ -79,7 +80,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, " +
-            "Code, EmployeeCode, Name, SurName, ConstructionSiteCode, " +
+            "Code, EmployeeCode, Name, SurName, ConstructionSiteCode, ConstructionSiteName, " +
             "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
             "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
@@ -90,7 +91,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandInsertPart = "INSERT INTO Employees " +
             "(Id, ServerId, Identifier, " +
-            "Code, EmployeeCode, Name, SurName, ConstructionSiteCode, " +
+            "Code, EmployeeCode, Name, SurName, ConstructionSiteCode, ConstructionSiteName, " +
             "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
             "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
@@ -100,7 +101,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
-            "@Code, @EmployeeCode, @Name, @SurName, @ConstructionSiteCode, " +
+            "@Code, @EmployeeCode, @Name, @SurName, @ConstructionSiteCode, @ConstructionSiteName, " +
             "@DateOfBirth, @Gender, @CountryId, @CountryIdentifier, @CountryCode, @CountryName, @RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, @CityId, @CityIdentifier, @CityCode, @CityName, @Address, " +
             "@PassportCountryId, @PassportCountryIdentifier, @PassportCountryCode, @PassportCountryName, @PassportCityId, @PassportCityIdentifier, @PassportCityCode, @PassportCityName, " +
@@ -125,14 +126,14 @@ namespace SirmiumERPGFC.Repository.Employees
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
-                        //"AND (@Interest IS NULL OR @Interest = '' OR Interest LIKE @Interest) " +
+                        "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
-                    //selectCommand.Parameters.AddWithValue("@Interest", ((object)EmployeeSearchObject.SearchBy_Interest) != null ? "%" + EmployeeSearchObject.SearchBy_Interest + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(EmployeeSearchObject.Search_ConstructionSite) ? "%" + EmployeeSearchObject.Search_ConstructionSite + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -150,6 +151,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
@@ -189,10 +191,12 @@ namespace SirmiumERPGFC.Repository.Employees
                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                        "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(EmployeeSearchObject.Search_ConstructionSite) ? "%" + EmployeeSearchObject.Search_ConstructionSite + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -259,6 +263,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
@@ -368,6 +373,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
@@ -479,6 +485,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
@@ -587,6 +594,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
@@ -686,6 +694,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
@@ -765,6 +774,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
@@ -891,6 +901,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@Name", ((object)Employee.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@SurName", ((object)Employee.SurName) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)Employee.ConstructionSiteCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)Employee.ConstructionSiteName) ?? DBNull.Value);
 
                 insertCommand.Parameters.AddWithValue("@DateOfBirth", ((object)Employee.DateOfBirth) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Gender", ((object)Employee.Gender) ?? DBNull.Value);

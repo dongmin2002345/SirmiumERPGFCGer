@@ -33,6 +33,7 @@ namespace DataMapper.Mappers.Employees
                 Name = EmployeeItem.Name,
                 
                 DateOfBirth = EmployeeItem.DateOfBirth,
+                EmbassyDate = EmployeeItem.EmbassyDate,
 
                 IsActive = EmployeeItem.Active,
 
@@ -56,6 +57,7 @@ namespace DataMapper.Mappers.Employees
                 Name = EmployeeItem.Name,
 
                 DateOfBirth = EmployeeItem.DateOfBirth,
+                EmbassyDate = EmployeeItem.EmbassyDate,
 
                 IsActive = EmployeeItem.Active,
 
@@ -79,6 +81,7 @@ namespace DataMapper.Mappers.Employees
                 Name = EmployeeItemViewModel.Name,
 
                 DateOfBirth = (DateTime)EmployeeItemViewModel.DateOfBirth,
+                EmbassyDate = EmployeeItemViewModel.EmbassyDate,
 
                 CreatedById = EmployeeItemViewModel.CreatedBy?.Id ?? null,
                 CompanyId = EmployeeItemViewModel.Company?.Id ?? null,

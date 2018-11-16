@@ -34,6 +34,7 @@ namespace DataMapper.Mappers.Employees
                 SurName = employee.SurName,
 
                 ConstructionSiteCode = employee.ConstructionSiteCode,
+                ConstructionSiteName = employee.ConstructionSiteName,
 
                 DateOfBirth = employee.DateOfBirth,
                 Gender = employee.Gender,
@@ -86,6 +87,7 @@ namespace DataMapper.Mappers.Employees
                 SurName = employee.SurName,
 
                 ConstructionSiteCode = employee.ConstructionSiteCode,
+                ConstructionSiteName = employee.ConstructionSiteName,
 
                 DateOfBirth = employee.DateOfBirth,
 
@@ -120,6 +122,7 @@ namespace DataMapper.Mappers.Employees
                 SurName = employeeViewModel.SurName,
 
                 ConstructionSiteCode = employeeViewModel.ConstructionSiteCode,
+                ConstructionSiteName = employeeViewModel.ConstructionSiteName,
 
                 DateOfBirth = (DateTime)employeeViewModel.DateOfBirth,
                 Gender = employeeViewModel.Gender,

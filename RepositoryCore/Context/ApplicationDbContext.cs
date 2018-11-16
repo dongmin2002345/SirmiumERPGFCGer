@@ -92,6 +92,8 @@ namespace RepositoryCore.Context
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeItem> EmployeeItems { get; set; }
+        public DbSet<EmployeeCard> EmployeeCards { get; set; }
+        public DbSet<EmployeeDocument> EmployeeDocuments { get; set; }
         public DbSet<EmployeeLicence> EmployeeLicences { get; set; }
         public DbSet<EmployeeProfession> EmployeeProfessions { get; set; }
         public DbSet<EmployeeByConstructionSite> EmployeeByConstructionSites { get; set; }

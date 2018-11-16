@@ -94,6 +94,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region EmbassyDate
+        private DateTime? _EmpassyDate;
+
+        public DateTime? EmbassyDate
+        {
+            get { return _EmpassyDate; }
+            set
+            {
+                if (_EmpassyDate != value)
+                {
+                    _EmpassyDate = value;
+                    NotifyPropertyChanged("EmbassyDate");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

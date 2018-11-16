@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,6 +33,7 @@ namespace SirmiumERPGFC.Views.Employees
         public event EmployeeHandler EmployeeCreated;
         #endregion
 
+
         #region CurrentEmployee
         private EmployeeViewModel _CurrentEmployee = new EmployeeViewModel();
 
@@ -48,6 +50,7 @@ namespace SirmiumERPGFC.Views.Employees
             }
         }
         #endregion
+
 
         #region EmployeeItemsFromDB
         private ObservableCollection<EmployeeItemViewModel> _EmployeeItemsFromDB;
@@ -186,6 +189,7 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
+
         #region EmployeeLicenceItemsFromDB
         private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicenceItemsFromDB;
 
@@ -249,6 +253,75 @@ namespace SirmiumERPGFC.Views.Employees
                 {
                     _LoadingLicenceItems = value;
                     NotifyPropertyChanged("LoadingLicenceItems");
+                }
+            }
+        }
+        #endregion
+
+
+        #region EmployeeDocumentsFromDB
+        private ObservableCollection<EmployeeDocumentViewModel> _EmployeeDocumentsFromDB;
+
+        public ObservableCollection<EmployeeDocumentViewModel> EmployeeDocumentsFromDB
+        {
+            get { return _EmployeeDocumentsFromDB; }
+            set
+            {
+                if (_EmployeeDocumentsFromDB != value)
+                {
+                    _EmployeeDocumentsFromDB = value;
+                    NotifyPropertyChanged("EmployeeDocumentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeDocumentForm
+        private EmployeeDocumentViewModel _CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
+
+        public EmployeeDocumentViewModel CurrentEmployeeDocumentForm
+        {
+            get { return _CurrentEmployeeDocumentForm; }
+            set
+            {
+                if (_CurrentEmployeeDocumentForm != value)
+                {
+                    _CurrentEmployeeDocumentForm = value;
+                    NotifyPropertyChanged("CurrentEmployeeDocumentForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeDocumentDG
+        private EmployeeDocumentViewModel _CurrentEmployeeDocumentDG;
+
+        public EmployeeDocumentViewModel CurrentEmployeeDocumentDG
+        {
+            get { return _CurrentEmployeeDocumentDG; }
+            set
+            {
+                if (_CurrentEmployeeDocumentDG != value)
+                {
+                    _CurrentEmployeeDocumentDG = value;
+                    NotifyPropertyChanged("CurrentEmployeeDocumentDG");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeDocumentDataLoading
+        private bool _EmployeeDocumentDataLoading;
+
+        public bool EmployeeDocumentDataLoading
+        {
+            get { return _EmployeeDocumentDataLoading; }
+            set
+            {
+                if (_EmployeeDocumentDataLoading != value)
+                {
+                    _EmployeeDocumentDataLoading = value;
+                    NotifyPropertyChanged("EmployeeDocumentDataLoading");
                 }
             }
         }
@@ -414,31 +487,20 @@ namespace SirmiumERPGFC.Views.Employees
 
             Thread displayThread = new Thread(() =>
             {
-                DisplayItemData();
+                DisplayEmployeeItemData();
+                DisplayProfessionItemData();
+                DisplayLicenceItemData();
+                DisplayDocumentData();
             });
             displayThread.IsBackground = true;
             displayThread.Start();
-
-            Thread displayThread2 = new Thread(() =>
-            {
-                DisplayProfessionItemData();
-            });
-            displayThread2.IsBackground = true;
-            displayThread2.Start();
-
-            Thread displayThread3 = new Thread(() =>
-            {
-                DisplayLicenceItemData();
-            });
-            displayThread3.IsBackground = true;
-            displayThread3.Start();
         }
 
         #endregion
 
         #region Display data
 
-        private void DisplayItemData()
+        private void DisplayEmployeeItemData()
         {
             EmployeeItemDataLoading = true;
 
@@ -498,6 +560,26 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             LoadingLicenceItems = false;
+        }
+
+        private void DisplayDocumentData()
+        {
+            EmployeeDocumentDataLoading = true;
+
+            EmployeeDocumentListResponse response = new EmployeeDocumentSQLiteRepository()
+                .GetEmployeeDocumentsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeDocumentsFromDB = new ObservableCollection<EmployeeDocumentViewModel>(
+                    response.EmployeeDocuments ?? new List<EmployeeDocumentViewModel>());
+            }
+            else
+            {
+                EmployeeDocumentsFromDB = new ObservableCollection<EmployeeDocumentViewModel>();
+            }
+
+            EmployeeDocumentDataLoading = false;
         }
 
         #endregion
@@ -604,7 +686,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 CurrentEmployeeItemForm = new EmployeeItemViewModel();
 
-                Thread displayThread = new Thread(() => DisplayItemData());
+                Thread displayThread = new Thread(() => DisplayEmployeeItemData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
 
@@ -631,7 +713,7 @@ namespace SirmiumERPGFC.Views.Employees
 
                 MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
 
-                Thread displayThread = new Thread(() => DisplayItemData());
+                Thread displayThread = new Thread(() => DisplayEmployeeItemData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -642,6 +724,108 @@ namespace SirmiumERPGFC.Views.Employees
         private void btnCancelItem_Click(object sender, RoutedEventArgs e)
         {
             CurrentEmployeeItemForm = new EmployeeItemViewModel();
+        }
+
+        #endregion
+
+        #region Add, edit, delete and cancel document
+
+        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+            string[] fileNames = dialog.FileNames;
+
+            if (fileNames.Length > 0)
+                CurrentEmployeeDocumentForm.Path = fileNames[0];
+        }
+
+        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            fileDIalog.Multiselect = true;
+            fileDIalog.FileOk += FileDIalog_FileOk;
+            fileDIalog.Filter = "Image Files | *.pdf";
+            fileDIalog.ShowDialog();
+        }
+
+        private void btnAddDocument_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentEmployeeDocumentForm.Name))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                return;
+            }
+
+            if (String.IsNullOrEmpty(CurrentEmployeeDocumentForm.Path))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Putanja";
+                return;
+            }
+
+            if (CurrentEmployeeDocumentForm.CreateDate == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Datum kreiranja";
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new EmployeeDocumentSQLiteRepository().Delete(CurrentEmployeeDocumentForm.Identifier);
+
+            CurrentEmployeeDocumentForm.Employee = CurrentEmployee;
+            CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
+            CurrentEmployeeDocumentForm.IsSynced = false;
+            CurrentEmployeeDocumentForm.UpdatedAt = DateTime.Now;
+            CurrentEmployeeDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentEmployeeDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new EmployeeDocumentSQLiteRepository().Create(CurrentEmployeeDocumentForm);
+            if (response.Success)
+            {
+                CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
+
+                Thread displayThread = new Thread(() => DisplayDocumentData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtDocumentName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
+        }
+
+        private void btnEditDocument_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeDocumentForm = CurrentEmployeeDocumentDG;
+        }
+
+        private void btnDeleteDocument_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dokument", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new EmployeeDocumentSQLiteRepository().Delete(CurrentEmployeeDocumentDG.Identifier);
+
+                MainWindow.SuccessMessage = "Dokument je uspešno obrisan!";
+
+                Thread displayThread = new Thread(() => DisplayDocumentData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
         #endregion
@@ -677,6 +861,7 @@ namespace SirmiumERPGFC.Views.Employees
                     CurrentEmployee.EmployeeItems = EmployeeItemsFromDB;
                     CurrentEmployee.EmployeeLicences = EmployeeLicenceItemsFromDB;
                     CurrentEmployee.EmployeeProfessions = EmployeeProfessionItemsFromDB;
+                    CurrentEmployee.EmployeeDocuments = EmployeeDocumentsFromDB;
 
                     EmployeeResponse response = EmployeeService.Create(CurrentEmployee);
 
@@ -935,5 +1120,6 @@ namespace SirmiumERPGFC.Views.Employees
 
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
+
     }
 }

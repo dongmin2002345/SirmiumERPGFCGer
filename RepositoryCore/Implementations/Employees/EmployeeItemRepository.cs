@@ -86,6 +86,7 @@ namespace RepositoryCore.Implementations.Employees
                     // Set properties
                     dbEntry.Name = EmployeeItem.Name;
                     dbEntry.DateOfBirth = EmployeeItem.DateOfBirth;
+                    dbEntry.EmbassyDate = EmployeeItem.EmbassyDate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

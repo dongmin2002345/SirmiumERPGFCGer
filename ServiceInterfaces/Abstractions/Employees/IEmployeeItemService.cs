@@ -10,11 +10,6 @@ namespace ServiceInterfaces.Abstractions.Employees
 {
     public interface IEmployeeItemService
     {
-        EmployeeItemListResponse GetEmployeeItems(int companyId);
-        EmployeeItemListResponse GetEmployeeItemsNewerThen(int companyId, DateTime? lastUpdateTime);
-
-        EmployeeItemResponse Create(EmployeeItemViewModel EmployeeItem);
-
         EmployeeItemListResponse Sync(SyncEmployeeItemRequest request);
     }
 }

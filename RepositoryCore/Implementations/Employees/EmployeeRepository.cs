@@ -134,6 +134,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.SurName = employee.SurName;
 
                     dbEntry.ConstructionSiteCode = employee.ConstructionSiteCode;
+                    dbEntry.ConstructionSiteName = employee.ConstructionSiteName;
 
                     dbEntry.DateOfBirth = employee.DateOfBirth;
                     dbEntry.Gender = employee.Gender;

@@ -50,6 +50,8 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         IEmployeeRepository GetEmployeeRepository();
         IEmployeeItemRepository GetEmployeeItemRepository();
+        IEmployeeCardRepository GetEmployeeCardRepository();
+        IEmployeeDocumentRepository GetEmployeeDocumentRepository();
         IEmployeeLicenceRepository GetEmployeeLicenceRepository();
         IEmployeeProfessionRepository GetEmployeeProfessionRepository();
         IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository();

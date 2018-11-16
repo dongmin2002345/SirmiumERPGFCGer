@@ -28,6 +28,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "FamilyMemberName NVARCHAR(48) NULL, " +
                "Name NVARCHAR(2048), " +
                "DateOfBirth DATETIME NULL, " +
+               "EmbassyDate DATETIME NULL, " +
                "Passport NVARCHAR(2048) NULL, " +
                "IsSynced BOOL NULL, " +
                "UpdatedAt DATETIME NULL, " +
@@ -39,18 +40,18 @@ namespace SirmiumERPGFC.Repository.Employees
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, FamilyMemberId, FamilyMemberIdentifier, " +
-            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, Passport, " +
+            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeItems " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, FamilyMemberId, FamilyMemberIdentifier, " +
-            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth,Passport, " +
+            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
             "@EmployeeCode, @EmployeeName, @FamilyMemberId, @FamilyMemberIdentifier, " +
-            "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @Passport, " +
+            "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @EmbassyDate, @Passport, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public EmployeeItemListResponse GetEmployeeItemsByEmployee(int companyId, Guid EmployeeIdentifier)
@@ -84,6 +85,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.FamilyMember = SQLiteHelper.GetFamilyMember(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -136,6 +138,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.FamilyMember = SQLiteHelper.GetFamilyMember(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -188,6 +191,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.FamilyMember = SQLiteHelper.GetFamilyMember(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -218,8 +222,6 @@ namespace SirmiumERPGFC.Repository.Employees
             SyncEmployeeItemRequest request = new SyncEmployeeItemRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-            request.UnSyncedEmployeeItems = unSynced?.EmployeeItems ?? new List<EmployeeItemViewModel>();
-
 
             EmployeeItemListResponse response = EmployeeItemService.Sync(request);
             if (response.Success)
@@ -297,6 +299,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@FamilyMemberName", ((object)EmployeeItem.FamilyMember.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", EmployeeItem.Name);
                 insertCommand.Parameters.AddWithValue("@DateOfBirth", ((object)EmployeeItem.DateOfBirth) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmbassyDate", ((object)EmployeeItem.EmbassyDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeItem.Passport) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", EmployeeItem.UpdatedAt);

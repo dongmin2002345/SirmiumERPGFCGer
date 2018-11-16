@@ -152,6 +152,12 @@ namespace ApiExtension.Sender
                 { typeof(EmployeeItemViewModel), "EmployeeItem" },
                 { typeof(List<EmployeeItemViewModel>), "EmployeeItem" },
 
+                { typeof(EmployeeDocumentViewModel), "EmployeeDocument" },
+                { typeof(List<EmployeeDocumentViewModel>), "EmployeeDocument" },
+
+                { typeof(EmployeeCardViewModel), "EmployeeCard" },
+                { typeof(List<EmployeeCardViewModel>), "EmployeeCard" },
+
                 { typeof(FamilyMemberViewModel), "FamilyMember" },
                 { typeof(List<FamilyMemberViewModel>), "FamilyMember" },
 

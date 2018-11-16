@@ -77,9 +77,24 @@ namespace ServiceCore.Implementations.Employees
 
                 Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee(re.Employee.Id);
                 employee.ConstructionSiteCode = constructionSite.InternalCode;
+                employee.ConstructionSiteName = constructionSite.Name;
                 employee.UpdatedAt = DateTime.Now;
 
                 EmployeeByConstructionSite addedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Create(re.ConvertToEmployeeByConstructionSite());
+
+                EmployeeCard ec = new EmployeeCard()
+                {
+                    Identifier = Guid.NewGuid(),
+                    EmployeeId = re.Employee.Id,
+                    CardDate = DateTime.Now,
+                    Description = "Radnik " + re.Employee?.Name + " je krenuo da radi na gradilištu " + re.ConstructionSite?.Name,
+                    CreatedById = re.CreatedBy?.Id,
+                    CompanyId = re.Company?.Id,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                unitOfWork.GetEmployeeCardRepository().Create(ec);
+
                 unitOfWork.Save();
 
                 response.EmployeeByConstructionSite = addedEmployeeByConstructionSite.ConvertToEmployeeByConstructionSiteViewModel();
@@ -101,6 +116,24 @@ namespace ServiceCore.Implementations.Employees
             try
             {
                 EmployeeByConstructionSite deletedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(identifier);
+
+                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee((int)deletedEmployeeByConstructionSite.EmployeeId);
+                employee.ConstructionSiteCode = "";
+                employee.ConstructionSiteName = "";
+                employee.UpdatedAt = DateTime.Now;
+
+                EmployeeCard ec = new EmployeeCard()
+                {
+                    Identifier = Guid.NewGuid(),
+                    EmployeeId = deletedEmployeeByConstructionSite.Employee.Id,
+                    CardDate = DateTime.Now,
+                    Description = "Radnik " + deletedEmployeeByConstructionSite.Employee?.Name + " je prestao da radi na gradilištu " + deletedEmployeeByConstructionSite.ConstructionSite?.Name,
+                    CreatedById = deletedEmployeeByConstructionSite.CreatedBy?.Id,
+                    CompanyId = deletedEmployeeByConstructionSite.Company?.Id,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                unitOfWork.GetEmployeeCardRepository().Create(ec);
 
                 unitOfWork.Save();
 

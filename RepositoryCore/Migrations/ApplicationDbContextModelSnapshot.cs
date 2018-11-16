@@ -1154,6 +1154,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("ConstructionSiteCode");
 
+                    b.Property<string>("ConstructionSiteName");
+
                     b.Property<int?>("CountryId");
 
                     b.Property<DateTime>("CreatedAt");
@@ -1395,6 +1397,78 @@ namespace RepositoryCore.Migrations
                     b.ToTable("EmployeeByConstructionSiteHistories");
                 });
 
+            modelBuilder.Entity("DomainCore.Employees.EmployeeCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("CardDate");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("EmployeeId");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeCards");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.EmployeeDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<int?>("EmployeeId");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeDocuments");
+                });
+
             modelBuilder.Entity("DomainCore.Employees.EmployeeItem", b =>
                 {
                     b.Property<int>("Id")
@@ -1410,6 +1484,8 @@ namespace RepositoryCore.Migrations
                     b.Property<int?>("CreatedById");
 
                     b.Property<DateTime>("DateOfBirth");
+
+                    b.Property<DateTime?>("EmbassyDate");
 
                     b.Property<int?>("EmployeeId");
 
@@ -2122,6 +2198,36 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.ConstructionSites.ConstructionSite", "ConstructionSite")
                         .WithMany()
                         .HasForeignKey("ConstructionSiteId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.EmployeeCard", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.EmployeeDocument", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()

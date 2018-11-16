@@ -196,6 +196,8 @@
     <Compile Include="Repository\Employees\EmployeeByBusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByConstructionSiteHistorySQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeCardSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeItemSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeLicenceItemSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeProfessionItemSQLiteRepository.cs" />
@@ -323,6 +325,12 @@
     </Compile>
     <Compile Include="Views\Home\ToDoAddEdit.xaml.cs">
       <DependentUpon>ToDoAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InputInvoices\InputInvoiceAddEdit.xaml.cs">
+      <DependentUpon>InputInvoiceAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InputInvoices\InputInvoiceList.xaml.cs">
+      <DependentUpon>InputInvoiceList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
@@ -588,6 +596,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Home\ToDoAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputInvoices\InputInvoiceAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputInvoices\InputInvoiceList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,5 +16,7 @@ namespace DomainCore.Employees
         public string Name { get; set; }
 
         public DateTime DateOfBirth { get; set; }
+
+        public DateTime? EmbassyDate { get; set; }
     }
 }
