@@ -218,7 +218,26 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox Grid.Column="0" Header="Istorija radnika">
-                
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeCardDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgEmployeeCardDataLoading"
+                            Grid.Row="0" Margin="0 5 0 0"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            CanUserResizeRows="False"
+                            GridLinesVisibility="All"
+                            HorizontalGridLinesBrush="Gray"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto"
+                            Style="{DynamicResource AzureDataGrid}"
+                            ItemsSource="{Binding Path=EmployeeCardsFromDB}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="CardDate" Header="Datum izmene" Binding="{Binding CardDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Description" Header="Opis" Binding="{Binding Description}" IsReadOnly="True" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </GroupBox>
 
             <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="1" />

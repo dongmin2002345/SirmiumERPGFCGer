@@ -70,6 +70,7 @@
     <Compile Include="Abstractions\Employees\IEmployeeByBusinessPartnerService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeByConstructionSiteHistoryService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeByConstructionSiteService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeCardService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeDocumentService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeLicenceService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeProfessionService.cs" />
@@ -157,6 +158,8 @@
     <Compile Include="Messages\Employees\EmployeeByConstructionSiteHistoryResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeByConstructionSiteListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeByConstructionSiteResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeCardListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeCardResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeDocumentListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeDocumentResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeItemListResponse.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="Messages\Employees\SyncEmployeeByBusinessPartnerRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeByConstructionSiteHistoryRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeByConstructionSiteRequest.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeCardRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeDocumentRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeLicenceItemRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeProfessionItemRequest.cs" />
@@ -217,6 +221,7 @@
     <Compile Include="ViewModels\Employees\EmployeeByBusinessPartnerViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeByConstructionSiteHistoryViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeByConstructionSiteViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeCardViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeDocumentViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeItemViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeLicenceItemViewModel.cs" />

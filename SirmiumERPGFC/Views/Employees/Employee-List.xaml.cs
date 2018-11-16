@@ -39,6 +39,7 @@ namespace SirmiumERPGFC.Views.Employees
         IEmployeeLicenceService employeeLicenceService;
         IEmployeeProfessionService employeeProfessionService;
         IEmployeeDocumentService employeeDocumentService;
+        IEmployeeCardService employeeCardService;
         #endregion
 
 
@@ -81,6 +82,7 @@ namespace SirmiumERPGFC.Views.Employees
                             DisplayProfessionItemData();
                             DisplayLicenceItemData();
                             DisplayDocumentData();
+                            DisplayCardData();
                         });
                         displayItemThread.IsBackground = true;
                         displayItemThread.Start();
@@ -284,6 +286,41 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
 
+        #region EmployeeCardsFromDB
+        private ObservableCollection<EmployeeCardViewModel> _EmployeeCardsFromDB;
+
+        public ObservableCollection<EmployeeCardViewModel> EmployeeCardsFromDB
+        {
+            get { return _EmployeeCardsFromDB; }
+            set
+            {
+                if (_EmployeeCardsFromDB != value)
+                {
+                    _EmployeeCardsFromDB = value;
+                    NotifyPropertyChanged("EmployeeCardsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeCardDataLoading
+        private bool _EmployeeCardDataLoading;
+
+        public bool EmployeeCardDataLoading
+        {
+            get { return _EmployeeCardDataLoading; }
+            set
+            {
+                if (_EmployeeCardDataLoading != value)
+                {
+                    _EmployeeCardDataLoading = value;
+                    NotifyPropertyChanged("EmployeeCardDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region Pagination data
         int currentPage = 1;
         int itemsPerPage = 50;
@@ -354,6 +391,7 @@ namespace SirmiumERPGFC.Views.Employees
             this.employeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
             this.employeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
             this.employeeDocumentService = DependencyResolver.Kernel.Get<IEmployeeDocumentService>();
+            this.employeeCardService = DependencyResolver.Kernel.Get<IEmployeeCardService>();
 
             InitializeComponent();
 
@@ -499,6 +537,26 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeDocumentDataLoading = false;
         }
 
+        private void DisplayCardData()
+        {
+            EmployeeCardDataLoading = true;
+
+            EmployeeCardListResponse response = new EmployeeCardSQLiteRepository()
+                .GetEmployeeCardsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeCardsFromDB = new ObservableCollection<EmployeeCardViewModel>(
+                    response.EmployeeCards ?? new List<EmployeeCardViewModel>());
+            }
+            else
+            {
+                EmployeeCardsFromDB = new ObservableCollection<EmployeeCardViewModel>();
+            }
+
+            EmployeeCardDataLoading = false;
+        }
+
         private void SyncData()
         {
             RefreshButtonEnabled = false;
@@ -511,6 +569,7 @@ namespace SirmiumERPGFC.Views.Employees
             new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService);
             new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService);
             new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService);
+            new EmployeeCardSQLiteRepository().Sync(employeeCardService);
 
             PopulateData();
 

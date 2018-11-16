@@ -409,6 +409,19 @@ namespace SirmiumERPGFC.Repository.Common
                     {
                         try
                         {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeCards", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeCardSQLiteRepository.EmployeeCardTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
                             SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeProfessionItems", db);
                             dropTable.ExecuteNonQuery();
                         }

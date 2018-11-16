@@ -72,7 +72,22 @@ namespace ServiceCore.Implementations.Employees
             EmployeeByBusinessPartnerResponse response = new EmployeeByBusinessPartnerResponse();
             try
             {
-                EmployeeByBusinessPartner addedEmployeeByBusinessPartner = unitOfWork.GetEmployeeByBusinessPartnerRepository().Create(re.ConvertToEmployeeByBusinessPartner());
+                EmployeeByBusinessPartner addedEmployeeByBusinessPartner = unitOfWork.GetEmployeeByBusinessPartnerRepository()
+                    .Create(re.ConvertToEmployeeByBusinessPartner());
+
+                EmployeeCard ec = new EmployeeCard()
+                {
+                    Identifier = Guid.NewGuid(),
+                    EmployeeId = re.Employee.Id,
+                    CardDate = DateTime.Now,
+                    Description = "Radnik " + re.Employee?.Name + " je sklopio ugovor sa firmom " + re.BusinessPartner?.Name, 
+                    CreatedById = re.CreatedBy?.Id,
+                    CompanyId = re.Company?.Id,
+                    CreatedAt = DateTime.Now, 
+                    UpdatedAt = DateTime.Now
+                };
+                unitOfWork.GetEmployeeCardRepository().Create(ec);
+
                 unitOfWork.Save();
 
                 response.EmployeeByBusinessPartner = addedEmployeeByBusinessPartner.ConvertToEmployeeByBusinessPartnerViewModel();
@@ -93,7 +108,21 @@ namespace ServiceCore.Implementations.Employees
             EmployeeByBusinessPartnerResponse response = new EmployeeByBusinessPartnerResponse();
             try
             {
-                EmployeeByBusinessPartner deletedEmployeeByBusinessPartner = unitOfWork.GetEmployeeByBusinessPartnerRepository().Delete(identifier);
+                EmployeeByBusinessPartner deletedEmployeeByBusinessPartner = unitOfWork.GetEmployeeByBusinessPartnerRepository()
+                    .Delete(identifier);
+
+                EmployeeCard ec = new EmployeeCard()
+                {
+                    Identifier = Guid.NewGuid(),
+                    EmployeeId = deletedEmployeeByBusinessPartner.EmployeeId,
+                    CardDate = DateTime.Now,
+                    Description = "Radnik " + deletedEmployeeByBusinessPartner.Employee?.Name + " je raskinuo ugovor sa firmom " + deletedEmployeeByBusinessPartner.BusinessPartner?.Name,
+                    CreatedById = deletedEmployeeByBusinessPartner.CreatedById,
+                    CompanyId = deletedEmployeeByBusinessPartner.CompanyId,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                unitOfWork.GetEmployeeCardRepository().Create(ec);
 
                 unitOfWork.Save();
 
