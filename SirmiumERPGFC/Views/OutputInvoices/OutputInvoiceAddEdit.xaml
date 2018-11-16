@@ -59,11 +59,7 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Broj fakture" />
                     <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentOutputInvoice.InvoiceNumber}" />
-
-                    <!--<ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxBankAccountTypeConverter" Margin="2"
-                                            SelectedItem="{Binding Path=CurrentFavor.Pdv, Converter={StaticResource cbxPdvPercentRateConverter}, Mode=TwoWay}"
-                                            ItemsSource="{Binding Path=PdvPercentRateOptions}">
-                    </ComboBox>-->
+                   
                     <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Datum fakture" />
                     <DatePicker Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" SelectedDate="{Binding Path=CurrentOutputInvoice.InvoiceDate}" />
 

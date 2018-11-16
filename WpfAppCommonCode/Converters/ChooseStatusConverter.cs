@@ -22,14 +22,26 @@ namespace WpfAppCommonCode.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            if (value is int) //---vraca 1 i 2
+            //if (value is int) //---vraca 1 i 2
+            //{
+            //    if ((int)value == 1)
+            //        return ChooseO;
+            //    else if ((int)value == 2)
+            //        return ChooseB;
+            //    return Choose;
+            //}
+            if (value != null && value is string)
             {
-                if ((int)value == 1)
+                int val = 0;
+                Int32.TryParse(value.ToString(), out val);
+
+                if (val == 1)
                     return ChooseO;
-                else if ((int)value == 2)
+                else if (val == 2)
                     return ChooseB;
                 return Choose;
             }
+
             return Choose;
 
         }

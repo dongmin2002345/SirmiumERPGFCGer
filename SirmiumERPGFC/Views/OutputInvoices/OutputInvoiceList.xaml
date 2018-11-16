@@ -209,14 +209,15 @@
                         <DataGridTextColumn SortMemberPath="Supplier" Header="Dobavljač" Binding="{Binding Supplier}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="Broj fakture" Binding="{Binding InvoiceNumber}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="InvoiceDate" Header="Datum fakture" Binding="{Binding InvoiceDate}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="InvoiceDate" Header="Datum fakture" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="AmountNet" Header="Iznos neto" Binding="{Binding AmountNet}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PdvPercent" Header="PDV%" Binding="{Binding PdvPercent}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Pdv" Header="PDV" Binding="{Binding Pdv}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="AmountGross" Header="Iznos bruto" Binding="{Binding AmountGross}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Currency" Header="Valuta" Binding="{Binding Currency}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DateOfPayment" Header="Datum plaćanja" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Status" Header="Status" Binding="{Binding Status, Converter={StaticResource cbxChooseStatusConverter} }" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="StatusDate" Header="Datum statusa" Binding="{Binding StatusDate}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="StatusDate" Header="Datum statusa" Binding="{Binding StatusDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
