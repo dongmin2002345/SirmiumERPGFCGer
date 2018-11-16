@@ -498,20 +498,7 @@ namespace SirmiumERPGFC.Repository.Common
 					#endregion
 
 					#region Invoices
-
-					//#region OutputInvoices
-					//if (withTableDrop)
-					//{
-					//    try
-					//    {
-					//        SqliteCommand dropTable = new SqliteCommand("DROP TABLE OutputInvoices", db);
-					//        dropTable.ExecuteNonQuery();
-					//    }
-					//    catch (Exception ex) { }
-					//}
-					//createTable = new SqliteCommand(OutputInvoiceSQLiteRepository.OutputInvoiceTableCreatePart, db);
-					//createTable.ExecuteReader();
-					//#endregion
+					
                     #region OutputInvoices
                     if (withTableDrop)
                     {
