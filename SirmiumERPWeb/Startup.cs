@@ -13,6 +13,7 @@ using ServiceCore.Implementations.Common;
 using ServiceCore.Implementations.Common.BusinessPartners;
 using ServiceCore.Implementations.Common.Companies;
 using ServiceCore.Implementations.Common.Identity;
+using ServiceCore.Implementations.Common.InputInvoices;
 using ServiceCore.Implementations.Common.Locations;
 using ServiceCore.Implementations.Common.OutputInvoices;
 using ServiceCore.Implementations.Common.Professions;
@@ -24,6 +25,7 @@ using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Identity;
+using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Abstractions.Common.Professions;
@@ -137,8 +139,9 @@ namespace SirmiumERPWeb
             services.AddScoped<IBusinessPartnerLocationService, BusinessPartnerLocationService>();
 
             services.AddScoped<IOutputInvoiceService, OutputInvoiceService>();
+			services.AddScoped<IInputInvoiceService, InputInvoiceService>();
 
-            services.AddScoped<ICityService, CityService>();
+			services.AddScoped<ICityService, CityService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<IMunicipalityService, MunicipalityService>();
             services.AddScoped<ICountryService, CountryService>();

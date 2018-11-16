@@ -33,6 +33,7 @@ using SirmiumERPGFC.Views.Banks;
 using SirmiumERPGFC.Views.ConstructionSites;
 using SirmiumERPGFC.Views.Common;
 using SirmiumERPGFC.Views.Administrations;
+using SirmiumERPGFC.Views.InputInvoices;
 
 namespace SirmiumERPGFC
 {
@@ -355,7 +356,13 @@ namespace SirmiumERPGFC
             //OpenTab("Izlazni računi", new OutputInvoiceList());
         }
 
-        private void mniCities_Click(object sender, RoutedEventArgs e)
+		private void mniInputInvoices_Click(object sender, RoutedEventArgs e)
+		{
+			cntCtrl.Content = new InputInvoiceList();
+			//OpenTab("Ulayni računi", new InputInvoiceList());
+		}
+
+		private void mniCities_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new CityList();
             //OpenTab("Gradovi", new CityList());

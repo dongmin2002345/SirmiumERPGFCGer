@@ -142,6 +142,7 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 				{
 					_PDVPercent = value;
 					NotifyPropertyChanged("PDVPercent");
+					PDV = AmountNet * PDVPercent / 100;
 				}
 			}
 		}
@@ -159,6 +160,10 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 				{
 					_PDV = value;
 					NotifyPropertyChanged("PDV");
+					if (PDV != null && AmountNet != null)
+					{
+						AmountGross = AmountNet + PDV;
+					}
 				}
 			}
 		}
