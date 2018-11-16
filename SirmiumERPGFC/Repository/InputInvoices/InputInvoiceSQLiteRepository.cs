@@ -33,7 +33,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 		  "AmountGross DECIMAL(18, 2) NULL, " +
 		  "Currency DECIMAL(18, 2) NULL, " +
 		  "DateOfPaymet DATETIME NULL, " +
-		  "Status NVARCHAR(48) NULL, " +
+		  "Status INTEGER NULL, " +
 		  "StatusDate DATETIME NULL, " +
 		  "Description NVARCHAR(48) NULL, " +
 		  "IsSynced BOOL NULL, " +
@@ -116,7 +116,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
 						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
@@ -210,7 +210,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
 						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
@@ -271,7 +271,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
 						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
+						dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);

@@ -178,7 +178,7 @@
                               SelectedItem="{Binding Path=CurrentInputInvoice, Mode=TwoWay}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Redni broj" Binding="{Binding Code}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="Redni broj" Binding="{Binding Code}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="Poslovni partner" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Supplier" Header="Dobavljač" Binding="{Binding Supplier}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
