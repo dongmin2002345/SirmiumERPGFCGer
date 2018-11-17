@@ -33,6 +33,7 @@ namespace DataMapper.Mappers.Employees
 
                 StartDate = employeeByConstructionSite.StartDate,
                 EndDate = employeeByConstructionSite.EndDate,
+                RealEndDate = employeeByConstructionSite.RealEndDate,
 
                 Employee = employeeByConstructionSite.Employee?.ConvertToEmployeeViewModelLite(),
                 BusinessPartner = employeeByConstructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModel(), 
@@ -63,6 +64,7 @@ namespace DataMapper.Mappers.Employees
 
                 StartDate = employeeByConstructionSite.StartDate,
                 EndDate = employeeByConstructionSite.EndDate,
+                RealEndDate = employeeByConstructionSite.RealEndDate,
 
                 IsActive = employeeByConstructionSite.Active,
 
@@ -84,6 +86,7 @@ namespace DataMapper.Mappers.Employees
                 Code = employeeByConstructionSiteViewModel.Code,
                 StartDate = employeeByConstructionSiteViewModel.StartDate,
                 EndDate = employeeByConstructionSiteViewModel.EndDate,
+                RealEndDate = employeeByConstructionSiteViewModel.RealEndDate,
 
                 EmployeeId = employeeByConstructionSiteViewModel.Employee?.Id ?? null,
                 BusinessPartnerId = employeeByConstructionSiteViewModel.BusinessPartner?.Id ?? null, 

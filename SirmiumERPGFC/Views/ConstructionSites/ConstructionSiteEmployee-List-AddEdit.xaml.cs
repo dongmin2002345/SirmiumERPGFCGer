@@ -101,7 +101,24 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             }
         }
         #endregion
-        
+
+        #region RealContractEndDate
+        private DateTime _RealContractEndDate = DateTime.Now;
+
+        public DateTime RealContractEndDate
+        {
+            get { return _RealContractEndDate; }
+            set
+            {
+                if (_RealContractEndDate != value)
+                {
+                    _RealContractEndDate = value;
+                    NotifyPropertyChanged("RealContractEndDate");
+                }
+            }
+        }
+        #endregion
+
 
         #region EmployeesNotOnConstructionSiteFromDB
         private ObservableCollection<EmployeeViewModel> _EmployeesNotOnConstructionSiteFromDB;
@@ -497,8 +514,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 Thread th = new Thread(() =>
                 {
-                    EmployeeByConstructionSiteListResponse listResponse = new EmployeeByConstructionSiteSQLiteRepository().GetByConstructionSiteAndBusinessPartner(CurrentConstructionSite.Identifier, CurrentBusinessPartner?.Identifier);
-                    EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(CurrentEmployeeOnConstructionSite.Identifier);
+                    CurrentEmployeeOnConstructionSite.RealEndDate = RealContractEndDate;
+                    EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(CurrentEmployeeOnConstructionSite);
                     if (!response.Success)
                     {
                         MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";

@@ -61,6 +61,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region RealEndDate
+        private DateTime? _RealEndDate;
+
+        public DateTime? RealEndDate
+        {
+            get { return _RealEndDate; }
+            set
+            {
+                if (_RealEndDate != value)
+                {
+                    _RealEndDate = value;
+                    NotifyPropertyChanged("RealEndDate");
+                }
+            }
+        }
+        #endregion
+
 
         #region Employee
         private EmployeeViewModel _Employee;

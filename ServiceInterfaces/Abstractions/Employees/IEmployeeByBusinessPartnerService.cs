@@ -14,7 +14,7 @@ namespace ServiceInterfaces.Abstractions.Employees
         EmployeeByBusinessPartnerListResponse GetEmployeeByBusinessPartnersNewerThen(int companyId, DateTime? lastUpdateTime);
 
         EmployeeByBusinessPartnerResponse Create(EmployeeByBusinessPartnerViewModel employeeByBusinessPartner);
-        EmployeeByBusinessPartnerResponse Delete(Guid identifier);
+        EmployeeByBusinessPartnerResponse Delete(EmployeeByBusinessPartnerViewModel employeeByBusinessPartner);
 
         EmployeeByBusinessPartnerListResponse Sync(SyncEmployeeByBusinessPartnerRequest request);
     }

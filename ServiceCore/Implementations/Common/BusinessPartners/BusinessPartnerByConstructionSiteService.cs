@@ -88,12 +88,12 @@ namespace ServiceCore.Implementations.Common
             return response;
         }
 
-        public BusinessPartnerByConstructionSiteResponse Delete(Guid identifier)
+        public BusinessPartnerByConstructionSiteResponse Delete(BusinessPartnerByConstructionSiteViewModel re)
         {
             BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
             try
             {
-                BusinessPartnerByConstructionSite deletedBusinessPartnerByConstructionSite = unitOfWork.GetBusinessPartnerByConstructionSiteRepository().Delete(identifier);
+                BusinessPartnerByConstructionSite deletedBusinessPartnerByConstructionSite = unitOfWork.GetBusinessPartnerByConstructionSiteRepository().Delete(re.ConvertToBusinessPartnerByConstructionSite());
 
                 unitOfWork.Save();
 

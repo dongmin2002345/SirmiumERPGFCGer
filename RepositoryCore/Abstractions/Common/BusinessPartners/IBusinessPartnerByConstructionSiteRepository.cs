@@ -11,6 +11,6 @@ namespace RepositoryCore.Abstractions.Common.BusinessPartners
         List<BusinessPartnerByConstructionSite> GetBusinessPartnerByConstructionSitesNewerThen(int companyId, DateTime lastUpdateTime);
 
         BusinessPartnerByConstructionSite Create(BusinessPartnerByConstructionSite businessPartnerByConstructionSite);
-        BusinessPartnerByConstructionSite Delete(Guid identifier);
+        BusinessPartnerByConstructionSite Delete(BusinessPartnerByConstructionSite businessPartnerByConstructionSite);
     }
 }

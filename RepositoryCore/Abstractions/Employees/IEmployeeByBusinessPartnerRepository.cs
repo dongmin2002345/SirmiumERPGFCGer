@@ -11,6 +11,6 @@ namespace RepositoryCore.Abstractions.Employees
         List<EmployeeByBusinessPartner> GetEmployeeByBusinessPartnersNewerThen(int companyId, DateTime lastUpdateTime);
 
         EmployeeByBusinessPartner Create(EmployeeByBusinessPartner employeeByBusinessPartner);
-        EmployeeByBusinessPartner Delete(Guid identifier);
+        EmployeeByBusinessPartner Delete(EmployeeByBusinessPartner employeeByBusinessPartner);
     }
 }

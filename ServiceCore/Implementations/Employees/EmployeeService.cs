@@ -79,10 +79,13 @@ namespace ServiceCore.Implementations.Employees
                 Employee.EmployeeItems = null;
 
                 List<EmployeeProfessionItemViewModel> EmployeeProfessions = Employee.EmployeeProfessions?.ToList() ?? new List<EmployeeProfessionItemViewModel>();
-                Employee.EmployeeLicences = null;
+                Employee.EmployeeProfessions = null;
 
                 List<EmployeeLicenceItemViewModel> EmployeeLicences = Employee.EmployeeLicences?.ToList() ?? new List<EmployeeLicenceItemViewModel>();
-                Employee.EmployeeProfessions = null;
+                Employee.EmployeeLicences = null;
+
+                List<EmployeeNoteViewModel> EmployeeNotes = Employee.EmployeeNotes?.ToList() ?? new List<EmployeeNoteViewModel>();
+                Employee.EmployeeNotes = null;
 
                 // Create animal input note
                 Employee createdEmployee = unitOfWork.GetEmployeeRepository()
@@ -121,6 +124,17 @@ namespace ServiceCore.Implementations.Employees
                 {
                     item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
                     unitOfWork.GetEmployeeProfessionRepository().Create(item.ConvertToEmployeeProfession());
+                }
+
+                // Update items
+                var EmployeeNotesFromDB = unitOfWork.GetEmployeeNoteRepository().GetEmployeeNotesByEmployee(createdEmployee.Id);
+                foreach (var item in EmployeeNotesFromDB)
+                    if (!EmployeeNotes.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetEmployeeNoteRepository().Delete(item.Identifier);
+                foreach (var item in EmployeeNotes)
+                {
+                    item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                    unitOfWork.GetEmployeeNoteRepository().Create(item.ConvertToEmployeeNote());
                 }
 
                 unitOfWork.Save();

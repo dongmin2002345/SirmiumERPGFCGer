@@ -22,6 +22,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "Code NVARCHAR(48) NULL, " +
                "StartDate DATETIME NULL, " +
                "EndDate DATETIME NULL, " +
+               "RealEndDate DATETIME NULL, " +
                "EmployeeId INTEGER NULL, " +
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode INTEGER NULL, " +
@@ -42,20 +43,20 @@ namespace SirmiumERPGFC.Repository.Employees
                "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-           "SELECT ServerId, Identifier, Code, StartDate, EndDate, " +
+           "SELECT ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeByConstructionSites " +
-           "(Id, ServerId, Identifier, Code, StartDate, EndDate, " +
+           "(Id, ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, " +
+           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, @RealEndDate, " +
            "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName,  " +
            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName,  " +
            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName,  " +
@@ -73,7 +74,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        "SELECT ecs.ServerId, ecs.Identifier, ecs.Code, ecs.StartDate, ecs.EndDate, " +
+                        "SELECT ecs.ServerId, ecs.Identifier, ecs.Code, ecs.StartDate, ecs.EndDate, ecs.RealEndDate, " +
                         "ecs.EmployeeId, ecs.EmployeeIdentifier, ecs.EmployeeCode, ecs.EmployeeName, e.SurName, e.Passport,  " +
                         "ecs.BusinessPartnerId, ecs.BusinessPartnerIdentifier, ecs.BusinessPartnerCode, ecs.BusinessPartnerName,  " +
                         "ecs.ConstructionSiteId, ecs.ConstructionSiteIdentifier, ecs.ConstructionSiteCode, ecs.ConstructionSiteName,  " +
@@ -96,6 +97,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter); 
                         dbEntry.Employee.Passport = SQLiteHelper.GetString(query, ref counter); 
@@ -198,6 +200,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@Code", ((object)employeeByConstructionSite.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@StartDate", ((object)employeeByConstructionSite.StartDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EndDate", ((object)employeeByConstructionSite.EndDate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)employeeByConstructionSite.RealEndDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)employeeByConstructionSite.Employee?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByConstructionSite.Employee?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByConstructionSite.Employee?.Code) ?? DBNull.Value);

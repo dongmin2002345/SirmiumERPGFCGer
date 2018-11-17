@@ -35,6 +35,23 @@
         <Fluent:Ribbon Grid.Row="0">
 
             <Fluent:RibbonTabItem Header="Radnici" KeyTip="RAD">
+                <Fluent:RibbonGroupBox Header="Radnici - Firme - Gradilišta">
+                    <Fluent:Button x:Name="mniBusinessPartnerEmployees" Click="mniBusinessPartnerEmployees_Click" Header="Radnici po firmama" KeyTip="RPF" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\Radnici_Na_Firmama.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button x:Name="mniConstructionSiteEmployees" Click="mniConstructionSiteEmployees_Click" Header="Radnici po gradilištu" KeyTip="SEK" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\Radnici_Na_Gradilistu.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                    <Fluent:Button x:Name="mniConstructionSiteBusinessPartners" Click="mniConstructionSiteBusinessPartners_Click" Header="Firme po gradilištu" KeyTip="FPG" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\Firme_Na_Gradilistu.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="Radnici">
                     <Fluent:Button Click="mniIndividuals_Click" Header="Radnici" KeyTip="RAD" Width="70">
                         <Fluent:Button.LargeIcon>
@@ -59,20 +76,7 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="Firme" KeyTip="FIR">
-                <Fluent:RibbonGroupBox>
-                    <Fluent:Button x:Name="mniBusinessPartnerEmployees" Click="mniBusinessPartnerEmployees_Click" Header="Radnici po firmama" KeyTip="RPF" Width="70">
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\Radnici_Na_Firmama.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                    <Fluent:Button x:Name="mniBusinessPartnerType" Click="mniBusinessPartnerType_Click" Header="Tip poslovnog partnera" KeyTip="RNP" Width="85">
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\TIP_PP.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                </Fluent:RibbonGroupBox>
-                
+            <Fluent:RibbonTabItem Header="Firme" KeyTip="FIR">                
                 <Fluent:RibbonGroupBox Header="Firme">
                     <Fluent:Button Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" Width="70">
                         <Fluent:Button.LargeIcon>
@@ -90,21 +94,16 @@
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
-            </Fluent:RibbonTabItem>
-
-            <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">
                 <Fluent:RibbonGroupBox>
-                    <Fluent:Button x:Name="mniConstructionSiteEmployees" Click="mniConstructionSiteEmployees_Click" Header="Radnici po gradilištu" KeyTip="SEK" Width="70">
+                    <Fluent:Button x:Name="mniBusinessPartnerType" Click="mniBusinessPartnerType_Click" Header="Tip poslovnog partnera" KeyTip="RNP" Width="85">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\Radnici_Na_Gradilistu.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                    <Fluent:Button x:Name="mniConstructionSiteBusinessPartners" Click="mniConstructionSiteBusinessPartners_Click" Header="Firme po gradilištu" KeyTip="FPG" Width="70">
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\Firme_Na_Gradilistu.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\TIP_PP.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">
                 <Fluent:RibbonGroupBox Header="Gradilišta">
                     <Fluent:Button x:Name="mniConstructionSite" Click="mniConstructionSite_Click" Header="Gradilišta" KeyTip="SEK" Width="70">
                         <Fluent:Button.LargeIcon>

@@ -110,12 +110,12 @@ namespace ServiceCore.Implementations.Employees
             return response;
         }
 
-        public EmployeeByConstructionSiteResponse Delete(Guid identifier)
+        public EmployeeByConstructionSiteResponse Delete(EmployeeByConstructionSiteViewModel re)
         {
             EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteResponse();
             try
             {
-                EmployeeByConstructionSite deletedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(identifier);
+                EmployeeByConstructionSite deletedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(re.ConvertToEmployeeByConstructionSite());
 
                 Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee((int)deletedEmployeeByConstructionSite.EmployeeId);
                 employee.ConstructionSiteCode = "";

@@ -21,6 +21,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "Code NVARCHAR(48) NULL, " +
             "StartDate DATETIME NULL, " +
             "EndDate DATETIME NULL, " +
+            "RealEndDate DATETIME NULL, " +
             "MaxNumOfEmployees INTEGER NULL, " + 
             "BusinessPartnerId INTEGER NULL, " +
             "BusinessPartnerIdentifier GUID NULL, " +
@@ -38,18 +39,18 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-           "SELECT ServerId, Identifier, Code, StartDate, EndDate, MaxNumOfEmployees, " +
+           "SELECT ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, MaxNumOfEmployees, " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerByConstructionSites " +
-           "(Id, ServerId, Identifier, Code, StartDate, EndDate, MaxNumOfEmployees, " +
+           "(Id, ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, MaxNumOfEmployees, " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, @MaxNumOfEmployees, " +
+           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, @RealEndDate, @MaxNumOfEmployees, " +
            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName,  " +
            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -82,6 +83,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.MaxNumOfEmployees = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
                         dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
@@ -182,6 +184,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerByConstructionSite.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@StartDate", ((object)businessPartnerByConstructionSite.StartDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EndDate", ((object)businessPartnerByConstructionSite.EndDate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)businessPartnerByConstructionSite.EndDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@MaxNumOfEmployees", ((object)businessPartnerByConstructionSite.MaxNumOfEmployees) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerByConstructionSite.BusinessPartner?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerByConstructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);

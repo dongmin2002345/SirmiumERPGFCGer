@@ -545,6 +545,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region EmployeeNotes
+        private ObservableCollection<EmployeeNoteViewModel> _EmployeeNotes;
+
+        public ObservableCollection<EmployeeNoteViewModel> EmployeeNotes
+        {
+            get { return _EmployeeNotes; }
+            set
+            {
+                if (_EmployeeNotes != value)
+                {
+                    _EmployeeNotes = value;
+                    NotifyPropertyChanged("EmployeeNotes");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

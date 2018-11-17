@@ -108,6 +108,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Code = businessPartnerByConstructionSite.Code;
                     dbEntry.StartDate = businessPartnerByConstructionSite.StartDate;
                     dbEntry.EndDate = businessPartnerByConstructionSite.EndDate;
+                    dbEntry.RealEndDate = businessPartnerByConstructionSite.RealEndDate;
                     dbEntry.MaxNumOfEmployees = businessPartnerByConstructionSite.MaxNumOfEmployees;
 
                     // Set timestamp
@@ -118,16 +119,17 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             }
         }
 
-        public BusinessPartnerByConstructionSite Delete(Guid identifier)
+        public BusinessPartnerByConstructionSite Delete(BusinessPartnerByConstructionSite businessPartnerByConstructionSite)
         {
             // Load BusinessPartnerByConstructionSite that will be deleted
             BusinessPartnerByConstructionSite dbEntry = context.BusinessPartnerByConstructionSites
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == businessPartnerByConstructionSite.Identifier && x.Active == true);
 
             if (dbEntry != null)
             {
                 // Set activity
                 dbEntry.Active = false;
+                dbEntry.RealEndDate = businessPartnerByConstructionSite.RealEndDate;
                 // Set timestamp
                 dbEntry.UpdatedAt = DateTime.Now;
             }

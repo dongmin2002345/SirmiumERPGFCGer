@@ -70,14 +70,12 @@ namespace ServiceWebApi.Implementations.Common.BusinessPartners
             return response;
         }
 
-        public BusinessPartnerByConstructionSiteResponse Delete(Guid identifier)
+        public BusinessPartnerByConstructionSiteResponse Delete(BusinessPartnerByConstructionSiteViewModel businessPartnerByConstructionSite)
         {
             BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
             try
             {
-                BusinessPartnerByConstructionSiteViewModel re = new BusinessPartnerByConstructionSiteViewModel();
-                re.Identifier = identifier;
-                response = WpfApiHandler.SendToApi<BusinessPartnerByConstructionSiteViewModel, BusinessPartnerByConstructionSiteResponse>(re, "Delete");
+                response = WpfApiHandler.SendToApi<BusinessPartnerByConstructionSiteViewModel, BusinessPartnerByConstructionSiteResponse>(businessPartnerByConstructionSite, "Delete");
             }
             catch (Exception ex)
             {

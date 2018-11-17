@@ -21,6 +21,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "Code NVARCHAR(48) NULL, " +
                "StartDate DATETIME NULL, " +
                "EndDate DATETIME NULL, " +
+               "RealEndDate DATETIME NULL, " +
                "EmployeeId INTEGER NULL, " +
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode INTEGER NULL, " +
@@ -37,18 +38,18 @@ namespace SirmiumERPGFC.Repository.Employees
                "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-           "SELECT ServerId, Identifier, Code, StartDate, EndDate, " +
+           "SELECT ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeByBusinessPartners " +
-           "(Id, ServerId, Identifier, Code, StartDate, EndDate, " +
+           "(Id, ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, " +
+           "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, @RealEndDate, " +
            "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName,  " +
            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -65,7 +66,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        "SELECT ebp.ServerId, ebp.Identifier, ebp.Code, ebp.StartDate, ebp.EndDate, " +
+                        "SELECT ebp.ServerId, ebp.Identifier, ebp.Code, ebp.StartDate, ebp.EndDate, ebp.RealEndDate, " +
                         "ebp.EmployeeId, ebp.EmployeeIdentifier, ebp.EmployeeCode, ebp.EmployeeName, e.SurName, e.Passport,  " +
                         "ebp.BusinessPartnerId, ebp.BusinessPartnerIdentifier, ebp.BusinessPartnerCode, ebp.BusinessPartnerName,  " +
                         "ebp.IsSynced, ebp.UpdatedAt, ebp.CreatedById, ebp.CreatedByName, ebp.CompanyId, ebp.CompanyName " +
@@ -85,6 +86,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Employee.Passport = SQLiteHelper.GetString(query, ref counter);
@@ -186,6 +188,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@Code", ((object)employeeByBusinessPartner.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@StartDate", ((object)employeeByBusinessPartner.StartDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EndDate", ((object)employeeByBusinessPartner.EndDate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)employeeByBusinessPartner.RealEndDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)employeeByBusinessPartner.Employee?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByBusinessPartner.Employee?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByBusinessPartner.Employee?.Code) ?? DBNull.Value);

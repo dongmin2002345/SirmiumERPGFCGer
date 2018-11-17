@@ -120,15 +120,13 @@
             </GroupBox>
         </Grid>
 
-        <GroupBox Grid.Row="0" Grid.Column="1" Header="Firme na odabranom gradilištu" Margin="1 2 2 2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
+            <GroupBox Header="Firme na odabranom gradilištu" Margin="1 2 2 2">
                 <DataGrid x:Name="dgConstructionSiteBusinessPartners"    
                               Grid.Row="1" Grid.ColumnSpan="6"
                               Margin="2"
@@ -153,14 +151,20 @@
                         <DataGridTextColumn SortMemberPath="EndDate" Header="Ugovor do" Binding="{Binding EndDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                     </DataGrid.Columns>
                 </DataGrid>
+            </GroupBox>
 
-                <Separator Grid.Row="2" />
+
+            <GroupBox Grid.Row="1" Header="Prekid ugovora između gradilišta i firme">
 
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Prekid ugovora: " VerticalAlignment="Center"/>
+                    <DatePicker Grid.Row="0" Grid.Column="1" Margin="2" SelectedDate="{Binding Path=RealContractEndDate, Mode=TwoWay}" />
 
                     <Button  x:Name="btnDelete" Click="btnDelete_Click" Margin="2" Grid.Column="2">
                         <StackPanel Orientation="Horizontal">
@@ -169,8 +173,8 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-            </Grid>
-        </GroupBox>
+            </GroupBox>
+        </Grid>
 
         <Separator Grid.Row="1" Grid.ColumnSpan="2" />
 

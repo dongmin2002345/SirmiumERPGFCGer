@@ -70,14 +70,12 @@ namespace ServiceWebApi.Implementations.Employees
             return response;
         }
 
-        public EmployeeByBusinessPartnerResponse Delete(Guid identifier)
+        public EmployeeByBusinessPartnerResponse Delete(EmployeeByBusinessPartnerViewModel employeeByBusinessPartner)
         {
             EmployeeByBusinessPartnerResponse response = new EmployeeByBusinessPartnerResponse();
             try
             {
-                EmployeeByBusinessPartnerViewModel re = new EmployeeByBusinessPartnerViewModel();
-                re.Identifier = identifier;
-                response = WpfApiHandler.SendToApi<EmployeeByBusinessPartnerViewModel, EmployeeByBusinessPartnerResponse>(re, "Delete");
+                response = WpfApiHandler.SendToApi<EmployeeByBusinessPartnerViewModel, EmployeeByBusinessPartnerResponse>(employeeByBusinessPartner, "Delete");
             }
             catch (Exception ex)
             {

@@ -70,6 +70,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IEmployeeRepository employeeRepository;
         private IEmployeeItemRepository employeeItemRepository;
+        private IEmployeeNoteRepository employeeNoteRepository;
         private IEmployeeCardRepository employeeCardRepository;
         private IEmployeeDocumentRepository employeeDocumentRepository;
         private IEmployeeLicenceRepository employeeLicenceRepository; 
@@ -319,6 +320,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (employeeItemRepository == null)
                 employeeItemRepository = new EmployeeItemRepository(context);
             return employeeItemRepository;
+        }
+
+        public IEmployeeNoteRepository GetEmployeeNoteRepository()
+        {
+            if (employeeNoteRepository == null)
+                employeeNoteRepository = new EmployeeNoteRepository(context);
+            return employeeNoteRepository;
         }
 
         public IEmployeeCardRepository GetEmployeeCardRepository()

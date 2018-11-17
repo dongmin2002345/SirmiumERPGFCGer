@@ -76,7 +76,7 @@ namespace SirmiumERPWeb.Controllers.BusinessPartners
             BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
             try
             {
-                response = this.employeeByConstructionSiteService.Delete(employeeByConstructionSite.Identifier);
+                response = this.employeeByConstructionSiteService.Delete(employeeByConstructionSite);
             }
             catch (Exception ex)
             {

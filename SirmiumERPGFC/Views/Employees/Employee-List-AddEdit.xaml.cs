@@ -328,6 +328,75 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
 
+        #region EmployeeNotesFromDB
+        private ObservableCollection<EmployeeNoteViewModel> _EmployeeNotesFromDB;
+
+        public ObservableCollection<EmployeeNoteViewModel> EmployeeNotesFromDB
+        {
+            get { return _EmployeeNotesFromDB; }
+            set
+            {
+                if (_EmployeeNotesFromDB != value)
+                {
+                    _EmployeeNotesFromDB = value;
+                    NotifyPropertyChanged("EmployeeNotesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeNoteForm
+        private EmployeeNoteViewModel _CurrentEmployeeNoteForm = new EmployeeNoteViewModel() { NoteDate = DateTime.Now };
+
+        public EmployeeNoteViewModel CurrentEmployeeNoteForm
+        {
+            get { return _CurrentEmployeeNoteForm; }
+            set
+            {
+                if (_CurrentEmployeeNoteForm != value)
+                {
+                    _CurrentEmployeeNoteForm = value;
+                    NotifyPropertyChanged("CurrentEmployeeNoteForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeNoteDG
+        private EmployeeNoteViewModel _CurrentEmployeeNoteDG;
+
+        public EmployeeNoteViewModel CurrentEmployeeNoteDG
+        {
+            get { return _CurrentEmployeeNoteDG; }
+            set
+            {
+                if (_CurrentEmployeeNoteDG != value)
+                {
+                    _CurrentEmployeeNoteDG = value;
+                    NotifyPropertyChanged("CurrentEmployeeNoteDG");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeNoteDataLoading
+        private bool _EmployeeNoteDataLoading;
+
+        public bool EmployeeNoteDataLoading
+        {
+            get { return _EmployeeNoteDataLoading; }
+            set
+            {
+                if (_EmployeeNoteDataLoading != value)
+                {
+                    _EmployeeNoteDataLoading = value;
+                    NotifyPropertyChanged("EmployeeNoteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region GenderOptions
         public ObservableCollection<String> GenderOptions
         {
@@ -491,6 +560,7 @@ namespace SirmiumERPGFC.Views.Employees
                 DisplayProfessionItemData();
                 DisplayLicenceItemData();
                 DisplayDocumentData();
+                DisplayEmployeeNoteData();
             });
             displayThread.IsBackground = true;
             displayThread.Start();
@@ -580,6 +650,26 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             EmployeeDocumentDataLoading = false;
+        }
+
+        private void DisplayEmployeeNoteData()
+        {
+            EmployeeNoteDataLoading = true;
+
+            EmployeeNoteListResponse response = new EmployeeNoteSQLiteRepository()
+                .GetEmployeeNotesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeNotesFromDB = new ObservableCollection<EmployeeNoteViewModel>(
+                    response.EmployeeNotes ?? new List<EmployeeNoteViewModel>());
+            }
+            else
+            {
+                EmployeeNotesFromDB = new ObservableCollection<EmployeeNoteViewModel>();
+            }
+
+            EmployeeNoteDataLoading = false;
         }
 
         #endregion
@@ -830,6 +920,83 @@ namespace SirmiumERPGFC.Views.Employees
 
         #endregion
 
+        #region Add, edit, delete and cancel note
+
+        private void btnAddNote_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentEmployeeNoteForm.Note))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Napomena";
+                return;
+            }
+
+            if (CurrentEmployeeNoteForm.NoteDate == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Datum napomene";
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new EmployeeNoteSQLiteRepository().Delete(CurrentEmployeeNoteForm.Identifier);
+
+            CurrentEmployeeNoteForm.Employee = CurrentEmployee;
+            CurrentEmployeeNoteForm.Identifier = Guid.NewGuid();
+            CurrentEmployeeNoteForm.IsSynced = false;
+            CurrentEmployeeNoteForm.UpdatedAt = DateTime.Now;
+            CurrentEmployeeNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentEmployeeNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new EmployeeNoteSQLiteRepository().Create(CurrentEmployeeNoteForm);
+            if (response.Success)
+            {
+                CurrentEmployeeNoteForm = new EmployeeNoteViewModel();
+
+                Thread displayThread = new Thread(() => DisplayEmployeeNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtNote.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnEditNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeNoteForm = CurrentEmployeeNoteDG;
+        }
+
+        private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new EmployeeNoteSQLiteRepository().Delete(CurrentEmployeeNoteDG.Identifier);
+
+                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => DisplayEmployeeNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        private void btnCancelNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeNoteForm = new EmployeeNoteViewModel();
+        }
+
+        #endregion
+
         #region Submit and Cancel button
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -862,6 +1029,7 @@ namespace SirmiumERPGFC.Views.Employees
                     CurrentEmployee.EmployeeLicences = EmployeeLicenceItemsFromDB;
                     CurrentEmployee.EmployeeProfessions = EmployeeProfessionItemsFromDB;
                     CurrentEmployee.EmployeeDocuments = EmployeeDocumentsFromDB;
+                    CurrentEmployee.EmployeeNotes = EmployeeNotesFromDB;
 
                     EmployeeResponse response = EmployeeService.Create(CurrentEmployee);
 

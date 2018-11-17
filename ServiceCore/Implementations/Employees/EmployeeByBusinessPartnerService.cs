@@ -103,13 +103,13 @@ namespace ServiceCore.Implementations.Employees
             return response;
         }
 
-        public EmployeeByBusinessPartnerResponse Delete(Guid identifier)
+        public EmployeeByBusinessPartnerResponse Delete(EmployeeByBusinessPartnerViewModel employeeByBysinessPartner)
         {
             EmployeeByBusinessPartnerResponse response = new EmployeeByBusinessPartnerResponse();
             try
             {
                 EmployeeByBusinessPartner deletedEmployeeByBusinessPartner = unitOfWork.GetEmployeeByBusinessPartnerRepository()
-                    .Delete(identifier);
+                    .Delete(employeeByBysinessPartner.ConvertToEmployeeByBusinessPartner());
 
                 EmployeeCard ec = new EmployeeCard()
                 {

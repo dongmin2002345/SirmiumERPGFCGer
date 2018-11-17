@@ -106,7 +106,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Datum početka ugovora: " VerticalAlignment="Center"/>
                     <DatePicker Grid.Row="0" Grid.Column="1" Margin="2" SelectedDate="{Binding Path=ContractStartDate, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Datum prekida ugovora: " VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Dogovoreni prekid ugovora: " VerticalAlignment="Center"/>
                     <DatePicker Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding Path=ContractEndDate, Mode=TwoWay}" />
 
                     <Button Grid.Row="1" x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Grid.Column="2">
@@ -119,17 +119,15 @@
             </GroupBox>
         </Grid>
 
-        <GroupBox Grid.Row="0" Grid.Column="1" Header="Radnici u odabranoj firmi" Margin="1 2 2 2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <GroupBox Header="Radnici u odabranoj firmi" Margin="1 2 2 2">
                 <DataGrid x:Name="dgCompanyEmployees"    
-                            Grid.Row="1" Grid.ColumnSpan="6"
+                            Grid.Row="0" Grid.ColumnSpan="6"
                             Margin="2"
                             AutoGenerateColumns="False"
                             CanUserAddRows="False"
@@ -152,14 +150,19 @@
                         <DataGridTextColumn SortMemberPath="EndDate" Header="Ugovor do" Binding="{Binding EndDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                     </DataGrid.Columns>
                 </DataGrid>
+            </GroupBox>
 
-                <Separator Grid.Row="2" />
+            <GroupBox Grid.Row="1" Header="Prekid ugovora između radnika i firme">
 
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Prekid ugovora: " VerticalAlignment="Center"/>
+                    <DatePicker Grid.Row="0" Grid.Column="1" Margin="2" SelectedDate="{Binding Path=RealContractEndDate, Mode=TwoWay}" />
 
                     <Button  x:Name="btnDelete" Click="btnDelete_Click" Margin="2" Grid.Column="2">
                         <StackPanel Orientation="Horizontal">
@@ -168,8 +171,8 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-            </Grid>
-        </GroupBox>
+            </GroupBox>
+        </Grid>
 
         <Separator Grid.Row="1" Grid.ColumnSpan="2" />
 

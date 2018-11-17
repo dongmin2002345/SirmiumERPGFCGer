@@ -71,6 +71,7 @@
     <Compile Include="Implementations\Employees\EmployeeByConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeCardService.cs" />
     <Compile Include="Implementations\Employees\EmployeeDocumentService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeNoteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeProfessionService.cs" />
     <Compile Include="Implementations\Employees\EmployeeLicenceService.cs" />
     <Compile Include="Implementations\Employees\EmployeeItemService.cs" />

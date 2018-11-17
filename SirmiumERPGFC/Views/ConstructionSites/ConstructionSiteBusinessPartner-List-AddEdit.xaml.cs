@@ -88,6 +88,24 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
+        #region RealContractEndDate
+        private DateTime _RealContractEndDate = DateTime.Now;
+
+        public DateTime RealContractEndDate
+        {
+            get { return _RealContractEndDate; }
+            set
+            {
+                if (_RealContractEndDate != value)
+                {
+                    _RealContractEndDate = value;
+                    NotifyPropertyChanged("RealContractEndDate");
+                }
+            }
+        }
+        #endregion
+
+
         #region MaxNumOfEmployees
         private int _MaxNumOfEmployees;
 
@@ -507,7 +525,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 Thread th = new Thread(() =>
                 {
                     // Remove business partner on construction site
-                    BusinessPartnerByConstructionSiteResponse response = businessPartnerByConstructionSiteService.Delete(CurrentBusinessPartnerOnConstructionSite.Identifier);
+                    CurrentBusinessPartnerOnConstructionSite.RealEndDate = RealContractEndDate;
+                    BusinessPartnerByConstructionSiteResponse response = businessPartnerByConstructionSiteService.Delete(CurrentBusinessPartnerOnConstructionSite);
                     if (!response.Success)
                     {
                         MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
@@ -522,7 +541,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                     foreach (var item in employeesResponse.EmployeeByConstructionSites)
                     {
-                        EmployeeByConstructionSiteResponse employeeResponse = employeeByConstructionSiteService.Delete(item.Identifier);
+                        item.RealEndDate = RealContractEndDate;
+                        EmployeeByConstructionSiteResponse employeeResponse = employeeByConstructionSiteService.Delete(item);
                         new EmployeeByConstructionSiteSQLiteRepository().Delete(item.Identifier);
                     }                  
 

@@ -14,7 +14,7 @@ namespace ServiceInterfaces.Abstractions.Employees
         EmployeeByConstructionSiteListResponse GetEmployeeByConstructionSitesNewerThen(int companyId, DateTime? lastUpdateTime);
 
         EmployeeByConstructionSiteResponse Create(EmployeeByConstructionSiteViewModel employeeByConstructionSite);
-        EmployeeByConstructionSiteResponse Delete(Guid identifier);
+        EmployeeByConstructionSiteResponse Delete(EmployeeByConstructionSiteViewModel employeeByConstructionSite);
 
         EmployeeByConstructionSiteListResponse Sync(SyncEmployeeByConstructionSiteRequest request);
     }

@@ -108,6 +108,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.Code = employeeByBusinessPartner.Code;
                     dbEntry.StartDate = employeeByBusinessPartner.StartDate;
                     dbEntry.EndDate = employeeByBusinessPartner.EndDate;
+                    dbEntry.RealEndDate = employeeByBusinessPartner.RealEndDate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -117,16 +118,17 @@ namespace RepositoryCore.Implementations.Employees
             }
         }
 
-        public EmployeeByBusinessPartner Delete(Guid identifier)
+        public EmployeeByBusinessPartner Delete(EmployeeByBusinessPartner employeeByBusinessPartner)
         {
             // Load EmployeeByBusinessPartner that will be deleted
             EmployeeByBusinessPartner dbEntry = context.EmployeeByBusinessPartners
-                .FirstOrDefault(x => x.Identifier == identifier);
+                .FirstOrDefault(x => x.Identifier == employeeByBusinessPartner.Identifier);
 
             if (dbEntry != null)
             {
                 // Set activity
                 dbEntry.Active = false;
+                dbEntry.RealEndDate = employeeByBusinessPartner.RealEndDate;
                 // Set timestamp
                 dbEntry.UpdatedAt = DateTime.Now;
             }

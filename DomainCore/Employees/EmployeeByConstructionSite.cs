@@ -13,6 +13,7 @@ namespace DomainCore.Employees
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime? RealEndDate { get; set; }
 
         public int? EmployeeId { get; set; }
         public Employee Employee { get; set; }

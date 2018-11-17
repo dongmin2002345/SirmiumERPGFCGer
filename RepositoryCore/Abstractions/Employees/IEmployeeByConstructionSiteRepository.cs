@@ -11,6 +11,6 @@ namespace RepositoryCore.Abstractions.Employees
         List<EmployeeByConstructionSite> GetEmployeeByConstructionSitesNewerThen(int companyId, DateTime lastUpdateTime);
 
         EmployeeByConstructionSite Create(EmployeeByConstructionSite employeeByConstructionSite);
-        EmployeeByConstructionSite Delete(Guid identifier);
+        EmployeeByConstructionSite Delete(EmployeeByConstructionSite employeeByConstructionSite);
     }
 }

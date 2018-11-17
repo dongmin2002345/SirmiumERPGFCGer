@@ -73,6 +73,7 @@
     <Compile Include="Abstractions\Employees\IEmployeeCardService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeDocumentService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeLicenceService.cs" />
+    <Compile Include="Abstractions\Employees\IEmployeeNoteService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeProfessionService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeItemService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeService.cs" />
@@ -166,6 +167,8 @@
     <Compile Include="Messages\Employees\EmployeeItemResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeLicenceItemListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeNoteListResponse.cs" />
+    <Compile Include="Messages\Employees\EmployeeNoteResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeProfessionItemListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeLicenceItemResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeProfessionItemResponse.cs" />
@@ -179,6 +182,7 @@
     <Compile Include="Messages\Employees\SyncEmployeeCardRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeDocumentRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeLicenceItemRequest.cs" />
+    <Compile Include="Messages\Employees\SyncEmployeeNoteRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeProfessionItemRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeItemRequest.cs" />
     <Compile Include="Messages\Employees\SyncEmployeeRequest.cs" />
@@ -225,6 +229,7 @@
     <Compile Include="ViewModels\Employees\EmployeeDocumentViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeItemViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeLicenceItemViewModel.cs" />
+    <Compile Include="ViewModels\Employees\EmployeeNoteViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeProfessionItemViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Employees\FamilyMemberViewModel.cs" />

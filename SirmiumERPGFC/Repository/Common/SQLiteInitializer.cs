@@ -396,6 +396,19 @@ namespace SirmiumERPGFC.Repository.Common
                     {
                         try
                         {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeNoteSQLiteRepository.EmployeeNoteTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
                             SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeDocuments", db);
                             dropTable.ExecuteNonQuery();
                         }
@@ -448,37 +461,40 @@ namespace SirmiumERPGFC.Repository.Common
                     {
                         try
                         {
-                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeByConstructionSite", db);
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeByConstructionSites", db);
                             dropTable.ExecuteNonQuery();
                         }
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeByConstructionSiteSQLiteRepository.EmployeeByConstructionSiteTableCreatePart, db);
                     createTable.ExecuteReader();
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByConstructionSites", "RealEndDate", "DATETIME NULL");
 
                     if (withTableDrop)
                     {
                         try
                         {
-                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeByBusinessPartner", db);
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeByBusinessPartners", db);
                             dropTable.ExecuteNonQuery();
                         }
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeByBusinessPartnerSQLiteRepository.EmployeeByBusinessPartnerTableCreatePart, db);
                     createTable.ExecuteReader();
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByBusinessPartners", "RealEndDate", "DATETIME NULL");
 
                     if (withTableDrop)
                     {
                         try
                         {
-                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE BusinessPartnerByConstructionSite", db);
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE BusinessPartnerByConstructionSites", db);
                             dropTable.ExecuteNonQuery();
                         }
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(BusinessPartnerByConstructionSiteSQLiteRepository.BusinessPartnerByConstructionSiteTableCreatePart, db);
                     createTable.ExecuteReader();
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerByConstructionSites", "RealEndDate", "DATETIME NULL");
 
                     #endregion
 

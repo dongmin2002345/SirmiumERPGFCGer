@@ -14,7 +14,7 @@ namespace ServiceInterfaces.Abstractions.Common.BusinessPartners
         BusinessPartnerByConstructionSiteListResponse GetBusinessPartnerByConstructionSitesNewerThen(int companyId, DateTime? lastUpdateTime);
 
         BusinessPartnerByConstructionSiteResponse Create(BusinessPartnerByConstructionSiteViewModel businessPartnerByConstructionSite);
-        BusinessPartnerByConstructionSiteResponse Delete(Guid identifier);
+        BusinessPartnerByConstructionSiteResponse Delete(BusinessPartnerByConstructionSiteViewModel businessPartnerByConstructionSite);
 
         BusinessPartnerByConstructionSiteListResponse Sync(SyncBusinessPartnerByConstructionSiteRequest request);
     }

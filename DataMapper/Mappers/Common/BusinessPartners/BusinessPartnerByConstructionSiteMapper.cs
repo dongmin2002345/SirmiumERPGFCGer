@@ -32,6 +32,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 StartDate = businessPartnerByConstructionSite.StartDate,
                 EndDate = businessPartnerByConstructionSite.EndDate,
+                RealEndDate = businessPartnerByConstructionSite.RealEndDate,
 
                 MaxNumOfEmployees = businessPartnerByConstructionSite.MaxNumOfEmployees,
 
@@ -63,6 +64,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 StartDate = businessPartnerByConstructionSite.StartDate,
                 EndDate = businessPartnerByConstructionSite.EndDate,
+                RealEndDate = businessPartnerByConstructionSite.RealEndDate,
 
                 MaxNumOfEmployees = businessPartnerByConstructionSite.MaxNumOfEmployees,
 
@@ -86,6 +88,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Code = businessPartnerByConstructionSiteViewModel.Code,
                 StartDate = businessPartnerByConstructionSiteViewModel.StartDate,
                 EndDate = businessPartnerByConstructionSiteViewModel.EndDate,
+                RealEndDate = businessPartnerByConstructionSiteViewModel.RealEndDate,
 
                 MaxNumOfEmployees = businessPartnerByConstructionSiteViewModel.MaxNumOfEmployees,
 

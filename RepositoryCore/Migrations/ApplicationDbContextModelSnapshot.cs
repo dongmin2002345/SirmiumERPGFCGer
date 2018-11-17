@@ -231,6 +231,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int>("MaxNumOfEmployees");
 
+                    b.Property<DateTime?>("RealEndDate");
+
                     b.Property<DateTime>("StartDate");
 
                     b.Property<DateTime>("UpdatedAt");
@@ -1253,6 +1255,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<Guid>("Identifier");
 
+                    b.Property<DateTime?>("RealEndDate");
+
                     b.Property<DateTime>("StartDate");
 
                     b.Property<DateTime>("UpdatedAt");
@@ -1336,6 +1340,8 @@ namespace RepositoryCore.Migrations
                     b.Property<DateTime>("EndDate");
 
                     b.Property<Guid>("Identifier");
+
+                    b.Property<DateTime?>("RealEndDate");
 
                     b.Property<DateTime>("StartDate");
 
@@ -1551,6 +1557,41 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("LicenceId");
 
                     b.ToTable("EmployeeLicences");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.EmployeeNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<int?>("EmployeeId");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Note");
+
+                    b.Property<DateTime>("NoteDate");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("EmployeeNotes");
                 });
 
             modelBuilder.Entity("DomainCore.Employees.EmployeeProfession", b =>
@@ -2278,6 +2319,21 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Employees.LicenceType", "Licence")
                         .WithMany()
                         .HasForeignKey("LicenceId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.EmployeeNote", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("DomainCore.Employees.EmployeeProfession", b =>

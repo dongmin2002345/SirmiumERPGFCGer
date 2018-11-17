@@ -152,6 +152,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IEmployeeDocumentService, EmployeeDocumentService>();
             services.AddScoped<IEmployeeCardService, EmployeeCardService>();
             services.AddScoped<IEmployeeItemService, EmployeeItemService>();
+            services.AddScoped<IEmployeeNoteService, EmployeeNoteService>();
             services.AddScoped<IEmployeeLicenceService, EmployeeLicenceService>();
             services.AddScoped<IEmployeeProfessionService, EmployeeProfessionService>();
             services.AddScoped<IEmployeeByConstructionSiteService, EmployeeByConstructionSiteService>();

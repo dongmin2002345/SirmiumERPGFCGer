@@ -62,6 +62,23 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region RealEndDate
+        private DateTime? _RealEndDate;
+
+        public DateTime? RealEndDate
+        {
+            get { return _RealEndDate; }
+            set
+            {
+                if (_RealEndDate != value)
+                {
+                    _RealEndDate = value;
+                    NotifyPropertyChanged("RealEndDate");
+                }
+            }
+        }
+        #endregion
+
 
         #region MaxNumOfEmployees
         private int _MaxNumOfEmployees;

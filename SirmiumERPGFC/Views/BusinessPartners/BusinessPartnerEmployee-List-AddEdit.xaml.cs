@@ -93,6 +93,23 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
+        #region RealContractEndDate
+        private DateTime _RealContractEndDate = DateTime.Now;
+
+        public DateTime RealContractEndDate
+        {
+            get { return _RealContractEndDate; }
+            set
+            {
+                if (_RealContractEndDate != value)
+                {
+                    _RealContractEndDate = value;
+                    NotifyPropertyChanged("RealContractEndDate");
+                }
+            }
+        }
+        #endregion
+
 
         #region EmployeesNotOnBusinessPartnerFromDB
         private ObservableCollection<EmployeeViewModel> _EmployeesNotOnBusinessPartnerFromDB;
@@ -491,9 +508,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             {
                 Thread th = new Thread(() =>
                 {
-                    EmployeeByBusinessPartnerListResponse listResponse = new EmployeeByBusinessPartnerSQLiteRepository().GetByBusinessPartner(CurrentBusinessPartner.Identifier);
-                    EmployeeByBusinessPartnerViewModel employeeByBusinessPartner = listResponse.EmployeeByBusinessPartners.FirstOrDefault(x => x.Employee.Identifier == CurrentEmployeeOnBusinessPartner.Employee.Identifier);
-                    EmployeeByBusinessPartnerResponse response = employeeByBusinessPartnerService.Delete(employeeByBusinessPartner?.Identifier ?? Guid.NewGuid());
+                    CurrentEmployeeOnBusinessPartner.RealEndDate = RealContractEndDate;
+                    EmployeeByBusinessPartnerResponse response = employeeByBusinessPartnerService.Delete(CurrentEmployeeOnBusinessPartner);
                     if (!response.Success)
                     {
                         MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";

@@ -111,6 +111,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.Code = employeeByConstructionSite.Code;
                     dbEntry.StartDate = employeeByConstructionSite.StartDate;
                     dbEntry.EndDate = employeeByConstructionSite.EndDate;
+                    dbEntry.RealEndDate = employeeByConstructionSite.RealEndDate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -120,16 +121,17 @@ namespace RepositoryCore.Implementations.Employees
             }
         }
 
-        public EmployeeByConstructionSite Delete(Guid identifier)
+        public EmployeeByConstructionSite Delete(EmployeeByConstructionSite employeeByConstructionSite)
         {
             // Load EmployeeByConstructionSite that will be deleted
             EmployeeByConstructionSite dbEntry = context.EmployeeByConstructionSites
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == employeeByConstructionSite.Identifier && x.Active == true);
 
             if (dbEntry != null)
             {
                 // Set activity
                 dbEntry.Active = false;
+                dbEntry.RealEndDate = employeeByConstructionSite.RealEndDate;
                 // Set timestamp
                 dbEntry.UpdatedAt = DateTime.Now;
             }
