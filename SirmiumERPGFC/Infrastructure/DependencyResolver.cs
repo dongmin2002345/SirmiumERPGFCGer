@@ -3,6 +3,7 @@ using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Identity;
+using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Abstractions.Common.Professions;
@@ -14,6 +15,7 @@ using ServiceWebApi.Implementations.Banks;
 using ServiceWebApi.Implementations.Common.BusinessPartners;
 using ServiceWebApi.Implementations.Common.Companies;
 using ServiceWebApi.Implementations.Common.Identity;
+using ServiceWebApi.Implementations.Common.InputInvoices;
 using ServiceWebApi.Implementations.Common.Locations;
 using ServiceWebApi.Implementations.Common.OutputInvoices;
 using ServiceWebApi.Implementations.Common.Professions;
@@ -53,8 +55,9 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IBusinessPartnerLocationService>().To<BusinessPartnerLocationService>();
 
                 Kernel.Bind<IOutputInvoiceService>().To<OutputInvoiceService>();
+				Kernel.Bind<IInputInvoiceService>().To<InputInvoiceService>();
 
-                Kernel.Bind<ICityService>().To<CityService>();
+				Kernel.Bind<ICityService>().To<CityService>();
                 Kernel.Bind<IRegionService>().To<RegionService>();
                 Kernel.Bind<IMunicipalityService>().To<MunicipalityService>();
                 Kernel.Bind<ICountryService>().To<CountryService>();

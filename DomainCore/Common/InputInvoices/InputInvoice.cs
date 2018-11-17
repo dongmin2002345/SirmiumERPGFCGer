@@ -27,7 +27,7 @@ namespace DomainCore.Common.InputInvoices
 
 		public DateTime DateOfPaymet { get; set; }
 
-		public string Status { get; set; }
+		public int Status { get; set; }
 		public DateTime StatusDate { get; set; }
 		public string Description { get; set; }
 

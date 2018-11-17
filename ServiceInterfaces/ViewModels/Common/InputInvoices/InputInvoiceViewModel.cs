@@ -125,6 +125,7 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 				{
 					_AmountNet = value;
 					NotifyPropertyChanged("AmountNet");
+					AmountGross = AmountNet + PDV;
 				}
 			}
 		}
@@ -142,6 +143,7 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 				{
 					_PDVPercent = value;
 					NotifyPropertyChanged("PDVPercent");
+					PDV = (AmountNet * PDVPercent) / 100;
 				}
 			}
 		}
@@ -159,6 +161,9 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 				{
 					_PDV = value;
 					NotifyPropertyChanged("PDV");
+
+						AmountGross = AmountNet + PDV;
+					
 				}
 			}
 		}
@@ -216,9 +221,9 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 		#endregion
 
 		#region Status
-		private string _Status;
+		private int _Status;
 
-		public string Status
+		public int Status
 		{
 			get { return _Status; }
 			set

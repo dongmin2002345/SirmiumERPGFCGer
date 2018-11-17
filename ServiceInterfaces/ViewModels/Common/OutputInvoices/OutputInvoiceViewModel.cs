@@ -67,7 +67,7 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
 
         public string Address
         {
-            get { return Address; }
+            get { return _Address; }
             set
             {
                 if (_Address != value)
@@ -232,7 +232,7 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         #endregion
 
         #region DateOfPayment
-        private DateTime _DateOfPayment;
+        private DateTime _DateOfPayment = DateTime.Now;
 
         public DateTime DateOfPayment
         {
@@ -266,7 +266,7 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         #endregion
 
         #region StatusDate
-        private DateTime _StatusDate;
+        private DateTime _StatusDate = DateTime.Now;
 
         public DateTime StatusDate
         {

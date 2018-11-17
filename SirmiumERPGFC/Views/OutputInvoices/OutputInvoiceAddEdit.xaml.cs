@@ -1,13 +1,17 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Messages.Common.OutputInvoices;
+using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
+using ServiceWebApi.Implementations.Common.OutputInvoices;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.OutputInvoices;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -26,6 +30,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.OutputInvoices
 {
@@ -61,132 +66,330 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
         #endregion
 
-        /// <summary>
-        /// Notifier for displaying error and success messages
-        /// </summary>
-        Notifier notifier;
+        #region StatusOptions
+        public ObservableCollection<String> StatusOptions
+        {
+            get
+            {
+                return new ObservableCollection<String>(new List<string>() {
+                           ChooseStatusConverter.Choose,
+                           ChooseStatusConverter.ChooseO,
+                           ChooseStatusConverter.ChooseB,
+                });
+            }
+        }
+        #endregion
+
+        #region IsCreateProcess
+        private bool _IsCreateProcess;
+
+        public bool IsCreateProcess
+        {
+            get { return _IsCreateProcess; }
+            set
+            {
+                if (_IsCreateProcess != value)
+                {
+                    _IsCreateProcess = value;
+                    NotifyPropertyChanged("IsCreateProcess");
+                }
+            }
+        }
+        #endregion
+
+        #region IsPopup
+        private bool _IsPopup;
+
+        public bool IsPopup
+        {
+            get { return _IsPopup; }
+            set
+            {
+                if (_IsPopup != value)
+                {
+                    _IsPopup = value;
+                    NotifyPropertyChanged("IsPopup");
+                }
+            }
+        }
+        #endregion
+
+
+        #region SaveButtonContent
+        private string _SaveButtonContent = " Sačuvaj ";
+
+        public string SaveButtonContent
+        {
+            get { return _SaveButtonContent; }
+            set
+            {
+                if (_SaveButtonContent != value)
+                {
+                    _SaveButtonContent = value;
+                    NotifyPropertyChanged("SaveButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SaveButtonEnabled
+        private bool _SaveButtonEnabled = true;
+
+        public bool SaveButtonEnabled
+        {
+            get { return _SaveButtonEnabled; }
+            set
+            {
+                if (_SaveButtonEnabled != value)
+                {
+                    _SaveButtonEnabled = value;
+                    NotifyPropertyChanged("SaveButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+
 
         #region Constructor
 
-        /// <summary>
-        /// OutputInvoiceAddEdit constructor
-        /// </summary>
-        /// <param name="OutputInvoiceViewModel"></param>
-        public OutputInvoiceAddEdit(OutputInvoiceViewModel OutputInvoiceViewModel)
+        public OutputInvoiceAddEdit(OutputInvoiceViewModel OutputInvoiceViewModel, bool isCreateProcess, bool isPopup = false)
         {
             // Initialize service
-            this.outputInvoiceService = DependencyResolver.Kernel.Get<IOutputInvoiceService>();
+            outputInvoiceService = DependencyResolver.Kernel.Get<IOutputInvoiceService>();
 
-            // Draw all components
             InitializeComponent();
 
             this.DataContext = this;
 
-            // Initialize notifications
-            notifier = new Notifier(cfg =>
-            {
-                cfg.PositionProvider = new WindowPositionProvider(
-                    parentWindow: System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault(),
-                    corner: Corner.TopRight,
-                    offsetX: 10,
-                    offsetY: 10);
-
-                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                    notificationLifetime: TimeSpan.FromSeconds(3),
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(3));
-
-                cfg.Dispatcher = Application.Current.Dispatcher;
-            });
-
             CurrentOutputInvoice = OutputInvoiceViewModel;
-
-            //if (CurrentOutputInvoice.Code <= 0)
-            //    CurrentOutputInvoice.Code = outputInvoiceService.GetNewCodeValue().OutputInvoiceCode;
-
-            // Add handler for keyboard shortcuts
-            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
-
-            //txtName.Focus();
+            IsCreateProcess = isCreateProcess;
+            IsPopup = isPopup;
         }
+
         #endregion
 
-        #region Cancel save button 
+        #region Save and Cancel button
 
-
-        /// <summary>
-        /// Cancel operation and close window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            FlyoutHelper.CloseFlyout(this);
-        }
-
-        /// <summary>
-        /// Create or update OutputInvoice
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            #region Validation
 
-            CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
-            CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = customPrincipal.Identity.Id };
+            if (String.IsNullOrEmpty(CurrentOutputInvoice.Supplier))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv dobavljača";
+                return;
+            }
 
-            //if (String.IsNullOrEmpty(CurrentOutputInvoice.Mobile))
-            //{
-            //    MainWindow.WarningMessage = "Morate uneti mobilni!";
-            //    return;
-            //}
+            #endregion
 
-            //int PIB = 0;
-            //Int32.TryParse(CurrentOutputInvoice.PIB, out PIB);
+            Thread th = new Thread(() =>
+            {
+                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonEnabled = false;
 
-            OutputInvoiceResponse response;
+                CurrentOutputInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-            //// If by any chance PIB exists in the database
-            //if (response.Success == false)
-            //{
-            //    if (CurrentOutputInvoice.Id != response.OutputInvoice.Id)
-            //    {
-            //        notifier.ShowError("PIB mora biti jedinstven!");
-            //        return;
-            //    }
-            //}
-            //if (CurrentOutputInvoice.Id > 0)
-            //    response = outputInvoiceService.Update(CurrentOutputInvoice);
-            //else
-            //    response = outputInvoiceService.Create(CurrentOutputInvoice);
+                CurrentOutputInvoice.IsSynced = false;
+                CurrentOutputInvoice.UpdatedAt = DateTime.Now;
 
-            //if (response.Success)
-            //{
-            //    OutputInvoiceCreatedUpdated(response.OutputInvoice);
-            //    FlyoutHelper.CloseFlyout(this);
-            //}
-            //else
-            //    notifier.ShowError(response.Message);
+                OutputInvoiceResponse response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
+                response = new OutputInvoiceSQLiteRepository().Create(CurrentOutputInvoice);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
+                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonEnabled = true;
+                    return;
+                }
+
+                response = outputInvoiceService.Create(CurrentOutputInvoice);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonEnabled = true;
+                }
+
+                if (response.Success)
+                {
+                    new OutputInvoiceSQLiteRepository().UpdateSyncStatus(response.OutputInvoice.Identifier, response.OutputInvoice.Id, true);
+                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonEnabled = true;
+
+                    OutputInvoiceCreatedUpdated();
+
+                    if (IsCreateProcess)
+                    {
+                        CurrentOutputInvoice = new OutputInvoiceViewModel();
+                        CurrentOutputInvoice.Identifier = Guid.NewGuid();
+
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                //txtAddress.Focus();
+                            })
+                        );
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                if (IsPopup)
+                                    FlyoutHelper.CloseFlyout(this);
+                                else
+                                    FlyoutHelper.CloseFlyout(this);
+                            })
+                        );
+                    }
+                }
+
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
-        #endregion
-
-
-        #region Keyboard shortcuts
-
-        private void HandleKeyDownEvent(object sender, KeyEventArgs e)
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
+            if (IsPopup)
                 FlyoutHelper.CloseFlyout(this);
-            }
-
-            if (e.Key == Key.S && (Keyboard.Modifiers & (ModifierKeys.Control)) == (ModifierKeys.Control))
-            {
-                btnSave_Click(sender, e);
-            }
+            else
+                FlyoutHelper.CloseFlyout(this);
         }
 
         #endregion
+
+        ///// <summary>
+        ///// Notifier for displaying error and success messages
+        ///// </summary>
+        //Notifier notifier;
+
+        //#region Constructor
+
+        ///// <summary>
+        ///// OutputInvoiceAddEdit constructor
+        ///// </summary>
+        ///// <param name="OutputInvoiceViewModel"></param>
+        //public OutputInvoiceAddEdit(OutputInvoiceViewModel OutputInvoiceViewModel)
+        //{
+        //    // Initialize service
+        //    this.outputInvoiceService = DependencyResolver.Kernel.Get<IOutputInvoiceService>();
+
+        //    // Draw all components
+        //    InitializeComponent();
+
+        //    this.DataContext = this;
+
+        //    // Initialize notifications
+        //    notifier = new Notifier(cfg =>
+        //    {
+        //        cfg.PositionProvider = new WindowPositionProvider(
+        //            parentWindow: System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault(),
+        //            corner: Corner.TopRight,
+        //            offsetX: 10,
+        //            offsetY: 10);
+
+        //        cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+        //            notificationLifetime: TimeSpan.FromSeconds(3),
+        //            maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+
+        //        cfg.Dispatcher = Application.Current.Dispatcher;
+        //    });
+
+        //    CurrentOutputInvoice = OutputInvoiceViewModel;
+
+        //    //if (CurrentOutputInvoice.Code <= 0)
+        //    //    CurrentOutputInvoice.Code = outputInvoiceService.GetNewCodeValue().OutputInvoiceCode;
+
+        //    // Add handler for keyboard shortcuts
+        //    AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
+
+        //    //txtName.Focus();
+        //}
+        //#endregion
+
+        //#region Cancel save button 
+
+
+        ///// <summary>
+        ///// Cancel operation and close window
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnCancel_Click(object sender, RoutedEventArgs e)
+        //{
+        //    FlyoutHelper.CloseFlyout(this);
+        //}
+
+        ///// <summary>
+        ///// Create or update OutputInvoice
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnSave_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //    CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
+        //    CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = customPrincipal.Identity.Id };
+
+        //    //if (String.IsNullOrEmpty(CurrentOutputInvoice.Mobile))
+        //    //{
+        //    //    MainWindow.WarningMessage = "Morate uneti mobilni!";
+        //    //    return;
+        //    //}
+
+        //    //int PIB = 0;
+        //    //Int32.TryParse(CurrentOutputInvoice.PIB, out PIB);
+
+        //    OutputInvoiceResponse response;
+
+        //    //// If by any chance PIB exists in the database
+        //    //if (response.Success == false)
+        //    //{
+        //    //    if (CurrentOutputInvoice.Id != response.OutputInvoice.Id)
+        //    //    {
+        //    //        notifier.ShowError("PIB mora biti jedinstven!");
+        //    //        return;
+        //    //    }
+        //    //}
+        //    //if (CurrentOutputInvoice.Id > 0)
+        //    //    response = outputInvoiceService.Update(CurrentOutputInvoice);
+        //    //else
+        //    //    response = outputInvoiceService.Create(CurrentOutputInvoice);
+
+        //    //if (response.Success)
+        //    //{
+        //    //    OutputInvoiceCreatedUpdated(response.OutputInvoice);
+        //    //    FlyoutHelper.CloseFlyout(this);
+        //    //}
+        //    //else
+        //    //    notifier.ShowError(response.Message);
+        //}
+
+        //#endregion
+
+
+        //#region Keyboard shortcuts
+
+        //private void HandleKeyDownEvent(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Escape)
+        //    {
+        //        FlyoutHelper.CloseFlyout(this);
+        //    }
+
+        //    if (e.Key == Key.S && (Keyboard.Modifiers & (ModifierKeys.Control)) == (ModifierKeys.Control))
+        //    {
+        //        btnSave_Click(sender, e);
+        //    }
+        //}
+
+        //#endregion
 
         //#region Validation
 
