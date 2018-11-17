@@ -112,7 +112,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         dbEntry.PdvPercent = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Pdv = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.Currency = SQLiteHelper.GetDecimal(query, ref counter);
+                        dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.DateOfPayment = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
@@ -204,7 +204,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         dbEntry.PdvPercent = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Pdv = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.Currency = SQLiteHelper.GetDecimal(query, ref counter);
+                        dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.DateOfPayment = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
@@ -265,7 +265,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         dbEntry.PdvPercent = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Pdv = SQLiteHelper.GetDecimal(query, ref counter);
                         dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.Currency = SQLiteHelper.GetDecimal(query, ref counter);
+                        dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.DateOfPayment = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
@@ -405,7 +405,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             }
         }
 
-        public OutputInvoiceResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public OutputInvoiceResponse UpdateSyncStatus(Guid identifier, int serverId, string code, bool isSynced)
         {
             OutputInvoiceResponse response = new OutputInvoiceResponse();
 
@@ -418,10 +418,12 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 
                 insertCommand.CommandText = "UPDATE OutputInvoices SET " +
                     "IsSynced = @IsSynced, " +
+                    "Code = @Code, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@Code", code);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 

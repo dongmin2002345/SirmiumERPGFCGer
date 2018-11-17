@@ -70,10 +70,10 @@
                     <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentOutputInvoice.PdvPercent}" />
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="PDV" />
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPdv" Text="{Binding Path=CurrentOutputInvoice.Pdv}" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPdv" Text="{Binding Path=CurrentOutputInvoice.Pdv}"  IsEnabled="False" />
 
                     <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Iznos bruto" />
-                    <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAmountGross" Text="{Binding Path=CurrentOutputInvoice.AmountGross}" />
+                    <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAmountGross" Text="{Binding Path=CurrentOutputInvoice.AmountGross}"  IsEnabled="False" />
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Valuta" />
                     <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentOutputInvoice.Currency}" />
