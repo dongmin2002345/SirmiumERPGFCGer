@@ -159,14 +159,11 @@ namespace SirmiumERPWeb
             services.AddScoped<IEmployeeLicenceService, EmployeeLicenceService>();
             services.AddScoped<IEmployeeProfessionService, EmployeeProfessionService>();
             services.AddScoped<IEmployeeByConstructionSiteService, EmployeeByConstructionSiteService>();
-            services.AddScoped<IEmployeeByConstructionSiteHistoryService, EmployeeByConstructionSiteHistoryService>();
             services.AddScoped<IFamilyMemberService, FamilyMemberService>();
 
             services.AddScoped<IEmployeeByBusinessPartnerService, EmployeeByBusinessPartnerService>();
-            services.AddScoped<IEmployeeByBusinessPartnerHistoryService, EmployeeByBusinessPartnerHistoryService>();
 
             services.AddScoped<IBusinessPartnerByConstructionSiteService, BusinessPartnerByConstructionSiteService>();
-            services.AddScoped<IBusinessPartnerByConstructionSiteHistoryService, BusinessPartnerByConstructionSiteHistoryService>();
 
             services.AddScoped<IBankService, BankService>();
 			services.AddScoped<ILicenceTypeService, LicenceTypeService>();

@@ -37,7 +37,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #region Services
         IEmployeeByBusinessPartnerService employeeByBusinessPartnerService;
-        IEmployeeByBusinessPartnerHistoryService employeeByBusinessPartnerHistoryService;
         IEmployeeService employeeService;
         IBusinessPartnerService businessPartnerService;
         #endregion
@@ -317,7 +316,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         public BusinessPartnerEmployee_List_AddEdit(BusinessPartnerViewModel businessPartnerViewModel)
         {
             employeeByBusinessPartnerService = DependencyResolver.Kernel.Get<IEmployeeByBusinessPartnerService>();
-            employeeByBusinessPartnerHistoryService = DependencyResolver.Kernel.Get<IEmployeeByBusinessPartnerHistoryService>();
             employeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
             businessPartnerService = DependencyResolver.Kernel.Get<IBusinessPartnerService>();
 

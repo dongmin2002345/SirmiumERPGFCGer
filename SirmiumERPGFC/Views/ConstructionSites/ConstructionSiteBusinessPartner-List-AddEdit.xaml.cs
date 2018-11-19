@@ -31,7 +31,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #region 
         IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService;
-        IBusinessPartnerByConstructionSiteHistoryService businessPartnerByConstructionSiteHistoryService;
         IBusinessPartnerService businessPartnerService;
         IConstructionSiteService constructionSiteService;
         IEmployeeByConstructionSiteService employeeByConstructionSiteService;
@@ -327,7 +326,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         public ConstructionSiteBusinessPartner_List_AddEdit(ConstructionSiteViewModel constructionSiteViewModel)
         {
             businessPartnerByConstructionSiteService = DependencyResolver.Kernel.Get<IBusinessPartnerByConstructionSiteService>();
-            businessPartnerByConstructionSiteHistoryService = DependencyResolver.Kernel.Get<IBusinessPartnerByConstructionSiteHistoryService>();
             businessPartnerService = DependencyResolver.Kernel.Get<IBusinessPartnerService>();
             constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
             employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();

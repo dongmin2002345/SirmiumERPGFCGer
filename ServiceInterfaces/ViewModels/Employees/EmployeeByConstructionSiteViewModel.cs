@@ -98,6 +98,24 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region EmployeeCount
+        private int _EmployeeCount;
+
+        public int EmployeeCount
+        {
+            get { return _EmployeeCount; }
+            set
+            {
+                if (_EmployeeCount != value)
+                {
+                    _EmployeeCount = value;
+                    NotifyPropertyChanged("EmployeeCount");
+                }
+            }
+        }
+        #endregion
+
+
         #region BusinessPartner
         private BusinessPartnerViewModel _BusinessPartner;
 
@@ -110,6 +128,23 @@ namespace ServiceInterfaces.ViewModels.Employees
                 {
                     _BusinessPartner = value;
                     NotifyPropertyChanged("BusinessPartner");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerCount
+        private int _BusinessPartnerCount;
+
+        public int BusinessPartnerCount
+        {
+            get { return _BusinessPartnerCount; }
+            set
+            {
+                if (_BusinessPartnerCount != value)
+                {
+                    _BusinessPartnerCount = value;
+                    NotifyPropertyChanged("BusinessPartnerCount");
                 }
             }
         }

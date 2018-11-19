@@ -15,6 +15,7 @@
         <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
         <!--<cbxConverters:PdvPercentRateConverter x:Key="cbxPdvPercentRateConverter" />-->
         <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
+        <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -87,8 +88,10 @@
                                 SelectedDate="{Binding Path=currentInputInvoice.DateOfPaymet, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="4" Grid.Column="0" Text="Status:" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="4" Grid.Column="1" Margin="2" x:Name="txtStatus"
-                                Text="{Binding Path=currentInputInvoice.Status, Mode=TwoWay}"/>
+                        <ComboBox Grid.Row="4" Grid.Column="1"  x:Name="cbxChooseStatusConverter" Margin="2"
+                                            SelectedItem="{Binding Path=currentInputInvoice.Status, Converter={StaticResource cbxChooseStatusConverter}, Mode=TwoWay}"
+                                            ItemsSource="{Binding Path=StatusOptions}">
+                        </ComboBox>
 
                         <TextBlock Grid.Row="4" Grid.Column="2" Text="Datum statusa:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <DatePicker Grid.Row="4" Grid.Column="3" Margin="2" x:Name="dtStatusDate"
@@ -137,7 +140,7 @@
 
                         <TextBlock Grid.Row="1" Grid.Column="3" Text="PDV%:" VerticalAlignment="Center" Margin="5 0 5 0"   />
                         <TextBox Grid.Row="1" Grid.Column="4" Margin="2" x:Name="txtPdvPercent" 
-                        Text="{Binding Path=currentInputInvoice.PdvPercent, Converter={StaticResource stringToDoubleConverter}}"  />
+                        Text="{Binding Path=currentInputInvoice.PDVPercent, Converter={StaticResource stringToDoubleConverter}}"  />
                         <!--<ComboBox Grid.Row="1" Grid.Column="4" Margin="2" x:Name="cbxPdvPercent"
                               SelectedItem="{Binding Path=currentInputInvoice.PdvPercentObject, Converter={StaticResource cbxPdvPercentRateConverter}, Mode=TwoWay}"
                                 ItemsSource="{Binding Path=PdvPercentRates}">

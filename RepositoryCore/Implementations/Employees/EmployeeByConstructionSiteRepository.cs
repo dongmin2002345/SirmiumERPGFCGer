@@ -112,6 +112,8 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.StartDate = employeeByConstructionSite.StartDate;
                     dbEntry.EndDate = employeeByConstructionSite.EndDate;
                     dbEntry.RealEndDate = employeeByConstructionSite.RealEndDate;
+                    dbEntry.EmployeeCount = employeeByConstructionSite.EmployeeCount;
+                    dbEntry.BusinessPartnerCount = employeeByConstructionSite.BusinessPartnerCount;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181117021531_IzbacivanjeHistory_Zdravko")]
+    partial class IzbacivanjeHistory_Zdravko
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,8 +214,6 @@ namespace RepositoryCore.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("Active");
-
-                    b.Property<int>("BusinessPartnerCount");
 
                     b.Property<int?>("BusinessPartnerId");
 
@@ -609,7 +609,7 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int?>("CreatedById");
 
-                    b.Property<int>("Currency");
+                    b.Property<decimal>("Currency");
 
                     b.Property<DateTime>("DateOfPaymet");
 
@@ -625,7 +625,7 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int>("PDVPercent");
 
-                    b.Property<string>("Status");
+                    b.Property<int>("Status");
 
                     b.Property<DateTime>("StatusDate");
 
@@ -828,7 +828,7 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int?>("CreatedById");
 
-                    b.Property<int>("Currency");
+                    b.Property<decimal>("Currency");
 
                     b.Property<DateTime>("DateOfPayment");
 
@@ -1210,8 +1210,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int?>("CreatedById");
 
-                    b.Property<int>("EmployeeCount");
-
                     b.Property<int?>("EmployeeId");
 
                     b.Property<DateTime>("EndDate");
@@ -1245,8 +1243,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int>("BusinessPartnerCount");
-
                     b.Property<int?>("BusinessPartnerId");
 
                     b.Property<string>("Code");
@@ -1258,8 +1254,6 @@ namespace RepositoryCore.Migrations
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<int?>("CreatedById");
-
-                    b.Property<int>("EmployeeCount");
 
                     b.Property<int?>("EmployeeId");
 

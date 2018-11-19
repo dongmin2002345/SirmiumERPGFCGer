@@ -9,6 +9,7 @@ using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.InputInvoices;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.InputInvoices
 {
@@ -52,6 +54,20 @@ namespace SirmiumERPGFC.Views.InputInvoices
 					_currentInputInvoice = value;
 					NotifyPropertyChanged("currentInputInvoice");
 				}
+			}
+		}
+		#endregion
+
+		#region StatusOptions
+		public ObservableCollection<String> StatusOptions
+		{
+			get
+			{
+				return new ObservableCollection<String>(new List<string>() {
+						   ChooseStatusConverter.Choose,
+						   ChooseStatusConverter.ChooseO,
+						   ChooseStatusConverter.ChooseB,
+				});
 			}
 		}
 		#endregion

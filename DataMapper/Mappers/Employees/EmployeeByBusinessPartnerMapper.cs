@@ -35,6 +35,7 @@ namespace DataMapper.Mappers.Employees
                 RealEndDate = employeeByBusinessPartner.RealEndDate,
 
                 Employee = employeeByBusinessPartner.Employee?.ConvertToEmployeeViewModelLite(),
+                EmployeeCount = employeeByBusinessPartner.EmployeeCount,
                 BusinessPartner = employeeByBusinessPartner.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
 
                 IsActive = employeeByBusinessPartner.Active,
@@ -64,6 +65,8 @@ namespace DataMapper.Mappers.Employees
                 EndDate = employeeByBusinessPartner.EndDate,
                 RealEndDate = employeeByBusinessPartner.RealEndDate,
 
+                EmployeeCount = employeeByBusinessPartner.EmployeeCount,
+
                 IsActive = employeeByBusinessPartner.Active,
 
                 UpdatedAt = employeeByBusinessPartner.UpdatedAt,
@@ -87,6 +90,7 @@ namespace DataMapper.Mappers.Employees
                 RealEndDate = employeeByBusinessPartnerViewModel.RealEndDate,
 
                 EmployeeId = employeeByBusinessPartnerViewModel.Employee?.Id ?? null,
+                EmployeeCount = employeeByBusinessPartnerViewModel.EmployeeCount,
                 BusinessPartnerId = employeeByBusinessPartnerViewModel.BusinessPartner?.Id ?? null,
 
                 CreatedById = employeeByBusinessPartnerViewModel.CreatedBy?.Id ?? null,

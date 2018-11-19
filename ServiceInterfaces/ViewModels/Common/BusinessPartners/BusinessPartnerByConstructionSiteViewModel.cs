@@ -115,6 +115,24 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region BusinessPartnerCount
+        private int _BusinessPartnerCount;
+
+        public int BusinessPartnerCount
+        {
+            get { return _BusinessPartnerCount; }
+            set
+            {
+                if (_BusinessPartnerCount != value)
+                {
+                    _BusinessPartnerCount = value;
+                    NotifyPropertyChanged("BusinessPartnerCount");
+                }
+            }
+        }
+        #endregion
+
+
         #region ConstructionSite
         private ConstructionSiteViewModel _ConstructionSite;
 

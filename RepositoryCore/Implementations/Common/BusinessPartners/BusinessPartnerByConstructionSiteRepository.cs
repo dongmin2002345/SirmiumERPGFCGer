@@ -110,6 +110,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.EndDate = businessPartnerByConstructionSite.EndDate;
                     dbEntry.RealEndDate = businessPartnerByConstructionSite.RealEndDate;
                     dbEntry.MaxNumOfEmployees = businessPartnerByConstructionSite.MaxNumOfEmployees;
+                    dbEntry.BusinessPartnerCount = businessPartnerByConstructionSite.BusinessPartnerCount;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

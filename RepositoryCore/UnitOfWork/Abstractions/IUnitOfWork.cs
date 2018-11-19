@@ -56,14 +56,11 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IEmployeeLicenceRepository GetEmployeeLicenceRepository();
         IEmployeeProfessionRepository GetEmployeeProfessionRepository();
         IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository();
-        IEmployeeByConstructionSiteHistoryRepository GetEmployeeByConstructionSiteHistoryRepository();
         IFamilyMemberRepository GetFamilyMemberRepository();
 
         IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository();
-        IEmployeeByBusinessPartnerHistoryRepository GetEmployeeByBusinessPartnerHistoryRepository();
 
         IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository();
-        IBusinessPartnerByConstructionSiteHistoryRepository GetBusinessPartnerByConstructionSiteHistoryRepository();
 
         void Save();
     }

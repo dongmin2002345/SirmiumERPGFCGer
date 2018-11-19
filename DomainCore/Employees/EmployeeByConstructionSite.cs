@@ -18,8 +18,12 @@ namespace DomainCore.Employees
         public int? EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
+        public int EmployeeCount { get; set; }
+
         public int? BusinessPartnerId { get; set; }
         public BusinessPartner BusinessPartner { get; set; }
+
+        public int BusinessPartnerCount { get; set; }
 
         public int? ConstructionSiteId { get; set; }
         public ConstructionSite ConstructionSite { get; set; }
