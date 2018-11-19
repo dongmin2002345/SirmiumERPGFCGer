@@ -36,7 +36,7 @@
         </Grid.ColumnDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="5,5,5,5" Header="Pretraga" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="Pretraga" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -123,12 +123,21 @@
                             <TextBlock Text=" DODAJ " />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" Width="150">
+                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" OSVEŽI " />
+                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" />
                         </StackPanel>
                     </Button>
+
+                    <Button x:Name="btnPrint" Click="btnPrint_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\printer.png" HorizontalAlignment="Center" Height="16" Width="16" />
+
+                            <TextBlock Text=" Štampaj" />
+                        </StackPanel>
+                    </Button>
+                    
                 </StackPanel>
 
 
