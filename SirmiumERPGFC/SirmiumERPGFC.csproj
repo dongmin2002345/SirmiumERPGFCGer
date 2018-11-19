@@ -179,6 +179,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Employees\EmployeesExcelReport.cs" />
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBankSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBusinessPartnerTypeSQLiteRepository.cs" />
@@ -719,7 +720,9 @@
     <Content Include="Resources\Backgrounds\dj.png" />
     <Content Include="Resources\Backgrounds\food-inc.jpg" />
     <Content Include="Resources\Entypo-license.txt" />
-    <Resource Include="Resources\erp8.png" />
+    <Content Include="Resources\erp8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Farm01.png" />
     <Resource Include="Resources\GFC.png" />
     <Content Include="Resources\Icons\001-error.png">
@@ -1089,6 +1092,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Zanimanja.png" />
+    <Content Include="Resources\image005.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>

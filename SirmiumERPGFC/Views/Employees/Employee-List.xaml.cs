@@ -5,6 +5,7 @@ using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Reports.Employees;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Views.Common;
 using System;
@@ -733,6 +734,11 @@ namespace SirmiumERPGFC.Views.Employees
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private void btnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeesExcelReport.Show(EmployeesFromDB.ToList());
+        }
     }
 }
 

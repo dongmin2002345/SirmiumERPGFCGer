@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     .Select(x => x.Entity as OutputInvoice))
                 .Where(x => x.CompanyId == companyId).Count();
             if (count == 0)
-                return "IZLAZNI-00001";
+                return "1";
             else
             {
                 string activeCode = context.OutputInvoices
@@ -68,8 +68,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     .Code;
                 if (!String.IsNullOrEmpty(activeCode))
                 {
-                    int intValue = Int32.Parse(activeCode.Replace("IZLAZNI-", ""));
-                    return "IZLAZNI-" + (intValue + 1).ToString("00000");
+                    int intValue = Int32.Parse(activeCode);
+                    return  (intValue + 1).ToString();
                 }
                 else
                     return "";
