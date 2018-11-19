@@ -82,6 +82,7 @@ namespace RepositoryCore.Implementations.Employees
                     // Set properties
                     dbEntry.CardDate = EmployeeCard.CardDate;
                     dbEntry.Description = EmployeeCard.Description;
+                    dbEntry.PlusMinus = EmployeeCard.PlusMinus;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

@@ -60,6 +60,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region PlusMinus
+        private string _PlusMinus;
+
+        public string PlusMinus
+        {
+            get { return _PlusMinus; }
+            set
+            {
+                if (_PlusMinus != value)
+                {
+                    _PlusMinus = value;
+                    NotifyPropertyChanged("PlusMinus");
+                }
+            }
+        }
+        #endregion
+        
 
         #region IsSynced
         private bool _IsSynced;
