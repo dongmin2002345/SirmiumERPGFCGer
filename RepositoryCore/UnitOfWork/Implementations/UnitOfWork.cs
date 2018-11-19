@@ -8,6 +8,7 @@ using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.TaxAdministrations;
 using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
@@ -20,6 +21,7 @@ using RepositoryCore.Implementations.Common.Invoices;
 using RepositoryCore.Implementations.Common.Locations;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Implementations.Common.Sectors;
+using RepositoryCore.Implementations.Common.TaxAdministrations;
 using RepositoryCore.Implementations.Common.ToDos;
 using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Implementations.Employees;
@@ -81,6 +83,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IEmployeeByBusinessPartnerRepository employeeByBusinessPartnerRepository;
 
         private IBusinessPartnerByConstructionSiteRepository businessPartnerByConstructionSiteRepository;
+
+        private ITaxAdministrationRepository taxAdministrationRepository;
+
 
         #endregion
 
@@ -361,6 +366,12 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return businessPartnerByConstructionSiteRepository;
         }
 
+        public ITaxAdministrationRepository GetTaxAdministrationRepository()
+        {
+            if (taxAdministrationRepository == null)
+                taxAdministrationRepository = new TaxAdministrationRepository(context);
+            return taxAdministrationRepository;
+        }
         #endregion
 
         #region Save method

@@ -7,6 +7,7 @@ using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
 using DomainCore.Common.Professions;
 using DomainCore.Common.Sectors;
+using DomainCore.Common.TaxAdministrations;
 using DomainCore.Common.ToDos;
 using DomainCore.ConstructionSites;
 using DomainCore.Employees;
@@ -110,12 +111,13 @@ namespace RepositoryCore.Context
         public DbSet<Bank> Banks { get; set; }
 		public DbSet<LicenceType> LicenceTypes { get; set; }
 
-        
+        public DbSet<TaxAdministration> TaxAdministrations { get; set; }
 
 
-		//protected override void OnModelCreating(ModelBuilder modelBuilder)
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             base.OnModelCreating(modelBuilder);
