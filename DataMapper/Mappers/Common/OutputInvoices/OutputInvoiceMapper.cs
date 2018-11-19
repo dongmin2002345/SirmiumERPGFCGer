@@ -34,6 +34,7 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 Address = outputInvoice.Address,
                 InvoiceNumber = outputInvoice.InvoiceNumber,
                 InvoiceDate = outputInvoice.InvoiceDate,
+                Currency = outputInvoice.Currency,
 
                 AmountNet = outputInvoice.AmountNet,
 
@@ -95,6 +96,8 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 Address = outputInvoice.Address,
                 InvoiceNumber = outputInvoice.InvoiceNumber,
                 InvoiceDate = outputInvoice.InvoiceDate,
+                Currency = outputInvoice.Currency,
+
 
                 AmountNet = outputInvoice.AmountNet,
 
@@ -130,6 +133,7 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 Address = outputInvoiceViewModel.Address,
                 InvoiceNumber = outputInvoiceViewModel.InvoiceNumber,
                 InvoiceDate = outputInvoiceViewModel.InvoiceDate,
+                Currency = outputInvoiceViewModel.Currency,
 
                 AmountNet = outputInvoiceViewModel.AmountNet,
 

@@ -23,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.InputInvoices
 {
@@ -99,6 +100,20 @@ namespace SirmiumERPGFC.Views.InputInvoices
 					_InputInvoiceDataLoading = value;
 					NotifyPropertyChanged("InputInvoiceDataLoading");
 				}
+			}
+		}
+		#endregion
+
+		#region StatusOptions
+		public ObservableCollection<String> StatusOptions
+		{
+			get
+			{
+				return new ObservableCollection<String>(new List<string>() {
+						   ChooseStatusConverter.ChooseO,
+						   ChooseStatusConverter.ChooseB,
+
+				});
 			}
 		}
 		#endregion
