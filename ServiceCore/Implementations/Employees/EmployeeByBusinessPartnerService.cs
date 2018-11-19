@@ -1,4 +1,6 @@
 ﻿using DataMapper.Mappers.Employees;
+using DomainCore.Common.BusinessPartners;
+using DomainCore.ConstructionSites;
 using DomainCore.Employees;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.Employees;
@@ -80,7 +82,7 @@ namespace ServiceCore.Implementations.Employees
                     Identifier = Guid.NewGuid(),
                     EmployeeId = re.Employee.Id,
                     CardDate = re.StartDate,
-                    Description = "Radnik " + re.Employee?.Name + " je sklopio ugovor sa firmom " + re.BusinessPartner?.Name + ". Radnik je u firmi od: " + re.StartDate.ToString("dd.MM.yyyy") + " do " + re.EndDate.ToString("dd.MM.yyyy"),
+                    Description = "Radnik " + re.Employee?.Name + " " + re.Employee?.SurName + " je sklopio ugovor sa firmom " + re.BusinessPartner?.Name + ". Radnik je u firmi od: " + re.StartDate.ToString("dd.MM.yyyy") + " do " + re.EndDate.ToString("dd.MM.yyyy"),
                     PlusMinus = "+",
                     CreatedById = re.CreatedBy?.Id,
                     CompanyId = re.Company?.Id,
@@ -112,12 +114,15 @@ namespace ServiceCore.Implementations.Employees
                 EmployeeByBusinessPartner deletedEmployeeByBusinessPartner = unitOfWork.GetEmployeeByBusinessPartnerRepository()
                     .Delete(employeeByBysinessPartner.ConvertToEmployeeByBusinessPartner());
 
+                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee((int)deletedEmployeeByBusinessPartner.EmployeeId);
+                BusinessPartner businessPartner = unitOfWork.GetBusinessPartnerRepository().GetBusinessPartner((int)deletedEmployeeByBusinessPartner.BusinessPartnerId);
+
                 EmployeeCard ec = new EmployeeCard()
                 {
                     Identifier = Guid.NewGuid(),
                     EmployeeId = deletedEmployeeByBusinessPartner.EmployeeId,
                     CardDate = (DateTime)deletedEmployeeByBusinessPartner.RealEndDate,
-                    Description = "Radnik " + deletedEmployeeByBusinessPartner.Employee?.Name + " je raskinuo ugovor sa firmom " + deletedEmployeeByBusinessPartner.BusinessPartner?.Name + ". Prestanak je od: " + ((DateTime)deletedEmployeeByBusinessPartner.RealEndDate).ToString("dd.MM.yyyy"),
+                    Description = "Radnik " + employee?.Name + " " + employee?.SurName + " je raskinuo ugovor sa firmom " + businessPartner?.Name + ". Prestanak je od: " + ((DateTime)deletedEmployeeByBusinessPartner.RealEndDate).ToString("dd.MM.yyyy"),
                     PlusMinus = "-",
                     CreatedById = deletedEmployeeByBusinessPartner.CreatedById,
                     CompanyId = deletedEmployeeByBusinessPartner.CompanyId,

@@ -87,7 +87,7 @@ namespace ServiceCore.Implementations.Employees
                     Identifier = Guid.NewGuid(),
                     EmployeeId = re.Employee.Id,
                     CardDate = addedEmployeeByConstructionSite.StartDate,
-                    Description = "Radnik " + re.Employee?.Name + " je krenuo da radi na gradilištu " + constructionSite?.Name + ". Radnik je na gradilištu od: " + re.StartDate.ToString("dd.MM.yyyy") + " do " + re.EndDate.ToString("dd.MM.yyyy"),
+                    Description = "Radnik " + employee?.Name + " " + employee?.SurName + " je krenuo da radi na gradilištu " + constructionSite?.Name + ". Radnik je na gradilištu od: " + re.StartDate.ToString("dd.MM.yyyy") + " do " + re.EndDate.ToString("dd.MM.yyyy"),
                     PlusMinus = "+",
                     CreatedById = re.CreatedBy?.Id,
                     CompanyId = re.Company?.Id,
@@ -119,6 +119,7 @@ namespace ServiceCore.Implementations.Employees
                 EmployeeByConstructionSite deletedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(re.ConvertToEmployeeByConstructionSite());
 
                 Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee((int)deletedEmployeeByConstructionSite.EmployeeId);
+                ConstructionSite constructionSite = unitOfWork.GetConstructionSiteRepository().GetConstructionSite((int)deletedEmployeeByConstructionSite.ConstructionSiteId);
                 employee.ConstructionSiteCode = "";
                 employee.ConstructionSiteName = "";
                 employee.UpdatedAt = DateTime.Now;
@@ -128,7 +129,7 @@ namespace ServiceCore.Implementations.Employees
                     Identifier = Guid.NewGuid(),
                     EmployeeId = deletedEmployeeByConstructionSite.Employee.Id,
                     CardDate = (DateTime)deletedEmployeeByConstructionSite.RealEndDate,
-                    Description = "Radnik " + deletedEmployeeByConstructionSite.Employee?.Name + " je prestao da radi na gradilištu " + deletedEmployeeByConstructionSite.ConstructionSite?.Name + ". Prestanak je od: " + ((DateTime)deletedEmployeeByConstructionSite.RealEndDate).ToString("dd.MM.yyyy"),
+                    Description = "Radnik " + employee?.Name + " " + employee.SurName + " je prestao da radi na gradilištu " + constructionSite?.Name + ". Prestanak je od: " + ((DateTime)deletedEmployeeByConstructionSite.RealEndDate).ToString("dd.MM.yyyy"),
                     CreatedById = deletedEmployeeByConstructionSite.CreatedBy?.Id,
                     PlusMinus = "-",
                     CompanyId = deletedEmployeeByConstructionSite.Company?.Id,
