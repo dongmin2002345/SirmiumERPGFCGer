@@ -79,8 +79,9 @@ namespace ServiceCore.Implementations.Employees
                 {
                     Identifier = Guid.NewGuid(),
                     EmployeeId = re.Employee.Id,
-                    CardDate = DateTime.Now,
-                    Description = "Radnik " + re.Employee?.Name + " je sklopio ugovor sa firmom " + re.BusinessPartner?.Name, 
+                    CardDate = re.StartDate,
+                    Description = "Radnik " + re.Employee?.Name + " je sklopio ugovor sa firmom " + re.BusinessPartner?.Name + ". Radnik je u firmi od: " + re.StartDate.ToString("dd.MM.yyyy") + " do " + re.EndDate.ToString("dd.MM.yyyy"),
+                    PlusMinus = "+",
                     CreatedById = re.CreatedBy?.Id,
                     CompanyId = re.Company?.Id,
                     CreatedAt = DateTime.Now, 
@@ -115,8 +116,9 @@ namespace ServiceCore.Implementations.Employees
                 {
                     Identifier = Guid.NewGuid(),
                     EmployeeId = deletedEmployeeByBusinessPartner.EmployeeId,
-                    CardDate = DateTime.Now,
-                    Description = "Radnik " + deletedEmployeeByBusinessPartner.Employee?.Name + " je raskinuo ugovor sa firmom " + deletedEmployeeByBusinessPartner.BusinessPartner?.Name,
+                    CardDate = (DateTime)deletedEmployeeByBusinessPartner.RealEndDate,
+                    Description = "Radnik " + deletedEmployeeByBusinessPartner.Employee?.Name + " je raskinuo ugovor sa firmom " + deletedEmployeeByBusinessPartner.BusinessPartner?.Name + ". Prestanak je od: " + ((DateTime)deletedEmployeeByBusinessPartner.RealEndDate).ToString("dd.MM.yyyy"),
+                    PlusMinus = "-",
                     CreatedById = deletedEmployeeByBusinessPartner.CreatedById,
                     CompanyId = deletedEmployeeByBusinessPartner.CompanyId,
                     CreatedAt = DateTime.Now,

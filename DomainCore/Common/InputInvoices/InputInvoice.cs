@@ -23,11 +23,11 @@ namespace DomainCore.Common.InputInvoices
 		public int PDVPercent { get; set; }
 		public decimal PDV { get; set; }
 		public decimal AmountGross { get; set; } //Bruto
-		public decimal Currency { get; set; }
+		public int Currency { get; set; }
 
 		public DateTime DateOfPaymet { get; set; }
 
-		public int Status { get; set; }
+		public string Status { get; set; }
 		public DateTime StatusDate { get; set; }
 		public string Description { get; set; }
 

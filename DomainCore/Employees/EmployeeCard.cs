@@ -12,5 +12,7 @@ namespace DomainCore.Employees
 
         public DateTime CardDate { get; set; }
         public string Description { get; set; }
+
+        public string PlusMinus { get; set; }
     }
 }

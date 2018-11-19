@@ -187,9 +187,9 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 		#endregion
 
 		#region Currency
-		private decimal _Currency;
+		private int _Currency;
 
-		public decimal Currency
+		public int Currency
 		{
 			get { return _Currency; }
 			set
@@ -198,6 +198,7 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 				{
 					_Currency = value;
 					NotifyPropertyChanged("Currency");
+					DateOfPaymet = InvoiceDate.AddDays(Currency);
 				}
 			}
 		}
@@ -221,9 +222,9 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 		#endregion
 
 		#region Status
-		private int _Status;
+		private string _Status;
 
-		public int Status
+		public string Status
 		{
 			get { return _Status; }
 			set

@@ -86,8 +86,9 @@ namespace ServiceCore.Implementations.Employees
                 {
                     Identifier = Guid.NewGuid(),
                     EmployeeId = re.Employee.Id,
-                    CardDate = DateTime.Now,
-                    Description = "Radnik " + re.Employee?.Name + " je krenuo da radi na gradilištu " + re.ConstructionSite?.Name,
+                    CardDate = addedEmployeeByConstructionSite.StartDate,
+                    Description = "Radnik " + re.Employee?.Name + " je krenuo da radi na gradilištu " + re.ConstructionSite?.Name + ". Radnik je na gradilištu od: " + addedEmployeeByConstructionSite.StartDate.ToString("dd.MM.yyyy") + " do " + addedEmployeeByConstructionSite.EndDate.ToString("dd.MM.yyyy"),
+                    PlusMinus = "+",
                     CreatedById = re.CreatedBy?.Id,
                     CompanyId = re.Company?.Id,
                     CreatedAt = DateTime.Now,
@@ -126,9 +127,10 @@ namespace ServiceCore.Implementations.Employees
                 {
                     Identifier = Guid.NewGuid(),
                     EmployeeId = deletedEmployeeByConstructionSite.Employee.Id,
-                    CardDate = DateTime.Now,
-                    Description = "Radnik " + deletedEmployeeByConstructionSite.Employee?.Name + " je prestao da radi na gradilištu " + deletedEmployeeByConstructionSite.ConstructionSite?.Name,
+                    CardDate = (DateTime)deletedEmployeeByConstructionSite.RealEndDate,
+                    Description = "Radnik " + deletedEmployeeByConstructionSite.Employee?.Name + " je prestao da radi na gradilištu " + deletedEmployeeByConstructionSite.ConstructionSite?.Name + ". Prestanak je od: " + ((DateTime)deletedEmployeeByConstructionSite.RealEndDate).ToString("dd.MM.yyyy"),
                     CreatedById = deletedEmployeeByConstructionSite.CreatedBy?.Id,
+                    PlusMinus = "-",
                     CompanyId = deletedEmployeeByConstructionSite.Company?.Id,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
