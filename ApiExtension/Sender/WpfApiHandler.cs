@@ -92,9 +92,6 @@ namespace ApiExtension.Sender
                 { typeof(BusinessPartnerByConstructionSiteViewModel), "BusinessPartnerByConstructionSite" },
                 { typeof(List<BusinessPartnerByConstructionSiteViewModel>), "BusinessPartnerByConstructionSite" },
 
-                { typeof(BusinessPartnerByConstructionSiteHistoryViewModel), "BusinessPartnerByConstructionSiteHistory" },
-                { typeof(List<BusinessPartnerByConstructionSiteHistoryViewModel>), "BusinessPartnerByConstructionSiteHistory" },
-
                 #endregion
 
                 #region OutputInvoices
@@ -173,14 +170,8 @@ namespace ApiExtension.Sender
                 { typeof(EmployeeByConstructionSiteViewModel), "EmployeeByConstructionSite" },
                 { typeof(List<EmployeeByConstructionSiteViewModel>), "EmployeeByConstructionSite" },
 
-                { typeof(EmployeeByConstructionSiteHistoryViewModel), "EmployeeByConstructionSiteHistory" },
-                { typeof(List<EmployeeByConstructionSiteHistoryViewModel>), "EmployeeByConstructionSiteHistory" },
-
                 { typeof(EmployeeByBusinessPartnerViewModel), "EmployeeByBusinessPartner" },
                 { typeof(List<EmployeeByBusinessPartnerViewModel>), "EmployeeByBusinessPartner" },
-
-                { typeof(EmployeeByBusinessPartnerHistoryViewModel), "EmployeeByBusinessPartnerHistory" },
-                { typeof(List<EmployeeByBusinessPartnerHistoryViewModel>), "EmployeeByBusinessPartnerHistory" },
 
 			    #endregion
                 

@@ -96,6 +96,24 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region EmployeeCount
+        private int _EmployeeCount;
+
+        public int EmployeeCount
+        {
+            get { return _EmployeeCount; }
+            set
+            {
+                if (_EmployeeCount != value)
+                {
+                    _EmployeeCount = value;
+                    NotifyPropertyChanged("EmployeeCount");
+                }
+            }
+        }
+        #endregion
+
+
         #region BusinessPartner
         private BusinessPartnerViewModel _BusinessPartner;
 

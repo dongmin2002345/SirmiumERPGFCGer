@@ -98,13 +98,10 @@ namespace RepositoryCore.Context
         public DbSet<EmployeeLicence> EmployeeLicences { get; set; }
         public DbSet<EmployeeProfession> EmployeeProfessions { get; set; }
         public DbSet<EmployeeByConstructionSite> EmployeeByConstructionSites { get; set; }
-        public DbSet<EmployeeByConstructionSiteHistory> EmployeeByConstructionSiteHistories { get; set; }
 
         public DbSet<EmployeeByBusinessPartner> EmployeeByBusinessPartners { get; set; }
-        public DbSet<EmployeeByBusinessPartnerHistory> EmployeeByBusinessPartnerHistories { get; set; }
 
         public DbSet<BusinessPartnerByConstructionSite> BusinessPartnerByConstructionSites { get; set; }
-        public DbSet<BusinessPartnerByConstructionSiteHistory> BusinessPartnerByConstructionSiteHistories { get; set; }
 
         public DbSet<ConstructionSite> ConstructionSites { get; set; }
         public DbSet<ConstructionSiteCalculation> ConstructionSiteCalculations { get; set; }

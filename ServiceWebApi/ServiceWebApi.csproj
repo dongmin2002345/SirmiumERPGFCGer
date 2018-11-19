@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Implementations\Banks\BankService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerBankService.cs" />
-    <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerByConstructionSiteHistoryService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerByConstructionSiteService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerInstitutionService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerLocationService.cs" />
@@ -66,8 +65,6 @@
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteCalculationService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByBusinessPartnerService.cs" />
-    <Compile Include="Implementations\Employees\EmployeeByBusinessPartnerHistoryService.cs" />
-    <Compile Include="Implementations\Employees\EmployeeByConstructionSiteHistoryService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeCardService.cs" />
     <Compile Include="Implementations\Employees\EmployeeDocumentService.cs" />

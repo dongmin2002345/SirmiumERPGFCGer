@@ -109,6 +109,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.StartDate = employeeByBusinessPartner.StartDate;
                     dbEntry.EndDate = employeeByBusinessPartner.EndDate;
                     dbEntry.RealEndDate = employeeByBusinessPartner.RealEndDate;
+                    dbEntry.EmployeeCount = employeeByBusinessPartner.EmployeeCount;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
