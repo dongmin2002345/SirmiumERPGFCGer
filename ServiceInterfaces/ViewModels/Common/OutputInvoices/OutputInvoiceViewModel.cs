@@ -175,6 +175,7 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
                 {
                     _PdvPercent = value;
                     NotifyPropertyChanged("PdvPercent");
+                    Pdv = (AmountNet * PdvPercent) / 100;
                 }
             }
         }
@@ -192,6 +193,7 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
                 {
                     _Pdv = value;
                     NotifyPropertyChanged("Pdv");
+                    AmountGross = AmountNet + Pdv;
                 }
             }
         }
@@ -215,9 +217,9 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         #endregion
 
         #region Currency
-        private decimal _Currency;
+        private int _Currency;
 
-        public decimal Currency
+        public int Currency
         {
             get { return _Currency; }
             set
@@ -226,6 +228,8 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
                 {
                     _Currency = value;
                     NotifyPropertyChanged("Currency");
+                    DateOfPayment = InvoiceDate.AddDays(Currency);
+
                 }
             }
         }

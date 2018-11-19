@@ -34,7 +34,7 @@
 
         <Fluent:Ribbon Grid.Row="0">
 
-            <Fluent:RibbonTabItem Header="Radnici" KeyTip="RAD">
+            <Fluent:RibbonTabItem Header="RADNICI" KeyTip="RAD">
                 <Fluent:RibbonGroupBox Header="Radnici - Firme - Gradilišta">
                     <Fluent:Button x:Name="mniBusinessPartnerEmployees" Click="mniBusinessPartnerEmployees_Click" Header="Radnici po firmama" KeyTip="RPF" Width="70">
                         <Fluent:Button.LargeIcon>
@@ -76,7 +76,7 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="Firme" KeyTip="FIR">                
+            <Fluent:RibbonTabItem Header="FIRME" KeyTip="FIR">                
                 <Fluent:RibbonGroupBox Header="Firme">
                     <Fluent:Button Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" Width="70">
                         <Fluent:Button.LargeIcon>
@@ -103,7 +103,7 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="Gradilišta" KeyTip="GRA">
+            <Fluent:RibbonTabItem Header="GRADILIŠTA" KeyTip="GRA">
                 <Fluent:RibbonGroupBox Header="Gradilišta">
                     <Fluent:Button x:Name="mniConstructionSite" Click="mniConstructionSite_Click" Header="Gradilišta" KeyTip="SEK" Width="70">
                         <Fluent:Button.LargeIcon>
@@ -113,7 +113,7 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="Kartoteka" KeyTip="KAR">
+            <Fluent:RibbonTabItem Header="KARTOTEKA" KeyTip="KAR">
                 <Fluent:RibbonGroupBox Header="Lokacije">
                     <Fluent:Button x:Name="mniCountries" Click="mniCountries_Click" Header="Države" KeyTip="DRZ" Width="70">
                         <Fluent:Button.LargeIcon>
@@ -146,7 +146,7 @@
                 </Fluent:RibbonGroupBox>                
             </Fluent:RibbonTabItem>
             
-            <Fluent:RibbonTabItem Header="Administracija" x:Name="mniAdministration" KeyTip="ADM">
+            <Fluent:RibbonTabItem Header="ADMINISTRACIJA" x:Name="mniAdministration" KeyTip="ADM">
 
                 <Fluent:RibbonGroupBox Header="Excel import">
                     <Fluent:Button x:Name="mniExcelImport" Click="mniExcelImport_Click" Header="Excel import" KeyTip="EXC" Width="70">

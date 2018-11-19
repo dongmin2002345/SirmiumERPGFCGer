@@ -25,7 +25,7 @@ namespace DomainCore.Common.OutputInvoices
         public int PdvPercent { get; set; }
         public decimal Pdv{ get; set; }
         public decimal AmountGross { get; set; } //bruto
-        public decimal Currency { get; set; }
+        public int Currency { get; set; }
 
         public DateTime DateOfPayment { get; set; }
         public string Status { get; set; }

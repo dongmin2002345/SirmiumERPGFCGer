@@ -13,10 +13,10 @@
     </UserControl.Background>
     <Grid>
         <TabControl TabStripPlacement="Top" Controls:TabControlHelper.Underlined="TabPanel" SelectionChanged="TabControl_SelectionChanged" x:Name="tabBusinessPartner">
-            <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="Poslovni partneri Srbija" x:Name="tabBusinessPartnerSerbia">
+            <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="POSLOVNI PARTNER SRBIJA" x:Name="tabBusinessPartnerSerbia">
                 <local:BusinessPartner_List Loaded="BusinessPartner_List_Loaded" />
             </TabItem>
-            <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="Poslovni partneri Nemacka" x:Name="tabBusinessPartnerGermany">
+            <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="POSLOVNI PARTNER NEMAČKA" x:Name="tabBusinessPartnerGermany">
                 <local:BusinessPartner_Ger_List/>
             </TabItem>
         </TabControl>

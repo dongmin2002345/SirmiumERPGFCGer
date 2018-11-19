@@ -36,7 +36,7 @@
         </Grid.ColumnDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="5,5,5,5" Header="Pretraga (Ctrl+1)" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="5,5,5,5" Header="Pretraga" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -56,43 +56,43 @@
 
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Poslovni partner"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="Poslovni partner:"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByAdvanceFinancialInvoiceCode" Grid.Column="1"  Grid.ColumnSpan="2"
                          Text="{Binding Path=InputInvoiceSearchObject.SearchBy_BusinessPartnerName, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Dobavljač"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="Dobavljač:"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="4" Grid.ColumnSpan="2"
                          Text="{Binding Path=InputInvoiceSearchObject.SearchBy_Supplier, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Datum fakture od"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <TextBlock Text="Datum fakture od:"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
                 <DatePicker x:Name="dtSearchByDatefrom" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
                          SelectedDate="{Binding Path=InputInvoiceSearchObject.SearchBy_InvoiceDateFrom}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Datum fakture do"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <TextBlock Text="Datum fakture do:"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
                 <DatePicker x:Name="dtSearchByDateTo" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"
                          SelectedDate="{Binding Path=InputInvoiceSearchObject.SearchBy_InvoiceDateTo}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Datum plaćanja od"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
+                <TextBlock Text="Datum plaćanja od:"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
                 <DatePicker x:Name="dtSearchByDateOfPaymentfrom" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"
                          SelectedDate="{Binding Path=InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Datum plaćanja do"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
+                <TextBlock Text="Datum plaćanja do:"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
                 <DatePicker x:Name="dtSearchByDateOfPaymentTo" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2"
                          SelectedDate="{Binding Path=InputInvoiceSearchObject.SearchBy_DateOfPaymetTo}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Broj fakture"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Margin="5"/>
+                <TextBlock Text="Broj fakture:"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Margin="5"/>
                 <TextBox x:Name="txtSearchByInvoiceNumber" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                          Text="{Binding Path=InputInvoiceSearchObject.SearchBy_InvoiceNumber}"
                          Margin="2"
@@ -101,7 +101,7 @@
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" >
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\search.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Prikaži " />
+                        <TextBlock Text=" PRIKAŽI " />
                     </StackPanel>
                 </Button>
             </Grid>
@@ -120,13 +120,13 @@
                     <Button x:Name="btnAdd" Click="btnAdd_Click" HorizontalAlignment="Left" Margin="2" Width="150">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" Dodaj " />
+                            <TextBlock Text=" DODAJ " />
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" Width="150">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" Osveži " />
+                            <TextBlock Text=" OSVEŽI " />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -178,7 +178,7 @@
                               SelectedItem="{Binding Path=CurrentInputInvoice, Mode=TwoWay}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Redni broj" Binding="{Binding Code}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="R.b." Binding="{Binding Code}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="Poslovni partner" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Supplier" Header="Dobavljač" Binding="{Binding Supplier}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />

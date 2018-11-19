@@ -21,7 +21,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Osnovni podaci" Margin="2 2 2 0">
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="OSNOVNI PODACI" Margin="2 2 2 0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -40,16 +40,16 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra:" />
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtCode"  Margin="2" Text="{Binding Path=CurrentSector.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra sektora *" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra sektora:" />
                     <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtSecondCode"  Margin="2" Text="{Binding Path=CurrentSector.SecondCode}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv sektora *" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv sektora:" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtName" Margin="2" Text="{Binding Path=CurrentSector.Name}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država:" />
                     <popups:CountryPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCountry" 
                                         CurrentCountry="{Binding Path=CurrentSector.Country, Mode=TwoWay}"/>
 
@@ -75,7 +75,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Odustani " FontSize="20" />
+                        <TextBlock Text=" ODUSTANI " FontSize="20" />
                     </StackPanel>
                 </Button>
             </Grid>

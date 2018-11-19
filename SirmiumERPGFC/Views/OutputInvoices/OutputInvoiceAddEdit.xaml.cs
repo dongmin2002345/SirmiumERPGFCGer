@@ -214,7 +214,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
                 if (response.Success)
                 {
-                    new OutputInvoiceSQLiteRepository().UpdateSyncStatus(response.OutputInvoice.Identifier, response.OutputInvoice.Id, true);
+                    new OutputInvoiceSQLiteRepository().UpdateSyncStatus(response.OutputInvoice.Identifier, response.OutputInvoice.Id, response.OutputInvoice.Code, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " Sačuvaj ";
                     SaveButtonEnabled = true;

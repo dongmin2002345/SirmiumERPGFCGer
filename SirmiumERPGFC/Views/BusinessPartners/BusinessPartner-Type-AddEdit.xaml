@@ -31,10 +31,10 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra *" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra:" />
                     <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Text="{Binding Path=CurrentBusinessPartnerType.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv tipa *" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv tipa:" />
                     <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentBusinessPartnerType.Name}" />
 
 
@@ -61,7 +61,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Odustani " FontSize="20" />
+                        <TextBlock Text=" ODUSTANI " FontSize="20" />
                     </StackPanel>
                 </Button>
             </Grid>

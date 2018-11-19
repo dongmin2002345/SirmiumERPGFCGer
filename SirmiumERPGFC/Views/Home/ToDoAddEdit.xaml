@@ -32,13 +32,13 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv *" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv:" />
                 <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" Text="{Binding Path=CurrentToDo.Name}" x:Name="txtName" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Datum *" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Datum:" />
                 <DatePicker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" SelectedDate="{Binding Path=CurrentToDo.ToDoDate}" x:Name="dtToDoDate" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Opis *" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Opis:" />
                 <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" Text="{Binding Path=CurrentToDo.Description}" Height="100" TextWrapping="Wrap"/>
 
             </Grid>
@@ -63,7 +63,7 @@
             <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock Text=" Odustani " FontSize="20" />
+                    <TextBlock Text=" ODUSTANI " FontSize="20" />
                 </StackPanel>
             </Button>
         </Grid>

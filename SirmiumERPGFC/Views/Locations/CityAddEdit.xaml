@@ -42,22 +42,22 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Postanski broj *" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Poštanski broj:" />
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtZipCode"  Margin="2" Text="{Binding Path=CurrentCity.ZipCode}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv grada *" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv grada:" />
                     <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtName" Margin="2" Text="{Binding Path=CurrentCity.Name}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država:" />
                     <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
                                         CurrentCountry="{Binding Path=CurrentCity.Country, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Region *" />
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Region:" />
                     <popups:RegionPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSpecies" 
                                                 CurrentCountry="{Binding Path=CurrentCity.Country, Mode=TwoWay}"
                                                 CurrentRegion="{Binding Path=CurrentCity.Region, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Opština *" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Opština:" />
                     <popups:MunicipalityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popLitter" 
                                         CurrentRegion="{Binding Path=CurrentCity.Region, Mode=TwoWay}"
                                         CurrentMunicipality="{Binding Path=CurrentCity.Municipality, Mode=TwoWay}"/>
@@ -84,7 +84,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Odustani " FontSize="20" />
+                        <TextBlock Text=" ODUSTANI " FontSize="20" />
                     </StackPanel>
                 </Button>
             </Grid>

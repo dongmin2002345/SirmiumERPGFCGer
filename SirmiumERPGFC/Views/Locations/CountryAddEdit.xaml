@@ -32,19 +32,19 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra:" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" IsEnabled="False" Text="{Binding Path=CurrentCountry.Code, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="2"  Text="Oznaka države *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="0" Grid.Column="2"  Text="Oznaka države:" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtMark" Text="{Binding Path=CurrentCountry.Mark, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0"  Text="Naziv države *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="1" Grid.Column="0"  Text="Naziv države:" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentCountry.Name, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="2"  Text="Alfa šifra *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="1" Grid.Column="2"  Text="Alfa šifra:" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="1" Grid.Column="3" Margin="2" x:Name="txtAlfaCode" Text="{Binding Path=CurrentCountry.AlfaCode, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="2" Grid.Column="0"  Text="Numerička šifra *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="2" Grid.Column="0"  Text="Numerička šifra:" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtNumericCode" Text="{Binding Path=CurrentCountry.NumericCode, Mode=TwoWay}"/>
 
             </Grid>
@@ -88,7 +88,7 @@
             <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock Text=" Odustani " FontSize="20" />
+                    <TextBlock Text=" ODUSTANI " FontSize="20" />
                 </StackPanel>
             </Button>
         </Grid>
