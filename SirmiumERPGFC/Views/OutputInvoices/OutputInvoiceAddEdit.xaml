@@ -8,6 +8,7 @@
              xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:popups1="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Background="White">
 
     
@@ -48,8 +49,8 @@
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentOutputInvoice.Code}" IsEnabled="False" />
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Poslovni partner:" />
-                    <!--<popups:BussinesPartnerPopup Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" 
-                                        CurrentBussinesPartner="{Binding Path=CurrentOutputInvoice.BussinesPartner, Mode=TwoWay}" />-->
+                    <popups1:BusinessPartnerPopup Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" 
+                                        CurrentBusinessPartner="{Binding Path=CurrentOutputInvoice.BusinessPartner, Mode=TwoWay}" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Dobavljač:" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentOutputInvoice.Supplier}" />

@@ -225,6 +225,9 @@
     <Compile Include="ViewComponents\Popups\BankPopup.xaml.cs">
       <DependentUpon>BankPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewComponents\Popups\BusinessPartnerPopup.xaml.cs">
+      <DependentUpon>BusinessPartnerPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Popups\CityPopup.xaml.cs">
       <DependentUpon>CityPopup.xaml</DependentUpon>
     </Compile>
@@ -461,6 +464,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\BankPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\BusinessPartnerPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

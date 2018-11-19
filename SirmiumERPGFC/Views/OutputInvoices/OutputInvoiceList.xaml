@@ -19,9 +19,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -191,7 +190,7 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding OutputInvoiceDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <Controls:ProgressRing Grid.Row="1" IsActive="{Binding OutputInvoiceDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                 <DataGrid x:Name="dgOutputInvoices"
                               Grid.Row="2" Margin="0 5 0 0"
                               AutoGenerateColumns="False"
