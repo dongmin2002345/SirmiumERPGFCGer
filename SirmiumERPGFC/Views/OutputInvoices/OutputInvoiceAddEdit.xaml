@@ -14,6 +14,7 @@
     
     <UserControl.Resources>
         <cbxConverters1:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
+        <cbxConverters1:StringDoubleConverter x:Key="stringToDoubleConverter" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -65,7 +66,7 @@
                     <DatePicker Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" SelectedDate="{Binding Path=CurrentOutputInvoice.InvoiceDate}" />
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Iznos neto:" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAmountNet" Text="{Binding Path=CurrentOutputInvoice.AmountNet}" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAmountNet" Text="{Binding Path=CurrentOutputInvoice.AmountNet, Converter={StaticResource stringToDoubleConverter}}" />
 
                     <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="PDV%" />
                     <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentOutputInvoice.PdvPercent}" />
@@ -74,7 +75,7 @@
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPdv" Text="{Binding Path=CurrentOutputInvoice.Pdv}"  IsEnabled="False" />
 
                     <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Iznos bruto:" />
-                    <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAmountGross" Text="{Binding Path=CurrentOutputInvoice.AmountGross}"  IsEnabled="False" />
+                    <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAmountGross" Text="{Binding Path=CurrentOutputInvoice.AmountGross, Converter={StaticResource stringToDoubleConverter}}"  IsEnabled="False" />
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Valuta:" />
                     <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentOutputInvoice.Currency}" />
