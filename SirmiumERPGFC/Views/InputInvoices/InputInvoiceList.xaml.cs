@@ -387,7 +387,17 @@ namespace SirmiumERPGFC.Views.InputInvoices
 				displayThread.Start();
 			}
 		}
-		#endregion	
+		#endregion
+
+		private void btnPrint_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		//private void btnExcel_Click(object sender, RoutedEventArgs e)
+		//{
+
+		//}
 
 		#region INotifyPropertyChanged implementation
 		public event PropertyChangedEventHandler PropertyChanged;

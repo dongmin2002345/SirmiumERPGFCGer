@@ -78,8 +78,8 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(InvoiceDate) <= DATE(@DateTo)) " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(InvoiceDate) >= DATE(@DateFrom)) " +
-                        "AND (@DateOfPaymentTo IS NULL OR @DateOfPaymentTo = '' OR DATE(InvoiceDate) <= DATE(@DateOfPaymentTo)) " +
-                        "AND (@DateOfPaymentFrom IS NULL OR @DateOfPaymentFrom = '' OR DATE(InvoiceDate) >= DATE(@DateOfPaymentFrom)) " +
+                        "AND (@DateOfPaymentTo IS NULL OR @DateOfPaymentTo = '' OR DATE(DateOfPayment) <= DATE(@DateOfPaymentTo)) " +
+                        "AND (@DateOfPaymentFrom IS NULL OR @DateOfPaymentFrom = '' OR DATE(DateOfPayment) >= DATE(@DateOfPaymentFrom)) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -133,8 +133,8 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(InvoiceDate) <= DATE(@DateTo)) " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(InvoiceDate) >= DATE(@DateFrom)) " +
-                        "AND (@DateOfPaymentTo IS NULL OR @DateOfPaymentTo = '' OR DATE(InvoiceDate) <= DATE(@DateOfPaymentTo)) " +
-                        "AND (@DateOfPaymentFrom IS NULL OR @DateOfPaymentFrom = '' OR DATE(InvoiceDate) >= DATE(@DateOfPaymentFrom)) " +
+                        "AND (@DateOfPaymentTo IS NULL OR @DateOfPaymentTo = '' OR DATE(DateOfPayment) <= DATE(@DateOfPaymentTo)) " +
+                        "AND (@DateOfPaymentFrom IS NULL OR @DateOfPaymentFrom = '' OR DATE(DateOfPayment) >= DATE(@DateOfPaymentFrom)) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Supplier", ((object)OutputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + OutputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)OutputInvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + OutputInvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
