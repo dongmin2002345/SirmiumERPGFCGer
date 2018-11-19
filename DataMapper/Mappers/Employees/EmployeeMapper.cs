@@ -52,6 +52,7 @@ namespace DataMapper.Mappers.Employees
                 VisaFrom = employee.VisaFrom,
                 VisaTo = employee.VisaTo,
 
+                ResidenceCountry = employee.ResidenceCountry?.ConvertToCountryViewModelLite(),
                 ResidenceCity = employee.ResidenceCity?.ConvertToCityViewModelLite(),
                 ResidenceAddress = employee.ResidenceAddress,
                 
@@ -139,6 +140,7 @@ namespace DataMapper.Mappers.Employees
                 VisaFrom = employeeViewModel.VisaFrom,
                 VisaTo = employeeViewModel.VisaTo,
 
+                ResidenceCountryId = employeeViewModel?.ResidenceCountry?.Id ?? null,
                 ResidenceCityId = employeeViewModel?.ResidenceCity?.Id ?? null,
                 ResidenceAddress = employeeViewModel.ResidenceAddress,
 

@@ -137,19 +137,19 @@ namespace SirmiumERPGFC.Reports.Employees
                 sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
                 sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-                sheet1.Cells[rowCounter, columnCounter] = employees[i].Country?.Name;
+                sheet1.Cells[rowCounter, columnCounter] = employees[i].ResidenceCountry?.Name;
                 columnCounter++;
 
                 sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
                 sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-                sheet1.Cells[rowCounter, columnCounter] = employees[i].City?.Name;
+                sheet1.Cells[rowCounter, columnCounter] = employees[i].ResidenceCity?.Name;
                 columnCounter++;
 
                 sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
                 sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
                 sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-                sheet1.Cells[rowCounter, columnCounter] = employees[i].Address;
+                sheet1.Cells[rowCounter, columnCounter] = employees[i].ResidenceAddress;
                 columnCounter++;
 
                 rowCounter++;

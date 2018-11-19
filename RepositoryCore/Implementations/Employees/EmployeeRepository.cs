@@ -31,6 +31,7 @@ namespace RepositoryCore.Implementations.Employees
                 .Include(x => x.City)
                 .Include(x => x.PassportCountry)
                 .Include(x => x.PassportCity)
+                .Include(x => x.ResidenceCountry)
                 .Include(x => x.ResidenceCity)
                 .Where(x => x.Company.Id == companyId && x.Active == true)
                 .AsNoTracking()
@@ -48,6 +49,7 @@ namespace RepositoryCore.Implementations.Employees
                 .Include(x => x.City)
                 .Include(x => x.PassportCountry)
                 .Include(x => x.PassportCity)
+                .Include(x => x.ResidenceCountry)
                 .Include(x => x.ResidenceCity)
                 .FirstOrDefault(x => x.Id == employeeId && x.Active == true);
         }
@@ -63,6 +65,7 @@ namespace RepositoryCore.Implementations.Employees
                 .Include(x => x.City)
                 .Include(x => x.PassportCountry)
                 .Include(x => x.PassportCity)
+                .Include(x => x.ResidenceCountry)
                 .Include(x => x.ResidenceCity)
                 .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
                 .AsNoTracking()
@@ -151,6 +154,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.PassportCountryId = employee.PassportCountryId;
                     dbEntry.PassportCityId = employee.PassportCityId;
 
+                    dbEntry.ResidenceCountryId = employee.ResidenceCountryId;
                     dbEntry.ResidenceCityId = employee.ResidenceCityId;
                     dbEntry.ResidenceAddress = employee.ResidenceAddress;
 
