@@ -14,35 +14,36 @@ namespace SirmiumERPGFC.Repository.Employees
     public class EmployeeCardSQLiteRepository
     {
         public static string EmployeeCardTableCreatePart =
-                     "CREATE TABLE IF NOT EXISTS EmployeeCards " +
-                     "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                     "ServerId INTEGER NULL, " +
-                     "Identifier GUID, " +
-                     "EmployeeId INTEGER NULL, " +
-                     "EmployeeIdentifier GUID NULL, " +
-                     "EmployeeCode NVARCHAR(48) NULL, " +
-                     "EmployeeName NVARCHAR(48) NULL, " +
-                     "CardDate DATETIME NULL, " +
-                     "Description NVARCHAR(2048) NULL, " +
-                     "IsSynced BOOL NULL, " +
-                     "UpdatedAt DATETIME NULL, " +
-                     "CreatedById INTEGER NULL, " +
-                     "CreatedByName NVARCHAR(2048) NULL, " +
-                     "CompanyId INTEGER NULL, " +
-                     "CompanyName NVARCHAR(2048) NULL)";
+            "CREATE TABLE IF NOT EXISTS EmployeeCards " +
+            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "ServerId INTEGER NULL, " +
+            "Identifier GUID, " +
+            "EmployeeId INTEGER NULL, " +
+            "EmployeeIdentifier GUID NULL, " +
+            "EmployeeCode NVARCHAR(48) NULL, " +
+            "EmployeeName NVARCHAR(48) NULL, " +
+            "CardDate DATETIME NULL, " +
+            "Description NVARCHAR(2048) NULL, " +
+            "PlusMinus NVARCHAR(48) NULL, " +
+            "IsSynced BOOL NULL, " +
+            "UpdatedAt DATETIME NULL, " +
+            "CreatedById INTEGER NULL, " +
+            "CreatedByName NVARCHAR(2048) NULL, " +
+            "CompanyId INTEGER NULL, " +
+            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, CardDate, Description, " +
+            "EmployeeCode, EmployeeName, CardDate, Description, PlusMinus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeCards " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, CardDate, Description, " +
+            "EmployeeCode, EmployeeName, CardDate, Description, PlusMinus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @CardDate, @Description, " +
+            "@EmployeeCode, @EmployeeName, @CardDate, @Description, @PlusMinus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public EmployeeCardListResponse GetEmployeeCardsByEmployee(int companyId, Guid EmployeeIdentifier)
@@ -75,6 +76,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.CardDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PlusMinus = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -125,6 +127,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.CardDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PlusMinus = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -175,6 +178,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
                         dbEntry.CardDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PlusMinus = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -277,6 +281,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeCard.Employee.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CardDate", ((object)EmployeeCard.CardDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Description", ((object)EmployeeCard.Description) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PlusMinus", ((object)EmployeeCard.PlusMinus) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeCard.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", EmployeeCard.UpdatedAt);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

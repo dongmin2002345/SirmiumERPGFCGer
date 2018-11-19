@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181119115017_IzmeneNaRadnicimaPlusMinus_Zdravko")]
+    partial class IzmeneNaRadnicimaPlusMinus_Zdravko
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -609,7 +611,7 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int?>("CreatedById");
 
-                    b.Property<int>("Currency");
+                    b.Property<decimal>("Currency");
 
                     b.Property<DateTime>("DateOfPaymet");
 
@@ -625,7 +627,7 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int>("PDVPercent");
 
-                    b.Property<string>("Status");
+                    b.Property<int>("Status");
 
                     b.Property<DateTime>("StatusDate");
 
