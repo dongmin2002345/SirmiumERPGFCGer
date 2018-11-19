@@ -14,7 +14,7 @@
     </Control.Background>
     <UserControl.Resources>
         <ResourceDictionary>
-            <cbxConverters:StringDateTimeConverter x:Key="cbxDatetimeToStringConverter" />
+            <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
             <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
             <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
             <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
