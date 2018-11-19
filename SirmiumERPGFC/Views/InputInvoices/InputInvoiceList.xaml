@@ -17,7 +17,7 @@
             <cbxConverters:StringDateTimeConverter x:Key="cbxDatetimeToStringConverter" />
             <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
             <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
-
+            <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
             <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
             <!--<cbxConverters:DataGridFieldIsNullConverter x:Key="DataGridFieldIsNullConverter" />
             <cbxConverters:DataGridFieldIsTrueConverter x:Key="DataGridFieldIsTrueConverter" />-->
@@ -108,7 +108,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Ulazne fakture" Margin="5,0,5,5" Grid.Row="1">
+        <GroupBox Header="Ulazne fakture" Margin="5,2,5,0" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -191,7 +191,7 @@
                         <DataGridTextColumn SortMemberPath="AmountGross" Header="Iznos bruto" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Currency" Header="Valuta" Binding="{Binding Currency}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DateOfPaymet" Header="Datum plaćanja" Binding="{Binding DateOfPaymet, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Status" Header="Status" Binding="{Binding Status}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Status" Header="Status" Binding="{Binding Status, Converter={StaticResource cbxChooseStatusConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="StatusDate" Header="Datum statusa" Binding="{Binding StatusDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
 
                         <!--<DataGridTextColumn SortMemberPath="SumOfBase" Header="Poreska osnovica" Binding="{Binding SumOfBase, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />

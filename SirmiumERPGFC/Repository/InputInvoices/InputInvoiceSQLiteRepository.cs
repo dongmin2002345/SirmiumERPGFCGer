@@ -116,7 +116,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
 						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
+						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
@@ -210,7 +210,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
 						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
+						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
@@ -271,7 +271,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
 						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
 						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
+						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
