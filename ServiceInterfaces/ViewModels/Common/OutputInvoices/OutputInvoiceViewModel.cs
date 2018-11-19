@@ -229,7 +229,6 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
                     _Currency = value;
                     NotifyPropertyChanged("Currency");
                     DateOfPayment = InvoiceDate.AddDays(Currency);
-
                 }
             }
         }
