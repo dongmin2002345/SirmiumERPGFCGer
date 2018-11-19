@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.InputInvoices"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d"
         BorderBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="2">
@@ -53,13 +54,13 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra računa:"  VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0"  Grid.Column="1" Margin="2"  IsEnabled="False"
+                        <TextBox Grid.Row="0"  Grid.Column="1" Margin="2"  
                              x:Name="txtInputInvoiceCode" Text="{Binding Path=currentInputInvoice.Code}" IsReadOnly="True"/>
 
                         <!--    BusinessPartner with popup    -->
                         <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="Poslovni Partner:" Margin="5 0 5 0"/>
-                        <!--<popups:BusinessPartnerPopup Grid.Row="0" Grid.Column="3" x:Name="businessPartnerPopup"
-                         CurrentBusinessPartner="{Binding Path=currentInputInvoice.BusinessPartner, Mode=TwoWay}"/>-->
+                        <popups:BusinessPartnerPopup Grid.Row="0" Grid.Column="3" x:Name="businessPartnerPopup"
+                         CurrentBusinessPartner="{Binding Path=currentInputInvoice.BusinessPartner, Mode=TwoWay}"/>
 
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Dobavljač:" VerticalAlignment="Center" Margin="5 0 5 0" />

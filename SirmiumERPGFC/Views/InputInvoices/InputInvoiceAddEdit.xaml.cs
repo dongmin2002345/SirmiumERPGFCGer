@@ -221,7 +221,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 							System.Windows.Threading.DispatcherPriority.Normal,
 							new Action(() =>
 							{
-								txtAddress.Focus();
+								txtInputInvoiceCode.Focus();
 							})
 						);
 					}
