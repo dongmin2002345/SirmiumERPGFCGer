@@ -431,6 +431,8 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(EmployeeCardSQLiteRepository.EmployeeCardTableCreatePart, db);
                     createTable.ExecuteReader();
 
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeCards", "PlusMinus", "NVARCHAR(48) NULL");
+
 
                     if (withTableDrop)
                     {
