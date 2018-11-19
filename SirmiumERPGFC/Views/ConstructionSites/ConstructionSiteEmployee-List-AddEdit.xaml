@@ -110,7 +110,7 @@
                     <Button Grid.Row="1" x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Grid.Column="2">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" PRIKAŽI " />
+                            <TextBlock Text=" POVEŽI " />
                         </StackPanel>
                     </Button>
                 </Grid>
