@@ -230,7 +230,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtCode.Focus();
+                               // txtCode.Focus();
                             })
                         );
                     }

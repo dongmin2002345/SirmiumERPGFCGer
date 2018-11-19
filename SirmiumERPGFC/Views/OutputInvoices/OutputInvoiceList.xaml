@@ -234,8 +234,8 @@
                               SelectedItem="{Binding Path=CurrentOutputInvoice}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="BussinesPartner.Name" Header="Poslovni partner" Binding="{Binding BussinesPartner.Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="R. B." Binding="{Binding Code}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BussinesPartner.Name" Header="Poslovni partner" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Supplier" Header="Dobavljač" Binding="{Binding Supplier}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="Broj fakture" Binding="{Binding InvoiceNumber}" IsReadOnly="True" />
