@@ -87,7 +87,7 @@ namespace ServiceCore.Implementations.Employees
                     Identifier = Guid.NewGuid(),
                     EmployeeId = re.Employee.Id,
                     CardDate = addedEmployeeByConstructionSite.StartDate,
-                    Description = "Radnik " + re.Employee?.Name + " je krenuo da radi na gradilištu " + re.ConstructionSite?.Name + ". Radnik je na gradilištu od: " + addedEmployeeByConstructionSite.StartDate.ToString("dd.MM.yyyy") + " do " + addedEmployeeByConstructionSite.EndDate.ToString("dd.MM.yyyy"),
+                    Description = "Radnik " + re.Employee?.Name + " je krenuo da radi na gradilištu " + constructionSite?.Name + ". Radnik je na gradilištu od: " + re.StartDate.ToString("dd.MM.yyyy") + " do " + re.EndDate.ToString("dd.MM.yyyy"),
                     PlusMinus = "+",
                     CreatedById = re.CreatedBy?.Id,
                     CompanyId = re.Company?.Id,
