@@ -57,28 +57,28 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Šifra *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Šifra:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCode" IsEnabled="False" Text="{Binding Path=CurrentBusinessPartner.Code}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Interna šifra *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Interna šifra:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtInternalCode" Text="{Binding Path=CurrentBusinessPartner.InternalCode}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Naziv kompanije *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Naziv kompanije:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentBusinessPartner.Name}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" Text="Matični broj" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="Matični broj:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtIdentificationNumber" 
                              Text="{Binding Path=CurrentBusinessPartner.IdentificationNumber}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Poreski broj (PIB/JMBG) " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Poreski broj (PIB/JMBG):" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPIBNumber" 
                              Text="{Binding Path=CurrentBusinessPartner.PIB}" />
 
-                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Registarski broj (PIO)" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Registarski broj (PIO):" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPIONumber" 
                              Text="{Binding Path=CurrentBusinessPartner.PIO}" />
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="PDV broj" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="PDV broj:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPDVNumber"
                              Text="{Binding Path=CurrentBusinessPartner.PDV}"/>
 
@@ -86,25 +86,25 @@
                         <popups:AgencyPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgencySrb" 
                              CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>-->
 
-                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Rabat" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Rabat:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
                              Text="{Binding Path=CurrentBusinessPartner.Rebate}"/>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Valuta" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Valuta:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtDueDate"
                              Text="{Binding Path=CurrentBusinessPartner.DueDate}" />
 
-                        <TextBlock Grid.Row="4" Grid.Column="3" Text="JBKJS" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="JBKJS:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtJBKJS" 
                              Text="{Binding Path=CurrentBusinessPartner.JBKJS}" />
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Obveznik PDV-a " VerticalAlignment="Center" Margin="5 0 5 0"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Obveznik PDV-a:" VerticalAlignment="Center" Margin="5 0 5 0"/>
                         <ComboBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2"
                         SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
                         ItemsSource="{Binding Path=IsInPdvOptions}">
                         </ComboBox>
 
-                        <TextBlock Grid.Row="5" Grid.Column="3" Text="Sajt" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="5" Grid.Column="3" Text="Sajt:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
                              Text="{Binding Path=CurrentBusinessPartner.WebSite}" />
 
@@ -115,7 +115,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Podaci o poslovnom partneru Nemacka" Margin="2 2 2 1" Grid.Row="1">
+                <GroupBox Header="Podaci o poslovnom partneru Nemačka" Margin="2 2 2 1" Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -133,36 +133,36 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Sifra *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Šifra:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCodeGer" IsEnabled="False" Text="{Binding Path=CurrentBusinessPartner.Code}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Naziv kompanije *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Naziv kompanije:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtNameGer" 
                                  Text="{Binding Path=CurrentBusinessPartner.NameGer}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Drzava *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Država:" Margin="5 0 5 0" />
                         <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountryGer"
                                          CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Sektor *" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Sektor:" Margin="5 0 5 0" />
                         <popups:SectorPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
                                          CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"
                                          CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Delatnost *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Delatnost:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <popups:AgencyPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgency" 
                                          CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"
                                          CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Poreski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Poreski broj:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
                                Text="{Binding Path=CurrentBusinessPartner.TaxNr}" />
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Registarski broj " VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Registarski broj:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCommercialNr" 
                              Text="{Binding Path=CurrentBusinessPartner.CommercialNr}" />
 
-                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Kontakt osoba:" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPersonGer"  
                              Text="{Binding Path=CurrentBusinessPartner.ContactPersonGer}"/>
 
@@ -181,7 +181,7 @@
                     <Button Grid.Column="3" x:Name="btnSaveHeader" Click="btnSaveHeader_Click" Margin="5 0 0 0">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock FontSize="20" Text=" Sačuvaj zaglavlje " />
+                            <TextBlock FontSize="20" Text=" SAČUVAJ ZAGLAVLJE " />
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -206,42 +206,42 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Kontakt osoba - Ime" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Kontakt osoba - Ime:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneContactPersonFirstName" Text="{Binding Path=CurrentPhoneForm.ContactPersonFirstName, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Kontakt osoba - Prezime" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Kontakt osoba - Prezime:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneContactPersonLastName" Text="{Binding Path=CurrentPhoneForm.ContactPersonLastName, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Mobilni " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Mobilni:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtMobile" Text="{Binding Path=CurrentPhoneForm.Mobile, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Telefon " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Telefon:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhone" Text="{Binding Path=CurrentPhoneForm.Phone, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Fax " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Fax:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtFax" Text="{Binding Path=CurrentPhoneForm.Fax, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Email " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Email:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtEmail" Text="{Binding Path=CurrentPhoneForm.Email, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Rodjendan " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Rodjendan:" Margin="5 0 5 0" />
                         <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtBirthday" SelectedDate="{Binding Path=CurrentPhoneForm.Birthday, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Text="Napomena " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Text="Napomena:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentPhoneForm.Description, Mode=TwoWay}"/>
 
 
                         <Button x:Name="btnPhone" Grid.Row="4" Grid.Column="4" Click="btnPhone_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Sačuvaj stavku " />
+                                <TextBlock Text=" SAČUVAJ STAVKU " />
                             </StackPanel>
                         </Button>
 
                         <Button x:Name="btnCancelPhone" Grid.Row="4" Grid.Column="5" Click="btnCancelPhone_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Odustani " />
+                                <TextBlock Text=" ODUSTANI " />
                             </StackPanel>
                         </Button>
 
@@ -272,7 +272,7 @@
                                 <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Path=Mobile}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Fax" Header="Fax" Binding="{Binding Path=Fax}" Width="*" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Email" Header="E-mail" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Birthday" Header="Rodjendan" Binding="{Binding Path=Birthday, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -315,39 +315,39 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Država " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Država:" Margin="5 0 5 0" />
                         <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
                                          CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Region " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Region:" Margin="5 0 5 0" />
                         <popups:RegionPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popRegion" 
                                       CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"
                                       CurrentRegion="{Binding Path=CurrentLocationForm.Region, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Opština " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Opština:" Margin="5 0 5 0" />
                         <popups:MunicipalityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popMunicipality" 
                                               CurrentRegion="{Binding Path=CurrentLocationForm.Region, Mode=TwoWay}"
                                               CurrentMunicipality="{Binding Path=CurrentLocationForm.Municipality, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Grad " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Grad:" Margin="5 0 5 0" />
                         <popups:CityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity" 
                                       CurrentCountry="{Binding Path=CurrentLocationForm.Country, Mode=TwoWay}"
                                       CurrentCity="{Binding Path=CurrentLocationForm.City, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Adresa " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Adresa:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddress" Text="{Binding Path=CurrentLocationForm.Address, Mode=TwoWay}"/>
 
                         <Button x:Name="btnAddLocation" Grid.Row="2" Grid.Column="4" Click="btnAddLocation_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Sačuvaj stavku " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " />
                             </StackPanel>
                         </Button>
 
                         <Button x:Name="btnCancelLocation" Grid.Row="2" Grid.Column="5" Click="btnCancelLocation_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Odustani " />
+                                <TextBlock Text=" ODUSTANI " />
                             </StackPanel>
                         </Button>
 
@@ -422,30 +422,30 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Država " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Država:" Margin="5 0 5 0" />
                         <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popBankCountry" 
                                              CurrentCountry="{Binding Path=CurrentBankForm.Country, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Banka " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Banka:" Margin="5 0 5 0" />
                         <popups:BankPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popBank" 
                                           CurrentCountry="{Binding Path=CurrentBankForm.Country, Mode=TwoWay}"
                                           CurrentBank="{Binding Path=CurrentBankForm.Bank, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Broj računa " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Broj računa:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAccountNumber" Text="{Binding Path=CurrentBankForm.AccountNumber, Mode=TwoWay}"/>
 
 
                         <Button x:Name="btnBank" Grid.Row="1" Grid.Column="4" Click="btnBank_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Sačuvaj stavku " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " />
                             </StackPanel>
                         </Button>
 
                         <Button x:Name="btnCancelBank" Grid.Row="1" Grid.Column="5" Click="btnCancelBank_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Odustani " />
+                                <TextBlock Text=" ODUSTANI " />
                             </StackPanel>
                         </Button>
 
@@ -517,45 +517,45 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Institucija " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Institucija:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtInstitution" 
                                  Text="{Binding Path=CurrentInstitutionForm.Institution, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Korisničko ime " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="Korisničko ime:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
                                  Text="{Binding Path=CurrentInstitutionForm.Username, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Lozinka " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Lozinka:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
                                  Text="{Binding Path=CurrentInstitutionForm.Password, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Kontakt osoba " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Kontakt osoba:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
                                  Text="{Binding Path=CurrentInstitutionForm.ContactPerson, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Telefon " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Telefon:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
                                  Text="{Binding Path=CurrentInstitutionForm.Phone, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Fax " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="Fax:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
                                  Text="{Binding Path=CurrentInstitutionForm.Fax, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Email " Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="E-mail:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
                                  Text="{Binding Path=CurrentInstitutionForm.Email, Mode=TwoWay}"/>
 
                         <Button x:Name="btnAddInstitution" Grid.Row="3" Grid.Column="4" Click="btnAddInstitution_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Sačuvaj stavku " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " />
                             </StackPanel>
                         </Button>
 
                         <Button x:Name="btnCancelInstitution" Grid.Row="3" Grid.Column="5" Click="btnCancelInstitution_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Odustani " />
+                                <TextBlock Text=" ODUSTANI " />
                             </StackPanel>
                         </Button>
 
@@ -580,13 +580,13 @@
                               SelectedItem="{Binding Path=CurrentInstitutionDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="Institution" Header="Institucija " Binding="{Binding Path=Institution}" Width="*" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Username" Header="Korisničko ime " Binding="{Binding Path=Username}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Institution" Header="Institucija" Binding="{Binding Path=Institution}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Username" Header="Korisničko ime" Binding="{Binding Path=Username}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Password" Header="Lozinka" Binding="{Binding Path=Password}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ContactPerson" Header="Kontakt osoba" Binding="{Binding Path=ContactPerson}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Fax" Header="Fax" Binding="{Binding Path=Fax}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Email" Header="Email" Binding="{Binding Path=Email}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Email" Header="E-mail" Binding="{Binding Path=Email}" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -655,14 +655,14 @@
                         <Button x:Name="btnSaveType" Grid.Row="1" Grid.Column="4" Click="btnSaveType_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Sačuvaj odabir " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " />
                             </StackPanel>
                         </Button>
 
                         <Button x:Name="btnCancelType" Grid.Row="1" Grid.Column="5" Click="btnCancelType_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" Odustani " />
+                                <TextBlock Text=" ODUSTANI " />
                             </StackPanel>
                         </Button>
 
@@ -692,7 +692,7 @@
             <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 5">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock FontSize="20" Text=" Zatvori " />
+                    <TextBlock FontSize="20" Text=" ZATVORI " />
                 </StackPanel>
             </Button>
         </Grid>

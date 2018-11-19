@@ -9,7 +9,7 @@
              xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Background="White">
-    
+
     <UserControl.Resources>
         <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
         <cbxConverters1:BoolStringConverter x:Key="BoolStringConverter" />
@@ -35,59 +35,60 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="130*" />
+                    <ColumnDefinition Width="17*" />
+                    <ColumnDefinition Width="113*"/>
+                    <ColumnDefinition Width="130*" />
+                    <ColumnDefinition Width="129*" />
+                    <ColumnDefinition Width="130*" />
+                    <ColumnDefinition Width="129*" />
 
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                
-                <TextBlock Text="Poslovni partner"  Grid.Column="0" VerticalAlignment="Center" Margin="5" Height="16"/>
+
+                <TextBlock Text="Poslovni partner:"  Grid.Column="0" VerticalAlignment="Center" Margin="5,7" Height="16"/>
                 <TextBox x:Name="txtSearchByBussinesPartner" Grid.Column="1" 
                          Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_BusinessPartner, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
+                         Controls:TextBoxHelper.ClearTextButton="True" Grid.ColumnSpan="2"/>
 
-                <TextBlock Text="Dobavljač" Grid.Column="2" VerticalAlignment="Center" Margin="5" Height="16"/>
-                <TextBox x:Name="txtSearchBySupplier" Grid.Column="3" 
+                <TextBlock Text="Dobavljač:" Grid.Column="3" VerticalAlignment="Center" Margin="5,7" Height="16"/>
+                <TextBox x:Name="txtSearchBySupplier" Grid.Column="4" 
                          Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_Supplier, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
 
-                <TextBlock Text="Broj fakture" Grid.Column="4" VerticalAlignment="Center" Margin="5" Height="16"/>
-                <TextBox x:Name="txtSearchByInvoiceNumber" Grid.Column="5" 
+                <TextBlock Text="Broj fakture:" Grid.Column="5" VerticalAlignment="Center" Margin="5,7" Height="16"/>
+                <TextBox x:Name="txtSearchByInvoiceNumber" Grid.Column="6" 
                          Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceNumber, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
 
-                <TextBlock Text="Datum fakture od"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Margin="5,6" Height="16"/>
+                <TextBlock Text="Datum fakture od:"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Margin="5,7" Height="16"/>
                 <DatePicker x:Name="dtSearchByInvoiceDateFrom" Grid.Column="1" Grid.Row="1" 
                          SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateFrom}"
                          Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
+                         Controls:TextBoxHelper.ClearTextButton="True" Grid.ColumnSpan="2"/>
 
-                <TextBlock Text="Datum fakture do"  Grid.Column="2" VerticalAlignment="Center" Grid.Row="1" Margin="5,6" Height="16"/>
-                <DatePicker x:Name="dtSearchByInvoiceDateTo" Grid.Column="3" Grid.Row="1" 
+                <TextBlock Text="Datum fakture do:"  Grid.Column="3" VerticalAlignment="Center" Grid.Row="1" Margin="5,7" Height="16"/>
+                <DatePicker x:Name="dtSearchByInvoiceDateTo" Grid.Column="4" Grid.Row="1" 
                          SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateTo}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
-                <TextBlock Text="Datum plaćanja od"  Grid.Column="4" VerticalAlignment="Center" Grid.Row="1" Margin="5,6" Height="16"/>
-                <DatePicker x:Name="dtSearchByCalculationDateFrom" Grid.Column="5" Grid.Row="1" 
+                <TextBlock Text="Datum plaćanja od"  Grid.Column="5" VerticalAlignment="Center" Grid.Row="1" Margin="5,7" Height="16"/>
+                <DatePicker x:Name="dtSearchByCalculationDateFrom" Grid.Column="6" Grid.Row="1" 
                          SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymentFrom}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Datum plaćanja do"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Margin="5,6" Height="16"/>
+                <TextBlock Text="Datum plaćanja do:"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Margin="5,7" Height="16"/>
                 <DatePicker x:Name="dtSearchByCalculationDateTo" Grid.Column="1" Grid.Row="2" 
                          SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymentTo}"
                          Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
+                         Controls:TextBoxHelper.ClearTextButton="True" Grid.ColumnSpan="2"/>
 
 
                 <!--<TextBlock Text="Broj računa"  Grid.Column="0" VerticalAlignment="Center" Margin="5" Height="16"/>
@@ -122,10 +123,10 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>-->
 
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="5,6" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2">
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="5,6" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\search.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Prikaži " />
+                        <TextBlock Text=" PRIKAŽI " />
                     </StackPanel>
                 </Button>
 
@@ -145,7 +146,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
 
-                            <TextBlock Text=" Dodaj" />
+                            <TextBlock Text=" DODAJ" />
                         </StackPanel>
                     </Button>
 
@@ -160,7 +161,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\printer.png" HorizontalAlignment="Center" Height="16" Width="16" />
 
-                            <TextBlock Text=" Štampaj" />
+                            <TextBlock Text=" ŠTAMPAJ" />
                         </StackPanel>
                     </Button>
 
@@ -255,7 +256,7 @@
                         <DataGridTextColumn SortMemberPath="InvoiceDate" Header="Datum računa" Binding="{Binding InvoiceDate}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="CreatedBy.Username" Header="Kreirao/promenio" Binding="{Binding CreatedBy.Username}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="UpdatedAt" Header="Vreme izmene" Binding="{Binding UpdatedAt}" Width="*" IsReadOnly="True"  />-->
-                        
+
                     </DataGrid.Columns>
                 </DataGrid>
 

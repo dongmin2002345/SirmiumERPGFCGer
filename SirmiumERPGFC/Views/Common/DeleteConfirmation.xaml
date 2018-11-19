@@ -25,12 +25,15 @@
                     Click="btnOK_Click"
                     Style="{StaticResource AccentedSquareButtonStyle}"
                     VerticalAlignment="Center"
-                    Margin="5" Width="100">Da</Button>
+                    Margin="5" Width="100"
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal">DA</Button>
             <Button x:Name="btnCancel"
                     Click="btnCancel_Click"
                     Style="{StaticResource AccentedSquareButtonStyle}"
                     VerticalAlignment="Center"
-                    Margin="5" Width="100" >Ne</Button>
+                    Margin="5" Width="100"
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal">NE</Button>
+
         </StackPanel>
     </Grid>
 </Window>
