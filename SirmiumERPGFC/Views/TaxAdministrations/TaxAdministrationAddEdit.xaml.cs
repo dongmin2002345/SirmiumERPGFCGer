@@ -1,12 +1,12 @@
 ﻿using Ninject;
-using ServiceInterfaces.Abstractions.ConstructionSites;
-using ServiceInterfaces.Messages.ConstructionSites;
+using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
+using ServiceInterfaces.Messages.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
-using ServiceInterfaces.ViewModels.ConstructionSites;
+using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
-using SirmiumERPGFC.Repository.ConstructionSites;
+using SirmiumERPGFC.Repository.TaxAdministrations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,40 +24,39 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.ConstructionSites
+namespace SirmiumERPGFC.Views.TaxAdministrations
 {
     /// <summary>
-    /// Interaction logic for ConstructionSite_List_AddEdit.xaml
+    /// Interaction logic for TaxAdministrationAddEdit.xaml
     /// </summary>
-    public partial class ConstructionSite_List_AddEdit : UserControl, INotifyPropertyChanged
+    public partial class TaxAdministrationAddEdit : UserControl, INotifyPropertyChanged
     {
-        #region Attributes
+        /// <summary>
+        /// Event for handling output invoice create and update
+        /// </summary>
+        public event TaxAdministrationHandler TaxAdministrationCreatedUpdated;
 
-        #region Services
-        IConstructionSiteService constructionSiteService;
-        #endregion
+        /// <summary>
+        /// Service for accessing output invoice
+        /// </summary>
+        ITaxAdministrationService taxAdministrationService;
 
-        #region Event
-        public event ConstructionSiteHandler ConstructionSiteCreatedUpdated;
-        #endregion
+        #region CurrentTaxAdministration
+        private TaxAdministrationViewModel _CurrentTaxAdministration;
 
-        #region CurrentConstructionSite
-        private ConstructionSiteViewModel _CurrentConstructionSite;
-
-        public ConstructionSiteViewModel CurrentConstructionSite
+        public TaxAdministrationViewModel CurrentTaxAdministration
         {
-            get { return _CurrentConstructionSite; }
+            get { return _CurrentTaxAdministration; }
             set
             {
-                if (_CurrentConstructionSite != value)
+                if (_CurrentTaxAdministration != value)
                 {
-                    _CurrentConstructionSite = value;
-                    NotifyPropertyChanged("CurrentConstructionSite");
+                    _CurrentTaxAdministration = value;
+                    NotifyPropertyChanged("CurrentTaxAdministration");
                 }
             }
         }
         #endregion
-
 
         #region IsCreateProcess
         private bool _IsCreateProcess;
@@ -95,7 +94,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = " Speichern ";
 
         public string SaveButtonContent
         {
@@ -128,41 +127,34 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
-        #endregion
 
         #region Constructor
 
-        public ConstructionSite_List_AddEdit(ConstructionSiteViewModel constructionSiteViewModel, bool isCreateProcess, bool isPopup = false)
+        public TaxAdministrationAddEdit(TaxAdministrationViewModel TaxAdministrationViewModel, bool isCreateProcess, bool isPopup = false)
         {
-            constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
+            // Initialize service
+            taxAdministrationService = DependencyResolver.Kernel.Get<ITaxAdministrationService>();
 
-            // Initialize form components
             InitializeComponent();
 
             this.DataContext = this;
 
-            CurrentConstructionSite = constructionSiteViewModel;
+            CurrentTaxAdministration = TaxAdministrationViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
         }
 
         #endregion
 
-        #region Cancel and Save buttons
+        #region Save and Cancel button
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
-            //if (CurrentConstructionSite.Code == null)
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Sifra";
-            //    return;
-            //}
-
-            if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
+            if (String.IsNullOrEmpty(CurrentTaxAdministration.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv gradilista";
+                MainWindow.WarningMessage = "Sie müssen einen Namen schreiben!";
                 return;
             }
 
@@ -170,46 +162,46 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = " Wird geschpeichert... ";
                 SaveButtonEnabled = false;
 
-                CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                CurrentTaxAdministration.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentTaxAdministration.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentConstructionSite.IsSynced = false;
-                CurrentConstructionSite.UpdatedAt = DateTime.Now;
+                CurrentTaxAdministration.IsSynced = false;
+                CurrentTaxAdministration.UpdatedAt = DateTime.Now;
 
-                ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
-                response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
+                TaxAdministrationResponse response = new TaxAdministrationSQLiteRepository().Delete(CurrentTaxAdministration.Identifier);
+                response = new TaxAdministrationSQLiteRepository().Create(CurrentTaxAdministration);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = "Lokaler Speicherfehler!";
+                    SaveButtonContent = " Speichern ";
                     SaveButtonEnabled = true;
                     return;
                 }
 
-                response = constructionSiteService.Create(CurrentConstructionSite);
+                response = taxAdministrationService.Create(CurrentTaxAdministration);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = "Die Daten wurden im Lokal gespeichert. Server-Speicherfehler!";
+                    SaveButtonContent = " Speichern ";
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    new ConstructionSiteSQLiteRepository().UpdateSyncStatus(response.ConstructionSite.Identifier, response.ConstructionSite.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    new TaxAdministrationSQLiteRepository().UpdateSyncStatus(response.TaxAdministration.Identifier, response.TaxAdministration.Id, response.TaxAdministration.Code, true);
+                    MainWindow.SuccessMessage = "Daten wurden erfolgreich gespeichert!";
+                    SaveButtonContent = " Speichern ";
                     SaveButtonEnabled = true;
 
-                    ConstructionSiteCreatedUpdated();
+                    TaxAdministrationCreatedUpdated();
 
                     if (IsCreateProcess)
                     {
-                        CurrentConstructionSite = new ConstructionSiteViewModel();
-                        CurrentConstructionSite.Identifier = Guid.NewGuid();
+                        CurrentTaxAdministration = new TaxAdministrationViewModel();
+                        CurrentTaxAdministration.Identifier = Guid.NewGuid();
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
@@ -226,7 +218,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                             new Action(() =>
                             {
                                 if (IsPopup)
-                                    FlyoutHelper.CloseFlyoutPopup(this);
+                                    FlyoutHelper.CloseFlyout(this);
                                 else
                                     FlyoutHelper.CloseFlyout(this);
                             })
@@ -242,24 +234,21 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             if (IsPopup)
-                FlyoutHelper.CloseFlyoutPopup(this);
+                FlyoutHelper.CloseFlyout(this);
             else
                 FlyoutHelper.CloseFlyout(this);
         }
 
         #endregion
 
-        #region INotifyPropertyChanged implementation
+        #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
+        public void NotifyPropertyChanged(string inPropName = "") //[CallerMemberName]
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
         }
-
         #endregion
+
     }
 }
