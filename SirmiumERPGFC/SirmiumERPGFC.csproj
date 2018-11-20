@@ -183,6 +183,7 @@
     <Compile Include="Reports\BusinessPartners\BusinessPartnerGerExcelReport.cs" />
     <Compile Include="Reports\ConstructionSites\ConstructionSitesExcelReport.cs" />
     <Compile Include="Reports\Employees\EmployeesExcelReport.cs" />
+    <Compile Include="Reports\Employees\PhysicalPersonsExcelReport.cs" />
     <Compile Include="Reports\InputInvoices\InputInvoicesExcelReport.cs" />
     <Compile Include="Reports\OutputInvoices\OutputInvoicesExcelReport.cs" />
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Repository\Employees\EmployeeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\LicenceTypeSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\FamilyMemberSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\PhysicalPersonSQLiteRepository.cs" />
     <Compile Include="Repository\InputInvoices\InputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Locations\CitySQLiteRepository.cs" />
     <Compile Include="Repository\Common\SQLiteHelper.cs" />
@@ -330,6 +332,12 @@
     </Compile>
     <Compile Include="Views\Employees\LicenceType_List_AddEdit.xaml.cs">
       <DependentUpon>LicenceType_List_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson-AddEdit.xaml.cs">
+      <DependentUpon>PhysicalPerson-AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_List.xaml.cs">
+      <DependentUpon>PhysicalPerson_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home\ToDoAddEdit.xaml.cs">
       <DependentUpon>ToDoAddEdit.xaml</DependentUpon>
@@ -610,6 +618,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Employees\LicenceType_List_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson-AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

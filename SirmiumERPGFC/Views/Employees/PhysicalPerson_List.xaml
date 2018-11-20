@@ -1,15 +1,15 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.BusinessPartners.BusinessPartner_Type_List"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Employees.PhysicalPerson_List"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.BusinessPartners"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Employees"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
-             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Control.Background>
         <SolidColorBrush Color="White" />
     </Control.Background>
@@ -23,33 +23,52 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="2,1,2,2" Header="Pretraga" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="Pretraga " IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Pretraga po nazivu tipa poslovnog partnera:"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                <TextBlock Text="Ime:" Grid.Column="0" VerticalAlignment="Center" Margin="5" Height="16"/>
                 <TextBox x:Name="txtSearchByName" Grid.Column="1" 
-                         Text="{Binding Path=BusinessPartnerTypeSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Path=PhysicalPersonSearchObject.SearchBy_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="5" Background="#007ACC">
+
+
+                <TextBlock Text="Prezime:" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="5" Height="16"/>
+                <TextBox x:Name="txtSearchBySurName" Grid.Column="3" Grid.Row="0" 
+                         Text="{Binding Path=PhysicalPersonSearchObject.SearchBy_SurName, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="Broj pasoša:" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5" Height="16"/>
+                <TextBox x:Name="txtSearchByPassport" Grid.Column="1" Grid.Row="1"
+                         Text="{Binding Path=PhysicalPersonSearchObject.SearchBy_Passport, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="Šifra (gradilište):" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="5" Height="16"/>
+                <TextBox x:Name="txtSearchByInterest" Grid.Column="3" Grid.Row="1"
+                         Text="{Binding Path=PhysicalPersonSearchObject.Search_ConstructionSite, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="4" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\search.png" HorizontalAlignment="Center" Height="16" Width="16" />
                         <TextBlock Text=" PRIKAŽI " Foreground="White" FontWeight="Regular" />
@@ -59,7 +78,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Tip poslovnog partnera" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
+        <GroupBox Header="Fizočko lice" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -70,13 +89,20 @@
                     <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" DODAJ " Foreground="White" FontWeight="Regular"  />
+                            <TextBlock Text=" DODAJ " Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular"  />
+                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="btnExcel" Click="btnExcel_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <TextBlock Text=" Izvezi u EXCEL" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -106,8 +132,8 @@
                 </StackPanel>
 
                 <!--Listing-->
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding BusinessPartnerTypesDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgBusinessPartnerTypes"
+                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding PhysicalPersonDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <DataGrid x:Name="dgBanks"
                           Grid.Row="1"
                           Margin="5 5 5 0"
                           AutoGenerateColumns="False"
@@ -122,12 +148,34 @@
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
                           Style="{DynamicResource AzureDataGrid}"
-                          ItemsSource="{Binding Path=BusinessPartnerTypesFromDB}"
-                          SelectedItem="{Binding Path=CurrentBusinessPartnerType, Mode=TwoWay}">
+                          ItemsSource="{Binding Path=PhysicalPersonsFromDB}"
+                          SelectedItem="{Binding Path=CurrentPhysicalPerson, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PhysicalPersonCode" Header="Šifra" Binding="{Binding PhysicalPersonCode}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SurName" Header="Prezime" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ConstructionSiteCode" Header="Šifra (Gradilište)" IsReadOnly="True">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} ( {1} )">
+                                    <Binding Path="ConstructionSiteCode" />
+                                    <Binding Path="ConstructionSiteName" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Passport" Header="Broj pasoša" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="EmbassyDate" Header="Datum ambasade" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="VisaValidFrom" Header="Datum vize od" Binding="{Binding VisaValidFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="VisaValidTo" Header="Datum vise do" Binding="{Binding VisaValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="WorkPermitFrom" Header="Datum radne dozvole od" Binding="{Binding WorkPermitFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="WorkPermitTo" Header="Datum radne dozvole do" Binding="{Binding WorkPermitTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
@@ -165,3 +213,4 @@
         </GroupBox>
     </Grid>
 </UserControl>
+

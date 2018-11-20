@@ -70,7 +70,10 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		private ILicenceTypeRepository licenceTypeRepository;
         private IAgencyRepository agencyRepository;
 
-        private IEmployeeRepository employeeRepository;
+		private IPhysicalPersonRepository physicalPersonRepository;
+	
+
+		private IEmployeeRepository employeeRepository;
         private IEmployeeItemRepository employeeItemRepository;
         private IEmployeeNoteRepository employeeNoteRepository;
         private IEmployeeCardRepository employeeCardRepository;
@@ -359,7 +362,15 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return employeeByBusinessPartnerRepository;
         }
 
-        public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
+		public IPhysicalPersonRepository GetPhysicalPersonRepository()
+		{
+			if (physicalPersonRepository == null)
+				physicalPersonRepository = new PhysicalPersonRepository(context);
+			return physicalPersonRepository;
+		}
+
+		
+		public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
         {
             if (businessPartnerByConstructionSiteRepository == null)
                 businessPartnerByConstructionSiteRepository = new BusinessPartnerByConstructionSiteRepository(context);

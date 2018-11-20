@@ -276,7 +276,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " Sinhronizuj ";
+        private string _SyncButtonContent = " SINHRONIZUJ ";
 
         public string SyncButtonContent
         {
@@ -412,7 +412,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             DisplayEmployeesNotOnBusinessPartnerData();
             DisplayEmployeesOnBusinessPartnerData();
 
-            SyncButtonContent = " Osveži ";
+            SyncButtonContent = " OSVEŽI ";
             SyncButtonEnabled = true;
 
         }

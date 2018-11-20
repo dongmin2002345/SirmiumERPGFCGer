@@ -351,7 +351,13 @@ namespace SirmiumERPGFC
             //OpenTab("Radnici", new IndividualList());
         }
 
-        private void mniOutputInvoices_Click(object sender, RoutedEventArgs e)
+		private void mniPhysicalPersons_Click(object sender, RoutedEventArgs e)
+		{
+			cntCtrl.Content = new PhysicalPerson_List();
+			//OpenTab("Radnici", new IndividualList());
+		}
+
+		private void mniOutputInvoices_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new OutputInvoiceList();
             //OpenTab("Izlazni računi", new OutputInvoiceList());
