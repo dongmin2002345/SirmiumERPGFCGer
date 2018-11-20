@@ -53,7 +53,7 @@ namespace SirmiumERPGFC.Reports.InputInvoices
 
 
 			int leftSideMin = 1;
-			int rightSideMax = 10;
+			int rightSideMax = 14;
 
 			int rowCounter = 1;
 
