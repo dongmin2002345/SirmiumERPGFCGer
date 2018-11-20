@@ -34,6 +34,7 @@ using SirmiumERPGFC.Views.ConstructionSites;
 using SirmiumERPGFC.Views.Common;
 using SirmiumERPGFC.Views.Administrations;
 using SirmiumERPGFC.Views.InputInvoices;
+using SirmiumERPGFC.Views.TaxAdministrations;
 
 namespace SirmiumERPGFC
 {
@@ -350,7 +351,13 @@ namespace SirmiumERPGFC
             //OpenTab("Radnici", new IndividualList());
         }
 
-        private void mniOutputInvoices_Click(object sender, RoutedEventArgs e)
+		private void mniPhysicalPersons_Click(object sender, RoutedEventArgs e)
+		{
+			cntCtrl.Content = new PhysicalPerson_List();
+			//OpenTab("Radnici", new IndividualList());
+		}
+
+		private void mniOutputInvoices_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new OutputInvoiceList();
             //OpenTab("Izlazni računi", new OutputInvoiceList());
@@ -449,6 +456,11 @@ namespace SirmiumERPGFC
         private void mniBusinessPartnerType_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new BusinessPartner_Type_List();
+        }
+
+        private void mniTaxAdministrations_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new TaxAdministrationList();
         }
     }
 }
