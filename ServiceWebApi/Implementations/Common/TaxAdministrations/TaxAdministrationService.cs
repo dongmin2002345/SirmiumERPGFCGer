@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ServiceWebApi.Implementations.Common.TaxAdministrations
 {
-    class TaxAdministrationService : ITaxAdministrationService
+    public class TaxAdministrationService : ITaxAdministrationService
     {
         public TaxAdministrationListResponse GetTaxAdministrations(int companyId)
         {

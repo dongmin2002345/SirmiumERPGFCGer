@@ -34,6 +34,7 @@ using SirmiumERPGFC.Views.ConstructionSites;
 using SirmiumERPGFC.Views.Common;
 using SirmiumERPGFC.Views.Administrations;
 using SirmiumERPGFC.Views.InputInvoices;
+using SirmiumERPGFC.Views.TaxAdministrations;
 
 namespace SirmiumERPGFC
 {
@@ -449,6 +450,11 @@ namespace SirmiumERPGFC
         private void mniBusinessPartnerType_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new BusinessPartner_Type_List();
+        }
+
+        private void mniTaxAdministrations_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new TaxAdministrationList();
         }
     }
 }

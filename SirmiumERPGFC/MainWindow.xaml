@@ -143,7 +143,14 @@
                             <Image Source="Resources\Icons\bank.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                </Fluent:RibbonGroupBox>                
+                </Fluent:RibbonGroupBox>              
+                <Fluent:RibbonGroupBox Header="Steuerverwaltungen">
+                    <Fluent:Button x:Name="mniTaxAdministrations" Click="mniTaxAdministrations_Click" Header="Steuerverwaltungen" KeyTip="BAN" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\bank.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>  
             </Fluent:RibbonTabItem>
             
             <Fluent:RibbonTabItem Header="ADMINISTRACIJA" x:Name="mniAdministration" KeyTip="ADM">

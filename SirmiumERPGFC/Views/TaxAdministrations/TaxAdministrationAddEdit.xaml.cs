@@ -1,17 +1,14 @@
 ﻿using Ninject;
-using ServiceInterfaces.Abstractions.Common.OutputInvoices;
-using ServiceInterfaces.Messages.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
+using ServiceInterfaces.Messages.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
-using ServiceInterfaces.ViewModels.Common.OutputInvoices;
-using ServiceWebApi.Implementations.Common.OutputInvoices;
+using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using SirmiumERPGFC.Common;
-using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Infrastructure;
-using SirmiumERPGFC.Repository.OutputInvoices;
+using SirmiumERPGFC.Repository.TaxAdministrations;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -26,56 +23,37 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ToastNotifications;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Messages;
-using ToastNotifications.Position;
-using WpfAppCommonCode.Converters;
 
-namespace SirmiumERPGFC.Views.OutputInvoices
+namespace SirmiumERPGFC.Views.TaxAdministrations
 {
     /// <summary>
-    /// Interaction logic for BusinessPartnerAddEdit.xaml
+    /// Interaction logic for TaxAdministrationAddEdit.xaml
     /// </summary>
-    public partial class OutputInvoiceAddEdit : UserControl, INotifyPropertyChanged
+    public partial class TaxAdministrationAddEdit : UserControl, INotifyPropertyChanged
     {
         /// <summary>
         /// Event for handling output invoice create and update
         /// </summary>
-        public event OutputInvoiceHandler OutputInvoiceCreatedUpdated;
+        public event TaxAdministrationHandler TaxAdministrationCreatedUpdated;
 
         /// <summary>
         /// Service for accessing output invoice
         /// </summary>
-        IOutputInvoiceService outputInvoiceService;
+        ITaxAdministrationService taxAdministrationService;
 
-        #region CurrentOutputInvoice
-        private OutputInvoiceViewModel _CurrentOutputInvoice;
+        #region CurrentTaxAdministration
+        private TaxAdministrationViewModel _CurrentTaxAdministration;
 
-        public OutputInvoiceViewModel CurrentOutputInvoice
+        public TaxAdministrationViewModel CurrentTaxAdministration
         {
-            get { return _CurrentOutputInvoice; }
+            get { return _CurrentTaxAdministration; }
             set
             {
-                if (_CurrentOutputInvoice != value)
+                if (_CurrentTaxAdministration != value)
                 {
-                    _CurrentOutputInvoice = value;
-                    NotifyPropertyChanged("CurrentOutputInvoice");
+                    _CurrentTaxAdministration = value;
+                    NotifyPropertyChanged("CurrentTaxAdministration");
                 }
-            }
-        }
-        #endregion
-
-        #region StatusOptions
-        public ObservableCollection<String> StatusOptions
-        {
-            get
-            {
-                return new ObservableCollection<String>(new List<string>() {
-                           ChooseStatusConverter.Choose,
-                           ChooseStatusConverter.ChooseO,
-                           ChooseStatusConverter.ChooseB,
-                });
             }
         }
         #endregion
@@ -116,7 +94,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
+        private string _SaveButtonContent = " Speichern ";
 
         public string SaveButtonContent
         {
@@ -150,19 +128,18 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         #endregion
 
 
-
         #region Constructor
 
-        public OutputInvoiceAddEdit(OutputInvoiceViewModel OutputInvoiceViewModel, bool isCreateProcess, bool isPopup = false)
+        public TaxAdministrationAddEdit(TaxAdministrationViewModel TaxAdministrationViewModel, bool isCreateProcess, bool isPopup = false)
         {
             // Initialize service
-            outputInvoiceService = DependencyResolver.Kernel.Get<IOutputInvoiceService>();
+            taxAdministrationService = DependencyResolver.Kernel.Get<ITaxAdministrationService>();
 
             InitializeComponent();
 
             this.DataContext = this;
 
-            CurrentOutputInvoice = OutputInvoiceViewModel;
+            CurrentTaxAdministration = TaxAdministrationViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
         }
@@ -175,9 +152,9 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         {
             #region Validation
 
-            if (String.IsNullOrEmpty(CurrentOutputInvoice.Supplier))
+            if (String.IsNullOrEmpty(CurrentTaxAdministration.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv dobavljača";
+                MainWindow.WarningMessage = "Sie müssen einen Namen schreiben!";
                 return;
             }
 
@@ -185,52 +162,52 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = " Wird geschpeichert... ";
                 SaveButtonEnabled = false;
 
-                CurrentOutputInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                CurrentTaxAdministration.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentTaxAdministration.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentOutputInvoice.IsSynced = false;
-                CurrentOutputInvoice.UpdatedAt = DateTime.Now;
+                CurrentTaxAdministration.IsSynced = false;
+                CurrentTaxAdministration.UpdatedAt = DateTime.Now;
 
-                OutputInvoiceResponse response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
-                response = new OutputInvoiceSQLiteRepository().Create(CurrentOutputInvoice);
+                TaxAdministrationResponse response = new TaxAdministrationSQLiteRepository().Delete(CurrentTaxAdministration.Identifier);
+                response = new TaxAdministrationSQLiteRepository().Create(CurrentTaxAdministration);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " Sačuvaj ";
+                    MainWindow.ErrorMessage = "Lokaler Speicherfehler!";
+                    SaveButtonContent = " Speichern ";
                     SaveButtonEnabled = true;
                     return;
                 }
 
-                response = outputInvoiceService.Create(CurrentOutputInvoice);
+                response = taxAdministrationService.Create(CurrentTaxAdministration);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " Sačuvaj ";
+                    MainWindow.ErrorMessage = "Die Daten wurden im Lokal gespeichert. Server-Speicherfehler!";
+                    SaveButtonContent = " Speichern ";
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    new OutputInvoiceSQLiteRepository().UpdateSyncStatus(response.OutputInvoice.Identifier, response.OutputInvoice.Id, response.OutputInvoice.Code, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " Sačuvaj ";
+                    new TaxAdministrationSQLiteRepository().UpdateSyncStatus(response.TaxAdministration.Identifier, response.TaxAdministration.Id, response.TaxAdministration.Code, true);
+                    MainWindow.SuccessMessage = "Daten wurden erfolgreich gespeichert!";
+                    SaveButtonContent = " Speichern ";
                     SaveButtonEnabled = true;
 
-                    OutputInvoiceCreatedUpdated();
+                    TaxAdministrationCreatedUpdated();
 
                     if (IsCreateProcess)
                     {
-                        CurrentOutputInvoice = new OutputInvoiceViewModel();
-                        CurrentOutputInvoice.Identifier = Guid.NewGuid();
+                        CurrentTaxAdministration = new TaxAdministrationViewModel();
+                        CurrentTaxAdministration.Identifier = Guid.NewGuid();
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                               // txtCode.Focus();
+                                txtCode.Focus();
                             })
                         );
                     }
