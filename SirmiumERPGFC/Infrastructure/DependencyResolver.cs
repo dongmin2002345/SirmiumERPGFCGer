@@ -69,7 +69,9 @@ namespace SirmiumERPGFC.Infrastructure
 				Kernel.Bind<IBankService>().To<BankService>();
 				Kernel.Bind<ILicenceTypeService>().To<LicenceTypeService>();
 
-                Kernel.Bind<IEmployeeService>().To<EmployeeService>();
+				Kernel.Bind<IPhysicalPersonService>().To<PhysicalPersonService>();
+
+				Kernel.Bind<IEmployeeService>().To<EmployeeService>();
                 Kernel.Bind<IEmployeeItemService>().To<EmployeeItemService>();
                 Kernel.Bind<IEmployeeNoteService>().To<EmployeeNoteService>();
                 Kernel.Bind<IEmployeeDocumentService>().To<EmployeeDocumentService>();

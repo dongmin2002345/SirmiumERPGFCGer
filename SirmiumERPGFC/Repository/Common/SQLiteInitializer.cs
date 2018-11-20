@@ -360,10 +360,24 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(ConstructionSiteCalculationSQLiteRepository.ConstructionSiteCalculationTableCreatePart, db);
                     createTable.ExecuteReader();
-                    #endregion
+					#endregion
 
-                    #region Employees
-                    if (withTableDrop)
+					#region PhysicalPerson
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersons", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(PhysicalPersonSQLiteRepository.PhysicalPersonTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+
+					#region Employees
+					if (withTableDrop)
                     {
                         try
                         {
