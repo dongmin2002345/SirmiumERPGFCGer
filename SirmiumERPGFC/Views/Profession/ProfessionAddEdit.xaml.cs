@@ -94,7 +94,7 @@ namespace SirmiumERPGFC.Views.Profession
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
+        private string _SaveButtonContent = " SAČUVAJ ";
 
         public string SaveButtonContent
         {
@@ -183,7 +183,7 @@ namespace SirmiumERPGFC.Views.Profession
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -192,7 +192,7 @@ namespace SirmiumERPGFC.Views.Profession
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                 }
 
@@ -200,7 +200,7 @@ namespace SirmiumERPGFC.Views.Profession
                 {
                     new ProfessionSQLiteRepository().UpdateSyncStatus(response.Profession.Identifier, response.Profession.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
 
                     ProfessionCreatedUpdated();

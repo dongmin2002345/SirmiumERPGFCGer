@@ -51,17 +51,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="btnSave" Click="btnSave_Click" Margin="0 0 2 0" Grid.Column="2" IsEnabled="{Binding Path=SaveButtonEnabled, Mode=TwoWay}">
+            <Button x:Name="btnSave" Click="btnSave_Click" Margin="0 0 2 0" Grid.Column="2" IsEnabled="{Binding Path=SaveButtonEnabled, Mode=TwoWay}" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock FontSize="20" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent"/>
+                    <TextBlock FontSize="20" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Regular"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="2 0 0 0" Grid.Column="3">
+            <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="2 0 0 0" Grid.Column="3" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock Text=" ODUSTANI " FontSize="20" />
+                    <TextBlock Text=" ODUSTANI " FontSize="20" Foreground="White" FontWeight="Regular" />
                 </StackPanel>
             </Button>
         </Grid>
