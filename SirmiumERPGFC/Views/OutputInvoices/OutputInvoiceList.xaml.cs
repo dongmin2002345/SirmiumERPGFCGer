@@ -5,6 +5,7 @@ using ServiceInterfaces.Messages.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Reports.OutputInvoices;
 using SirmiumERPGFC.Repository.OutputInvoices;
 using SirmiumERPGFC.Views.Common;
 using System;
@@ -400,8 +401,8 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-
-        }
+			OutputInvoicesExcelReport.Show(OutputInvoicesFromDB.ToList());
+		}
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
