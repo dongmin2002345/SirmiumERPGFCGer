@@ -93,6 +93,12 @@
                             <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
+                    <Button x:Name="btnExcel" Click="btnExcel_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <TextBlock Text=" Izvezi u EXCEL" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
