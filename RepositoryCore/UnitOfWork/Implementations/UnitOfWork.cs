@@ -208,7 +208,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public IInputInvoiceRepository GetInputInvoiceRepository()
 		{
 			if (inputInvoiceRepository == null)
-				inputInvoiceRepository = new InputInvoiceRepository(context);
+				inputInvoiceRepository = new InputInvoiceViewRepository(context);
 			return inputInvoiceRepository;
 		}
 
