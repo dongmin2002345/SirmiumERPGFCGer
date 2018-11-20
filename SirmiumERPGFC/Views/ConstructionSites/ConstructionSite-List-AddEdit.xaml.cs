@@ -95,7 +95,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
+        private string _SaveButtonContent = " SAČUVAJ ";
 
         public string SaveButtonContent
         {
@@ -184,7 +184,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -193,7 +193,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                 }
 
@@ -201,7 +201,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     new ConstructionSiteSQLiteRepository().UpdateSyncStatus(response.ConstructionSite.Identifier, response.ConstructionSite.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
 
                     ConstructionSiteCreatedUpdated();
