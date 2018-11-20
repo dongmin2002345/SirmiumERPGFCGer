@@ -90,7 +90,7 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True" Grid.ColumnSpan="2"/>-->
 
-        <Expander x:Name="searchExpander" Margin="5,5,5,5" Header="Pretraga" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="Pretraga" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
