@@ -249,7 +249,7 @@ namespace SirmiumERPGFC.Views.Sectors
 
 			DisplayData();
 
-			RefreshButtonContent = " Osveži ";
+			RefreshButtonContent = " OSVEŽI ";
 			RefreshButtonEnabled = true;
 		}
 
