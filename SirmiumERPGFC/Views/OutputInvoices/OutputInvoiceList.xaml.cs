@@ -145,7 +145,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
 
         #region RefreshButtonContent
-        private string _RefreshButtonContent = " Osveži ";
+        private string _RefreshButtonContent = " OSVEŽI ";
 
         public string RefreshButtonContent
         {
@@ -259,7 +259,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             DisplayData();
 
-            RefreshButtonContent = " Osveži ";
+            RefreshButtonContent = " OSVEŽI ";
             RefreshButtonEnabled = true;
         }
 
