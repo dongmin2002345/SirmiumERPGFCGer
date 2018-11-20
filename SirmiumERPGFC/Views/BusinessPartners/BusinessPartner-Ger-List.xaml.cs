@@ -4,6 +4,7 @@ using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Reports.BusinessPartners;
 using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Views.Common;
 using System;
@@ -52,10 +53,27 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 }
             }
         }
-        #endregion
+		#endregion
 
-        #region CurrentBusinessPartner
-        private BusinessPartnerViewModel _CurrentBusinessPartner;
+		#region BusinessPartnerLocationsFromDB
+		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB;
+
+		public ObservableCollection<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB
+		{
+			get { return _BusinessPartnerLocationsFromDB; }
+			set
+			{
+				if (_BusinessPartnerLocationsFromDB != value)
+				{
+					_BusinessPartnerLocationsFromDB = value;
+					NotifyPropertyChanged("BusinessPartnerLocationsFromDB");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentBusinessPartner
+		private BusinessPartnerViewModel _CurrentBusinessPartner;
 
         public BusinessPartnerViewModel CurrentBusinessPartner
         {
@@ -519,5 +537,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             PopulateInitialData();
         }
-    }
+
+		private void btnPrint_Click(object sender, RoutedEventArgs e)
+		{
+			BusinessPartnerGerExcelReport.Show(BusinessPartnersFromDB.ToList(), BusinessPartnerLocationsFromDB.ToList());
+		}
+	}
 }

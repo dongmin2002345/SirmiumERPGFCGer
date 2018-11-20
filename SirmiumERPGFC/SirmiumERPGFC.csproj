@@ -179,6 +179,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
+    <Compile Include="Reports\BusinessPartners\BusinessPartnerGerExcelReport.cs" />
     <Compile Include="Reports\Employees\EmployeesExcelReport.cs" />
     <Compile Include="Reports\InputInvoices\InputInvoicesExcelReport.cs" />
     <Compile Include="Reports\OutputInvoices\OutputInvoicesExcelReport.cs" />
