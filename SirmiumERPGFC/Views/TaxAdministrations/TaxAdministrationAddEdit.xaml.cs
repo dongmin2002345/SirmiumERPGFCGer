@@ -94,7 +94,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Speichern ";
+        private string _SaveButtonContent = " SAČUVAJ ";
 
         public string SaveButtonContent
         {
@@ -176,7 +176,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Lokaler Speicherfehler!";
-                    SaveButtonContent = " Speichern ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -185,7 +185,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Die Daten wurden im Lokal gespeichert. Server-Speicherfehler!";
-                    SaveButtonContent = " Speichern ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                 }
 
@@ -193,7 +193,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
                 {
                     new TaxAdministrationSQLiteRepository().UpdateSyncStatus(response.TaxAdministration.Identifier, response.TaxAdministration.Id, response.TaxAdministration.Code, true);
                     MainWindow.SuccessMessage = "Daten wurden erfolgreich gespeichert!";
-                    SaveButtonContent = " Speichern ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
 
                     TaxAdministrationCreatedUpdated();
