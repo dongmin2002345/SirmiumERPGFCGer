@@ -19,6 +19,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
           "ServerId INTEGER NULL, " +
           "Identifier GUID, " +
           "Code NVARCHAR(48) NULL, " +
+          "SecondCode NVARCHAR(48) NULL, " +
           "Name NVARCHAR(48) NULL, " +
           "Address1 NVARCHAR(48) NULL, " +
           "Address2 NVARCHAR(48) NULL, " +
@@ -45,7 +46,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
           "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, Address1, Address2, Address3,  " +
+            "SELECT ServerId, Identifier, Code, SecondCode, Name, Address1, Address2, Address3,  " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "BankId1, BankIdentifier1, BankCode1, BankName1, " +
             "BankId2, BankIdentifier2, BankCode2, BankName2, " +
@@ -53,14 +54,14 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO TaxAdministrations " +
-            "(Id, ServerId, Identifier, Code, Name, Address1, Address2, Address3,  " +
+            "(Id, ServerId, Identifier, Code, SecondCode, Name, Address1, Address2, Address3,  " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "BankId1, BankIdentifier1, BankCode1, BankName1, " +
             "BankId2, BankIdentifier2, BankCode2, BankName2, " +
             "IBAN1, SWIFT, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @Address1, @Address2, @Address3, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @SecondCode, @Name, @Address1, @Address2, @Address3, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@BankId1, @BankIdentifier1, @BankCode1, @BankName1, " +
             "@BankId2, @BankIdentifier2, @BankCode2, @BankName2, " +
@@ -108,6 +109,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
+
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address1 = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address2 = SQLiteHelper.GetString(query, ref counter);
@@ -193,6 +196,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
+
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address1 = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address2 = SQLiteHelper.GetString(query, ref counter);
@@ -249,6 +254,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
+
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address1 = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address2 = SQLiteHelper.GetString(query, ref counter);
@@ -350,6 +357,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                 insertCommand.Parameters.AddWithValue("@ServerId", taxAdministration.Id);
                 insertCommand.Parameters.AddWithValue("@Identifier", taxAdministration.Identifier);
                 insertCommand.Parameters.AddWithValue("@Code", ((object)taxAdministration.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@SecondCode", ((object)taxAdministration.SecondCode) ?? DBNull.Value);
+
                 insertCommand.Parameters.AddWithValue("@Name", ((object)taxAdministration.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Address1", ((object)taxAdministration.Address1) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Address2", ((object)taxAdministration.Address2) ?? DBNull.Value);

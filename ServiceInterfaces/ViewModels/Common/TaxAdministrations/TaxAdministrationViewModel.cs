@@ -29,6 +29,23 @@ namespace ServiceInterfaces.ViewModels.Common.TaxAdministrations
         }
         #endregion
 
+        #region SecondCode
+        private string _SecondCode;
+
+        public string SecondCode
+        {
+            get { return _SecondCode; }
+            set
+            {
+                if (_SecondCode != value)
+                {
+                    _SecondCode = value;
+                    NotifyPropertyChanged("SecondCode");
+                }
+            }
+        }
+        #endregion
+
         #region Name
         private string _Name;
 

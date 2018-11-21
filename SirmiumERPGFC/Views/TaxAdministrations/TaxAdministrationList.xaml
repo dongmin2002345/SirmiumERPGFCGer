@@ -164,7 +164,8 @@
                               SelectedItem="{Binding Path=CurrentTaxAdministration}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Code" Binding="{Binding Code}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SecondCode" Header="Šifra poreske uprave" Binding="{Binding SecondCode}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Name" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="City" Header="Grad" Binding="{Binding City.Name}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Bank1" Header="Bank1" Binding="{Binding Bank1}" IsReadOnly="True" />

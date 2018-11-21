@@ -10,6 +10,7 @@ namespace DomainCore.Common.TaxAdministrations
     public class TaxAdministration : BaseEntity
     {
         public string Code { get; set; }
+        public string SecondCode { get; set; }
         public string Name { get; set; }
 
         public int? CityId { get; set; }
