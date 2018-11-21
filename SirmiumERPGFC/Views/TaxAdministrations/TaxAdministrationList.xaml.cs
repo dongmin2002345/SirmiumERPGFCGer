@@ -127,7 +127,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
 
         #region RefreshButtonContent
-        private string _RefreshButtonContent = " AKTUALISIEREN ";
+        private string _RefreshButtonContent = " OSVEŽI ";
 
         public string RefreshButtonContent
         {
@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
             DisplayData();
 
-            RefreshButtonContent = " AKTUALISIEREN ";
+            RefreshButtonContent = " OSVEŽI ";
             RefreshButtonEnabled = true;
         }
 

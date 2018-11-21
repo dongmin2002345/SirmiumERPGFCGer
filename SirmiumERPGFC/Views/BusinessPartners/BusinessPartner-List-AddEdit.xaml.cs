@@ -389,7 +389,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " Proknjiži ";
+        private string _SubmitButtonContent = " PROKNJIŽI ";
 
         public string SubmitButtonContent
         {
@@ -961,7 +961,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 CurrentBusinessPartner.NameGer == null)
             {
                 MainWindow.ErrorMessage = "Obavezno polje: Naziv!";
-                SubmitButtonContent = " Proknjiži ";
+                SubmitButtonContent = " PROKNJIŽI ";
                 SubmitButtonEnabled = true;
                 return;
             }
@@ -1006,7 +1006,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     MainWindow.ErrorMessage = response.Message;
 
-                    SubmitButtonContent = " Proknjiži ";
+                    SubmitButtonContent = " PROKNJIŽI ";
                     SubmitButtonEnabled = true;
                 }
             });

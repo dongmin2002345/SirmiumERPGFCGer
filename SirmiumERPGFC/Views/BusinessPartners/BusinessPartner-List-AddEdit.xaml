@@ -231,17 +231,17 @@
                         <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentPhoneForm.Description, Mode=TwoWay}"/>
 
 
-                        <Button x:Name="btnPhone" Grid.Row="4" Grid.Column="4" Click="btnPhone_Click" Margin="2" >
+                        <Button x:Name="btnPhone" Grid.Row="4" Grid.Column="4" Click="btnPhone_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" SAČUVAJ STAVKU " />
+                                <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="btnCancelPhone" Grid.Row="4" Grid.Column="5" Click="btnCancelPhone_Click" Margin="2" >
+                        <Button x:Name="btnCancelPhone" Grid.Row="4" Grid.Column="5" Click="btnCancelPhone_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" ODUSTANI " />
+                                <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
@@ -337,17 +337,17 @@
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Adresa:" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddress" Text="{Binding Path=CurrentLocationForm.Address, Mode=TwoWay}"/>
 
-                        <Button x:Name="btnAddLocation" Grid.Row="2" Grid.Column="4" Click="btnAddLocation_Click" Margin="2" >
+                        <Button x:Name="btnAddLocation" Grid.Row="2" Grid.Column="4" Click="btnAddLocation_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" SAČUVAJ STAVKE " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " Foreground="White" FontWeight="Regular"/>
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="btnCancelLocation" Grid.Row="2" Grid.Column="5" Click="btnCancelLocation_Click" Margin="2" >
+                        <Button x:Name="btnCancelLocation" Grid.Row="2" Grid.Column="5" Click="btnCancelLocation_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" ODUSTANI " />
+                                <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
@@ -435,17 +435,17 @@
                         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAccountNumber" Text="{Binding Path=CurrentBankForm.AccountNumber, Mode=TwoWay}"/>
 
 
-                        <Button x:Name="btnBank" Grid.Row="1" Grid.Column="4" Click="btnBank_Click" Margin="2" >
+                        <Button x:Name="btnBank" Grid.Row="1" Grid.Column="4" Click="btnBank_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" SAČUVAJ STAVKE " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="btnCancelBank" Grid.Row="1" Grid.Column="5" Click="btnCancelBank_Click" Margin="2" >
+                        <Button x:Name="btnCancelBank" Grid.Row="1" Grid.Column="5" Click="btnCancelBank_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" ODUSTANI " />
+                                <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
@@ -545,17 +545,17 @@
                         <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
                                  Text="{Binding Path=CurrentInstitutionForm.Email, Mode=TwoWay}"/>
 
-                        <Button x:Name="btnAddInstitution" Grid.Row="3" Grid.Column="4" Click="btnAddInstitution_Click" Margin="2" >
+                        <Button x:Name="btnAddInstitution" Grid.Row="3" Grid.Column="4" Click="btnAddInstitution_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" SAČUVAJ STAVKE " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="btnCancelInstitution" Grid.Row="3" Grid.Column="5" Click="btnCancelInstitution_Click" Margin="2" >
+                        <Button x:Name="btnCancelInstitution" Grid.Row="3" Grid.Column="5" Click="btnCancelInstitution_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" ODUSTANI " />
+                                <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
@@ -652,17 +652,17 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <Button x:Name="btnSaveType" Grid.Row="1" Grid.Column="4" Click="btnSaveType_Click" Margin="2" >
+                        <Button x:Name="btnSaveType" Grid.Row="1" Grid.Column="4" Click="btnSaveType_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" SAČUVAJ STAVKE " />
+                                <TextBlock Text=" SAČUVAJ STAVKE " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
-                        <Button x:Name="btnCancelType" Grid.Row="1" Grid.Column="5" Click="btnCancelType_Click" Margin="2" >
+                        <Button x:Name="btnCancelType" Grid.Row="1" Grid.Column="5" Click="btnCancelType_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" ODUSTANI " />
+                                <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
@@ -682,17 +682,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="5 0 0 5" IsEnabled="{Binding Path=SubmitButtonEnabled, Mode=TwoWay}">
+            <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="5 0 0 5" IsEnabled="{Binding Path=SubmitButtonEnabled, Mode=TwoWay}" Background="midnightblue">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent, Mode=TwoWay}" x:Name="btnSubmitContent" />
+                    <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent, Mode=TwoWay}" x:Name="btnSubmitContent" Foreground="White" FontWeight="Regular"/>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 5">
+            <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 5" Background="midnightblue">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock FontSize="20" Text=" ZATVORI " />
+                    <TextBlock FontSize="20" Text=" ZATVORI " Foreground="White" FontWeight="Regular" />
                 </StackPanel>
             </Button>
         </Grid>
