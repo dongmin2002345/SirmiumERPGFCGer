@@ -16,6 +16,7 @@
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
         <cbxConverters1:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
         <cbxConverters1:StringDoubleConverter x:Key="stringToDoubleConverter" />
+
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
