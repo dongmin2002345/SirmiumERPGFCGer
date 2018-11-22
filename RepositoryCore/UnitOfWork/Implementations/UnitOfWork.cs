@@ -267,7 +267,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public IBankRepository GetBankRepository()
 		{
 			if (bankRepository == null)
-				bankRepository = new BankRepository(context);
+				bankRepository = new BankViewRepository(context);
 			return bankRepository;
 		}
 

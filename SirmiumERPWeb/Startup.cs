@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryCore.Context;
 using RepositoryCore.DbSeed;
+using RepositoryCore.DbViews.Banks;
 using RepositoryCore.DbViews.Common.Invoices;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
@@ -215,6 +216,7 @@ namespace SirmiumERPWeb
 
             // Create views
             InputInvoiceView.CreateView();
+            BankView.CreateView();
         }
     }
 }
