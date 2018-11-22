@@ -53,7 +53,7 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
 
 
 			int leftSideMin = 1;
-			int rightSideMax = 14;
+			int rightSideMax = 10;
 
 			int rowCounter = 1;
 
@@ -127,6 +127,14 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
 				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
 				sheet1.Cells[rowCounter, columnCounter] = businessPartners[i].CommercialNr;
 				columnCounter++;
+
+				rowCounter++;
+
+				sheet1.Range[sheet1.Cells[rowCounter - 1, leftSideMin], sheet1.Cells[rowCounter - 1, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
+			}
+			for (int i = 0; i < businessPartnerLocations?.Count; i++)
+			{
+				columnCounter = 8;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
