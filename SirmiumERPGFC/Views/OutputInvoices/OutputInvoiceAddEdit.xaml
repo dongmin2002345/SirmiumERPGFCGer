@@ -53,7 +53,7 @@
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra računa:"  VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0"  Grid.Column="1" Margin="2"  
-                             x:Name="txtInputInvoiceCode" Text="{Binding Path=CurrentOutputInvoice.Code}" IsReadOnly="True"/>
+                             x:Name="txtOutoutInvoiceCode" Text="{Binding Path=CurrentOutputInvoice.Code}" IsReadOnly="True"/>
 
                         <!--    BusinessPartner with popup    -->
                         <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="Poslovni Partner:" Margin="5 0 5 0"/>

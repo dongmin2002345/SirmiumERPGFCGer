@@ -26,6 +26,8 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -37,38 +39,43 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Code:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra:" />
                     <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" Text="{Binding Path=CurrentTaxAdministration.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Name:" />
-                    <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentTaxAdministration.Name}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra poreske uprave:" />
+                    <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtSecondCode" Text="{Binding Path=CurrentTaxAdministration.SecondCode}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad:" />
-                    <popup:CityPopup Grid.Row="1" Grid.Column="1" x:Name="popCountry" 
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Name:" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentTaxAdministration.Name}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad:" />
+                    <popup:CityPopup Grid.Row="1" Grid.Column="3" x:Name="popCountry" 
                                         CurrentCity="{Binding Path=CurrentTaxAdministration.City, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse1:" />
-                    <TextBox Grid.Row="1" Grid.Column="3" Margin="2" x:Name="txtAddress1" Text="{Binding Path=CurrentTaxAdministration.Address1}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse1:" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtAddress1" Text="{Binding Path=CurrentTaxAdministration.Address1}" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse2:" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtAddress2" Text="{Binding Path=CurrentTaxAdministration.Address2}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse2:" />
+                    <TextBox Grid.Row="2" Grid.Column="3" Margin="2" x:Name="txtAddress2" Text="{Binding Path=CurrentTaxAdministration.Address2}" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse3:" />
-                    <TextBox Grid.Row="2" Grid.Column="3" Margin="2" x:Name="txtAddress3" Text="{Binding Path=CurrentTaxAdministration.Address3}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse3:" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="2" x:Name="txtAddress3" Text="{Binding Path=CurrentTaxAdministration.Address3}" />
                     
-                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Bank1:" />
-                    <popup:BankPopup Grid.Row="3" Grid.Column="1" x:Name="popBank1" 
+                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Bank1:" />
+                    <popup:BankPopup Grid.Row="3" Grid.Column="3" x:Name="popBank1" 
                                         CurrentBank="{Binding Path=CurrentTaxAdministration.Bank1, Mode=TwoWay}" />
-                    
-                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Bank2:" />
-                    <popup:BankPopup Grid.Row="3" Grid.Column="3" x:Name="popBank2" 
-                                        CurrentBank="{Binding Path=CurrentTaxAdministration.Bank2, Mode=TwoWay}" />
-                    
+
                     <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="IBAN1:" />
                     <TextBox Grid.Row="4" Grid.Column="1" Margin="2" x:Name="txtIBAN1" Text="{Binding Path=CurrentTaxAdministration.IBAN1}" />
 
                     <TextBlock Grid.Row="4" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="BIC/SWIFT:" />
                     <TextBox Grid.Row="4" Grid.Column="3" Margin="2" x:Name="txtSWIFT" Text="{Binding Path=CurrentTaxAdministration.SWIFT}" />
+                    
+                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Bank2:" />
+                    <popup:BankPopup Grid.Row="5" Grid.Column="1" x:Name="popBank2" 
+                                        CurrentBank="{Binding Path=CurrentTaxAdministration.Bank2, Mode=TwoWay}" />
+                    
+                  
 
                 </Grid>
             </GroupBox>

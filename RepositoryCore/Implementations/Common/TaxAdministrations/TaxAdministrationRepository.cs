@@ -58,7 +58,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                     .Select(x => x.Entity as TaxAdministration))
                 .Where(x => x.CompanyId == companyId).Count();
             if (count == 0)
-                return "Steuer-Ver-00001";
+                return "1";
             else
             {
                 string activeCode = context.TaxAdministrations
@@ -70,8 +70,8 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                     .Code;
                 if (!String.IsNullOrEmpty(activeCode))
                 {
-                    int intValue = Int32.Parse(activeCode.Replace("Steuer-Ver-", ""));
-                    return "Steuer-Ver-" + (intValue + 1).ToString("00000");
+                    int intValue = Int32.Parse(activeCode);
+                    return (intValue + 1).ToString();
                 }
                 else
                     return "";

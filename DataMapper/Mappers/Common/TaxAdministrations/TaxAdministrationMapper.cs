@@ -29,6 +29,8 @@ namespace DataMapper.Mappers.Common.TaxAdministrations
                 Id = taxAdministration.Id,
                 Identifier = taxAdministration.Identifier,
                 Code = taxAdministration.Code,
+                SecondCode = taxAdministration.SecondCode,
+
                 Name = taxAdministration.Name,
 
                 Address1 = taxAdministration.Address1,
@@ -67,6 +69,8 @@ namespace DataMapper.Mappers.Common.TaxAdministrations
                 Id = taxAdministration.Id,
                 Identifier = taxAdministration.Identifier,
                 Code = taxAdministration.Code,
+                SecondCode = taxAdministration.SecondCode,
+
                 Name = taxAdministration.Name,
 
                 Address1 = taxAdministration.Address1,
@@ -89,6 +93,8 @@ namespace DataMapper.Mappers.Common.TaxAdministrations
                 Id = taxAdministrationViewModel.Id,
                 Identifier = taxAdministrationViewModel.Identifier,
                 Code = taxAdministrationViewModel.Code,
+                SecondCode = taxAdministrationViewModel.SecondCode,
+
                 Name = taxAdministrationViewModel.Name,
 
                 Address1 = taxAdministrationViewModel.Address1,
