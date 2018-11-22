@@ -999,7 +999,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     System.Windows.Threading.DispatcherPriority.Normal,
                     new Action(() =>
                     {
-                        FlyoutHelper.CloseFlyout(this);
+                        if (IsPopup)
+                            FlyoutHelper.CloseFlyoutPopup(this);
+                        else
+                            FlyoutHelper.CloseFlyout(this);
                     }));
                 }
                 else
@@ -1016,7 +1019,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.CloseFlyout(this);
+            if (IsPopup)
+                FlyoutHelper.CloseFlyoutPopup(this);
+            else
+                FlyoutHelper.CloseFlyout(this);
         }
 
         #endregion
