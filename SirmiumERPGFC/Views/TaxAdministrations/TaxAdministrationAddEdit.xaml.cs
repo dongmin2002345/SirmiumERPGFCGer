@@ -3,9 +3,11 @@ using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
 using ServiceInterfaces.Messages.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.Locations;
 using SirmiumERPGFC.Repository.TaxAdministrations;
 using System;
 using System.Collections.Generic;
@@ -127,6 +129,23 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
         }
         #endregion
 
+        #region Germany
+        private CountryViewModel _Germany;
+
+        public CountryViewModel Germany
+        {
+            get { return _Germany; }
+            set
+            {
+                if (_Germany != value)
+                {
+                    _Germany = value;
+                    NotifyPropertyChanged("Germany");
+                }
+            }
+        }
+        #endregion
+
 
         #region Constructor
 
@@ -142,6 +161,13 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
             CurrentTaxAdministration = TaxAdministrationViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
+
+            Thread th = new Thread(() =>
+            {
+                Germany = new CountrySQLiteRepository().GetCountriesByPage(MainWindow.CurrentCompanyId, new CountryViewModel(), 1, Int32.MaxValue).Countries.FirstOrDefault(x => x.Name == "Nemačka");
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         #endregion
