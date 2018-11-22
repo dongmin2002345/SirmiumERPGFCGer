@@ -53,7 +53,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 
 
 			int leftSideMin = 1;
-			int rightSideMax = 14;
+			int rightSideMax = 9;
 
 			int rowCounter = 1;
 
@@ -110,11 +110,6 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 				sheet1.Cells[rowCounter, columnCounter] = constructionSites[i].Name;
 				columnCounter++;
 
-				//sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-				//sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
-				//sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				//sheet1.Cells[rowCounter, columnCounter] = constructionSites[i].Country?.Name;
-				//columnCounter++;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -154,7 +149,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 
 			for (int i = 0; i < constructionSiteCalculation?.Count; i++)
 			{
-				columnCounter = 10;
+				columnCounter = 9;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
