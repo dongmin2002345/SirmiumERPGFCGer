@@ -514,7 +514,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 		private void btnExcel_Click(object sender, RoutedEventArgs e)
 		{
-			ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList());
+			ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList(), ConstructionSiteCalculationsFromDB.ToList());
 		}
 	}
 }
