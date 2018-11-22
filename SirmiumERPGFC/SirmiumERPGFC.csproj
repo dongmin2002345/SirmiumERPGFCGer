@@ -184,7 +184,9 @@
     <Compile Include="Reports\ConstructionSites\ConstructionSitesExcelReport.cs" />
     <Compile Include="Reports\Employees\EmployeesExcelReport.cs" />
     <Compile Include="Reports\Employees\PhysicalPersonsExcelReport.cs" />
+    <Compile Include="Reports\InputInvoices\InputInvoiceExcelReport.cs" />
     <Compile Include="Reports\InputInvoices\InputInvoicesExcelReport.cs" />
+    <Compile Include="Reports\OutputInvoices\OutputInvoiceExcelReport.cs" />
     <Compile Include="Reports\OutputInvoices\OutputInvoicesExcelReport.cs" />
     <Compile Include="Repository\Banks\BankSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBankSQLiteRepository.cs" />

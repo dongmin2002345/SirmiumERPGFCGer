@@ -406,7 +406,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
-
+            OutputInvoiceExcelReport.Show(CurrentOutputInvoice);
         }
 
         private void btnShow_Click(object sender, RoutedEventArgs e)

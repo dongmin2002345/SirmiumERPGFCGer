@@ -58,7 +58,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, " +
             "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
-            "@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PdvPercent, @Pdv, @AmountGross, @Currency, @DateOfPayment, @Status, @StatusDate, @Description,  @Path" +
+            "@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PdvPercent, @Pdv, @AmountGross, @Currency, @DateOfPayment, @Status, @StatusDate, @Description, @Path, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public OutputInvoiceListResponse GetOutputInvoicesByPage(int companyId, OutputInvoiceViewModel OutputInvoiceSearchObject, int currentPage = 1, int itemsPerPage = 50)

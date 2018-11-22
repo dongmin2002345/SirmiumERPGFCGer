@@ -428,5 +428,10 @@ namespace SirmiumERPGFC.Views.InputInvoices
                 MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        private void btnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            InputInvoiceExcelReport.Show(CurrentInputInvoice);
+        }
     }
 }
