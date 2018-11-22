@@ -215,8 +215,10 @@ namespace SirmiumERPWeb
             //seedData.PopulateData();
 
             // Create views
-            InputInvoiceView.CreateView();
             BankView.CreateView();
+            InputInvoiceView.CreateView();
+            OutputInvoiceView.CreateView();
+            
         }
     }
 }

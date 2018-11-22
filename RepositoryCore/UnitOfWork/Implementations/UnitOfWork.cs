@@ -204,7 +204,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IOutputInvoiceRepository GetOutputInvoiceRepository()
         {
             if (outputInvoiceRepository == null)
-                outputInvoiceRepository = new OutputInvoiceRepository(context);
+                outputInvoiceRepository = new OutputInvoiceViewRepository(context);
             return outputInvoiceRepository;
         }
 
