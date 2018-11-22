@@ -302,6 +302,24 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         }
         #endregion
 
+        #region Path
+        private string _Path;
+
+        public string Path
+        {
+            get { return _Path; }
+            set
+            {
+                if (_Path != value)
+                {
+                    _Path = value;
+                    NotifyPropertyChanged("Path");
+                }
+            }
+        }
+        #endregion
+
+
         #region IsSynced
         private bool _IsSynced;
 

@@ -35,7 +35,8 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
           "DateOfPayment DATETIME NULL, " +
           "Status NVARCHAR(48) NULL, " +
           "StatusDate DATETIME NULL, " +
-          "Description NVARCHAR(48) NULL, " +
+          "Description NVARCHAR(2048) NULL, " +
+          "Path NVARCHAR(2048) NULL, " +
           "IsSynced BOOL NULL, " +
           "UpdatedAt DATETIME NULL, " +
           "CreatedById INTEGER NULL, " +
@@ -46,18 +47,18 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, " +
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-            "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, " +
+            "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO OutputInvoices " +
             "(Id, ServerId, Identifier, Code, " +
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-            "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, " +
+            "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, " +
             "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
-            "@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PdvPercent, @Pdv, @AmountGross, @Currency, @DateOfPayment, @Status, @StatusDate, @Description,  " +
+            "@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PdvPercent, @Pdv, @AmountGross, @Currency, @DateOfPayment, @Status, @StatusDate, @Description,  @Path" +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public OutputInvoiceListResponse GetOutputInvoicesByPage(int companyId, OutputInvoiceViewModel OutputInvoiceSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -117,6 +118,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -209,6 +211,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -270,6 +273,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -379,6 +383,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                 insertCommand.Parameters.AddWithValue("@Status", ((object)outputInvoice.Status) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@StatusDate", ((object)outputInvoice.StatusDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Description", ((object)outputInvoice.Description) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@Path", ((object)outputInvoice.Path) ?? DBNull.Value);
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", outputInvoice.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", outputInvoice.UpdatedAt);

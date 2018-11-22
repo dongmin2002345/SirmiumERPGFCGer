@@ -274,6 +274,11 @@
                                                 <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                             </StackPanel>
                                         </Button>
+                                        <Button x:Name="btnShow" Click="btnShow_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaz dokumenta">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\printer.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                            </StackPanel>
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

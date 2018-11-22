@@ -51,7 +51,9 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 //PDV = outputInvoice.PDV,
                 //Total = outputInvoice.Total,
 
-                //IsActive = outputInvoice.Active,
+                Path = outputInvoice.Path,
+
+                IsActive = outputInvoice.Active,
 
                 Company = outputInvoice.Company?.ConvertToCompanyViewModelLite(),
                 CreatedBy = outputInvoice.CreatedBy?.ConvertToUserViewModelLite(),
@@ -111,7 +113,9 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 Status = outputInvoice.Status,
                 StatusDate = outputInvoice.StatusDate,
 
-                //Company = outputInvoice.Company?.ConvertToCompanyViewModelLite(),
+                Path = outputInvoice.Path,
+
+                IsActive = outputInvoice.Active,
 
                 UpdatedAt = outputInvoice.UpdatedAt,
                 CreatedAt = outputInvoice.CreatedAt,
@@ -147,6 +151,9 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 Status = outputInvoiceViewModel.Status,
                 StatusDate = outputInvoiceViewModel.StatusDate,
 
+                Path = outputInvoiceViewModel.Path,
+
+                Active = outputInvoiceViewModel.IsActive,
 
                 BusinessPartnerId = outputInvoiceViewModel.BusinessPartner?.Id ?? null,
                 CreatedById = outputInvoiceViewModel.CreatedBy?.Id ?? null,

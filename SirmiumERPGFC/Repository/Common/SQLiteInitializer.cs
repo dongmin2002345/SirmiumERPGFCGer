@@ -562,10 +562,12 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(OutputInvoiceSQLiteRepository.OutputInvoiceTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("OutputInvoices", "Path", "NVARCHAR(2018) NULL");
                     #endregion
 
-					#region InputInvoices
-					if (withTableDrop)
+                    #region InputInvoices
+                    if (withTableDrop)
 					{
 						try
 						{
@@ -576,10 +578,12 @@ namespace SirmiumERPGFC.Repository.Common
 					}
 					createTable = new SqliteCommand(InputInvoiceSQLiteRepository.InputInvoiceTableCreatePart, db);
 					createTable.ExecuteReader();
-					#endregion
 
-					#endregion
-				}
+                    SQLiteHelper.AddColumnIfNotExists("InputInvoices", "Path", "NVARCHAR(2018) NULL");
+                    #endregion
+
+                    #endregion
+                }
 			}
 
             catch (SqliteException e)

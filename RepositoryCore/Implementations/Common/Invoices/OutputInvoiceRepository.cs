@@ -118,7 +118,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     dbEntry.Status = outputInvoice.Status;
                     dbEntry.StatusDate = outputInvoice.StatusDate;
                     dbEntry.Description = outputInvoice.Description;
-
+                    dbEntry.Path = outputInvoice.Path;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

@@ -32,7 +32,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             string queryString =
                 "SELECT InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, " +
+                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
                 "UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName," +
                 "FROM vInputInvoices " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -91,6 +91,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             inputInvoice.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
                         if (reader["Description"] != null)
                             inputInvoice.Description = reader["Description"].ToString();
+                        if (reader["Path"] != null)
+                            inputInvoice.Description = reader["Path"].ToString();
 
                         inputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -137,7 +139,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             string queryString =
                 "SELECT InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, " +
+                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
                 "UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName," +
                 "FROM vInputInvoices " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
@@ -196,6 +198,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             inputInvoice.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
                         if (reader["Description"] != null)
                             inputInvoice.Description = reader["Description"].ToString();
+                        if (reader["Path"] != null)
+                            inputInvoice.Description = reader["Path"].ToString();
 
                         inputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -305,6 +309,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     dbEntry.Status = inputInvoice.Status;
                     dbEntry.StatusDate = inputInvoice.StatusDate;
                     dbEntry.Description = inputInvoice.Description;
+                    dbEntry.Path = inputInvoice.Path;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

@@ -304,14 +304,30 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 				}
 			}
 		}
-		#endregion
+        #endregion
+
+        #region Path
+        private string _Path;
+
+        public string Path
+        {
+            get { return _Path; }
+            set
+            {
+                if (_Path != value)
+                {
+                    _Path = value;
+                    NotifyPropertyChanged("Path");
+                }
+            }
+        }
+        #endregion
 
 
+        #region Search
 
-		#region Search
-
-		#region SearchBy_BusinessPartnerName
-		private string _SearchBy_BusinessPartnerName;
+        #region SearchBy_BusinessPartnerName
+        private string _SearchBy_BusinessPartnerName;
 
 		public string SearchBy_BusinessPartnerName
 		{

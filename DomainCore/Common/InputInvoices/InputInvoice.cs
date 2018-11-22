@@ -32,11 +32,12 @@ namespace DomainCore.Common.InputInvoices
 		public string Description { get; set; }
 
 
+        public string Path { get; set; }
 
-		//public decimal Price { get; set; }
-		//public decimal Rebate { get; set; }
-		//public decimal RebateValue { get; set; }
-		//public decimal Base { get; set; }
-		//public decimal Total { get; set; }
-	}
+        //public decimal Price { get; set; }
+        //public decimal Rebate { get; set; }
+        //public decimal RebateValue { get; set; }
+        //public decimal Base { get; set; }
+        //public decimal Total { get; set; }
+    }
 }

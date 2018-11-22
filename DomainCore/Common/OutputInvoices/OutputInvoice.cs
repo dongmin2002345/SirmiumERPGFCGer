@@ -34,6 +34,7 @@ namespace DomainCore.Common.OutputInvoices
         public string Description { get; set; } //slobodan tekst
 
 
+        public string Path { get; set; }
 
         // public string BusinessPartner { get; set; }
 
