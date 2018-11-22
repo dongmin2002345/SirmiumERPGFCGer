@@ -8,6 +8,7 @@ using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.TaxAdministrations;
 using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
@@ -20,6 +21,7 @@ using RepositoryCore.Implementations.Common.Invoices;
 using RepositoryCore.Implementations.Common.Locations;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Implementations.Common.Sectors;
+using RepositoryCore.Implementations.Common.TaxAdministrations;
 using RepositoryCore.Implementations.Common.ToDos;
 using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Implementations.Employees;
@@ -68,7 +70,10 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		private ILicenceTypeRepository licenceTypeRepository;
         private IAgencyRepository agencyRepository;
 
-        private IEmployeeRepository employeeRepository;
+		private IPhysicalPersonRepository physicalPersonRepository;
+	
+
+		private IEmployeeRepository employeeRepository;
         private IEmployeeItemRepository employeeItemRepository;
         private IEmployeeNoteRepository employeeNoteRepository;
         private IEmployeeCardRepository employeeCardRepository;
@@ -81,6 +86,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IEmployeeByBusinessPartnerRepository employeeByBusinessPartnerRepository;
 
         private IBusinessPartnerByConstructionSiteRepository businessPartnerByConstructionSiteRepository;
+
+        private ITaxAdministrationRepository taxAdministrationRepository;
+
 
         #endregion
 
@@ -203,7 +211,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public IInputInvoiceRepository GetInputInvoiceRepository()
 		{
 			if (inputInvoiceRepository == null)
-				inputInvoiceRepository = new InputInvoiceRepository(context);
+				inputInvoiceRepository = new InputInvoiceViewRepository(context);
 			return inputInvoiceRepository;
 		}
 
@@ -354,13 +362,27 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return employeeByBusinessPartnerRepository;
         }
 
-        public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
+		public IPhysicalPersonRepository GetPhysicalPersonRepository()
+		{
+			if (physicalPersonRepository == null)
+				physicalPersonRepository = new PhysicalPersonRepository(context);
+			return physicalPersonRepository;
+		}
+
+		
+		public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
         {
             if (businessPartnerByConstructionSiteRepository == null)
                 businessPartnerByConstructionSiteRepository = new BusinessPartnerByConstructionSiteRepository(context);
             return businessPartnerByConstructionSiteRepository;
         }
 
+        public ITaxAdministrationRepository GetTaxAdministrationRepository()
+        {
+            if (taxAdministrationRepository == null)
+                taxAdministrationRepository = new TaxAdministrationRepository(context);
+            return taxAdministrationRepository;
+        }
         #endregion
 
         #region Save method

@@ -16,6 +16,7 @@ using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Repository.ToDos;
 using SirmiumERPGFC.Repository.OutputInvoices;
 using SirmiumERPGFC.Repository.InputInvoices;
+using SirmiumERPGFC.Repository.TaxAdministrations;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -360,10 +361,24 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(ConstructionSiteCalculationSQLiteRepository.ConstructionSiteCalculationTableCreatePart, db);
                     createTable.ExecuteReader();
-                    #endregion
+					#endregion
 
-                    #region Employees
-                    if (withTableDrop)
+					#region PhysicalPerson
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersons", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(PhysicalPersonSQLiteRepository.PhysicalPersonTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+
+					#region Employees
+					if (withTableDrop)
                     {
                         try
                         {
@@ -517,10 +532,24 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(FamilyMemberSQLiteRepository.FamilyMemberTableCreatePart, db);
                     createTable.ExecuteReader();
-					#endregion
+                    #endregion
 
-					#region Invoices
-					
+                    #region TaxAdministrations
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE TaxAdministrations", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(TaxAdministrationSQLiteRepository.TaxAdministrationTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region Invoices
+
                     #region OutputInvoices
                     if (withTableDrop)
                     {

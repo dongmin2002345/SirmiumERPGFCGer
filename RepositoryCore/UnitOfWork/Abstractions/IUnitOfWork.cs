@@ -6,6 +6,7 @@ using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.TaxAdministrations;
 using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
@@ -55,12 +56,19 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IEmployeeDocumentRepository GetEmployeeDocumentRepository();
         IEmployeeLicenceRepository GetEmployeeLicenceRepository();
         IEmployeeProfessionRepository GetEmployeeProfessionRepository();
-        IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository();
+
+		IPhysicalPersonRepository GetPhysicalPersonRepository();
+
+
+		IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository();
         IFamilyMemberRepository GetFamilyMemberRepository();
 
         IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository();
 
         IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository();
+
+        ITaxAdministrationRepository GetTaxAdministrationRepository();
+
 
         void Save();
     }

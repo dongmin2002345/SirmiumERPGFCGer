@@ -4,6 +4,7 @@ using ServiceInterfaces.Messages.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Reports.InputInvoices;
 using SirmiumERPGFC.Repository.InputInvoices;
 using SirmiumERPGFC.Views.Common;
 using System;
@@ -142,7 +143,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 		#endregion
 
 		#region RefreshButtonContent
-		private string _RefreshButtonContent = " Osveži ";
+		private string _RefreshButtonContent = " OSVEŽI ";
 
 		public string RefreshButtonContent
 		{
@@ -261,7 +262,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 			DisplayData();
 
-			RefreshButtonContent = " Osveži ";
+			RefreshButtonContent = " OSVEŽI ";
 			RefreshButtonEnabled = true;
 		}
 
@@ -391,7 +392,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 		private void btnPrint_Click(object sender, RoutedEventArgs e)
 		{
-
+			InputInvoicesExcelReport.Show(InputInvoicesFromDB.ToList());
 		}
 
 		//private void btnExcel_Click(object sender, RoutedEventArgs e)

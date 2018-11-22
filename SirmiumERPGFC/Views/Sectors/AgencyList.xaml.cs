@@ -131,7 +131,7 @@ namespace SirmiumERPGFC.Views.Sectors
 
 
         #region RefreshButtonContent
-        private string _RefreshButtonContent = " Osveži ";
+        private string _RefreshButtonContent = " OSVEŽI ";
 
         public string RefreshButtonContent
         {
@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.Sectors
 
             DisplayData();
 
-            RefreshButtonContent = " Osveži ";
+            RefreshButtonContent = " OSVEŽI ";
             RefreshButtonEnabled = true;
         }
 

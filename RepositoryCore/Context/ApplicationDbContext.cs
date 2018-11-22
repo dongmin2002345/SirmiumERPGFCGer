@@ -7,6 +7,7 @@ using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
 using DomainCore.Common.Professions;
 using DomainCore.Common.Sectors;
+using DomainCore.Common.TaxAdministrations;
 using DomainCore.Common.ToDos;
 using DomainCore.ConstructionSites;
 using DomainCore.Employees;
@@ -90,6 +91,9 @@ namespace RepositoryCore.Context
         public DbSet<Profession> Professions { get; set; }
         public DbSet<FamilyMember> FamilyMembers { get; set; }
 
+		public DbSet<PhysicalPerson> PhysicalPersons { get; set; }
+
+
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeItem> EmployeeItems { get; set; }
         public DbSet<EmployeeNote> EmployeeNotes { get; set; }
@@ -110,12 +114,13 @@ namespace RepositoryCore.Context
         public DbSet<Bank> Banks { get; set; }
 		public DbSet<LicenceType> LicenceTypes { get; set; }
 
-        
+        public DbSet<TaxAdministration> TaxAdministrations { get; set; }
 
 
-		//protected override void OnModelCreating(ModelBuilder modelBuilder)
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             base.OnModelCreating(modelBuilder);

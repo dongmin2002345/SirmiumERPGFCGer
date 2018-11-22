@@ -97,7 +97,7 @@ namespace SirmiumERPGFC.Views.Banks
 
 
 		#region SaveButtonContent
-		private string _SaveButtonContent = " Sačuvaj ";
+		private string _SaveButtonContent = " SAČUVAJ ";
 
 		public string SaveButtonContent
 		{
@@ -180,7 +180,7 @@ namespace SirmiumERPGFC.Views.Banks
 				if (!response.Success)
 				{
 					MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-					SaveButtonContent = " Sačuvaj ";
+					SaveButtonContent = " SAČUVAJ ";
 					SaveButtonEnabled = true;
 					return;
 				}
@@ -189,7 +189,7 @@ namespace SirmiumERPGFC.Views.Banks
 				if (!response.Success)
 				{
 					MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-					SaveButtonContent = " Sačuvaj ";
+					SaveButtonContent = " SAČUVAJ ";
 					SaveButtonEnabled = true;
 				}
 
@@ -197,7 +197,7 @@ namespace SirmiumERPGFC.Views.Banks
 				{
 					new BankSQLiteRepository().UpdateSyncStatus(response.Bank.Identifier, response.Bank.Id, true);
 					MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-					SaveButtonContent = " Sačuvaj ";
+					SaveButtonContent = " SAČUVAJ ";
 					SaveButtonEnabled = true;
 
 					BankCreatedUpdated();

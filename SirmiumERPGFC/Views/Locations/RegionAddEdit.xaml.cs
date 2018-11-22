@@ -92,7 +92,7 @@ namespace SirmiumERPGFC.Views.Locations
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
+        private string _SaveButtonContent = " SAČUVAJ ";
 
         public string SaveButtonContent
         {
@@ -175,7 +175,7 @@ namespace SirmiumERPGFC.Views.Locations
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -184,7 +184,7 @@ namespace SirmiumERPGFC.Views.Locations
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                 }
 
@@ -192,7 +192,7 @@ namespace SirmiumERPGFC.Views.Locations
                 {
                     new RegionSQLiteRepository().UpdateSyncStatus(CurrentRegion.Identifier, response.Region.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
 
                     RegionCreatedUpdated();

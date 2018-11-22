@@ -4,6 +4,7 @@ using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Reports.ConstructionSites;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Views.Common;
 using System;
@@ -193,7 +194,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region RefreshButtonContent
-        private string _RefreshButtonContent = " Osveži ";
+        private string _RefreshButtonContent = " OSVEŽI ";
 
         public string RefreshButtonContent
         {
@@ -332,7 +333,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             DisplayConstructionSiteData();
 
-            RefreshButtonContent = " Osveži ";
+            RefreshButtonContent = " OSVEŽI ";
             RefreshButtonEnabled = true;
         }
 
@@ -510,5 +511,10 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             removeForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, removeForm);
         }
-    }
+
+		private void btnExcel_Click(object sender, RoutedEventArgs e)
+		{
+			ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList(), ConstructionSiteCalculationsFromDB.ToList());
+		}
+	}
 }

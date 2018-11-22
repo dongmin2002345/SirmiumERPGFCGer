@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryCore.Context;
 using RepositoryCore.DbSeed;
+using RepositoryCore.DbViews.Common.Invoices;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
 using ServiceCore.Implementations.Banks;
@@ -18,6 +19,7 @@ using ServiceCore.Implementations.Common.Locations;
 using ServiceCore.Implementations.Common.OutputInvoices;
 using ServiceCore.Implementations.Common.Professions;
 using ServiceCore.Implementations.Common.Sectors;
+using ServiceCore.Implementations.Common.TaxAdministrations;
 using ServiceCore.Implementations.Common.ToDos;
 using ServiceCore.Implementations.ConstructionSites;
 using ServiceCore.Implementations.Employees;
@@ -30,6 +32,7 @@ using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
+using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
 using ServiceInterfaces.Abstractions.Common.ToDos;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
@@ -151,7 +154,9 @@ namespace SirmiumERPWeb
 
             services.AddScoped<IProfessionService, ProfessionService>();
 
-            services.AddScoped<IEmployeeService, EmployeeService>();
+			services.AddScoped<IPhysicalPersonService, PhysicalPersonService>();
+
+			services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeDocumentService, EmployeeDocumentService>();
             services.AddScoped<IEmployeeCardService, EmployeeCardService>();
             services.AddScoped<IEmployeeItemService, EmployeeItemService>();
@@ -171,6 +176,9 @@ namespace SirmiumERPWeb
 
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
             services.AddScoped<IConstructionSiteCalculationService, ConstructionSiteCalculationService>();
+
+            services.AddScoped<ITaxAdministrationService, TaxAdministrationService>();
+
 
         }
 
@@ -204,6 +212,9 @@ namespace SirmiumERPWeb
             seedData.SeedCompanyData();
 
             //seedData.PopulateData();
+
+            // Create views
+            InputInvoiceView.CreateView();
         }
     }
 }

@@ -8,6 +8,7 @@ using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Common.ToDos;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
@@ -142,8 +143,11 @@ namespace ApiExtension.Sender
 			#endregion
 
                 #region Employees
-                
-                { typeof(EmployeeViewModel), "Employee" },
+
+				{ typeof(PhysicalPersonViewModel), "PhysicalPerson" },
+				{ typeof(List<PhysicalPersonViewModel>), "PhysicalPerson" },
+
+				{ typeof(EmployeeViewModel), "Employee" },
                 { typeof(List<EmployeeViewModel>), "Employee" },
 
                 { typeof(EmployeeItemViewModel), "EmployeeItem" },
@@ -184,7 +188,14 @@ namespace ApiExtension.Sender
                 { typeof(List<ConstructionSiteCalculationViewModel>), "ConstructionSiteCalculation" },
 
 			    #endregion
-                                
+
+                #region ConstructionSites
+
+                { typeof(TaxAdministrationViewModel), "TaxAdministration" },
+                { typeof(List<TaxAdministrationViewModel>), "TaxAdministration" },
+
+                #endregion
+
              { typeof(ToDoViewModel), "ToDo" },
              { typeof(List<ToDoViewModel>), "ToDo" },
 

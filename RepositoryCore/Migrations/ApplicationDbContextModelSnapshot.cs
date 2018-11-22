@@ -976,6 +976,65 @@ namespace RepositoryCore.Migrations
                     b.ToTable("Sectors");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.TaxAdministrations.TaxAdministration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Address1");
+
+                    b.Property<string>("Address2");
+
+                    b.Property<string>("Address3");
+
+                    b.Property<int?>("Bank1Id");
+
+                    b.Property<int?>("Bank2Id");
+
+                    b.Property<int?>("BankId1");
+
+                    b.Property<int?>("BankId2");
+
+                    b.Property<int?>("CityId");
+
+                    b.Property<string>("Code");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<int>("IBAN1");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("SWIFT");
+
+                    b.Property<string>("SecondCode");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Bank1Id");
+
+                    b.HasIndex("Bank2Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("TaxAdministrations");
+                });
+
             modelBuilder.Entity("DomainCore.Common.ToDos.ToDo", b =>
                 {
                     b.Property<int>("Id")
@@ -1592,6 +1651,103 @@ namespace RepositoryCore.Migrations
                     b.ToTable("LicenceTypes");
                 });
 
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPerson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Address");
+
+                    b.Property<int?>("CityId");
+
+                    b.Property<string>("Code");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<string>("ConstructionSiteCode");
+
+                    b.Property<string>("ConstructionSiteName");
+
+                    b.Property<int?>("CountryId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<DateTime>("DateOfBirth");
+
+                    b.Property<DateTime?>("EmbassyDate");
+
+                    b.Property<int>("Gender");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<int?>("MunicipalityId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Passport");
+
+                    b.Property<int?>("PassportCityId");
+
+                    b.Property<int?>("PassportCountryId");
+
+                    b.Property<string>("PhysicalPersonCode");
+
+                    b.Property<int?>("RegionId");
+
+                    b.Property<string>("ResidenceAddress");
+
+                    b.Property<int?>("ResidenceCityId");
+
+                    b.Property<int?>("ResidenceCountryId");
+
+                    b.Property<string>("SurName");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<DateTime?>("VisaDate");
+
+                    b.Property<DateTime?>("VisaFrom");
+
+                    b.Property<DateTime?>("VisaTo");
+
+                    b.Property<DateTime?>("VisaValidFrom");
+
+                    b.Property<DateTime?>("VisaValidTo");
+
+                    b.Property<DateTime?>("WorkPermitFrom");
+
+                    b.Property<DateTime?>("WorkPermitTo");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("MunicipalityId");
+
+                    b.HasIndex("PassportCityId");
+
+                    b.HasIndex("PassportCountryId");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("ResidenceCityId");
+
+                    b.HasIndex("ResidenceCountryId");
+
+                    b.ToTable("PhysicalPersons");
+                });
+
             modelBuilder.Entity("DomainCore.Banks.Bank", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
@@ -1961,6 +2117,29 @@ namespace RepositoryCore.Migrations
                         .HasForeignKey("CreatedById");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.TaxAdministrations.TaxAdministration", b =>
+                {
+                    b.HasOne("DomainCore.Banks.Bank", "Bank1")
+                        .WithMany()
+                        .HasForeignKey("Bank1Id");
+
+                    b.HasOne("DomainCore.Banks.Bank", "Bank2")
+                        .WithMany()
+                        .HasForeignKey("Bank2Id");
+
+                    b.HasOne("DomainCore.Common.Locations.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+                });
+
             modelBuilder.Entity("DomainCore.Common.ToDos.ToDo", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
@@ -2221,6 +2400,49 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPerson", b =>
+                {
+                    b.HasOne("DomainCore.Common.Locations.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Common.Locations.Municipality", "Municipality")
+                        .WithMany()
+                        .HasForeignKey("MunicipalityId");
+
+                    b.HasOne("DomainCore.Common.Locations.City", "PassportCity")
+                        .WithMany()
+                        .HasForeignKey("PassportCityId");
+
+                    b.HasOne("DomainCore.Common.Locations.Country", "PassportCountry")
+                        .WithMany()
+                        .HasForeignKey("PassportCountryId");
+
+                    b.HasOne("DomainCore.Common.Locations.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId");
+
+                    b.HasOne("DomainCore.Common.Locations.City", "ResidenceCity")
+                        .WithMany()
+                        .HasForeignKey("ResidenceCityId");
+
+                    b.HasOne("DomainCore.Common.Locations.Country", "ResidenceCountry")
+                        .WithMany()
+                        .HasForeignKey("ResidenceCountryId");
                 });
 #pragma warning restore 612, 618
         }

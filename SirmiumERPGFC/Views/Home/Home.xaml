@@ -56,16 +56,16 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Grid.Column="0" Width="150">
+                        <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Grid.Column="0" Width="150" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text=" DODAJ " />
+                                <TextBlock Text=" DODAJ " Foreground="White" FontWeight="Regular"/>
                             </StackPanel>
                         </Button>
-                        <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}" Grid.Column="1" Width="150">
+                        <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}" Grid.Column="1" Width="150" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" />
+                                <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
                     </Grid>
