@@ -43,6 +43,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _ConstructionSitesFromDB = value;
                     NotifyPropertyChanged("ConstructionSitesFromDB");
+
+                    if (_ConstructionSitesFromDB != null)
+                    {
+                        TotalNumOfConstructionSites = _ConstructionSitesFromDB.Count;
+                    }
                 }
             }
         }
@@ -123,6 +128,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _BusinessPartnersOnConstructionSiteFromDB = value;
                     NotifyPropertyChanged("BusinessPartnersOnConstructionSiteFromDB");
+
+                    if (_BusinessPartnersOnConstructionSiteFromDB != null)
+                    {
+                        TotalNumOfBusinessPartners = _BusinessPartnersOnConstructionSiteFromDB.Count;
+                    }
                 }
             }
         }
@@ -175,6 +185,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _EmployeesOnConstructionSiteFromDB = value;
                     NotifyPropertyChanged("EmployeesOnConstructionSiteFromDB");
+
+                    if (_EmployeesOnConstructionSiteFromDB != null)
+                    {
+                        TotalNumOfEmployees = _EmployeesOnConstructionSiteFromDB.Count;
+                    }
                 }
             }
         }
@@ -209,6 +224,58 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _EmployeeOnConstructionSiteDataLoading = value;
                     NotifyPropertyChanged("EmployeeOnConstructionSiteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region TotalNumOfConstructionSites
+        private int _TotalNumOfConstructionSites;
+
+        public int TotalNumOfConstructionSites
+        {
+            get { return _TotalNumOfConstructionSites; }
+            set
+            {
+                if (_TotalNumOfConstructionSites != value)
+                {
+                    _TotalNumOfConstructionSites = value;
+                    NotifyPropertyChanged("TotalNumOfConstructionSites");
+                }
+            }
+        }
+        #endregion
+
+        #region TotalNumOfBusinessPartners
+        private int _TotalNumOfBusinessPartners;
+
+        public int TotalNumOfBusinessPartners
+        {
+            get { return _TotalNumOfBusinessPartners; }
+            set
+            {
+                if (_TotalNumOfBusinessPartners != value)
+                {
+                    _TotalNumOfBusinessPartners = value;
+                    NotifyPropertyChanged("TotalNumOfBusinessPartners");
+                }
+            }
+        }
+        #endregion
+
+        #region TotalNumOfEmployees
+        private int _TotalNumOfEmployees;
+
+        public int TotalNumOfEmployees
+        {
+            get { return _TotalNumOfEmployees; }
+            set
+            {
+                if (_TotalNumOfEmployees != value)
+                {
+                    _TotalNumOfEmployees = value;
+                    NotifyPropertyChanged("TotalNumOfEmployees");
                 }
             }
         }

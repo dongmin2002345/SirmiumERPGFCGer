@@ -414,7 +414,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			}
 		}
 
-		public InputInvoiceResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+		public InputInvoiceResponse UpdateSyncStatus(Guid identifier, int serverId, string code, bool isSynced)
 		{
 			InputInvoiceResponse response = new InputInvoiceResponse();
 
@@ -427,14 +427,16 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
 				insertCommand.CommandText = "UPDATE InputInvoices SET " +
 					"IsSynced = @IsSynced, " +
+					"Code = @Code, " +
 					"ServerId = @ServerId " +
-					"WHERE Identifier = @Identifier ";
+                    "WHERE Identifier = @Identifier ";
 
 				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
 				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+				insertCommand.Parameters.AddWithValue("@Code", code);
 				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 
-				try
+                try
 				{
 					insertCommand.ExecuteReader();
 				}
