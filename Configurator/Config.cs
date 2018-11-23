@@ -19,7 +19,7 @@ namespace Configurator
             Settings = new Dictionary<string, string>();
             Settings["ConnectionString"] = "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true";
             Settings["ApiConnectionString"] = "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true";
-            Settings["ServerUrl"] = "http://0.0.0.0:5001/";
+            Settings["ServerUrl"] = "http://0.0.0.0:5005/";
             //Settings["ConnectionString"] = "Server=ML350G5\\sd2016;Database=SirmiumERPDB;Trusted_Connection=True;MultipleActiveResultSets=true";
             //Settings["ApiConnectionString"] = "Server=ML350G5\\sd2016;Database=SirmiumERPDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 

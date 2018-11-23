@@ -1,6 +1,6 @@
-{
+
   "ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true",
   "ApiConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true",
   "SDDbConnectionString": "Data Source=192.168.0.10\\sd2018;Initial Catalog=Sd_Meta;Integrated Security=False;User ID=sa;Password=sct0",
-  "ServerUrl": "http://0.0.0.0:5001/"
+  "ServerUrl": "http://0.0.0.0:5005/"
 }
