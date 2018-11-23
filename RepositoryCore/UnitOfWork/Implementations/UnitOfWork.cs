@@ -204,7 +204,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IOutputInvoiceRepository GetOutputInvoiceRepository()
         {
             if (outputInvoiceRepository == null)
-                outputInvoiceRepository = new OutputInvoiceRepository(context);
+                outputInvoiceRepository = new OutputInvoiceViewRepository(context);
             return outputInvoiceRepository;
         }
 
@@ -267,7 +267,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public IBankRepository GetBankRepository()
 		{
 			if (bankRepository == null)
-				bankRepository = new BankRepository(context);
+				bankRepository = new BankViewRepository(context);
 			return bankRepository;
 		}
 
