@@ -1,4 +1,5 @@
 ﻿using Configurator;
+using System;
 using System.Data.SqlClient;
 
 
@@ -12,12 +13,17 @@ namespace RepositoryCore.DbViews.Common.Invoices
 
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
+            try
+            {
+                string strSQLCommand = "DROP VIEW IF EXISTS vInputInvoices";
+                SqlCommand command = new SqlCommand(strSQLCommand, conn);
+                string returnvalue = (string)command.ExecuteScalar();
+            }
+            catch (Exception ex) { }
 
-            string strSQLCommand = "DROP VIEW IF EXISTS vInputInvoices";
-            SqlCommand command = new SqlCommand(strSQLCommand, conn);
-            string returnvalue = (string)command.ExecuteScalar();
-
-            strSQLCommand =
+            try
+            {
+                string strSQLCommand =
                 "CREATE VIEW vInputInvoices AS " +
                 "SELECT inputInvoice.Id AS InputInvoiceId, inputInvoice.Identifier AS InputInvoiceIdentifier, inputInvoice.Code AS InputInvoiceCode, " +
                 "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, " +
@@ -31,8 +37,10 @@ namespace RepositoryCore.DbViews.Common.Invoices
                 "LEFT JOIN Companies company ON inputInvoice.CompanyId = company.Id;";
 
 
-            command = new SqlCommand(strSQLCommand, conn);
-            returnvalue = (string)command.ExecuteScalar();
+                SqlCommand command = new SqlCommand(strSQLCommand, conn);
+                string returnvalue = (string)command.ExecuteScalar();
+            }
+            catch (Exception ex) { }
 
             conn.Close();
         }
