@@ -18,6 +18,7 @@ using System.Configuration;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 
 namespace ApiExtension.Sender
 {
@@ -275,7 +276,7 @@ namespace ApiExtension.Sender
 
             string jsonResponse = "";
             var values = JsonConvert.SerializeObject(obj,
-                Formatting.Indented,
+                Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     //StringEscapeHandling = StringEscapeHandling.EscapeNonAscii,

@@ -176,7 +176,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IBusinessPartnerBankRepository GetBusinessPartnerBankRepository()
         {
             if (businessPartnerBankRepository == null)
-                businessPartnerBankRepository = new BusinessPartnerBankRepository(context);
+                businessPartnerBankRepository = new BusinessPartnerBankViewRepository(context);
             return businessPartnerBankRepository;
         }
 

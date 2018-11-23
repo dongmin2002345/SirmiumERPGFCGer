@@ -355,7 +355,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     
-                    while (reader.Read())
+                    if (reader.Read())
                     {
                         businessPartnerBank.Id = Int32.Parse(reader["BusinessPartnerBankId"].ToString());
                         businessPartnerBank.Identifier = Guid.Parse(reader["BusinessPartnerBankIdentifier"].ToString());

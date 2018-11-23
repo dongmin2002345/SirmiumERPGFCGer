@@ -32,7 +32,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "FROM BusinessPartnerBanks businessPartnerBank " +
                 "LEFT JOIN BusinessPartners businessPartner ON businessPartnerBank.BusinessPartnerId = businessPartner.Id " +
                 "LEFT JOIN Banks bank ON businessPartnerBank.BankId = bank.Id " +
-                "LEFT JOIN Countries country ON businessPartnerBank.CountryId = country.Id" +
+                "LEFT JOIN Countries country ON businessPartnerBank.CountryId = country.Id " +
                 "LEFT JOIN Users createdBy ON businessPartnerBank.CreatedById = createdBy.Id " +
                 "LEFT JOIN Companies company ON businessPartnerBank.CompanyId = company.Id;";
 
