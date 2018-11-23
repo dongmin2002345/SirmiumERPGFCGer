@@ -1,4 +1,1 @@
-﻿{
-  "ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true",
-  "ApiConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true"
-}
+﻿{ "ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true","ApiConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true"}
