@@ -26,10 +26,10 @@
 
                     <TextBox Margin="2" Name="txtFilterCompanies" TextChanged="txtFilterCompanies_TextChanged" MinWidth="150" />
                     <Button x:Name="btnChooseCompany" Click="btnChooseCompany_Click" Grid.Column="1" VerticalAlignment="Center" Margin="2">
-                        <Image Source="..\..\Resources\Icons\check.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                        <Image Source="..\..\Resources\Icons\Ok02.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <Button x:Name="btnCancleCompany" Click="btnCancleCompany_Click" Grid.Column="2" VerticalAlignment="Center" Margin="2">
-                        <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                        <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
 
                     <DataGrid x:Name="dgCompaniesList" 
@@ -52,10 +52,10 @@
                             <DataGridTextColumn SortMemberPath="CompanyName" Header="Ime" Binding="{Binding CompanyName}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btnCloseCompanyPopup" Click="btnCloseCompanyPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2">
+                    <Button x:Name="btnCloseCompanyPopup" Click="btnCloseCompanyPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text="Zatvori" Margin="5 0 5 0"/>
+                            <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="ZATVORI" Margin="5 0 5 0" Foreground="White" FontWeight="Regular" FontSize="16" TextAlignment="Center"/>
                         </StackPanel>
                     </Button>
                 </Grid>
