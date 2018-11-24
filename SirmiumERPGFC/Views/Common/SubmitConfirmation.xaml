@@ -32,7 +32,7 @@
                     Style="{StaticResource AccentedSquareButtonStyle}"
                     VerticalAlignment="Center"
                     Margin="5" Width="100" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal">DA</Button>
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal">NE</Button>
         </StackPanel>
     </Grid>
 </Window>

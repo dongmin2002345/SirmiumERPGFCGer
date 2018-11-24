@@ -260,10 +260,10 @@
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="3" x:Name="btnSaveHeader" Click="btnSaveHeader_Click" Margin="5 0 0 0" Background="midnightblue">
+                    <Button Grid.Column="3" x:Name="btnSaveHeader" Click="btnSaveHeader_Click" Margin="5 0 0 0" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock FontSize="20" Text=" SAČUVAJ ZAGLAVLJE " Foreground="White" FontWeight="Bold"/>
+                            <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock FontSize="25" Text=" SAČUVAJ ZAGLAVLJE " Foreground="White" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -294,14 +294,14 @@
 
                         <Button x:Name="btnAddProfessionItem" Grid.Row="1" Grid.Column="4" Click="btnAddProfessionItem_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                 <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
 
                         <Button x:Name="btnCancelProfessionItem" Grid.Row="1" Grid.Column="5" Click="btnCancelProfessionItem_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                 <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular"/>
                             </StackPanel>
                         </Button>
@@ -389,7 +389,7 @@
 
                         <Button x:Name="btnAddDItem" Grid.Row="2" Grid.Column="4" Click="btnAddDItem_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
@@ -490,7 +490,7 @@
 
                         <Button x:Name="btnAddItem" Grid.Row="2" Grid.Column="4" Click="btnAddItem_Click" Margin="2" Background="#007ACC" >
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                 <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
@@ -587,7 +587,7 @@
 
                         <Button x:Name="btnAddDocument" Grid.Row="1" Grid.Column="4" Click="btnAddDocument_Click" Margin="2" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                 <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular"/>
                             </StackPanel>
                         </Button>
@@ -671,7 +671,7 @@
 
                         <Button x:Name="btnAddNote" Grid.Row="1" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                 <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular"/>
                             </StackPanel>
                         </Button>
@@ -741,16 +741,16 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="2" Background="midnightblue">
+            <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="2" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock Text=" PROKNJIŽI " FontSize="20" Foreground="White" FontWeight="Bold"/>
+                    <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text=" PROKNJIŽI " FontSize="25" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
             </Button>
-            <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2" Background="midnightblue">
+            <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                    <TextBlock Text=" ZATVORI " FontSize="20" Foreground="White" FontWeight="Bold"/>
+                    <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text=" ZATVORI " FontSize="25" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
             </Button>
         </Grid>

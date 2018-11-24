@@ -770,6 +770,7 @@
     </Content>
     <Resource Include="Resources\Farm01.png" />
     <Resource Include="Resources\GFC.png" />
+    <Resource Include="Resources\erp9.png" />
     <Content Include="Resources\Icons\001-error.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -903,11 +904,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Excel01.png" />
+    <Resource Include="Resources\Icons\Excel02.png" />
     <Content Include="Resources\Icons\fat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Firme.png" />
     <Resource Include="Resources\Icons\Firme_Na_Gradilistu.png" />
+    <Resource Include="Resources\Icons\FizickaLica.png" />
+    <Resource Include="Resources\Icons\Firme1.png" />
+    <Resource Include="Resources\Icons\FirmePoGradilistima2.png" />
+    <Resource Include="Resources\Icons\Firme02.png" />
     <Content Include="Resources\Icons\flag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -920,6 +926,8 @@
     <Resource Include="Resources\Icons\Gradovi Ikonica.png" />
     <Resource Include="Resources\Icons\Gradovi_Ikonica.png" />
     <Resource Include="Resources\Icons\Gradiliste.png" />
+    <Resource Include="Resources\Icons\Gradiliste02.png" />
+    <Resource Include="Resources\Icons\Gradovi2.png" />
     <Content Include="Resources\Icons\ham.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -941,6 +949,7 @@
     <Content Include="Resources\Icons\input_invoice.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\IzlazneFakture.png" />
     <Content Include="Resources\Icons\knife.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -969,6 +978,7 @@
     <Resource Include="Resources\Icons\Opstina Ikonica.png" />
     <Resource Include="Resources\Icons\Opstina_Ikonica.png" />
     <Resource Include="Resources\Icons\Opstine.png" />
+    <Resource Include="Resources\Icons\Opstine2.png" />
     <Content Include="Resources\Icons\organization.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1032,6 +1042,7 @@
     <Content Include="Resources\Icons\plus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Porodica01.png" />
     <Content Include="Resources\Icons\price-tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1047,6 +1058,8 @@
     <Resource Include="Resources\Icons\Radnik.png" />
     <Resource Include="Resources\Icons\Radnici_Na_Firmama.png" />
     <Resource Include="Resources\Icons\Radnici_Na_Gradilistu.png" />
+    <Resource Include="Resources\Icons\RadniciPoGradilistima2.png" />
+    <Resource Include="Resources\Icons\RadniciPoFirmama2.png" />
     <Content Include="Resources\Icons\radniNalog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1137,17 +1150,21 @@
     <Content Include="Resources\Icons\Ukupni lager.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\VozackaDozvola.png" />
+    <Resource Include="Resources\Icons\UlazneFakture.png" />
     <Content Include="Resources\Icons\warehouse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Icons\weight-scale.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Worker.png" />
     <Content Include="Resources\Icons\zacini.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Zanimanja.png" />
     <Resource Include="Resources\Icons\Zatvori.png" />
+    <Resource Include="Resources\Icons\Zanimanje.png" />
     <Content Include="Resources\image005.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

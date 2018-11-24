@@ -15,7 +15,7 @@ namespace WpfAppCommonCode.Converters.Common
         {
             bool? isSynced = (value as bool?);
             if (isSynced != null && (bool)isSynced)
-                return new SolidColorBrush(Colors.LimeGreen);
+                return new SolidColorBrush(Colors.Blue);
             else
                 return new SolidColorBrush(Colors.IndianRed);
         }

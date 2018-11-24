@@ -94,7 +94,7 @@ namespace SirmiumERPGFC.Views.Home
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
+        private string _SaveButtonContent = " SAČUVAJ ";
 
         public string SaveButtonContent
         {
@@ -175,7 +175,7 @@ namespace SirmiumERPGFC.Views.Home
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -184,7 +184,7 @@ namespace SirmiumERPGFC.Views.Home
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                 }
 
@@ -192,7 +192,7 @@ namespace SirmiumERPGFC.Views.Home
                 {
                     new ToDoSQLiteRepository().UpdateSyncStatus(response.ToDo.Identifier, response.ToDo.UpdatedAt, response.ToDo.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " Sačuvaj ";
+                    SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
 
                     ToDoCreatedUpdated();
