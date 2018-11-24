@@ -175,13 +175,13 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button x:Name="btnSave" Click="btnSave_Click" Margin="5 0 0 5" Width="150" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 <TextBlock Text=" SAČUVAJ " Foreground="White" FontWeight="Regular"/>
                             </StackPanel>
                         </Button>
                         <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 5" Width="150" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular"/>
                             </StackPanel>
                         </Button>

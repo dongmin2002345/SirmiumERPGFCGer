@@ -893,12 +893,16 @@
     </Content>
     <Resource Include="Resources\Icons\Drzava.png" />
     <Resource Include="Resources\Icons\Dodavanje_Drzave1.png" />
+    <Resource Include="Resources\Icons\Dodaj01.png" />
+    <Resource Include="Resources\Icons\DuplaStrelcaLeva.png" />
+    <Resource Include="Resources\Icons\DuplaStrelicaDesna.png" />
     <Content Include="Resources\Icons\edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Icons\excel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Excel01.png" />
     <Content Include="Resources\Icons\fat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -958,6 +962,7 @@
     <Content Include="Resources\Icons\logistics.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Lupa.png" />
     <Content Include="Resources\Icons\manager.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1074,6 +1079,7 @@
     <Content Include="Resources\Icons\sausage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\saveNovi.png" />
     <Content Include="Resources\Icons\scale.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1106,6 +1112,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\tax.png" />
+    <Resource Include="Resources\Icons\Sunhronizuj.png" />
+    <Resource Include="Resources\Icons\StrelicaDesna.png" />
+    <Resource Include="Resources\Icons\StrelicaLeva.png" />
     <Content Include="Resources\Icons\telephone.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1138,15 +1147,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Zanimanja.png" />
+    <Resource Include="Resources\Icons\Zatvori.png" />
     <Content Include="Resources\image005.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\saveNovi.png" />
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Images\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
