@@ -217,7 +217,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
                 if (response.Success)
                 {
-                    new TaxAdministrationSQLiteRepository().UpdateSyncStatus(response.TaxAdministration.Identifier, response.TaxAdministration.Id, response.TaxAdministration.Code, true);
+                    new TaxAdministrationSQLiteRepository().UpdateSyncStatus(response.TaxAdministration.Identifier, response.TaxAdministration.Code, response.TaxAdministration.UpdatedAt, response.TaxAdministration.Id, true);
                     MainWindow.SuccessMessage = "Daten wurden erfolgreich gespeichert!";
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;

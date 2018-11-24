@@ -190,7 +190,7 @@ namespace SirmiumERPGFC.Views.Locations
 
                 if (response.Success)
                 {
-                    new RegionSQLiteRepository().UpdateSyncStatus(CurrentRegion.Identifier, response.Region.Id, true);
+                    new RegionSQLiteRepository().UpdateSyncStatus(CurrentRegion.Identifier, response.Region.Code, response.Region.UpdatedAt, response.Region.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;

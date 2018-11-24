@@ -309,7 +309,7 @@ namespace SirmiumERPGFC.Repository.Locations
                 insertCommand.Parameters.AddWithValue("@Mark", ((object)country.Mark) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", ((object)country.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", country.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", country.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)country.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -333,7 +333,7 @@ namespace SirmiumERPGFC.Repository.Locations
             }
         }
 
-        public CountryResponse UpdateSyncStatus(Guid identifier, int serverId, string code, bool isSynced)
+        public CountryResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAT, int serverId, bool isSynced)
         {
             CountryResponse response = new CountryResponse();
 
@@ -346,13 +346,15 @@ namespace SirmiumERPGFC.Repository.Locations
 
                 insertCommand.CommandText = "UPDATE Countries SET " +
                     "IsSynced = @IsSynced, " +
-                    "ServerId = @ServerId, " +
-                    "Code = @Code " +
+                    "Code = @Code, " +
+                    "UpdatedAt = @UpdatedAt, " +
+                    "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAT);
+                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
                 try

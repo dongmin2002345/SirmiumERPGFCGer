@@ -121,7 +121,7 @@ namespace DataMapper.Mappers.Common.Companies
                 WebSite = companyViewModel.WebSite,
 
                 CreatedBy = new User() { Id = companyViewModel.CreatedBy?.Id ?? 0 },
-                CreatedAt = companyViewModel.CreatedAt
+                CreatedAt = (DateTime)companyViewModel.CreatedAt
             };
             return Company;
         }

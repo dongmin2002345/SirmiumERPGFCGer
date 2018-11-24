@@ -208,7 +208,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
                 if (response.Success)
                 {
-                    new BusinessPartnerTypeSQLiteRepository().UpdateSyncStatus(CurrentBusinessPartnerType.Identifier, CurrentBusinessPartnerType.Id, true);
+                    new BusinessPartnerTypeSQLiteRepository().UpdateSyncStatus(response.BusinessPartnerType.Identifier, response.BusinessPartnerType.Code, response.BusinessPartnerType.UpdatedAt, response.BusinessPartnerType.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;

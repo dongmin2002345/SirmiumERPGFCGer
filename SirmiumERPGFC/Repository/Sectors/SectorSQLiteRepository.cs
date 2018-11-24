@@ -316,7 +316,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                 insertCommand.Parameters.AddWithValue("@CountryCode", ((object)sector.Country?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryName", ((object)sector.Country?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", sector.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", sector.UpdatedAt);
+				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)sector.UpdatedAt) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
 				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
 				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -340,7 +340,7 @@ namespace SirmiumERPGFC.Repository.Sectors
 			}
 		}
 
-		public SectorResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+		public SectorResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
 		{
 			SectorResponse response = new SectorResponse();
 
@@ -353,11 +353,15 @@ namespace SirmiumERPGFC.Repository.Sectors
 
 				insertCommand.CommandText = "UPDATE Sectors SET " +
 					"IsSynced = @IsSynced, " +
-					"ServerId = @ServerId " +
+                    "Code = @Code, " +
+                    "UpdatedAt = @UpdatedAt, " +
+                    "ServerId = @ServerId " +
 					"WHERE Identifier = @Identifier ";
 
 				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+				insertCommand.Parameters.AddWithValue("@Code", code);
+				insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
+                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
 				try

@@ -386,7 +386,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                 insertCommand.Parameters.AddWithValue("@Path", ((object)outputInvoice.Path) ?? DBNull.Value);
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", outputInvoice.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", outputInvoice.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)outputInvoice.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -410,7 +410,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             }
         }
 
-        public OutputInvoiceResponse UpdateSyncStatus(Guid identifier, int serverId, string code, bool isSynced)
+        public OutputInvoiceResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
         {
             OutputInvoiceResponse response = new OutputInvoiceResponse();
 
@@ -424,10 +424,12 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                 insertCommand.CommandText = "UPDATE OutputInvoices SET " +
                     "IsSynced = @IsSynced, " +
                     "Code = @Code, " +
+                    "UpdatedAt = @UpdatedAt, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@Code", code);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);

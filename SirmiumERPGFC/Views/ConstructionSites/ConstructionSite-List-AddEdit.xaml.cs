@@ -199,7 +199,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                 if (response.Success)
                 {
-                    new ConstructionSiteSQLiteRepository().UpdateSyncStatus(response.ConstructionSite.Identifier, response.ConstructionSite.Id, true);
+                    new ConstructionSiteSQLiteRepository().UpdateSyncStatus(response.ConstructionSite.Identifier, response.ConstructionSite.Code, response.ConstructionSite.UpdatedAt, response.ConstructionSite.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;

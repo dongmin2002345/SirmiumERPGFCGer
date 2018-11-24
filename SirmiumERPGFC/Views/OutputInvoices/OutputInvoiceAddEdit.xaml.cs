@@ -192,7 +192,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentOutputInvoice.IsSynced = false;
-                CurrentOutputInvoice.UpdatedAt = DateTime.Now;
 
                 OutputInvoiceResponse response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
                 response = new OutputInvoiceSQLiteRepository().Create(CurrentOutputInvoice);
@@ -214,7 +213,13 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
                 if (response.Success)
                 {
-                    new OutputInvoiceSQLiteRepository().UpdateSyncStatus(response.OutputInvoice.Identifier, response.OutputInvoice.Id, response.OutputInvoice.Code, true);
+                    new OutputInvoiceSQLiteRepository().UpdateSyncStatus(
+                        response.OutputInvoice.Identifier,
+                        response.OutputInvoice.Code,
+                        response.OutputInvoice.UpdatedAt,
+                        response.OutputInvoice.Id, 
+                        true);
+
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " Sačuvaj ";
                     SaveButtonEnabled = true;

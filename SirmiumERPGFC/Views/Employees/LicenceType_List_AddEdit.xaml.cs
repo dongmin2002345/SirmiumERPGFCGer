@@ -193,7 +193,7 @@ namespace SirmiumERPGFC.Views.Employees
 
 				if (response.Success)
 				{
-					new LicenceTypeSQLiteRepository().UpdateSyncStatus(response.LicenceType.Identifier, response.LicenceType.Id, true);
+					new LicenceTypeSQLiteRepository().UpdateSyncStatus(response.LicenceType.Identifier, response.LicenceType.Code, response.LicenceType.UpdatedAt, response.LicenceType.Id, true);
 					MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
 					SaveButtonContent = " SAČUVAJ ";
 					SaveButtonEnabled = true;
