@@ -38,13 +38,14 @@ namespace DomainCore.Employees
 
 		public int? PassportCityId { get; set; }
 		public City PassportCity { get; set; }
-
 		public string Passport { get; set; }
+
 		public DateTime? VisaFrom { get; set; }
 		public DateTime? VisaTo { get; set; }
 
 		public int? ResidenceCountryId { get; set; }
 		public Country ResidenceCountry { get; set; }
+
 		public int? ResidenceCityId { get; set; }
 		public City ResidenceCity { get; set; }
 		public string ResidenceAddress { get; set; }
