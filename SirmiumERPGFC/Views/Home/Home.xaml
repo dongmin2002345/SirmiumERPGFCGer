@@ -31,7 +31,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Image Grid.Row="0" Source="..\..\Resources\erp9.png" />
+                <Image Grid.Row="0" Source="..\..\Resources\erp8.png" RenderOptions.BitmapScalingMode="HighQuality" />
                 <Image Grid.Row="1" Source="..\..\Resources\GFC.png" VerticalAlignment="Bottom" RenderOptions.BitmapScalingMode="HighQuality" Margin="15 0 15 15" />
             </Grid>
         </Grid>
