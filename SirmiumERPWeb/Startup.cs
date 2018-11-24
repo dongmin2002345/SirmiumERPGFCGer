@@ -9,6 +9,7 @@ using RepositoryCore.DbSeed;
 using RepositoryCore.DbViews.Banks;
 using RepositoryCore.DbViews.Common.BusinessPartners;
 using RepositoryCore.DbViews.Common.Invoices;
+using RepositoryCore.DbViews.Employees;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
 using ServiceCore.Implementations.Banks;
@@ -222,7 +223,11 @@ namespace SirmiumERPWeb
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();
-            
+
+            EmployeeView.CreateView();
+
+
+
         }
     }
 }
