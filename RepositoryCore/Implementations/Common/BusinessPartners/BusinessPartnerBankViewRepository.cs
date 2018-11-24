@@ -332,6 +332,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
         public BusinessPartnerBank GetBusinessPartnerBank(int id)
         {
+            BusinessPartnerBank businessPartnerBank = new BusinessPartnerBank();
 
             string queryString =
                 "SELECT BusinessPartnerBankId, BusinessPartnerBankIdentifier, " +
@@ -341,15 +342,13 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "AccountNumber, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerBanks " +
-                "WHERE BusinessPartnerId = @BusinessPartnerId;"; // AND Active = 1
-
-            BusinessPartnerBank businessPartnerBank = new BusinessPartnerBank();
+                "WHERE BusinessPartnerBankId = @BusinessPartnerBankId;"; // AND Active = 1
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = queryString;
-                command.Parameters.Add(new SqlParameter("@BusinessPartnerId", id));
+                command.Parameters.Add(new SqlParameter("@BusinessPartnerBankId", id));
 
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -412,13 +411,11 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
                             businessPartnerBank.Company.Name = reader["CompanyName"].ToString();
                         }
-
-                        
                     }
-
-                    
                 }
             }
+
+            return businessPartnerBank;
 
             //return context.BusinessPartnerBanks
             //    .Include(x => x.BusinessPartner)
@@ -427,8 +424,6 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             //    .Include(x => x.Company)
             //    .Include(x => x.CreatedBy)
             //    .FirstOrDefault(x => x.Id == id && x.Active == true);
-
-            return businessPartnerBank;
         }
 
         public BusinessPartnerBank Create(BusinessPartnerBank businessPartnerBank)

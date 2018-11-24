@@ -21,15 +21,15 @@ namespace RepositoryCore.DbViews.Employees
 
             strSQLCommand =
                 "CREATE VIEW vEmployees AS " +
-                "SELECT employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.EmployeeCode AS EmployeeEmployeeCode, employee.Name AS EmployeeName, employee.SurName AS EmployeeSurName, employee.ConstructionSiteCode AS EmployeeConstructionSiteCode, employee.ConstructionSiteName AS EmployeeonstructionSiteName, employee.DateOfBirth, employee.Gender, " +
-                "country.Id AS CountryeId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "SELECT employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.EmployeeCode AS EmployeeEmployeeCode, employee.Name AS EmployeeName, employee.SurName AS EmployeeSurName, employee.ConstructionSiteCode AS EmployeeConstructionSiteCode, employee.ConstructionSiteName AS EmployeeConstructionSiteName, employee.DateOfBirth, employee.Gender, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
                 "region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.Code AS RegionCode, region.Name AS RegionName, " +
                 "municipality.Id AS MunicipalityId, municipality.Identifier AS MunicipalityIdentifier, municipality.Code AS MunicipalityCode, municipality.Name AS MunicipalityName, " +
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.Code AS CityCode, city.Name AS CityName, " +
                 "employee.Address, " +
                 "countryPassport.Id AS PassportCountryId, countryPassport.Identifier AS PassportCountryIdentifier, countryPassport.Code AS PassportCountryCode, countryPassport.Name AS PassportCountryName, " +
                 "cityPassport.Id AS PassportCityId, cityPassport.Identifier AS PassportCityIdentifier, cityPassport.Code AS PassportCityCode, cityPassport.Name AS PassportCityName, " +
-                "employee.Passport, employee.VisaFrom, employee.Code, employee.VisaTo, " +
+                "employee.Passport, employee.VisaFrom, employee.VisaTo, " +
                 "countryResidence.Id AS ResidenceCountryId, countryResidence.Identifier AS ResidenceCountryIdentifier, countryResidence.Code AS ResidenceCountryCode, countryResidence.Name AS ResidenceCountryName, " +
                 "cityResidence.Id AS ResidenceCityId, cityResidence.Identifier AS ResidenceCityIdentifier, cityResidence.Code AS ResidenceCityCode, cityResidence.Name AS ResidenceCityName, " +
                 "employee.ResidenceAddress, employee.EmbassyDate, employee.VisaDate, employee.VisaValidFrom, employee.VisaValidTo, employee.WorkPermitFrom, employee.WorkPermitTo, employee.Active AS Active, " +
