@@ -198,7 +198,7 @@ namespace SirmiumERPGFC.Views.Profession
 
                 if (response.Success)
                 {
-                    new ProfessionSQLiteRepository().UpdateSyncStatus(response.Profession.Identifier, response.Profession.Id, true);
+                    new ProfessionSQLiteRepository().UpdateSyncStatus(response.Profession.Identifier, response.Profession.Code, response.Profession.UpdatedAt, response.Profession.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;

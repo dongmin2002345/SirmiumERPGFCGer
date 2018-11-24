@@ -313,7 +313,7 @@ namespace SirmiumERPGFC.Repository.Banks
 				insertCommand.Parameters.AddWithValue("@CountryCode", ((object)bank.Country?.Code) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CountryName", ((object)bank.Country?.Name) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@IsSynced", bank.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", bank.UpdatedAt);
+				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)bank.UpdatedAt) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
 				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
 				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -337,7 +337,7 @@ namespace SirmiumERPGFC.Repository.Banks
 			}
 		}
 
-		public BankResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+		public BankResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
 		{
 			BankResponse response = new BankResponse();
 
@@ -350,14 +350,18 @@ namespace SirmiumERPGFC.Repository.Banks
 
 				insertCommand.CommandText = "UPDATE Banks SET " +
 					"IsSynced = @IsSynced, " +
+                    "Code = @Code, " + 
+                    "UpdatedAt = @UpdatedAt, " +
 					"ServerId = @ServerId " +
 					"WHERE Identifier = @Identifier ";
 
 				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                insertCommand.Parameters.AddWithValue("@Code", code);
+				insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
+                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
-				try
+                try
 				{
 					insertCommand.ExecuteReader();
 				}

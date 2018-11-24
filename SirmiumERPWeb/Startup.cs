@@ -218,7 +218,7 @@ namespace SirmiumERPWeb
             // Create views
             BankView.CreateView();
 
-           // BusinessPartnerBankView.CreateView();
+           BusinessPartnerBankView.CreateView();
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();

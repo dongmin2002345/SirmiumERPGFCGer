@@ -739,7 +739,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@AgencyCode", ((object)businessPartner.Agency?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartner.Agency?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", businessPartner.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", businessPartner.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartner.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -763,27 +763,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerResponse Update(BusinessPartnerViewModel businessPartner)
-        {
-            BusinessPartnerResponse response = new BusinessPartnerResponse();
-            try
-            {
-                Delete(businessPartner.Identifier);
-                Create(businessPartner);
-            }
-            catch (SqliteException error)
-            {
-                MainWindow.ErrorMessage = error.Message;
-                response.Success = false;
-                response.Message = error.Message;
-                return response;
-            }
-
-            response.Success = true;
-            return response;
-        }
-
-        public BusinessPartnerResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public BusinessPartnerResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
         {
             BusinessPartnerResponse response = new BusinessPartnerResponse();
 
@@ -796,10 +776,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
                 insertCommand.CommandText = "UPDATE BusinessPartners SET " +
                     "IsSynced = @IsSynced, " +
+                    "Code = @Code, " +
+                    "UpdatedAt = @UpdatedAt, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 

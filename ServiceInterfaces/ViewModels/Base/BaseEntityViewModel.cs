@@ -1,9 +1,7 @@
 ﻿using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace ServiceInterfaces.ViewModels.Base
 {
@@ -79,9 +77,9 @@ namespace ServiceInterfaces.ViewModels.Base
         #endregion
 
         #region UpdatedAt
-        private DateTime _UpdatedAt;
+        private DateTime? _UpdatedAt;
 
-        public DateTime UpdatedAt
+        public DateTime? UpdatedAt
         {
             get { return _UpdatedAt; }
             set
@@ -96,9 +94,9 @@ namespace ServiceInterfaces.ViewModels.Base
         #endregion
 
         #region CreatedAt
-        private DateTime _CreatedAt;
+        private DateTime? _CreatedAt;
 
-        public DateTime CreatedAt
+        public DateTime? CreatedAt
         {
             get { return _CreatedAt; }
             set

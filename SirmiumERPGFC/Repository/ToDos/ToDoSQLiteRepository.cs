@@ -213,7 +213,7 @@ namespace SirmiumERPGFC.Repository.ToDos
                 insertCommand.Parameters.AddWithValue("@Description", ((object)toDo.Description) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ToDoDate", ((object)toDo.ToDoDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", toDo.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", toDo.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)toDo.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -237,7 +237,7 @@ namespace SirmiumERPGFC.Repository.ToDos
             }
         }
 
-        public ToDoResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public ToDoResponse UpdateSyncStatus(Guid identifier, DateTime? updatedAt, int serverId, bool isSynced)
         {
             ToDoResponse response = new ToDoResponse();
 
@@ -250,10 +250,12 @@ namespace SirmiumERPGFC.Repository.ToDos
 
                 insertCommand.CommandText = "UPDATE ToDos SET " +
                     "IsSynced = @IsSynced, " +
+                    "UpdatedAt = @UpdatedAt, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 

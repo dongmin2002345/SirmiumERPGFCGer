@@ -47,9 +47,8 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 DateOfPayment = outputInvoice.DateOfPayment,
                 Status = outputInvoice.Status,
                 StatusDate = outputInvoice.StatusDate,
-                //Base = outputInvoice.Base,
-                //PDV = outputInvoice.PDV,
-                //Total = outputInvoice.Total,
+                
+                Description = outputInvoice.Description,
 
                 Path = outputInvoice.Path,
 
@@ -61,29 +60,9 @@ namespace DataMapper.Mappers.Common.OutputInvoices
 
                 UpdatedAt = outputInvoice.UpdatedAt,
                 CreatedAt = outputInvoice.CreatedAt,
-                //IsCancelItem = outputInvoice.IsCancelItem,
             };
 
-            //if (outputInvoice.InvoiceItems != null && outputInvoice.InvoiceItems.Count > 0)
-            //{
-            //    outputInvoiceViewModel.OutputInvoiceSubItems = new ObservableCollection<OutputInvoiceSubItemViewModel>(outputInvoice.InvoiceItems.ConvertToOutputInvoiceSubItemViewModelListLite());
-            //}
-            //else
-            //{
-            //    outputInvoiceViewModel.OutputInvoiceSubItems = new ObservableCollection<OutputInvoiceSubItemViewModel>();
-            //}
-
             return outputInvoiceViewModel;
-        }
-
-        public static List<OutputInvoiceViewModel> ConvertToOutputInvoiceViewModelListLite(this IEnumerable<OutputInvoice> outputInvoices)
-        {
-            List<OutputInvoiceViewModel> outputInvoiceViewModels = new List<OutputInvoiceViewModel>();
-            foreach (OutputInvoice outputInvoice in outputInvoices)
-            {
-                outputInvoiceViewModels.Add(outputInvoice.ConvertToOutputInvoiceViewModelLite());
-            }
-            return outputInvoiceViewModels;
         }
 
         public static OutputInvoiceViewModel ConvertToOutputInvoiceViewModelLite(this OutputInvoice outputInvoice)
@@ -112,6 +91,8 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 DateOfPayment = outputInvoice.DateOfPayment,
                 Status = outputInvoice.Status,
                 StatusDate = outputInvoice.StatusDate,
+
+                Description = outputInvoice.Description,
 
                 Path = outputInvoice.Path,
 
@@ -151,6 +132,8 @@ namespace DataMapper.Mappers.Common.OutputInvoices
                 Status = outputInvoiceViewModel.Status,
                 StatusDate = outputInvoiceViewModel.StatusDate,
 
+                Description = outputInvoiceViewModel.Description,
+
                 Path = outputInvoiceViewModel.Path,
 
                 Active = outputInvoiceViewModel.IsActive,
@@ -161,18 +144,6 @@ namespace DataMapper.Mappers.Common.OutputInvoices
 
                 CreatedAt = outputInvoiceViewModel.CreatedAt,
                 UpdatedAt = outputInvoiceViewModel.UpdatedAt
-
-                //IsLocked = outputInvoiceViewModel.IsLocked,
-                //LockedDate = outputInvoiceViewModel.LockedDate,
-
-                //CreatedBy = new User() { Id = outputInvoiceViewModel.CreatedBy?.Id ?? 0 },
-
-                //InvoiceItems = outputInvoiceViewModel.OutputInvoiceSubItems?.ConvertToOutputInvoiceSubItemList(),
-
-                //Status = 0,
-
-                //CreatedAt = outputInvoiceViewModel.CreatedAt,
-                //IsCancelItem = outputInvoiceViewModel.IsCancelItem
             };
 
             return outputinvoice;

@@ -198,7 +198,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)businessPartnerByConstructionSite.ConstructionSite?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)businessPartnerByConstructionSite.ConstructionSite?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerByConstructionSite.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", businessPartnerByConstructionSite.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerByConstructionSite.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -222,7 +222,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerByConstructionSiteResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public BusinessPartnerByConstructionSiteResponse UpdateSyncStatus(Guid identifier, int serverId, string code, DateTime? updatedAt, bool isSynced)
         {
             BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
 
@@ -235,10 +235,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
                 insertCommand.CommandText = "UPDATE BusinessPartnerByConstructionSites SET " +
                     "IsSynced = @IsSynced, " +
+                    "Code = @Code, " + 
+                    "UpdatedAt = @UpdatedAt, " + 
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 

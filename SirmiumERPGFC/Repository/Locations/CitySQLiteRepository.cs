@@ -403,7 +403,7 @@ namespace SirmiumERPGFC.Repository.Locations
                 insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)city.Municipality?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)city.Municipality?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", city.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", city.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)city.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -427,7 +427,7 @@ namespace SirmiumERPGFC.Repository.Locations
             }
         }
 
-        public CityResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public CityResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
         {
             CityResponse response = new CityResponse();
 
@@ -440,10 +440,14 @@ namespace SirmiumERPGFC.Repository.Locations
 
                 insertCommand.CommandText = "UPDATE Cities SET " +
                     "IsSynced = @IsSynced, " +
+                    "Code = @Code, " +
+                    "UpdatedAt = @UpdatedAt, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 

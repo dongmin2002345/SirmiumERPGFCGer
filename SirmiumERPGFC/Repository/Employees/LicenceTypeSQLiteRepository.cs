@@ -314,7 +314,7 @@ namespace SirmiumERPGFC.Repository.Employees
 				insertCommand.Parameters.AddWithValue("@CountryCode", ((object)licenceType.Country?.Code) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CountryName", ((object)licenceType.Country?.Name) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@IsSynced", licenceType.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", licenceType.UpdatedAt);
+				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)licenceType.UpdatedAt) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
 				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
 				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -338,7 +338,7 @@ namespace SirmiumERPGFC.Repository.Employees
 			}
 		}
 
-		public LicenceTypeResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+		public LicenceTypeResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
 		{
 			LicenceTypeResponse response = new LicenceTypeResponse();
 
@@ -351,11 +351,15 @@ namespace SirmiumERPGFC.Repository.Employees
 
 				insertCommand.CommandText = "UPDATE LicenceTypes SET " +
 					"IsSynced = @IsSynced, " +
-					"ServerId = @ServerId " +
+                    "Code = @Code, " +
+                    "UpdatedAt = @UpdatedAt, " +
+                    "ServerId = @ServerId " +
 					"WHERE Identifier = @Identifier ";
 
 				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+				insertCommand.Parameters.AddWithValue("@Code", code);
+				insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
+                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
 				try

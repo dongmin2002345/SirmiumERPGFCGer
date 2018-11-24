@@ -207,7 +207,7 @@ namespace SirmiumERPGFC.Views.Employees
 
 				if (response.Success)
 				{
-					new PhysicalPersonSQLiteRepository().UpdateSyncStatus(response.PhysicalPerson.Identifier, response.PhysicalPerson.Id, true);
+					new PhysicalPersonSQLiteRepository().UpdateSyncStatus(response.PhysicalPerson.Identifier, response.PhysicalPerson.Code, response.PhysicalPerson.UpdatedAt, response.PhysicalPerson.Id, true);
 					MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
 					SaveButtonContent = " SAČUVAJ ";
 					SaveButtonEnabled = true;

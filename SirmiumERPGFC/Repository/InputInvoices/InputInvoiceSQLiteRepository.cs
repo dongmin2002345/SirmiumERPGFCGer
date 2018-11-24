@@ -390,7 +390,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 				insertCommand.Parameters.AddWithValue("@Description", ((object)InputInvoice.Description) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@Path", ((object)InputInvoice.Path) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@IsSynced", InputInvoice.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", InputInvoice.UpdatedAt);
+				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)InputInvoice.UpdatedAt) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
 				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
 				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -414,7 +414,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			}
 		}
 
-		public InputInvoiceResponse UpdateSyncStatus(Guid identifier, int serverId, string code, bool isSynced)
+		public InputInvoiceResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
 		{
 			InputInvoiceResponse response = new InputInvoiceResponse();
 
@@ -428,12 +428,14 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 				insertCommand.CommandText = "UPDATE InputInvoices SET " +
 					"IsSynced = @IsSynced, " +
 					"Code = @Code, " +
-					"ServerId = @ServerId " +
+                    "UpdatedAt = @UpdatedAt, " +
+                    "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
 				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-				insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@DateTime", updatedAt);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 
                 try

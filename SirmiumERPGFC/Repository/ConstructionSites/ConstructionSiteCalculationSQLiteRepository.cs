@@ -307,7 +307,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Parameters.AddWithValue("@ValueDifference", ((object)ConstructionSiteCalculation.ValueDifference) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@PlusMinus", ((object)ConstructionSiteCalculation.PlusMinus) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", ConstructionSiteCalculation.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ConstructionSiteCalculation.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)ConstructionSiteCalculation.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -331,7 +331,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             }
         }
 
-        public ConstructionSiteCalculationResponse UpdateSyncStatus(Guid identifier, int serverId, decimal valueDifference, decimal newValue, bool isSynced)
+        public ConstructionSiteCalculationResponse UpdateSyncStatus(Guid identifier, DateTime? updatedAt, int serverId, decimal valueDifference, decimal newValue, bool isSynced)
         {
             ConstructionSiteCalculationResponse response = new ConstructionSiteCalculationResponse();
 
@@ -344,12 +344,14 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
                 insertCommand.CommandText = "UPDATE ConstructionSiteCalculations SET " +
                     "IsSynced = @IsSynced, " +
+                    "UpdatedAt = @UpdatedAt, " +
                     "NewValue = @NewValue, " +
                     "ValueDifference = @ValueDifference, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@NewValue", newValue);
                 insertCommand.Parameters.AddWithValue("@ValueDifference", valueDifference);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);

@@ -190,7 +190,7 @@ namespace SirmiumERPGFC.Views.Home
 
                 if (response.Success)
                 {
-                    new ToDoSQLiteRepository().UpdateSyncStatus(response.ToDo.Identifier, response.ToDo.Id, true);
+                    new ToDoSQLiteRepository().UpdateSyncStatus(response.ToDo.Identifier, response.ToDo.UpdatedAt, response.ToDo.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " Sačuvaj ";
                     SaveButtonEnabled = true;

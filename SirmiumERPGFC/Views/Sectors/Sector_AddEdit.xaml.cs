@@ -198,7 +198,7 @@ namespace SirmiumERPGFC.Views.Sectors
 
 				if (response.Success)
 				{
-					new SectorSQLiteRepository().UpdateSyncStatus(response.Sector.Identifier, response.Sector.Id, true);
+					new SectorSQLiteRepository().UpdateSyncStatus(response.Sector.Identifier, response.Sector.Code, response.Sector.UpdatedAt, response.Sector.Id, true);
 					MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
 					SaveButtonContent = " SAČUVAJ ";
 					SaveButtonEnabled = true;

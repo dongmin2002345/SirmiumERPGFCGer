@@ -93,7 +93,7 @@ namespace SirmiumERPGFC.Repository.Companies
                 insertCommand.Parameters.AddWithValue("@Name", company.CompanyName);
                 insertCommand.Parameters.AddWithValue("@Address", company.Address);
                 insertCommand.Parameters.AddWithValue("@IsSynced", company.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", company.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)company.UpdatedAt) ?? DBNull.Value);
 
                 try
                 {

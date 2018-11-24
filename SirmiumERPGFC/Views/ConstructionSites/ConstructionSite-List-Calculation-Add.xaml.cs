@@ -138,6 +138,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     new ConstructionSiteCalculationSQLiteRepository().UpdateSyncStatus(
                         response.ConstructionSiteCalculation.Identifier, 
+                        response.ConstructionSiteCalculation.UpdatedAt,
                         response.ConstructionSiteCalculation.Id,
                         response.ConstructionSiteCalculation.ValueDifference,
                         response.ConstructionSiteCalculation.NewValue,

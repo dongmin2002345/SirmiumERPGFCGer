@@ -324,7 +324,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                 insertCommand.Parameters.AddWithValue("@SectorCode", ((object)Agency.Sector?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@SectorName", ((object)Agency.Sector?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", Agency.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", Agency.UpdatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)Agency.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
                 insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
                 insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -348,7 +348,7 @@ namespace SirmiumERPGFC.Repository.Sectors
             }
         }
 
-        public AgencyResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced)
+        public AgencyResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
         {
             AgencyResponse response = new AgencyResponse();
 
@@ -361,10 +361,14 @@ namespace SirmiumERPGFC.Repository.Sectors
 
                 insertCommand.CommandText = "UPDATE Agencies SET " +
                     "IsSynced = @IsSynced, " +
+                    "Code = @Code, " +
+                    "UpdatedAt = @UpdatedAt, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
