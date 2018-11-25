@@ -35,6 +35,7 @@ namespace RepositoryCore.DbViews.Employees
                 "LEFT JOIN Users createdBy ON employeeByBusinessPartner.CreatedById = createdBy.Id " +
                 "LEFT JOIN Companies company ON employeeByBusinessPartner.CompanyId = company.Id;";
 
+
             command = new SqlCommand(strSQLCommand, conn);
             returnvalue = (string)command.ExecuteScalar();
 
