@@ -26,7 +26,7 @@
 
                     <TextBox Margin="2" Name="txtMunicipalityFilter" TextChanged="txtFilterMunicipality_TextChanged" MinWidth="150" />
                     <Button x:Name="btnChooseMunicipalityCode" Click="btnChooseMunicipality_Click" Grid.Column="1" VerticalAlignment="Center" Margin="2" >
-                        <Image Source="..\..\Resources\Icons\Ok02.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <Image Source="..\..\Resources\Icons\Ok10.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
 
                     <Button x:Name="btnCancleMunicipality" Click="btnCancleMunicipality_Click" Grid.Column="2" VerticalAlignment="Center" Margin="2" >

@@ -26,7 +26,7 @@
 
                     <TextBox Margin="2" Name="txtFilterProfession" TextChanged="txtFilterProfession_TextChanged" MinWidth="150" />
                     <Button x:Name="btnChooseProfession" Click="btnChooseProfession_Click" Grid.Column="1" VerticalAlignment="Center" Margin="2">
-                        <Image Source="..\..\Resources\Icons\Ok02.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Image Source="..\..\Resources\Icons\Ok10.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Button>
                     <Button x:Name="btnCancleProfession" Click="btnCancleProfession_Click" Grid.Column="2" VerticalAlignment="Center" Margin="2">
                         <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
