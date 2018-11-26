@@ -9,6 +9,7 @@ using RepositoryCore.DbSeed;
 using RepositoryCore.DbViews.Banks;
 using RepositoryCore.DbViews.Common.BusinessPartners;
 using RepositoryCore.DbViews.Common.Invoices;
+using RepositoryCore.DbViews.ConstructionSites;
 using RepositoryCore.DbViews.Employees;
 using RepositoryCore.DbViews.PhysicalPersons;
 using RepositoryCore.UnitOfWork.Abstractions;
@@ -144,6 +145,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IBusinessPartnerOrganizationUnitService, BusinessPartnerOrganizationUnitService>();
             services.AddScoped<IBusinessPartnerTypeService, BusinessPartnerTypeService>();
             services.AddScoped<IBusinessPartnerLocationService, BusinessPartnerLocationService>();
+            services.AddScoped<IBusinessPartnerDocumentService, BusinessPartnerDocumentService>();
 
             services.AddScoped<IOutputInvoiceService, OutputInvoiceService>();
 			services.AddScoped<IInputInvoiceService, InputInvoiceService>();
@@ -180,6 +182,7 @@ namespace SirmiumERPWeb
 
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
             services.AddScoped<IConstructionSiteCalculationService, ConstructionSiteCalculationService>();
+            services.AddScoped<IConstructionSiteDocumentService, ConstructionSiteDocumentService>();
 
             services.AddScoped<ITaxAdministrationService, TaxAdministrationService>();
 
@@ -221,6 +224,8 @@ namespace SirmiumERPWeb
             BankView.CreateView();
 
             BusinessPartnerBankView.CreateView();
+            BusinessPartnerByConstructionSiteView.CreateView();
+            BusinessPartnerInstitutionView.CreateView();
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();
@@ -233,9 +238,12 @@ namespace SirmiumERPWeb
             EmployeeItemView.CreateView();
             EmployeeLicenceView.CreateView();
             EmployeeNoteView.CreateView();
+            EmployeeProfessionView.CreateView();
+            FamilyMemberView.CreateView();
+            LicenceTypeView.CreateView();
             PhysicalPersonView.CreateView();
 
-
+            ConstructionSiteDocumentView.CreateView();
 
         }
     }

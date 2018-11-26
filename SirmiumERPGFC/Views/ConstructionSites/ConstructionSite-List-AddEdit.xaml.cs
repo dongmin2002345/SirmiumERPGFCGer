@@ -7,8 +7,10 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.ConstructionSites;
+using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -58,6 +60,92 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
+
+        #region ConstructionSiteDocumentsFromDB
+        private ObservableCollection<ConstructionSiteDocumentViewModel> _ConstructionSiteDocumentsFromDB;
+
+        public ObservableCollection<ConstructionSiteDocumentViewModel> ConstructionSiteDocumentsFromDB
+        {
+            get { return _ConstructionSiteDocumentsFromDB; }
+            set
+            {
+                if (_ConstructionSiteDocumentsFromDB != value)
+                {
+                    _ConstructionSiteDocumentsFromDB = value;
+                    NotifyPropertyChanged("ConstructionSiteDocumentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteDocumentForm
+        private ConstructionSiteDocumentViewModel _CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+
+        public ConstructionSiteDocumentViewModel CurrentConstructionSiteDocumentForm
+        {
+            get { return _CurrentConstructionSiteDocumentForm; }
+            set
+            {
+                if (_CurrentConstructionSiteDocumentForm != value)
+                {
+                    _CurrentConstructionSiteDocumentForm = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteDocumentForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteDocumentDG
+        private ConstructionSiteDocumentViewModel _CurrentConstructionSiteDocumentDG;
+
+        public ConstructionSiteDocumentViewModel CurrentConstructionSiteDocumentDG
+        {
+            get { return _CurrentConstructionSiteDocumentDG; }
+            set
+            {
+                if (_CurrentConstructionSiteDocumentDG != value)
+                {
+                    _CurrentConstructionSiteDocumentDG = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteDocumentDG");
+                }
+            }
+        }
+        #endregion
+
+        #region ConstructionSiteDocumentDataLoading
+        private bool _ConstructionSiteDocumentDataLoading;
+
+        public bool ConstructionSiteDocumentDataLoading
+        {
+            get { return _ConstructionSiteDocumentDataLoading; }
+            set
+            {
+                if (_ConstructionSiteDocumentDataLoading != value)
+                {
+                    _ConstructionSiteDocumentDataLoading = value;
+                    NotifyPropertyChanged("ConstructionSiteDocumentDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsHeaderCreated
+        private bool _IsHeaderCreated;
+
+        public bool IsHeaderCreated
+        {
+            get { return _IsHeaderCreated; }
+            set
+            {
+                if (_IsHeaderCreated != value)
+                {
+                    _IsHeaderCreated = value;
+                    NotifyPropertyChanged("IsHeaderCreated");
+                }
+            }
+        }
+        #endregion
 
         #region IsCreateProcess
         private bool _IsCreateProcess;
@@ -141,14 +229,79 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             this.DataContext = this;
 
+            IsHeaderCreated = !isCreateProcess;
+
             CurrentConstructionSite = constructionSiteViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
+
+            Thread displayThread = new Thread(() =>
+            {
+                DisplayDocumentData();
+            });
+            displayThread.IsBackground = true;
+            displayThread.Start();
         }
 
         #endregion
 
+        private void DisplayDocumentData()
+        {
+            ConstructionSiteDocumentDataLoading = true;
+
+            ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentSQLiteRepository()
+                .GetConstructionSiteDocumentsByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
+
+            if (response.Success)
+            {
+                ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>(
+                    response.ConstructionSiteDocuments ?? new List<ConstructionSiteDocumentViewModel>());
+            }
+            else
+            {
+                ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>();
+            }
+
+            ConstructionSiteDocumentDataLoading = false;
+        }
+
         #region Cancel and Save buttons
+
+        private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            //if (CurrentConstructionSite.Code == null)
+            //{
+            //    MainWindow.WarningMessage = "Obavezno polje: Sifra";
+            //    return;
+            //}
+
+            if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv gradilista";
+                return;
+            }
+
+            #endregion
+
+            CurrentConstructionSite.IsSynced = false;
+            CurrentConstructionSite.UpdatedAt = DateTime.Now;
+            CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
+            response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
+            if (response.Success)
+            {
+                MainWindow.SuccessMessage = "Zaglavlje je uspešno sačuvano!";
+                IsHeaderCreated = true;
+
+                txtDocumentName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -173,12 +326,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 SaveButtonContent = " Čuvanje u toku... ";
                 SaveButtonEnabled = false;
 
-                CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
                 CurrentConstructionSite.IsSynced = false;
                 CurrentConstructionSite.UpdatedAt = DateTime.Now;
-
+                CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                                
                 ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
                 response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
                 if (!response.Success)
@@ -188,6 +340,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     SaveButtonEnabled = true;
                     return;
                 }
+
+                CurrentConstructionSite.ConstructionSiteDocuments = ConstructionSiteDocumentsFromDB;
 
                 response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
@@ -245,6 +399,125 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 FlyoutHelper.CloseFlyoutPopup(this);
             else
                 FlyoutHelper.CloseFlyout(this);
+        }
+
+        #endregion
+
+        #region Add, edit, delete and cancel document
+
+        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+            string[] fileNames = dialog.FileNames;
+
+            if (fileNames.Length > 0)
+                CurrentConstructionSiteDocumentForm.Path = fileNames[0];
+        }
+
+        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            fileDIalog.Multiselect = true;
+            fileDIalog.FileOk += FileDIalog_FileOk;
+            fileDIalog.Filter = "Image Files | *.pdf";
+            fileDIalog.ShowDialog();
+        }
+
+        private void btnAddDocument_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Name))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                return;
+            }
+
+            if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Path))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Putanja";
+                return;
+            }
+
+            if (CurrentConstructionSiteDocumentForm.CreateDate == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Datum kreiranja";
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentForm.Identifier);
+
+            CurrentConstructionSiteDocumentForm.ConstructionSite = CurrentConstructionSite;
+            CurrentConstructionSiteDocumentForm.Identifier = Guid.NewGuid();
+            CurrentConstructionSiteDocumentForm.IsSynced = false;
+            CurrentConstructionSiteDocumentForm.UpdatedAt = DateTime.Now;
+            CurrentConstructionSiteDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentConstructionSiteDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new ConstructionSiteDocumentSQLiteRepository().Create(CurrentConstructionSiteDocumentForm);
+            if (response.Success)
+            {
+                CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+
+                Thread displayThread = new Thread(() => DisplayDocumentData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtDocumentName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+        }
+
+        private void btnEditDocument_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentConstructionSiteDocumentForm = CurrentConstructionSiteDocumentDG;
+        }
+
+        private void btnDeleteDocument_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dokument", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentDG.Identifier);
+
+                MainWindow.SuccessMessage = "Dokument je uspešno obrisan!";
+
+                Thread displayThread = new Thread(() => DisplayDocumentData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        #endregion
+
+        #region Mouse wheel event 
+
+        private void PreviewMouseWheelEv(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
         }
 
         #endregion

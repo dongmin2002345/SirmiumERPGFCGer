@@ -156,6 +156,19 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryIdentifier", "GUID NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryName", "NVARCHAR(2048) NULL");
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE BusinessPartnerDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(BusinessPartnerDocumentSQLiteRepository.BusinessPartnerDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
 
                     #region BusinessPartnerLocation
@@ -347,6 +360,19 @@ namespace SirmiumERPGFC.Repository.Common
 
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "InternalCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "ContractStart", "DATETIME NULL");
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ConstructionSiteDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ConstructionSiteDocumentSQLiteRepository.ConstructionSiteDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
 
                     #region ConstructionSiteCalculations

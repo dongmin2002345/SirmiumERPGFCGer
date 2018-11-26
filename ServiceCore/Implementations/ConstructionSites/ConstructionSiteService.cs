@@ -6,6 +6,7 @@ using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ServiceCore.Implementations.ConstructionSites
@@ -73,10 +74,27 @@ namespace ServiceCore.Implementations.ConstructionSites
             ConstructionSiteResponse response = new ConstructionSiteResponse();
             try
             {
-                ConstructionSite addedConstructionSite = unitOfWork.GetConstructionSiteRepository().Create(constructionSite.ConvertToConstructionSite());
+                // Backup items
+                List<ConstructionSiteDocumentViewModel> constructionSiteDocuments = constructionSite.ConstructionSiteDocuments?.ToList() ?? new List<ConstructionSiteDocumentViewModel>();
+                constructionSite.ConstructionSiteDocuments = null;
+
+                ConstructionSite createdConstructionSite = unitOfWork.GetConstructionSiteRepository()
+                    .Create(constructionSite.ConvertToConstructionSite());
+
+                // Update items
+                var ConstructionSiteDocumentsFromDB = unitOfWork.GetConstructionSiteDocumentRepository().GetConstructionSiteDocumentsByConstructionSite(createdConstructionSite.Id);
+                foreach (var item in ConstructionSiteDocumentsFromDB)
+                    if (!constructionSiteDocuments.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetConstructionSiteDocumentRepository().Delete(item.Identifier);
+                foreach (var item in constructionSiteDocuments)
+                {
+                    item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                    unitOfWork.GetConstructionSiteDocumentRepository().Create(item.ConvertToConstructionSiteDocument());
+                }
+
                 unitOfWork.Save();
 
-                response.ConstructionSite = addedConstructionSite.ConvertToConstructionSiteViewModel();
+                response.ConstructionSite = createdConstructionSite.ConvertToConstructionSiteViewModel();
                 response.Success = true;
             }
             catch (Exception ex)
