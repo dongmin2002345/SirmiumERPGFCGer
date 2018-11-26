@@ -449,6 +449,23 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region BusinessPartnerDocuments
+        private ObservableCollection<BusinessPartnerDocumentViewModel> _BusinessPartnerDocuments;
+
+        public ObservableCollection<BusinessPartnerDocumentViewModel> BusinessPartnerDocuments
+        {
+            get { return _BusinessPartnerDocuments; }
+            set
+            {
+                if (_BusinessPartnerDocuments != value)
+                {
+                    _BusinessPartnerDocuments = value;
+                    NotifyPropertyChanged("BusinessPartnerDocuments");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

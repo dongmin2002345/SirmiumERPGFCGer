@@ -352,7 +352,76 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
-        
+
+        #region BusinessPartnerDocumentsFromDB
+        private ObservableCollection<BusinessPartnerDocumentViewModel> _BusinessPartnerDocumentsFromDB;
+
+        public ObservableCollection<BusinessPartnerDocumentViewModel> BusinessPartnerDocumentsFromDB
+        {
+            get { return _BusinessPartnerDocumentsFromDB; }
+            set
+            {
+                if (_BusinessPartnerDocumentsFromDB != value)
+                {
+                    _BusinessPartnerDocumentsFromDB = value;
+                    NotifyPropertyChanged("BusinessPartnerDocumentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBusinessPartnerDocumentForm
+        private BusinessPartnerDocumentViewModel _CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
+
+        public BusinessPartnerDocumentViewModel CurrentBusinessPartnerDocumentForm
+        {
+            get { return _CurrentBusinessPartnerDocumentForm; }
+            set
+            {
+                if (_CurrentBusinessPartnerDocumentForm != value)
+                {
+                    _CurrentBusinessPartnerDocumentForm = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerDocumentForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBusinessPartnerDocumentDG
+        private BusinessPartnerDocumentViewModel _CurrentBusinessPartnerDocumentDG;
+
+        public BusinessPartnerDocumentViewModel CurrentBusinessPartnerDocumentDG
+        {
+            get { return _CurrentBusinessPartnerDocumentDG; }
+            set
+            {
+                if (_CurrentBusinessPartnerDocumentDG != value)
+                {
+                    _CurrentBusinessPartnerDocumentDG = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerDocumentDG");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerDocumentDataLoading
+        private bool _BusinessPartnerDocumentDataLoading;
+
+        public bool BusinessPartnerDocumentDataLoading
+        {
+            get { return _BusinessPartnerDocumentDataLoading; }
+            set
+            {
+                if (_BusinessPartnerDocumentDataLoading != value)
+                {
+                    _BusinessPartnerDocumentDataLoading = value;
+                    NotifyPropertyChanged("BusinessPartnerDocumentDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region BusinessPartnerTypesFromDB
         private ObservableCollection<BusinessPartnerTypeViewModel> _BusinessPartnerTypesFromDB;
 
@@ -488,6 +557,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 PopulateInstitutionData();
                 PopulatePhoneData();
                 PopulateBankData();
+                DisplayDocumentData();
             });
             displayThread.IsBackground = true;
             displayThread.Start();
@@ -603,6 +673,26 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
 
             BusinessPartnerTypeDataLoading = false;
+        }
+
+        private void DisplayDocumentData()
+        {
+            BusinessPartnerDocumentDataLoading = true;
+
+            BusinessPartnerDocumentListResponse response = new BusinessPartnerDocumentSQLiteRepository()
+                .GetBusinessPartnerDocumentsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                BusinessPartnerDocumentsFromDB = new ObservableCollection<BusinessPartnerDocumentViewModel>(
+                    response.BusinessPartnerDocuments ?? new List<BusinessPartnerDocumentViewModel>());
+            }
+            else
+            {
+                BusinessPartnerDocumentsFromDB = new ObservableCollection<BusinessPartnerDocumentViewModel>();
+            }
+
+            BusinessPartnerDocumentDataLoading = false;
         }
 
         #endregion
@@ -920,6 +1010,108 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
+        #region Add, edit, delete and cancel document
+
+        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+            string[] fileNames = dialog.FileNames;
+
+            if (fileNames.Length > 0)
+                CurrentBusinessPartnerDocumentForm.Path = fileNames[0];
+        }
+
+        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            fileDIalog.Multiselect = true;
+            fileDIalog.FileOk += FileDIalog_FileOk;
+            fileDIalog.Filter = "Image Files | *.pdf";
+            fileDIalog.ShowDialog();
+        }
+
+        private void btnAddDocument_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentBusinessPartnerDocumentForm.Name))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                return;
+            }
+
+            if (String.IsNullOrEmpty(CurrentBusinessPartnerDocumentForm.Path))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Putanja";
+                return;
+            }
+
+            if (CurrentBusinessPartnerDocumentForm.CreateDate == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Datum kreiranja";
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new BusinessPartnerDocumentSQLiteRepository().Delete(CurrentBusinessPartnerDocumentForm.Identifier);
+
+            CurrentBusinessPartnerDocumentForm.BusinessPartner = CurrentBusinessPartner;
+            CurrentBusinessPartnerDocumentForm.Identifier = Guid.NewGuid();
+            CurrentBusinessPartnerDocumentForm.IsSynced = false;
+            CurrentBusinessPartnerDocumentForm.UpdatedAt = DateTime.Now;
+            CurrentBusinessPartnerDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentBusinessPartnerDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new BusinessPartnerDocumentSQLiteRepository().Create(CurrentBusinessPartnerDocumentForm);
+            if (response.Success)
+            {
+                CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
+
+                Thread displayThread = new Thread(() => DisplayDocumentData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtDocumentName.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
+        }
+
+        private void btnEditDocument_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentBusinessPartnerDocumentForm = CurrentBusinessPartnerDocumentDG;
+        }
+
+        private void btnDeleteDocument_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dokument", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new BusinessPartnerDocumentSQLiteRepository().Delete(CurrentBusinessPartnerDocumentDG.Identifier);
+
+                MainWindow.SuccessMessage = "Dokument je uspešno obrisan!";
+
+                Thread displayThread = new Thread(() => DisplayDocumentData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        #endregion
+
         #region Select type
 
         private void btnSaveType_Click(object sender, RoutedEventArgs e)
@@ -985,6 +1177,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     new BusinessPartnerTypeSQLiteRepository()
                     .GetBusinessPartnerTypesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerTypes
                     ?? new List<BusinessPartnerTypeViewModel>());
+                CurrentBusinessPartner.BusinessPartnerDocuments = BusinessPartnerDocumentsFromDB;
 
                 BusinessPartnerResponse response = businessPartnerService.Create(CurrentBusinessPartner);
 
@@ -1027,7 +1220,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
-        #region Mouse wheel event
+        #region Mouse wheel event 
 
         private void PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
@@ -1052,5 +1245,21 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
         }
         #endregion
+
+        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentBusinessPartnerDocumentDG.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

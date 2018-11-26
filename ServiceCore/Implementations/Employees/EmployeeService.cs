@@ -87,6 +87,9 @@ namespace ServiceCore.Implementations.Employees
                 List<EmployeeNoteViewModel> EmployeeNotes = Employee.EmployeeNotes?.ToList() ?? new List<EmployeeNoteViewModel>();
                 Employee.EmployeeNotes = null;
 
+                List<EmployeeDocumentViewModel> EmployeeDocuments = Employee.EmployeeDocuments?.ToList() ?? new List<EmployeeDocumentViewModel>();
+                Employee.EmployeeDocuments = null;
+
                 // Create animal input note
                 Employee createdEmployee = unitOfWork.GetEmployeeRepository()
                     .Create(Employee.ConvertToEmployee());
@@ -135,6 +138,16 @@ namespace ServiceCore.Implementations.Employees
                 {
                     item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
                     unitOfWork.GetEmployeeNoteRepository().Create(item.ConvertToEmployeeNote());
+                }
+
+                var EmployeeDocumentsFromDB = unitOfWork.GetEmployeeDocumentRepository().GetEmployeeDocumentsByEmployee(createdEmployee.Id);
+                foreach (var item in EmployeeDocumentsFromDB)
+                    if (!EmployeeDocuments.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetEmployeeDocumentRepository().Delete(item.Identifier);
+                foreach (var item in EmployeeDocuments)
+                {
+                    item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                    unitOfWork.GetEmployeeDocumentRepository().Create(item.ConvertToEmployeeDocument());
                 }
 
                 unitOfWork.Save();
