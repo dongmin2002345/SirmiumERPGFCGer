@@ -94,6 +94,9 @@ namespace ApiExtension.Sender
                 { typeof(BusinessPartnerByConstructionSiteViewModel), "BusinessPartnerByConstructionSite" },
                 { typeof(List<BusinessPartnerByConstructionSiteViewModel>), "BusinessPartnerByConstructionSite" },
 
+                { typeof(BusinessPartnerDocumentViewModel), "BusinessPartnerDocument" },
+                { typeof(List<BusinessPartnerDocumentViewModel>), "BusinessPartnerDocument" },
+
                 #endregion
 
                 #region OutputInvoices
@@ -187,6 +190,9 @@ namespace ApiExtension.Sender
 
                 { typeof(ConstructionSiteCalculationViewModel), "ConstructionSiteCalculation" },
                 { typeof(List<ConstructionSiteCalculationViewModel>), "ConstructionSiteCalculation" },
+
+                { typeof(ConstructionSiteDocumentViewModel), "ConstructionSiteDocument" },
+                { typeof(List<ConstructionSiteDocumentViewModel>), "ConstructionSiteDocument" },
 
 			    #endregion
 

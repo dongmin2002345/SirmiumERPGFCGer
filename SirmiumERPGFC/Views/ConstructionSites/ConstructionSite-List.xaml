@@ -190,31 +190,36 @@
         <!--Splitter-->
         <GridSplitter Grid.Row="2" Grid.ColumnSpan="3" Height="2" HorizontalAlignment="Stretch" />
 
-        <GroupBox Header="Kalkulacije u okviru gradilišta" Grid.Row="3" VerticalAlignment="Stretch" Margin="2 1 2 2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Kalkulacije u okviru gradilišta" Grid.Column="0" VerticalAlignment="Stretch" Margin="2 1 1 2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1">
-                    <Button x:Name="btnAddEmployees" Click="btnAddEmployees_Click" Margin="2" Width="250" Background="#007ACC">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" DODAJ RADNIKE/MESECE " Foreground="White" FontWeight="Regular" />
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="btnRemoveEmployees" Click="btnRemoveEmployees_Click" Margin="2" Width="250" Background="#007ACC">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
-                            <TextBlock Text=" UKLONI RADNIKE/MESECE " Foreground="White" FontWeight="Regular" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1">
+                        <Button x:Name="btnAddEmployees" Click="btnAddEmployees_Click" Margin="2" Width="250" Background="#007ACC">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text=" DODAJ RADNIKE/MESECE " Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnRemoveEmployees" Click="btnRemoveEmployees_Click" Margin="2" Width="250" Background="#007ACC">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
+                                <TextBlock Text=" UKLONI RADNIKE/MESECE " Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
 
-                <!--Listing-->
-                <Controls:ProgressRing Grid.Row="2" IsActive="{Binding ConstructionSiteCalculationDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgConstructionSiteCalculations"
+                    <!--Listing-->
+                    <Controls:ProgressRing Grid.Row="2" IsActive="{Binding ConstructionSiteCalculationDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgConstructionSiteCalculations"
                           Grid.Row="1"
                           Margin="2"
                           AutoGenerateColumns="False"
@@ -230,21 +235,59 @@
                           VerticalScrollBarVisibility="Auto"
                           ItemsSource="{Binding Path=ConstructionSiteCalculationsFromDB}">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="NumOfEmployees" Header="Broj radnika" Binding="{Binding NumOfEmployees}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="EmployeePrice" Header="Cena za radnika" Binding="{Binding EmployeePrice}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="NumOfMonths" Header="Broj meseci" Binding="{Binding NumOfMonths}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="NewValue" Header="Ukupna vrednost" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ValueDifference" Header="Razlika vrednosti" Binding="{Binding ValueDifference}" Width="*" IsReadOnly="True" />
-                    </DataGrid.Columns>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="NumOfEmployees" Header="Broj radnika" Binding="{Binding NumOfEmployees}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="EmployeePrice" Header="Cena za radnika" Binding="{Binding EmployeePrice}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="NumOfMonths" Header="Broj meseci" Binding="{Binding NumOfMonths}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="NewValue" Header="Ukupna vrednost" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="ValueDifference" Header="Razlika vrednosti" Binding="{Binding ValueDifference}" Width="*" IsReadOnly="True" />
+                        </DataGrid.Columns>
 
-                    <DataGrid.RowStyle>
-                        <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Background" Value="{Binding PlusMinus, Converter={StaticResource PlusMinusConverter}}"  />
-                        </Style>
-                    </DataGrid.RowStyle>
-                </DataGrid>
-            </Grid>
-        </GroupBox>
+                        <DataGrid.RowStyle>
+                            <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Background" Value="{Binding PlusMinus, Converter={StaticResource PlusMinusConverter}}"  />
+                            </Style>
+                        </DataGrid.RowStyle>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Dokumenti" Grid.Column="1" VerticalAlignment="Stretch" Margin="1 1 2 2">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0" IsActive="{Binding ConstructionSiteDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgConstructionSiteDocumentDataLoading"
+                            Grid.Row="0" Margin="0 5 0 0"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            CanUserResizeRows="False"
+                            GridLinesVisibility="All"
+                            HorizontalGridLinesBrush="Gray"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto"
+                            Style="{DynamicResource AzureDataGrid}"
+                            ItemsSource="{Binding Path=ConstructionSiteDocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentConstructionSiteDocument, Mode=TwoWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                            <DataGridTextColumn SortMemberPath="CreateDate" Header="Datum krerianja" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                            <DataGridTemplateColumn Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                </StackPanel>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

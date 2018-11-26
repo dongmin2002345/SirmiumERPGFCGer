@@ -62,6 +62,36 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             .FirstOrDefault(x => x.Id == id && x.Active == true);
         }
 
+
+        private string GetNewCodeValue(int companyId)
+        {
+            int count = context.BusinessPartners
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartner))
+                    .Select(x => x.Entity as BusinessPartner))
+                .Where(x => x.CompanyId == companyId).Count();
+            if (count == 0)
+                return "BP/00001";
+            else
+            {
+                string activeCode = context.BusinessPartners
+                    .Union(context.ChangeTracker.Entries()
+                        .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartner))
+                        .Select(x => x.Entity as BusinessPartner))
+                    .Where(x => x.CompanyId == companyId)
+                    .OrderByDescending(x => x.Id).FirstOrDefault()
+                    .Code;
+                if (!String.IsNullOrEmpty(activeCode))
+                {
+                    int intValue = Int32.Parse(activeCode.Replace("BP/", ""));
+                    return "BP/" + (intValue + 1).ToString("00000");
+                }
+                else
+                    return "";
+            }
+        }
+
+
         public BusinessPartner Create(BusinessPartner businessPartner)
         {
             if (context.BusinessPartners.Where(x => x.Identifier != null && x.Identifier == businessPartner.Identifier).Count() == 0)
@@ -69,6 +99,11 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 businessPartner.Id = 0;
 
                 businessPartner.Active = true;
+
+                businessPartner.Code = GetNewCodeValue(businessPartner.CompanyId ?? 0);
+
+                businessPartner.CreatedAt = DateTime.Now;
+                businessPartner.UpdatedAt = DateTime.Now;
 
                 context.BusinessPartners.Add(businessPartner);
                 return businessPartner;

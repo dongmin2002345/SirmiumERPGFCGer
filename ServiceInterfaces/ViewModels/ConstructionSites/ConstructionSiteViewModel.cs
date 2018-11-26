@@ -1,6 +1,7 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
+using System.Collections.ObjectModel;
 
 namespace ServiceInterfaces.ViewModels.ConstructionSites
 {
@@ -139,6 +140,24 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
                 {
                     _ContractExpiration = value;
                     NotifyPropertyChanged("ContractExpiration");
+                }
+            }
+        }
+        #endregion
+
+
+        #region ConstructionSiteDocuments
+        private ObservableCollection<ConstructionSiteDocumentViewModel> _ConstructionSiteDocuments;
+
+        public ObservableCollection<ConstructionSiteDocumentViewModel> ConstructionSiteDocuments
+        {
+            get { return _ConstructionSiteDocuments; }
+            set
+            {
+                if (_ConstructionSiteDocuments != value)
+                {
+                    _ConstructionSiteDocuments = value;
+                    NotifyPropertyChanged("ConstructionSiteDocuments");
                 }
             }
         }

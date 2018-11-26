@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\Banks\IBankService.cs" />
-    <Compile Include="Abstractions\Common\BusinessPartners\BusinessPartnerTypeService.cs" />
+    <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerDocumentService.cs" />
+    <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerTypeService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerBankService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerByConstructionSiteService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerInstitutionService.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Abstractions\Common\TaxAdministrations\ITaxAdministrationService.cs" />
     <Compile Include="Abstractions\Common\ToDos\IToDoService.cs" />
     <Compile Include="Abstractions\ConstructionSites\IConstructionSiteCalculationService.cs" />
+    <Compile Include="Abstractions\ConstructionSites\IConstructionSiteDocumentService.cs" />
     <Compile Include="Abstractions\ConstructionSites\IConstructionSiteService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeByBusinessPartnerService.cs" />
     <Compile Include="Abstractions\Employees\IEmployeeByConstructionSiteService.cs" />
@@ -88,6 +90,8 @@
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerBankResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerByConstructionSiteListResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerByConstructionSiteResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerDocumentListResponse.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerDocumentResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerInstitutionListResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerInstitutionResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerListResponse.cs" />
@@ -102,6 +106,7 @@
     <Compile Include="Messages\Common\BusinessPartners\BusinessPartnerTypeResponse.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerBankRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerByConstructionSiteRequest.cs" />
+    <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerDocumentRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerInstitutionRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerLocationRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerOrganizationUnitRequest.cs" />
@@ -149,7 +154,10 @@
     <Compile Include="Messages\Common\ToDos\ToDoResponse.cs" />
     <Compile Include="Messages\ConstructionSites\ConstructionSiteCalculationListResponse.cs" />
     <Compile Include="Messages\ConstructionSites\ConstructionSiteCalculationResponse.cs" />
+    <Compile Include="Messages\ConstructionSites\ConstructionSiteDocumentListResponse.cs" />
+    <Compile Include="Messages\ConstructionSites\ConstructionSiteDocumentResponse.cs" />
     <Compile Include="Messages\ConstructionSites\SyncConstructionSiteCalculationRequest.cs" />
+    <Compile Include="Messages\ConstructionSites\SyncConstructionSiteDocumentRequest.cs" />
     <Compile Include="Messages\Employees\EmployeeByBusinessPartnerListResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeByBusinessPartnerResponse.cs" />
     <Compile Include="Messages\Employees\EmployeeByConstructionSiteListResponse.cs" />
@@ -195,6 +203,7 @@
     <Compile Include="ViewModels\Base\BaseEntityViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerBankViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerByConstructionSiteViewModel.cs" />
+    <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerDocumentViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerInstitutionViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerLocationViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerOrganizationUnitViewModel.cs" />
@@ -216,6 +225,7 @@
     <Compile Include="ViewModels\Common\TaxAdministrations\TaxAdministrationViewModel.cs" />
     <Compile Include="ViewModels\Common\ToDos\ToDoViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteCalculationViewModel.cs" />
+    <Compile Include="ViewModels\ConstructionSites\ConstructionSiteDocumentViewModel.cs" />
     <Compile Include="ViewModels\ConstructionSites\ConstructionSiteViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeByBusinessPartnerViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeByConstructionSiteViewModel.cs" />
