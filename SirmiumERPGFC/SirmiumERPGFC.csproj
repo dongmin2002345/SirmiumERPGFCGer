@@ -198,6 +198,7 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBankSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerBusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerByConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerInstitutionSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerLocationSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerOrganizationUnitSQLiteRepository.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteCalculationSQLiteRepository.cs" />
+    <Compile Include="Repository\ConstructionSites\ConstructionSiteDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByBusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByConstructionSiteSQLiteRepository.cs" />

@@ -37,6 +37,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #region Services
         IConstructionSiteService constructionSiteService;
         IConstructionSiteCalculationService constructionSiteCalculationService;
+        IConstructionSiteDocumentService constructionSiteDocumentService;
         #endregion
 
 
@@ -72,7 +73,10 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                     if (_CurrentConstructionSite != null)
                     {
-                        Thread th = new Thread(() => DisplayConstructionSiteCalculationData());
+                        Thread th = new Thread(() => {
+                            DisplayConstructionSiteCalculationData();
+                            DisplayDocumentData();
+                        });
                         th.IsBackground = true;
                         th.Start();
                     }
@@ -110,6 +114,58 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 {
                     _ConstructionSiteDataLoading = value;
                     NotifyPropertyChanged("ConstructionSiteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region ConstructionSiteDocumentsFromDB
+        private ObservableCollection<ConstructionSiteDocumentViewModel> _ConstructionSiteDocumentsFromDB;
+
+        public ObservableCollection<ConstructionSiteDocumentViewModel> ConstructionSiteDocumentsFromDB
+        {
+            get { return _ConstructionSiteDocumentsFromDB; }
+            set
+            {
+                if (_ConstructionSiteDocumentsFromDB != value)
+                {
+                    _ConstructionSiteDocumentsFromDB = value;
+                    NotifyPropertyChanged("ConstructionSiteDocumentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteDocument
+        private ConstructionSiteDocumentViewModel _CurrentConstructionSiteDocument;
+
+        public ConstructionSiteDocumentViewModel CurrentConstructionSiteDocument
+        {
+            get { return _CurrentConstructionSiteDocument; }
+            set
+            {
+                if (_CurrentConstructionSiteDocument != value)
+                {
+                    _CurrentConstructionSiteDocument = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteDocument");
+                }
+            }
+        }
+        #endregion
+
+        #region ConstructionSiteDocumentDataLoading
+        private bool _ConstructionSiteDocumentDataLoading;
+
+        public bool ConstructionSiteDocumentDataLoading
+        {
+            get { return _ConstructionSiteDocumentDataLoading; }
+            set
+            {
+                if (_ConstructionSiteDocumentDataLoading != value)
+                {
+                    _ConstructionSiteDocumentDataLoading = value;
+                    NotifyPropertyChanged("ConstructionSiteDocumentDataLoading");
                 }
             }
         }
@@ -236,6 +292,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             // Get required services
             constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
             constructionSiteCalculationService = DependencyResolver.Kernel.Get<IConstructionSiteCalculationService>();
+            constructionSiteDocumentService = DependencyResolver.Kernel.Get<IConstructionSiteDocumentService>();
 
             // Initialize form components
             InitializeComponent();
@@ -321,6 +378,26 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteCalculationDataLoading = false;
         }
 
+        private void DisplayDocumentData()
+        {
+            ConstructionSiteDocumentDataLoading = true;
+
+            ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentSQLiteRepository()
+                .GetConstructionSiteDocumentsByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
+
+            if (response.Success)
+            {
+                ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>(
+                    response.ConstructionSiteDocuments ?? new List<ConstructionSiteDocumentViewModel>());
+            }
+            else
+            {
+                ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>();
+            }
+
+            ConstructionSiteDocumentDataLoading = false;
+        }
+
         private void SyncData()
         {
             RefreshButtonEnabled = false;
@@ -330,6 +407,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             RefreshButtonContent = " Kalkulacije ... ";
             new ConstructionSiteCalculationSQLiteRepository().Sync(constructionSiteCalculationService);
+
+            RefreshButtonContent = " Dokumenti ... ";
+            new ConstructionSiteDocumentSQLiteRepository().Sync(constructionSiteDocumentService);
 
             DisplayConstructionSiteData();
 
@@ -405,6 +485,26 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
+        #endregion
+
+        #region Display documents
+
+        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentConstructionSiteDocument.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
         #endregion
 
         #region Pagination

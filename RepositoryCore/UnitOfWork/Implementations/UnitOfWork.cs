@@ -51,6 +51,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerOrganizationUnitRepository businessPartnerOrganizationUnitRepository;
         private IBusinessPartnerTypeRepository businessPartnerTypeRepository;
         private IBusinessPartnerBusinessPartnerTypeRepository businessPartnerBusinessPartnerTypeRepository;
+        private IBusinessPartnerDocumentRepository businessPartnerDocumentRepository;
 
         private IOutputInvoiceRepository outputInvoiceRepository;
 		private IInputInvoiceRepository inputInvoiceRepository;
@@ -64,6 +65,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IConstructionSiteRepository constructionSiteRepository;
         private IConstructionSiteCalculationRepository constructionSiteCalculationRepository;
+        private IConstructionSiteDocumentRepository constructionSiteDocumentRepository;
 
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
@@ -201,6 +203,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return businessPartnerBusinessPartnerTypeRepository;
         }
 
+        public IBusinessPartnerDocumentRepository GetBusinessPartnerDocumentRepository()
+        {
+            if (businessPartnerDocumentRepository == null)
+                businessPartnerDocumentRepository = new BusinessPartnerDocumentViewRepository(context);
+            return businessPartnerDocumentRepository;
+        }
+
         public IOutputInvoiceRepository GetOutputInvoiceRepository()
         {
             if (outputInvoiceRepository == null)
@@ -290,6 +299,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (constructionSiteCalculationRepository == null)
                 constructionSiteCalculationRepository = new ConstructionSiteCalculationRepository(context);
             return constructionSiteCalculationRepository;
+        }
+
+        public IConstructionSiteDocumentRepository GetConstructionSiteDocumentRepository()
+        {
+            if (constructionSiteDocumentRepository == null)
+                constructionSiteDocumentRepository = new ConstructionSiteDocumentViewRepository(context);
+            return constructionSiteDocumentRepository;
         }
 
         public IFamilyMemberRepository GetFamilyMemberRepository()
