@@ -342,7 +342,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "AccountNumber, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerBanks " +
-                "WHERE BusinessPartnerBankId = @BusinessPartnerBankId;"; // AND Active = 1
+                "WHERE BusinessPartnerBankId = @BusinessPartnerBankId AND Active = 1;"; 
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
