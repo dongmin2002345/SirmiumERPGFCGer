@@ -7,6 +7,7 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace SirmiumERPGFC.Views.Administrations
 {
     public partial class DataSync_List_Excel : UserControl, INotifyPropertyChanged
     {
-        public static string BaseApiUrl = "http://localhost:5001/api";
+        public static string BaseApiUrl = "http://localhost:5005/api";
 
         #region CountryButtonContent
         private string _CountryButtonContent = " Države ";
@@ -236,6 +237,41 @@ namespace SirmiumERPGFC.Views.Administrations
                 {
                     _SectorButtonEnabled = value;
                     NotifyPropertyChanged("SectorButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+
+        #region TaxAdministrationButtonContent
+        private string _TaxAdministrationButtonContent = " Poreska uprava ";
+
+        public string TaxAdministrationButtonContent
+        {
+            get { return _TaxAdministrationButtonContent; }
+            set
+            {
+                if (_TaxAdministrationButtonContent != value)
+                {
+                    _TaxAdministrationButtonContent = value;
+                    NotifyPropertyChanged("TaxAdministrationButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region TaxAdministrationButtonEnabled
+        private bool _TaxAdministrationButtonEnabled = true;
+
+        public bool TaxAdministrationButtonEnabled
+        {
+            get { return _TaxAdministrationButtonEnabled; }
+            set
+            {
+                if (_TaxAdministrationButtonEnabled != value)
+                {
+                    _TaxAdministrationButtonEnabled = value;
+                    NotifyPropertyChanged("TaxAdministrationButtonEnabled");
                 }
             }
         }
@@ -764,6 +800,82 @@ namespace SirmiumERPGFC.Views.Administrations
 
                 SectorButtonContent = " Sektori ";
                 SectorButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
+        }
+
+        private void btnTaxAdministrations_Insert_Click(object sender, RoutedEventArgs e)
+        {
+            Thread th = new Thread(() =>
+            {
+                TaxAdministrationButtonContent = " Učitavanje EXCEL fajla... ";
+                TaxAdministrationButtonEnabled = false;
+
+                DateTime createTime = DateTime.Now;
+
+                List<AgencyViewModel> agencies = new List<AgencyViewModel>();
+                List<TaxAdministrationViewModel> sectors = new List<TaxAdministrationViewModel>();
+
+                #region Excel
+                OpenFileDialog oDlg = new OpenFileDialog();
+                oDlg.InitialDirectory = "C:\\";
+                oDlg.Filter = "xlsx Files (*.xlsx)|*.xlsx";
+                if (true == oDlg.ShowDialog())
+                {
+                    Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                    Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(oDlg.FileName);
+                    Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+                    Microsoft.Office.Interop.Excel.Range xlRange = xlWorksheet.UsedRange;
+
+                    int rowCount = xlRange.Rows.Count;
+                    int colCount = xlRange.Columns.Count;
+
+                    for (int i = 2; i <= rowCount; i++)
+                    {
+                        TaxAdministrationButtonContent = i + " od " + rowCount;
+
+                        TaxAdministrationViewModel taxAdministration = new TaxAdministrationViewModel();
+                        taxAdministration.SecondCode = xlRange.Cells[i, 1]?.Text;
+                        taxAdministration.Name = xlRange.Cells[i, 2]?.Text;
+                        taxAdministration.City = new CityViewModel() { Name = xlRange.Cells[i, 3]?.Text };
+                        taxAdministration.Address1 = xlRange.Cells[i, 4]?.Text;
+                        taxAdministration.Address2 = xlRange.Cells[i, 5]?.Text;
+                        taxAdministration.Address3 = xlRange.Cells[i, 6]?.Text;
+                        taxAdministration.Bank1 = new BankViewModel() { Name = xlRange.Cells[i, 7]?.Text };
+                        taxAdministration.IBAN1 = xlRange.Cells[i, 8]?.Text;
+                        taxAdministration.SWIFT = xlRange.Cells[i, 9]?.Text;
+                        taxAdministration.Bank2 = new BankViewModel() { Name = xlRange.Cells[i, 10]?.Text };
+
+                        taxAdministration.Identifier = Guid.NewGuid();
+                        taxAdministration.IsSynced = false;
+                        taxAdministration.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                        taxAdministration.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                        taxAdministration.CreatedAt = createTime;
+                        taxAdministration.UpdatedAt = createTime;
+
+                        if (sectors.Where(x => x.Code == taxAdministration.Code).Count() == 0)
+                            sectors.Add(taxAdministration);
+                    }
+                }
+                #endregion
+
+                TaxAdministrationButtonContent = " Unos podataka u toku... ";
+                TaxAdministrationButtonEnabled = false;
+
+                string apiUrl = BaseApiUrl + "/SeedData/SeedTaxAdministrations";
+                string values = JsonConvert.SerializeObject(
+                    sectors,
+                    Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+
+                SendData(apiUrl, values);
+
+                TaxAdministrationButtonContent = " Poreska uprava ";
+                TaxAdministrationButtonEnabled = true;
             });
             th.IsBackground = true;
             th.Start();

@@ -8,12 +8,14 @@ using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
+using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Base;
 using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Employees;
 
 namespace SirmiumERPWeb.Controllers.Administrations
@@ -28,7 +30,8 @@ namespace SirmiumERPWeb.Controllers.Administrations
         IProfessionService professionService;
         ILicenceTypeService licenceTypeService;
         ISectorService sectorService;
-        IAgencyService agencyService; 
+        IAgencyService agencyService;
+        ITaxAdministrationService taxAdministrationService;
 
         public SeedDataController(IServiceProvider provider)
         {
@@ -41,6 +44,7 @@ namespace SirmiumERPWeb.Controllers.Administrations
             licenceTypeService = provider.GetRequiredService<ILicenceTypeService>();
             sectorService = provider.GetRequiredService<ISectorService>();
             agencyService = provider.GetRequiredService<IAgencyService>();
+            taxAdministrationService = provider.GetRequiredService<ITaxAdministrationService>();
         }
 
         [HttpPost]
@@ -250,6 +254,31 @@ namespace SirmiumERPWeb.Controllers.Administrations
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     item.Sector = sectors.FirstOrDefault(x => x.SecondCode == item.Sector.SecondCode);
                     agencyService.Create(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                response = null;
+                Console.WriteLine(ex.Message);
+            }
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        }
+
+        [HttpPost]
+        public JsonResult SeedTaxAdministrations([FromBody]List<TaxAdministrationViewModel> taxAdministrations)
+        {
+            BaseResponse response = new BaseResponse();
+            try
+            {
+                int companyId = taxAdministrations.FirstOrDefault()?.Company?.Id ?? 0;
+                List<CityViewModel> cities = cityService.GetCities(companyId).Cities;
+                List<BankViewModel> bank = bankService.GetBanks(companyId).Banks;
+                foreach (var item in taxAdministrations ?? new List<TaxAdministrationViewModel>())
+                {
+                    item.City = cities.FirstOrDefault(x => x.Name == item.City?.Name);
+                    item.Bank1 = bank.FirstOrDefault(x => x.Name == item.Bank1?.Name);
+                    item.Bank2 = bank.FirstOrDefault(x => x.Name == item.Bank2?.Name);
+                    taxAdministrationService.Create(item);
                 }
             }
             catch (Exception ex)

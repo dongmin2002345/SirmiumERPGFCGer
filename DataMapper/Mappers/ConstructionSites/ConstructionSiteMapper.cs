@@ -38,6 +38,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
 
+                
                 City = constructionSite.City?.ConvertToCityViewModelLite(),
 
                 IsActive = constructionSite.Active,

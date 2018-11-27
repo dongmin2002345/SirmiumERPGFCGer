@@ -26,8 +26,8 @@ namespace DomainCore.Common.TaxAdministrations
         public int? BankId2 { get; set; }
         public Bank Bank2 { get; set; }
 
-        public int IBAN1 { get; set; }
-        public int SWIFT { get; set; } //BIC/SWIFT
+        public string IBAN1 { get; set; }
+        public string SWIFT { get; set; } //BIC/SWIFT
 
     }
 }

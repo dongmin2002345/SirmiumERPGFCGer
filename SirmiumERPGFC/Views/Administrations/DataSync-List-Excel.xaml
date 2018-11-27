@@ -67,5 +67,12 @@
             </StackPanel>
         </Button>
 
+        <Button Grid.Row="3" Grid.Column="0" Margin="2" x:Name="btnTaxAdministrations_Insert" Click="btnTaxAdministrations_Insert_Click" IsEnabled="{Binding Path=TaxAdministrationButtonEnabled, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" />
+                <TextBlock Text="{Binding Path=TaxAdministrationButtonContent, Mode=TwoWay}" FontSize="20"  />
+            </StackPanel>
+        </Button>
+
     </Grid>
 </UserControl>

@@ -451,21 +451,21 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                     ConstructionSiteCreatedUpdated();
 
-                    if (IsCreateProcess)
-                    {
-                        CurrentConstructionSite = new ConstructionSiteViewModel();
-                        CurrentConstructionSite.Identifier = Guid.NewGuid();
+                    //if (IsCreateProcess)
+                    //{
+                    //    CurrentConstructionSite = new ConstructionSiteViewModel();
+                    //    CurrentConstructionSite.Identifier = Guid.NewGuid();
 
-                        Application.Current.Dispatcher.BeginInvoke(
-                            System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(() =>
-                            {
-                                txtCode.Focus();
-                            })
-                        );
-                    }
-                    else
-                    {
+                    //    Application.Current.Dispatcher.BeginInvoke(
+                    //        System.Windows.Threading.DispatcherPriority.Normal,
+                    //        new Action(() =>
+                    //        {
+                    //            txtCode.Focus();
+                    //        })
+                    //    );
+                    //}
+                    //else
+                    //{
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
@@ -476,7 +476,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                                     FlyoutHelper.CloseFlyout(this);
                             })
                         );
-                    }
+                    //}
                 }
 
             });

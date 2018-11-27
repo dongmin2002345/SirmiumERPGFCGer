@@ -184,9 +184,9 @@ namespace ServiceInterfaces.ViewModels.Common.TaxAdministrations
         #endregion
 
         #region IBAN1
-        private int _IBAN1;
+        private string _IBAN1;
 
-        public int IBAN1
+        public string IBAN1
         {
             get { return _IBAN1; }
             set
@@ -201,9 +201,9 @@ namespace ServiceInterfaces.ViewModels.Common.TaxAdministrations
         #endregion
 
         #region SWIFT
-        private int _SWIFT;
+        private string _SWIFT;
 
-        public int SWIFT
+        public string SWIFT
         {
             get { return _SWIFT; }
             set

@@ -36,8 +36,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
           "BankIdentifier2 GUID NULL, " +
           "BankCode2 NVARCHAR(48) NULL, " +
           "BankName2 NVARCHAR(48) NULL, " +
-          "IBAN1 INTEGER NULL, " +
-          "SWIFT INTEGER NULL, " +
+          "IBAN1 NVARCHAR(48) NULL, " +
+          "SWIFT NVARCHAR(48) NULL, " +
           "IsSynced BOOL NULL, " +
           "UpdatedAt DATETIME NULL, " +
           "CreatedById INTEGER NULL, " +
@@ -118,8 +118,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Bank1 = SQLiteHelper.GetBank(query, ref counter);
                         dbEntry.Bank2 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.IBAN1 = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.SWIFT = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.IBAN1 = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.SWIFT = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -205,8 +205,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Bank1 = SQLiteHelper.GetBank(query, ref counter);
                         dbEntry.Bank2 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.IBAN1 = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.SWIFT = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.IBAN1 = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.SWIFT = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -263,8 +263,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Bank1 = SQLiteHelper.GetBank(query, ref counter);
                         dbEntry.Bank2 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.IBAN1 = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.SWIFT = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.IBAN1 = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.SWIFT = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
