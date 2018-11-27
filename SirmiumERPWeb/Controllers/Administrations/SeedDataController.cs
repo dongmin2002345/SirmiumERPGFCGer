@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceInterfaces.Abstractions.Banks;
+using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
@@ -12,6 +13,7 @@ using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Base;
 using ServiceInterfaces.ViewModels.Banks;
+using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
@@ -32,6 +34,7 @@ namespace SirmiumERPWeb.Controllers.Administrations
         ISectorService sectorService;
         IAgencyService agencyService;
         ITaxAdministrationService taxAdministrationService;
+        ICompanyService companyService;
 
         public SeedDataController(IServiceProvider provider)
         {
@@ -45,6 +48,7 @@ namespace SirmiumERPWeb.Controllers.Administrations
             sectorService = provider.GetRequiredService<ISectorService>();
             agencyService = provider.GetRequiredService<IAgencyService>();
             taxAdministrationService = provider.GetRequiredService<ITaxAdministrationService>();
+            companyService = provider.GetRequiredService<ICompanyService>();
         }
 
         [HttpPost]
@@ -265,19 +269,80 @@ namespace SirmiumERPWeb.Controllers.Administrations
         }
 
         [HttpPost]
+        public void DeleteTaxAdministrations([FromBody] int id)
+        {
+            var company = companyService.GetCompany(id);
+
+            var adminisrationsForDelete = taxAdministrationService.GetTaxAdministrations(id).TaxAdministrations;
+            foreach (var item in adminisrationsForDelete)
+            {
+                taxAdministrationService.Delete(item.Identifier);
+            }
+        }
+
+        [HttpPost]
         public JsonResult SeedTaxAdministrations([FromBody]List<TaxAdministrationViewModel> taxAdministrations)
         {
             BaseResponse response = new BaseResponse();
             try
             {
+                var company = companyService.GetCompanies().Companies.FirstOrDefault();
+
                 int companyId = taxAdministrations.FirstOrDefault()?.Company?.Id ?? 0;
                 List<CityViewModel> cities = cityService.GetCities(companyId).Cities;
-                List<BankViewModel> bank = bankService.GetBanks(companyId).Banks;
+                List<BankViewModel> banks = bankService.GetBanks(companyId).Banks;
                 foreach (var item in taxAdministrations ?? new List<TaxAdministrationViewModel>())
                 {
-                    item.City = cities.FirstOrDefault(x => x.Name == item.City?.Name);
-                    item.Bank1 = bank.FirstOrDefault(x => x.Name == item.Bank1?.Name);
-                    item.Bank2 = bank.FirstOrDefault(x => x.Name == item.Bank2?.Name);
+                    if (item.City != null && !String.IsNullOrEmpty(item.City.Name))
+                    {
+                        CityViewModel tmpCity = cities.FirstOrDefault(x => x.Name == item.City?.Name);
+                        if (tmpCity == null)
+                        {
+                            tmpCity = new CityViewModel()
+                            {
+                                Name = item.City.Name,
+                                Identifier = Guid.NewGuid(),
+                                Company = company,
+                            };
+                            tmpCity = cityService.Create(tmpCity).City;
+                        }
+                        item.City = tmpCity;
+                    }
+
+                    if (item.Bank1 != null && !String.IsNullOrEmpty(item.Bank1.Name))
+                    {
+                        BankViewModel tmpBank = banks.FirstOrDefault(x => x.Name == item.Bank1?.Name && x.Swift == item.Bank1?.Swift);
+                        if (tmpBank == null)
+                        {
+                            tmpBank = new BankViewModel()
+                            {
+                                Name = item.Bank1.Name,
+                                Identifier = Guid.NewGuid(),
+                                Company = companyService.GetCompanies().Companies.FirstOrDefault(),
+                                Swift = item.SWIFT
+                            };
+                            tmpBank = bankService.Create(tmpBank).Bank;
+                        }
+                        item.Bank1 = tmpBank;
+                    }
+
+                    if (item.Bank2 != null && !String.IsNullOrEmpty(item.Bank2.Name))
+                    {
+                        BankViewModel tmpBank = banks.FirstOrDefault(x => x.Name == item.Bank2?.Name && x.Swift == item.Bank2.Swift);
+                        if (tmpBank == null)
+                        {
+                            tmpBank = new BankViewModel()
+                            {
+                                Name = item.Bank2.Name,
+                                Identifier = Guid.NewGuid(),
+                                Company = companyService.GetCompanies().Companies.FirstOrDefault(),
+                                Swift = item.SWIFT
+                            };
+                            tmpBank = bankService.Create(tmpBank).Bank;
+                        }
+                        item.Bank2 = tmpBank;
+                    }
+
                     taxAdministrationService.Create(item);
                 }
             }
