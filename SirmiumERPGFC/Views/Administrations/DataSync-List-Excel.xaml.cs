@@ -809,13 +809,12 @@ namespace SirmiumERPGFC.Views.Administrations
         {
             Thread th = new Thread(() =>
             {
-                TaxAdministrationButtonContent = " Učitavanje EXCEL fajla... ";
+                TaxAdministrationButtonContent = " Priprema ... ";
                 TaxAdministrationButtonEnabled = false;
 
                 DateTime createTime = DateTime.Now;
 
-                List<AgencyViewModel> agencies = new List<AgencyViewModel>();
-                List<TaxAdministrationViewModel> sectors = new List<TaxAdministrationViewModel>();
+                List<TaxAdministrationViewModel> taxAdministrations = new List<TaxAdministrationViewModel>();
 
                 #region Excel
                 OpenFileDialog oDlg = new OpenFileDialog();
@@ -823,6 +822,13 @@ namespace SirmiumERPGFC.Views.Administrations
                 oDlg.Filter = "xlsx Files (*.xlsx)|*.xlsx";
                 if (true == oDlg.ShowDialog())
                 {
+                    TaxAdministrationButtonContent = " Brisanje postojecih podataka ... ";
+
+                    string apiUrlDelete = BaseApiUrl + "/SeedData/DeleteTaxAdministrations";
+                    SendData(apiUrlDelete, MainWindow.CurrentCompanyId.ToString());
+
+                    TaxAdministrationButtonContent = " Učitavanje EXCEL fajla ... ";
+
                     Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
                     Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(oDlg.FileName);
                     Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
@@ -854,8 +860,29 @@ namespace SirmiumERPGFC.Views.Administrations
                         taxAdministration.CreatedAt = createTime;
                         taxAdministration.UpdatedAt = createTime;
 
-                        if (sectors.Where(x => x.Code == taxAdministration.Code).Count() == 0)
-                            sectors.Add(taxAdministration);
+                        if (taxAdministrations.Where(x => x.SecondCode == taxAdministration.SecondCode).Count() == 0)
+                        {
+                            taxAdministrations.Add(taxAdministration);
+
+                            if (i % 50 == 0)
+                            {
+                                TaxAdministrationButtonContent = " Unos podataka u toku... ";
+                                TaxAdministrationButtonEnabled = false;
+
+                                string apiUrlTmp = BaseApiUrl + "/SeedData/SeedTaxAdministrations";
+                                string valuesTmp = JsonConvert.SerializeObject(
+                                    taxAdministrations,
+                                    Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                    });
+
+                                SendData(apiUrlTmp, valuesTmp);
+
+                                taxAdministrations.Clear();
+                            }
+                        }
                     }
                 }
                 #endregion
@@ -865,7 +892,7 @@ namespace SirmiumERPGFC.Views.Administrations
 
                 string apiUrl = BaseApiUrl + "/SeedData/SeedTaxAdministrations";
                 string values = JsonConvert.SerializeObject(
-                    sectors,
+                    taxAdministrations,
                     Formatting.Indented,
                     new JsonSerializerSettings
                     {

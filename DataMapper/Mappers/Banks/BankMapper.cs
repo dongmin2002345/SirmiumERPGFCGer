@@ -46,17 +46,6 @@ namespace DataMapper.Mappers.Banks
 			return bankViewModel;
 		}
 
-		public static List<BankViewModel> ConvertToBankViewModelListLite(this IEnumerable<Bank> banks)
-		{
-			List<BankViewModel> bankViewModels = new List<BankViewModel>();
-			foreach (Bank bank in banks)
-			{
-				bankViewModels.Add(bank.ConvertToBankViewModelLite());
-			}
-			return bankViewModels;
-		}
-
-
 		public static BankViewModel ConvertToBankViewModelLite(this Bank bank)
 		{
 			BankViewModel bankViewModel = new BankViewModel()

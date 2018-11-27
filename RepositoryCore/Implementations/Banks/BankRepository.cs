@@ -117,7 +117,7 @@ namespace RepositoryCore.Implementations.Banks
 
 		public Bank Delete(Guid identifier)
 		{
-			// Load Remedy that will be deleted
+			// Load item that will be deleted
 			Bank dbEntry = context.Banks
 				.FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
