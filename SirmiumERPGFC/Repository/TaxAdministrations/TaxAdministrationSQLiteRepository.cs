@@ -300,8 +300,11 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                 foreach (var taxAdministration in taxAdministrationsFromDB.OrderBy(x => x.Id))
                 {
                     Delete(taxAdministration.Identifier);
-                    taxAdministration.IsSynced = true;
-                    Create(taxAdministration);
+                    if (taxAdministration.IsActive)
+                    {
+                        taxAdministration.IsSynced = true;
+                        Create(taxAdministration);
+                    }
                 }
             }
         }
