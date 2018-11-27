@@ -34,6 +34,22 @@ namespace RepositoryCore.Implementations.Employees
             return EmployeeByConstructionSites;
         }
 
+        public List<EmployeeByConstructionSite> GetEmployeeByConstructionSitesAndBusinessPartner(int companyId, int constructionSiteId, int businessPartnerId)
+        {
+            List<EmployeeByConstructionSite> EmployeeByConstructionSites = context.EmployeeByConstructionSites
+                .Include(x => x.Employee)
+                .Include(x => x.BusinessPartner)
+                .Include(x => x.ConstructionSite)
+                .Include(x => x.Company)
+                .Include(x => x.CreatedBy)
+                .Where(x => x.Active == true && x.CompanyId == companyId && x.ConstructionSiteId == constructionSiteId && x.BusinessPartnerId == businessPartnerId)
+                .OrderByDescending(x => x.CreatedAt)
+                .AsNoTracking()
+                .ToList();
+
+            return EmployeeByConstructionSites;
+        }
+
         public List<EmployeeByConstructionSite> GetEmployeeByConstructionSitesNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<EmployeeByConstructionSite> EmployeeByConstructionSites = context.EmployeeByConstructionSites

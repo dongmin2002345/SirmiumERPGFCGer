@@ -9,7 +9,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:popups1="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
-             mc:Ignorable="d" d:DesignHeight="2000" d:DesignWidth="843">
+             mc:Ignorable="d" d:DesignHeight="2300" d:DesignWidth="843">
 
     <Control.Background>
         <SolidColorBrush Color="White" />

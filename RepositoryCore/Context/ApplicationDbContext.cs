@@ -77,6 +77,7 @@ namespace RepositoryCore.Context
         public DbSet<BusinessPartnerType> BusinessPartnerTypes { get; set; }
         public DbSet<BusinessPartnerBusinessPartnerType> BusinessPartnerBusinessPartnerTypes { get; set; }
         public DbSet<BusinessPartnerDocument> BusinessPartnerDocuments { get; set; }
+        public DbSet<BusinessPartnerNote> BusinessPartnerNotes { get; set; }
 
         public DbSet<OutputInvoice> OutputInvoices { get; set; }
 		public DbSet<InputInvoice> InputInvoices { get; set; }
@@ -111,6 +112,7 @@ namespace RepositoryCore.Context
         public DbSet<ConstructionSite> ConstructionSites { get; set; }
         public DbSet<ConstructionSiteCalculation> ConstructionSiteCalculations { get; set; }
         public DbSet<ConstructionSiteDocument> ConstructionSiteDocuments { get; set; }
+        public DbSet<ConstructionSiteNote> ConstructionSiteNotes { get; set; }
 
 
         public DbSet<Bank> Banks { get; set; }

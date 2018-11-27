@@ -46,6 +46,7 @@
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerDocumentService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerInstitutionService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerLocationService.cs" />
+    <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerNoteService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerOrganizationUnitService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerPhoneService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerService.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Implementations\Common\ToDos\ToDoService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteCalculationService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteDocumentService.cs" />
+    <Compile Include="Implementations\ConstructionSites\ConstructionSiteNoteService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByBusinessPartnerService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByConstructionSiteService.cs" />

@@ -6,6 +6,7 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
@@ -399,6 +400,26 @@ namespace SirmiumERPGFC.Repository.Common
             else
             {
                 var viewModel = new ConstructionSiteViewModel();
+                viewModel.Id = query.GetInt32(counter++);
+                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.Name = query.GetString(counter++);
+
+
+                return viewModel;
+            }
+        }
+
+        public static TaxAdministrationViewModel GetTaxAdministration(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+            {
+                var viewModel = new TaxAdministrationViewModel();
                 viewModel.Id = query.GetInt32(counter++);
                 viewModel.Identifier = query.GetGuid(counter++);
                 viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);

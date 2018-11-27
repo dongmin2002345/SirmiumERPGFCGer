@@ -66,6 +66,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int?>("AgencyId");
 
+                    b.Property<string>("BetriebsNumber");
+
                     b.Property<string>("Code");
 
                     b.Property<string>("CommercialNr");
@@ -84,6 +86,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int>("DueDate");
 
+                    b.Property<string>("IBAN");
+
                     b.Property<string>("IdentificationNumber");
 
                     b.Property<Guid>("Identifier");
@@ -91,6 +95,8 @@ namespace RepositoryCore.Migrations
                     b.Property<string>("InternalCode");
 
                     b.Property<bool>("IsInPDV");
+
+                    b.Property<bool>("IsInPDVGer");
 
                     b.Property<string>("JBKJS");
 
@@ -107,6 +113,8 @@ namespace RepositoryCore.Migrations
                     b.Property<decimal>("Rebate");
 
                     b.Property<int?>("SectorId");
+
+                    b.Property<int?>("TaxAdministrationId");
 
                     b.Property<string>("TaxNr");
 
@@ -125,6 +133,8 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("SectorId");
+
+                    b.HasIndex("TaxAdministrationId");
 
                     b.ToTable("BusinessPartners");
                 });
@@ -381,6 +391,41 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("RegionId");
 
                     b.ToTable("BusinessPartnerLocations");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartnerNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("BusinessPartnerId");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Note");
+
+                    b.Property<DateTime>("NoteDate");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessPartnerId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("BusinessPartnerNotes");
                 });
 
             modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartnerOrganizationUnit", b =>
@@ -1236,6 +1281,41 @@ namespace RepositoryCore.Migrations
                     b.ToTable("ConstructionSiteDocuments");
                 });
 
+            modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSiteNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<int?>("ConstructionSiteId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Note");
+
+                    b.Property<DateTime>("NoteDate");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("ConstructionSiteId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("ConstructionSiteNotes");
+                });
+
             modelBuilder.Entity("DomainCore.Employees.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -1862,6 +1942,10 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Sectors.Sector", "Sector")
                         .WithMany()
                         .HasForeignKey("SectorId");
+
+                    b.HasOne("DomainCore.Common.TaxAdministrations.TaxAdministration", "TaxAdministration")
+                        .WithMany()
+                        .HasForeignKey("TaxAdministrationId");
                 });
 
             modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartnerBank", b =>
@@ -1986,6 +2070,21 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Locations.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartnerNote", b =>
+                {
+                    b.HasOne("DomainCore.Common.BusinessPartners.BusinessPartner", "BusinessPartner")
+                        .WithMany()
+                        .HasForeignKey("BusinessPartnerId");
+
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
                 });
 
             modelBuilder.Entity("DomainCore.Common.BusinessPartners.BusinessPartnerOrganizationUnit", b =>
@@ -2275,6 +2374,21 @@ namespace RepositoryCore.Migrations
                 });
 
             modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSiteDocument", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.ConstructionSites.ConstructionSite", "ConstructionSite")
+                        .WithMany()
+                        .HasForeignKey("ConstructionSiteId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+                });
+
+            modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSiteNote", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()

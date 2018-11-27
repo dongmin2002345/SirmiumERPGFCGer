@@ -8,6 +8,7 @@ namespace RepositoryCore.Abstractions.Employees
     public interface IEmployeeByConstructionSiteRepository
     {
         List<EmployeeByConstructionSite> GetEmployeeByConstructionSites(int companyId);
+        List<EmployeeByConstructionSite> GetEmployeeByConstructionSitesAndBusinessPartner(int companyId, int constructionSiteId, int businessPartnerId);
         List<EmployeeByConstructionSite> GetEmployeeByConstructionSitesNewerThen(int companyId, DateTime lastUpdateTime);
 
         EmployeeByConstructionSite Create(EmployeeByConstructionSite employeeByConstructionSite);

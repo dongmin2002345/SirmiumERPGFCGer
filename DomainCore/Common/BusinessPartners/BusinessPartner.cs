@@ -1,6 +1,7 @@
 ﻿using DomainCore.Base;
 using DomainCore.Common.Locations;
 using DomainCore.Common.Sectors;
+using DomainCore.Common.TaxAdministrations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +32,14 @@ namespace DomainCore.Common.BusinessPartners
         #region GER
 
         public string NameGer { get; set; }
+
+        public bool IsInPDVGer { get; set; }
+
+        public int? TaxAdministrationId { get; set; }
+        public TaxAdministration TaxAdministration { get; set; }
+
+        public string IBAN { get; set; }
+        public string BetriebsNumber { get; set; }
 
         public int? CountryId { get; set; }
         public Country Country { get; set; }

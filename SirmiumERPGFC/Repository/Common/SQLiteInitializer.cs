@@ -157,6 +157,14 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryName", "NVARCHAR(2048) NULL");
 
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "IsInPDVGEr", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "TaxAdministrationId", "INTEGER NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "TaxAdministrationIdentifier", "GUID NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "TaxAdministrationCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "TaxAdministrationName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "IBAN", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "BetriebsNumber", "NVARCHAR(48) NULL");
+
                     if (withTableDrop)
                     {
                         try
@@ -167,6 +175,18 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(BusinessPartnerDocumentSQLiteRepository.BusinessPartnerDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE BusinessPartnerNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(BusinessPartnerNoteSQLiteRepository.BusinessPartnerNoteTableCreatePart, db);
                     createTable.ExecuteReader();
 
                     #endregion
@@ -371,6 +391,18 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(ConstructionSiteDocumentSQLiteRepository.ConstructionSiteDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ConstructionSiteNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ConstructionSiteNoteSQLiteRepository.ConstructionSiteNoteTableCreatePart, db);
                     createTable.ExecuteReader();
 
                     #endregion

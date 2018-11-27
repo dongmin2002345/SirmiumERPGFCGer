@@ -121,6 +121,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.AgencyId = businessPartner.AgencyId ?? null;
                     dbEntry.CompanyId = businessPartner.CompanyId ?? null;
                     dbEntry.CreatedById = businessPartner.CreatedById ?? null;
+                    dbEntry.TaxAdministrationId = businessPartner.TaxAdministrationId ?? null;
 
                     // Set properties
                     dbEntry.Code = businessPartner.Code;
@@ -134,6 +135,11 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                     // Set GER properties
                     dbEntry.NameGer = businessPartner.NameGer;
+
+                    dbEntry.IsInPDVGer = businessPartner.IsInPDVGer;
+                    dbEntry.IBAN = businessPartner.IBAN;
+                    dbEntry.BetriebsNumber = businessPartner.BetriebsNumber;
+
                     dbEntry.TaxNr = businessPartner.TaxNr;
                     dbEntry.CommercialNr = businessPartner.CommercialNr;
                     dbEntry.ContactPersonGer = businessPartner.ContactPersonGer;

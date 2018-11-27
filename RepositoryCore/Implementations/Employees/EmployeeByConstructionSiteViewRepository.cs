@@ -136,6 +136,118 @@ namespace RepositoryCore.Implementations.Employees
             return EmployeeByConstructionSites;
         }
 
+        public List<EmployeeByConstructionSite> GetEmployeeByConstructionSitesAndBusinessPartner(int companyId, int constructionSiteId, int businessPartnerId)
+        {
+            List<EmployeeByConstructionSite> EmployeeByConstructionSites = new List<EmployeeByConstructionSite>();
+
+            string queryString =
+                "SELECT EmployeeByConstructionSiteId, EmployeeByConstructionSiteIdentifier, EmployeeByConstructionSiteCode, StartDate, EndDate, RealEndDate, " +
+                "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
+                "EmployeeCount, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerCount" +
+                "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
+                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "FROM vEmployeeByConstructionSites " +
+                "WHERE CompanyId = @CompanyId AND ConstructionSiteId = @ConstructionSiteId AND BusinessPartnerId = @BusinessPartnerId AND Active = 1;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = queryString;
+                command.Parameters.Add(new SqlParameter("@CompanyId", companyId));
+                command.Parameters.Add(new SqlParameter("@ConstructionSiteId", constructionSiteId));
+                command.Parameters.Add(new SqlParameter("@BusinessPartnerId", businessPartnerId));
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    EmployeeByConstructionSite employeeByConstructionSite;
+                    while (reader.Read())
+                    {
+                        employeeByConstructionSite = new EmployeeByConstructionSite();
+                        employeeByConstructionSite.Id = Int32.Parse(reader["EmployeeByConstructionSiteId"].ToString());
+                        employeeByConstructionSite.Identifier = Guid.Parse(reader["EmployeeByConstructionSiteIdentifier"].ToString());
+                        employeeByConstructionSite.Code = reader["EmployeeByConstructionSiteCode"].ToString();
+                        employeeByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        employeeByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        employeeByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+
+                        if (reader["EmployeeId"] != null)
+                        {
+                            employeeByConstructionSite.Employee = new Employee();
+                            employeeByConstructionSite.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
+                            employeeByConstructionSite.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
+                            employeeByConstructionSite.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
+                            employeeByConstructionSite.Employee.Code = reader["EmployeeCode"].ToString();
+                            employeeByConstructionSite.Employee.Name = reader["EmployeeName"].ToString();
+                        }
+
+                        if (reader["EmployeeCount"] != null)
+                            employeeByConstructionSite.EmployeeCount = Int32.Parse(reader["EmployeeCount"].ToString());
+
+                        if (reader["BusinessPartnerId"] != null)
+                        {
+                            employeeByConstructionSite.BusinessPartner = new BusinessPartner();
+                            employeeByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            employeeByConstructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            employeeByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            employeeByConstructionSite.BusinessPartner.Code = reader["ConstructionSiteCode"].ToString();
+                            employeeByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                        }
+
+                        if (reader["BusinessPartnerCount"] != null)
+                            employeeByConstructionSite.BusinessPartnerCount = Int32.Parse(reader["BusinessPartnerCount"].ToString());
+
+                        if (reader["ConstructionSiteId"] != null)
+                        {
+                            employeeByConstructionSite.ConstructionSite = new ConstructionSite();
+                            employeeByConstructionSite.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
+                            employeeByConstructionSite.ConstructionSite.Id = Int32.Parse(reader["ConstructionSiteId"].ToString());
+                            employeeByConstructionSite.ConstructionSite.Identifier = Guid.Parse(reader["ConstructionSiteIdentifier"].ToString());
+                            employeeByConstructionSite.ConstructionSite.Code = reader["ConstructionSiteCode"].ToString();
+                            employeeByConstructionSite.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
+                        }
+
+                        employeeByConstructionSite.Active = bool.Parse(reader["Active"].ToString());
+                        employeeByConstructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
+
+                        if (reader["CreatedById"] != null)
+                        {
+                            employeeByConstructionSite.CreatedBy = new User();
+                            employeeByConstructionSite.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
+                            employeeByConstructionSite.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
+                            employeeByConstructionSite.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
+                            employeeByConstructionSite.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
+                        }
+
+                        if (reader["CompanyId"] != null)
+                        {
+                            employeeByConstructionSite.Company = new Company();
+                            employeeByConstructionSite.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
+                            employeeByConstructionSite.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
+                            employeeByConstructionSite.Company.Name = reader["CompanyName"].ToString();
+                        }
+
+                        EmployeeByConstructionSites.Add(employeeByConstructionSite);
+                    }
+                }
+            }
+
+            //List<EmployeeByConstructionSite> EmployeeByConstructionSites = context.EmployeeByConstructionSites
+            //     .Include(x => x.Employee)
+            //     .Include(x => x.BusinessPartner)
+            //     .Include(x => x.ConstructionSite)
+            //     .Include(x => x.Company)
+            //     .Include(x => x.CreatedBy)
+            //     .Where(x => x.Active == true && x.CompanyId == companyId)
+            //     .OrderByDescending(x => x.CreatedAt)
+            //     .AsNoTracking()
+            //     .ToList();
+
+            return EmployeeByConstructionSites;
+        }
+
         public List<EmployeeByConstructionSite> GetEmployeeByConstructionSitesNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<EmployeeByConstructionSite> EmployeeByConstructionSites = new List<EmployeeByConstructionSite>();

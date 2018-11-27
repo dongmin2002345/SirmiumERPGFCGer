@@ -31,6 +31,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IBusinessPartnerTypeRepository GetBusinessPartnerTypeRepository();
         IBusinessPartnerBusinessPartnerTypeRepository GetBusinessPartnerBusinessPartnerTypeRepository();
         IBusinessPartnerDocumentRepository GetBusinessPartnerDocumentRepository();
+        IBusinessPartnerNoteRepository GetBusinessPartnerNoteRepository();
 
         IOutputInvoiceRepository GetOutputInvoiceRepository();
 		IInputInvoiceRepository GetInputInvoiceRepository();
@@ -50,6 +51,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IConstructionSiteRepository GetConstructionSiteRepository();
         IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository();
         IConstructionSiteDocumentRepository GetConstructionSiteDocumentRepository();
+        IConstructionSiteNoteRepository GetConstructionSiteNoteRepository();
 
         IEmployeeRepository GetEmployeeRepository();
         IEmployeeItemRepository GetEmployeeItemRepository();

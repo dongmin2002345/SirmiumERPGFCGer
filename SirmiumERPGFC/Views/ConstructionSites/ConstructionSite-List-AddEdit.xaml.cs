@@ -130,6 +130,75 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
 
+        #region ConstructionSiteNotesFromDB
+        private ObservableCollection<ConstructionSiteNoteViewModel> _ConstructionSiteNotesFromDB;
+
+        public ObservableCollection<ConstructionSiteNoteViewModel> ConstructionSiteNotesFromDB
+        {
+            get { return _ConstructionSiteNotesFromDB; }
+            set
+            {
+                if (_ConstructionSiteNotesFromDB != value)
+                {
+                    _ConstructionSiteNotesFromDB = value;
+                    NotifyPropertyChanged("ConstructionSiteNotesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteNoteForm
+        private ConstructionSiteNoteViewModel _CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel() { NoteDate = DateTime.Now };
+
+        public ConstructionSiteNoteViewModel CurrentConstructionSiteNoteForm
+        {
+            get { return _CurrentConstructionSiteNoteForm; }
+            set
+            {
+                if (_CurrentConstructionSiteNoteForm != value)
+                {
+                    _CurrentConstructionSiteNoteForm = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteNoteForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteNoteDG
+        private ConstructionSiteNoteViewModel _CurrentConstructionSiteNoteDG;
+
+        public ConstructionSiteNoteViewModel CurrentConstructionSiteNoteDG
+        {
+            get { return _CurrentConstructionSiteNoteDG; }
+            set
+            {
+                if (_CurrentConstructionSiteNoteDG != value)
+                {
+                    _CurrentConstructionSiteNoteDG = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteNoteDG");
+                }
+            }
+        }
+        #endregion
+
+        #region ConstructionSiteNoteDataLoading
+        private bool _ConstructionSiteNoteDataLoading;
+
+        public bool ConstructionSiteNoteDataLoading
+        {
+            get { return _ConstructionSiteNoteDataLoading; }
+            set
+            {
+                if (_ConstructionSiteNoteDataLoading != value)
+                {
+                    _ConstructionSiteNoteDataLoading = value;
+                    NotifyPropertyChanged("ConstructionSiteNoteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region IsHeaderCreated
         private bool _IsHeaderCreated;
 
@@ -238,6 +307,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             Thread displayThread = new Thread(() =>
             {
                 DisplayDocumentData();
+                DisplayConstructionSiteNoteData();
             });
             displayThread.IsBackground = true;
             displayThread.Start();
@@ -263,6 +333,26 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             }
 
             ConstructionSiteDocumentDataLoading = false;
+        }
+
+        private void DisplayConstructionSiteNoteData()
+        {
+            ConstructionSiteNoteDataLoading = true;
+
+            ConstructionSiteNoteListResponse response = new ConstructionSiteNoteSQLiteRepository()
+                .GetConstructionSiteNotesByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
+
+            if (response.Success)
+            {
+                ConstructionSiteNotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>(
+                    response.ConstructionSiteNotes ?? new List<ConstructionSiteNoteViewModel>());
+            }
+            else
+            {
+                ConstructionSiteNotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>();
+            }
+
+            ConstructionSiteNoteDataLoading = false;
         }
 
         #region Cancel and Save buttons
@@ -342,6 +432,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 }
 
                 CurrentConstructionSite.ConstructionSiteDocuments = ConstructionSiteDocumentsFromDB;
+                CurrentConstructionSite.ConstructionSiteNotes = ConstructionSiteNotesFromDB;
 
                 response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
@@ -501,6 +592,83 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             }
 
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        #endregion
+
+        #region Add, edit, delete and cancel note
+
+        private void btnAddNote_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentConstructionSiteNoteForm.Note))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Napomena";
+                return;
+            }
+
+            if (CurrentConstructionSiteNoteForm.NoteDate == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Datum napomene";
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteForm.Identifier);
+
+            CurrentConstructionSiteNoteForm.ConstructionSite = CurrentConstructionSite;
+            CurrentConstructionSiteNoteForm.Identifier = Guid.NewGuid();
+            CurrentConstructionSiteNoteForm.IsSynced = false;
+            CurrentConstructionSiteNoteForm.UpdatedAt = DateTime.Now;
+            CurrentConstructionSiteNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentConstructionSiteNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new ConstructionSiteNoteSQLiteRepository().Create(CurrentConstructionSiteNoteForm);
+            if (response.Success)
+            {
+                CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
+
+                Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtNote.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnEditNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentConstructionSiteNoteForm = CurrentConstructionSiteNoteDG;
+        }
+
+        private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteDG.Identifier);
+
+                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        private void btnCancelNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
         }
 
         #endregion

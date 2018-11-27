@@ -85,6 +85,8 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                 businessPartnerViewModel.BusinessPartnerTypes = null;
                 List<BusinessPartnerDocumentViewModel> businessPartnerDocuments = businessPartnerViewModel.BusinessPartnerDocuments?.ToList() ?? new List<BusinessPartnerDocumentViewModel>();
                 businessPartnerViewModel.BusinessPartnerDocuments = null;
+                List<BusinessPartnerNoteViewModel> businessPartnerNotes = businessPartnerViewModel.BusinessPartnerNotes?.ToList() ?? new List<BusinessPartnerNoteViewModel>();
+                businessPartnerViewModel.BusinessPartnerNotes = null;
 
                 // Create business partner
                 BusinessPartner createdBusinessPartner = unitOfWork.GetBusinessPartnerRepository()
@@ -135,6 +137,16 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                 {
                     item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
                     unitOfWork.GetBusinessPartnerDocumentRepository().Create(item.ConvertToBusinessPartnerDocument());
+                }
+
+                var BusinessPartnerNotesFromDB = unitOfWork.GetBusinessPartnerNoteRepository().GetBusinessPartnerNotesByBusinessPartner(createdBusinessPartner.Id);
+                foreach (var item in BusinessPartnerNotesFromDB)
+                    if (!businessPartnerNotes.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetBusinessPartnerNoteRepository().Delete(item.Identifier);
+                foreach (var item in businessPartnerNotes)
+                {
+                    item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
+                    unitOfWork.GetBusinessPartnerNoteRepository().Create(item.ConvertToBusinessPartnerNote());
                 }
 
                 unitOfWork.Save();

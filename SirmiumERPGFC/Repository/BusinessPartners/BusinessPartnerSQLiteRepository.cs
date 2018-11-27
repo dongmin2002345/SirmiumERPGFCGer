@@ -32,6 +32,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                "IsInPdv BOOL NULL, " +
                "JBKJS NVARCHAR(48) NULL, " +
                "NameGer NVARCHAR(2048) NULL, " +
+               "IsInPDVGer BOOL NULL, " +
+               "TaxAdministrationId INTEGER NULL, " +
+               "TaxAdministrationIdentifier GUID NULL, " +
+               "TaxAdministrationCode NVARCHAR(48) NULL, " +
+               "TaxAdministrationName NVARCHAR(2048) NULL, " +
+               "IBAN NVARCHAR(48) NULL, " +
+               "BetriebsNumber NVARCHAR(48) NULL, " +
                "TaxNr NVARCHAR(2048) NULL, " +
                "CommercialNr NVARCHAR(2048) NULL, " +
                "ContactPersonGer NVARCHAR(2048) NULL, " +
@@ -57,7 +64,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, PDV, IdentificationNumber, " +
             "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
-            "NameGer, TaxNr, CommercialNr, ContactPersonGer, " +
+            "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
+            "IBAN, BetriebsNumber, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
@@ -66,7 +74,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
             "(Id, ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, PDV, IdentificationNumber, " +
             "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
-            "NameGer, TaxNr, CommercialNr, ContactPersonGer, " +
+            "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
+            "IBAN, BetriebsNumber, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
@@ -74,7 +83,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @PIB, @PIO, @PDV, @IdentificationNumber, " +
             "@Rebate, @DueDate, @WebSite, @ContactPerson, @IsInPdv, @JBKJS, " +
-            "@NameGer, @TaxNr, @CommercialNr, @ContactPersonGer, " +
+            "@NameGer, @IsInPDVGer, @TaxAdministrationId, @TaxAdministrationIdentifier, @TaxAdministrationCode, @TaxAdministrationName, " +
+            "@IBAN, @BetriebsNumber, @TaxNr, @CommercialNr, @ContactPersonGer, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
             "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, " +
@@ -188,6 +198,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
+                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
@@ -286,6 +300,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
+                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
@@ -377,6 +395,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
+                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
@@ -444,6 +466,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
+                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
@@ -522,6 +548,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
+                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
@@ -608,6 +638,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
+                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
@@ -723,6 +757,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@IsInPdv", ((object)businessPartner.IsInPDV) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@JBKJS", ((object)businessPartner.JBKJS) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@NameGer", ((object)businessPartner.NameGer) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@IsInPDVGer", ((object)businessPartner.IsInPDVGer) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@TaxAdministrationId", ((object)businessPartner.TaxAdministration?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@TaxAdministrationIdentifier", ((object)businessPartner.TaxAdministration?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@TaxAdministrationCode", ((object)businessPartner.TaxAdministration?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@TaxAdministrationName", ((object)businessPartner.TaxAdministration?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@IBAN", ((object)businessPartner.IBAN) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BetriebsNumber", ((object)businessPartner.BetriebsNumber) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@TaxNr", ((object)businessPartner.TaxNr) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CommercialNr", ((object)businessPartner.CommercialNr) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ContactPersonGer", ((object)businessPartner.ContactPersonGer) ?? DBNull.Value);

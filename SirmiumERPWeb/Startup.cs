@@ -146,6 +146,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IBusinessPartnerTypeService, BusinessPartnerTypeService>();
             services.AddScoped<IBusinessPartnerLocationService, BusinessPartnerLocationService>();
             services.AddScoped<IBusinessPartnerDocumentService, BusinessPartnerDocumentService>();
+            services.AddScoped<IBusinessPartnerNoteService, BusinessPartnerNoteService>();
 
             services.AddScoped<IOutputInvoiceService, OutputInvoiceService>();
 			services.AddScoped<IInputInvoiceService, InputInvoiceService>();
@@ -183,6 +184,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
             services.AddScoped<IConstructionSiteCalculationService, ConstructionSiteCalculationService>();
             services.AddScoped<IConstructionSiteDocumentService, ConstructionSiteDocumentService>();
+            services.AddScoped<IConstructionSiteNoteService, ConstructionSiteNoteService>();
 
             services.AddScoped<ITaxAdministrationService, TaxAdministrationService>();
 
@@ -227,6 +229,8 @@ namespace SirmiumERPWeb
             BusinessPartnerByConstructionSiteView.CreateView();
             BusinessPartnerInstitutionView.CreateView();
             BusinessPartnerLocationView.CreateView();
+            BusinessPartnerDocumentView.CreateView();
+            BusinessPartnerNoteView.CreateView();
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();
@@ -245,6 +249,7 @@ namespace SirmiumERPWeb
             PhysicalPersonView.CreateView();
 
             ConstructionSiteDocumentView.CreateView();
+            ConstructionSiteNoteView.CreateView();
 
         }
     }

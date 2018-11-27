@@ -163,6 +163,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region ConstructionSiteNotes
+        private ObservableCollection<ConstructionSiteNoteViewModel> _ConstructionSiteNotes;
+
+        public ObservableCollection<ConstructionSiteNoteViewModel> ConstructionSiteNotes
+        {
+            get { return _ConstructionSiteNotes; }
+            set
+            {
+                if (_ConstructionSiteNotes != value)
+                {
+                    _ConstructionSiteNotes = value;
+                    NotifyPropertyChanged("ConstructionSiteNotes");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

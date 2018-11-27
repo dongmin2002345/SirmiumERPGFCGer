@@ -52,6 +52,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerTypeRepository businessPartnerTypeRepository;
         private IBusinessPartnerBusinessPartnerTypeRepository businessPartnerBusinessPartnerTypeRepository;
         private IBusinessPartnerDocumentRepository businessPartnerDocumentRepository;
+        private IBusinessPartnerNoteRepository businessPartnerNoteRepository;
 
         private IOutputInvoiceRepository outputInvoiceRepository;
 		private IInputInvoiceRepository inputInvoiceRepository;
@@ -66,6 +67,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IConstructionSiteRepository constructionSiteRepository;
         private IConstructionSiteCalculationRepository constructionSiteCalculationRepository;
         private IConstructionSiteDocumentRepository constructionSiteDocumentRepository;
+        private IConstructionSiteNoteRepository constructionSiteNoteRepository;
 
         private ISectorRepository sectorRepository;
 		private IBankRepository bankRepository;
@@ -210,6 +212,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return businessPartnerDocumentRepository;
         }
 
+        public IBusinessPartnerNoteRepository GetBusinessPartnerNoteRepository()
+        {
+            if (businessPartnerNoteRepository == null)
+                businessPartnerNoteRepository = new BusinessPartnerNoteViewRepository(context);
+            return businessPartnerNoteRepository;
+        }
+
+
         public IOutputInvoiceRepository GetOutputInvoiceRepository()
         {
             if (outputInvoiceRepository == null)
@@ -307,6 +317,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
                 constructionSiteDocumentRepository = new ConstructionSiteDocumentViewRepository(context);
             return constructionSiteDocumentRepository;
         }
+
+        public IConstructionSiteNoteRepository GetConstructionSiteNoteRepository()
+        {
+            if (constructionSiteNoteRepository == null)
+                constructionSiteNoteRepository = new ConstructionSiteNoteViewRepository(context);
+            return constructionSiteNoteRepository;
+        }
+
 
         public IFamilyMemberRepository GetFamilyMemberRepository()
         {

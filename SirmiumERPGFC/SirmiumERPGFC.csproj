@@ -201,12 +201,14 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerInstitutionSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerLocationSQLiteRepository.cs" />
+    <Compile Include="Repository\BusinessPartners\BusinessPartnerNoteSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerOrganizationUnitSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteCalculationSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteDocumentSQLiteRepository.cs" />
+    <Compile Include="Repository\ConstructionSites\ConstructionSiteNoteSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByBusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByConstructionSiteSQLiteRepository.cs" />
@@ -267,6 +269,9 @@
     </Compile>
     <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
       <DependentUpon>RegionPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\TaxAdministrationPopup.xaml.cs">
+      <DependentUpon>TaxAdministrationPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Administrations\DataSync-List-Excel.xaml.cs">
       <DependentUpon>DataSync-List-Excel.xaml</DependentUpon>
@@ -529,6 +534,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\RegionPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\TaxAdministrationPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

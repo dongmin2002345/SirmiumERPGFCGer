@@ -10,7 +10,7 @@ using System.Text;
 
 namespace DataMapper.Mappers.Common.BusinessPartners
 {
-    public static class BusinessPartnerBankService
+    public static class BusinessPartnerBankMapper
     {
         public static List<BusinessPartnerBankViewModel> ConvertToBusinessPartnerBankViewModelList(this IEnumerable<BusinessPartnerBank> businessPartnerBanks)
         {

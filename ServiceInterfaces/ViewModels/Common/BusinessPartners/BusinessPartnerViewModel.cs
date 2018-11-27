@@ -1,6 +1,7 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Sectors;
+using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -259,6 +260,75 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region IsInPDVGer
+        private bool _IsInPDVGer;
+
+        public bool IsInPDVGer
+        {
+            get { return _IsInPDVGer; }
+            set
+            {
+                if (_IsInPDVGer != value)
+                {
+                    _IsInPDVGer = value;
+                    NotifyPropertyChanged("IsInPDVGer");
+                }
+            }
+        }
+        #endregion
+
+        #region TaxAdministration
+        private TaxAdministrationViewModel _TaxAdministration;
+
+        public TaxAdministrationViewModel TaxAdministration
+        {
+            get { return _TaxAdministration; }
+            set
+            {
+                if (_TaxAdministration != value)
+                {
+                    _TaxAdministration = value;
+                    NotifyPropertyChanged("TaxAdministration");
+                }
+            }
+        }
+        #endregion
+
+        #region IBAN
+        private string _IBAN;
+
+        public string IBAN
+        {
+            get { return _IBAN; }
+            set
+            {
+                if (_IBAN != value)
+                {
+                    _IBAN = value;
+                    NotifyPropertyChanged("IBAN");
+                }
+            }
+        }
+        #endregion
+
+        #region BetriebsNumber
+        private string _BetriebsNumber;
+
+        public string BetriebsNumber
+        {
+            get { return _BetriebsNumber; }
+            set
+            {
+                if (_BetriebsNumber != value)
+                {
+                    _BetriebsNumber = value;
+                    NotifyPropertyChanged("BetriebsNumber");
+                }
+            }
+        }
+        #endregion
+
+
         #region Country
         private CountryViewModel _Country;
 
@@ -461,6 +531,23 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
                 {
                     _BusinessPartnerDocuments = value;
                     NotifyPropertyChanged("BusinessPartnerDocuments");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerNotes
+        private ObservableCollection<BusinessPartnerNoteViewModel> _BusinessPartnerNotes;
+
+        public ObservableCollection<BusinessPartnerNoteViewModel> BusinessPartnerNotes
+        {
+            get { return _BusinessPartnerNotes; }
+            set
+            {
+                if (_BusinessPartnerNotes != value)
+                {
+                    _BusinessPartnerNotes = value;
+                    NotifyPropertyChanged("BusinessPartnerNotes");
                 }
             }
         }

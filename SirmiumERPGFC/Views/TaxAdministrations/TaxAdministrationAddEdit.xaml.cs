@@ -244,7 +244,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
                             new Action(() =>
                             {
                                 if (IsPopup)
-                                    FlyoutHelper.CloseFlyout(this);
+                                    FlyoutHelper.CloseFlyoutPopup(this);
                                 else
                                     FlyoutHelper.CloseFlyout(this);
                             })
@@ -260,7 +260,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             if (IsPopup)
-                FlyoutHelper.CloseFlyout(this);
+                FlyoutHelper.CloseFlyoutPopup(this);
             else
                 FlyoutHelper.CloseFlyout(this);
         }

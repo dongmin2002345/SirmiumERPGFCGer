@@ -422,6 +422,75 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
 
+        #region BusinessPartnerNotesFromDB
+        private ObservableCollection<BusinessPartnerNoteViewModel> _BusinessPartnerNotesFromDB;
+
+        public ObservableCollection<BusinessPartnerNoteViewModel> BusinessPartnerNotesFromDB
+        {
+            get { return _BusinessPartnerNotesFromDB; }
+            set
+            {
+                if (_BusinessPartnerNotesFromDB != value)
+                {
+                    _BusinessPartnerNotesFromDB = value;
+                    NotifyPropertyChanged("BusinessPartnerNotesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBusinessPartnerNoteForm
+        private BusinessPartnerNoteViewModel _CurrentBusinessPartnerNoteForm = new BusinessPartnerNoteViewModel() { NoteDate = DateTime.Now };
+
+        public BusinessPartnerNoteViewModel CurrentBusinessPartnerNoteForm
+        {
+            get { return _CurrentBusinessPartnerNoteForm; }
+            set
+            {
+                if (_CurrentBusinessPartnerNoteForm != value)
+                {
+                    _CurrentBusinessPartnerNoteForm = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerNoteForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBusinessPartnerNoteDG
+        private BusinessPartnerNoteViewModel _CurrentBusinessPartnerNoteDG;
+
+        public BusinessPartnerNoteViewModel CurrentBusinessPartnerNoteDG
+        {
+            get { return _CurrentBusinessPartnerNoteDG; }
+            set
+            {
+                if (_CurrentBusinessPartnerNoteDG != value)
+                {
+                    _CurrentBusinessPartnerNoteDG = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerNoteDG");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerNoteDataLoading
+        private bool _BusinessPartnerNoteDataLoading;
+
+        public bool BusinessPartnerNoteDataLoading
+        {
+            get { return _BusinessPartnerNoteDataLoading; }
+            set
+            {
+                if (_BusinessPartnerNoteDataLoading != value)
+                {
+                    _BusinessPartnerNoteDataLoading = value;
+                    NotifyPropertyChanged("BusinessPartnerNoteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
         #region BusinessPartnerTypesFromDB
         private ObservableCollection<BusinessPartnerTypeViewModel> _BusinessPartnerTypesFromDB;
 
@@ -558,6 +627,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 PopulatePhoneData();
                 PopulateBankData();
                 DisplayDocumentData();
+                DisplayBusinessPartnerNoteData();
             });
             displayThread.IsBackground = true;
             displayThread.Start();
@@ -693,6 +763,26 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
 
             BusinessPartnerDocumentDataLoading = false;
+        }
+
+        private void DisplayBusinessPartnerNoteData()
+        {
+            BusinessPartnerNoteDataLoading = true;
+
+            BusinessPartnerNoteListResponse response = new BusinessPartnerNoteSQLiteRepository()
+                .GetBusinessPartnerNotesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                BusinessPartnerNotesFromDB = new ObservableCollection<BusinessPartnerNoteViewModel>(
+                    response.BusinessPartnerNotes ?? new List<BusinessPartnerNoteViewModel>());
+            }
+            else
+            {
+                BusinessPartnerNotesFromDB = new ObservableCollection<BusinessPartnerNoteViewModel>();
+            }
+
+            BusinessPartnerNoteDataLoading = false;
         }
 
         #endregion
@@ -1112,6 +1202,83 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
+        #region Add, edit, delete and cancel note
+
+        private void btnAddNote_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentBusinessPartnerNoteForm.Note))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Napomena";
+                return;
+            }
+
+            if (CurrentBusinessPartnerNoteForm.NoteDate == null)
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Datum napomene";
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new BusinessPartnerNoteSQLiteRepository().Delete(CurrentBusinessPartnerNoteForm.Identifier);
+
+            CurrentBusinessPartnerNoteForm.BusinessPartner = CurrentBusinessPartner;
+            CurrentBusinessPartnerNoteForm.Identifier = Guid.NewGuid();
+            CurrentBusinessPartnerNoteForm.IsSynced = false;
+            CurrentBusinessPartnerNoteForm.UpdatedAt = DateTime.Now;
+            CurrentBusinessPartnerNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentBusinessPartnerNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new BusinessPartnerNoteSQLiteRepository().Create(CurrentBusinessPartnerNoteForm);
+            if (response.Success)
+            {
+                CurrentBusinessPartnerNoteForm = new BusinessPartnerNoteViewModel();
+
+                Thread displayThread = new Thread(() => DisplayBusinessPartnerNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtNote.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnEditNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentBusinessPartnerNoteForm = CurrentBusinessPartnerNoteDG;
+        }
+
+        private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new BusinessPartnerNoteSQLiteRepository().Delete(CurrentBusinessPartnerNoteDG.Identifier);
+
+                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+
+                Thread displayThread = new Thread(() => DisplayBusinessPartnerNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        private void btnCancelNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentBusinessPartnerNoteForm = new BusinessPartnerNoteViewModel();
+        }
+
+        #endregion
+
         #region Select type
 
         private void btnSaveType_Click(object sender, RoutedEventArgs e)
@@ -1178,6 +1345,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     .GetBusinessPartnerTypesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerTypes
                     ?? new List<BusinessPartnerTypeViewModel>());
                 CurrentBusinessPartner.BusinessPartnerDocuments = BusinessPartnerDocumentsFromDB;
+                CurrentBusinessPartner.BusinessPartnerNotes = BusinessPartnerNotesFromDB;
 
                 BusinessPartnerResponse response = businessPartnerService.Create(CurrentBusinessPartner);
 

@@ -88,12 +88,24 @@ namespace ServiceCore.Implementations.Common
             return response;
         }
 
-        public BusinessPartnerByConstructionSiteResponse Delete(BusinessPartnerByConstructionSiteViewModel re)
+        public BusinessPartnerByConstructionSiteResponse Delete(BusinessPartnerByConstructionSiteViewModel businessPartnerByConstructionSite)
         {
             BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
             try
             {
-                BusinessPartnerByConstructionSite deletedBusinessPartnerByConstructionSite = unitOfWork.GetBusinessPartnerByConstructionSiteRepository().Delete(re.ConvertToBusinessPartnerByConstructionSite());
+                // First remove all employees on that construction site and that company
+                var employeesByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().GetEmployeeByConstructionSitesAndBusinessPartner(
+                    businessPartnerByConstructionSite.Company.Id, businessPartnerByConstructionSite.ConstructionSite.Id, businessPartnerByConstructionSite.BusinessPartner.Id);
+                if (employeesByConstructionSite != null)
+                {
+                    foreach (var item in employeesByConstructionSite)
+                    {
+                        unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(item);
+                    }
+                }
+
+                BusinessPartnerByConstructionSite deletedBusinessPartnerByConstructionSite = unitOfWork.GetBusinessPartnerByConstructionSiteRepository()
+                    .Delete(businessPartnerByConstructionSite.ConvertToBusinessPartnerByConstructionSite());
 
                 unitOfWork.Save();
 

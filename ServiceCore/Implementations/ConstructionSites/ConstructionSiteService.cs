@@ -77,6 +77,8 @@ namespace ServiceCore.Implementations.ConstructionSites
                 // Backup items
                 List<ConstructionSiteDocumentViewModel> constructionSiteDocuments = constructionSite.ConstructionSiteDocuments?.ToList() ?? new List<ConstructionSiteDocumentViewModel>();
                 constructionSite.ConstructionSiteDocuments = null;
+                List<ConstructionSiteNoteViewModel> constructionSiteNotes = constructionSite.ConstructionSiteNotes?.ToList() ?? new List<ConstructionSiteNoteViewModel>();
+                constructionSite.ConstructionSiteNotes = null;
 
                 ConstructionSite createdConstructionSite = unitOfWork.GetConstructionSiteRepository()
                     .Create(constructionSite.ConvertToConstructionSite());
@@ -90,6 +92,16 @@ namespace ServiceCore.Implementations.ConstructionSites
                 {
                     item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
                     unitOfWork.GetConstructionSiteDocumentRepository().Create(item.ConvertToConstructionSiteDocument());
+                }
+
+                var ConstructionSiteNotesFromDB = unitOfWork.GetConstructionSiteNoteRepository().GetConstructionSiteNotesByConstructionSite(createdConstructionSite.Id);
+                foreach (var item in ConstructionSiteNotesFromDB)
+                    if (!constructionSiteNotes.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetConstructionSiteNoteRepository().Delete(item.Identifier);
+                foreach (var item in constructionSiteNotes)
+                {
+                    item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                    unitOfWork.GetConstructionSiteNoteRepository().Create(item.ConvertToConstructionSiteNote());
                 }
 
                 unitOfWork.Save();

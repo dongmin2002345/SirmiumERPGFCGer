@@ -2,6 +2,7 @@
 using DataMapper.Mappers.Common.Identity;
 using DataMapper.Mappers.Common.Locations;
 using DataMapper.Mappers.Common.Sectors;
+using DataMapper.Mappers.Common.TaxAdministrations;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
@@ -50,6 +51,10 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 JBKJS = businessPartner.JBKJS,
 
                 NameGer = businessPartner.NameGer,
+                IsInPDVGer = businessPartner.IsInPDVGer,
+                TaxAdministration = businessPartner.TaxAdministration?.ConvertToTaxAdministrationViewModelLite(), 
+                IBAN = businessPartner.IBAN, 
+                BetriebsNumber = businessPartner.BetriebsNumber,
                 Country = businessPartner.Country?.ConvertToCountryViewModelLite(),
                 Sector = businessPartner.Sector?.ConvertToSectorViewModelLite(),
                 Agency = businessPartner.Agency?.ConvertToAgencyViewModelLite(),
@@ -96,6 +101,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 JBKJS = businessPartner.JBKJS,
 
                 NameGer = businessPartner.NameGer,
+                IsInPDVGer = businessPartner.IsInPDVGer,
+                IBAN = businessPartner.IBAN,
+                BetriebsNumber = businessPartner.BetriebsNumber,
                 TaxNr = businessPartner.TaxNr,
                 CommercialNr = businessPartner.CommercialNr,
                 ContactPersonGer = businessPartner.ContactPersonGer,
@@ -135,6 +143,10 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 JBKJS = businessPartnerViewModel.JBKJS,
 
                 NameGer = businessPartnerViewModel.NameGer,
+                IsInPDVGer = businessPartnerViewModel.IsInPDVGer, 
+                TaxAdministrationId = businessPartnerViewModel.TaxAdministration?.Id ?? null, 
+                IBAN = businessPartnerViewModel.IBAN, 
+                BetriebsNumber = businessPartnerViewModel.BetriebsNumber,
                 CountryId = businessPartnerViewModel.Country?.Id ?? null,
                 SectorId = businessPartnerViewModel.Sector?.Id ?? null,
                 AgencyId = businessPartnerViewModel.Agency?.Id ?? null,

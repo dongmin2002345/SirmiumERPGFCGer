@@ -434,7 +434,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
 				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
                 insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@DateTime", updatedAt);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 
