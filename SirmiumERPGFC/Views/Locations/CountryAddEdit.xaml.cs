@@ -206,7 +206,7 @@ namespace SirmiumERPGFC.Views.Locations
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtAlfaCode.Focus();
+                                txtMark.Focus();
                             })
                         );
                     }

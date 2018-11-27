@@ -211,7 +211,7 @@ namespace SirmiumERPGFC.Views.Locations
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtName.Focus();
+                                txtMunicipalityCode.Focus();
                             })
                         );
                     }

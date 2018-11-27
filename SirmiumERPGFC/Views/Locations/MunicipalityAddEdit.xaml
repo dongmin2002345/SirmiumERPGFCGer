@@ -41,7 +41,7 @@
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentMunicipality.Code}" IsEnabled="False" />
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra opstine:" />
-                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentMunicipality.MunicipalityCode}" />
+                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtMunicipalityCode" Text="{Binding Path=CurrentMunicipality.MunicipalityCode}" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv opštine:" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentMunicipality.Name}" />
