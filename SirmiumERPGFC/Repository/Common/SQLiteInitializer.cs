@@ -157,7 +157,7 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "CountryName", "NVARCHAR(2048) NULL");
 
-                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "IsInPDVGEr", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "IsInPDVGer", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "TaxAdministrationId", "INTEGER NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "TaxAdministrationIdentifier", "GUID NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "TaxAdministrationCode", "NVARCHAR(48) NULL");
