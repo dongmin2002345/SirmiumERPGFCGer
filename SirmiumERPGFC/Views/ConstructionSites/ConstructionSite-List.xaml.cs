@@ -612,9 +612,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, removeForm);
         }
 
-		private void btnExcel_Click(object sender, RoutedEventArgs e)
-		{
-			ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList(), ConstructionSiteCalculationsFromDB.ToList());
-		}
+        private void btnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList(), ConstructionSiteCalculationsFromDB.ToList());
+            }
+            catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 	}
 }

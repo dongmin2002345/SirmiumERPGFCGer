@@ -1,5 +1,7 @@
 ﻿using DataMapper.Mappers.Common.BusinessPartners;
 using DomainCore.Common.BusinessPartners;
+using DomainCore.ConstructionSites;
+using DomainCore.Employees;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
@@ -101,6 +103,11 @@ namespace ServiceCore.Implementations.Common
                     foreach (var item in employeesByConstructionSite)
                     {
                         unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(item);
+
+                        Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee((int)item.EmployeeId);
+                        employee.ConstructionSiteCode = "";
+                        employee.ConstructionSiteName = "";
+                        employee.UpdatedAt = DateTime.Now;
                     }
                 }
 

@@ -100,7 +100,18 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
                     BusinessPartnerListResponse businessPartnerResp = new BusinessPartnerSQLiteRepository().GetBusinessPartnersForPopup(MainWindow.CurrentCompanyId, filterString);
                     if (businessPartnerResp.Success)
-                        BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(businessPartnerResp.BusinessPartners ?? new List<BusinessPartnerViewModel>());
+                    {
+                        BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
+                        foreach (var item in businessPartnerResp.BusinessPartners.Where(x => !String.IsNullOrEmpty(x.Name)))
+                        {
+                            BusinessPartnersFromDB.Add(item);
+                        }
+                        foreach (var item in businessPartnerResp.BusinessPartners.Where(x => !String.IsNullOrEmpty(x.NameGer)))
+                        {
+                            item.Name = item.NameGer;
+                            BusinessPartnersFromDB.Add(item);
+                        }
+                    }
                     else
                         BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
                 })

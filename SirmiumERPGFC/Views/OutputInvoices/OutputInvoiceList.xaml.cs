@@ -401,12 +401,26 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-			OutputInvoicesExcelReport.Show(OutputInvoicesFromDB.ToList());
+            try
+            {
+                OutputInvoicesExcelReport.Show(OutputInvoicesFromDB.ToList());
+            }
+            catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
 		}
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
-            OutputInvoiceExcelReport.Show(CurrentOutputInvoice);
+            try
+            {
+                OutputInvoiceExcelReport.Show(CurrentOutputInvoice);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
         }
 
         private void btnShow_Click(object sender, RoutedEventArgs e)

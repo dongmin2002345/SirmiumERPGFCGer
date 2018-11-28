@@ -1368,6 +1368,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 }
                 else
                 {
+                    BusinessPartnerCreatedUpdated();
+
                     MainWindow.ErrorMessage = response.Message;
 
                     SubmitButtonContent = " PROKNJIŽI ";

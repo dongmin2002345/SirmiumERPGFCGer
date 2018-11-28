@@ -757,88 +757,8 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public EmployeeListResponse GetUnSyncedItems(int companyId)
-        {
-            EmployeeListResponse response = new EmployeeListResponse();
-            List<EmployeeViewModel> viewModels = new List<EmployeeViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM Employees " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeViewModel dbEntry = new EmployeeViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.EmployeeCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
-
-                        dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
-                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
-                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-
-                        dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
-
-                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.VisaValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.VisaValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
-
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        viewModels.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.Employees = new List<EmployeeViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.Employees = viewModels;
-            return response;
-        }
-
         public void Sync(IEmployeeService EmployeeService)
         {
-            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
             SyncEmployeeRequest request = new SyncEmployeeRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
