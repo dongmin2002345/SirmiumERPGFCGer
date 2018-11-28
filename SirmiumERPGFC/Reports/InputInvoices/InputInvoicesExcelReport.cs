@@ -119,13 +119,14 @@ namespace SirmiumERPGFC.Reports.InputInvoices
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounter] = inputInvoices[i].InvoiceNumber;
+				sheet1.Cells[rowCounter, columnCounter] = inputInvoices[i].InvoiceNumber.ToString();
 				columnCounter++;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounter] = inputInvoices[i].InvoiceDate.ToString("dd.MM.yyyy");
+				sheet1.Cells[rowCounter, columnCounter].C = 10;
+                sheet1.Cells[rowCounter, columnCounter] = inputInvoices[i].InvoiceDate.ToString("dd.MM.yyyy");
 				columnCounter++;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
