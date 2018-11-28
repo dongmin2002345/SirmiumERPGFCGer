@@ -284,10 +284,22 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
                 .GetSerbianBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
 
+            int numOfGermanBusinessPartners = 0;
             if (response.Success)
             {
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response?.BusinessPartners ?? new List<BusinessPartnerViewModel>());
+                var tmp = new List<BusinessPartnerViewModel>();
+                foreach (var item in response.BusinessPartners?.Where(x => !String.IsNullOrEmpty(x.Name)) ?? new List<BusinessPartnerViewModel>())
+                {
+                    tmp.Add(item);
+                }
+                foreach (var item in response.BusinessPartners?.Where(x => !String.IsNullOrEmpty(x.NameGer)) ?? new List<BusinessPartnerViewModel>())
+                {
+                    item.Name = item.NameGer;
+                    numOfGermanBusinessPartners++;
+                    tmp.Add(item);
+                }
                 totalItems = response.TotalItems;
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(tmp);
             }
             else
             {
@@ -299,7 +311,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
             int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
 
-            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+            PaginationDisplay = itemFrom + " - " + BusinessPartnersFromDB.Count + " od " + (totalItems + numOfGermanBusinessPartners);
 
             BusinessPartnerDataLoading = false;
         }

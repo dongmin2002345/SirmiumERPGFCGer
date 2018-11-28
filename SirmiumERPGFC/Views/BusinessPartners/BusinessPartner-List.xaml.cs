@@ -566,8 +566,15 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
 		private void btnPrint_Click(object sender, RoutedEventArgs e)
 		{
-			BusinessPartnerExcelReport.Show(BusinessPartnersFromDB.ToList(), BusinessPartnerLocationsFromDB.ToList());
-		}
+            try
+            {
+                BusinessPartnerExcelReport.Show(BusinessPartnersFromDB.ToList(), BusinessPartnerLocationsFromDB.ToList());
+            }
+            catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 	}
 }
 

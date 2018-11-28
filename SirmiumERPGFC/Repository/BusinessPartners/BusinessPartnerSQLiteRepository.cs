@@ -365,7 +365,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM BusinessPartners " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name OR NameGer LIKE @Name) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);

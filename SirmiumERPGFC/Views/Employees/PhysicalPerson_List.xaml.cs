@@ -388,7 +388,14 @@ namespace SirmiumERPGFC.Views.Employees
 
 		private void btnExcel_Click(object sender, RoutedEventArgs e)
 		{
-			PhysicalPersonsExcelReport.Show(PhysicalPersonsFromDB.ToList());
+            try
+            {
+                PhysicalPersonsExcelReport.Show(PhysicalPersonsFromDB.ToList());
+            }
+            catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
 		}
 	}
 }

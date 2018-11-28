@@ -392,7 +392,14 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 		private void btnPrint_Click(object sender, RoutedEventArgs e)
 		{
-			InputInvoicesExcelReport.Show(InputInvoicesFromDB.ToList());
+            try
+            {
+                InputInvoicesExcelReport.Show(InputInvoicesFromDB.ToList());
+            }
+            catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
 		}
 
 		//private void btnExcel_Click(object sender, RoutedEventArgs e)
@@ -431,7 +438,14 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
-            InputInvoiceExcelReport.Show(CurrentInputInvoice);
+            try
+            {
+                InputInvoiceExcelReport.Show(CurrentInputInvoice);
+            }
+            catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
         }
     }
 }
