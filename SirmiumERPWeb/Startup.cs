@@ -231,6 +231,8 @@ namespace SirmiumERPWeb
             BusinessPartnerLocationView.CreateView();
             BusinessPartnerDocumentView.CreateView();
             BusinessPartnerNoteView.CreateView();
+            BusinessPartnerOrganizationUnitView.CreateView();
+            BusinessPartnerPhoneView.CreateView();
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();
