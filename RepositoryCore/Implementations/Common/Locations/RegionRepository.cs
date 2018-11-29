@@ -21,7 +21,7 @@ namespace RepositoryCore.Implementations.Common.Locations
         public List<Region> GetRegions(int companyId)
         {
             List<Region> Regions = context.Regions
-                 .Include(x => x.Country)
+                .Include(x => x.Country)
                 .Include(x => x.Company)
                 .Include(x => x.CreatedBy)
                 .Where(x => x.Active == true && x.CompanyId == companyId)
