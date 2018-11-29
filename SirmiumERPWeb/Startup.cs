@@ -8,6 +8,8 @@ using RepositoryCore.Context;
 using RepositoryCore.DbSeed;
 using RepositoryCore.DbViews.Banks;
 using RepositoryCore.DbViews.Common.BusinessPartners;
+using RepositoryCore.DbViews.Common.Companies;
+using RepositoryCore.DbViews.Common.Identity;
 using RepositoryCore.DbViews.Common.Invoices;
 using RepositoryCore.DbViews.ConstructionSites;
 using RepositoryCore.DbViews.Employees;
@@ -235,6 +237,10 @@ namespace SirmiumERPWeb
             BusinessPartnerPhoneView.CreateView();
             BusinessPartnerView.CreateView();
             BusinessPartnerTypeView.CreateView();
+
+            CompanyView.CreateView(); //???
+
+            UserView.CreateView();
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();
