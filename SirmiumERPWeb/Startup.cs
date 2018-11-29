@@ -248,6 +248,7 @@ namespace SirmiumERPWeb
 
             CountryView.CreateView();
             RegionView.CreateView();
+            MunicipalityView.CreateView();
 
             EmployeeByBusinessPartnerView.CreateView();
             EmployeeByConstructionSiteView.CreateView();
