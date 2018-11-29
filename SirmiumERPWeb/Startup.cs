@@ -11,6 +11,7 @@ using RepositoryCore.DbViews.Common.BusinessPartners;
 using RepositoryCore.DbViews.Common.Companies;
 using RepositoryCore.DbViews.Common.Identity;
 using RepositoryCore.DbViews.Common.Invoices;
+using RepositoryCore.DbViews.Common.Locations;
 using RepositoryCore.DbViews.ConstructionSites;
 using RepositoryCore.DbViews.Employees;
 using RepositoryCore.DbViews.PhysicalPersons;
@@ -244,6 +245,8 @@ namespace SirmiumERPWeb
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();
+
+            CountryView.CreateView();
 
             EmployeeByBusinessPartnerView.CreateView();
             EmployeeByConstructionSiteView.CreateView();
