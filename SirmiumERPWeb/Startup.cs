@@ -256,6 +256,7 @@ namespace SirmiumERPWeb
             ProfessionView.CreateView();
 
             SectorView.CreateView();
+            AgencyView.CreateView();
 
             EmployeeByBusinessPartnerView.CreateView();
             EmployeeByConstructionSiteView.CreateView();
