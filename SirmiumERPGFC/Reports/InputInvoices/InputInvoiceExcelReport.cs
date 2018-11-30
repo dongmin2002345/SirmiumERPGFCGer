@@ -118,7 +118,7 @@ namespace SirmiumERPGFC.Reports.InputInvoices
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter + 1] = inputInvoice.InvoiceNumber;
+            sheet1.Cells[rowCounter, columnCounter + 1] = inputInvoice.InvoiceNumber.ToString();
 
             rowCounter++;
 
