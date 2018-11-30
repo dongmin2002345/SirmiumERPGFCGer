@@ -15,6 +15,7 @@ using RepositoryCore.DbViews.Common.Locations;
 using RepositoryCore.DbViews.Common.Professions;
 using RepositoryCore.DbViews.Common.Sectors;
 using RepositoryCore.DbViews.Common.TaxAdministrations;
+using RepositoryCore.DbViews.Common.ToDos;
 using RepositoryCore.DbViews.ConstructionSites;
 using RepositoryCore.DbViews.Employees;
 using RepositoryCore.DbViews.PhysicalPersons;
@@ -260,6 +261,8 @@ namespace SirmiumERPWeb
             AgencyView.CreateView();
 
             TaxAdministrationView.CreateView();
+
+            ToDoView.CreateView();
 
             EmployeeByBusinessPartnerView.CreateView();
             EmployeeByConstructionSiteView.CreateView();
