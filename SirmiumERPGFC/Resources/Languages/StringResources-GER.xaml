@@ -4,6 +4,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Meni-->
-    <system:String x:Key="password">Lozinka</system:String>
-    
+    <system:String x:Key="password">Password</system:String>
+        
 </ResourceDictionary>

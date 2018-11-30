@@ -481,7 +481,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Languages\StringResources-ENG.xaml">
+    <Page Include="Resources\Languages\StringResources-GER.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
