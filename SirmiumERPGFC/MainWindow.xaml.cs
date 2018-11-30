@@ -462,6 +462,11 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new TaxAdministrationList();
         }
+
+        private void mniLimitations_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new Limitations();
+        }
     }
 }
 
