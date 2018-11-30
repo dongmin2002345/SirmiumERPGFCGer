@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SirmiumERPGFC.Views.Administrations"
       mc:Ignorable="d" 
-      d:DesignHeight="1485.5" d:DesignWidth="937.5" Background="White">
+      d:DesignHeight="1085.5" d:DesignWidth="909.5" Background="White">
 
 
 
@@ -16,7 +16,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -402,12 +404,23 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-
                 </Grid>
 
             </GroupBox>
 
+            <Button x:Name="btnSave" Click="btnSave_Click" Margin="2" Background="#007ACC" Grid.Column=" 3" Grid.Row="4">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text=" SAČUVAJ " Foreground="White" FontWeight="Bold" FontSize="20"/>
+                </StackPanel>
+            </Button>
 
+            <Button Grid.Column="4" x:Name="btnCancel" Click="btnCancel_Click" Margin="2" Background="#007ACC" Grid.Row="4">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text=" ZATVORI " FontSize="25" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
 
         </Grid>
     </ScrollViewer>

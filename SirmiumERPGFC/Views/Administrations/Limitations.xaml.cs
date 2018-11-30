@@ -129,5 +129,25 @@ namespace SirmiumERPGFC.Views.Administrations
         {
 
         }
+
+        private void btnProknjizi_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnOdustani_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
