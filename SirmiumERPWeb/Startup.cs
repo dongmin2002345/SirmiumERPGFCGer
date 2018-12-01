@@ -280,6 +280,7 @@ namespace SirmiumERPWeb
             ConstructionSiteCalculationView.CreateView();
             ConstructionSiteDocumentView.CreateView();
             ConstructionSiteNoteView.CreateView();
+            ConstructionSiteView.CreateView();
 
         }
     }
