@@ -277,6 +277,7 @@ namespace SirmiumERPWeb
             LicenceTypeView.CreateView();
             PhysicalPersonView.CreateView();
 
+            ConstructionSiteCalculationView.CreateView();
             ConstructionSiteDocumentView.CreateView();
             ConstructionSiteNoteView.CreateView();
 
