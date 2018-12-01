@@ -70,9 +70,7 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="AutoUpdater.NET, Version=1.4.11.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Autoupdater.NET.Official.1.4.11\lib\net40\AutoUpdater.NET.dll</HintPath>
@@ -279,6 +277,9 @@
     <Compile Include="ViewComponents\Popups\SectorPopup.xaml.cs">
       <DependentUpon>SectorPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Administrations\Limitations.xaml.cs">
+      <DependentUpon>Limitations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Banks\Bank-List-AddEdit.xaml.cs">
       <DependentUpon>Bank-List-AddEdit.xaml</DependentUpon>
     </Compile>
@@ -445,7 +446,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -546,6 +546,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\SectorPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Administrations\Limitations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

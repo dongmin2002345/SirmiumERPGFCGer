@@ -184,8 +184,17 @@
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
 
-                
-                
+                <Fluent:RibbonGroupBox Header="Ogranicenja">
+                    <Fluent:Button Click="mniLimitations_Click" Header="Ogranicenja" KeyTip="OGR" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+
+
+
+
             </Fluent:RibbonTabItem>
 
         </Fluent:Ribbon>
