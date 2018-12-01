@@ -4,8 +4,9 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--Meni-->
-    
-    <system:String x:Key="password">Password</system:String>
+    <system:String x:Key="password">PASSWORT</system:String>
+    <system:String x:Key="username">BENUTZER</system:String>
+    <system:String x:Key="login">PROTOKOLLIERUNG</system:String>
     <system:String x:Key="ADMINISTRACIJA">VERWALTUNG</system:String>
     <system:String x:Key="Adresa">Adresse</system:String>
     <system:String x:Key="AdresaDvotacka">Adresse:</system:String>
@@ -345,8 +346,33 @@
     <system:String x:Key="Adresa1Dvotacka">Adresse1:</system:String>
     <system:String x:Key="Adresa2Dvotacka">Adresse2:</system:String>
     <system:String x:Key="Adresa3Dvotacka">Adresse3:</system:String>
-
+    <system:String x:Key="OSVEŽI">ERFRISCHEN</system:String>
     <system:String x:Key="Ukupan_broj_gradilistaDvotacka">Gesamtzahl der Bauherren:</system:String>
     <system:String x:Key="Ukupan_broj_firmi_na_gradilištuDvotacka">Gesamtzahl der Bauunternehmen:</system:String>
     <system:String x:Key="Ukupan_broj_radnika_u_odabranoj_firmi_na_odabranom_gradilištuDvotacka">Gesamtzahl der Beschäftigten im ausgewählten Unternehmen am ausgewählten Standort:</system:String>
+
+    <system:String x:Key="PROMENI">ÄNDERN</system:String>
+    <system:String x:Key="Dana">Tage</system:String>
+    <system:String x:Key="Ugovor_gradilište">Vertragsbaustelle</system:String>
+    <system:String x:Key="Firma_Crta_Gradilište">Unternehmen - Baustelle</system:String>
+    <system:String x:Key="Radnik_Crta_Gradilište">RadArbeiternik - Baustelle</system:String>
+    <system:String x:Key="Radnik_Crta_Firma">Arbeiter - Unternehmen</system:String>
+    <system:String x:Key="Rodjendani">Geburtstage</system:String>
+    <system:String x:Key="Radnik_Crta_Pasoši">Arbeiter - Pässe</system:String>
+    <system:String x:Key="Radnik_Crta_Ambasada_prijem">Arbeiter - Botschaftsempfang</system:String>
+    <system:String x:Key="Radnik_Crta_Viza_podizanje">Arbeiter - Visumheben</system:String>
+    <system:String x:Key="Radnik_Crta_Viza_isticanje">Arbeiter - Visum hervorheben</system:String>
+    <system:String x:Key="Radnik_Crta_Radna_dozvola">Arbeiter - Arbeitserlaubnis</system:String>
+    <system:String x:Key="Radnik_Crta_Vozačka_dozvola">Arbeiter - Führerschein</system:String>
+    <system:String x:Key="Radnik_Crta_Ambasada_porodica">Arbeiter - Familienbotschaft</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Pasoši">Körperliches Gesicht - Pässe</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Ambasada_prijem">Natürliche Person - Botschaftsempfang</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Viza_podizanje">Körperliche Person - Visumhebung</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Viza_isticanje">Körperliches Gesicht - Visa-Hervorhebung</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Radna_dozvola">Körperliche Person - Arbeitserlaubnis</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Vozaćka_dozvola">Körperliche Person - Führerschein</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Ambasada_porodica">Körperliche Person - Familienbotschaft</system:String>
+    <system:String x:Key="Gradilište">Baustelle</system:String>
+    <system:String x:Key="Ograničenja">Einschränkungen</system:String>
+
 </ResourceDictionary>

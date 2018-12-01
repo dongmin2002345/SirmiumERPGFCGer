@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Gradiliste" Margin="2" Grid.ColumnSpan="5" >
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Gradilište}" Margin="2" Grid.ColumnSpan="5" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -50,63 +50,63 @@
                     </Grid.RowDefinitions>
 
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Ugovor gradiliste" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Ugovor_gradilište}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="0" Grid.Column="4" x:Name="btnUgovorGradiliste" Click="btnUgovorGradiliste_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="15" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="15" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left " Text="Firma - Gradiliste"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left " Text="{DynamicResource Firma_Crta_Gradilište}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="2"/>
-                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="1" Grid.Column="4" x:Name="btnFirmaGradiliste" Click="btnFirmaGradiliste_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="15" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="15" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="Radnik - Gradiliste"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="{DynamicResource Radnik_Crta_Gradilište}"/>
                     <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="2"/>
-                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="2" Grid.Column="4" x:Name="btnRadnikGradiliste" Click="btnRadnikGradiliste_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="15" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="15" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Radnik - Firma"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Radnik_Crta_Firma}"/>
                     <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="2"/>
-                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="3" Grid.Column="4" x:Name="btnRadnikFirma" Click="btnRadnikFirma_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="15" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="15" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Rodjendani"/>
+                    <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Rodjendani}"/>
                     <TextBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="5" Grid.Column="4" x:Name="btnRodjendani" Click="btnRodjendani_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="15" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="15" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -115,7 +115,7 @@
 
             </GroupBox>
 
-            <GroupBox Grid.Row="1" Grid.Column="0" Header="Pasosi" Margin="2" Grid.ColumnSpan="5" >
+            <GroupBox Grid.Row="1" Grid.Column="0" Header="{DynamicResource Pasoš}" Margin="2" Grid.ColumnSpan="5" >
 
                 <Grid>
 
@@ -137,87 +137,87 @@
                         <ColumnDefinition Width=" *"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Radnik - Pasosi" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Radnik_Crta_Pasoši}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="0" Grid.Column="4" x:Name="btnRadnikPasosi" Click="btnRadnikPasosi_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Radnik - Ambasada prijem" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Radnik_Crta_Ambasada_prijem}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="1" Grid.Column="4" x:Name="btnRadnikAmbasadaPrijem" Click="btnRadnikAmbasadaPrijem_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Radnik - Viza podizanje" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Radnik_Crta_Viza_podizanje}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="2" Grid.Column="4" x:Name="btnRadnikViza" Click="btnRadnikViza_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Radnik - Viza isticanje" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Radnik_Crta_Viza_isticanje}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="3" Grid.Column="4" x:Name="btnRadnikVizaIsticanje" Click="btnRadnikVizaIsticanje_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Radnik - Radna dozvola" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Radnik_Crta_Radna_dozvola}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="4" Grid.Column="4" x:Name="btnRadnikRadnaDozvola" Click="btnRadnikRadnaDozvola_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Radnik - Vozacka dozvola" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Radnik_Crta_Vozačka_dozvola}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="5" Grid.Column="4" x:Name="btnRadnikVozackaDozvola" Click="btnRadnikVozackaDozvola_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Radnik - Ambasada porodica" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Radnik_Crta_Ambasada_porodica}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="6" Grid.Column="4" x:Name="btnRadnikAmbasadaPorodica" Click="btnRadnikAmbasadaPorodica_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -225,7 +225,7 @@
 
             </GroupBox>
 
-            <GroupBox Grid.Row="2" Grid.Column="0" Header="Fizicka lica" Margin="2" Grid.ColumnSpan="5">
+            <GroupBox Grid.Row="2" Grid.Column="0" Header="{DynamicResource Fizička_lica}" Margin="2" Grid.ColumnSpan="5">
 
                 <Grid>
                     <Grid.ColumnDefinitions >
@@ -246,87 +246,87 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Fizicko lice - Pasosi" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Pasoši}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="0" Grid.Column="4" x:Name="btnFizickoLicePasosi" Click="btnFizickoLiceAmbasadaPasosi_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Fizicko lice - Ambasada prijem" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Ambasada_prijem}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="1" Grid.Column="4" x:Name="btnFizickoLiceAmbasadaPrijem" Click="btnFizickoLiceAmbasadaPrijem_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Fizicko lice - Viza podizanje" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Viza_podizanje}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="2" Grid.Column="4" x:Name="btnFizickoLiceVizaPodizanje" Click="btnFizickoLiceVizaPodizanje_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="Fizicko lice - Viza isticanje" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Viza_isticanje}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="3" Grid.Column="4" x:Name="btnFizickoLiceVizaIsticanje" Click="btnFizickoLiceVizaIsticanje_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="Fizicko lice - Radna dozvola" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Radna_dozvola}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="4" Grid.Column="4" x:Name="btnFizickoLiceRadnaDozvola" Click="btnFizickoLiceRadnaDozvola_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="Fizicko lice - Vozacka dozvola" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Vozaćka_dozvola}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="5" Grid.Column="4" x:Name="btnFizickoLiceVozackaDozvola" Click="btnFizickoLiceVozackaDozvola_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="Fizicko lice - Ambasada porodica" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Ambasada_porodica}" HorizontalAlignment="Left"/>
                     <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Dana"/>
+                    <TextBlock Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
                     <TextBox Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
 
                     <Button Grid.Row="6" Grid.Column="4" x:Name="btnFizickoLiceAmbasadaPorodica" Click="btnFizickoLiceAmbasadaPorodica_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="12" Text="PROMENI" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
@@ -334,7 +334,7 @@
 
             </GroupBox>
 
-            <GroupBox Grid.Row="3" Grid.Column="0" Header="Mailovi" Margin="2" Grid.ColumnSpan="5">
+            <GroupBox Grid.Row="3" Grid.Column="0" Header="{DynamicResource EmailDvotacka}" Margin="2" Grid.ColumnSpan="5">
 
                 <Grid>
                     <Grid.ColumnDefinitions >
@@ -352,25 +352,25 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="IME" HorizontalAlignment="Center"     />
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Ime}" HorizontalAlignment="Center"     />
                     <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin=" 2"/>
-                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="PREZIME" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="{DynamicResource Prezime}" HorizontalAlignment="Center" />
                     <TextBox Grid.Row=" 0" Grid.Column=" 3" VerticalAlignment="Center" Margin=" 2"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column=" 0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="MAIL"/>
+                    <TextBlock Grid.Row="1" Grid.Column=" 0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{DynamicResource EmailDvotacka}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin=" 2"/>
 
                     <Button x:Name="btnAddDocument" Grid.Row="2" Grid.Column="1" Click="btnAddDocument_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular"/>
+                            <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="btnCancelDocument" Grid.Row="2" Grid.Column="3" Click="btnCancelDocument_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular" />
+                            <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
 
@@ -394,10 +394,10 @@
                               SelectedItem="{Binding Path=CurrentConstructionSiteDocumentDG, Mode=TwoWay}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="R.B." Header="R.B" Width="auto" IsReadOnly="True"/>
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Surname" Header="Prezime"  Width="*" IsReadOnly="True"/>
-                            <DataGridTextColumn SortMemberPath="Mail" Header="Mail"  Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn SortMemberPath="R.B." Header="{DynamicResource RTackabTacka}" Width="auto" IsReadOnly="True"/>
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Surname" Header="{DynamicResource Prezime}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn SortMemberPath="Mail" Header="{DynamicResource EmailDvotacka}"  Width="*" IsReadOnly="True"/>
                             <DataGridTemplateColumn Header="" Width="Auto">
 
                             </DataGridTemplateColumn>
@@ -411,14 +411,14 @@
             <Button x:Name="btnSave" Click="btnSave_Click" Margin="2" Background="#007ACC" Grid.Column=" 3" Grid.Row="4">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                    <TextBlock Text=" SAČUVAJ " Foreground="White" FontWeight="Bold" FontSize="20"/>
+                    <TextBlock Text="{DynamicResource SNIMI}" Foreground="White" FontWeight="Bold" FontSize="20"/>
                 </StackPanel>
             </Button>
 
             <Button Grid.Column="4" x:Name="btnCancel" Click="btnCancel_Click" Margin="2" Background="#007ACC" Grid.Row="4">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                    <TextBlock Text=" ZATVORI " FontSize="25" Foreground="White" FontWeight="Bold"/>
+                    <TextBlock Text="{DynamicResource ZATVORI}" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
             </Button>
 
