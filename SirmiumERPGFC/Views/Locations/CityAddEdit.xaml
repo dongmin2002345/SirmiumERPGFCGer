@@ -23,7 +23,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Osnovni podaci o gradu" Margin="2 2 2 0">
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Osnovni_podaci_o_gradu}" Margin="2 2 2 0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -42,22 +42,22 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Poštanski broj:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Poštanski_brojDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtZipCode"  Margin="2" Text="{Binding Path=CurrentCity.ZipCode}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv grada:" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_gradaDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtName" Margin="2" Text="{Binding Path=CurrentCity.Name}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država:" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
                     <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
                                         CurrentCountry="{Binding Path=CurrentCity.Country, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Region:" />
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource RegionDvotacka}" />
                     <popups:RegionPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSpecies" 
                                                 CurrentCountry="{Binding Path=CurrentCity.Country, Mode=TwoWay}"
                                                 CurrentRegion="{Binding Path=CurrentCity.Region, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Opština:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpštinaDvotacka}" />
                     <popups:MunicipalityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popLitter" 
                                         CurrentRegion="{Binding Path=CurrentCity.Region, Mode=TwoWay}"
                                         CurrentMunicipality="{Binding Path=CurrentCity.Municipality, Mode=TwoWay}"/>
@@ -84,7 +84,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text=" ODUSTANI " FontSize="20" Foreground="White" FontWeight="Bold"/>
+                        <TextBlock Text="{DynamicResource ODUSTANI}" FontSize="20" Foreground="White" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
             </Grid>

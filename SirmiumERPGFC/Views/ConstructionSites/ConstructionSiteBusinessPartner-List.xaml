@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="Pretraga" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -43,13 +43,13 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Šifra gradilišta:"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="{DynamicResource Šifra_gradilištaDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByCode" Grid.Column="1" 
                          Text="{Binding Path=ConstructionSiteSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="Ime gradilišta:"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="{DynamicResource Ime_gradilištaDvotacka}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByName" Grid.Column="3" Grid.Row="0"
                          Text="{Binding Path=ConstructionSiteSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
@@ -58,14 +58,14 @@
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="0" Grid.Column="5" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text=" PRIKAŽI " Foreground="White" FontWeight="Regular" />
+                        <TextBlock Text="{DynamicResource PRIKAŽI}" Foreground="White" FontWeight="Regular" />
                     </StackPanel>
                 </Button>
             </Grid>
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Podaci po gradilištima" Margin="2,1,2,1" Grid.Row="1" VerticalAlignment="Stretch">
+        <GroupBox Header="{DynamicResource Podaci_po_gradilištima}" Margin="2,1,2,1" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -125,11 +125,11 @@
                               SelectedItem="{Binding Path=CurrentConstructionSite}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="City.Name" Header="Grad" Binding="{Binding City.Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Grad}" Binding="{Binding City.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
                                     <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
@@ -164,7 +164,7 @@
         <GridSplitter Grid.Row="2" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
 
         <!--    Items container    -->
-        <GroupBox Header="Firme unutar gradilišta" Margin="2 1 2 2" Grid.Row="3">
+        <GroupBox Header="{DynamicResource Firme_unutar_gradilišta}" Margin="2 1 2 2" Grid.Row="3">
             <Grid>
 
                 <!--Listing-->
@@ -183,9 +183,9 @@
                         ItemsSource="{Binding Path=BusinessPartnersFromDB}"
                         SelectedItem="{Binding Path=CurrentBusinessPartner}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv " Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PIB" Header="PIB " Binding="{Binding PIB}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PIB" Header="{DynamicResource PIB}" Binding="{Binding PIB}" Width="*" IsReadOnly="True" />
 
                     </DataGrid.Columns>
                 </DataGrid>

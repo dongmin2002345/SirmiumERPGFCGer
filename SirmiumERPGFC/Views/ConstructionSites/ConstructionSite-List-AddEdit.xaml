@@ -29,7 +29,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Osnovni podaci o gradilištu" Margin="2 2 2 1">
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Osnovni_podaci_o_gradilištu}" Margin="2 2 2 1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -48,34 +48,34 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtCode"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra gradilišta:" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Šifra_gradilištaDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtInternalCode"  Margin="2" Text="{Binding Path=CurrentConstructionSite.InternalCode}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv gradilišta:" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_gradilištaDvotacka}" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtName"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Name}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država:" />
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
                     <popups:CountryPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCountry" 
                                         CurrentCountry="{Binding Path=CurrentConstructionSite.Country, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
                     <popups:CityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity" 
                                         CurrentCountry="{Binding Path=CurrentConstructionSite.Country, Mode=TwoWay}"
                                         CurrentCity="{Binding Path=CurrentConstructionSite.City, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresa:" />
+                    <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource AdresaDvotacka}" />
                     <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtAddress"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Address}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Maksimalni broj radnika:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Maksimalni_broj_radnikaDvotacka}" />
                     <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtMaxNumOfEmployees"  Margin="2" Text="{Binding Path=CurrentConstructionSite.MaxWorkers}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Početak ugovora:" />
+                    <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Početak_ugovoraDvotacka}" />
                     <DatePicker Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractStartDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractStart}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Istek ugovora:" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
                     <DatePicker Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
 
                 </Grid>
@@ -93,12 +93,12 @@
                 <Button Grid.Column="3" x:Name="btnSaveHeader" Click="btnSaveHeader_Click" Margin="5 0 0 0" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock FontSize="25" Text=" SAČUVAJ ZAGLAVLJE " Foreground="White" FontWeight="Bold"/>
+                        <TextBlock FontSize="25" Text="{DynamicResource SAČUVAJ_ZAGLAVLJE}" Foreground="White" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
             </Grid>
 
-            <GroupBox Header="Dokumenti" Margin="2 1 2 1" Grid.Row="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}" >
+            <GroupBox Header="{DynamicResource Dokumenti}" Margin="2 1 2 1" Grid.Row="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -114,13 +114,13 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Naziv dokumenta:" Margin="2" VerticalAlignment="Center" x:Name="txtConstructionSiteDocumentName" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Naziv_dokumentaDvotacka}" Margin="2" VerticalAlignment="Center" x:Name="txtConstructionSiteDocumentName" />
                     <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Path=CurrentConstructionSiteDocumentForm.Name, Mode=TwoWay}" Margin="2" x:Name="txtDocumentName"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Datum unosa:" Margin="2" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource Datum_unosaDvotacka}" Margin="2" VerticalAlignment="Center" />
                     <DatePicker Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" SelectedDate="{Binding Path=CurrentConstructionSiteDocumentForm.CreateDate, Mode=TwoWay}" Margin="2" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Putanja:" Margin="2" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
                     <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
@@ -129,7 +129,7 @@
                         <TextBox Grid.Column="0" Text="{Binding Path=CurrentConstructionSiteDocumentForm.Path, Mode=TwoWay}" Margin="2" />
                         <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text=" ODABERI " />
+                                <TextBlock Text="{DynamicResource ODABERI}" />
                             </StackPanel>
                         </Button>
                     </Grid>
@@ -137,14 +137,14 @@
                     <Button x:Name="btnAddDocument" Grid.Row="1" Grid.Column="4" Click="btnAddDocument_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular"/>
+                            <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="btnCancelDocument" Grid.Row="1" Grid.Column="5" Click="btnCancelDocument_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular" />
+                            <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
 
@@ -168,9 +168,9 @@
                               SelectedItem="{Binding Path=CurrentConstructionSiteDocumentDG, Mode=TwoWay}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
-                            <DataGridTextColumn SortMemberPath="CreateDate" Header="Datum kreiranja" Binding="{Binding Path=CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Path" Header="Putanja" Binding="{Binding Path=Path}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_kreiranja}" Binding="{Binding Path=CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource Putanja}" Binding="{Binding Path=Path}" IsReadOnly="True" />
                             <DataGridTemplateColumn Header="" Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -194,12 +194,12 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header="Napomene" Margin="2 1 2 1" Grid.Row="3" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+            <GroupBox Header="{DynamicResource Napomene}" Margin="2 1 2 1" Grid.Row="3" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -210,25 +210,25 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Napomena:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource NapomenaDvotacka}" />
                     <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtNote" Height="50" TextWrapping="Wrap"
                              Text="{Binding Path=CurrentConstructionSiteNoteForm.Note, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Datum napomene:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Datum_napomeneDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <DatePicker Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
                                 SelectedDate="{Binding Path=CurrentConstructionSiteNoteForm.NoteDate, Mode=TwoWay}"/>
 
                     <Button x:Name="btnAddNote" Grid.Row="1" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" SAČUVAJ STAVKU " Foreground="White" FontWeight="Regular"/>
+                            <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="btnCancelNote" Grid.Row="1" Grid.Column="5" Click="btnCancelNote_Click" Margin="2" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Regular"/>
+                            <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
@@ -251,8 +251,8 @@
                               SelectedItem="{Binding Path=CurrentConstructionSiteNoteDG, Mode=TwoWay}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Note" Header="Napomena" Binding="{Binding Note}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="NoteDate" Header="Datum napomene" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Note}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum_napomeneDvotacka}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                             <DataGridTemplateColumn Header="" Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -295,7 +295,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text=" ODUSTANI " FontSize="20" Foreground="White" FontWeight="Regular" />
+                        <TextBlock Text="{DynamicResource ODUSTANI}" FontSize="20" Foreground="White" FontWeight="Regular" />
                     </StackPanel>
                 </Button>
             </Grid>

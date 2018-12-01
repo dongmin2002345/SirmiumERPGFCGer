@@ -18,7 +18,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Osnovni podaci"  Margin="2 2 2 0">
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource OSNOVNI_PODACI}"  Margin="2 2 2 0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -31,10 +31,10 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Text="{Binding Path=CurrentBusinessPartnerType.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Naziv tipa:" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_tipaDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentBusinessPartnerType.Name}" />
 
 
@@ -61,7 +61,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text=" ODUSTANI " FontSize="20" Foreground="White" FontWeight="Regular" />
+                        <TextBlock Text="{DynamicResource ODUSTANI}" FontSize="20" Foreground="White" FontWeight="Regular" />
                     </StackPanel>
                 </Button>
             </Grid>

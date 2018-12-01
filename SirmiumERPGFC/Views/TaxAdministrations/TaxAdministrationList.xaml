@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="PRETRAGA" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -76,7 +76,7 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="SWIFT:"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
+                <TextBlock Text="{DynamicResource BICKosaCrtaSWIFTDvotacka}"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
                 <TextBox x:Name="dtSearchByDateOfPaymentTo" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2"
                          Text="{Binding Path=TaxAdministrationSearchObject.SearchBy_SWIFT}"
                          Margin="2"
@@ -85,7 +85,7 @@
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text=" PRETRAGA " Foreground="White" FontWeight="Regular"/>
+                        <TextBlock Text="{DynamicResource PRETRAGA}" Foreground="White" FontWeight="Regular"/>
                     </StackPanel>
                 </Button>
 
@@ -93,7 +93,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="PORESKA UPRAVA" Margin="5,2,5,0" Grid.Row="1" >
+        <GroupBox Header="{DynamicResource Poreska_Uprava}" Margin="5,2,5,0" Grid.Row="1" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -105,7 +105,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
 
-                            <TextBlock Text=" DODAJ " Foreground="White" FontWeight="Regular"/>
+                            <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
@@ -119,7 +119,7 @@
                     <Button x:Name="btnExcel" Click="btnExcel_Click" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Excel01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text=" IZVEZI U EXCEL" Foreground="White" FontWeight="Regular" />
+                            <TextBlock Text="{DynamicResource IZVEZI_U_EXCEL}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
 
@@ -164,14 +164,14 @@
                               SelectedItem="{Binding Path=CurrentTaxAdministration}" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="SecondCode" Header="Šifra poreske uprave" Binding="{Binding SecondCode}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Name" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="City" Header="Grad" Binding="{Binding City.Name}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Bank1" Header="Bank1" Binding="{Binding Bank1}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="IBAN1" Header="IBAN1" Binding="{Binding IBAN1}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="SWIFT" Header="BIC/SWIFT" Binding="{Binding SWIFT}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SecondCode" Header="{DynamicResource Šifra_poreske_uprave}" Binding="{Binding SecondCode}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="City" Header="{DynamicResource Grad}" Binding="{Binding City.Name}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Bank1" Header="{DynamicResource Bank1}" Binding="{Binding Bank1}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IBAN1" Header="{DynamicResource IBAN1}" Binding="{Binding IBAN1}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SWIFT" Header="{DynamicResource BICKosaCrtaSwift}" Binding="{Binding SWIFT}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
                                     <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />

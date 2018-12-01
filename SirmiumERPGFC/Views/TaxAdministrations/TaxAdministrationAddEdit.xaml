@@ -19,7 +19,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Grid.Column="0" Header="Grunddaten"  Margin="2 2 2 0">
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource OSNOVNI_PODACI}"  Margin="2 2 2 0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -39,40 +39,40 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" Text="{Binding Path=CurrentTaxAdministration.Code}" IsEnabled="False" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Šifra poreske uprave:" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Šifra_poreske_uprave}" />
                     <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtSecondCode" Text="{Binding Path=CurrentTaxAdministration.SecondCode}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Name:" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Ime}" />
                     <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentTaxAdministration.Name}" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad:" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
                     <popup:CityPopup Grid.Row="1" Grid.Column="3" x:Name="popCountry" 
                                         CurrentCity="{Binding Path=CurrentTaxAdministration.City, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse1:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Adresa1Dvotacka}" />
                     <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtAddress1" Text="{Binding Path=CurrentTaxAdministration.Address1}" />
 
-                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse2:" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Adresa2Dvotacka}" />
                     <TextBox Grid.Row="2" Grid.Column="3" Margin="2" x:Name="txtAddress2" Text="{Binding Path=CurrentTaxAdministration.Address2}" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Adresse3:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Adresa3Dvotacka}" />
                     <TextBox Grid.Row="3" Grid.Column="1" Margin="2" x:Name="txtAddress3" Text="{Binding Path=CurrentTaxAdministration.Address3}" />
-                    
-                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="Bank1:" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Bank1}" />
                     <popup:BankPopup Grid.Row="3" Grid.Column="3" x:Name="popBank1" 
                                      CurrentCountry="{Binding Path=Germany, Mode=TwoWay}"
                                         CurrentBank="{Binding Path=CurrentTaxAdministration.Bank1, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="IBAN1:" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource IBAN1}" />
                     <TextBox Grid.Row="4" Grid.Column="1" Margin="2" x:Name="txtIBAN1" Text="{Binding Path=CurrentTaxAdministration.IBAN1}" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="BIC/SWIFT:" />
+                    <TextBlock Grid.Row="4" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource BICKosaCrtaSWIFTDvotacka}" />
                     <TextBox Grid.Row="4" Grid.Column="3" Margin="2" x:Name="txtSWIFT" Text="{Binding Path=CurrentTaxAdministration.SWIFT}" />
-                    
-                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Bank2:" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource BankaDvotacka}" />
                     <popup:BankPopup Grid.Row="5" Grid.Column="1" x:Name="popBank2" 
                                      CurrentCountry="{Binding Path=Germany, Mode=TwoWay}"
                                         CurrentBank="{Binding Path=CurrentTaxAdministration.Bank2, Mode=TwoWay}" />
@@ -100,7 +100,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text=" ZATVORI " FontSize="20" Foreground="White" FontWeight="Bold" />
+                        <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" Foreground="White" FontWeight="Bold" />
                     </StackPanel>
                 </Button>
             </Grid>
