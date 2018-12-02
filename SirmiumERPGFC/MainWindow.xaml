@@ -34,46 +34,46 @@
 
         <Fluent:Ribbon Grid.Row="0">
 
-            <Fluent:RibbonTabItem Header="RADNICI" KeyTip="RAD">
-                <Fluent:RibbonGroupBox Header="Radnici - Firme - Gradilišta">
-                    <Fluent:Button x:Name="mniBusinessPartnerEmployees" Click="mniBusinessPartnerEmployees_Click" Header="Radnici po firmama" KeyTip="RPF" Width="70">
+            <Fluent:RibbonTabItem Header="{DynamicResource RADNICI}" KeyTip="RAD">
+                <Fluent:RibbonGroupBox Header="{DynamicResource Radnici_Crtica_Firme_Crtica_Gradilišta}">
+                    <Fluent:Button x:Name="mniBusinessPartnerEmployees" Click="mniBusinessPartnerEmployees_Click" Header="{DynamicResource Radnici_po_firmama}" KeyTip="RPF" Width="90">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\RadniciPoFirmama2.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button x:Name="mniConstructionSiteEmployees" Click="mniConstructionSiteEmployees_Click" Header="Radnici po gradilištu" KeyTip="SEK" Width="70">
+                    <Fluent:Button x:Name="mniConstructionSiteEmployees" Click="mniConstructionSiteEmployees_Click" Header="{DynamicResource Radnici_po_gradilištu}" KeyTip="SEK" Width="90">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\RadniciPoGradilistima2.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button x:Name="mniConstructionSiteBusinessPartners" Click="mniConstructionSiteBusinessPartners_Click" Header="Firme po gradilištu" KeyTip="FPG" Width="70">
+                    <Fluent:Button x:Name="mniConstructionSiteBusinessPartners" Click="mniConstructionSiteBusinessPartners_Click" Header="{DynamicResource Firme_po_gradilištu}" KeyTip="FPG" Width="90">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\FirmePoGradilistima2.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Radnici">
-                    <Fluent:Button Click="mniIndividuals_Click" Header="Radnici" KeyTip="RAD" Width="70">
+                <Fluent:RibbonGroupBox Header="{DynamicResource RADNICI}">
+                    <Fluent:Button Click="mniIndividuals_Click" Header="{DynamicResource RADNICI}" KeyTip="RAD" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Worker.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button Click="mniPhysicalPersons_Click" Header="Fizička lica" KeyTip="RAD" Width="70">
+                    <Fluent:Button Click="mniPhysicalPersons_Click" Header="{DynamicResource Fizička_lica}" KeyTip="RAD" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\FizickaLica.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button Click="mniProfessions_Click" Header="Zanimanja" KeyTip="RAD" Width="70">
+                    <Fluent:Button Click="mniProfessions_Click" Header="{DynamicResource Zanimanja}" KeyTip="RAD" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Zanimanje.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button x:Name="mniFamilyMembers" Click="mniFamilyMembers_Click" Header="Članovi porodice" KeyTip="CPO" Width="70">
+                    <Fluent:Button x:Name="mniFamilyMembers" Click="mniFamilyMembers_Click" Header="{DynamicResource Članovi_porodice}" KeyTip="CPO" Width="110">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Porodica01.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button x:Name="mniLicenceType" Click="mniLicenceType_Click" Header="Tip dozvole" KeyTip="CPO" Width="70">
+                    <Fluent:Button x:Name="mniLicenceType" Click="mniLicenceType_Click" Header="{DynamicResource Tip_dozvole}" KeyTip="CPO" Width="110">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\VozackaDozvola.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
@@ -81,26 +81,26 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="FIRME" KeyTip="FIR">                
-                <Fluent:RibbonGroupBox Header="Firme">
-                    <Fluent:Button Click="mniBusinessPartners_Click" Header="Firme" KeyTip="FIR" Width="70">
+            <Fluent:RibbonTabItem Header="{DynamicResource FIRME}" KeyTip="FIR">
+                <Fluent:RibbonGroupBox Header="{DynamicResource FIRME}">
+                    <Fluent:Button Click="mniBusinessPartners_Click" Header="{DynamicResource FIRME}" KeyTip="FIR" Width="100">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Firme02.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button Click="mniSector_Click" Header="Sektori" KeyTip="SEK" Width="70">
+                    <Fluent:Button Click="mniSector_Click" Header="{DynamicResource SEKTORI}" KeyTip="SEK" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Sektori.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button x:Name="mniWorkActivity" Click="mniWorkActivity_Click" Header="Delatnosti" KeyTip="DEL" Width="70">
+                    <Fluent:Button x:Name="mniWorkActivity" Click="mniWorkActivity_Click" Header="{DynamicResource Delatnosti}" KeyTip="DEL" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Delatnost.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox>
-                    <Fluent:Button x:Name="mniBusinessPartnerType" Click="mniBusinessPartnerType_Click" Header="Tip poslovnog partnera" KeyTip="RNP" Width="85">
+                    <Fluent:Button x:Name="mniBusinessPartnerType" Click="mniBusinessPartnerType_Click" Header="{DynamicResource Tip_poslovnog_partnera}" KeyTip="RNP" Width="90">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\TIP_PP.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
@@ -108,9 +108,9 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="GRADILIŠTA" KeyTip="GRA">
-                <Fluent:RibbonGroupBox Header="Gradilišta">
-                    <Fluent:Button x:Name="mniConstructionSite" Click="mniConstructionSite_Click" Header="Gradilišta" KeyTip="SEK" Width="70">
+            <Fluent:RibbonTabItem Header="{DynamicResource GRADILIŠTA}" KeyTip="GRA">
+                <Fluent:RibbonGroupBox Header="{DynamicResource GRADILIŠTA}">
+                    <Fluent:Button x:Name="mniConstructionSite" Click="mniConstructionSite_Click" Header="{DynamicResource GRADILIŠTA}" KeyTip="SEK" Width="100">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Gradiliste02.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
@@ -118,47 +118,47 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="KARTOTEKA" KeyTip="KAR">
-                <Fluent:RibbonGroupBox Header="Lokacije">
-                    <Fluent:Button x:Name="mniCountries" Click="mniCountries_Click" Header="Države" KeyTip="DRZ" Width="70">
+            <Fluent:RibbonTabItem Header="{DynamicResource KARTOTEKA}" KeyTip="KAR">
+                <Fluent:RibbonGroupBox Header="{DynamicResource Lokacije}">
+                    <Fluent:Button x:Name="mniCountries" Click="mniCountries_Click" Header="{DynamicResource Države}" KeyTip="DRZ" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Dodavanje_Drzave1.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button x:Name="mniRegions" Click="mniRegions_Click" Header="Regioni" KeyTip="REG" Width="70">
+                    <Fluent:Button x:Name="mniRegions" Click="mniRegions_Click" Header="{DynamicResource Regioni}" KeyTip="REG" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Regioni.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button Click="mniMunicipalities_Click" Header="Opstine" KeyTip="OPS" Width="70">
+                    <Fluent:Button Click="mniMunicipalities_Click" Header="{DynamicResource Opštine}" KeyTip="OPS" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Opstine2.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                    <Fluent:Button Click="mniCities_Click" Header="Gradovi" KeyTip="GRA" Width="70">
+                    <Fluent:Button Click="mniCities_Click" Header="{DynamicResource Gradovi}" KeyTip="GRA" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\Gradovi2.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
 
-                <Fluent:RibbonGroupBox Header="Banke">
-                    <Fluent:Button x:Name="mniBanks" Click="mniBanks_Click" Header="Banke" KeyTip="BAN" Width="70">
+                <Fluent:RibbonGroupBox Header="{DynamicResource Banke}">
+                    <Fluent:Button x:Name="mniBanks" Click="mniBanks_Click" Header="{DynamicResource Banke}" KeyTip="BAN" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\bank.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                </Fluent:RibbonGroupBox>              
-                <Fluent:RibbonGroupBox Header="Poreska Uprava">
-                    <Fluent:Button x:Name="mniTaxAdministrations" Click="mniTaxAdministrations_Click" Header="Poreska Uprava" KeyTip="BAN" Width="70">
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="{DynamicResource Poreska_Uprava}">
+                    <Fluent:Button x:Name="mniTaxAdministrations" Click="mniTaxAdministrations_Click" Header="{DynamicResource Poreska_Uprava}" KeyTip="BAN" Width="100">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\tax.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>  
             </Fluent:RibbonTabItem>
-            
-            <Fluent:RibbonTabItem Header="ADMINISTRACIJA" x:Name="mniAdministration" KeyTip="ADM">
+
+            <Fluent:RibbonTabItem Header="{DynamicResource ADMINISTRACIJA}" x:Name="mniAdministration" KeyTip="ADM">
 
                 <Fluent:RibbonGroupBox Header="Excel import">
                     <Fluent:Button x:Name="mniExcelImport" Click="mniExcelImport_Click" Header="Excel import" KeyTip="EXC" Width="70">
@@ -168,24 +168,33 @@
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
 
-                <Fluent:RibbonGroupBox Header="Ulazni računi">
-                    <Fluent:Button Click="mniInputInvoices_Click" Header="Ulazni računi" KeyTip="IZL" Width="70">
+                <Fluent:RibbonGroupBox Header="{DynamicResource Ulazni_računi}">
+                    <Fluent:Button Click="mniInputInvoices_Click" Header="{DynamicResource Ulazni_računi}" KeyTip="IZL" Width="70">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\UlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
-                
-                <Fluent:RibbonGroupBox Header="Izlazni računi">
-                    <Fluent:Button Click="mniOutputInvoices_Click" Header="Izlazni računi" KeyTip="IZL" Width="70">
+
+                <Fluent:RibbonGroupBox Header="{DynamicResource Izlazni_računi}">
+                    <Fluent:Button Click="mniOutputInvoices_Click" Header="{DynamicResource Izlazni_računi}" KeyTip="IZL" Width="80">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
 
-                
-                
+                <Fluent:RibbonGroupBox Header="{DynamicResource Ograničenja}">
+                    <Fluent:Button Click="mniLimitations_Click" Header="{DynamicResource Ograničenja}" KeyTip="OGR" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+
+
+
+
             </Fluent:RibbonTabItem>
 
         </Fluent:Ribbon>

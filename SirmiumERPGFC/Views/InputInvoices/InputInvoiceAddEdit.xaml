@@ -53,38 +53,38 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra računa:"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Šifra_računaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0"  Grid.Column="1" Margin="2"  
                              x:Name="txtInputInvoiceCode" Text="{Binding Path=currentInputInvoice.Code}" IsReadOnly="True"/>
 
                         <!--    BusinessPartner with popup    -->
-                        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="Poslovni Partner:" Margin="5 0 5 0"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="{DynamicResource Poslovni_partnerDvotacka}" Margin="5 0 5 0"/>
                         <popups:BusinessPartnerPopup Grid.Row="0" Grid.Column="3" x:Name="businessPartnerPopup"
                          CurrentBusinessPartner="{Binding Path=currentInputInvoice.BusinessPartner, Mode=TwoWay}"/>
 
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Dobavljač:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource DobavljačDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1"  Grid.Column="1" Margin="2" IsEnabled="True"
                              x:Name="txtSupplier" Text="{Binding Path=currentInputInvoice.Supplier}" />
 
 
-                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Adresa:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{DynamicResource AdresaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="3" Margin="2" x:Name="txtAddress"
                                 Text="{Binding Path=currentInputInvoice.Address, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Broj fakture:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Broj_faktureDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtInvoiceNumber"
                                 Text="{Binding Path=currentInputInvoice.InvoiceNumber, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Datum fakture:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{DynamicResource Datum_faktureDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <DatePicker Grid.Row="2" Grid.Column="3" Margin="2" x:Name="dtInvoiceDate"
                                 SelectedDate="{Binding Path=currentInputInvoice.InvoiceDate, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Valuta:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource ValutaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="3" Grid.Column="1" Margin="2" x:Name="txtCurrency"
                                 Text="{Binding Path=currentInputInvoice.Currency, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="2" Text="Datum plaćanja:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="{DynamicResource Datum_plaćanjaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <DatePicker Grid.Row="3" Grid.Column="3" Margin="2" x:Name="dtDateOfPaymet"
                                 SelectedDate="{Binding Path=currentInputInvoice.DateOfPaymet, Mode=TwoWay}"/>
 
@@ -94,15 +94,15 @@
                                             ItemsSource="{Binding Path=StatusOptions}">
                         </ComboBox>
 
-                        <TextBlock Grid.Row="4" Grid.Column="2" Text="Datum statusa:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="4" Grid.Column="2" Text="{DynamicResource Datum_statusaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <DatePicker Grid.Row="4" Grid.Column="3" Margin="2" x:Name="dtStatusDate"
                                 SelectedDate="{Binding Path=currentInputInvoice.StatusDate, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Opis:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource OpisDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="5" Grid.Column="1" Margin="2" x:Name="txtDescription" 
                                 Text="{Binding Path=currentInputInvoice.Description, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="5" Grid.Column="2" Text="Putanja:" Margin="2" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="5" Grid.Column="2" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
                         <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
@@ -111,7 +111,7 @@
                             <TextBox Grid.Column="0" Text="{Binding Path=currentInputInvoice.Path, Mode=TwoWay}" Margin="2" />
                             <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text=" ODABERI " />
+                                    <TextBlock Text="{DynamicResource ODABERI}" />
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -142,7 +142,7 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Neto:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource NetoDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtBase" 
                              Text="{Binding Path=currentInputInvoice.AmountNet, Converter={StaticResource stringToDoubleConverter}}" Grid.ColumnSpan="2"  />
 
@@ -154,7 +154,7 @@
                         <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtRebate" 
                              Text="{Binding Path=currentGivenAdvanceFinancialInvoice.SumOfRebate, Converter={StaticResource stringToDoubleConverter}}" Grid.ColumnSpan="2" IsEnabled="False"/>  -->
 
-                        <TextBlock Grid.Row="1" Grid.Column="3" Text="PDV%:" VerticalAlignment="Center" Margin="5 0 5 0"   />
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource PDVProcenatDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"   />
                         <TextBox Grid.Row="1" Grid.Column="4" Margin="2" x:Name="txtPdvPercent" 
                         Text="{Binding Path=currentInputInvoice.PDVPercent}"  />
                         <!--<ComboBox Grid.Row="1" Grid.Column="4" Margin="2" x:Name="cbxPdvPercent"
@@ -165,7 +165,7 @@
                         <TextBox Grid.Row="1" Grid.Column="5" Margin="2" x:Name="txtPdv" 
                              Text="{Binding Path=currentInputInvoice.PDV, Converter={StaticResource stringToDoubleConverter}}" IsEnabled="False"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Bruto:" VerticalAlignment="Center"  Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource BrutoDvotacka}" VerticalAlignment="Center"  Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtTotalValue" 
                              Text="{Binding Path=currentInputInvoice.AmountGross, Converter={StaticResource stringToDoubleConverter}}" Grid.ColumnSpan="2" IsEnabled="False"/>
 
@@ -178,13 +178,13 @@
                         <Button x:Name="btnSave" Click="btnSave_Click" Margin="5 0 0 5" Width="150" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                <TextBlock Text=" SAČUVAJ " Foreground="White" FontWeight="Bold" />
+                                <TextBlock Text="{DynamicResource SAČUVAJ_STAVKE}" Foreground="White" FontWeight="Bold" />
                             </StackPanel>
                         </Button>
                         <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 5" Width="150" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                <TextBlock Text=" ODUSTANI " Foreground="White" FontWeight="Bold" />
+                                <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Bold" />
                             </StackPanel>
                         </Button>
 

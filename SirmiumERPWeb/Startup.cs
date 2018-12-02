@@ -12,6 +12,10 @@ using RepositoryCore.DbViews.Common.Companies;
 using RepositoryCore.DbViews.Common.Identity;
 using RepositoryCore.DbViews.Common.Invoices;
 using RepositoryCore.DbViews.Common.Locations;
+using RepositoryCore.DbViews.Common.Professions;
+using RepositoryCore.DbViews.Common.Sectors;
+using RepositoryCore.DbViews.Common.TaxAdministrations;
+using RepositoryCore.DbViews.Common.ToDos;
 using RepositoryCore.DbViews.ConstructionSites;
 using RepositoryCore.DbViews.Employees;
 using RepositoryCore.DbViews.PhysicalPersons;
@@ -251,6 +255,15 @@ namespace SirmiumERPWeb
             MunicipalityView.CreateView();
             CityView.CreateView();
 
+            ProfessionView.CreateView();
+
+            SectorView.CreateView();
+            AgencyView.CreateView();
+
+            TaxAdministrationView.CreateView();
+
+            ToDoView.CreateView();
+
             EmployeeByBusinessPartnerView.CreateView();
             EmployeeByConstructionSiteView.CreateView();
             EmployeeCardView.CreateView();
@@ -264,8 +277,10 @@ namespace SirmiumERPWeb
             LicenceTypeView.CreateView();
             PhysicalPersonView.CreateView();
 
+            ConstructionSiteCalculationView.CreateView();
             ConstructionSiteDocumentView.CreateView();
             ConstructionSiteNoteView.CreateView();
+            ConstructionSiteView.CreateView();
 
         }
     }

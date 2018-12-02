@@ -7,7 +7,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:SirmiumERPGFC.Identity.Views"
         mc:Ignorable="d"
-        Title="Logovanje" Height="145" Width="800"
+        Title="{DynamicResource login}" Height="145" Width="800"
         BorderBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="2"
         WindowStartupLocation="CenterScreen"
@@ -50,7 +50,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
                         <TextBlock Text=" " />
-                        <TextBlock Text="{DynamicResource close}" />
+                        <TextBlock Text="{DynamicResource ZATVORI}" />
                     </StackPanel>
                 </Button>
 

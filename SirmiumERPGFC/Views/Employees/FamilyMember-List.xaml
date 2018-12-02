@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="Pretraga " IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -42,7 +42,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Naziv:"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="{DynamicResource NazivDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByName" Grid.Column="1" 
                          Text="{Binding Path=FamilyMemberSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
@@ -51,14 +51,14 @@
                 <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="4" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text=" PRIKAŽI " Foreground="White" FontWeight="Regular"/>
+                        <TextBlock Text="{DynamicResource PRIKAŽI}" Foreground="White" FontWeight="Regular"/>
                     </StackPanel>
                 </Button>
             </Grid>
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Članovi porodice" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
+        <GroupBox Header="{DynamicResource Članovi_porodice}" Margin="2,1,2,2" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -69,7 +69,7 @@
                     <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text=" DODAJ " Foreground="White" FontWeight="Regular"/>
+                            <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
@@ -125,9 +125,9 @@
                           SelectedItem="{Binding Path=CurrentFamilyMember, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
                                     <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />

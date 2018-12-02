@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Grid.Column="0" Header="Unos radnika i cena za gradilište" Margin="2">
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Unos_radnika_i_cena_za_gradilište}" Margin="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -35,13 +35,13 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Br. radnika koji odlaze:" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Br._radnika_koji_odlazeDvotacka}" />
                 <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNumOfEmployees" Text="{Binding Path=CurrentConstructionSiteCalculation.NumOfEmployees}"  />
 
-                <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Cena po radniku:" />
+                <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cena_po_radnikuDvotacka}" />
                 <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculation.EmployeePrice}"  />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Broj meseci:" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Broj_meseciDvotacka}" />
                 <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculation.NumOfMonths}"  />
 
             </Grid>
@@ -68,7 +68,7 @@
             <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                    <TextBlock Text=" ZATVORI " FontSize="20" Foreground="White" FontWeight="Regular" />
+                    <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" Foreground="White" FontWeight="Regular" />
                 </StackPanel>
             </Button>
         </Grid>
