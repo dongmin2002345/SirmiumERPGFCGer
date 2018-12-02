@@ -746,6 +746,35 @@ namespace SirmiumERPGFC.Views.Employees
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
+
+        private void btnEmployeeExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                EmployeeExcelReport.Show(CurrentEmployee);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+
+        private void btnExcelMS0129_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (CurrentEmployee == null)
+                {
+                    MainWindow.WarningMessage = "Morate odabrati radnika";
+                    return;
+                }
+                MS0129Report.Show(CurrentEmployee);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
     }
 }
 

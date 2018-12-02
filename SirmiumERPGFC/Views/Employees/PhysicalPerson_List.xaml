@@ -155,19 +155,6 @@
                         <DataGridTextColumn SortMemberPath="PhysicalPersonCode" Header="Šifra" Binding="{Binding PhysicalPersonCode}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SurName" Header="Prezime" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ConstructionSiteCode" Header="Šifra (Gradilište)" IsReadOnly="True">
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding StringFormat="{}{0} ( {1} )">
-                                    <Binding Path="ConstructionSiteCode" />
-                                    <Binding Path="ConstructionSiteName" />
-                                </MultiBinding>
-                            </DataGridTextColumn.Binding>
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Header="Datum rođenja" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="Adresa" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="Broj pasoša" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
@@ -193,6 +180,11 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button x:Name="btnPhysicalPersonExcel" Click="btnPhysicalPersonExcel_Click" Margin="2 0 2 0" CommandParameter="{Binding}" ToolTip="Izvezi u EXCEL">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                            </StackPanel>
+                                        </Button>
                                         <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="0" CommandParameter="{Binding}" ToolTip="Promeni">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />

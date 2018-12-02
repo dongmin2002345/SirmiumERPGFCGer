@@ -416,8 +416,10 @@ namespace SirmiumERPGFC.Views.Administrations
 
                     for (int i = 2; i <= rowCount; i++)
                     {
+                        BankButtonContent = i + " od " + rowCount;
+
                         BankViewModel bank = new BankViewModel();
-                        bank.Code = xlRange.Cells[i, 1].Text;
+                        bank.Swift = xlRange.Cells[i, 1].Text;
                         bank.Name = xlRange.Cells[i, 2].Text;
                         bank.Country = new CountryViewModel() { Mark = xlRange.Cells[i, 3].Text };
 
@@ -428,7 +430,29 @@ namespace SirmiumERPGFC.Views.Administrations
                         bank.CreatedAt = DateTime.Now;
                         bank.UpdatedAt = DateTime.Now;
 
-                        banks.Add(bank);
+                        if (banks.Where(x => x.Swift == bank.Swift).Count() == 0)
+                        {
+                            banks.Add(bank);
+
+                            if (i % 100 == 0)
+                            {
+                                BankButtonContent = " Unos podataka u toku... ";
+                                BankButtonEnabled = false;
+
+                                string apiUrlTmp = BaseApiUrl + "/SeedData/SeedBanks";
+                                string valuesTmp = JsonConvert.SerializeObject(
+                                    banks,
+                                    Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                    });
+
+                                SendData(apiUrlTmp, valuesTmp);
+
+                                banks.Clear();
+                            }
+                        }
                     }
                 }
                 #endregion
@@ -485,24 +509,6 @@ namespace SirmiumERPGFC.Views.Administrations
                     {
                         CityButtonContent = i + " od " + rowCount;
 
-                        CityViewModel city = new CityViewModel();
-                        city.Code = xlRange.Cells[i, 1].Text;
-                        city.ZipCode = xlRange.Cells[i, 1].Text;
-                        city.Name = xlRange.Cells[i, 2].Text;
-                        city.Country = new CountryViewModel() { Mark = xlRange.Cells[i, 7].Text };
-                        city.Municipality = new MunicipalityViewModel() { MunicipalityCode = xlRange.Cells[i, 5].Text };
-                        city.Region = new RegionViewModel() { RegionCode = xlRange.Cells[i, 3].Text };
-
-                        city.Identifier = Guid.NewGuid();
-                        city.IsSynced = false;
-                        city.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-                        city.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                        city.CreatedAt = createTime;
-                        city.UpdatedAt = createTime;
-
-                        if (cities.Where(x => x.ZipCode == city.ZipCode).Count() == 0)
-                            cities.Add(city);
-
                         RegionViewModel region = new RegionViewModel();
                         region.Code = xlRange.Cells[i, 3].Text;
                         region.RegionCode = xlRange.Cells[i, 3].Text;
@@ -535,6 +541,77 @@ namespace SirmiumERPGFC.Views.Administrations
 
                         if (municipalities.Where(x => x.MunicipalityCode == municipality.MunicipalityCode).Count() == 0)
                             municipalities.Add(municipality);
+
+                        CityViewModel city = new CityViewModel();
+                        city.Code = xlRange.Cells[i, 1].Text;
+                        city.ZipCode = xlRange.Cells[i, 1].Text;
+                        city.Name = xlRange.Cells[i, 2].Text;
+                        city.Country = new CountryViewModel() { Mark = xlRange.Cells[i, 7].Text };
+                        city.Municipality = new MunicipalityViewModel() { MunicipalityCode = xlRange.Cells[i, 5].Text };
+                        city.Region = new RegionViewModel() { RegionCode = xlRange.Cells[i, 3].Text };
+
+                        city.Identifier = Guid.NewGuid();
+                        city.IsSynced = false;
+                        city.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                        city.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                        city.CreatedAt = createTime;
+                        city.UpdatedAt = createTime;
+
+                        if (cities.Where(x => x.ZipCode == city.ZipCode).Count() == 0)
+                        {
+                            cities.Add(city);
+
+                            if (i % 100 == 0)
+                            {
+                                CityButtonContent = " Unos regiona u toku... ";
+                                CityButtonEnabled = false;
+
+                                string apiUrlTmp = BaseApiUrl + "/SeedData/SeedRegions";
+                                string valuesTmp = JsonConvert.SerializeObject(
+                                    regions,
+                                    Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                    });
+
+                                SendData(apiUrlTmp, valuesTmp);
+                                regions.Clear();
+
+
+                                CityButtonContent = " Unos opstina u toku... ";
+                                CityButtonEnabled = false;
+
+                                apiUrlTmp = BaseApiUrl + "/SeedData/SeedMunicipalities";
+                                valuesTmp = JsonConvert.SerializeObject(
+                                    municipalities,
+                                    Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                    });
+
+                                SendData(apiUrlTmp, valuesTmp);
+                                municipalities.Clear();
+
+
+                                CityButtonContent = " Unos gradova u toku... ";
+                                CityButtonEnabled = false;
+
+                                apiUrlTmp = BaseApiUrl + "/SeedData/SeedCities";
+                                valuesTmp = JsonConvert.SerializeObject(
+                                    cities,
+                                    Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                    });
+
+                                SendData(apiUrlTmp, valuesTmp);
+                                cities.Clear();
+                            }
+                        }
+
                     }
                 }
                 #endregion
@@ -671,9 +748,12 @@ namespace SirmiumERPGFC.Views.Administrations
 
                     for (int i = 2; i <= rowCount; i++)
                     {
+                        LicenceTypeButtonContent = i + " od " + rowCount;
+
                         LicenceTypeViewModel licenceType = new LicenceTypeViewModel();
-                        licenceType.Code = xlRange.Cells[i, 1].Text;
-                        licenceType.Category = xlRange.Cells[i, 2].Text;
+                        licenceType.Category = xlRange.Cells[i, 1].Text;
+                        licenceType.Description = xlRange.Cells[i, 2].Text;
+                        licenceType.Country = new CountryViewModel() { Mark = xlRange.Cells[i, 3].Text };
 
                         licenceType.Identifier = Guid.NewGuid();
                         licenceType.IsSynced = false;
@@ -682,7 +762,29 @@ namespace SirmiumERPGFC.Views.Administrations
                         licenceType.CreatedAt = DateTime.Now;
                         licenceType.UpdatedAt = DateTime.Now;
 
-                        licenceTypes.Add(licenceType);
+                        if (licenceTypes.Where(x => x.Code == licenceType.Code).Count() == 0)
+                        {
+                            licenceTypes.Add(licenceType);
+
+                            if (i % 100 == 0)
+                            {
+                                BankButtonContent = " Unos podataka u toku... ";
+                                BankButtonEnabled = false;
+
+                                string apiUrlTmp = BaseApiUrl + "/SeedData/SeedLicenceTypes";
+                                string valuesTmp = JsonConvert.SerializeObject(
+                                    licenceTypes,
+                                    Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                    });
+
+                                SendData(apiUrlTmp, valuesTmp);
+
+                                licenceTypes.Clear();
+                            }
+                        }
                     }
                 }
                 #endregion

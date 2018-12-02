@@ -188,7 +188,10 @@
     <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerGerExcelReport.cs" />
     <Compile Include="Reports\ConstructionSites\ConstructionSitesExcelReport.cs" />
+    <Compile Include="Reports\Employees\EmployeeExcelReport.cs" />
     <Compile Include="Reports\Employees\EmployeesExcelReport.cs" />
+    <Compile Include="Reports\Employees\MS0129Report.cs" />
+    <Compile Include="Reports\Employees\PhysicalPersonExcelReport.cs" />
     <Compile Include="Reports\Employees\PhysicalPersonsExcelReport.cs" />
     <Compile Include="Reports\InputInvoices\InputInvoiceExcelReport.cs" />
     <Compile Include="Reports\InputInvoices\InputInvoicesExcelReport.cs" />
@@ -1183,6 +1186,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Images\saveNovi.png" />
+    <Content Include="Resources\Bundesagentur.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>

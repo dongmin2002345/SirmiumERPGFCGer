@@ -38,6 +38,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         IBusinessPartnerLocationService businessPartnerLocationService;
         IBusinessPartnerPhoneService businessPartnerPhoneService;
         IBusinessPartnerOrganizationUnitService businessPartnerOrganizationUnitService;
+        IBusinessPartnerDocumentService businessPartnerDocumentService;
         #endregion
 
         #region BusinessPartnersFromDB
@@ -86,6 +87,17 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     _CurrentBusinessPartner = value;
                     NotifyPropertyChanged("CurrentBusinessPartner");
+
+                    if (_CurrentBusinessPartner != null)
+                    {
+                        Thread th = new Thread(() =>
+                        {
+                            DisplayDocumentData();
+                            DisplayPhoneData();
+                        });
+                        th.IsBackground = true;
+                        th.Start();
+                    }
                 }
             }
         }
@@ -124,6 +136,128 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
         }
         #endregion
+
+
+        #region PhonesFromDB
+        private ObservableCollection<BusinessPartnerPhoneViewModel> _PhonesFromDB;
+
+        public ObservableCollection<BusinessPartnerPhoneViewModel> PhonesFromDB
+        {
+            get { return _PhonesFromDB; }
+            set
+            {
+                if (_PhonesFromDB != value)
+                {
+                    _PhonesFromDB = value;
+                    NotifyPropertyChanged("PhonesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentPhoneForm
+        private BusinessPartnerPhoneViewModel _CurrentPhoneForm = new BusinessPartnerPhoneViewModel();
+
+        public BusinessPartnerPhoneViewModel CurrentPhoneForm
+        {
+            get { return _CurrentPhoneForm; }
+            set
+            {
+                if (_CurrentPhoneForm != value)
+                {
+                    _CurrentPhoneForm = value;
+                    NotifyPropertyChanged("CurrentPhoneForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentPhoneDG
+        private BusinessPartnerPhoneViewModel _CurrentPhoneDG;
+
+        public BusinessPartnerPhoneViewModel CurrentPhoneDG
+        {
+            get { return _CurrentPhoneDG; }
+            set
+            {
+                if (_CurrentPhoneDG != value)
+                {
+                    _CurrentPhoneDG = value;
+                    NotifyPropertyChanged("CurrentPhoneDG");
+                }
+            }
+        }
+        #endregion
+
+        #region PhoneDataLoading
+        private bool _PhoneDataLoading;
+
+        public bool PhoneDataLoading
+        {
+            get { return _PhoneDataLoading; }
+            set
+            {
+                if (_PhoneDataLoading != value)
+                {
+                    _PhoneDataLoading = value;
+                    NotifyPropertyChanged("PhoneDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region BusinessPartnerDocumentsFromDB
+        private ObservableCollection<BusinessPartnerDocumentViewModel> _BusinessPartnerDocumentsFromDB;
+
+        public ObservableCollection<BusinessPartnerDocumentViewModel> BusinessPartnerDocumentsFromDB
+        {
+            get { return _BusinessPartnerDocumentsFromDB; }
+            set
+            {
+                if (_BusinessPartnerDocumentsFromDB != value)
+                {
+                    _BusinessPartnerDocumentsFromDB = value;
+                    NotifyPropertyChanged("BusinessPartnerDocumentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBusinessPartnerDocument
+        private BusinessPartnerDocumentViewModel _CurrentBusinessPartnerDocument;
+
+        public BusinessPartnerDocumentViewModel CurrentBusinessPartnerDocument
+        {
+            get { return _CurrentBusinessPartnerDocument; }
+            set
+            {
+                if (_CurrentBusinessPartnerDocument != value)
+                {
+                    _CurrentBusinessPartnerDocument = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerDocument");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerDocumentDataLoading
+        private bool _BusinessPartnerDocumentDataLoading;
+
+        public bool BusinessPartnerDocumentDataLoading
+        {
+            get { return _BusinessPartnerDocumentDataLoading; }
+            set
+            {
+                if (_BusinessPartnerDocumentDataLoading != value)
+                {
+                    _BusinessPartnerDocumentDataLoading = value;
+                    NotifyPropertyChanged("BusinessPartnerDocumentDataLoading");
+                }
+            }
+        }
+        #endregion
+
 
         #region Pagination data
         int currentPage = 1;
@@ -228,7 +362,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             this.businessPartnerLocationService = DependencyResolver.Kernel.Get<IBusinessPartnerLocationService>();
             this.businessPartnerPhoneService = DependencyResolver.Kernel.Get<IBusinessPartnerPhoneService>();
             this.businessPartnerOrganizationUnitService = DependencyResolver.Kernel.Get<IBusinessPartnerOrganizationUnitService>();
-
+            this.businessPartnerDocumentService = DependencyResolver.Kernel.Get<IBusinessPartnerDocumentService>();
             // Initialize form components
             InitializeComponent();
 
@@ -297,12 +431,55 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDataLoading = false;
         }
 
+        private void DisplayPhoneData()
+        {
+            PhoneDataLoading = true;
+
+            BusinessPartnerPhoneListResponse response = new BusinessPartnerPhoneSQLiteRepository()
+                .GetBusinessPartnerPhonesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                PhonesFromDB = new ObservableCollection<BusinessPartnerPhoneViewModel>(
+                    response.BusinessPartnerPhones ?? new List<BusinessPartnerPhoneViewModel>());
+            }
+            else
+            {
+                PhonesFromDB = new ObservableCollection<BusinessPartnerPhoneViewModel>();
+            }
+
+            PhoneDataLoading = false;
+        }
+
+        private void DisplayDocumentData()
+        {
+            BusinessPartnerDocumentDataLoading = true;
+
+            BusinessPartnerDocumentListResponse response = new BusinessPartnerDocumentSQLiteRepository()
+                .GetBusinessPartnerDocumentsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                BusinessPartnerDocumentsFromDB = new ObservableCollection<BusinessPartnerDocumentViewModel>(
+                    response.BusinessPartnerDocuments ?? new List<BusinessPartnerDocumentViewModel>());
+            }
+            else
+            {
+                BusinessPartnerDocumentsFromDB = new ObservableCollection<BusinessPartnerDocumentViewModel>();
+            }
+
+            BusinessPartnerDocumentDataLoading = false;
+        }
+
         private void SyncData()
         {
             RefreshButtonEnabled = false;
 
             RefreshButtonContent = " Firme ... ";
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
+
+            RefreshButtonContent = " Dokumenti ... ";
+            new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService);
 
             DisplayData();
 
@@ -495,6 +672,26 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             });
             th.IsBackground = true;
             th.Start();
+        }
+
+        #endregion
+
+        #region Display documents
+
+        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentBusinessPartnerDocument.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         #endregion

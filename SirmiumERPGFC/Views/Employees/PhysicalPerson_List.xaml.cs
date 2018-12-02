@@ -5,6 +5,7 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Reports.Employees;
+using SirmiumERPGFC.Reports.PhysicalPersons;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Views.Common;
 using System;
@@ -397,5 +398,17 @@ namespace SirmiumERPGFC.Views.Employees
                 MainWindow.ErrorMessage = ex.Message;
             }
 		}
-	}
+
+        private void btnPhysicalPersonExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PhysicalPersonExcelReport.Show(CurrentPhysicalPerson);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+    }
 }
