@@ -317,6 +317,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
         {
             if (context.ConstructionSites.Where(x => x.Identifier != null && x.Identifier == constructionSite.Identifier).Count() == 0)
             {
+                if (context.ConstructionSites.Where(x => x.InternalCode == constructionSite.InternalCode).Count() > 0)
+                    throw new Exception("Gradilište sa datom šifrom već postoji u bazi!");
+
                 constructionSite.Id = 0;
 
                 constructionSite.Code = GetNewCodeValue(constructionSite.CompanyId ?? 0);

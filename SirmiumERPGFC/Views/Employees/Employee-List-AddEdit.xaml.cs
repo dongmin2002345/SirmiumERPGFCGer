@@ -1058,7 +1058,7 @@ namespace SirmiumERPGFC.Views.Employees
                     }
                     else
                     {
-                        MainWindow.ErrorMessage = "Greška kod čuvanja na serveru!";
+                        MainWindow.ErrorMessage = "Greška kod čuvanja na serveru! " + response.Message;
 
                         SubmitButtonContent = " Proknjiži ";
                         SubmitButtonEnabled = true;

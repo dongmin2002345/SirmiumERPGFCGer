@@ -437,7 +437,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru! " + response.Message;
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
                 }
