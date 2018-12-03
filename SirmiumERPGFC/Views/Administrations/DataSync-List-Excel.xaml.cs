@@ -956,8 +956,8 @@ namespace SirmiumERPGFC.Views.Administrations
                         taxAdministration.IsSynced = false;
                         taxAdministration.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
                         taxAdministration.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                        taxAdministration.CreatedAt = createTime;
-                        taxAdministration.UpdatedAt = createTime;
+                        taxAdministration.CreatedAt = DateTime.Now;
+                        taxAdministration.UpdatedAt = DateTime.Now;
 
                         if (taxAdministrations.Where(x => x.SecondCode == taxAdministration.SecondCode).Count() == 0)
                         {

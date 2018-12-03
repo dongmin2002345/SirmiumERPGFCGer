@@ -45,6 +45,8 @@ namespace DataMapper.Mappers.Common.TaxAdministrations
                 Company = taxAdministration.Company?.ConvertToCompanyViewModelLite(),
                 CreatedBy = taxAdministration.CreatedBy?.ConvertToUserViewModelLite(),
 
+                IsActive = taxAdministration.Active, 
+
                 UpdatedAt = taxAdministration.UpdatedAt,
                 CreatedAt = taxAdministration.CreatedAt,
             };
@@ -79,6 +81,8 @@ namespace DataMapper.Mappers.Common.TaxAdministrations
                 IBAN1 = taxAdministration.IBAN1,
                 SWIFT = taxAdministration.SWIFT,
 
+                IsActive = taxAdministration.Active,
+
                 UpdatedAt = taxAdministration.UpdatedAt,
                 CreatedAt = taxAdministration.CreatedAt,
             };
@@ -108,6 +112,8 @@ namespace DataMapper.Mappers.Common.TaxAdministrations
                 BankId2 = taxAdministrationViewModel.Bank2?.Id ?? null,
                 CreatedById = taxAdministrationViewModel.CreatedBy?.Id ?? null,
                 CompanyId = taxAdministrationViewModel.Company?.Id ?? null,
+
+                Active = taxAdministrationViewModel.IsActive,
 
                 UpdatedAt = taxAdministrationViewModel.UpdatedAt,
                 CreatedAt = taxAdministrationViewModel.CreatedAt,
