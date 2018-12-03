@@ -27,17 +27,30 @@ namespace DataMapper.Mappers.Common.Identity
             {
                 Id = user.Id,
                 Identifier = user.Identifier,
+                Code = user.Code,
                 Username = user.Username,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Password = user.PasswordHash,
                 Email = user.Email,
+
+                CompanyUsers = user.CompanyUsers?.ConvertToCompanyUserViewModelList(),
+
                 IsActive = user.Active,
 
                 UpdatedAt = user.UpdatedAt,
-                CreatedAt = user.CreatedAt
             };
             return userViewModel;
+        }
+
+        public static List<UserViewModel> ConvertToUserViewModelListLite(this IEnumerable<User> users)
+        {
+            List<UserViewModel> userViewModels = new List<UserViewModel>();
+            foreach (User user in users)
+            {
+                userViewModels.Add(user.ConvertToUserViewModelLite());
+            }
+            return userViewModels;
         }
 
         public static UserViewModel ConvertToUserViewModelLite(this User user)
@@ -46,53 +59,36 @@ namespace DataMapper.Mappers.Common.Identity
             {
                 Id = user.Id,
                 Identifier = user.Identifier,
+                Code = user.Code,
                 Username = user.Username,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Password = user.PasswordHash,
                 Email = user.Email,
                 IsActive = user.Active,
+
                 UpdatedAt = user.UpdatedAt,
-                CreatedAt = user.CreatedAt
             };
             return userViewModel;
         }
 
         public static User ConvertToUser(this UserViewModel userViewModel)
         {
-
-            string rolesCSV = "";
-            foreach (String role in userViewModel.Roles)
-            {
-                rolesCSV += role + ",";
-            }
-            if (rolesCSV.Length > 0)
-                rolesCSV = rolesCSV.Substring(0, rolesCSV.Length - 1);
-
-            //var companies = new List<CompanyUsers>();
-
-            //if (userViewModel.Companies != null)
-            //{
-            //    foreach (var item in userViewModel.Companies)
-            //    {
-            //        companies.Add(new CompanyUsers()
-            //        {
-            //            Company = item?.ConvertToCompany()
-            //        });
-            //    }
-            //}
-
-            var userPassword = (String.IsNullOrEmpty(userViewModel.Password) == false ? CalculateHash(userViewModel.Password, userViewModel.Username) : null);
-
             User user = new User()
             {
                 Id = userViewModel.Id,
                 Identifier = userViewModel.Identifier,
+                Code = userViewModel.Code,
                 Username = userViewModel.Username,
                 FirstName = userViewModel.FirstName,
                 LastName = userViewModel.LastName,
-                PasswordHash = userPassword,
+                PasswordHash = userViewModel.Password,
                 Email = userViewModel.Email,
+                Active = userViewModel.IsActive,
+                // Roles = userViewModel.userRolesSplit, // ??
+                CompanyUsers = userViewModel?.CompanyUsers?.ConvertToCompanyUserList(),
+
+                //UpdatedAt = userViewModel.UpdatedAt
             };
 
             return user;

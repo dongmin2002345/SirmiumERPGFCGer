@@ -12,13 +12,15 @@ namespace ServiceWebApi.Implementations.Common.Identity
 {
     public class UserService : IUserService
     {
-        public UserListResponse GetUsers()
+        public UserListResponse GetUsers(int companyId)
         {
             UserListResponse response = new UserListResponse();
             try
             {
-                response = WpfApiHandler.GetFromApi<List<UserViewModel>, UserListResponse>("GetUsers", new Dictionary<string, string>());
-                response.Success = true;
+                response = WpfApiHandler.GetFromApi<List<UserViewModel>, UserListResponse>("GetUsers", new Dictionary<string, string>()
+                {
+                    { "CompanyId", companyId.ToString() }
+                });
             }
             catch (Exception ex)
             {
@@ -30,76 +32,73 @@ namespace ServiceWebApi.Implementations.Common.Identity
             return response;
         }
 
-        public UserResponse GetUser(int id)
+        public UserListResponse GetUsersNewerThan(int companyId, DateTime? lastUpdateTime)
         {
-            UserResponse response = new UserResponse();
+            UserListResponse response = new UserListResponse();
             try
             {
-                response = WpfApiHandler.GetFromApi<UserViewModel, UserResponse>("GetUser", new Dictionary<string, string>() {
-                    { "ID", id.ToString() }
-                });
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.User = null;
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public UserResponse Create(UserViewModel user)
-        {
-            UserResponse response = new UserResponse();
-            try
-            {
-                response = WpfApiHandler.SendToApi<UserViewModel, UserViewModel, UserResponse>(user, "Create");
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.User = null;
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public UserResponse Update(UserViewModel user)
-        {
-            UserResponse response = new UserResponse();
-            try
-            {
-                response = WpfApiHandler.SendToApi<UserViewModel, UserViewModel, UserResponse>(user, "Update");
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.User = null;
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public UserResponse Delete(int id)
-        {
-            UserResponse response = new UserResponse();
-            try
-            {
-                response = WpfApiHandler.GetFromApi<UserViewModel, UserResponse>("Delete", new Dictionary<string, string>()
+                response = WpfApiHandler.GetFromApi<List<UserViewModel>, UserListResponse>("GetUsersNewerThan", new Dictionary<string, string>()
                 {
-                    { "id", id.ToString() }
+                    { "CompanyId", companyId.ToString() },
+                    { "LastUpdateTime", lastUpdateTime.ToString() }
                 });
-                response.Success = true;
             }
             catch (Exception ex)
             {
-                response.User = null;
+                response.Users = new List<UserViewModel>();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public UserResponse Create(UserViewModel re)
+        {
+            UserResponse response = new UserResponse();
+            try
+            {
+                response = WpfApiHandler.SendToApi<UserViewModel, UserResponse>(re, "Create");
+            }
+            catch (Exception ex)
+            {
+                response.User = new UserViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public UserResponse Delete(Guid identifier)
+        {
+            UserResponse response = new UserResponse();
+            try
+            {
+                UserViewModel re = new UserViewModel();
+                re.Identifier = identifier;
+                response = WpfApiHandler.SendToApi<UserViewModel, UserResponse>(re, "Delete");
+            }
+            catch (Exception ex)
+            {
+                response.User = new UserViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public UserListResponse Sync(SyncUserRequest request)
+        {
+            UserListResponse response = new UserListResponse();
+            try
+            {
+                response = WpfApiHandler.SendToApi<SyncUserRequest, UserViewModel, UserListResponse>(request, "Sync");
+            }
+            catch (Exception ex)
+            {
+                response.Users = new List<UserViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }

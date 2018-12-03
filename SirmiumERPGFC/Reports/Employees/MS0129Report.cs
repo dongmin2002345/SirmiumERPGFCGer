@@ -31,8 +31,6 @@ namespace SirmiumERPGFC.Reports.Employees
             sheet1.PageSetup.FitToPagesWide = 1;
             sheet1.PageSetup.Zoom = false;
 
-
-
             int column1Min = 1;
             int column1Max = 12;
             int column2Min = 13;

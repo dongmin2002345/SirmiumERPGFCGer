@@ -8,11 +8,9 @@ namespace RepositoryCore.Abstractions.Common.Companies
     public interface ICompanyRepository
     {
         List<Company> GetCompanies();
-        Company GetCompany(int id);
-        int GetNewCodeValue();
+        List<Company> GetCompaniesNewerThan(DateTime dateFrom);
 
         Company Create(Company company);
-        Company Update(Company company);
         Company Delete(int id);
     }
 }

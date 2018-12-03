@@ -9,5 +9,6 @@ namespace ServiceInterfaces.Messages.Common.Identity
     public class UserListResponse : BaseResponse
     {
         public List<UserViewModel> Users { get; set; }
+        public int TotalItems { get; set; }
     }
 }

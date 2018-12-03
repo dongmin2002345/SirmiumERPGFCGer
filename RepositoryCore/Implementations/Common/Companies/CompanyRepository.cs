@@ -31,98 +31,80 @@ namespace RepositoryCore.Implementations.Common.Companies
             return Companies;
         }
 
-        public Company GetCompany(int id)
+        public string GetNewCodeValue()
         {
-            return context.Companies
-                .FirstOrDefault(x => x.Id == id && x.Active == true);
-        }
+            var CODE_TEMPLATE = "KOR-";
+            int count = context.Companies
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(Company))
+                    .Select(x => x.Entity as Company))
+                    .Count();
+            if (count == 0)
+                return CODE_TEMPLATE + "000001";
+            else
+            {
+                string activeCode = context.Companies
+                    .Union(context.ChangeTracker.Entries()
+                        .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(Company))
+                        .Select(x => x.Entity as Company))
+                        .Where(x => !String.IsNullOrEmpty(x.Code))
+                    .OrderByDescending(x => x.Id)
+                    .FirstOrDefault()
+                    ?.Code ?? "";
 
-        //public Company GetFromDictionary(int userId, int companyId)
-        //{
-        //    lock (CompanyDictionary)
-        //    {
-        //        if (CompanyDictionary.ContainsKey(userId))
-        //        {
-        //            if (CompanyDictionary[userId].ContainsKey(companyId))
-        //            {
-        //                return CompanyDictionary[userId][companyId];
-        //            }
-        //            else
-        //            {
-        //                Company company = GetCompany(companyId);
-        //                ConcurrentDictionary<int, Company> tmpDictionary = CompanyDictionary[userId];
-        //                tmpDictionary.TryAdd(companyId, company);
-        //                CompanyDictionary[userId] = tmpDictionary;
-
-        //                return CompanyDictionary[userId][companyId];
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Company company = GetCompany(companyId);
-        //            ConcurrentDictionary<int, Company> tmpDictionary = new ConcurrentDictionary<int, Company>();
-        //            tmpDictionary.TryAdd(companyId, company);
-        //            CompanyDictionary.TryAdd(userId, tmpDictionary);
-
-        //            return CompanyDictionary[userId][companyId];
-        //        }
-        //    }
-        //}
-
-        //public void ClearDictionary(int userId)
-        //{
-        //    if (CompanyDictionary.ContainsKey(userId))
-        //        CompanyDictionary[userId] = new ConcurrentDictionary<int, Company>();
-        //}
-
-        public int GetNewCodeValue()
-        {
-            var companyID = context.Companies.Max(x => (int?)x.Id);
-            var maxId = (companyID == null ? 0 : companyID);
-            var newId = maxId + 1;
-            if (newId < 1000)
-                newId = 1000 + newId;
-            return (int)newId;
+                activeCode = activeCode.Replace(CODE_TEMPLATE, "");
+                if (!String.IsNullOrEmpty(activeCode))
+                {
+                    int intValue = Int32.Parse(activeCode);
+                    return CODE_TEMPLATE + (intValue + 1).ToString("000000");
+                }
+                else
+                    return "";
+            }
         }
 
         public Company Create(Company company)
         {
-            // Set activity
-            company.Active = true;
-
-            // Set timestamps
-            company.CreatedAt = DateTime.Now;
-            company.UpdatedAt = DateTime.Now;
-
-            // Add Company to database
-            context.Companies.Add(company);
-            return company;
-        }
-
-        public Company Update(Company company)
-        {
-            // Load Company that will be updated
-            Company dbEntry = context.Companies
-                .FirstOrDefault(x => x.Id == company.Id && x.Active == true);
-
-            if (dbEntry != null)
+            if (company.Id < 1)
             {
-                dbEntry.Code = company.Code;
-                dbEntry.Name = company.Name;
-                dbEntry.Address = company.Address;
-                dbEntry.BankAccountNo = company.BankAccountNo;
-                dbEntry.BankAccountName = company.BankAccountName;
-                dbEntry.IdentificationNumber = company.IdentificationNumber;
-                dbEntry.PIBNumber = company.PIBNumber;
-                dbEntry.PIONumber = company.PIONumber;
-                dbEntry.PDVNumber = company.PDVNumber;
-                dbEntry.IndustryCode = company.IndustryCode;
-                dbEntry.IndustryName = company.IndustryName;
-                dbEntry.Email = company.Email;
-                dbEntry.WebSite = company.WebSite;
-                dbEntry.UpdatedAt = DateTime.Now;
+                company.Id = 0;
+                company.Code = GetNewCodeValue();
+
+                // Set activity
+                company.Active = true;
+
+                // Set timestamps
+                company.CreatedAt = DateTime.Now;
+                company.UpdatedAt = DateTime.Now;
+
+                // Add Company to database
+                context.Companies.Add(company);
+                return company;
             }
-            return dbEntry;
+            else
+            {
+                // Load Company that will be updated
+                Company dbEntry = context.Companies
+                    .FirstOrDefault(x => x.Id == company.Id && x.Active == true);
+
+                if (dbEntry != null)
+                {
+                    dbEntry.Code = company.Code;
+                    dbEntry.Name = company.Name;
+                    dbEntry.Address = company.Address;
+                    dbEntry.IdentificationNumber = company.IdentificationNumber;
+                    dbEntry.PIBNumber = company.PIBNumber;
+                    dbEntry.PIONumber = company.PIONumber;
+                    dbEntry.PDVNumber = company.PDVNumber;
+                    dbEntry.IndustryCode = company.IndustryCode;
+                    dbEntry.IndustryName = company.IndustryName;
+                    dbEntry.Email = company.Email;
+                    dbEntry.WebSite = company.WebSite;
+
+                    dbEntry.UpdatedAt = DateTime.Now;
+                }
+                return dbEntry;
+            }
         }
 
         public Company Delete(int id)
@@ -139,6 +121,15 @@ namespace RepositoryCore.Implementations.Common.Companies
                 dbEntry.UpdatedAt = DateTime.Now;
             }
             return dbEntry;
+        }
+
+        public List<Company> GetCompaniesNewerThan(DateTime dateFrom)
+        {
+            List<Company> Companies = context.Companies
+                .Where(x => x.UpdatedAt > dateFrom)
+                .ToList();
+
+            return Companies;
         }
     }
 }

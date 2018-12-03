@@ -35,6 +35,7 @@ using SirmiumERPGFC.Views.Common;
 using SirmiumERPGFC.Views.Administrations;
 using SirmiumERPGFC.Views.InputInvoices;
 using SirmiumERPGFC.Views.TaxAdministrations;
+using SirmiumERPGFC.Views.Users;
 
 namespace SirmiumERPGFC
 {
@@ -466,6 +467,11 @@ namespace SirmiumERPGFC
         private void mniLimitations_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new Limitations();
+        }
+
+        private void mniUsers_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new UserList();
         }
     }
 }

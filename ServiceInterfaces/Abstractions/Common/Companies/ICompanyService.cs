@@ -9,11 +9,11 @@ namespace ServiceInterfaces.Abstractions.Common.Companies
     public interface ICompanyService
     {
         CompanyListResponse GetCompanies();
-        CompanyResponse GetCompany(int id);
-        CompanyResponse GetNewCodeValue();
-        CompanyResponse Create(CompanyViewModel comp);
-        CompanyResponse Update(CompanyViewModel comp);
+        CompanyResponse Create(CompanyViewModel prod);
         CompanyResponse Delete(int id);
+
+        CompanyListResponse GetCompaniesNewerThan(DateTime? dateFrom);
+        CompanyListResponse Sync(SyncCompanyRequest request);
     }
 }
 

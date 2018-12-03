@@ -80,6 +80,20 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
                     #endregion
 
+                    #region CompanyUsers
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE CompanyUsers", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(CompanyUserSQLiteRepository.CompanyUserTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #endregion
 
                     #region Countries

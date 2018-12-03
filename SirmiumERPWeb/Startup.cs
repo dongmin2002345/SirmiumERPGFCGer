@@ -142,6 +142,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<ICompanyUserService, CompanyUserService>();
 
             services.AddScoped<IToDoService, ToDoService>();
 
@@ -243,9 +244,9 @@ namespace SirmiumERPWeb
             BusinessPartnerView.CreateView();
             BusinessPartnerTypeView.CreateView();
 
-            CompanyView.CreateView(); //???
+            //CompanyView.CreateView(); //???
 
-            UserView.CreateView();
+            //UserView.CreateView();
 
             InputInvoiceView.CreateView();
             OutputInvoiceView.CreateView();

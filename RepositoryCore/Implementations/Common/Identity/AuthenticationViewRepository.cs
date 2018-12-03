@@ -55,24 +55,6 @@ namespace RepositoryCore.Implementations.Common.Identity
 
                         user.Active = bool.Parse(reader["Active"].ToString());
                         user.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
-
-                        if (reader["CreatedById"] != null)
-                        {
-                            user.CreatedBy = new User();
-                            user.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
-                            user.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
-                            user.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
-                            user.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
-                        }
-
-                        if (reader["CompanyId"] != null)
-                        {
-                            user.Company = new Company();
-                            user.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
-                            user.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
-                            user.Company.Name = reader["CompanyName"].ToString();
-                        }
-
                     }
                 }
             }

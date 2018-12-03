@@ -52,6 +52,7 @@
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerOrganizationUnitService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerPhoneService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerService.cs" />
+    <Compile Include="Abstractions\Common\Companies\ICompanyUserService.cs" />
     <Compile Include="Abstractions\Common\InputInvoices\IInputInvoiceService.cs" />
     <Compile Include="Abstractions\Common\Locations\ICityService.cs" />
     <Compile Include="Abstractions\Common\Companies\ICompanyService.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Abstractions\Employees\IFamilyMemberService.cs" />
     <Compile Include="Abstractions\Employees\ILicenceTypeService.cs" />
     <Compile Include="Abstractions\Employees\IPhysicalPersonService.cs" />
+    <Compile Include="Helpers\UserRoleHelper.cs" />
     <Compile Include="InvoiceHelpers\InvoiceHelpers.cs" />
     <Compile Include="Messages\Banks\BankCodeResponse.cs" />
     <Compile Include="Messages\Banks\BankListResponse.cs" />
@@ -118,6 +120,11 @@
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerPhoneRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerRequest.cs" />
     <Compile Include="Messages\Common\BusinessPartners\SyncBusinessPartnerTypeRequest.cs" />
+    <Compile Include="Messages\Common\Companies\CompanyUserListResponse.cs" />
+    <Compile Include="Messages\Common\Companies\CompanyUserResponse.cs" />
+    <Compile Include="Messages\Common\Companies\SyncCompanyRequest.cs" />
+    <Compile Include="Messages\Common\Companies\SyncCompanyUserRequest.cs" />
+    <Compile Include="Messages\Common\Identity\SyncUserRequest.cs" />
     <Compile Include="Messages\Common\InputInvoices\InputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\InputInvoices\InputInvoiceResponse.cs" />
     <Compile Include="Messages\Common\InputInvoices\SyncInputInvoiceRequest.cs" />
@@ -219,6 +226,8 @@
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerPhoneViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerTypeViewModel.cs" />
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerViewModel.cs" />
+    <Compile Include="ViewModels\Common\Companies\CompanyUserViewModel.cs" />
+    <Compile Include="ViewModels\Common\Identity\UserRoleViewModel.cs" />
     <Compile Include="ViewModels\Common\InputInvoices\InputInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\CityViewModel.cs" />
     <Compile Include="ViewModels\Common\Companies\CompanyViewModel.cs" />
@@ -253,6 +262,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GlobalValidations\GlobalValidations.csproj">
+      <Project>{1AFDD4F3-1326-47A1-95AB-F73814AF1FAB}</Project>
+      <Name>GlobalValidations</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,6 +9,5 @@ namespace ServiceInterfaces.Messages.Common.Companies
     public class CompanyResponse : BaseResponse
     {
         public CompanyViewModel Company { get; set; }
-        public int NewCode { get; set; }
     }
 }

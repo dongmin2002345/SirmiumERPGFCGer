@@ -1,4 +1,5 @@
-﻿using ServiceInterfaces.ViewModels.Base;
+﻿using GlobalValidations;
+using ServiceInterfaces.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,9 @@ namespace ServiceInterfaces.ViewModels.Common.Companies
     {
 
         #region CompanyCode
-        private int _CompanyCode;
+        private string _CompanyCode;
 
-        [Required(ErrorMessage = "Obavezno polje: Sifra")]
-        public int CompanyCode
+        public string CompanyCode
         {
             get { return _CompanyCode; }
             set
@@ -31,6 +31,7 @@ namespace ServiceInterfaces.ViewModels.Common.Companies
         private string _CompanyName;
 
         [Required(ErrorMessage = "Obavezno polje: Naziv")]
+        [requiredField_Validator]
         public string CompanyName
         {
             get { return _CompanyName; }
@@ -65,6 +66,8 @@ namespace ServiceInterfaces.ViewModels.Common.Companies
         #region Address
         private string _Address;
 
+        [Required(ErrorMessage = "Obavezno polje: Adresa")]
+        [requiredField_Validator]
         public string Address
         {
             get { return _Address; }
@@ -79,43 +82,11 @@ namespace ServiceInterfaces.ViewModels.Common.Companies
         }
         #endregion
 
-        #region BankAccountNo
-        private string _BankAccountNo;
-
-        public string BankAccountNo
-        {
-            get { return _BankAccountNo; }
-            set
-            {
-                if (_BankAccountNo != value)
-                {
-                    _BankAccountNo = value;
-                    NotifyPropertyChanged("BankAccountNo");
-                }
-            }
-        }
-        #endregion
-
-        #region BankAccountName
-        private string _BankAccountName;
-
-        public string BankAccountName
-        {
-            get { return _BankAccountName; }
-            set
-            {
-                if (_BankAccountName != value)
-                {
-                    _BankAccountName = value;
-                    NotifyPropertyChanged("BankAccountName");
-                }
-            }
-        }
-        #endregion
-
         #region IdentificationNumber
         private string _IdentificationNumber;
 
+        [Required(ErrorMessage = "Obavezno polje: Matični broj")]
+        [requiredField_Validator]
         public string IdentificationNumber
         {
             get { return _IdentificationNumber; }
@@ -133,7 +104,8 @@ namespace ServiceInterfaces.ViewModels.Common.Companies
         #region PIBNumber
         private string _PIBNumber;
 
-        [Required(ErrorMessage = "Obavezno polje: PIB")]
+        [Required(ErrorMessage = "Obavezno polje: Poreski broj (PIB)")]
+        [requiredField_Validator]
         public string PIBNumber
         {
             get { return _PIBNumber; }
@@ -167,7 +139,8 @@ namespace ServiceInterfaces.ViewModels.Common.Companies
         #region PDVNumber
         private string _PDVNumber;
 
-        [Required(ErrorMessage = "Obavezno polje: PDV")]
+        [Required(ErrorMessage = "Obavezno polje: PDV broj")]
+        [requiredField_Validator]
         public string PDVNumber
         {
             get { return _PDVNumber; }
@@ -283,5 +256,75 @@ namespace ServiceInterfaces.ViewModels.Common.Companies
             }
         }
         #endregion
+
+
+        #region Search_Code
+        private string _Search_Code;
+
+        public string Search_Code
+        {
+            get { return _Search_Code; }
+            set
+            {
+                if (_Search_Code != value)
+                {
+                    _Search_Code = value;
+                    NotifyPropertyChanged("Search_Code");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Name
+        private string _Search_Name;
+
+        public string Search_Name
+        {
+            get { return _Search_Name; }
+            set
+            {
+                if (_Search_Name != value)
+                {
+                    _Search_Name = value;
+                    NotifyPropertyChanged("Search_Name");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Pib
+        private string _Search_Pib;
+
+        public string Search_Pib
+        {
+            get { return _Search_Pib; }
+            set
+            {
+                if (_Search_Pib != value)
+                {
+                    _Search_Pib = value;
+                    NotifyPropertyChanged("Search_Pib");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_City
+        private string _Search_City;
+
+        public string Search_City
+        {
+            get { return _Search_City; }
+            set
+            {
+                if (_Search_City != value)
+                {
+                    _Search_City = value;
+                    NotifyPropertyChanged("Search_City");
+                }
+            }
+        }
+        #endregion
+
     }
 }
