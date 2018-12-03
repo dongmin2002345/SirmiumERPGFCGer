@@ -101,13 +101,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB " +
+                        "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB, IsSynced " +
                         "FROM BusinessPartners " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
                         "AND CompanyId = @CompanyId AND Name IS NOT NULL AND Name != '' " +
                         "UNION " +
-                        "SELECT ServerId, Identifier, Code, InternalCode, NameGer AS NAME, TaxNr AS PIB " +
+                        "SELECT ServerId, Identifier, Code, InternalCode, NameGer AS NAME, TaxNr AS PIB, IsSynced " +
                         "FROM BusinessPartners " +
                         "WHERE (@Name IS NULL OR @Name = '' OR NameGer LIKE @Name) " +
                         "AND (@PIB IS NULL OR @PIB = '' OR TaxNr LIKE @PIB) " +
@@ -129,6 +129,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         businessPartners.Add(dbEntry);
                     }
 
