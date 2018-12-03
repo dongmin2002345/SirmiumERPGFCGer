@@ -43,7 +43,7 @@ namespace SirmiumERPGFC
             EventManager.RegisterClassHandler(typeof(ComboBox), DatePicker.PreviewKeyDownEvent, new KeyEventHandler(Grid_PreviewKeyDown));
 
             ResourceDictionary dict = new ResourceDictionary();
-            dict.Source = new Uri("\\Resources\\Languages\\StringResources-GER.xaml", UriKind.Relative);
+            dict.Source = new Uri("\\Resources\\Languages\\StringResources-SRB.xaml", UriKind.Relative);
             this.Resources.MergedDictionaries.Add(dict);
 
             base.OnStartup(e);

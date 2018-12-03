@@ -35,7 +35,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Br._radnika_koji_odlazeDvotacka}" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource BrTacka_radnika_koji_odlazeDvotacka}" />
                 <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNumOfEmployees" Text="{Binding Path=CurrentConstructionSiteCalculation.NumOfEmployees}"  />
 
                 <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cena_po_radnikuDvotacka}" />

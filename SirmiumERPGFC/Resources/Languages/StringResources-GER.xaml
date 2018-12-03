@@ -45,6 +45,7 @@
     <system:String x:Key="Datum_fakture_odDvotacka">Rechnungsdatum ab:</system:String>
     <system:String x:Key="Datum_faktureDvotacka">Rechnungsdatum:</system:String>
     <system:String x:Key="Datum_izdavanja_odDvotacka">Datum der Ausgabe:</system:String>
+    <system:String x:Key="Datum_izdavanja_doDvotacka">Ausstellungsdatum bis:</system:String>
     <system:String x:Key="Datum_izmene">Änderunsdatum</system:String>
     <system:String x:Key="Datum_kreiranja">Erstellungsdatum</system:String>
     <system:String x:Key="Datum_krerianja">Erstellungsdatum</system:String>
@@ -62,7 +63,7 @@
     <system:String x:Key="Datum_statusa">Statusdatum</system:String>
     <system:String x:Key="Datum_statusaDvotacka">Statusdatum</system:String>
     <system:String x:Key="Datum_unosaDvotacka">Datum:</system:String>
-    <system:String x:Key="Datum_vise_do">Visum bis:</system:String>
+    <system:String x:Key="Datum_vize_do">Visum bis:</system:String>
     <system:String x:Key="Datum_vize_doDvotacka">Visa-Datum bis:</system:String>
     <system:String x:Key="Datum_vize_od">Visum ab:</system:String>
     <system:String x:Key="Datum_vize_odDvotacka">Visa Datum von:</system:String>

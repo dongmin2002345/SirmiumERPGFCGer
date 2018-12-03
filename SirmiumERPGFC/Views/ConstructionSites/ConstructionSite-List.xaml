@@ -206,13 +206,13 @@
                         <Button x:Name="btnAddEmployees" Click="btnAddEmployees_Click" Margin="2" Width="250" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                <TextBlock Text="{DynamicResource DODAJ_RADNIKE/MESECE}" Foreground="White" FontWeight="Regular" />
+                                <TextBlock Text="{DynamicResource DODAJ_RADNIKEKosaCrtaMESECE}" Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
                         <Button x:Name="btnRemoveEmployees" Click="btnRemoveEmployees_Click" Margin="2" Width="250" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
-                                <TextBlock Text="{DynamicResource UKLONI_RADNIKE/MESECE}" Foreground="White" FontWeight="Regular" />
+                                <TextBlock Text="{DynamicResource UKLONI_RADNIKEKosaCrtaMESECE}" Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
                     </StackPanel>

@@ -100,7 +100,7 @@
                         <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtJBKJS" 
                              Text="{Binding Path=CurrentBusinessPartner.JBKJS}" />-->
 
-                        <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Obveznik_PDVCrticaaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
                         <ComboBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2"
                             SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
                             ItemsSource="{Binding Path=IsInPdvOptions}">
@@ -161,7 +161,7 @@
                         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
                                Text="{Binding Path=CurrentBusinessPartner.TaxNr}" />
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource Obveznik_PDVCrticaaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
                         <ComboBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxIsInPDVGer" Margin="2"
                             SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDVGer, Converter={StaticResource cbxStringToBoolConverter}}"
                             ItemsSource="{Binding Path=IsInPdvOptions}">
@@ -227,10 +227,10 @@
                         </Grid.ColumnDefinitions>
 
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Kontakt_osoba_Crtica_ImeDvotacka}" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Kontakt_osoba_Crta_ImeDvotacka}" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneContactPersonFirstName" Text="{Binding Path=CurrentPhoneForm.ContactPersonFirstName, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource Kontakt_osoba_Crtica_PrezimeDvotacka}" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource Kontakt_osoba_Crta_PrezimeDvotacka}" Margin="5 0 5 0" />
                         <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneContactPersonLastName" Text="{Binding Path=CurrentPhoneForm.ContactPersonLastName, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource MobilniDvotacka}" Margin="5 0 5 0" />
