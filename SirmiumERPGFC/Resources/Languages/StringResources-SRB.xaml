@@ -46,6 +46,7 @@
     <system:String x:Key="Datum_fakture_odDvotacka">Datum fakture od:</system:String>
     <system:String x:Key="Datum_faktureDvotacka">Datum fakture:</system:String>
     <system:String x:Key="Datum_izdavanja_odDvotacka">Datum izdavanja od:</system:String>
+    <system:String x:Key="Datum_izdavanja_doDvotacka">Datum izdavanja do:</system:String>
     <system:String x:Key="Datum_izmene">Datum izmene</system:String>
     <system:String x:Key="Datum_kreiranja">Datum kreiranja</system:String>
     <system:String x:Key="Datum_krerianja">Datum krerianja</system:String>
@@ -63,7 +64,7 @@
     <system:String x:Key="Datum_statusa">Datum statusa</system:String>
     <system:String x:Key="Datum_statusaDvotacka">Datum statusa:</system:String>
     <system:String x:Key="Datum_unosaDvotacka">Datum unosa:</system:String>
-    <system:String x:Key="Datum_vise_do">Datum vise do</system:String>
+    <system:String x:Key="Datum_vize_do">Datum vise do</system:String>
     <system:String x:Key="Datum_vize_doDvotacka">Datum vize do:</system:String>
     <system:String x:Key="Datum_vize_od">Datum vize od</system:String>
     <system:String x:Key="Datum_vize_odDvotacka">Datum vize od:</system:String>

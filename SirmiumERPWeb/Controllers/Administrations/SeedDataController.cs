@@ -80,10 +80,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in banks ?? new List<BankViewModel>())
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
-                    if (mark == "SRB")
-                        mark = "RS";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
+                    if (mark == "SRB" || mark == "RS")
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     bankService.Create(item);
                 }
@@ -106,10 +106,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in regions)
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
                     if (mark == "SRB")
-                        mark = "RS";
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     regionService.Create(item);
                 }
@@ -134,10 +134,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in municipalities)
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
                     if (mark == "SRB")
-                        mark = "RS";
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     item.Region = regions.FirstOrDefault(x => x.RegionCode == item.Region.RegionCode);
                     municipalityService.Create(item);
@@ -164,10 +164,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in cities)
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
                     if (mark == "SRB")
-                        mark = "RS";
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     item.Region = regions.FirstOrDefault(x => x.RegionCode == item.Region.RegionCode);
                     item.Municipality = municipalities.FirstOrDefault(x => x.MunicipalityCode == item.Municipality.MunicipalityCode);
@@ -192,10 +192,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in professions ?? new List<ProfessionViewModel>())
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
                     if (mark == "SRB")
-                        mark = "RS";
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     professionService.Create(item);
                 }
@@ -218,10 +218,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in licenceTypes ?? new List<LicenceTypeViewModel>())
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
                     if (mark == "SRB")
-                        mark = "RS";
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     licenceTypeService.Create(item);
                 }
@@ -244,10 +244,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in sectors ?? new List<SectorViewModel>())
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
                     if (mark == "SRB")
-                        mark = "RS";
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     sectorService.Create(item);
                 }
@@ -272,10 +272,10 @@ namespace SirmiumERPWeb.Controllers.Administrations
                 foreach (var item in agencies ?? new List<AgencyViewModel>())
                 {
                     string mark = item?.Country.Mark;
-                    if (mark == "NEM" || mark == "GER")
-                        mark = "DE";
+                    if (mark == "NEM" || mark == "GER" || mark == "DEU")
+                        mark = "DEU";
                     if (mark == "SRB")
-                        mark = "RS";
+                        mark = "SRB";
                     item.Country = countries.FirstOrDefault(x => x.Mark == mark);
                     item.Sector = sectors.FirstOrDefault(x => x.SecondCode == item.Sector.SecondCode);
                     agencyService.Create(item);
