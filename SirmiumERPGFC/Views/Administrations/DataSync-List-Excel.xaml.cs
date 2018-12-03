@@ -762,8 +762,6 @@ namespace SirmiumERPGFC.Views.Administrations
                         licenceType.CreatedAt = DateTime.Now;
                         licenceType.UpdatedAt = DateTime.Now;
 
-                        if (licenceTypes.Where(x => x.Code == licenceType.Code).Count() == 0)
-                        {
                             licenceTypes.Add(licenceType);
 
                             if (i % 100 == 0)
@@ -784,7 +782,6 @@ namespace SirmiumERPGFC.Views.Administrations
 
                                 licenceTypes.Clear();
                             }
-                        }
                     }
                 }
                 #endregion

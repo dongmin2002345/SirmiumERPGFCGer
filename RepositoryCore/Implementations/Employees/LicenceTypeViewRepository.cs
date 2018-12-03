@@ -212,7 +212,7 @@ namespace RepositoryCore.Implementations.Employees
 
         public LicenceType Create(LicenceType licenceType)
         {
-            if (context.Banks.Where(x => x.Identifier != null && x.Identifier == licenceType.Identifier).Count() == 0)
+            if (context.LicenceTypes.Where(x => x.Identifier != null && x.Identifier == licenceType.Identifier).Count() == 0)
             {
                 licenceType.Id = 0;
 
