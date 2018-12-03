@@ -575,17 +575,17 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("BankAccountName");
-
-                    b.Property<string>("BankAccountNo");
-
                     b.Property<int?>("CityId");
 
-                    b.Property<int>("Code");
+                    b.Property<string>("Code");
+
+                    b.Property<int?>("CompanyId");
 
                     b.Property<int?>("CountryId");
 
-                    b.Property<DateTime>("CreatedAt");
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
 
                     b.Property<string>("Email");
 
@@ -605,27 +605,48 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("PIONumber");
 
-                    b.Property<DateTime>("UpdatedAt");
+                    b.Property<DateTime?>("UpdatedAt");
 
                     b.Property<string>("WebSite");
-
-                    b.Property<long?>("tmpIdLong");
-
-                    b.Property<string>("tmpIdString");
-
-                    b.Property<decimal?>("tmpPropDecimal");
-
-                    b.Property<long?>("tmpPropLong");
-
-                    b.Property<string>("tmpPropString");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("CountryId");
 
+                    b.HasIndex("CreatedById");
+
                     b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.Companies.CompanyUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("RolesCSV");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CompanyUsers");
                 });
 
             modelBuilder.Entity("DomainCore.Common.Identity.User", b =>
@@ -636,11 +657,9 @@ namespace RepositoryCore.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int?>("CompanyId");
+                    b.Property<string>("Code");
 
-                    b.Property<DateTime?>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
+                    b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("Email");
 
@@ -652,17 +671,11 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("PasswordHash");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.Property<string>("Username");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId")
-                        .IsUnique()
-                        .HasFilter("[CompanyId] IS NOT NULL");
-
-                    b.HasIndex("CreatedById");
 
                     b.ToTable("Users");
                 });
@@ -2146,20 +2159,28 @@ namespace RepositoryCore.Migrations
                         .WithMany("Companies")
                         .HasForeignKey("CityId");
 
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
                     b.HasOne("DomainCore.Common.Locations.Country")
                         .WithMany("Companies")
                         .HasForeignKey("CountryId");
-                });
-
-            modelBuilder.Entity("DomainCore.Common.Identity.User", b =>
-                {
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithOne("CreatedBy")
-                        .HasForeignKey("DomainCore.Common.Identity.User", "CompanyId");
 
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.Companies.CompanyUser", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany("CompanyUsers")
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "User")
+                        .WithMany("CompanyUsers")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("DomainCore.Common.InputInvoices.InputInvoice", b =>

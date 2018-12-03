@@ -292,9 +292,9 @@ namespace SirmiumERPWeb.Controllers.Administrations
         [HttpPost]
         public void DeleteTaxAdministrations([FromBody] int id)
         {
-            var company = companyService.GetCompany(id);
+            var company = companyService.GetCompanies().Companies.FirstOrDefault();
 
-            var adminisrationsForDelete = taxAdministrationService.GetTaxAdministrations(id).TaxAdministrations;
+            var adminisrationsForDelete = taxAdministrationService.GetTaxAdministrations(company?.Id ?? 0).TaxAdministrations;
             foreach (var item in adminisrationsForDelete)
             {
                 taxAdministrationService.Delete(item.Identifier);

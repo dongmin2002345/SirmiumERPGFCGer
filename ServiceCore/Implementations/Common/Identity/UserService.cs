@@ -1,10 +1,13 @@
-﻿using DataMapper.Mappers.Common.Identity;
+﻿using DataMapper.Mappers.Common.Companies;
+using DataMapper.Mappers.Common.Identity;
+using DomainCore.Common.Identity;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Messages.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ServiceCore.Implementations.Common.Identity
@@ -18,13 +21,13 @@ namespace ServiceCore.Implementations.Common.Identity
             this.unitOfWork = unitOfWork;
         }
 
-        public UserListResponse GetUsers()
+        public UserListResponse GetUsers(int companyId)
         {
             UserListResponse response = new UserListResponse();
             try
             {
-                response.Users = unitOfWork.GetUserRepository().GetUsers()
-                    .ConvertToUserViewModelList();
+                response.Users = unitOfWork.GetUserRepository().GetUsers(companyId)
+               .ConvertToUserViewModelList();
                 response.Success = true;
             }
             catch (Exception ex)
@@ -37,17 +40,28 @@ namespace ServiceCore.Implementations.Common.Identity
             return response;
         }
 
-        public UserResponse GetUser(int id)
+        public UserListResponse GetUsersNewerThan(int companyId, DateTime? lastUpdateTime)
         {
-            UserResponse response = new UserResponse();
+            UserListResponse response = new UserListResponse();
             try
             {
-                response.User = unitOfWork.GetUserRepository().GetUser(id).ConvertToUserViewModel();
+                if (lastUpdateTime != null)
+                {
+                    response.Users = unitOfWork.GetUserRepository()
+                        .GetUsersNewerThan(companyId, (DateTime)lastUpdateTime)
+                        .ConvertToUserViewModelList();
+                }
+                else
+                {
+                    response.Users = unitOfWork.GetUserRepository()
+                        .GetUsers(companyId)
+                        .ConvertToUserViewModelList();
+                }
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.User = null;
+                response.Users = new List<UserViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }
@@ -55,19 +69,36 @@ namespace ServiceCore.Implementations.Common.Identity
             return response;
         }
 
-        public UserResponse Create(UserViewModel user)
+        public UserResponse Create(UserViewModel re)
         {
             UserResponse response = new UserResponse();
             try
             {
-                response.User = unitOfWork.GetUserRepository().Create(user.ConvertToUser())
-                    .ConvertToUserViewModel();
+                var companyUsers = re.CompanyUsers?.ConvertToCompanyUserList();
+
+                re.CompanyUsers = null;
+
+                User addedUser = unitOfWork.GetUserRepository().Create(re.ConvertToUser());
+
+                var itemsFromDB = unitOfWork.GetCompanyUserRepository().GetCompanyUsersByUser(addedUser.Id);
+                foreach (var item in itemsFromDB)
+                    if (!companyUsers.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetCompanyUserRepository().Delete(item.Identifier);
+
+                foreach (var compUser in companyUsers)
+                {
+                    compUser.UserId = addedUser.Id;
+
+                    unitOfWork.GetCompanyUserRepository().Create(compUser);
+                }
+
                 unitOfWork.Save();
+                response.User = addedUser.ConvertToUserViewModel();
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.User = null;
+                response.User = new UserViewModel();
                 response.Success = false;
                 response.Message = ex.Message;
             }
@@ -75,19 +106,21 @@ namespace ServiceCore.Implementations.Common.Identity
             return response;
         }
 
-        public UserResponse Update(UserViewModel user)
+        public UserResponse Delete(Guid identifier)
         {
             UserResponse response = new UserResponse();
             try
             {
-                response.User = unitOfWork.GetUserRepository().Update(user.ConvertToUser())
-                    .ConvertToUserViewModel();
+                User deletedUser = unitOfWork.GetUserRepository().Delete(identifier);
+
                 unitOfWork.Save();
+
+                response.User = deletedUser.ConvertToUserViewModel();
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.User = null;
+                response.User = new UserViewModel();
                 response.Success = false;
                 response.Message = ex.Message;
             }
@@ -95,19 +128,33 @@ namespace ServiceCore.Implementations.Common.Identity
             return response;
         }
 
-        public UserResponse Delete(int id)
+        public UserListResponse Sync(SyncUserRequest request)
         {
-            UserResponse response = new UserResponse();
+            UserListResponse response = new UserListResponse();
+            List<UserViewModel> users = new List<UserViewModel>();
             try
             {
-                response.User = unitOfWork.GetUserRepository().Delete(id)
-                    .ConvertToUserViewModel();
-                unitOfWork.Save();
+                if (request.LastUpdatedAt != null)
+                {
+                    var users2 = unitOfWork.GetUserRepository()
+                        .GetUsersNewerThan(request.CompanyId, (DateTime)request.LastUpdatedAt)
+                        ?.ConvertToUserViewModelList() ?? new List<UserViewModel>();
+
+                    users.AddRange(users2);
+                }
+                else
+                {
+                    var users2 = unitOfWork.GetUserRepository()
+                        .GetUsers(request.CompanyId)
+                        ?.ConvertToUserViewModelList() ?? new List<UserViewModel>();
+                    users.AddRange(users2);
+                }
+                response.Users = users;
                 response.Success = true;
             }
             catch (Exception ex)
             {
-                response.User = null;
+                response.Users = new List<UserViewModel>();
                 response.Success = false;
                 response.Message = ex.Message;
             }

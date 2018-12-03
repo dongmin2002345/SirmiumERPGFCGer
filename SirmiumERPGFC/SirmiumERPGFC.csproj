@@ -171,6 +171,7 @@
     <Compile Include="Behaviors\DateTimeNowBehavior.cs" />
     <Compile Include="CloseableTabItem.cs" />
     <Compile Include="Common\FlyoutHelper.cs" />
+    <Compile Include="Common\UserRolesHelper.cs" />
     <Compile Include="Identity\AnonymousIdentity.cs" />
     <Compile Include="Identity\CustomIdentity.cs" />
     <Compile Include="Identity\CustomPrincipal.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
+    <Compile Include="Repository\Companies\CompanyUserSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteCalculationSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteNoteSQLiteRepository.cs" />
@@ -436,6 +438,12 @@
     </Compile>
     <Compile Include="Views\TaxAdministrations\TaxAdministrationList.xaml.cs">
       <DependentUpon>TaxAdministrationList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserAddEdit.xaml.cs">
+      <DependentUpon>UserAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\UserList.xaml.cs">
+      <DependentUpon>UserList.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -757,6 +765,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TaxAdministrations\TaxAdministrationList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Users\UserAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Users\UserList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

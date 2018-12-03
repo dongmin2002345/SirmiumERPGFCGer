@@ -8,10 +8,12 @@ namespace ServiceInterfaces.Abstractions.Common.Identity
 {
     public interface IUserService
     {
-        UserListResponse GetUsers();
-        UserResponse GetUser(int id);
+        UserListResponse GetUsers(int companyId);
+        UserListResponse GetUsersNewerThan(int companyId, DateTime? lastUpdateTime);
+
         UserResponse Create(UserViewModel user);
-        UserResponse Update(UserViewModel user);
-        UserResponse Delete(int id);
+        UserResponse Delete(Guid identifier);
+
+        UserListResponse Sync(SyncUserRequest request);
     }
 }

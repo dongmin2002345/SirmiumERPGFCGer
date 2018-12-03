@@ -42,8 +42,6 @@ namespace DataMapper.Mappers.Common.Companies
                 CompanyCode = company.Code,
                 CompanyName = company.Name,
                 Address = company.Address,
-                BankAccountNo = company.BankAccountNo,
-                BankAccountName = company.BankAccountName,
                 IdentificationNumber = company.IdentificationNumber,
                 PIBNumber = company.PIBNumber,
                 PIONumber = company.PIONumber,
@@ -53,7 +51,6 @@ namespace DataMapper.Mappers.Common.Companies
                 Email = company.Email,
                 WebSite = company.WebSite,
                 UpdatedAt = company.UpdatedAt,
-
                 IsActive = company.Active,
 
                 CreatedBy = company.CreatedBy?.ConvertToUserViewModelLite(),
@@ -71,8 +68,6 @@ namespace DataMapper.Mappers.Common.Companies
                 CompanyCode = company.Code,
                 CompanyName = company.Name,
                 Address = company.Address,
-                BankAccountNo = company.BankAccountNo,
-                BankAccountName = company.BankAccountName,
                 IdentificationNumber = company.IdentificationNumber,
                 PIBNumber = company.PIBNumber,
                 PIONumber = company.PIONumber,
@@ -81,9 +76,7 @@ namespace DataMapper.Mappers.Common.Companies
                 IndustryName = company.IndustryName,
                 Email = company.Email,
                 WebSite = company.WebSite,
-
                 IsActive = company.Active,
-
                 UpdatedAt = company.UpdatedAt,
                 CreatedAt = company.CreatedAt
             };
@@ -109,8 +102,6 @@ namespace DataMapper.Mappers.Common.Companies
                 Code = companyViewModel.CompanyCode,
                 Name = companyViewModel.CompanyName,
                 Address = companyViewModel.Address,
-                BankAccountNo = companyViewModel.BankAccountNo,
-                BankAccountName = companyViewModel.BankAccountName,
                 IdentificationNumber = companyViewModel.IdentificationNumber,
                 PIBNumber = companyViewModel.PIBNumber,
                 PIONumber = companyViewModel.PIONumber,
@@ -119,9 +110,9 @@ namespace DataMapper.Mappers.Common.Companies
                 IndustryName = companyViewModel.IndustryName,
                 Email = companyViewModel.Email,
                 WebSite = companyViewModel.WebSite,
-
-                CreatedBy = new User() { Id = companyViewModel.CreatedBy?.Id ?? 0 },
-                CreatedAt = (DateTime)companyViewModel.CreatedAt
+                Active = companyViewModel.IsActive,
+                CreatedById = companyViewModel.CreatedBy?.Id ?? null,
+                CreatedAt = companyViewModel.CreatedAt
             };
             return Company;
         }

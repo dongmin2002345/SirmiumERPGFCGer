@@ -37,6 +37,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         #region Repository variables
 
         private ICompanyRepository companyRepository;
+        private ICompanyUserRepository companyUserRepository;
 
         private IToDoRepository toDoRepository;
 
@@ -126,6 +127,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (companyRepository == null)
                 companyRepository = new CompanyRepository(context);
             return companyRepository;
+        }
+
+        public ICompanyUserRepository GetCompanyUserRepository()
+        {
+            if (companyUserRepository == null)
+                companyUserRepository = new CompanyUserRepository(context);
+
+            return companyUserRepository;
         }
 
         public IToDoRepository GetToDoRepository()

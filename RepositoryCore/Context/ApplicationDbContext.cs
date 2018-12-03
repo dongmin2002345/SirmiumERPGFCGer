@@ -65,6 +65,7 @@ namespace RepositoryCore.Context
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<CompanyUser> CompanyUsers { get; set; }
 
         public DbSet<ToDo> ToDos { get; set; }
 

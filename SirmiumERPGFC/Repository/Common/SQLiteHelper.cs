@@ -410,6 +410,22 @@ namespace SirmiumERPGFC.Repository.Common
             }
         }
 
+        public static UserViewModel GetCompanyUser(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 3;
+                return null;
+            }
+            else
+                return new UserViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    FullName = query.GetString(counter++)
+                };
+        }
+
         public static TaxAdministrationViewModel GetTaxAdministration(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))

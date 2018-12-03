@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,22 @@ namespace ServiceInterfaces.ViewModels.Common.Identity
 {
     public class UserViewModel : BaseEntityViewModel
     {
+        #region Code
+        private string _Code;
+        public string Code
+        {
+            get { return _Code; }
+            set
+            {
+                if (_Code != value)
+                {
+                    _Code = value;
+                    NotifyPropertyChanged("Code");
+                }
+            }
+        }
+        #endregion
+
         #region Username
         private string _Username;
 
@@ -80,7 +97,6 @@ namespace ServiceInterfaces.ViewModels.Common.Identity
         }
         #endregion
 
-
         #region Password
         private string _Password;
 
@@ -95,6 +111,22 @@ namespace ServiceInterfaces.ViewModels.Common.Identity
                 {
                     _Password = value;
                     NotifyPropertyChanged("Password");
+                }
+            }
+        }
+        #endregion
+
+        #region IsSynced
+        private bool _IsSynced;
+        public bool IsSynced
+        {
+            get { return _IsSynced; }
+            set
+            {
+                if (_IsSynced != value)
+                {
+                    _IsSynced = value;
+                    NotifyPropertyChanged("IsSynced");
                 }
             }
         }
@@ -134,39 +166,90 @@ namespace ServiceInterfaces.ViewModels.Common.Identity
         }
         #endregion
 
-        #region Roles
-        private List<string> _Roles;
+        #region BusinessPartner
+        private BusinessPartnerViewModel _BusinessPartner;
 
-        public List<string> Roles
+        public BusinessPartnerViewModel BusinessPartner
         {
-            get { return _Roles; }
+            get { return _BusinessPartner; }
             set
             {
-                if (_Roles != value)
+                if (_BusinessPartner != value)
                 {
-                    _Roles = value;
-                    NotifyPropertyChanged("Roles");
+                    _BusinessPartner = value;
+                    NotifyPropertyChanged("BusinessPartner");
                 }
             }
         }
         #endregion
 
-        #region RolesCSV
-        private string _RolesCSV;
+        #region CompanyUsers
+        private List<CompanyUserViewModel> _CompanyUsers;
 
-        public string RolesCSV
+        public List<CompanyUserViewModel> CompanyUsers
         {
-            get { return _RolesCSV; }
+            get { return _CompanyUsers; }
             set
             {
-                if (_RolesCSV != value)
+                if (_CompanyUsers != value)
                 {
-                    _RolesCSV = value;
-                    NotifyPropertyChanged("RolesCSV");
+                    _CompanyUsers = value;
+                    NotifyPropertyChanged("CompanyUsers");
                 }
             }
         }
         #endregion
 
+        #region PasswordHash
+        private string _PasswordHash;
+
+        public string PasswordHash
+        {
+            get { return _PasswordHash; }
+            set
+            {
+                if (_PasswordHash != value)
+                {
+                    _PasswordHash = value;
+                    NotifyPropertyChanged("PasswordHash");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Search_UserName
+        private string _Search_UserName;
+
+        public string Search_UserName
+        {
+            get { return _Search_UserName; }
+            set
+            {
+                if (_Search_UserName != value)
+                {
+                    _Search_UserName = value;
+                    NotifyPropertyChanged("Search_UserName");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_Email
+        private string _Search_Email;
+
+        public string Search_Email
+        {
+            get { return _Search_Email; }
+            set
+            {
+                if (_Search_Email != value)
+                {
+                    _Search_Email = value;
+                    NotifyPropertyChanged("Search_Email");
+                }
+            }
+        }
+        #endregion
     }
 }

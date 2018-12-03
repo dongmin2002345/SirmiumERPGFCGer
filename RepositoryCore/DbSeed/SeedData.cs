@@ -1,5 +1,6 @@
 ﻿using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Context;
 using System;
 using System.Collections.Generic;
@@ -23,29 +24,55 @@ namespace RepositoryCore.DbSeed
             byte[] saltedHashBytes = Encoding.UTF8.GetBytes("Secret123$" + "Korisnik");
             HashAlgorithm algorithm = new SHA256Managed();
 
-            if (context.Users.Count() == 0)
+            if (context.Users.Where(x => x.Identifier != Guid.Empty).Count() == 0 || context.CompanyUsers.Count() == 0)
             {
+
                 if (context.Users.Count(x => x.Email == "admin@admin.com") == 0)
                 {
                     saltedHashBytes = Encoding.UTF8.GetBytes("Secret123$" + "Admin");
                     algorithm = new SHA256Managed();
                     byte[] hash = algorithm.ComputeHash(saltedHashBytes);
                     string password = Convert.ToBase64String(hash);
-                    context.Users.Add(new User()
-                    {
 
+                    var userForDb = new User()
+                    {
+                        Identifier = Guid.NewGuid(),
                         Username = "Admin",
                         FirstName = "Petar",
                         LastName = "Petrovic",
                         PasswordHash = password,
                         Email = "admin@admin.com",
-                        //RolesCSV = "Admin",
                         Active = true,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
-                    });
-
+                        UpdatedAt = DateTime.Now,
+                        CreatedAt = DateTime.Now
+                    };
+                    context.Users.Add(userForDb);
                     context.SaveChanges();
+                }
+                if (context.Users.FirstOrDefault(x => x.Email == "admin@admin.com").Identifier == Guid.Empty)
+                {
+                    var user = context.Users.FirstOrDefault(x => x.Email == "admin@admin.com");
+                    user.Identifier = Guid.NewGuid();
+                    user.UpdatedAt = DateTime.Now;
+                    context.SaveChanges();
+                }
+
+                if (context.CompanyUsers.Include(x => x.User).Where(x => x.Identifier != Guid.Empty && x.User.Identifier != Guid.Empty).Count() == 0)
+                {
+                    if (context.CompanyUsers.Include(x => x.User).Count(x => x.User.Email == "admin@admin.com") == 0)
+                    {
+                        var companyUser = new CompanyUser()
+                        {
+                            Identifier = Guid.NewGuid(),
+                            UserId = context.Users.FirstOrDefault(x => x.Email == "admin@admin.com")?.Id ?? null,
+                            CompanyId = context.Companies.FirstOrDefault()?.Id,
+                            RolesCSV = "Admin",
+                            UpdatedAt = DateTime.Now,
+                            Active = true
+                        };
+                        context.CompanyUsers.Add(companyUser);
+                        context.SaveChanges();
+                    }
                 }
             }
         }
@@ -60,14 +87,12 @@ namespace RepositoryCore.DbSeed
                 {
                     context.Companies.Add(new Company()
                     {
-                        Code = 1,
+                        Code = "KOR-1",
                         Identifier = Guid.NewGuid(),
                         Name = "MS Accounting Office",
                         PIBNumber = "000000",
                         PDVNumber = "18",
                         Address = "Primer adresa",
-                        BankAccountName = "Ime korisnika racuna",
-                        BankAccountNo = "111-123-1321",
                         Email = "mail@firma.com",
                         IndustryCode = "1001",
                         IndustryName = "Farma",

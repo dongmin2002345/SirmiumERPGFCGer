@@ -41,8 +41,13 @@ namespace SirmiumERPGFC.Identity.Views
     /// </summary>
     public partial class LoginWindow : INotifyPropertyChanged
     {
+        #region Attributes
+        #region Services
         ICompanyService companyService;
         IAuthenticationService authenticationService;
+        IUserService userService;
+        ICompanyUserService compUserService;
+        #endregion
 
         #region CompaniesFromDB
         private ObservableCollection<CompanyViewModel> _CompaniesFromDB;
@@ -61,15 +66,38 @@ namespace SirmiumERPGFC.Identity.Views
         }
         #endregion
 
+        #region CurrentCompany
+        private CompanyViewModel _CurrentCompany;
+
+        public CompanyViewModel CurrentCompany
+        {
+            get { return _CurrentCompany; }
+            set
+            {
+                if (_CurrentCompany != value)
+                {
+                    _CurrentCompany = value;
+                    NotifyPropertyChanged("CurrentCompany");
+                }
+            }
+        }
+        #endregion
+
 
         Notifier notifier;
-
+        #endregion
+        
+        #region Constructor
         public LoginWindow()
         {
             companyService = DependencyResolver.Kernel.Get<ICompanyService>();
             authenticationService = DependencyResolver.Kernel.Get<IAuthenticationService>();
+            userService = DependencyResolver.Kernel.Get<IUserService>();
+            compUserService = DependencyResolver.Kernel.Get<ICompanyUserService>();
 
             InitializeComponent();
+
+            this.DataContext = this;
 
             notifier = new Notifier(cfg =>
             {
@@ -88,24 +116,40 @@ namespace SirmiumERPGFC.Identity.Views
 
             SQLiteInitializer.Initalize(false);
 
+            new CompanySQLiteRepository().Sync(companyService);
+            new UserSQLiteRepository().Sync(userService);
+            new CompanyUserSQLiteRepository().Sync(compUserService);
+            // Set company combobox
+            List<CompanyViewModel> companiesFromDb = new List<CompanyViewModel>();
+            try
+            {
+                companiesFromDb.Add(new CompanyViewModel() { CompanyName = "Odaberite firmu", CompanyCode = "0" });
+                CompanyListResponse response = companyService.GetCompanies();
+                if (response.Success && response.Companies != null && response.Companies.Count > 0)
+                {
+                    companiesFromDb.AddRange(response.Companies.OrderBy(x => x.CompanyName));
+                }
+            }
+            catch (Exception ex)
+            {
+                CompanyListResponse response = new CompanySQLiteRepository().GetCompanies(null);//companyService.GetCompanies();
+                if (response.Success && response.Companies != null && response.Companies.Count > 0)
+                {
+                    companiesFromDb.AddRange(response.Companies.OrderBy(x => x.CompanyName));
+                }
+            }
+
+            CompaniesFromDB = new ObservableCollection<CompanyViewModel>(companiesFromDb ?? new List<CompanyViewModel>());
+            CurrentCompany = CompaniesFromDB.FirstOrDefault();
             // Set focus
             txtUsername.Focus();
 
             InitializeUpdater();
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        #endregion
 
-        public static string CalculateHash(string password, string username)
-        {
-            byte[] saltedHashBytes = Encoding.UTF8.GetBytes(password + username);
-            HashAlgorithm algorithm = new SHA256Managed();
-            byte[] hash = algorithm.ComputeHash(saltedHashBytes);
-            return Convert.ToBase64String(hash);
-        }
+        #region Login, Cancel
 
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -113,31 +157,53 @@ namespace SirmiumERPGFC.Identity.Views
             {
                 string username = txtUsername.Text;
                 string password = txtPasswordBox.Password;
-                //CompanyViewModel company = cbxCompanies.SelectedItem as CompanyViewModel;
                 try
                 {
                     //Validate credentials through the authentication service
                     UserSQLiteRepository userSQLiteRepository = new UserSQLiteRepository();
                     UserViewModel userViewModel = new UserViewModel();
 
-                    //userSQLiteRepository.GetUsers();
-                    UserResponse userResponse = authenticationService.Authenticate(username, CalculateHash(password, username));
+                    CompanyViewModel company = CompaniesFromDB.Where(x => x.Identifier != Guid.Empty).FirstOrDefault();
+
+                    CompanyUserViewModel compUser = null;
+
+                    userSQLiteRepository.GetUsers();
+                    UserResponse userResponse = userSQLiteRepository.Authenticate(username, CalculateHash(password, username), company.Id);
                     if (userResponse.Success && userResponse.User != null)
                     {
+                        userViewModel = userResponse.User;
+
+                        var companyUser = new CompanyUserSQLiteRepository().GetCompanyUser(company.Id, userViewModel.Identifier);
+                        if (companyUser.Success)
+                        {
+                            compUser = companyUser.CompanyUser;
+                        }
+                    }
+                    else
+                    {
                         userResponse = authenticationService.Authenticate(username, CalculateHash(password, username));
+                        if (!userResponse.Success || userResponse.User == null)
+                            throw new UnauthorizedAccessException();
 
                         userViewModel = userResponse.User;
+
+                        var companyUser = new CompanyUserSQLiteRepository().GetCompanyUser(company.Id, userViewModel.Identifier);
+                        if (companyUser.Success)
+                        {
+                            compUser = companyUser.CompanyUser;
+                        }
                     }
-                    if (!userResponse.Success || userResponse.User == null)
+
+                    if (compUser == null)
+                    {
                         throw new UnauthorizedAccessException();
+                    }
 
 
                     //Get the current principal object
                     CustomPrincipal customPrincipal = Thread.CurrentPrincipal as CustomPrincipal;
                     if (customPrincipal == null)
                         throw new ArgumentException("The application's default thread principal must be set to a CustomPrincipal object on startup.");
-
-                    CompanyViewModel company = companyService.GetCompanies().Companies.FirstOrDefault(x => x.CompanyCode == 1);
 
                     //Authenticate the user
                     customPrincipal.Identity = new CustomIdentity(
@@ -149,7 +215,8 @@ namespace SirmiumERPGFC.Identity.Views
                         company.Id,
                         company.Identifier,
                         company.CompanyName,
-                        userViewModel.Roles);
+                        userViewModel,
+                        compUser);
 
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
@@ -188,6 +255,21 @@ namespace SirmiumERPGFC.Identity.Views
 
             return isValid;
         }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        public static string CalculateHash(string password, string username)
+        {
+            byte[] saltedHashBytes = Encoding.UTF8.GetBytes(password + username);
+            HashAlgorithm algorithm = new SHA256Managed();
+            byte[] hash = algorithm.ComputeHash(saltedHashBytes);
+            return Convert.ToBase64String(hash);
+        }
+
+        #endregion
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

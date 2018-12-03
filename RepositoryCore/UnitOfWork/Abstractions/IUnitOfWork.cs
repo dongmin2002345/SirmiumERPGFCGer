@@ -16,6 +16,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
     public interface IUnitOfWork //: IDisposable
     {
         ICompanyRepository GetCompanyRepository();
+        ICompanyUserRepository GetCompanyUserRepository();
 
         IAuthenticationRepository GetAuthenticationRepository();
         IUserRepository GetUserRepository();

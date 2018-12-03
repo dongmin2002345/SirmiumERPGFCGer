@@ -39,6 +39,7 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel = new StandardKernel();
 
                 Kernel.Bind<ICompanyService>().To<CompanyService>();
+                Kernel.Bind<ICompanyUserService>().To<CompanyUserService>();
 
                 //Kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InSingletonScope();
                 //Kernel.Bind<ISeedDataService>().To<SeedDataService>();

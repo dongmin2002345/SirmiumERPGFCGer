@@ -41,41 +41,6 @@ namespace SirmiumERPWeb.Controllers.Companies
             return Json(response, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         }
 
-        [HttpGet]
-        public JsonResult GetCompany(int id)
-        {
-            CompanyResponse response = new CompanyResponse();
-            try
-            {
-                response = companyService.GetCompany(id);
-            }
-            catch (Exception ex)
-            {
-                response.Message = ex.Message;
-                response.Success = false;
-            }
-
-            return Json(response, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
-        }
-
-        [HttpGet]
-        public JsonResult GetNewCodeValue()
-        {
-            CompanyResponse response = new CompanyResponse();
-            try
-            {
-                response = companyService.GetNewCodeValue();
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-                Console.WriteLine(ex.Message);
-            }
-            return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
         [HttpPost]
         public JsonResult Create([FromBody] CompanyViewModel c)
         {
@@ -91,92 +56,6 @@ namespace SirmiumERPWeb.Controllers.Companies
             }
 
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-
-
-            //CompanyResponse response = new CompanyResponse();
-
-            //try
-            //{
-            //    string obj = data["Object"];
-
-            //    CompanyViewModel c = JsonConvert.DeserializeObject<CompanyViewModel>(obj,
-            //            new JsonSerializerSettings()
-            //            {
-            //                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //            });
-
-            //    response = companyService.Create(c);
-            //    response.Success = true;
-            //    response.Message = "Uspesno izmenjena kompanija!";
-            //    return Json(response,
-            //            new JsonSerializerSettings()
-            //            {
-            //                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //            });
-            //}
-            //catch (Exception ex)
-            //{
-            //    response.Message = ex.Message;
-            //    response.Success = false;
-            //}
-
-            //return Json(response,
-            //            new JsonSerializerSettings()
-            //            {
-            //                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //            });
-        }
-
-        [HttpPost]
-        public JsonResult Update([FromBody] CompanyViewModel c)
-        {
-
-            CompanyResponse response;
-            try
-            {
-                response = this.companyService.Update(c);
-            }
-            catch (Exception ex)
-            {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-
-            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-
-
-            //CompanyResponse response = new CompanyResponse();
-
-            //try
-            //{
-            //    string obj = data["Object"];
-
-            //    CompanyViewModel c = JsonConvert.DeserializeObject<CompanyViewModel>(obj,
-            //            new JsonSerializerSettings()
-            //            {
-            //                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //            });
-
-            //    response = companyService.Update(c);
-            //    response.Success = true;
-            //    response.Message = "Uspesno izmenjena kompanija!";
-            //    return Json(response,
-            //            new JsonSerializerSettings()
-            //            {
-            //                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //            });
-            //}
-            //catch (Exception ex)
-            //{
-            //    response.Message = ex.Message;
-            //    response.Success = false;
-            //}
-
-            //return Json(response,
-            //            new JsonSerializerSettings()
-            //            {
-            //                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            //            });
         }
 
         [HttpPost]
@@ -192,6 +71,23 @@ namespace SirmiumERPWeb.Controllers.Companies
             {
                 response = null;
                 Console.WriteLine(ex.Message);
+            }
+
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        }
+
+        [HttpPost]
+        public JsonResult Sync([FromBody] SyncCompanyRequest request)
+        {
+            CompanyListResponse response = new CompanyListResponse();
+            try
+            {
+                response = this.companyService.Sync(request);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
             }
 
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });

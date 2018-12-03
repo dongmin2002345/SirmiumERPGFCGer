@@ -60,6 +60,11 @@ namespace ApiExtension.Sender
                 { typeof(List<CompanyViewModel>), "Company" },
                 #endregion
             
+                #region CompanyUsers
+                { typeof(CompanyUserViewModel), "CompanyUser" },
+                { typeof(List<CompanyUserViewModel>), "CompanyUser" },
+                #endregion
+            
                 #region Identity
                 { typeof(UserViewModel), "User" },
                 { typeof(List<UserViewModel>), "User" },

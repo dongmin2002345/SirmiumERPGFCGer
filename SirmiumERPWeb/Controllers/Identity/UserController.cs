@@ -10,24 +10,40 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 
 namespace SirmiumERPWeb.Controllers.Identity
 {
-    public class UserController
+    public class UserController : Controller
     {
-
-        IUserService userRepository { get; set; }
+        IUserService userService { get; set; }
 
         public UserController(IServiceProvider provider)
         {
-            userRepository = provider.GetRequiredService<IUserService>();
+            userService = provider.GetRequiredService<IUserService>();
 
         }
-        // GET: api/Box
+
         [HttpGet]
-        public JsonResult GetUsers()
+        public JsonResult GetUsers(int companyId)
+        {
+            UserListResponse response = new UserListResponse();
+            try
+            {
+                response = userService.GetUsers(companyId);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+                Console.WriteLine(ex.Message);
+            }
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+        }
+
+        [HttpGet]
+        public JsonResult GetUsersNewerThan(int companyId, DateTime? lastUpdateTime)
         {
             UserListResponse response;
             try
             {
-                response = userRepository.GetUsers();
+                response = userService.GetUsersNewerThan(companyId, lastUpdateTime);
             }
             catch (Exception ex)
             {
@@ -35,73 +51,59 @@ namespace SirmiumERPWeb.Controllers.Identity
                 Console.WriteLine(ex.Message);
             }
             return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
-        [HttpGet]
-        public JsonResult GetUser(int id)
-        {
-            UserResponse user;
-            try
-            {
-                user = userRepository.GetUser(id);
-            }
-            catch (Exception ex)
-            {
-                user = null;
-                Console.WriteLine(ex.Message);
-            }
-            return new JsonResult(user, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
         [HttpPost]
         public JsonResult Create([FromBody] UserViewModel c)
         {
-            UserResponse response;
+            UserResponse response = new UserResponse();
             try
             {
-                response = this.userRepository.Create(c);
+                response = this.userService.Create(c);
             }
             catch (Exception ex)
             {
-                response = null;
+                response.Success = false;
+                response.Message = ex.Message;
                 Console.WriteLine(ex.Message);
             }
 
-            return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
         [HttpPost]
-        public JsonResult Update([FromBody] UserViewModel c)
+        public JsonResult Delete([FromBody]UserViewModel user)
         {
-            UserResponse response;
+            UserResponse response = new UserResponse();
             try
             {
-                response = this.userRepository.Update(c);
+                response = this.userService.Delete(user.Identifier);
             }
             catch (Exception ex)
             {
-                response = null;
+                response.Success = false;
+                response.Message = ex.Message;
                 Console.WriteLine(ex.Message);
             }
 
-            return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
-        [HttpGet]
-        public JsonResult Delete(int id)
+        [HttpPost]
+        public JsonResult Sync([FromBody] SyncUserRequest request)
         {
-            UserResponse response;
+            UserListResponse response = new UserListResponse();
             try
             {
-                response = this.userRepository.Delete(id);
+                response = this.userService.Sync(request);
             }
             catch (Exception ex)
             {
-                response = null;
-                Console.WriteLine(ex.Message);
+                response.Success = false;
+                response.Message = ex.Message;
             }
 
-            return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
+            return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
     }
 }
