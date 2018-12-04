@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
@@ -127,60 +128,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public BusinessPartnerLocationListResponse GetUnSyncedBusinessPartnerLocations(int companyId)
-        {
-            BusinessPartnerLocationListResponse response = new BusinessPartnerLocationListResponse();
-            List<BusinessPartnerLocationViewModel> businessPartnerLocations = new List<BusinessPartnerLocationViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM BusinessPartnerLocations " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerLocationViewModel dbEntry = new BusinessPartnerLocationViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
-                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerLocations.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.BusinessPartnerLocations = new List<BusinessPartnerLocationViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.BusinessPartnerLocations = businessPartnerLocations;
-            return response;
-        }
-
         public BusinessPartnerLocationResponse GetBusinessPartnerLocation(Guid identifier)
         {
             BusinessPartnerLocationResponse response = new BusinessPartnerLocationResponse();
@@ -231,6 +178,28 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.Success = true;
             response.BusinessPartnerLocation = businessPartnerLocation;
             return response;
+        }
+
+        public void Sync(IBusinessPartnerLocationService BusinessPartnerLocationService)
+        {
+            SyncBusinessPartnerLocationRequest request = new SyncBusinessPartnerLocationRequest();
+            request.CompanyId = MainWindow.CurrentCompanyId;
+            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+            BusinessPartnerLocationListResponse response = BusinessPartnerLocationService.Sync(request);
+            if (response.Success)
+            {
+                List<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB = response.BusinessPartnerLocations;
+                foreach (var BusinessPartnerLocation in BusinessPartnerLocationsFromDB.OrderBy(x => x.Id))
+                {
+                    Delete(BusinessPartnerLocation.Identifier);
+                    if (BusinessPartnerLocation.IsActive)
+                    {
+                        BusinessPartnerLocation.IsSynced = true;
+                        Create(BusinessPartnerLocation);
+                    }
+                }
+            }
         }
 
         public DateTime? GetLastUpdatedAt(int companyId)

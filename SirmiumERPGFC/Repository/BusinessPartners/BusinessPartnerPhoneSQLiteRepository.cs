@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
@@ -109,63 +110,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public BusinessPartnerPhoneListResponse GetUnSyncedBusinessPartnerPhones(int companyId)
-        {
-            BusinessPartnerPhoneListResponse response = new BusinessPartnerPhoneListResponse();
-            List<BusinessPartnerPhoneViewModel> businessPartnerPhones = new List<BusinessPartnerPhoneViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM BusinessPartnerPhones " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerPhoneViewModel dbEntry = new BusinessPartnerPhoneViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Phone = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Mobile = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPersonFirstName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPersonLastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Birthday = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerPhones.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.BusinessPartnerPhones = new List<BusinessPartnerPhoneViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.BusinessPartnerPhones = businessPartnerPhones;
-            return response;
-        }
-
         public BusinessPartnerPhoneResponse GetBusinessPartnerPhone(Guid identifier)
         {
             BusinessPartnerPhoneResponse response = new BusinessPartnerPhoneResponse();
@@ -219,6 +163,28 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.Success = true;
             response.BusinessPartnerPhone = businessPartnerPhone;
             return response;
+        }
+
+        public void Sync(IBusinessPartnerPhoneService BusinessPartnerPhoneService)
+        {
+            SyncBusinessPartnerPhoneRequest request = new SyncBusinessPartnerPhoneRequest();
+            request.CompanyId = MainWindow.CurrentCompanyId;
+            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+            BusinessPartnerPhoneListResponse response = BusinessPartnerPhoneService.Sync(request);
+            if (response.Success)
+            {
+                List<BusinessPartnerPhoneViewModel> BusinessPartnerPhonesFromDB = response.BusinessPartnerPhones;
+                foreach (var BusinessPartnerPhone in BusinessPartnerPhonesFromDB.OrderBy(x => x.Id))
+                {
+                    Delete(BusinessPartnerPhone.Identifier);
+                    if (BusinessPartnerPhone.IsActive)
+                    {
+                        BusinessPartnerPhone.IsSynced = true;
+                        Create(BusinessPartnerPhone);
+                    }
+                }
+            }
         }
 
         public DateTime? GetLastUpdatedAt(int companyId)

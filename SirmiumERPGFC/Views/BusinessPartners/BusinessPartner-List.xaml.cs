@@ -39,6 +39,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         IBusinessPartnerPhoneService businessPartnerPhoneService;
         IBusinessPartnerOrganizationUnitService businessPartnerOrganizationUnitService;
         IBusinessPartnerDocumentService businessPartnerDocumentService;
+        IBusinessPartnerBankService businessPartnerBankService;
+        IBusinessPartnerInstitutionService businessPartnerInstitutionService;
+        IBusinessPartnerTypeService businessPartnerTypeService;
+        IBusinessPartnerNoteService businessPartnerNoteService;
         #endregion
 
         #region BusinessPartnersFromDB
@@ -363,6 +367,11 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             this.businessPartnerPhoneService = DependencyResolver.Kernel.Get<IBusinessPartnerPhoneService>();
             this.businessPartnerOrganizationUnitService = DependencyResolver.Kernel.Get<IBusinessPartnerOrganizationUnitService>();
             this.businessPartnerDocumentService = DependencyResolver.Kernel.Get<IBusinessPartnerDocumentService>();
+            this.businessPartnerBankService = DependencyResolver.Kernel.Get<IBusinessPartnerBankService>();
+            this.businessPartnerInstitutionService = DependencyResolver.Kernel.Get<IBusinessPartnerInstitutionService>();
+            this.businessPartnerTypeService = DependencyResolver.Kernel.Get<IBusinessPartnerTypeService>();
+            this.businessPartnerNoteService = DependencyResolver.Kernel.Get<IBusinessPartnerNoteService>();
+
             // Initialize form components
             InitializeComponent();
 
@@ -478,8 +487,23 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             RefreshButtonContent = " Firme ... ";
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
 
+            RefreshButtonContent = " Telefoni ... ";
+            new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService);
+
+            RefreshButtonContent = " Lokacije ... ";
+            new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService);
+
+            RefreshButtonContent = " Banke ... ";
+            new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService);
+
+            RefreshButtonContent = " Institucije ... ";
+            new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService);
+
             RefreshButtonContent = " Dokumenti ... ";
             new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService);
+
+            RefreshButtonContent = " Tipovi ... ";
+            new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
 
             DisplayData();
 
@@ -555,123 +579,38 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void btnSync_Click(object sender, RoutedEventArgs e)
         {
-            Thread th = new Thread(() =>
-            {
-                BusinessPartnerButtonContent = " Sinhronizacija u toku... ";
-                BusinessPartnerButtonEnabled = false;
+            RefreshButtonEnabled = false;
 
-                BusinessPartnerSQLiteRepository sqlLite = new BusinessPartnerSQLiteRepository();
-                List<BusinessPartnerViewModel> unsincedBusinessPartner = sqlLite.GetUnSyncedBusinessPartners(MainWindow.CurrentCompanyId).BusinessPartners;
-                int total = unsincedBusinessPartner.Count;
-                int counter = 0;
+            RefreshButtonContent = " Firme ... ";
+            new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
 
-                while (counter < total)
-                {
-                    SyncBusinessPartnerRequest request = new SyncBusinessPartnerRequest();
-                    request.CompanyId = MainWindow.CurrentCompanyId;
-                    request.LastUpdatedAt = sqlLite.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+            RefreshButtonContent = " Telefoni ... ";
+            new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService);
 
-                    BusinessPartnerListResponse response = businessPartnerService.Sync(request);
-                    if (response.Success)
-                    {
-                        List<BusinessPartnerViewModel> businessPartnersFromDB = response.BusinessPartners;
-                        foreach (var businessPartner in businessPartnersFromDB.OrderBy(x => x.Id))
-                        {
-                            BusinessPartnerButtonContent = " Poslovni partneri: " + counter++ + " od " + total;
-                            sqlLite.Delete(businessPartner.Identifier);
-                            businessPartner.IsSynced = true;
-                            sqlLite.Create(businessPartner);
-                        }
-                    }
-                }
+            RefreshButtonContent = " Lokacije ... ";
+            new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService);
 
-                BusinessPartnerLocationSQLiteRepository sqlLiteLocation = new BusinessPartnerLocationSQLiteRepository();
-                List<BusinessPartnerLocationViewModel> unsincedBusinessPartnetLocations = sqlLiteLocation.GetUnSyncedBusinessPartnerLocations(MainWindow.CurrentCompanyId).BusinessPartnerLocations;
-                total = unsincedBusinessPartnetLocations.Count;
-                counter = 0;
+            RefreshButtonContent = " Banke ... ";
+            new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService);
 
-                while (counter < total)
-                {
-                    SyncBusinessPartnerLocationRequest bankAccountRequest = new SyncBusinessPartnerLocationRequest();
-                    bankAccountRequest.CompanyId = MainWindow.CurrentCompanyId;
-                    bankAccountRequest.LastUpdatedAt = sqlLiteLocation.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+            RefreshButtonContent = " Institucije ... ";
+            new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService);
 
-                    BusinessPartnerLocationListResponse bankAccountRespose = businessPartnerLocationService.Sync(bankAccountRequest);
-                    if (bankAccountRespose.Success)
-                    {
-                        List<BusinessPartnerLocationViewModel> businessPartnerLocationsFromDB = bankAccountRespose.BusinessPartnerLocations;
-                        foreach (var businessPartnerLocation in businessPartnerLocationsFromDB.OrderBy(x => x.Id))
-                        {
-                            BusinessPartnerButtonContent = " Lokacije: " + counter++ + " od " + total;
-                            sqlLiteLocation.Delete(businessPartnerLocation.Identifier);
-                            businessPartnerLocation.IsSynced = true;
-                            sqlLiteLocation.Create(businessPartnerLocation);
-                        }
-                    }
-                }
+            RefreshButtonContent = " Tipovi ... ";
+            new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
 
-                BusinessPartnerPhoneSQLiteRepository sqlLitePhone = new BusinessPartnerPhoneSQLiteRepository();
-                List<BusinessPartnerPhoneViewModel> unsincedBusinessPartnetPhones = sqlLitePhone.GetUnSyncedBusinessPartnerPhones(MainWindow.CurrentCompanyId).BusinessPartnerPhones;
-                total = unsincedBusinessPartnetPhones.Count;
-                counter = 0;
+            RefreshButtonContent = " Dokumenti ... ";
+            new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService);
 
-                while (counter < total)
-                {
-                    SyncBusinessPartnerPhoneRequest bankAccountRequest = new SyncBusinessPartnerPhoneRequest();
-                    bankAccountRequest.CompanyId = MainWindow.CurrentCompanyId;
-                    bankAccountRequest.LastUpdatedAt = sqlLitePhone.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-                    BusinessPartnerPhoneListResponse bankAccountRespose = businessPartnerPhoneService.Sync(bankAccountRequest);
-                    if (bankAccountRespose.Success)
-                    {
-                        List<BusinessPartnerPhoneViewModel> businessPartnerPhonesFromDB = bankAccountRespose.BusinessPartnerPhones;
-                        foreach (var businessPartnerPhone in businessPartnerPhonesFromDB.OrderBy(x => x.Id))
-                        {
-                            BusinessPartnerButtonContent = " Telefoni: " + counter++ + " od " + total;
-                            sqlLitePhone.Delete(businessPartnerPhone.Identifier);
-                            businessPartnerPhone.IsSynced = true;
-                            sqlLitePhone.Create(businessPartnerPhone);
-                        }
-                    }
-                }
-
-                BusinessPartnerOrganizationUnitSQLiteRepository sqlLiteOrganizationUnit = new BusinessPartnerOrganizationUnitSQLiteRepository();
-                List<BusinessPartnerOrganizationUnitViewModel> unsincedBusinessPartnetOrganizationUnits = sqlLiteOrganizationUnit.GetUnSyncedBusinessPartnerOrganizationUnits(MainWindow.CurrentCompanyId).BusinessPartnerOrganizationUnits;
-                total = unsincedBusinessPartnetOrganizationUnits.Count;
-                counter = 0;
-
-                while (counter < total)
-                {
-                    SyncBusinessPartnerOrganizationUnitRequest bankAccountRequest = new SyncBusinessPartnerOrganizationUnitRequest();
-                    bankAccountRequest.CompanyId = MainWindow.CurrentCompanyId;
-                    bankAccountRequest.LastUpdatedAt = sqlLiteOrganizationUnit.GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-                    BusinessPartnerOrganizationUnitListResponse bankAccountRespose = businessPartnerOrganizationUnitService.Sync(bankAccountRequest);
-                    if (bankAccountRespose.Success)
-                    {
-                        List<BusinessPartnerOrganizationUnitViewModel> businessPartnerOrganizationUnitsFromDB = bankAccountRespose.BusinessPartnerOrganizationUnits;
-                        foreach (var businessPartnerOrganizationUnit in businessPartnerOrganizationUnitsFromDB.OrderBy(x => x.Id))
-                        {
-                            BusinessPartnerButtonContent = " Organizacione jedinice: " + counter++ + " od " + total;
-                            sqlLiteOrganizationUnit.Delete(businessPartnerOrganizationUnit.Identifier);
-                            businessPartnerOrganizationUnit.IsSynced = true;
-                            sqlLiteOrganizationUnit.Create(businessPartnerOrganizationUnit);
-                        }
-                    }
-                }
+            RefreshButtonContent = " Napomene ... ";
+            new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService);
 
 
-                unsincedBusinessPartner = sqlLite.GetUnSyncedBusinessPartners(MainWindow.CurrentCompanyId).BusinessPartners;
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+            DisplayData();
 
-                DisplayData();
-
-                BusinessPartnerButtonContent = " Sinhronizacija poslovnih partnera ";
-                BusinessPartnerButtonEnabled = true;
-            });
-            th.IsBackground = true;
-            th.Start();
+            RefreshButtonContent = " OSVEŽI ";
+            RefreshButtonEnabled = true;
         }
 
         #endregion
