@@ -58,11 +58,16 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if (reader["BusinessPartnerId"] != null)
                         {
                             inputInvoice.BusinessPartner = new BusinessPartner();
-                            inputInvoice.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            inputInvoice.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            inputInvoice.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerCode"].ToString());
-                            inputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
-                            inputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            if (reader["BusinessPartnerId"] != null)
+                                inputInvoice.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            if (reader["BusinessPartnerId"] != null)
+                                inputInvoice.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            if (reader["BusinessPartnerIdentifier"] != null)
+                                inputInvoice.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            if (reader["BusinessPartnerCode"] != null)
+                                inputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                            if (reader["BusinessPartnerName"] != null)
+                                inputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
                         if (reader["Supplier"] != null)
@@ -92,7 +97,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if (reader["Description"] != null)
                             inputInvoice.Description = reader["Description"].ToString();
                         if (reader["Path"] != null)
-                            inputInvoice.Description = reader["Path"].ToString();
+                            inputInvoice.Path = reader["Path"].ToString();
 
                         inputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -100,18 +105,25 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if(reader["CreatedById"] != null)
                         {
                             inputInvoice.CreatedBy = new User();
-                            inputInvoice.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
-                            inputInvoice.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
-                            inputInvoice.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
-                            inputInvoice.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
+                            if (reader["CreatedById"] != null)
+                                inputInvoice.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
+                            if (reader["CreatedById"] != null)
+                                inputInvoice.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
+                            if (reader["CreatedByFirstName"] != null)
+                                inputInvoice.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
+                            if (reader["CreatedByLastName"] != null)
+                                inputInvoice.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
                         if(reader["CompanyId"] != null)
                         {
                             inputInvoice.Company = new Company();
-                            inputInvoice.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
-                            inputInvoice.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
-                            inputInvoice.Company.Name = reader["CompanyName"].ToString();
+                            if (reader["CompanyId"] != null)
+                                inputInvoice.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
+                            if (reader["CompanyId"] != null)
+                                inputInvoice.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
+                            if (reader["CompanyName"] != null)
+                                inputInvoice.Company.Name = reader["CompanyName"].ToString();
                         }
 
                         InputInvoices.Add(inputInvoice);
@@ -165,11 +177,16 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if (reader["BusinessPartnerId"] != null)
                         {
                             inputInvoice.BusinessPartner = new BusinessPartner();
-                            inputInvoice.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            inputInvoice.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            inputInvoice.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerCode"].ToString());
-                            inputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
-                            inputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            if (reader["BusinessPartnerId"] != null)
+                                inputInvoice.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            if (reader["BusinessPartnerId"] != null)
+                                inputInvoice.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            if (reader["BusinessPartnerIdentifier"] != null)
+                                inputInvoice.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            if (reader["BusinessPartnerCode"] != null)
+                                inputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                            if (reader["BusinessPartnerName"] != null)
+                                inputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
                         if (reader["Supplier"] != null)
@@ -199,7 +216,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if (reader["Description"] != null)
                             inputInvoice.Description = reader["Description"].ToString();
                         if (reader["Path"] != null)
-                            inputInvoice.Description = reader["Path"].ToString();
+                            inputInvoice.Path = reader["Path"].ToString();
 
                         inputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -207,18 +224,25 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if (reader["CreatedById"] != null)
                         {
                             inputInvoice.CreatedBy = new User();
-                            inputInvoice.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
-                            inputInvoice.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
-                            inputInvoice.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
-                            inputInvoice.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
+                            if (reader["CreatedById"] != null)
+                                inputInvoice.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
+                            if (reader["CreatedById"] != null)
+                                inputInvoice.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
+                            if (reader["CreatedByFirstName"] != null)
+                                inputInvoice.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
+                            if (reader["CreatedByLastName"] != null)
+                                inputInvoice.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
                         if (reader["CompanyId"] != null)
                         {
                             inputInvoice.Company = new Company();
-                            inputInvoice.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
-                            inputInvoice.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
-                            inputInvoice.Company.Name = reader["CompanyName"].ToString();
+                            if (reader["CompanyId"] != null)
+                                inputInvoice.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
+                            if (reader["CompanyId"] != null)
+                                inputInvoice.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
+                            if (reader["CompanyName"] != null)
+                                inputInvoice.Company.Name = reader["CompanyName"].ToString();
                         }
 
                         InputInvoices.Add(inputInvoice);
