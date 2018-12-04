@@ -52,7 +52,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
                         region.Code = reader["Code"].ToString();
                         region.RegionCode = reader["RegionCode"].ToString();
-                        region.RegionCode = reader["RegionName"].ToString();
+                        region.Name = reader["RegionName"].ToString();
 
                         if (reader["CountryId"] != DBNull.Value)
                         {
