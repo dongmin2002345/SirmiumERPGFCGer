@@ -51,7 +51,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerNote.Id = Int32.Parse(reader["BusinessPartnerNoteId"].ToString());
                         businessPartnerNote.Identifier = Guid.Parse(reader["BusinessPartnerNoteIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerNote.BusinessPartner = new BusinessPartner();
                             businessPartnerNote.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -61,15 +61,15 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerNote.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             businessPartnerNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             businessPartnerNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         businessPartnerNote.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerNote.CreatedBy = new User();
                             businessPartnerNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -78,7 +78,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerNote.Company = new Company();
                             businessPartnerNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -132,7 +132,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerNote.Id = Int32.Parse(reader["BusinessPartnerNoteId"].ToString());
                         businessPartnerNote.Identifier = Guid.Parse(reader["BusinessPartnerNoteIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerNote.BusinessPartner = new BusinessPartner();
                             businessPartnerNote.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -143,15 +143,15 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         }
 
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             businessPartnerNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             businessPartnerNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         businessPartnerNote.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerNote.CreatedBy = new User();
                             businessPartnerNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -160,7 +160,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerNote.Company = new Company();
                             businessPartnerNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -214,7 +214,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerNote.Id = Int32.Parse(reader["BusinessPartnerNoteId"].ToString());
                         businessPartnerNote.Identifier = Guid.Parse(reader["BusinessPartnerNoteIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerNote.BusinessPartner = new BusinessPartner();
                             businessPartnerNote.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -225,15 +225,15 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         }
 
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             businessPartnerNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             businessPartnerNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         businessPartnerNote.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerNote.CreatedBy = new User();
                             businessPartnerNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -242,7 +242,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerNote.Company = new Company();
                             businessPartnerNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

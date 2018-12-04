@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         city.Name = reader["CityName"].ToString();
                         city.ZipCode = reader["ZipCode"]?.ToString();
                         
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             city.Country = new Country();
                             city.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -66,7 +66,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null)
+                        if (reader["RegionId"] != DBNull.Value)
                         {
                             city.Region = new Region();
                             city.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -76,7 +76,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.Region.Name = reader["RegionCode"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null)
+                        if (reader["MunicipalityId"] != DBNull.Value)
                         {
                             city.Municipality = new Municipality();
                             city.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -89,7 +89,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         city.Active = bool.Parse(reader["Active"].ToString());
                         city.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             city.CreatedBy = new User();
                             city.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -98,7 +98,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             city.Company = new Company();
                             city.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -159,7 +159,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         city.Name = reader["CityName"].ToString();
                         city.ZipCode = reader["ZipCode"]?.ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             city.Country = new Country();
                             city.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -169,7 +169,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null)
+                        if (reader["RegionId"] != DBNull.Value)
                         {
                             city.Region = new Region();
                             city.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -179,7 +179,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.Region.Name = reader["RegionCode"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null)
+                        if (reader["MunicipalityId"] != DBNull.Value)
                         {
                             city.Municipality = new Municipality();
                             city.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -192,7 +192,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         city.Active = bool.Parse(reader["Active"].ToString());
                         city.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             city.CreatedBy = new User();
                             city.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -201,7 +201,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             city.Company = new Company();
                             city.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

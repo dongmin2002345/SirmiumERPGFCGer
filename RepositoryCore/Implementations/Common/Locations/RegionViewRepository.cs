@@ -52,9 +52,9 @@ namespace RepositoryCore.Implementations.Common.Locations
                         region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
                         region.Code = reader["Code"].ToString();
                         region.RegionCode = reader["RegionCode"].ToString();
-                        region.RegionCode = reader["RegionName"].ToString();
+                        region.Name = reader["RegionName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             region.Country = new Country();
                             region.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -67,7 +67,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         region.Active = bool.Parse(reader["Active"].ToString());
                         region.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             region.CreatedBy = new User();
                             region.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -76,7 +76,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             region.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             region.Company = new Company();
                             region.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -133,7 +133,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         region.RegionCode = reader["RegionCode"].ToString();
                         region.RegionCode = reader["RegionName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             region.Country = new Country();
                             region.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -146,7 +146,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         region.Active = bool.Parse(reader["Active"].ToString());
                         region.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             region.CreatedBy = new User();
                             region.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -155,7 +155,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             region.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             region.Company = new Company();
                             region.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

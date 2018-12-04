@@ -52,7 +52,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerDocument.Id = Int32.Parse(reader["BusinessPartnerDocumentId"].ToString());
                         businessPartnerDocument.Identifier = Guid.Parse(reader["BusinessPartnerDocumentIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerDocument.BusinessPartner = new BusinessPartner();
                             businessPartnerDocument.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -62,17 +62,17 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             businessPartnerDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             businessPartnerDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             businessPartnerDocument.Path = reader["Path"].ToString();
 
                         businessPartnerDocument.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerDocument.CreatedBy = new User();
                             businessPartnerDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -81,7 +81,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerDocument.Company = new Company();
                             businessPartnerDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -135,7 +135,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerDocument.Id = Int32.Parse(reader["BusinessPartnerDocumentId"].ToString());
                         businessPartnerDocument.Identifier = Guid.Parse(reader["BusinessPartnerDocumentIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerDocument.BusinessPartner = new BusinessPartner();
                             businessPartnerDocument.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -145,17 +145,17 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             businessPartnerDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             businessPartnerDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             businessPartnerDocument.Path = reader["Path"].ToString();
 
                         businessPartnerDocument.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerDocument.CreatedBy = new User();
                             businessPartnerDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -164,7 +164,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerDocument.Company = new Company();
                             businessPartnerDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -220,7 +220,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerDocument.Id = Int32.Parse(reader["BusinessPartnerDocumentId"].ToString());
                         businessPartnerDocument.Identifier = Guid.Parse(reader["BusinessPartnerDocumentIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerDocument.BusinessPartner = new BusinessPartner();
                             businessPartnerDocument.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -230,17 +230,17 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             businessPartnerDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             businessPartnerDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             businessPartnerDocument.Path = reader["Path"].ToString();
 
                         businessPartnerDocument.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerDocument.CreatedBy = new User();
                             businessPartnerDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -249,7 +249,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerDocument.Company = new Company();
                             businessPartnerDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

@@ -59,7 +59,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
                         businessPartnerByConstructionSite.MaxNumOfEmployees = Int32.Parse(reader["MaxNumOfEmployees"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.BusinessPartner = new BusinessPartner();
                             businessPartnerByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -69,10 +69,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerByConstructionSite.BusinessPartner.Name = reader["FoodTypeName"].ToString();
                         }
 
-                        if (reader["BusinessPartnerCount"] != null)
+                        if (reader["BusinessPartnerCount"] != DBNull.Value)
                             businessPartnerByConstructionSite.BusinessPartnerCount = Int32.Parse(reader["BusinessPartnerCount"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.ConstructionSite = new ConstructionSite();
                             businessPartnerByConstructionSite.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -85,7 +85,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerByConstructionSite.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerByConstructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.CreatedBy = new User();
                             businessPartnerByConstructionSite.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -94,7 +94,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerByConstructionSite.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.Company = new Company();
                             businessPartnerByConstructionSite.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -156,7 +156,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
                         businessPartnerByConstructionSite.MaxNumOfEmployees = Int32.Parse(reader["MaxNumOfEmployees"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.BusinessPartner = new BusinessPartner();
                             businessPartnerByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -166,10 +166,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerByConstructionSite.BusinessPartner.Name = reader["FoodTypeName"].ToString();
                         }
 
-                        if (reader["BusinessPartnerCount"] != null)
+                        if (reader["BusinessPartnerCount"] != DBNull.Value)
                             businessPartnerByConstructionSite.BusinessPartnerCount = Int32.Parse(reader["BusinessPartnerCount"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.ConstructionSite = new ConstructionSite();
                             businessPartnerByConstructionSite.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -182,7 +182,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerByConstructionSite.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerByConstructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.CreatedBy = new User();
                             businessPartnerByConstructionSite.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -191,7 +191,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerByConstructionSite.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.Company = new Company();
                             businessPartnerByConstructionSite.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

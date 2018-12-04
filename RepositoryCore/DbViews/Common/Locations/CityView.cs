@@ -15,12 +15,12 @@ namespace RepositoryCore.DbViews.Common.Locations
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
 
-            string strSQLCommand = "DROP VIEW IF EXISTS vCountries";
+            string strSQLCommand = "DROP VIEW IF EXISTS vCities";
             SqlCommand command = new SqlCommand(strSQLCommand, conn);
             string returnvalue = (string)command.ExecuteScalar();
 
             strSQLCommand =
-                "CREATE VIEW vCountries AS " +
+                "CREATE VIEW vCities AS " +
                 "SELECT city.Id AS CityId, city.Identifier AS CityIdentifier, city.Code AS CityCode, country.Name AS CityName, city.ZipCode, " +
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
                 "region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.Code AS RegionCode, region.Name AS RegionName, " +
