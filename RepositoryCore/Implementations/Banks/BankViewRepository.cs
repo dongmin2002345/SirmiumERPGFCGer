@@ -54,10 +54,10 @@ namespace RepositoryCore.Implementations.Banks
                         bank.Code = reader["BankCode"]?.ToString();
                         bank.Name = reader["BankName"].ToString();
 
-                        if (reader["Swift"] != null)
+                        if (reader["Swift"] != DBNull.Value)
                             bank.Swift = reader["Swift"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             bank.Country = new Country();
                             bank.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -70,7 +70,7 @@ namespace RepositoryCore.Implementations.Banks
                         bank.Active = bool.Parse(reader["Active"].ToString());
                         bank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             bank.CreatedBy = new User();
                             bank.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -79,7 +79,7 @@ namespace RepositoryCore.Implementations.Banks
                             bank.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             bank.Company = new Company();
                             bank.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -134,10 +134,10 @@ namespace RepositoryCore.Implementations.Banks
                         bank.Code = reader["BankCode"]?.ToString();
                         bank.Name = reader["BankName"].ToString();
 
-                        if (reader["Swift"] != null)
+                        if (reader["Swift"] != DBNull.Value)
                             bank.Swift = reader["Swift"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             bank.Country = new Country();
                             bank.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -150,7 +150,7 @@ namespace RepositoryCore.Implementations.Banks
                         bank.Active = bool.Parse(reader["Active"].ToString());
                         bank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             bank.CreatedBy = new User();
                             bank.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -159,7 +159,7 @@ namespace RepositoryCore.Implementations.Banks
                             bank.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             bank.Company = new Company();
                             bank.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
