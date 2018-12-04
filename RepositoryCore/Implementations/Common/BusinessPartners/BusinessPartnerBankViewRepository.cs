@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerBank.Id = Int32.Parse(reader["BusinessPartnerBankId"].ToString());
                         businessPartnerBank.Identifier = Guid.Parse(reader["BusinessPartnerBankIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerBank.BusinessPartner = new BusinessPartner();
                             businessPartnerBank.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -66,7 +66,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["BankId"] != null)
+                        if (reader["BankId"] != DBNull.Value)
                         {
                             businessPartnerBank.Bank = new Bank();
                             businessPartnerBank.BankId = Int32.Parse(reader["BankId"].ToString());
@@ -76,7 +76,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Bank.Name = reader["BankName"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             businessPartnerBank.Country = new Country();
                             businessPartnerBank.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -86,13 +86,13 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["AccountNumber"] != null)
+                        if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
 
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerBank.CreatedBy = new User();
                             businessPartnerBank.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -101,7 +101,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerBank.Company = new Company();
                             businessPartnerBank.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -157,7 +157,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerBank.Id = Int32.Parse(reader["BusinessPartnerBankId"].ToString());
                         businessPartnerBank.Identifier = Guid.Parse(reader["BusinessPartnerBankIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerBank.BusinessPartner = new BusinessPartner();
                             businessPartnerBank.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -167,7 +167,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["BankId"] != null)
+                        if (reader["BankId"] != DBNull.Value)
                         {
                             businessPartnerBank.Bank = new Bank();
                             businessPartnerBank.BankId = Int32.Parse(reader["BankId"].ToString());
@@ -177,7 +177,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Bank.Name = reader["BankName"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             businessPartnerBank.Country = new Country();
                             businessPartnerBank.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -187,13 +187,13 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["AccountNumber"] != null)
+                        if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
 
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerBank.CreatedBy = new User();
                             businessPartnerBank.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -202,7 +202,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerBank.Company = new Company();
                             businessPartnerBank.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -259,7 +259,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerBank.Id = Int32.Parse(reader["BusinessPartnerBankId"].ToString());
                         businessPartnerBank.Identifier = Guid.Parse(reader["BusinessPartnerBankIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerBank.BusinessPartner = new BusinessPartner();
                             businessPartnerBank.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -269,7 +269,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["BankId"] != null)
+                        if (reader["BankId"] != DBNull.Value)
                         {
                             businessPartnerBank.Bank = new Bank();
                             businessPartnerBank.BankId = Int32.Parse(reader["BankId"].ToString());
@@ -279,7 +279,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Bank.Name = reader["BankName"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             businessPartnerBank.Country = new Country();
                             businessPartnerBank.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -289,13 +289,13 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["AccountNumber"] != null)
+                        if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
 
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerBank.CreatedBy = new User();
                             businessPartnerBank.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -304,7 +304,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerBank.Company = new Company();
                             businessPartnerBank.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -359,7 +359,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerBank.Id = Int32.Parse(reader["BusinessPartnerBankId"].ToString());
                         businessPartnerBank.Identifier = Guid.Parse(reader["BusinessPartnerBankIdentifier"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerBank.BusinessPartner = new BusinessPartner();
                             businessPartnerBank.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -369,7 +369,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["BankId"] != null)
+                        if (reader["BankId"] != DBNull.Value)
                         {
                             businessPartnerBank.Bank = new Bank();
                             businessPartnerBank.BankId = Int32.Parse(reader["BankId"].ToString());
@@ -379,7 +379,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Bank.Name = reader["BankName"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             businessPartnerBank.Country = new Country();
                             businessPartnerBank.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -389,13 +389,13 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["AccountNumber"] != null)
+                        if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
 
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerBank.CreatedBy = new User();
                             businessPartnerBank.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -404,7 +404,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerBank.Company = new Company();
                             businessPartnerBank.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
