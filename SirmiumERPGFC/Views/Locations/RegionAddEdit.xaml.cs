@@ -168,7 +168,6 @@ namespace SirmiumERPGFC.Views.Locations
                 CurrentRegion.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentRegion.IsSynced = false;
-                CurrentRegion.UpdatedAt = DateTime.Now;
 
                 RegionResponse response = new RegionSQLiteRepository().Delete(CurrentRegion.Identifier);
                 response = new RegionSQLiteRepository().Create(CurrentRegion);

@@ -173,7 +173,6 @@ namespace SirmiumERPGFC.Views.Locations
                 CurrentMunicipality.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentMunicipality.IsSynced = false;
-                CurrentMunicipality.UpdatedAt = DateTime.Now;
 
                 MunicipalityResponse response = new MunicipalitySQLiteRepository().Delete(CurrentMunicipality.Identifier);
                 response = new MunicipalitySQLiteRepository().Create(CurrentMunicipality);

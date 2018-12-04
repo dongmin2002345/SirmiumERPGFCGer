@@ -93,6 +93,8 @@ namespace DataMapper.Mappers.Common.Locations
                 Mark = countryViewModel.Mark,
                 Name = countryViewModel.Name,
 
+                Active = countryViewModel.IsActive,
+
                 CreatedById = countryViewModel.CreatedBy?.Id ?? null,
                 CompanyId = countryViewModel.Company?.Id ?? null,
 

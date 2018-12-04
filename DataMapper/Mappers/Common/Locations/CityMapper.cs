@@ -92,6 +92,8 @@ namespace DataMapper.Mappers.Common.Locations
                 RegionId = cityViewModel.Region?.Id ?? null,
                 MunicipalityId = cityViewModel.Municipality?.Id ?? null,
 
+                Active = cityViewModel.IsActive, 
+
                 CreatedById = cityViewModel.CreatedBy?.Id ?? null,
                 CompanyId = cityViewModel.Company?.Id ?? null,
 

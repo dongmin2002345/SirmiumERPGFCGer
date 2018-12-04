@@ -174,7 +174,6 @@ namespace SirmiumERPGFC.Views.Locations
                 CurrentCity.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentCity.IsSynced = false;
-                CurrentCity.UpdatedAt = DateTime.Now;
 
                 CityResponse response = new CitySQLiteRepository().Delete(CurrentCity.Identifier);
                 response = new CitySQLiteRepository().Create(CurrentCity);

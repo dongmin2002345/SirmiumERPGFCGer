@@ -34,7 +34,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
-                "FROM vCountries " +
+                "FROM vCities " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -136,7 +136,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
-                "FROM vCountries " +
+                "FROM vCities " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))

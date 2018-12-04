@@ -29,7 +29,6 @@ namespace RepositoryCore.Implementations.Common.Locations
             List<Country> Countries = new List<Country>();
 
             string queryString =
-                "CREATE VIEW vCountries AS " +
                 "SELECT CountryId, CountryIdentifier, CountryCode, AlfaCode, NumericCode, Mark, CountryName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vCountries " +
@@ -98,7 +97,6 @@ namespace RepositoryCore.Implementations.Common.Locations
             List<Country> Countries = new List<Country>();
 
             string queryString =
-                "CREATE VIEW vCountries AS " +
                 "SELECT CountryId, CountryIdentifier, CountryCode, AlfaCode, NumericCode, Mark, CountryName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vCountries " +

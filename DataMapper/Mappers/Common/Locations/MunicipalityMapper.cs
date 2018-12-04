@@ -78,6 +78,8 @@ namespace DataMapper.Mappers.Common.Locations
                 CountryId = municipalityViewModel.Country?.Id ?? null,
                 RegionId = municipalityViewModel.Region?.Id ?? null,
 
+                Active = municipalityViewModel.IsActive,
+
                 CreatedById = municipalityViewModel.CreatedBy?.Id ?? null,
                 CompanyId = municipalityViewModel.Company?.Id ?? null,
 

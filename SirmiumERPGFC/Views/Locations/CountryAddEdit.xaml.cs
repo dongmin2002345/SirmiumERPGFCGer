@@ -168,7 +168,6 @@ namespace SirmiumERPGFC.Views.Locations
                 CurrentCountry.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentCountry.IsSynced = false;
-                CurrentCountry.UpdatedAt = DateTime.Now;
 
                 CountryResponse response = new CountrySQLiteRepository().Delete(CurrentCountry.Identifier);
                 response = new CountrySQLiteRepository().Create(CurrentCountry);
