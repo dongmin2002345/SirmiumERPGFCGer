@@ -183,7 +183,6 @@ namespace SirmiumERPGFC.Views.InputInvoices
 				currentInputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
 				currentInputInvoice.IsSynced = false;
-				currentInputInvoice.UpdatedAt = DateTime.Now;
 
 				InputInvoiceResponse response = new InputInvoiceSQLiteRepository().Delete(currentInputInvoice.Identifier);
 				response = new InputInvoiceSQLiteRepository().Create(currentInputInvoice);

@@ -235,14 +235,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IOutputInvoiceRepository GetOutputInvoiceRepository()
         {
             if (outputInvoiceRepository == null)
-                outputInvoiceRepository = new OutputInvoiceRepository(context);
+                outputInvoiceRepository = new OutputInvoiceViewRepository(context);
             return outputInvoiceRepository;
         }
 
 		public IInputInvoiceRepository GetInputInvoiceRepository()
 		{
 			if (inputInvoiceRepository == null)
-				inputInvoiceRepository = new InputInvoiceRepository(context);
+				inputInvoiceRepository = new InputInvoiceViewRepository(context);
 			return inputInvoiceRepository;
 		}
 

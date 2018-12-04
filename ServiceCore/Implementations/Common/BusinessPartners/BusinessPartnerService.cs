@@ -77,6 +77,10 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                 // Backup items
                 List<BusinessPartnerLocationViewModel> locations = businessPartnerViewModel.Locations?.ToList() ?? new List<BusinessPartnerLocationViewModel>();
                 businessPartnerViewModel.Locations = null;
+
+                List<BusinessPartnerBankViewModel> banks = businessPartnerViewModel.Banks?.ToList() ?? new List<BusinessPartnerBankViewModel>();
+                businessPartnerViewModel.Banks = null;
+
                 List<BusinessPartnerInstitutionViewModel> organizationUnits = businessPartnerViewModel.Institutions?.ToList() ?? new List<BusinessPartnerInstitutionViewModel>();
                 businessPartnerViewModel.Institutions = null;
                 List<BusinessPartnerPhoneViewModel> phones = businessPartnerViewModel.Phones?.ToList() ?? new List<BusinessPartnerPhoneViewModel>();
@@ -101,6 +105,16 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                 {
                     item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
                     unitOfWork.GetBusinessPartnerLocationRepository().Create(item.ConvertToBusinessPartnerLocation());
+                }
+
+                var banksFromDB = unitOfWork.GetBusinessPartnerBankRepository().GetBusinessPartnerBanksByBusinessPartner(createdBusinessPartner.Id);
+                foreach (var item in banksFromDB)
+                    if (!banks.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetBusinessPartnerBankRepository().Delete(item.Identifier);
+                foreach (var item in banks)
+                {
+                    item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
+                    unitOfWork.GetBusinessPartnerBankRepository().Create(item.ConvertToBusinessPartnerBank());
                 }
 
                 var organizationUnitsFromDB = unitOfWork.GetBusinessPartnerInstitutionRepository().GetBusinessPartnerInstitutionsByBusinessPartner(createdBusinessPartner.Id);

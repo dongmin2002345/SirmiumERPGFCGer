@@ -48,6 +48,9 @@ namespace DataMapper.Mappers.Common.InputInvoices
                 Path = inputInvoice.Path,
 
 				BusinessPartner = inputInvoice.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
+
+                IsActive = inputInvoice.Active, 
+
 				CreatedBy = inputInvoice.CreatedBy?.ConvertToUserViewModelLite(),
 				Company = inputInvoice.Company?.ConvertToCompanyViewModelLite(),
 
@@ -95,6 +98,8 @@ namespace DataMapper.Mappers.Common.InputInvoices
 
                 Path = inputInvoice.Path,
 
+                IsActive = inputInvoice.Active,
+
                 UpdatedAt = inputInvoice.UpdatedAt,
 				CreatedAt = inputInvoice.CreatedAt
 			};
@@ -129,7 +134,10 @@ namespace DataMapper.Mappers.Common.InputInvoices
                 Path = inputInvoiceViewModel.Path,
 
                 BusinessPartnerId = inputInvoiceViewModel.BusinessPartner?.Id ?? null,
-				CreatedById = inputInvoiceViewModel.CreatedBy?.Id ?? null,
+
+                Active = inputInvoiceViewModel.IsActive,
+
+                CreatedById = inputInvoiceViewModel.CreatedBy?.Id ?? null,
 				CompanyId = inputInvoiceViewModel.Company?.Id ?? null,
 
 				CreatedAt = inputInvoiceViewModel.CreatedAt,

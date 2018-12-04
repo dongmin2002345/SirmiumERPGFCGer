@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
@@ -107,62 +108,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public BusinessPartnerInstitutionListResponse GetUnSyncedBusinessPartnerInstitutions(int companyId)
-        {
-            BusinessPartnerInstitutionListResponse response = new BusinessPartnerInstitutionListResponse();
-            List<BusinessPartnerInstitutionViewModel> businessPartnerInstitutions = new List<BusinessPartnerInstitutionViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM BusinessPartnerInstitutions " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerInstitutionViewModel dbEntry = new BusinessPartnerInstitutionViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Institution = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Phone = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerInstitutions.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.BusinessPartnerInstitutions = new List<BusinessPartnerInstitutionViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.BusinessPartnerInstitutions = businessPartnerInstitutions;
-            return response;
-        }
-
         public BusinessPartnerInstitutionResponse GetBusinessPartnerInstitution(Guid identifier)
         {
             BusinessPartnerInstitutionResponse response = new BusinessPartnerInstitutionResponse();
@@ -217,6 +162,28 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
+        public void Sync(IBusinessPartnerInstitutionService BusinessPartnerInstitutionService)
+        {
+            SyncBusinessPartnerInstitutionRequest request = new SyncBusinessPartnerInstitutionRequest();
+            request.CompanyId = MainWindow.CurrentCompanyId;
+            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+            BusinessPartnerInstitutionListResponse response = BusinessPartnerInstitutionService.Sync(request);
+            if (response.Success)
+            {
+                List<BusinessPartnerInstitutionViewModel> BusinessPartnerInstitutionsFromDB = response.BusinessPartnerInstitutions;
+                foreach (var BusinessPartnerInstitution in BusinessPartnerInstitutionsFromDB.OrderBy(x => x.Id))
+                {
+                    Delete(BusinessPartnerInstitution.Identifier);
+                    if (BusinessPartnerInstitution.IsActive)
+                    {
+                        BusinessPartnerInstitution.IsSynced = true;
+                        Create(BusinessPartnerInstitution);
+                    }
+                }
+            }
+        }
+
         public DateTime? GetLastUpdatedAt(int companyId)
         {
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
@@ -224,7 +191,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 db.Open();
                 try
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from BusinessPartnerInstitutions WHERE CompanyId = @CompanyId", db);
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from BusinessPartnerInstitutions WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     SqliteDataReader query = selectCommand.ExecuteReader();
                     int count = query.Read() ? query.GetInt32(0) : 0;
@@ -233,7 +200,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         return null;
                     else
                     {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from BusinessPartnerInstitutions WHERE CompanyId = @CompanyId", db);
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from BusinessPartnerInstitutions WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
                         if (query.Read())

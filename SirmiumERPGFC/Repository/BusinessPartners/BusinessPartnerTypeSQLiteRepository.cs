@@ -295,7 +295,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 db.Open();
                 try
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from BusinessPartnerTypes WHERE CompanyId = @CompanyId", db);
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from BusinessPartnerTypes WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     SqliteDataReader query = selectCommand.ExecuteReader();
                     int count = query.Read() ? query.GetInt32(0) : 0;
@@ -304,7 +304,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         return null;
                     else
                     {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from BusinessPartnerTypes WHERE CompanyId = @CompanyId", db);
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from BusinessPartnerTypes WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
                         if (query.Read())

@@ -282,6 +282,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                 BusinessPartnerDocument.Active = true;
 
+                BusinessPartnerDocument.CreatedAt = DateTime.Now;
+                BusinessPartnerDocument.UpdatedAt = DateTime.Now;
+
                 context.BusinessPartnerDocuments.Add(BusinessPartnerDocument);
                 return BusinessPartnerDocument;
             }
