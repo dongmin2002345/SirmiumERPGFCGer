@@ -27,6 +27,7 @@ using RepositoryCore.Implementations.Common.ToDos;
 using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Implementations.Employees;
 using RepositoryCore.Implementations.Limitations;
+using RepositoryCore.Implementations.PhysicalPersons;
 using RepositoryCore.UnitOfWork.Abstractions;
 using System;
 
@@ -418,7 +419,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public IPhysicalPersonRepository GetPhysicalPersonRepository()
 		{
 			if (physicalPersonRepository == null)
-				physicalPersonRepository = new PhysicalPersonRepository(context);
+				physicalPersonRepository = new PhysicalPersonViewRepository(context);
 			return physicalPersonRepository;
 		}
 

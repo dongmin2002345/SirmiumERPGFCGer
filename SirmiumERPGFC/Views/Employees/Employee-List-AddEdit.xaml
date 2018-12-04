@@ -111,18 +111,6 @@
                         <TextBlock Grid.Row="5" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradilišteDvotacka}" />
                         <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.ConstructionSiteCode}" IsEnabled="False" />
 
-                        <!--
-
-                        <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Zanimanje *" />
-                        <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.Interest}"  />
-
-                        <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Posedovanje dozvola *" />
-                        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.License}"  />
-
-                        <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Datum prijave za dob. termina *" />
-                        <DatePicker Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
-                                    Text="{Binding Path=CurrentEmployee.EmbassyDate,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />-->
-
                     </Grid>
                 </GroupBox>
 
@@ -150,17 +138,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
                         <popups1:CityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2"
                                              CurrentCountry="{Binding Path=CurrentEmployee.PassportCountry, Mode=TwoWay}" 
-                                             CurrentCity="{Binding Path=CurrentEmployee.PassportCity, Mode=TwoWay}" 
-                                             />
-
-                        <!--<TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="Država *" />
-                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry1" 
-                                        CurrentCountry="{Binding Path=CurrentEmployee.Country, Mode=TwoWay}"/>
-
-                        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Grad *" />
-                        <popups1:CityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity1" 
-                                        CurrentCountry="{Binding Path=CurrentEmployee.Country, Mode=TwoWay}"
-                                        CurrentCity="{Binding Path=CurrentEmployee.City, Mode=TwoWay}"/>-->
+                                             CurrentCity="{Binding Path=CurrentEmployee.PassportCity, Mode=TwoWay}" />
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Broj_pasošaDvotacka}" />
                         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.Passport}"  />
