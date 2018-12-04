@@ -73,7 +73,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.Region.Id = Int32.Parse(reader["RegionId"].ToString());
                             city.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
                             city.Region.Code = reader["RegionCode"].ToString();
-                            city.Region.Name = reader["RegionCode"].ToString();
+                            city.Region.Name = reader["RegionName"].ToString();
                         }
 
                         if (reader["MunicipalityId"] != DBNull.Value)
@@ -176,7 +176,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             city.Region.Id = Int32.Parse(reader["RegionId"].ToString());
                             city.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
                             city.Region.Code = reader["RegionCode"].ToString();
-                            city.Region.Name = reader["RegionCode"].ToString();
+                            city.Region.Name = reader["RegionName"].ToString();
                         }
 
                         if (reader["MunicipalityId"] != DBNull.Value)
