@@ -32,7 +32,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             string queryString =
                 "SELECT InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
+                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPaymet, Status, StatusDate, Description, Path, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoices " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -88,8 +88,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             inputInvoice.AmountGross = decimal.Parse(reader["AmountGross"].ToString());
                         if (reader["Currency"] != null)
                             inputInvoice.AmountGross = Int32.Parse(reader["Currency"].ToString());
-                        if (reader["DateOfPayment"] != null)
-                            inputInvoice.DateOfPaymet = DateTime.Parse(reader["DateOfPayment"].ToString());
+                        if (reader["DateOfPaymet"] != null)
+                            inputInvoice.DateOfPaymet = DateTime.Parse(reader["DateOfPaymet"].ToString());
                         if (reader["Status"] != null)
                             inputInvoice.Status = reader["Status"].ToString();
                         if (reader["StatusDate"] != null)
@@ -151,7 +151,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             string queryString =
                 "SELECT InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
+                "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPaymet, Status, StatusDate, Description, Path, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoices " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
@@ -207,8 +207,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             inputInvoice.AmountGross = decimal.Parse(reader["AmountGross"].ToString());
                         if (reader["Currency"] != null)
                             inputInvoice.AmountGross = Int32.Parse(reader["Currency"].ToString());
-                        if (reader["DateOfPayment"] != null)
-                            inputInvoice.DateOfPaymet = DateTime.Parse(reader["DateOfPayment"].ToString());
+                        if (reader["DateOfPaymet"] != null)
+                            inputInvoice.DateOfPaymet = DateTime.Parse(reader["DateOfPaymet"].ToString());
                         if (reader["Status"] != null)
                             inputInvoice.Status = reader["Status"].ToString();
                         if (reader["StatusDate"] != null)
