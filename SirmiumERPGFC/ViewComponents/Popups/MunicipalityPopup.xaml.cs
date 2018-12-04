@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,13 +113,15 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         private void PopulateFromDb(string filterString = "")
         {
-            Application.Current.Dispatcher.BeginInvoke(
+            Thread th = new Thread(() =>
+            {
+                Application.Current.Dispatcher.BeginInvoke(
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
                     if (CurrentRegion != null)
                     {
-                        new MunicipalitySQLiteRepository().Sync(municipalityService);
+                        //new MunicipalitySQLiteRepository().Sync(municipalityService);
 
                         MunicipalityListResponse municipalityResp = new MunicipalitySQLiteRepository().GetMunicipalitiesForPopup(MainWindow.CurrentCompanyId, CurrentRegion.Identifier, filterString);
                         if (municipalityResp.Success)
@@ -128,8 +131,10 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                     }
                     else
                         MunicipalitysFromDB = new ObservableCollection<MunicipalityViewModel>();
-                })
-            );
+                }));
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void txtMunicipality_GotFocus(object sender, RoutedEventArgs e)

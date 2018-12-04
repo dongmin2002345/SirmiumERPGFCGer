@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -135,19 +136,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         private void PopulateFromDb(string filterString = "")
         {
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    new CitySQLiteRepository().Sync(cityService);
+            Thread th = new Thread(() =>
+            {
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        //new CitySQLiteRepository().Sync(cityService);
 
-                    CityListResponse cityResp = new CitySQLiteRepository().GetCitiesForPopupCountry(MainWindow.CurrentCompanyId, CurrentCountry?.Identifier ?? null, filterString);
-                    if (cityResp.Success)
-                        CitiesFromDB = new ObservableCollection<CityViewModel>(cityResp.Cities ?? new List<CityViewModel>());
-                    else
-                        CitiesFromDB = new ObservableCollection<CityViewModel>();
-                })
-            );
+                        CityListResponse cityResp = new CitySQLiteRepository().GetCitiesForPopupCountry(MainWindow.CurrentCompanyId, CurrentCountry?.Identifier ?? null, filterString);
+                        if (cityResp.Success)
+                            CitiesFromDB = new ObservableCollection<CityViewModel>(cityResp.Cities ?? new List<CityViewModel>());
+                        else
+                            CitiesFromDB = new ObservableCollection<CityViewModel>();
+                    })
+                );
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void txtCity_GotFocus(object sender, RoutedEventArgs e)
