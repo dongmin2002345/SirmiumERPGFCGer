@@ -326,7 +326,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository()
         {
             if (constructionSiteCalculationRepository == null)
-                constructionSiteCalculationRepository = new ConstructionSiteCalculationRepository(context);
+                constructionSiteCalculationRepository = new ConstructionSiteCalculationViewRepository(context);
             return constructionSiteCalculationRepository;
         }
 
