@@ -505,6 +505,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             RefreshButtonContent = " Tipovi ... ";
             new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
 
+            RefreshButtonContent = " Napomene ... ";
+            new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService);
+
             DisplayData();
 
             RefreshButtonContent = " OSVEŽI ";
