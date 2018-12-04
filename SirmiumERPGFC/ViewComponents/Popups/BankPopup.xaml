@@ -51,7 +51,7 @@
                               ItemsSource="{Binding Path=BanksFromDB}"
                               SelectedItem="{Binding Path=CurrentBank}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="BankCode" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Swift" Header="Swift" Binding="{Binding Swift}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
