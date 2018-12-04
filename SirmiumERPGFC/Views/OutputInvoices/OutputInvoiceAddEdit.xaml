@@ -165,7 +165,7 @@
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource BrutoDvotacka}" VerticalAlignment="Center"  Margin="5 0 5 0" />
                         <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtTotalValue" 
-                             Text="{Binding Path=CurrentOutputInvoice.AmountGross, Converter={StaticResource stringToDoubleConverter}}" Grid.ColumnSpan="2" IsEnabled="False"/>
+                             Text="{Binding Path=CurrentOutputInvoice.AmountGross, Converter={StaticResource stringToDoubleConverter}, Mode=TwoWay}" Grid.ColumnSpan="2" IsEnabled="False"/>
 
                     </Grid>
                 </GroupBox>

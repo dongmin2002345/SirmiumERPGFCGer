@@ -29,6 +29,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "CityIdentifier GUID NULL, " +
            "CityCode NVARCHAR(2048) NULL, " +
            "CityName NVARCHAR(2048) NULL, " +
+           "CountryId INTEGER NULL, " +
+           "CountryIdentifier GUID NULL, " +
+           "CountryCode NVARCHAR(2048) NULL, " +
+           "CountryName NVARCHAR(2048) NULL, " +
            "IsSynced BOOL NULL, " +
            "UpdatedAt DATETIME NULL, " +
            "CreatedById INTEGER NULL, " +
@@ -39,15 +43,18 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSites " +
             "(Id, ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @Address, @MaxWorkers, @ContractStart, @ContractExpiration, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
+            "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public ConstructionSiteListResponse GetConstructionSitesByPage(int companyId, ConstructionSiteViewModel constructionSiteSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -93,6 +100,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         dbEntry.ContractStart = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractExpiration = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -177,6 +185,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         dbEntry.ContractStart = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractExpiration = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -231,6 +240,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         dbEntry.ContractStart = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractExpiration = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -336,6 +346,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)constructionSite.City?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CityCode", ((object)constructionSite.City?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CityName", ((object)constructionSite.City?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryId", ((object)constructionSite.Country?.Id) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)constructionSite.Country?.Identifier) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)constructionSite.Country?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@CountryName", ((object)constructionSite.Country?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", constructionSite.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSite.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

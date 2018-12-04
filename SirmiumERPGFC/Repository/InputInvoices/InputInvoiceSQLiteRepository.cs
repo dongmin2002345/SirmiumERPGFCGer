@@ -329,7 +329,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 				db.Open();
 				try
 				{
-					SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from InputInvoices WHERE CompanyId = @CompanyId", db);
+					SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from InputInvoices WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					SqliteDataReader query = selectCommand.ExecuteReader();
 					int count = query.Read() ? query.GetInt32(0) : 0;
@@ -338,7 +338,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						return null;
 					else
 					{
-						selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from InputInvoices WHERE CompanyId = @CompanyId", db);
+						selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from InputInvoices WHERE CompanyId = @CompanyId IsSynced = 1", db);
 						selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 						query = selectCommand.ExecuteReader();
 						if (query.Read())

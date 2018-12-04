@@ -32,6 +32,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
+                "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "Address, MaxWorkers, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
@@ -64,6 +65,16 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
                             constructionSite.City.Code = reader["CityCode"].ToString();
                             constructionSite.City.Name = reader["CityName"].ToString();
+                        }
+
+                        if (reader["CountryId"] != DBNull.Value)
+                        {
+                            constructionSite.Country = new Country();
+                            constructionSite.CountryId = Int32.Parse(reader["CountryId"].ToString());
+                            constructionSite.Country.Id = Int32.Parse(reader["CountryId"].ToString());
+                            constructionSite.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                            constructionSite.Country.Code = reader["CountryCode"].ToString();
+                            constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
                         if (reader["Address"] != DBNull.Value)
@@ -120,6 +131,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
+                "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "Address, MaxWorkers, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
@@ -151,6 +163,16 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
                             constructionSite.City.Code = reader["CityCode"].ToString();
                             constructionSite.City.Name = reader["CityName"].ToString();
+                        }
+
+                        if (reader["CountryId"] != DBNull.Value)
+                        {
+                            constructionSite.Country = new Country();
+                            constructionSite.CountryId = Int32.Parse(reader["CountryId"].ToString());
+                            constructionSite.Country.Id = Int32.Parse(reader["CountryId"].ToString());
+                            constructionSite.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                            constructionSite.Country.Code = reader["CountryCode"].ToString();
+                            constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
                         if (reader["Address"] != DBNull.Value)
@@ -203,6 +225,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
+                "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "Address, MaxWorkers, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
@@ -236,6 +259,16 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
                             constructionSite.City.Code = reader["CityCode"].ToString();
                             constructionSite.City.Name = reader["CityName"].ToString();
+                        }
+
+                        if (reader["CountryId"] != DBNull.Value)
+                        {
+                            constructionSite.Country = new Country();
+                            constructionSite.CountryId = Int32.Parse(reader["CountryId"].ToString());
+                            constructionSite.Country.Id = Int32.Parse(reader["CountryId"].ToString());
+                            constructionSite.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                            constructionSite.Country.Code = reader["CountryCode"].ToString();
+                            constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
                         if (reader["Address"] != DBNull.Value)
@@ -340,6 +373,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 if (dbEntry != null)
                 {
                     dbEntry.CityId = constructionSite.CityId ?? null;
+                    dbEntry.CountryId = constructionSite.CountryId ?? null;
                     dbEntry.CompanyId = constructionSite.CompanyId ?? null;
                     dbEntry.CreatedById = constructionSite.CreatedById ?? null;
 

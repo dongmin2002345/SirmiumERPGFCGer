@@ -287,7 +287,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     return (intValue + 1).ToString();
                 }
                 else
-                    return "";
+                    return "1";
             }
         }
 

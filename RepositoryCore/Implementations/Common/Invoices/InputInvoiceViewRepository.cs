@@ -287,7 +287,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     return (intValue + 1).ToString();
                 }
                 else
-                    return "";
+                    return "1";
             }
         }
 
@@ -347,7 +347,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
         {
             // Load Favor that will be deleted
             InputInvoice dbEntry = context.InputInvoices
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

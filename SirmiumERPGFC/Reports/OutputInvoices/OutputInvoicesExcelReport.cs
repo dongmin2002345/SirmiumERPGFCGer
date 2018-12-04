@@ -2,9 +2,11 @@
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Reports.OutputInvoices
 {
@@ -167,8 +169,8 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounter] = outputInvoices[i].Status;
-				columnCounter++;
+				sheet1.Cells[rowCounter, columnCounter] = new ChooseStatusConverter().Convert(outputInvoices[i].Status, null, null, CultureInfo.InvariantCulture);
+                columnCounter++;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;

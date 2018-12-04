@@ -40,6 +40,7 @@ namespace DataMapper.Mappers.ConstructionSites
 
                 
                 City = constructionSite.City?.ConvertToCityViewModelLite(),
+                Country = constructionSite.Country?.ConvertToCountryViewModelLite(),
 
                 IsActive = constructionSite.Active,
 
@@ -107,6 +108,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 ContractExpiration = constructionSiteViewModel.ContractExpiration,
 
                 CityId = constructionSiteViewModel.City?.Id ?? null,
+                CountryId = constructionSiteViewModel.Country?.Id ?? null, 
 
                 CreatedById = constructionSiteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = constructionSiteViewModel.Company?.Id ?? null,

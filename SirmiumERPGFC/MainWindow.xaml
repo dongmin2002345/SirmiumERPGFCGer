@@ -158,15 +158,7 @@
                 </Fluent:RibbonGroupBox>  
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="{DynamicResource ADMINISTRACIJA}" x:Name="mniAdministration" KeyTip="ADM">
-
-                <Fluent:RibbonGroupBox Header="Excel import">
-                    <Fluent:Button x:Name="mniExcelImport" Click="mniExcelImport_Click" Header="Excel import" KeyTip="EXC" Width="70">
-                        <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\Excel02.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Fluent:Button.LargeIcon>
-                    </Fluent:Button>
-                </Fluent:RibbonGroupBox>
+            <Fluent:RibbonTabItem Header="RAČUNI" KeyTip="RAC">
 
                 <Fluent:RibbonGroupBox Header="{DynamicResource Ulazni_računi}">
                     <Fluent:Button Click="mniInputInvoices_Click" Header="{DynamicResource Ulazni_računi}" KeyTip="IZL" Width="70">
@@ -180,6 +172,18 @@
                     <Fluent:Button Click="mniOutputInvoices_Click" Header="{DynamicResource Izlazni_računi}" KeyTip="IZL" Width="80">
                         <Fluent:Button.LargeIcon>
                             <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="{DynamicResource ADMINISTRACIJA}" x:Name="mniAdministration" KeyTip="ADM">
+
+                <Fluent:RibbonGroupBox Header="Excel import">
+                    <Fluent:Button x:Name="mniExcelImport" Click="mniExcelImport_Click" Header="Excel import" KeyTip="EXC" Width="70">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\Excel02.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>

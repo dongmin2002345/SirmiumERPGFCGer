@@ -2,9 +2,11 @@
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Reports.InputInvoices
 {
@@ -125,7 +127,6 @@ namespace SirmiumERPGFC.Reports.InputInvoices
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounter].C = 10;
                 sheet1.Cells[rowCounter, columnCounter] = inputInvoices[i].InvoiceDate.ToString("dd.MM.yyyy");
 				columnCounter++;
 
@@ -168,8 +169,8 @@ namespace SirmiumERPGFC.Reports.InputInvoices
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounter] = inputInvoices[i].Status;
-				columnCounter++;
+				sheet1.Cells[rowCounter, columnCounter] = new ChooseStatusConverter().Convert(inputInvoices[i].Status, null, null, CultureInfo.InvariantCulture);
+                columnCounter++;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;

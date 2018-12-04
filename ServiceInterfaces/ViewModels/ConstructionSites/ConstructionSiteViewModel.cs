@@ -93,6 +93,24 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region Country
+        private CountryViewModel _Country;
+
+        public CountryViewModel Country
+        {
+            get { return _Country; }
+            set
+            {
+                if (_Country != value)
+                {
+                    _Country = value;
+                    NotifyPropertyChanged("Country");
+                }
+            }
+        }
+        #endregion
+
+
         #region MaxWorkers
         private int _MaxWorkers;
 
