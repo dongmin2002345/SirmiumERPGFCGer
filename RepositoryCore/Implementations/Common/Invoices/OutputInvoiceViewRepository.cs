@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if (reader["Description"] != DBNull.Value)
                             outputInvoice.Description = reader["Description"].ToString();
                         if (reader["Path"] != DBNull.Value)
-                            outputInvoice.Description = reader["Path"].ToString();
+                            outputInvoice.Path = reader["Path"].ToString();
 
                         outputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         outputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -216,7 +216,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         if (reader["Description"] != DBNull.Value)
                             outputInvoice.Description = reader["Description"].ToString();
                         if (reader["Path"] != DBNull.Value)
-                            outputInvoice.Description = reader["Path"].ToString();
+                            outputInvoice.Path = reader["Path"].ToString();
 
                         outputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         outputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
