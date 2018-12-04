@@ -254,7 +254,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
         {
             // Load Remedy that will be deleted
             Sector dbEntry = context.Sectors
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

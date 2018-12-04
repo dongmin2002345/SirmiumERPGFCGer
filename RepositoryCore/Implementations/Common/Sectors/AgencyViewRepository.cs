@@ -276,7 +276,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
         {
             // Load Remedy that will be deleted
             Agency dbEntry = context.Agencies
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

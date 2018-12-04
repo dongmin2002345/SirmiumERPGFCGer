@@ -297,7 +297,7 @@ namespace SirmiumERPWeb.Controllers.Administrations
             var adminisrationsForDelete = taxAdministrationService.GetTaxAdministrations(company?.Id ?? 0).TaxAdministrations;
             foreach (var item in adminisrationsForDelete)
             {
-                taxAdministrationService.Delete(item.Identifier);
+                var response = taxAdministrationService.Delete(item.Identifier);
             }
         }
 

@@ -337,7 +337,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
         {
             // Load TaxAdministration that will be deleted
             TaxAdministration dbEntry = context.TaxAdministrations
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

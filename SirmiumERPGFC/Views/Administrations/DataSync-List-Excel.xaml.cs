@@ -923,15 +923,15 @@ namespace SirmiumERPGFC.Views.Administrations
                 {
                     TaxAdministrationButtonContent = " Brisanje postojecih podataka ... ";
 
-                    string apiUrlDelete = BaseApiUrl + "/SeedData/DeleteTaxAdministrations";
-                    SendData(apiUrlDelete, MainWindow.CurrentCompanyId.ToString());
-
-                    TaxAdministrationButtonContent = " Učitavanje EXCEL fajla ... ";
-
                     Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
                     Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(oDlg.FileName);
                     Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
                     Microsoft.Office.Interop.Excel.Range xlRange = xlWorksheet.UsedRange;
+
+                    string apiUrlDelete = BaseApiUrl + "/SeedData/DeleteTaxAdministrations";
+                    SendData(apiUrlDelete, MainWindow.CurrentCompanyId.ToString());
+
+                    TaxAdministrationButtonContent = " Učitavanje EXCEL fajla ... ";
 
                     int rowCount = xlRange.Rows.Count;
                     int colCount = xlRange.Columns.Count;
@@ -956,8 +956,6 @@ namespace SirmiumERPGFC.Views.Administrations
                         taxAdministration.IsSynced = false;
                         taxAdministration.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
                         taxAdministration.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                        taxAdministration.CreatedAt = DateTime.Now;
-                        taxAdministration.UpdatedAt = DateTime.Now;
 
                         if (taxAdministrations.Where(x => x.SecondCode == taxAdministration.SecondCode).Count() == 0)
                         {
