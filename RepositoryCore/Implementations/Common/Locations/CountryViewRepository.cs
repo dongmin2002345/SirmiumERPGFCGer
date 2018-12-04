@@ -59,7 +59,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         country.Active = bool.Parse(reader["Active"].ToString());
                         country.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             country.CreatedBy = new User();
                             country.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -68,7 +68,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             country.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             country.Company = new Company();
                             country.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -129,7 +129,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                         country.Active = bool.Parse(reader["Active"].ToString());
                         country.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             country.CreatedBy = new User();
                             country.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -138,7 +138,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             country.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             country.Company = new Company();
                             country.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

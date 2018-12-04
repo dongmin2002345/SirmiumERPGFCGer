@@ -164,28 +164,28 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IBusinessPartnerRepository GetBusinessPartnerRepository()
         {
             if (businessPartnerRepository == null)
-                businessPartnerRepository = new BusinessPartnerRepository(context);
+                businessPartnerRepository = new BusinessPartnerViewRepository(context);
             return businessPartnerRepository;
         }
 
         public IBusinessPartnerLocationRepository GetBusinessPartnerLocationRepository()
         {
             if (businessPartnerLocationRepository == null)
-                businessPartnerLocationRepository = new BusinessPartnerLocationRepository(context);
+                businessPartnerLocationRepository = new BusinessPartnerLocationViewRepository(context);
             return businessPartnerLocationRepository;
         }
 
         public IBusinessPartnerPhoneRepository GetBusinessPartnerPhoneRepository()
         {
             if (businessPartnerPhoneRepository == null)
-                businessPartnerPhoneRepository = new BusinessPartnerPhoneRepository(context);
+                businessPartnerPhoneRepository = new BusinessPartnerPhoneViewRepository(context);
             return businessPartnerPhoneRepository;
         }
 
         public IBusinessPartnerInstitutionRepository GetBusinessPartnerInstitutionRepository()
         {
             if (businessPartnerInstitutionRepository == null)
-                businessPartnerInstitutionRepository = new BusinessPartnerInstitutionRepository(context);
+                businessPartnerInstitutionRepository = new BusinessPartnerInstitutionViewRepository(context);
             return businessPartnerInstitutionRepository;
         }
 
@@ -199,14 +199,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IBusinessPartnerOrganizationUnitRepository GetBusinessPartnerOrganizationUnitRepository()
         {
             if (businessPartnerOrganizationUnitRepository == null)
-                businessPartnerOrganizationUnitRepository = new BusinessPartnerOrganizationUnitRepository(context);
+                businessPartnerOrganizationUnitRepository = new BusinessPartnerOrganizationUnitViewRepository(context);
             return businessPartnerOrganizationUnitRepository;
         }
 
         public IBusinessPartnerTypeRepository GetBusinessPartnerTypeRepository()
         {
             if (businessPartnerTypeRepository == null)
-                businessPartnerTypeRepository = new BusinessPartnerTypeRepository(context);
+                businessPartnerTypeRepository = new BusinessPartnerTypeViewRepository(context);
             return businessPartnerTypeRepository;
         }
 
@@ -249,28 +249,28 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public ICountryRepository GetCountryRepository()
         {
             if (countryRepository == null)
-                countryRepository = new CountryRepository(context);
+                countryRepository = new CountryViewRepository(context);
             return countryRepository;
         }
 
         public ICityRepository GetCityRepository()
         {
             if (cityRepository == null)
-                cityRepository = new CityRepository(context);
+                cityRepository = new CityViewRepository(context);
             return cityRepository;
         }
 
         public IRegionRepository GetRegionRepository()
         {
             if (regionRepository == null)
-                regionRepository = new RegionRepository(context);
+                regionRepository = new RegionViewRepository(context);
             return regionRepository;
         }
 
         public IMunicipalityRepository GetMunicipalityRepository()
         {
             if (municipalityRepository == null)
-                municipalityRepository = new MunicipalityRepository(context);
+                municipalityRepository = new MunicipalityViewRepository(context);
             return municipalityRepository;
         }
 
@@ -426,7 +426,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
         {
             if (businessPartnerByConstructionSiteRepository == null)
-                businessPartnerByConstructionSiteRepository = new BusinessPartnerByConstructionSiteRepository(context);
+                businessPartnerByConstructionSiteRepository = new BusinessPartnerByConstructionSiteViewRepository(context);
             return businessPartnerByConstructionSiteRepository;
         }
 
