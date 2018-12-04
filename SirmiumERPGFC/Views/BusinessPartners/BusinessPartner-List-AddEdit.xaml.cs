@@ -804,7 +804,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             var sqLite = new BusinessPartnerSQLiteRepository();
             sqLite.Delete(CurrentBusinessPartner.Identifier);
 
-            CurrentBusinessPartner.UpdatedAt = DateTime.Now;
             var response = sqLite.Create(CurrentBusinessPartner);
             if (response.Success)
             {
@@ -1151,7 +1150,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerDocumentForm.BusinessPartner = CurrentBusinessPartner;
             CurrentBusinessPartnerDocumentForm.Identifier = Guid.NewGuid();
             CurrentBusinessPartnerDocumentForm.IsSynced = false;
-            CurrentBusinessPartnerDocumentForm.UpdatedAt = DateTime.Now;
             CurrentBusinessPartnerDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
             CurrentBusinessPartnerDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
@@ -1228,7 +1226,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerNoteForm.BusinessPartner = CurrentBusinessPartner;
             CurrentBusinessPartnerNoteForm.Identifier = Guid.NewGuid();
             CurrentBusinessPartnerNoteForm.IsSynced = false;
-            CurrentBusinessPartnerNoteForm.UpdatedAt = DateTime.Now;
             CurrentBusinessPartnerNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
             CurrentBusinessPartnerNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
@@ -1332,9 +1329,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 SubmitButtonContent = " Čuvanje u toku... ";
                 SubmitButtonEnabled = false;
 
+                new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
+
                 CurrentBusinessPartner.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentBusinessPartner.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-                CurrentBusinessPartner.UpdatedAt = DateTime.Now;
 
                 CurrentBusinessPartner.Locations = LocationsFromDB;
                 CurrentBusinessPartner.Institutions = InstitutionsFromDB;
