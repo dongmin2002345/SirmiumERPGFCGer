@@ -21,7 +21,7 @@ namespace RepositoryCore.DbViews.Common.Locations
 
             strSQLCommand =
                 "CREATE VIEW vCities AS " +
-                "SELECT city.Id AS CityId, city.Identifier AS CityIdentifier, city.Code AS CityCode, country.Name AS CityName, city.ZipCode, " +
+                "SELECT city.Id AS CityId, city.Identifier AS CityIdentifier, city.Code AS CityCode, city.Name AS CityName, city.ZipCode, " +
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
                 "region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.Code AS RegionCode, region.Name AS RegionName, " +
                 "municipality.Id AS MunicipalityId, municipality.Identifier AS MunicipalityIdentifier, municipality.Code AS MunicipalityCode, municipality.Name AS MunicipalityName, " +

@@ -317,50 +317,50 @@ namespace SirmiumERPWeb.Controllers.Administrations
                     if (item.City != null && !String.IsNullOrEmpty(item.City.Name))
                     {
                         CityViewModel tmpCity = cities.FirstOrDefault(x => x.Name == item.City?.Name);
-                        if (tmpCity == null)
-                        {
-                            tmpCity = new CityViewModel()
-                            {
-                                Name = item.City.Name,
-                                Identifier = Guid.NewGuid(),
-                                Company = company,
-                            };
-                            tmpCity = cityService.Create(tmpCity).City;
-                        }
+                        //if (tmpCity == null)
+                        //{
+                        //    tmpCity = new CityViewModel()
+                        //    {
+                        //        Name = item.City.Name,
+                        //        Identifier = Guid.NewGuid(),
+                        //        Company = company,
+                        //    };
+                        //    tmpCity = cityService.Create(tmpCity).City;
+                        //}
                         item.City = tmpCity;
                     }
 
                     if (item.Bank1 != null && !String.IsNullOrEmpty(item.Bank1.Name))
                     {
                         BankViewModel tmpBank = banks.FirstOrDefault(x => x.Name == item.Bank1?.Name && x.Swift == item.Bank1?.Swift);
-                        if (tmpBank == null)
-                        {
-                            tmpBank = new BankViewModel()
-                            {
-                                Name = item.Bank1.Name,
-                                Identifier = Guid.NewGuid(),
-                                Company = companyService.GetCompanies().Companies.FirstOrDefault(),
-                                Swift = item.SWIFT
-                            };
-                            tmpBank = bankService.Create(tmpBank).Bank;
-                        }
+                        //if (tmpBank == null)
+                        //{
+                        //    tmpBank = new BankViewModel()
+                        //    {
+                        //        Name = item.Bank1.Name,
+                        //        Identifier = Guid.NewGuid(),
+                        //        Company = companyService.GetCompanies().Companies.FirstOrDefault(),
+                        //        Swift = item.SWIFT
+                        //    };
+                        //    tmpBank = bankService.Create(tmpBank).Bank;
+                        //}
                         item.Bank1 = tmpBank;
                     }
 
                     if (item.Bank2 != null && !String.IsNullOrEmpty(item.Bank2.Name))
                     {
                         BankViewModel tmpBank = banks.FirstOrDefault(x => x.Name == item.Bank2?.Name && x.Swift == item.Bank2.Swift);
-                        if (tmpBank == null)
-                        {
-                            tmpBank = new BankViewModel()
-                            {
-                                Name = item.Bank2.Name,
-                                Identifier = Guid.NewGuid(),
-                                Company = companyService.GetCompanies().Companies.FirstOrDefault(),
-                                Swift = item.SWIFT
-                            };
-                            tmpBank = bankService.Create(tmpBank).Bank;
-                        }
+                        //if (tmpBank == null)
+                        //{
+                        //    tmpBank = new BankViewModel()
+                        //    {
+                        //        Name = item.Bank2.Name,
+                        //        Identifier = Guid.NewGuid(),
+                        //        Company = companyService.GetCompanies().Companies.FirstOrDefault(),
+                        //        Swift = item.SWIFT
+                        //    };
+                        //    tmpBank = bankService.Create(tmpBank).Bank;
+                        //}
                         item.Bank2 = tmpBank;
                     }
 
