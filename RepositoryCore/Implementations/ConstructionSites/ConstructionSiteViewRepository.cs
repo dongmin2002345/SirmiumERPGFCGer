@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSite.InternalCode = reader["ConstructionSiteInternalCode"]?.ToString();
                         constructionSite.Name = reader["ConstructionSiteName"].ToString();
 
-                        if (reader["CityId"] != null)
+                        if (reader["CityId"] != DBNull.Value)
                         {
                             constructionSite.City = new City();
                             constructionSite.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -66,19 +66,19 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.City.Name = reader["CityName"].ToString();
                         }
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             constructionSite.Address = reader["Address"].ToString();
-                        if (reader["MaxWorkers"] != null)
+                        if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
-                        if (reader["ContractStart"] != null)
+                        if (reader["ContractStart"] != DBNull.Value)
                             constructionSite.ContractStart = DateTime.Parse(reader["ContractStart"].ToString());
-                        if (reader["ContractExpiration"] != null)
+                        if (reader["ContractExpiration"] != DBNull.Value)
                             constructionSite.ContractExpiration = DateTime.Parse(reader["ContractExpiration"].ToString());
 
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSite.CreatedBy = new User();
                             constructionSite.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -87,7 +87,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSite.Company = new Company();
                             constructionSite.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -143,7 +143,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSite.InternalCode = reader["ConstructionSiteInternalCode"]?.ToString();
                         constructionSite.Name = reader["ConstructionSiteName"].ToString();
 
-                        if (reader["CityId"] != null)
+                        if (reader["CityId"] != DBNull.Value)
                         {
                             constructionSite.City = new City();
                             constructionSite.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -153,19 +153,19 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.City.Name = reader["CityName"].ToString();
                         }
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             constructionSite.Address = reader["Address"].ToString();
-                        if (reader["MaxWorkers"] != null)
+                        if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
-                        if (reader["ContractStart"] != null)
+                        if (reader["ContractStart"] != DBNull.Value)
                             constructionSite.ContractStart = DateTime.Parse(reader["ContractStart"].ToString());
-                        if (reader["ContractExpiration"] != null)
+                        if (reader["ContractExpiration"] != DBNull.Value)
                             constructionSite.ContractExpiration = DateTime.Parse(reader["ContractExpiration"].ToString());
 
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSite.CreatedBy = new User();
                             constructionSite.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -174,7 +174,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSite.Company = new Company();
                             constructionSite.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -228,7 +228,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSite.InternalCode = reader["ConstructionSiteInternalCode"]?.ToString();
                         constructionSite.Name = reader["ConstructionSiteName"].ToString();
 
-                        if (reader["CityId"] != null)
+                        if (reader["CityId"] != DBNull.Value)
                         {
                             constructionSite.City = new City();
                             constructionSite.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -238,19 +238,19 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.City.Name = reader["CityName"].ToString();
                         }
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             constructionSite.Address = reader["Address"].ToString();
-                        if (reader["MaxWorkers"] != null)
+                        if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
-                        if (reader["ContractStart"] != null)
+                        if (reader["ContractStart"] != DBNull.Value)
                             constructionSite.ContractStart = DateTime.Parse(reader["ContractStart"].ToString());
-                        if (reader["ContractExpiration"] != null)
+                        if (reader["ContractExpiration"] != DBNull.Value)
                             constructionSite.ContractExpiration = DateTime.Parse(reader["ContractExpiration"].ToString());
 
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSite.CreatedBy = new User();
                             constructionSite.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -259,7 +259,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSite.Company = new Company();
                             constructionSite.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -365,7 +365,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
         {
             // Load ConstructionSite that will be deleted
             ConstructionSite dbEntry = context.ConstructionSites
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

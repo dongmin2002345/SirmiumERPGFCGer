@@ -312,7 +312,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IConstructionSiteRepository GetConstructionSiteRepository()
         {
             if (constructionSiteRepository == null)
-                constructionSiteRepository = new ConstructionSiteRepository(context);
+                constructionSiteRepository = new ConstructionSiteViewRepository(context);
             return constructionSiteRepository;
         }
 
