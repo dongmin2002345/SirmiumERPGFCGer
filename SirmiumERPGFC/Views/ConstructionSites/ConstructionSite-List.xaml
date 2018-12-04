@@ -115,12 +115,12 @@
                     <TextBox IsEnabled="False" Margin="2" Text="{Binding Path=PaginationDisplay}"/>
                     <Button x:Name="btnNextPage" Click="btnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <Image Source="..\..\Resources\Icons\StrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnLastPage" Click="btnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
