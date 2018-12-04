@@ -355,63 +355,63 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IEmployeeRepository GetEmployeeRepository()
         {
             if (employeeRepository == null)
-                employeeRepository = new EmployeeRepository(context);
+                employeeRepository = new EmployeeViewRepository(context);
             return employeeRepository;
         }
 
         public IEmployeeProfessionRepository GetEmployeeProfessionRepository()
         {
             if (employeeProfessionRepository == null)
-                employeeProfessionRepository = new EmployeeProfessionRepository(context);
+                employeeProfessionRepository = new EmployeeProfessionViewRepository(context);
             return employeeProfessionRepository;
         }
 
         public IEmployeeLicenceRepository GetEmployeeLicenceRepository()
         {
             if (employeeLicenceRepository == null)
-                employeeLicenceRepository = new EmployeeLicenceRepository(context);
+                employeeLicenceRepository = new EmployeeLicenceViewRepository(context);
             return employeeLicenceRepository;
         }
 
         public IEmployeeItemRepository GetEmployeeItemRepository()
         {
             if (employeeItemRepository == null)
-                employeeItemRepository = new EmployeeItemRepository(context);
+                employeeItemRepository = new EmployeeItemViewRepository(context);
             return employeeItemRepository;
         }
 
         public IEmployeeNoteRepository GetEmployeeNoteRepository()
         {
             if (employeeNoteRepository == null)
-                employeeNoteRepository = new EmployeeNoteRepository(context);
+                employeeNoteRepository = new EmployeeNoteViewRepository(context);
             return employeeNoteRepository;
         }
 
         public IEmployeeCardRepository GetEmployeeCardRepository()
         {
             if (employeeCardRepository == null)
-                employeeCardRepository = new EmployeeCardRepository(context);
+                employeeCardRepository = new EmployeeCardViewRepository(context);
             return employeeCardRepository;
         }
 
         public IEmployeeDocumentRepository GetEmployeeDocumentRepository()
         {
             if (employeeDocumentRepository == null)
-                employeeDocumentRepository = new EmployeeDocumentRepository(context);
+                employeeDocumentRepository = new EmployeeDocumentViewRepository(context);
             return employeeDocumentRepository;
         }
 
         public IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository()
         {
             if (employeeByConstructionSiteRepository == null)
-                employeeByConstructionSiteRepository = new EmployeeByConstructionSiteRepository(context);
+                employeeByConstructionSiteRepository = new EmployeeByConstructionSiteViewRepository(context);
             return employeeByConstructionSiteRepository;
         }
 
         public IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository()
         {
             if (employeeByBusinessPartnerRepository == null)
-                employeeByBusinessPartnerRepository = new EmployeeByBusinessPartnerRepository(context);
+                employeeByBusinessPartnerRepository = new EmployeeByBusinessPartnerViewRepository(context);
             return employeeByBusinessPartnerRepository;
         }
 
