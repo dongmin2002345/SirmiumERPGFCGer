@@ -33,7 +33,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 "SELECT OutputInvoiceId, OutputInvoiceIdentifier, OutputInvoiceCode, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName," +
+                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vOutputInvoices " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
 
@@ -140,7 +140,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 "SELECT OutputInvoiceId, OutputInvoiceIdentifier, OutputInvoiceCode, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName," +
+                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vOutputInvoices " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
 
