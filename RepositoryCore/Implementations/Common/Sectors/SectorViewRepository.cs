@@ -55,20 +55,20 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         sector.SecondCode = reader["SectorSecondCode"]?.ToString();
                         sector.Name = reader["SectorName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             sector.Country = new Country();
                             sector.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             sector.Country.Id = Int32.Parse(reader["CountryId"].ToString());
-                            sector.Country.Identifier = Guid.Parse(reader["FoodTypeIdentifier"].ToString());
-                            sector.Country.Code = reader["FoodTypeCode"].ToString();
-                            sector.Country.Name = reader["FoodTypeName"].ToString();
+                            sector.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                            sector.Country.Code = reader["CountryCode"].ToString();
+                            sector.Country.Name = reader["CountryName"].ToString();
                         }
 
                         sector.Active = bool.Parse(reader["Active"].ToString());
                         sector.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             sector.CreatedBy = new User();
                             sector.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -77,7 +77,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             sector.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             sector.Company = new Company();
                             sector.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -134,20 +134,20 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         sector.SecondCode = reader["SectorSecondCode"]?.ToString();
                         sector.Name = reader["SectorName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             sector.Country = new Country();
                             sector.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             sector.Country.Id = Int32.Parse(reader["CountryId"].ToString());
-                            sector.Country.Identifier = Guid.Parse(reader["FoodTypeIdentifier"].ToString());
-                            sector.Country.Code = reader["FoodTypeCode"].ToString();
-                            sector.Country.Name = reader["FoodTypeName"].ToString();
+                            sector.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                            sector.Country.Code = reader["CountryCode"].ToString();
+                            sector.Country.Name = reader["CountryName"].ToString();
                         }
 
                         sector.Active = bool.Parse(reader["Active"].ToString());
                         sector.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             sector.CreatedBy = new User();
                             sector.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -156,7 +156,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             sector.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             sector.Company = new Company();
                             sector.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

@@ -55,7 +55,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         agency.Code = reader["AgencyCode"]?.ToString();
                         agency.Name = reader["AgencyName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             agency.Country = new Country();
                             agency.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -65,7 +65,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["SectorId"] != null)
+                        if (reader["SectorId"] != DBNull.Value)
                         {
                             agency.Sector = new Sector();
                             agency.SectorId = Int32.Parse(reader["SectorId"].ToString());
@@ -78,7 +78,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         agency.Active = bool.Parse(reader["Active"].ToString());
                         agency.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             agency.CreatedBy = new User();
                             agency.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -87,7 +87,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             agency.Company = new Company();
                             agency.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -145,7 +145,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         agency.Code = reader["AgencyCode"]?.ToString();
                         agency.Name = reader["AgencyName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             agency.Country = new Country();
                             agency.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -155,7 +155,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["SectorId"] != null)
+                        if (reader["SectorId"] != DBNull.Value)
                         {
                             agency.Sector = new Sector();
                             agency.SectorId = Int32.Parse(reader["SectorId"].ToString());
@@ -168,7 +168,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         agency.Active = bool.Parse(reader["Active"].ToString());
                         agency.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             agency.CreatedBy = new User();
                             agency.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -177,7 +177,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             agency.Company = new Company();
                             agency.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

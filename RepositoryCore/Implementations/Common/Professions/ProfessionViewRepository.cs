@@ -55,20 +55,20 @@ namespace RepositoryCore.Implementations.Common.Professions
                         profession.SecondCode = reader["ProfessionSecondCode"]?.ToString();
                         profession.Name = reader["ProfessionName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             profession.Country = new Country();
                             profession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             profession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
-                            profession.Country.Identifier = Guid.Parse(reader["FoodTypeIdentifier"].ToString());
-                            profession.Country.Code = reader["FoodTypeCode"].ToString();
-                            profession.Country.Name = reader["FoodTypeName"].ToString();
+                            profession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                            profession.Country.Code = reader["CountryCode"].ToString();
+                            profession.Country.Name = reader["CountryName"].ToString();
                         }
 
                         profession.Active = bool.Parse(reader["Active"].ToString());
                         profession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             profession.CreatedBy = new User();
                             profession.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -77,7 +77,7 @@ namespace RepositoryCore.Implementations.Common.Professions
                             profession.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             profession.Company = new Company();
                             profession.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -135,20 +135,20 @@ namespace RepositoryCore.Implementations.Common.Professions
                         profession.SecondCode = reader["ProfessionSecondCode"]?.ToString();
                         profession.Name = reader["ProfessionName"].ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             profession.Country = new Country();
                             profession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             profession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
-                            profession.Country.Identifier = Guid.Parse(reader["FoodTypeIdentifier"].ToString());
-                            profession.Country.Code = reader["FoodTypeCode"].ToString();
-                            profession.Country.Name = reader["FoodTypeName"].ToString();
+                            profession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                            profession.Country.Code = reader["CountryCode"].ToString();
+                            profession.Country.Name = reader["CountryName"].ToString();
                         }
 
                         profession.Active = bool.Parse(reader["Active"].ToString());
                         profession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             profession.CreatedBy = new User();
                             profession.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
