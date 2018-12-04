@@ -55,7 +55,7 @@ namespace RepositoryCore.Implementations.Employees
                         licenceType.Category = reader["Category"]?.ToString();
                         licenceType.Description = reader["Description"]?.ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             licenceType.Country = new Country();
                             licenceType.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -68,7 +68,7 @@ namespace RepositoryCore.Implementations.Employees
                         licenceType.Active = bool.Parse(reader["Active"].ToString());
                         licenceType.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             licenceType.CreatedBy = new User();
                             licenceType.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -77,7 +77,7 @@ namespace RepositoryCore.Implementations.Employees
                             licenceType.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             licenceType.Company = new Company();
                             licenceType.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -134,7 +134,7 @@ namespace RepositoryCore.Implementations.Employees
                         licenceType.Category = reader["Category"]?.ToString();
                         licenceType.Description = reader["Description"]?.ToString();
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             licenceType.Country = new Country();
                             licenceType.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -147,7 +147,7 @@ namespace RepositoryCore.Implementations.Employees
                         licenceType.Active = bool.Parse(reader["Active"].ToString());
                         licenceType.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             licenceType.CreatedBy = new User();
                             licenceType.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -156,7 +156,7 @@ namespace RepositoryCore.Implementations.Employees
                             licenceType.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             licenceType.Company = new Company();
                             licenceType.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

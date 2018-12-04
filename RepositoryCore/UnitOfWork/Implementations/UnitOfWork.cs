@@ -277,21 +277,21 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public ISectorRepository GetSectorRepository()
         {
             if (sectorRepository == null)
-                sectorRepository = new SectorRepository(context);
+                sectorRepository = new SectorViewRepository(context);
             return sectorRepository;
         }
 
         public IAgencyRepository GetAgencyRepository()
         {
             if (agencyRepository == null)
-                agencyRepository = new AgencyRepository(context);
+                agencyRepository = new AgencyViewRepository(context);
             return agencyRepository;
         }
 
         public IProfessionRepository GetProfessionRepository()
         {
             if (professionRepository == null)
-                professionRepository = new ProfessionRepository(context);
+                professionRepository = new ProfessionViewRepository(context);
             return professionRepository;
         }
 
@@ -305,7 +305,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		public ILicenceTypeRepository GetLicenceTypeRepository()
 		{
 			if (licenceTypeRepository == null)
-				licenceTypeRepository = new LicenceTypeRepository(context);
+				licenceTypeRepository = new LicenceTypeViewRepository(context);
 			return licenceTypeRepository;
 		}
 
