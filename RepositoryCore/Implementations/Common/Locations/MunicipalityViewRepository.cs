@@ -278,7 +278,7 @@ namespace RepositoryCore.Implementations.Common.Locations
         {
             // Load Municipality that will be deleted
             Municipality dbEntry = context.Municipalities
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

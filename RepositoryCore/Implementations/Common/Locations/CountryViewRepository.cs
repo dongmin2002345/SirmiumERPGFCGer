@@ -234,7 +234,7 @@ namespace RepositoryCore.Implementations.Common.Locations
         {
             // Load Remedy that will be deleted
             Country dbEntry = context.Countries
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

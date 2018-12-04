@@ -253,7 +253,7 @@ namespace RepositoryCore.Implementations.Common.Locations
         {
             // Load Region that will be deleted
             Region dbEntry = context.Regions
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {
