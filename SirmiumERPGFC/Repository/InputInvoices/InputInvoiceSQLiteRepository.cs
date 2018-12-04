@@ -338,7 +338,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						return null;
 					else
 					{
-						selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from InputInvoices WHERE CompanyId = @CompanyId IsSynced = 1", db);
+						selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from InputInvoices WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
 						selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 						query = selectCommand.ExecuteReader();
 						if (query.Read())
