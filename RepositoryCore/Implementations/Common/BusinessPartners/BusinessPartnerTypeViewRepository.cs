@@ -58,7 +58,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerType.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerType.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerType.CreatedBy = new User();
                             businessPartnerType.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -67,7 +67,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerType.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerType.Company = new Company();
                             businessPartnerType.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -127,7 +127,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerType.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerType.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             businessPartnerType.CreatedBy = new User();
                             businessPartnerType.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -136,7 +136,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerType.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             businessPartnerType.Company = new Company();
                             businessPartnerType.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
