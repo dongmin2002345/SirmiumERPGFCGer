@@ -35,10 +35,10 @@ namespace SirmiumERPGFC.Views.Employees
 
 		#region Services
 		IPhysicalPersonService physicalPersonService;
-		#endregion
+        #endregion
 
-		#region PhysicalPersonsFromDB
-		private ObservableCollection<PhysicalPersonViewModel> _PhysicalPersonsFromDB;
+        #region PhysicalPersonsFromDB
+        private ObservableCollection<PhysicalPersonViewModel> _PhysicalPersonsFromDB;
 
 		public ObservableCollection<PhysicalPersonViewModel> PhysicalPersonsFromDB
 		{

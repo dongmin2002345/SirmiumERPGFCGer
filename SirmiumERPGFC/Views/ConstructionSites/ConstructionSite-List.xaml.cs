@@ -38,6 +38,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         IConstructionSiteService constructionSiteService;
         IConstructionSiteCalculationService constructionSiteCalculationService;
         IConstructionSiteDocumentService constructionSiteDocumentService;
+        IConstructionSiteNoteService constructionSiteNoteService;
         #endregion
 
 
@@ -293,6 +294,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
             constructionSiteCalculationService = DependencyResolver.Kernel.Get<IConstructionSiteCalculationService>();
             constructionSiteDocumentService = DependencyResolver.Kernel.Get<IConstructionSiteDocumentService>();
+            constructionSiteNoteService = DependencyResolver.Kernel.Get<IConstructionSiteNoteService>();
 
             // Initialize form components
             InitializeComponent();
@@ -410,6 +412,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             RefreshButtonContent = " Dokumenti ... ";
             new ConstructionSiteDocumentSQLiteRepository().Sync(constructionSiteDocumentService);
+
+            RefreshButtonContent = " Napomene ... ";
+            new ConstructionSiteNoteSQLiteRepository().Sync(constructionSiteNoteService);
 
             DisplayConstructionSiteData();
 
