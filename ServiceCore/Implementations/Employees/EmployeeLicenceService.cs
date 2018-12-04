@@ -105,15 +105,6 @@ namespace ServiceCore.Implementations.Employees
                         ?.ConvertToEmployeeLicenceViewModelList() ?? new List<EmployeeLicenceItemViewModel>());
                 }
 
-                List<EmployeeLicence> added = new List<EmployeeLicence>();
-                foreach (var item in request.UnSyncedEmployeeLicenceItems)
-                {
-                    if (item.Id == 0)
-                        added.Add(unitOfWork.GetEmployeeLicenceRepository().Create(item.ConvertToEmployeeLicence()));
-                    ////else
-                    ////    added.Add(unitOfWork.GetEmployeeRepository().Update(item.ConvertToFoodInputHay()));
-                }
-
                 unitOfWork.Save();
 
                 response.Success = true;

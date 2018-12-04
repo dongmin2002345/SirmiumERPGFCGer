@@ -141,7 +141,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.Employee = new Employee();
                             employeeDocument.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeDocument.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeDocument.Employee.Identifier = Guid.Parse(reader["EmployeeDocumentTypeIdentifier"].ToString());
+                            employeeDocument.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeDocument.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeDocument.Employee.Name = reader["EmployeeName"].ToString();
                         }
@@ -226,7 +226,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.Employee = new Employee();
                             employeeDocument.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeDocument.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeDocument.Employee.Identifier = Guid.Parse(reader["EmployeeDocumentTypeIdentifier"].ToString());
+                            employeeDocument.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeDocument.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeDocument.Employee.Name = reader["EmployeeName"].ToString();
                         }

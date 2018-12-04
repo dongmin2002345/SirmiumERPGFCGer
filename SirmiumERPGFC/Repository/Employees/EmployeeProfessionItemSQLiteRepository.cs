@@ -160,64 +160,11 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public EmployeeProfessionItemListResponse GetUnSyncedItems(int companyId)
-        {
-            EmployeeProfessionItemListResponse response = new EmployeeProfessionItemListResponse();
-            List<EmployeeProfessionItemViewModel> viewModels = new List<EmployeeProfessionItemViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM  EmployeeProfessionItems " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeProfessionItemViewModel dbEntry = new EmployeeProfessionItemViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Profession = SQLiteHelper.GetProfession(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        viewModels.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.EmployeeProfessionItems = new List<EmployeeProfessionItemViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.EmployeeProfessionItems = viewModels;
-            return response;
-        }
-
         public void Sync(IEmployeeProfessionService EmployeeItemService)
         {
-            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
             SyncEmployeeProfessionItemRequest request = new SyncEmployeeProfessionItemRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-            request.UnSyncedEmployeeProfessionItems = unSynced?.EmployeeProfessionItems ?? new List<EmployeeProfessionItemViewModel>();
 
 
             EmployeeProfessionItemListResponse response = EmployeeItemService.Sync(request);

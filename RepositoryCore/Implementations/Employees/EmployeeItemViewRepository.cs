@@ -59,7 +59,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.Employee = new Employee();
                             employeeItem.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeItem.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeItem.Employee.Identifier = Guid.Parse(reader["EmployeeItemTypeIdentifier"].ToString());
+                            employeeItem.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeItem.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeItem.Employee.Name = reader["EmployeeName"].ToString();
                         }
@@ -154,7 +154,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.Employee = new Employee();
                             employeeItem.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeItem.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeItem.Employee.Identifier = Guid.Parse(reader["EmployeeItemTypeIdentifier"].ToString());
+                            employeeItem.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeItem.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeItem.Employee.Name = reader["EmployeeName"].ToString();
                         }
@@ -250,7 +250,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.Employee = new Employee();
                             employeeItem.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeItem.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeItem.Employee.Identifier = Guid.Parse(reader["EmployeeItemTypeIdentifier"].ToString());
+                            employeeItem.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeItem.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeItem.Employee.Name = reader["EmployeeName"].ToString();
                         }

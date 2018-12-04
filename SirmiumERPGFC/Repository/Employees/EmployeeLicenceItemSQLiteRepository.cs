@@ -167,66 +167,11 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public EmployeeLicenceItemListResponse GetUnSyncedItems(int companyId)
-        {
-            EmployeeLicenceItemListResponse response = new EmployeeLicenceItemListResponse();
-            List<EmployeeLicenceItemViewModel> viewModels = new List<EmployeeLicenceItemViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM  EmployeeLicenceItems " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeLicenceItemViewModel dbEntry = new EmployeeLicenceItemViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
-                        dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        viewModels.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.EmployeeLicenceItems = new List<EmployeeLicenceItemViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.EmployeeLicenceItems = viewModels;
-            return response;
-        }
-
         public void Sync(IEmployeeLicenceService EmployeeItemService)
         {
-            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
             SyncEmployeeLicenceItemRequest request = new SyncEmployeeLicenceItemRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-            request.UnSyncedEmployeeLicenceItems = unSynced?.EmployeeLicenceItems ?? new List<EmployeeLicenceItemViewModel>();
 
             EmployeeLicenceItemListResponse response = EmployeeItemService.Sync(request);
             if (response.Success)
