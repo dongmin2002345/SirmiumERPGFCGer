@@ -349,7 +349,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IFamilyMemberRepository GetFamilyMemberRepository()
         {
             if (familyMemberRepository == null)
-                familyMemberRepository = new FamilyMemberRepository(context);
+                familyMemberRepository = new FamilyMemberViewRepository(context);
             return familyMemberRepository;
         }
 
@@ -434,7 +434,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public ITaxAdministrationRepository GetTaxAdministrationRepository()
         {
             if (taxAdministrationRepository == null)
-                taxAdministrationRepository = new TaxAdministrationRepository(context);
+                taxAdministrationRepository = new TaxAdministrationViewRepository(context);
             return taxAdministrationRepository;
         }
         #endregion

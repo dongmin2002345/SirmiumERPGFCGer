@@ -150,61 +150,8 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public EmployeeDocumentListResponse GetUnSyncedDocuments(int companyId)
-        {
-            EmployeeDocumentListResponse response = new EmployeeDocumentListResponse();
-            List<EmployeeDocumentViewModel> viewModels = new List<EmployeeDocumentViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM  EmployeeDocuments " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeDocumentViewModel dbEntry = new EmployeeDocumentViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        viewModels.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.EmployeeDocuments = new List<EmployeeDocumentViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.EmployeeDocuments = viewModels;
-            return response;
-        }
-
         public void Sync(IEmployeeDocumentService EmployeeDocumentService)
         {
-            var unSynced = GetUnSyncedDocuments(MainWindow.CurrentCompanyId);
             SyncEmployeeDocumentRequest request = new SyncEmployeeDocumentRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);

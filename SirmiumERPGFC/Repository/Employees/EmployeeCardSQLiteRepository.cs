@@ -150,61 +150,8 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public EmployeeCardListResponse GetUnSyncedCards(int companyId)
-        {
-            EmployeeCardListResponse response = new EmployeeCardListResponse();
-            List<EmployeeCardViewModel> viewModels = new List<EmployeeCardViewModel>();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM  EmployeeCards " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeCardViewModel dbEntry = new EmployeeCardViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.CardDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PlusMinus = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        viewModels.Add(dbEntry);
-                    }
-
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.EmployeeCards = new List<EmployeeCardViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.EmployeeCards = viewModels;
-            return response;
-        }
-
         public void Sync(IEmployeeCardService EmployeeCardService)
         {
-            var unSynced = GetUnSyncedCards(MainWindow.CurrentCompanyId);
             SyncEmployeeCardRequest request = new SyncEmployeeCardRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
