@@ -82,6 +82,7 @@
     <Compile Include="Implementations\Employees\FamilyMemberService.cs" />
     <Compile Include="Implementations\Employees\LicenceTypeService.cs" />
     <Compile Include="Implementations\Employees\PhysicalPersonService.cs" />
+    <Compile Include="Implementations\Limitations\LimitationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

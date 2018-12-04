@@ -12,6 +12,7 @@ using RepositoryCore.Abstractions.Common.TaxAdministrations;
 using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Abstractions.Limitations;
 using RepositoryCore.Context;
 using RepositoryCore.Implementations.Banks;
 using RepositoryCore.Implementations.Common.BusinessPartners;
@@ -25,6 +26,7 @@ using RepositoryCore.Implementations.Common.TaxAdministrations;
 using RepositoryCore.Implementations.Common.ToDos;
 using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Implementations.Employees;
+using RepositoryCore.Implementations.Limitations;
 using RepositoryCore.UnitOfWork.Abstractions;
 using System;
 
@@ -74,6 +76,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		private IBankRepository bankRepository;
 		private ILicenceTypeRepository licenceTypeRepository;
         private IAgencyRepository agencyRepository;
+        private ILimitationRepository limitationRepository;
 
 		private IPhysicalPersonRepository physicalPersonRepository;
 	
@@ -311,6 +314,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (constructionSiteRepository == null)
                 constructionSiteRepository = new ConstructionSiteRepository(context);
             return constructionSiteRepository;
+        }
+
+        public ILimitationRepository GetLimitationRepository()
+        {
+            if (limitationRepository == null)
+                limitationRepository = new LimitationRepository(context);
+            return limitationRepository;
         }
 
         public IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository()

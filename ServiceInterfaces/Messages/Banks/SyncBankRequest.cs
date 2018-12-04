@@ -11,6 +11,5 @@ namespace ServiceInterfaces.Messages.Banks
 	{
 		public int CompanyId { get; set; }
 		public DateTime? LastUpdatedAt { get; set; }
-		public List<BankViewModel> UnSyncedBanks { get; set; }
 	}
 }

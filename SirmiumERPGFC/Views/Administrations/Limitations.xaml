@@ -36,7 +36,6 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
 
@@ -51,16 +50,9 @@
 
 
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Ugovor_gradilište}" HorizontalAlignment="Left"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="2" />
-                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Dana}"/>
-                    <TextBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Margin="2" />
-
-                    <Button Grid.Row="0" Grid.Column="4" x:Name="btnUgovorGradiliste" Click="btnUgovorGradiliste_Click" Margin="2" Background="#007ACC">
-                        <StackPanel Orientation="Horizontal">
-                            <!--<Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality" />-->
-                            <TextBlock FontSize="15" Text="{DynamicResource PROMENI}" Foreground="White" FontWeight="Normal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                    <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Path=CurrentLimitation.ConstructionSiteLimit, Mode=TwoWay}" Margin="2" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Firma_Crta_Gradilište}"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" Text="{Binding Path=CurrentLimitation.BusinessPartnerConstructionSiteLimit, Mode=TwoWay}" Margin="2" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left " Text="{DynamicResource Firma_Crta_Gradilište}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="2"/>

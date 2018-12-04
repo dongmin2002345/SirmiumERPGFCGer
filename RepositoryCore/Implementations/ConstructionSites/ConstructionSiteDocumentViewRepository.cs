@@ -225,7 +225,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.ConstructionSite = new ConstructionSite();
                             constructionSiteDocument.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
                             constructionSiteDocument.ConstructionSite.Id = Int32.Parse(reader["ConstructionSiteId"].ToString());
-                            constructionSiteDocument.ConstructionSite.Identifier = Guid.Parse(reader["ConstructionSiteDocumentTypeIdentifier"].ToString());
+                            constructionSiteDocument.ConstructionSite.Identifier = Guid.Parse(reader["ConstructionSiteIdentifier"].ToString());
                             constructionSiteDocument.ConstructionSite.Code = reader["ConstructionSiteCode"].ToString();
                             constructionSiteDocument.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }

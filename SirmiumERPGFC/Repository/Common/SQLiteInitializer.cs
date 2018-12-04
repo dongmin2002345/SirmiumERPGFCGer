@@ -17,6 +17,7 @@ using SirmiumERPGFC.Repository.ToDos;
 using SirmiumERPGFC.Repository.OutputInvoices;
 using SirmiumERPGFC.Repository.InputInvoices;
 using SirmiumERPGFC.Repository.TaxAdministrations;
+using SirmiumERPGFC.Repository.Limitations;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -62,6 +63,20 @@ namespace SirmiumERPGFC.Repository.Common
                     createTableToDo.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("ToDos", "ToDoDate", "DATETIME NULL");
+                    #endregion
+
+                    #region Limitations
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Limitations", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    SqliteCommand createTableLimitation = new SqliteCommand(LimitationSQLiteRepository.LimitationTableCreatePart, db);
+                    createTableLimitation.ExecuteReader();
                     #endregion
 
                     #region Users

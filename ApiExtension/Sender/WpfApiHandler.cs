@@ -12,6 +12,7 @@ using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Common.ToDos;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
+using ServiceInterfaces.ViewModels.Limitations;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -221,8 +222,13 @@ namespace ApiExtension.Sender
 
 			#region Banks
 			{ typeof(BankViewModel), "Bank" },
-                { typeof(List<BankViewModel>), "Bank" },
-                #endregion
+            { typeof(List<BankViewModel>), "Bank" },
+            #endregion
+            
+			#region Limitations
+			{ typeof(LimitationViewModel), "Limitation" },
+            { typeof(List<LimitationViewModel>), "Limitation" },
+            #endregion
 
 			#region LicenceTypes
 				 { typeof(LicenceTypeViewModel), "LicenceType" },

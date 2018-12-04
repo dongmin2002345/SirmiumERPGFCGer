@@ -35,6 +35,7 @@ using ServiceCore.Implementations.Common.TaxAdministrations;
 using ServiceCore.Implementations.Common.ToDos;
 using ServiceCore.Implementations.ConstructionSites;
 using ServiceCore.Implementations.Employees;
+using ServiceCore.Implementations.Limitations;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.Companies;
@@ -48,7 +49,10 @@ using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
 using ServiceInterfaces.Abstractions.Common.ToDos;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Abstractions.Limitations;
+using SirmiumERPWeb.Tasks;
 using System;
+using System.Threading;
 
 namespace SirmiumERPWeb
 {
@@ -187,7 +191,7 @@ namespace SirmiumERPWeb
 
             services.AddScoped<IBankService, BankService>();
 			services.AddScoped<ILicenceTypeService, LicenceTypeService>();
-
+            services.AddScoped<ILimitationService, LimitationService>();
 
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
             services.AddScoped<IConstructionSiteCalculationService, ConstructionSiteCalculationService>();
@@ -283,6 +287,10 @@ namespace SirmiumERPWeb
             ConstructionSiteNoteView.CreateView();
             ConstructionSiteView.CreateView();
 
+
+            Thread mailThread = new Thread(() => MailTask.SendMailTime("20:59:00"));
+            mailThread.IsBackground = true;
+            mailThread.Start();
         }
     }
 }

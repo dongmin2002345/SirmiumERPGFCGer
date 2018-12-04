@@ -11,6 +11,7 @@ using DomainCore.Common.TaxAdministrations;
 using DomainCore.Common.ToDos;
 using DomainCore.ConstructionSites;
 using DomainCore.Employees;
+using DomainCore.Limitations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -121,7 +122,7 @@ namespace RepositoryCore.Context
 
         public DbSet<TaxAdministration> TaxAdministrations { get; set; }
 
-
+        public DbSet<Limitation> Limitations { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 

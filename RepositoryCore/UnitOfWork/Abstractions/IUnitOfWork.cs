@@ -10,6 +10,7 @@ using RepositoryCore.Abstractions.Common.TaxAdministrations;
 using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
+using RepositoryCore.Abstractions.Limitations;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
 {
@@ -48,6 +49,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IProfessionRepository GetProfessionRepository();
 		IBankRepository GetBankRepository();
 		ILicenceTypeRepository GetLicenceTypeRepository();
+        ILimitationRepository GetLimitationRepository();
 
         IConstructionSiteRepository GetConstructionSiteRepository();
         IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository();
