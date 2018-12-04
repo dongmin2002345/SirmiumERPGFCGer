@@ -313,8 +313,11 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 				foreach (var inputInvoice in inputInvoicesFromDB.OrderBy(x => x.Id))
 				{
 					Delete(inputInvoice.Identifier);
-					inputInvoice.IsSynced = true;
-					Create(inputInvoice);
+                    if (inputInvoice.IsActive)
+                    {
+                        inputInvoice.IsSynced = true;
+                        Create(inputInvoice);
+                    }
 				}
 			}
 		}
