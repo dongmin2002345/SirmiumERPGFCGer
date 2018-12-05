@@ -73,7 +73,7 @@ namespace RepositoryCore.Implementations.Employees
                         employee.DateOfBirth = DateTime.Parse( reader["DateOfBirth"]?.ToString());
                         employee.Gender = Int32.Parse(reader["Gender"].ToString());
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employee.Country = new Country();
                             employee.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -83,7 +83,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null) //"RegionId, RegionIdentifier, RegionCode, RegionName, " +
+                        if (reader["RegionId"] != DBNull.Value) //"RegionId, RegionIdentifier, RegionCode, RegionName, " +
                         {
                             employee.Region = new Region();
                             employee.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -93,7 +93,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Region.Name = reader["RegionName"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
+                        if (reader["MunicipalityId"] != DBNull.Value) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
                         {
                             employee.Municipality = new Municipality();
                             employee.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -103,7 +103,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
-                        if (reader["CityId"] != null) // "CityId, CityIdentifier, CityCode, CityName, " +
+                        if (reader["CityId"] != DBNull.Value) // "CityId, CityIdentifier, CityCode, CityName, " +
                         {
                             employee.City = new City();
                             employee.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -114,11 +114,11 @@ namespace RepositoryCore.Implementations.Employees
                         }
 
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             employee.Address = reader["Address"].ToString();
 
 
-                        if (reader["PassportCountryId"] != null) // "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
+                        if (reader["PassportCountryId"] != DBNull.Value) // "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                         {
                             employee.PassportCountry = new Country();
                             employee.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
@@ -128,7 +128,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
-                        if (reader["PassportCityId"] != null) // "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
+                        if (reader["PassportCityId"] != DBNull.Value) // "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
                         {
                             employee.PassportCity = new City();
                             employee.PassportCityId = Int32.Parse(reader["PassportCityId"].ToString());
@@ -140,15 +140,15 @@ namespace RepositoryCore.Implementations.Employees
 
                         //"Passport, VisaFrom, Code, VisaTo, " +
 
-                        if (reader["Passport"] != null)
+                        if (reader["Passport"] != DBNull.Value)
                             employee.Passport = reader["Passport"].ToString();
-                        if (reader["VisaFrom"] != null)
+                        if (reader["VisaFrom"] != DBNull.Value)
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
-                        if (reader["VisaTo"] != null)
+                        if (reader["VisaTo"] != DBNull.Value)
                             employee.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
 
                         
-                        if (reader["ResidenceCountryId"] != null) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
+                        if (reader["ResidenceCountryId"] != DBNull.Value) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                         {
                             employee.ResidenceCountry = new Country();
                             employee.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
@@ -158,7 +158,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
-                        if (reader["ResidenceCityId"] != null) //"ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " + 
+                        if (reader["ResidenceCityId"] != DBNull.Value) //"ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " + 
                         {
                             employee.ResidenceCity = new City();
                             employee.ResidenceCityId = Int32.Parse(reader["ResidenceCityId"].ToString());
@@ -170,19 +170,19 @@ namespace RepositoryCore.Implementations.Employees
 
                         //"ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
 
-                        if (reader["ResidenceAddress"] != null)
+                        if (reader["ResidenceAddress"] != DBNull.Value)
                             employee.ResidenceAddress = reader["ResidenceAddress"].ToString();
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             employee.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-                        if (reader["VisaDate"] != null)
+                        if (reader["VisaDate"] != DBNull.Value)
                             employee.VisaDate = DateTime.Parse(reader["VisaDate"].ToString());
-                        if (reader["VisaValidFrom"] != null)
+                        if (reader["VisaValidFrom"] != DBNull.Value)
                             employee.VisaValidFrom = DateTime.Parse(reader["VisaValidFrom"].ToString());
-                        if (reader["VisaValidTo"] != null)
+                        if (reader["VisaValidTo"] != DBNull.Value)
                             employee.VisaValidTo = DateTime.Parse(reader["VisaValidTo"].ToString());
-                        if (reader["WorkPermitFrom"] != null)
+                        if (reader["WorkPermitFrom"] != DBNull.Value)
                             employee.WorkPermitFrom = DateTime.Parse(reader["WorkPermitFrom"].ToString());
-                        if (reader["WorkPermitTo"] != null)
+                        if (reader["WorkPermitTo"] != DBNull.Value)
                             employee.WorkPermitTo = DateTime.Parse(reader["WorkPermitTo"].ToString());
 
                         //"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -190,7 +190,7 @@ namespace RepositoryCore.Implementations.Employees
                         employee.Active = bool.Parse(reader["Active"].ToString());
                         employee.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employee.CreatedBy = new User();
                             employee.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -199,7 +199,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employee.Company = new Company();
                             employee.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -273,7 +273,7 @@ namespace RepositoryCore.Implementations.Employees
                         employee.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
                         employee.Gender = Int32.Parse(reader["Gender"].ToString());
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employee.Country = new Country();
                             employee.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -283,7 +283,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null) //"RegionId, RegionIdentifier, RegionCode, RegionName, " +
+                        if (reader["RegionId"] != DBNull.Value) //"RegionId, RegionIdentifier, RegionCode, RegionName, " +
                         {
                             employee.Region = new Region();
                             employee.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -293,7 +293,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Region.Name = reader["RegionName"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
+                        if (reader["MunicipalityId"] != DBNull.Value) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
                         {
                             employee.Municipality = new Municipality();
                             employee.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -303,7 +303,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
-                        if (reader["CityId"] != null) // "CityId, CityIdentifier, CityCode, CityName, " +
+                        if (reader["CityId"] != DBNull.Value) // "CityId, CityIdentifier, CityCode, CityName, " +
                         {
                             employee.City = new City();
                             employee.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -318,7 +318,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Address = reader["Address"].ToString();
 
 
-                        if (reader["PassportCountryId"] != null) // "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
+                        if (reader["PassportCountryId"] != DBNull.Value) // "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                         {
                             employee.PassportCountry = new Country();
                             employee.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
@@ -328,7 +328,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
-                        if (reader["PassportCityId"] != null) // "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
+                        if (reader["PassportCityId"] != DBNull.Value) // "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
                         {
                             employee.PassportCity = new City();
                             employee.PassportCityId = Int32.Parse(reader["PassportCityId"].ToString());
@@ -340,15 +340,15 @@ namespace RepositoryCore.Implementations.Employees
 
                         //"Passport, VisaFrom, Code, VisaTo, " +
 
-                        if (reader["Passport"] != null)
+                        if (reader["Passport"] != DBNull.Value)
                             employee.Passport = reader["Passport"].ToString();
-                        if (reader["VisaFrom"] != null)
+                        if (reader["VisaFrom"] != DBNull.Value)
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
-                        if (reader["VisaTo"] != null)
+                        if (reader["VisaTo"] != DBNull.Value)
                             employee.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
 
 
-                        if (reader["ResidenceCountryId"] != null) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
+                        if (reader["ResidenceCountryId"] != DBNull.Value) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                         {
                             employee.ResidenceCountry = new Country();
                             employee.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
@@ -358,7 +358,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
-                        if (reader["ResidenceCityId"] != null) //"ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " + 
+                        if (reader["ResidenceCityId"] != DBNull.Value) //"ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " + 
                         {
                             employee.ResidenceCity = new City();
                             employee.ResidenceCityId = Int32.Parse(reader["ResidenceCityId"].ToString());
@@ -370,19 +370,19 @@ namespace RepositoryCore.Implementations.Employees
 
                         //"ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
 
-                        if (reader["ResidenceAddress"] != null)
+                        if (reader["ResidenceAddress"] != DBNull.Value)
                             employee.ResidenceAddress = reader["ResidenceAddress"].ToString();
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             employee.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-                        if (reader["VisaDate"] != null)
+                        if (reader["VisaDate"] != DBNull.Value)
                             employee.VisaDate = DateTime.Parse(reader["VisaDate"].ToString());
-                        if (reader["VisaValidFrom"] != null)
+                        if (reader["VisaValidFrom"] != DBNull.Value)
                             employee.VisaValidFrom = DateTime.Parse(reader["VisaValidFrom"].ToString());
-                        if (reader["VisaValidTo"] != null)
+                        if (reader["VisaValidTo"] != DBNull.Value)
                             employee.VisaValidTo = DateTime.Parse(reader["VisaValidTo"].ToString());
-                        if (reader["WorkPermitFrom"] != null)
+                        if (reader["WorkPermitFrom"] != DBNull.Value)
                             employee.WorkPermitFrom = DateTime.Parse(reader["WorkPermitFrom"].ToString());
-                        if (reader["WorkPermitTo"] != null)
+                        if (reader["WorkPermitTo"] != DBNull.Value)
                             employee.WorkPermitTo = DateTime.Parse(reader["WorkPermitTo"].ToString());
 
                         //"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -390,7 +390,7 @@ namespace RepositoryCore.Implementations.Employees
                         employee.Active = bool.Parse(reader["Active"].ToString());
                         employee.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employee.CreatedBy = new User();
                             employee.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -399,7 +399,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employee.Company = new Company();
                             employee.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -464,16 +464,24 @@ namespace RepositoryCore.Implementations.Employees
                         employee = new Employee();
                         employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
                         employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
-                        employee.Code = reader["EmployeeCode"]?.ToString();
-                        employee.EmployeeCode = reader["EmployeeEmployeeCode"]?.ToString();
-                        employee.Name = reader["EmployeeName"].ToString();
-                        employee.SurName = reader["EmployeeSurName"].ToString();
-                        employee.ConstructionSiteCode = reader["EmployeeConstructionSiteCode"]?.ToString();
-                        employee.ConstructionSiteName = reader["EmployeeConstructionSiteName"]?.ToString();
-                        employee.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
-                        employee.Gender = Int32.Parse(reader["Gender"].ToString());
+                        if (reader["EmployeeCode"] != DBNull.Value)
+                            employee.Code = reader["EmployeeCode"]?.ToString();
+                        if (reader["EmployeeEmployeeCode"] != DBNull.Value)
+                            employee.EmployeeCode = reader["EmployeeEmployeeCode"]?.ToString();
+                        if (reader["EmployeeName"] != DBNull.Value)
+                            employee.Name = reader["EmployeeName"].ToString();
+                        if (reader["EmployeeSurName"] != DBNull.Value)
+                            employee.SurName = reader["EmployeeSurName"].ToString();
+                        if (reader["EmployeeConstructionSiteCode"] != DBNull.Value)
+                            employee.ConstructionSiteCode = reader["EmployeeConstructionSiteCode"]?.ToString();
+                        if (reader["EmployeeConstructionSiteName"] != DBNull.Value)
+                            employee.ConstructionSiteName = reader["EmployeeConstructionSiteName"]?.ToString();
+                        if (reader["DateOfBirth"] != DBNull.Value)
+                            employee.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
+                        if (reader["Gender"] != DBNull.Value)
+                            employee.Gender = Int32.Parse(reader["Gender"].ToString());
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employee.Country = new Country();
                             employee.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -483,7 +491,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null) //"RegionId, RegionIdentifier, RegionCode, RegionName, " +
+                        if (reader["RegionId"] != DBNull.Value) //"RegionId, RegionIdentifier, RegionCode, RegionName, " +
                         {
                             employee.Region = new Region();
                             employee.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -493,7 +501,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Region.Name = reader["RegionName"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
+                        if (reader["MunicipalityId"] != DBNull.Value) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
                         {
                             employee.Municipality = new Municipality();
                             employee.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -503,7 +511,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
-                        if (reader["CityId"] != null) // "CityId, CityIdentifier, CityCode, CityName, " +
+                        if (reader["CityId"] != DBNull.Value) // "CityId, CityIdentifier, CityCode, CityName, " +
                         {
                             employee.City = new City();
                             employee.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -514,11 +522,11 @@ namespace RepositoryCore.Implementations.Employees
                         }
 
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             employee.Address = reader["Address"].ToString();
 
 
-                        if (reader["PassportCountryId"] != null) // "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
+                        if (reader["PassportCountryId"] != DBNull.Value) // "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                         {
                             employee.PassportCountry = new Country();
                             employee.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
@@ -528,7 +536,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
-                        if (reader["PassportCityId"] != null) // "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
+                        if (reader["PassportCityId"] != DBNull.Value) // "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
                         {
                             employee.PassportCity = new City();
                             employee.PassportCityId = Int32.Parse(reader["PassportCityId"].ToString());
@@ -540,15 +548,15 @@ namespace RepositoryCore.Implementations.Employees
 
                         //"Passport, VisaFrom, Code, VisaTo, " +
 
-                        if (reader["Passport"] != null)
+                        if (reader["Passport"] != DBNull.Value)
                             employee.Passport = reader["Passport"].ToString();
-                        if (reader["VisaFrom"] != null)
+                        if (reader["VisaFrom"] != DBNull.Value)
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
-                        if (reader["VisaTo"] != null)
+                        if (reader["VisaTo"] != DBNull.Value)
                             employee.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
 
 
-                        if (reader["ResidenceCountryId"] != null) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
+                        if (reader["ResidenceCountryId"] != DBNull.Value) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                         {
                             employee.ResidenceCountry = new Country();
                             employee.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
@@ -558,7 +566,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
-                        if (reader["ResidenceCityId"] != null) //"ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " + 
+                        if (reader["ResidenceCityId"] != DBNull.Value) //"ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " + 
                         {
                             employee.ResidenceCity = new City();
                             employee.ResidenceCityId = Int32.Parse(reader["ResidenceCityId"].ToString());
@@ -570,19 +578,19 @@ namespace RepositoryCore.Implementations.Employees
 
                         //"ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
 
-                        if (reader["ResidenceAddress"] != null)
+                        if (reader["ResidenceAddress"] != DBNull.Value)
                             employee.ResidenceAddress = reader["ResidenceAddress"].ToString();
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             employee.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-                        if (reader["VisaDate"] != null)
+                        if (reader["VisaDate"] != DBNull.Value)
                             employee.VisaDate = DateTime.Parse(reader["VisaDate"].ToString());
-                        if (reader["VisaValidFrom"] != null)
+                        if (reader["VisaValidFrom"] != DBNull.Value)
                             employee.VisaValidFrom = DateTime.Parse(reader["VisaValidFrom"].ToString());
-                        if (reader["VisaValidTo"] != null)
+                        if (reader["VisaValidTo"] != DBNull.Value)
                             employee.VisaValidTo = DateTime.Parse(reader["VisaValidTo"].ToString());
-                        if (reader["WorkPermitFrom"] != null)
+                        if (reader["WorkPermitFrom"] != DBNull.Value)
                             employee.WorkPermitFrom = DateTime.Parse(reader["WorkPermitFrom"].ToString());
-                        if (reader["WorkPermitTo"] != null)
+                        if (reader["WorkPermitTo"] != DBNull.Value)
                             employee.WorkPermitTo = DateTime.Parse(reader["WorkPermitTo"].ToString());
 
                         //"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -590,7 +598,7 @@ namespace RepositoryCore.Implementations.Employees
                         employee.Active = bool.Parse(reader["Active"].ToString());
                         employee.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employee.CreatedBy = new User();
                             employee.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -599,7 +607,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employee.Company = new Company();
                             employee.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
