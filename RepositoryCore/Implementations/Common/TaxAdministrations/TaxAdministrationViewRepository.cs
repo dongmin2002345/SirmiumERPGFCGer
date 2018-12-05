@@ -60,7 +60,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                         taxAdministration.SecondCode = reader["TaxAdministrationSecondCode"]?.ToString();
                         taxAdministration.Name = reader["TaxAdministrationName"].ToString();
 
-                        if (reader["CityId"] != null)
+                        if (reader["CityId"] != DBNull.Value)
                         {
                             taxAdministration.City = new City();
                             taxAdministration.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -70,14 +70,14 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.City.Name = reader["CityName"].ToString();
                         }
 
-                        if (reader["Address1"] != null)
+                        if (reader["Address1"] != DBNull.Value)
                             taxAdministration.Address1 = reader["Address1"].ToString();
-                        if (reader["Address2"] != null)
+                        if (reader["Address2"] != DBNull.Value)
                             taxAdministration.Address2 = reader["Address2"].ToString();
-                        if (reader["Address3"] != null)
+                        if (reader["Address3"] != DBNull.Value)
                             taxAdministration.Address3 = reader["Address3"].ToString();
 
-                        if (reader["BankId1"] != null)
+                        if (reader["BankId1"] != DBNull.Value)
                         {
                             taxAdministration.Bank1 = new Bank();
                             taxAdministration.BankId1 = Int32.Parse(reader["BankId1"].ToString());
@@ -87,7 +87,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.Bank1.Name = reader["BankName1"].ToString();
                         }
 
-                        if (reader["BankId2"] != null)
+                        if (reader["BankId2"] != DBNull.Value)
                         {
                             taxAdministration.Bank2 = new Bank();
                             taxAdministration.BankId2 = Int32.Parse(reader["BankId2"].ToString());
@@ -97,15 +97,15 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.Bank2.Name = reader["BankName2"].ToString();
                         }
 
-                        if (reader["IBAN1"] != null)
+                        if (reader["IBAN1"] != DBNull.Value)
                             taxAdministration.IBAN1 = reader["IBAN1"].ToString();
-                        if (reader["SWIFT"] != null)
+                        if (reader["SWIFT"] != DBNull.Value)
                             taxAdministration.SWIFT = reader["SWIFT"].ToString();
 
                         taxAdministration.Active = bool.Parse(reader["Active"].ToString());
                         taxAdministration.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             taxAdministration.CreatedBy = new User();
                             taxAdministration.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -114,7 +114,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             taxAdministration.Company = new Company();
                             taxAdministration.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -177,7 +177,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                         taxAdministration.SecondCode = reader["TaxAdministrationSecondCode"]?.ToString();
                         taxAdministration.Name = reader["TaxAdministrationName"].ToString();
 
-                        if (reader["CityId"] != null)
+                        if (reader["CityId"] != DBNull.Value)
                         {
                             taxAdministration.City = new City();
                             taxAdministration.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -187,14 +187,14 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.City.Name = reader["CityName"].ToString();
                         }
 
-                        if (reader["Address1"] != null)
+                        if (reader["Address1"] != DBNull.Value)
                             taxAdministration.Address1 = reader["Address1"].ToString();
-                        if (reader["Address2"] != null)
+                        if (reader["Address2"] != DBNull.Value)
                             taxAdministration.Address2 = reader["Address2"].ToString();
-                        if (reader["Address3"] != null)
+                        if (reader["Address3"] != DBNull.Value)
                             taxAdministration.Address3 = reader["Address3"].ToString();
 
-                        if (reader["BankId1"] != null)
+                        if (reader["BankId1"] != DBNull.Value)
                         {
                             taxAdministration.Bank1 = new Bank();
                             taxAdministration.BankId1 = Int32.Parse(reader["BankId1"].ToString());
@@ -204,7 +204,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.Bank1.Name = reader["BankName1"].ToString();
                         }
 
-                        if (reader["BankId2"] != null)
+                        if (reader["BankId2"] != DBNull.Value)
                         {
                             taxAdministration.Bank2 = new Bank();
                             taxAdministration.BankId2 = Int32.Parse(reader["BankId2"].ToString());
@@ -214,15 +214,15 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.Bank2.Name = reader["BankName2"].ToString();
                         }
 
-                        if (reader["IBAN1"] != null)
+                        if (reader["IBAN1"] != DBNull.Value)
                             taxAdministration.IBAN1 = reader["IBAN1"].ToString();
-                        if (reader["SWIFT"] != null)
+                        if (reader["SWIFT"] != DBNull.Value)
                             taxAdministration.SWIFT = reader["SWIFT"].ToString();
 
                         taxAdministration.Active = bool.Parse(reader["Active"].ToString());
                         taxAdministration.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             taxAdministration.CreatedBy = new User();
                             taxAdministration.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -231,7 +231,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             taxAdministration.Company = new Company();
                             taxAdministration.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
