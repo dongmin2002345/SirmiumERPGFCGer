@@ -56,17 +56,17 @@ namespace RepositoryCore.Implementations.Employees
                         employeeLicence.Id = Int32.Parse(reader["EmployeeLicenceId"].ToString());
                         employeeLicence.Identifier = Guid.Parse(reader["EmployeeLicenceIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeLicence.Employee = new Employee();
                             employeeLicence.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeLicence.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeLicence.Employee.Identifier = Guid.Parse(reader["EmployeeLicenceTypeIdentifier"].ToString());
+                            employeeLicence.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeLicence.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeLicence.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["LicenceId"] != null)
+                        if (reader["LicenceId"] != DBNull.Value)
                         {
                             employeeLicence.Licence = new LicenceType();
                             employeeLicence.LicenceId = Int32.Parse(reader["LicenceId"].ToString());
@@ -77,7 +77,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.Licence.Description = reader["LicenceDescription"].ToString();
                         }
                         
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employeeLicence.Country = new Country();
                             employeeLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -87,15 +87,15 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["ValidFrom"] != null)
+                        if (reader["ValidFrom"] != DBNull.Value)
                             employeeLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
-                        if (reader["ValidTo"] != null)
+                        if (reader["ValidTo"] != DBNull.Value)
                             employeeLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
 
                         employeeLicence.Active = bool.Parse(reader["Active"].ToString());
                         employeeLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeLicence.CreatedBy = new User();
                             employeeLicence.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -104,7 +104,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeLicence.Company = new Company();
                             employeeLicence.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -162,17 +162,17 @@ namespace RepositoryCore.Implementations.Employees
                         employeeLicence.Id = Int32.Parse(reader["EmployeeLicenceId"].ToString());
                         employeeLicence.Identifier = Guid.Parse(reader["EmployeeLicenceIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeLicence.Employee = new Employee();
                             employeeLicence.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeLicence.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeLicence.Employee.Identifier = Guid.Parse(reader["EmployeeLicenceTypeIdentifier"].ToString());
+                            employeeLicence.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeLicence.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeLicence.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["LicenceId"] != null)
+                        if (reader["LicenceId"] != DBNull.Value)
                         {
                             employeeLicence.Licence = new LicenceType();
                             employeeLicence.LicenceId = Int32.Parse(reader["LicenceId"].ToString());
@@ -183,7 +183,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.Licence.Description = reader["LicenceDescription"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employeeLicence.Country = new Country();
                             employeeLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -193,15 +193,15 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["ValidFrom"] != null)
+                        if (reader["ValidFrom"] != DBNull.Value)
                             employeeLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
-                        if (reader["ValidTo"] != null)
+                        if (reader["ValidTo"] != DBNull.Value)
                             employeeLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
 
                         employeeLicence.Active = bool.Parse(reader["Active"].ToString());
                         employeeLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeLicence.CreatedBy = new User();
                             employeeLicence.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -210,7 +210,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeLicence.Company = new Company();
                             employeeLicence.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -269,17 +269,17 @@ namespace RepositoryCore.Implementations.Employees
                         employeeLicence.Id = Int32.Parse(reader["EmployeeLicenceId"].ToString());
                         employeeLicence.Identifier = Guid.Parse(reader["EmployeeLicenceIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeLicence.Employee = new Employee();
                             employeeLicence.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeLicence.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeLicence.Employee.Identifier = Guid.Parse(reader["EmployeeLicenceTypeIdentifier"].ToString());
+                            employeeLicence.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeLicence.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeLicence.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["LicenceId"] != null)
+                        if (reader["LicenceId"] != DBNull.Value)
                         {
                             employeeLicence.Licence = new LicenceType();
                             employeeLicence.LicenceId = Int32.Parse(reader["LicenceId"].ToString());
@@ -290,7 +290,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.Licence.Description = reader["LicenceDescription"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employeeLicence.Country = new Country();
                             employeeLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -300,15 +300,15 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["ValidFrom"] != null)
+                        if (reader["ValidFrom"] != DBNull.Value)
                             employeeLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
-                        if (reader["ValidTo"] != null)
+                        if (reader["ValidTo"] != DBNull.Value)
                             employeeLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
 
                         employeeLicence.Active = bool.Parse(reader["Active"].ToString());
                         employeeLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeLicence.CreatedBy = new User();
                             employeeLicence.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -317,7 +317,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeLicence.Company = new Company();
                             employeeLicence.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

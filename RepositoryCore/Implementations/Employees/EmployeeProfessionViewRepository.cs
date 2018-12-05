@@ -55,7 +55,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeProfession.Id = Int32.Parse(reader["EmployeeProfessionId"].ToString());
                         employeeProfession.Identifier = Guid.Parse(reader["EmployeeProfessionIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeProfession.Employee = new Employee();
                             employeeProfession.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -65,7 +65,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["ProfessionId"] != null)
+                        if (reader["ProfessionId"] != DBNull.Value)
                         {
                             employeeProfession.Profession = new Profession();
                             employeeProfession.ProfessionId = Int32.Parse(reader["ProfessionId"].ToString());
@@ -75,7 +75,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Profession.Name = reader["ProfessionName"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employeeProfession.Country = new Country();
                             employeeProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -88,7 +88,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeProfession.Active = bool.Parse(reader["Active"].ToString());
                         employeeProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeProfession.CreatedBy = new User();
                             employeeProfession.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeProfession.Company = new Company();
                             employeeProfession.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -154,7 +154,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeProfession.Id = Int32.Parse(reader["EmployeeProfessionId"].ToString());
                         employeeProfession.Identifier = Guid.Parse(reader["EmployeeProfessionIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeProfession.Employee = new Employee();
                             employeeProfession.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -164,7 +164,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["ProfessionId"] != null)
+                        if (reader["ProfessionId"] != DBNull.Value)
                         {
                             employeeProfession.Profession = new Profession();
                             employeeProfession.ProfessionId = Int32.Parse(reader["ProfessionId"].ToString());
@@ -174,7 +174,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Profession.Name = reader["ProfessionName"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employeeProfession.Country = new Country();
                             employeeProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -187,7 +187,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeProfession.Active = bool.Parse(reader["Active"].ToString());
                         employeeProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeProfession.CreatedBy = new User();
                             employeeProfession.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -196,7 +196,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeProfession.Company = new Company();
                             employeeProfession.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -253,7 +253,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeProfession.Id = Int32.Parse(reader["EmployeeProfessionId"].ToString());
                         employeeProfession.Identifier = Guid.Parse(reader["EmployeeProfessionIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeProfession.Employee = new Employee();
                             employeeProfession.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -263,7 +263,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["ProfessionId"] != null)
+                        if (reader["ProfessionId"] != DBNull.Value)
                         {
                             employeeProfession.Profession = new Profession();
                             employeeProfession.ProfessionId = Int32.Parse(reader["ProfessionId"].ToString());
@@ -273,7 +273,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Profession.Name = reader["ProfessionName"].ToString();
                         }
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             employeeProfession.Country = new Country();
                             employeeProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -286,7 +286,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeProfession.Active = bool.Parse(reader["Active"].ToString());
                         employeeProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeProfession.CreatedBy = new User();
                             employeeProfession.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -295,7 +295,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeProfession.Company = new Company();
                             employeeProfession.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

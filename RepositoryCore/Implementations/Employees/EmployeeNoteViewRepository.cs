@@ -52,7 +52,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeNote.Id = Int32.Parse(reader["EmployeeNoteId"].ToString());
                         employeeNote.Identifier = Guid.Parse(reader["EmployeeNoteIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeNote.Employee = new Employee();
                             employeeNote.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -62,15 +62,15 @@ namespace RepositoryCore.Implementations.Employees
                             employeeNote.Employee.Name = reader["EmployeeName"].ToString();
                         }
                        
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             employeeNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             employeeNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         employeeNote.Active = bool.Parse(reader["Active"].ToString());
                         employeeNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeNote.CreatedBy = new User();
                             employeeNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -79,7 +79,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeNote.Company = new Company();
                             employeeNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -133,7 +133,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeNote.Id = Int32.Parse(reader["EmployeeNoteId"].ToString());
                         employeeNote.Identifier = Guid.Parse(reader["EmployeeNoteIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeNote.Employee = new Employee();
                             employeeNote.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -144,15 +144,15 @@ namespace RepositoryCore.Implementations.Employees
                         }
 
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             employeeNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             employeeNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         employeeNote.Active = bool.Parse(reader["Active"].ToString());
                         employeeNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeNote.CreatedBy = new User();
                             employeeNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -161,7 +161,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeNote.Company = new Company();
                             employeeNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -215,7 +215,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeNote.Id = Int32.Parse(reader["EmployeeNoteId"].ToString());
                         employeeNote.Identifier = Guid.Parse(reader["EmployeeNoteIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeNote.Employee = new Employee();
                             employeeNote.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -226,15 +226,15 @@ namespace RepositoryCore.Implementations.Employees
                         }
 
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             employeeNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             employeeNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         employeeNote.Active = bool.Parse(reader["Active"].ToString());
                         employeeNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeNote.CreatedBy = new User();
                             employeeNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -243,7 +243,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeNote.Company = new Company();
                             employeeNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

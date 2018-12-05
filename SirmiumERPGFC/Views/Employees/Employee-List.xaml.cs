@@ -41,6 +41,7 @@ namespace SirmiumERPGFC.Views.Employees
         IEmployeeProfessionService employeeProfessionService;
         IEmployeeDocumentService employeeDocumentService;
         IEmployeeCardService employeeCardService;
+        IEmployeeNoteService employeeNoteService;
         #endregion
 
 
@@ -393,6 +394,7 @@ namespace SirmiumERPGFC.Views.Employees
             this.employeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
             this.employeeDocumentService = DependencyResolver.Kernel.Get<IEmployeeDocumentService>();
             this.employeeCardService = DependencyResolver.Kernel.Get<IEmployeeCardService>();
+            this.employeeNoteService = DependencyResolver.Kernel.Get<IEmployeeNoteService>();
 
             InitializeComponent();
 
@@ -571,6 +573,7 @@ namespace SirmiumERPGFC.Views.Employees
             new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService);
             new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService);
             new EmployeeCardSQLiteRepository().Sync(employeeCardService);
+            new EmployeeNoteSQLiteRepository().Sync(employeeNoteService);
 
             PopulateData();
 
