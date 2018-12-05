@@ -157,7 +157,7 @@ namespace RepositoryCore.Implementations.Common.Professions
                             profession.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             profession.Company = new Company();
                             profession.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
