@@ -38,7 +38,7 @@ namespace RepositoryCore.Implementations.Common.Companies
         //    {
         //        SqlCommand command = connection.CreateCommand();
         //        command.CommandText = queryString;
-                
+
 
         //        connection.Open();
         //        using (SqlDataReader reader = command.ExecuteReader())
@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.Common.Companies
         //                company.Active = bool.Parse(reader["Active"].ToString());
         //                company.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-        //                //if (reader["CreatedById"] != null)
+        //                //if (reader["CreatedById"] != DBNull.Value)
         //                //{
         //                //    company.CreatedBy = new User();
         //                //    company.CreatedById = Int32.Parse(reader["CreatedById"].ToString()); //???
@@ -110,7 +110,7 @@ namespace RepositoryCore.Implementations.Common.Companies
         //                company.Active = bool.Parse(reader["Active"].ToString());
         //                company.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-        //                //if (reader["CreatedById"] != null)
+        //                //if (reader["CreatedById"] != DBNull.Value)
         //                //{
         //                //    company.CreatedBy = new User();
         //                //    company.CreatedById = Int32.Parse(reader["CreatedById"].ToString()); //???

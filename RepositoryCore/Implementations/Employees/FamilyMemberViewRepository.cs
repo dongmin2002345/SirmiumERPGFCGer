@@ -55,7 +55,7 @@ namespace RepositoryCore.Implementations.Employees
                         familyMember.Active = bool.Parse(reader["Active"].ToString());
                         familyMember.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             familyMember.CreatedBy = new User();
                             familyMember.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -64,7 +64,7 @@ namespace RepositoryCore.Implementations.Employees
                             familyMember.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             familyMember.Company = new Company();
                             familyMember.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -121,7 +121,7 @@ namespace RepositoryCore.Implementations.Employees
                         familyMember.Active = bool.Parse(reader["Active"].ToString());
                         familyMember.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             familyMember.CreatedBy = new User();
                             familyMember.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -130,7 +130,7 @@ namespace RepositoryCore.Implementations.Employees
                             familyMember.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             familyMember.Company = new Company();
                             familyMember.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

@@ -53,15 +53,15 @@ namespace RepositoryCore.Implementations.Common.ToDos
                         toDo.Identifier = Guid.Parse(reader["ToDoIdentifier"].ToString());
                         toDo.Name = reader["ToDoName"].ToString();
 
-                        if (reader["ToDoDescription"] != null)
+                        if (reader["ToDoDescription"] != DBNull.Value)
                             toDo.Description = reader["ToDoDescription"].ToString();
-                        if (reader["ToDoDate"] != null)
+                        if (reader["ToDoDate"] != DBNull.Value)
                             toDo.ToDoDate = DateTime.Parse(reader["ToDoDate"].ToString());
 
                         toDo.Active = bool.Parse(reader["Active"].ToString());
                         toDo.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             toDo.CreatedBy = new User();
                             toDo.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -70,7 +70,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
                             toDo.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             toDo.Company = new Company();
                             toDo.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -124,15 +124,15 @@ namespace RepositoryCore.Implementations.Common.ToDos
                         toDo.Identifier = Guid.Parse(reader["ToDoIdentifier"].ToString());
                         toDo.Name = reader["ToDoName"].ToString();
 
-                        if (reader["ToDoDescription"] != null)
+                        if (reader["ToDoDescription"] != DBNull.Value)
                             toDo.Description = reader["ToDoDescription"].ToString();
-                        if (reader["ToDoDate"] != null)
+                        if (reader["ToDoDate"] != DBNull.Value)
                             toDo.ToDoDate = DateTime.Parse(reader["ToDoDate"].ToString());
 
                         toDo.Active = bool.Parse(reader["Active"].ToString());
                         toDo.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             toDo.CreatedBy = new User();
                             toDo.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -141,7 +141,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
                             toDo.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             toDo.Company = new Company();
                             toDo.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

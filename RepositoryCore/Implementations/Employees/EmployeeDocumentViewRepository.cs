@@ -53,7 +53,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeDocument.Id = Int32.Parse(reader["EmployeeDocumentId"].ToString());
                         employeeDocument.Identifier = Guid.Parse(reader["EmployeeDocumentIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeDocument.Employee = new Employee();
                             employeeDocument.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -63,17 +63,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             employeeDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             employeeDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             employeeDocument.Path = reader["Path"].ToString();
 
                         employeeDocument.Active = bool.Parse(reader["Active"].ToString());
                         employeeDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeDocument.CreatedBy = new User();
                             employeeDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -82,7 +82,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeDocument.Company = new Company();
                             employeeDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -136,7 +136,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeDocument.Id = Int32.Parse(reader["EmployeeDocumentId"].ToString());
                         employeeDocument.Identifier = Guid.Parse(reader["EmployeeDocumentIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeDocument.Employee = new Employee();
                             employeeDocument.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -146,17 +146,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             employeeDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             employeeDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             employeeDocument.Path = reader["Path"].ToString();
 
                         employeeDocument.Active = bool.Parse(reader["Active"].ToString());
                         employeeDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeDocument.CreatedBy = new User();
                             employeeDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -165,7 +165,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeDocument.Company = new Company();
                             employeeDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -221,7 +221,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeDocument.Id = Int32.Parse(reader["EmployeeDocumentId"].ToString());
                         employeeDocument.Identifier = Guid.Parse(reader["EmployeeDocumentIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeDocument.Employee = new Employee();
                             employeeDocument.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -231,17 +231,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             employeeDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             employeeDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             employeeDocument.Path = reader["Path"].ToString();
 
                         employeeDocument.Active = bool.Parse(reader["Active"].ToString());
                         employeeDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeDocument.CreatedBy = new User();
                             employeeDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -250,7 +250,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeDocument.Company = new Company();
                             employeeDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

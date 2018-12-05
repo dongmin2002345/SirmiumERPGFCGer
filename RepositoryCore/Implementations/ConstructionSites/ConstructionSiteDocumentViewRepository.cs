@@ -52,7 +52,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteDocument.Id = Int32.Parse(reader["ConstructionSiteDocumentId"].ToString());
                         constructionSiteDocument.Identifier = Guid.Parse(reader["ConstructionSiteDocumentIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteDocument.ConstructionSite = new ConstructionSite();
                             constructionSiteDocument.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -62,17 +62,17 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             constructionSiteDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             constructionSiteDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             constructionSiteDocument.Path = reader["Path"].ToString();
 
                         constructionSiteDocument.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteDocument.CreatedBy = new User();
                             constructionSiteDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -81,7 +81,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteDocument.Company = new Company();
                             constructionSiteDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -135,7 +135,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteDocument.Id = Int32.Parse(reader["ConstructionSiteDocumentId"].ToString());
                         constructionSiteDocument.Identifier = Guid.Parse(reader["ConstructionSiteDocumentIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteDocument.ConstructionSite = new ConstructionSite();
                             constructionSiteDocument.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -145,17 +145,17 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             constructionSiteDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             constructionSiteDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             constructionSiteDocument.Path = reader["Path"].ToString();
 
                         constructionSiteDocument.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteDocument.CreatedBy = new User();
                             constructionSiteDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -164,7 +164,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteDocument.Company = new Company();
                             constructionSiteDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -220,7 +220,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteDocument.Id = Int32.Parse(reader["ConstructionSiteDocumentId"].ToString());
                         constructionSiteDocument.Identifier = Guid.Parse(reader["ConstructionSiteDocumentIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteDocument.ConstructionSite = new ConstructionSite();
                             constructionSiteDocument.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -230,17 +230,17 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             constructionSiteDocument.Name = reader["Name"].ToString();
-                        if (reader["CreateDate"] != null)
+                        if (reader["CreateDate"] != DBNull.Value)
                             constructionSiteDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             constructionSiteDocument.Path = reader["Path"].ToString();
 
                         constructionSiteDocument.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteDocument.CreatedBy = new User();
                             constructionSiteDocument.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -249,7 +249,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteDocument.Company = new Company();
                             constructionSiteDocument.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

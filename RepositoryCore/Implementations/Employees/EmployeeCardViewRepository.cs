@@ -53,7 +53,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeCard.Id = Int32.Parse(reader["EmployeeCardId"].ToString());
                         employeeCard.Identifier = Guid.Parse(reader["EmployeeCardIdentifier"].ToString());
 
-                       if (reader["EmployeeId"] != null)
+                       if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeCard.Employee = new Employee();
                             employeeCard.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -63,17 +63,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["CardDate"] != null)
+                        if (reader["CardDate"] != DBNull.Value)
                             employeeCard.CardDate = DateTime.Parse(reader["CardDate"].ToString());
-                        if (reader["Description"] != null)
+                        if (reader["Description"] != DBNull.Value)
                             employeeCard.Description = reader["Description"].ToString();
-                        if (reader["PlusMinus"] != null)
+                        if (reader["PlusMinus"] != DBNull.Value)
                             employeeCard.PlusMinus = reader["PlusMinus"].ToString();
 
                         employeeCard.Active = bool.Parse(reader["Active"].ToString());
                         employeeCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeCard.CreatedBy = new User();
                             employeeCard.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -82,7 +82,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeCard.Company = new Company();
                             employeeCard.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -135,7 +135,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeCard.Id = Int32.Parse(reader["EmployeeCardId"].ToString());
                         employeeCard.Identifier = Guid.Parse(reader["EmployeeCardIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeCard.Employee = new Employee();
                             employeeCard.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -145,17 +145,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["CardDate"] != null)
+                        if (reader["CardDate"] != DBNull.Value)
                             employeeCard.CardDate = DateTime.Parse(reader["CardDate"].ToString());
-                        if (reader["Description"] != null)
+                        if (reader["Description"] != DBNull.Value)
                             employeeCard.Description = reader["Description"].ToString();
-                        if (reader["PlusMinus"] != null)
+                        if (reader["PlusMinus"] != DBNull.Value)
                             employeeCard.PlusMinus = reader["PlusMinus"].ToString();
 
                         employeeCard.Active = bool.Parse(reader["Active"].ToString());
                         employeeCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeCard.CreatedBy = new User();
                             employeeCard.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -164,7 +164,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeCard.Company = new Company();
                             employeeCard.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -220,7 +220,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeCard.Id = Int32.Parse(reader["EmployeeCardId"].ToString());
                         employeeCard.Identifier = Guid.Parse(reader["EmployeeCardIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeCard.Employee = new Employee();
                             employeeCard.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -230,17 +230,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["CardDate"] != null)
+                        if (reader["CardDate"] != DBNull.Value)
                             employeeCard.CardDate = DateTime.Parse(reader["CardDate"].ToString());
-                        if (reader["Description"] != null)
+                        if (reader["Description"] != DBNull.Value)
                             employeeCard.Description = reader["Description"].ToString();
-                        if (reader["PlusMinus"] != null)
+                        if (reader["PlusMinus"] != DBNull.Value)
                             employeeCard.PlusMinus = reader["PlusMinus"].ToString();
 
                         employeeCard.Active = bool.Parse(reader["Active"].ToString());
                         employeeCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeCard.CreatedBy = new User();
                             employeeCard.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -249,7 +249,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeCard.Company = new Company();
                             employeeCard.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

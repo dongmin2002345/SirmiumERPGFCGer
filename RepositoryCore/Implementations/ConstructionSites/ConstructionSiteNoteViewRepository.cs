@@ -51,7 +51,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteNote.Id = Int32.Parse(reader["ConstructionSiteNoteId"].ToString());
                         constructionSiteNote.Identifier = Guid.Parse(reader["ConstructionSiteNoteIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteNote.ConstructionSite = new ConstructionSite();
                             constructionSiteNote.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -61,15 +61,15 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             constructionSiteNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteNote.CreatedBy = new User();
                             constructionSiteNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -78,7 +78,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteNote.Company = new Company();
                             constructionSiteNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -132,7 +132,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteNote.Id = Int32.Parse(reader["ConstructionSiteNoteId"].ToString());
                         constructionSiteNote.Identifier = Guid.Parse(reader["ConstructionSiteNoteIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteNote.ConstructionSite = new ConstructionSite();
                             constructionSiteNote.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -143,15 +143,15 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         }
 
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             constructionSiteNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteNote.CreatedBy = new User();
                             constructionSiteNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -160,7 +160,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteNote.Company = new Company();
                             constructionSiteNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -214,7 +214,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteNote.Id = Int32.Parse(reader["ConstructionSiteNoteId"].ToString());
                         constructionSiteNote.Identifier = Guid.Parse(reader["ConstructionSiteNoteIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteNote.ConstructionSite = new ConstructionSite();
                             constructionSiteNote.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -225,15 +225,15 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         }
 
 
-                        if (reader["Note"] != null)
+                        if (reader["Note"] != DBNull.Value)
                             constructionSiteNote.Note = reader["Note"].ToString();
-                        if (reader["NoteDate"] != null)
+                        if (reader["NoteDate"] != DBNull.Value)
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteNote.CreatedBy = new User();
                             constructionSiteNote.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -242,7 +242,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteNote.Company = new Company();
                             constructionSiteNote.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

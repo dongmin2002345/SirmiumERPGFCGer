@@ -55,74 +55,74 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         inputInvoice.Identifier = Guid.Parse(reader["InputInvoiceIdentifier"].ToString());
                         inputInvoice.Code = reader["InputInvoiceCode"]?.ToString();
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             inputInvoice.BusinessPartner = new BusinessPartner();
-                            if (reader["BusinessPartnerId"] != null)
+                            if (reader["BusinessPartnerId"] != DBNull.Value)
                                 inputInvoice.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            if (reader["BusinessPartnerId"] != null)
+                            if (reader["BusinessPartnerId"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            if (reader["BusinessPartnerIdentifier"] != null)
+                            if (reader["BusinessPartnerIdentifier"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
-                            if (reader["BusinessPartnerCode"] != null)
+                            if (reader["BusinessPartnerCode"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
-                            if (reader["BusinessPartnerName"] != null)
+                            if (reader["BusinessPartnerName"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["Supplier"] != null)
+                        if (reader["Supplier"] != DBNull.Value)
                             inputInvoice.Supplier = reader["Supplier"].ToString();
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             inputInvoice.Address = reader["Address"].ToString();
-                        if (reader["InvoiceNumber"] != null)
+                        if (reader["InvoiceNumber"] != DBNull.Value)
                             inputInvoice.InvoiceNumber = reader["InvoiceNumber"].ToString();
-                        if (reader["InvoiceDate"] != null)
+                        if (reader["InvoiceDate"] != DBNull.Value)
                             inputInvoice.InvoiceDate = DateTime.Parse(reader["InvoiceDate"].ToString());
-                        if (reader["AmountNet"] != null)
+                        if (reader["AmountNet"] != DBNull.Value)
                             inputInvoice.AmountNet = decimal.Parse(reader["AmountNet"].ToString());
-                        if (reader["PDVPercent"] != null)
+                        if (reader["PDVPercent"] != DBNull.Value)
                             inputInvoice.PDVPercent = Int32.Parse(reader["PDVPercent"].ToString());
-                        if (reader["PDV"] != null)
+                        if (reader["PDV"] != DBNull.Value)
                             inputInvoice.PDV = decimal.Parse(reader["PDV"].ToString());
-                        if (reader["AmountGross"] != null)
+                        if (reader["AmountGross"] != DBNull.Value)
                             inputInvoice.AmountGross = decimal.Parse(reader["AmountGross"].ToString());
-                        if (reader["Currency"] != null)
+                        if (reader["Currency"] != DBNull.Value)
                             inputInvoice.AmountGross = Int32.Parse(reader["Currency"].ToString());
-                        if (reader["DateOfPaymet"] != null)
+                        if (reader["DateOfPaymet"] != DBNull.Value)
                             inputInvoice.DateOfPaymet = DateTime.Parse(reader["DateOfPaymet"].ToString());
-                        if (reader["Status"] != null)
+                        if (reader["Status"] != DBNull.Value)
                             inputInvoice.Status = reader["Status"].ToString();
-                        if (reader["StatusDate"] != null)
+                        if (reader["StatusDate"] != DBNull.Value)
                             inputInvoice.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
-                        if (reader["Description"] != null)
+                        if (reader["Description"] != DBNull.Value)
                             inputInvoice.Description = reader["Description"].ToString();
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             inputInvoice.Path = reader["Path"].ToString();
 
                         inputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if(reader["CreatedById"] != null)
+                        if(reader["CreatedById"] != DBNull.Value)
                         {
                             inputInvoice.CreatedBy = new User();
-                            if (reader["CreatedById"] != null)
+                            if (reader["CreatedById"] != DBNull.Value)
                                 inputInvoice.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
-                            if (reader["CreatedById"] != null)
+                            if (reader["CreatedById"] != DBNull.Value)
                                 inputInvoice.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
-                            if (reader["CreatedByFirstName"] != null)
+                            if (reader["CreatedByFirstName"] != DBNull.Value)
                                 inputInvoice.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
-                            if (reader["CreatedByLastName"] != null)
+                            if (reader["CreatedByLastName"] != DBNull.Value)
                                 inputInvoice.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if(reader["CompanyId"] != null)
+                        if(reader["CompanyId"] != DBNull.Value)
                         {
                             inputInvoice.Company = new Company();
-                            if (reader["CompanyId"] != null)
+                            if (reader["CompanyId"] != DBNull.Value)
                                 inputInvoice.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
-                            if (reader["CompanyId"] != null)
+                            if (reader["CompanyId"] != DBNull.Value)
                                 inputInvoice.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
-                            if (reader["CompanyName"] != null)
+                            if (reader["CompanyName"] != DBNull.Value)
                                 inputInvoice.Company.Name = reader["CompanyName"].ToString();
                         }
 
@@ -174,74 +174,74 @@ namespace RepositoryCore.Implementations.Common.Invoices
                         inputInvoice.Identifier = Guid.Parse(reader["InputInvoiceIdentifier"].ToString());
                         inputInvoice.Code = reader["InputInvoiceCode"]?.ToString();
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             inputInvoice.BusinessPartner = new BusinessPartner();
-                            if (reader["BusinessPartnerId"] != null)
+                            if (reader["BusinessPartnerId"] != DBNull.Value)
                                 inputInvoice.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            if (reader["BusinessPartnerId"] != null)
+                            if (reader["BusinessPartnerId"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            if (reader["BusinessPartnerIdentifier"] != null)
+                            if (reader["BusinessPartnerIdentifier"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
-                            if (reader["BusinessPartnerCode"] != null)
+                            if (reader["BusinessPartnerCode"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
-                            if (reader["BusinessPartnerName"] != null)
+                            if (reader["BusinessPartnerName"] != DBNull.Value)
                                 inputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
-                        if (reader["Supplier"] != null)
+                        if (reader["Supplier"] != DBNull.Value)
                             inputInvoice.Supplier = reader["Supplier"].ToString();
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             inputInvoice.Address = reader["Address"].ToString();
-                        if (reader["InvoiceNumber"] != null)
+                        if (reader["InvoiceNumber"] != DBNull.Value)
                             inputInvoice.InvoiceNumber = reader["InvoiceNumber"].ToString();
-                        if (reader["InvoiceDate"] != null)
+                        if (reader["InvoiceDate"] != DBNull.Value)
                             inputInvoice.InvoiceDate = DateTime.Parse(reader["InvoiceDate"].ToString());
-                        if (reader["AmountNet"] != null)
+                        if (reader["AmountNet"] != DBNull.Value)
                             inputInvoice.AmountNet = decimal.Parse(reader["AmountNet"].ToString());
-                        if (reader["PDVPercent"] != null)
+                        if (reader["PDVPercent"] != DBNull.Value)
                             inputInvoice.PDVPercent = Int32.Parse(reader["PDVPercent"].ToString());
-                        if (reader["PDV"] != null)
+                        if (reader["PDV"] != DBNull.Value)
                             inputInvoice.PDV = decimal.Parse(reader["PDV"].ToString());
-                        if (reader["AmountGross"] != null)
+                        if (reader["AmountGross"] != DBNull.Value)
                             inputInvoice.AmountGross = decimal.Parse(reader["AmountGross"].ToString());
-                        if (reader["Currency"] != null)
+                        if (reader["Currency"] != DBNull.Value)
                             inputInvoice.AmountGross = Int32.Parse(reader["Currency"].ToString());
-                        if (reader["DateOfPaymet"] != null)
+                        if (reader["DateOfPaymet"] != DBNull.Value)
                             inputInvoice.DateOfPaymet = DateTime.Parse(reader["DateOfPaymet"].ToString());
-                        if (reader["Status"] != null)
+                        if (reader["Status"] != DBNull.Value)
                             inputInvoice.Status = reader["Status"].ToString();
-                        if (reader["StatusDate"] != null)
+                        if (reader["StatusDate"] != DBNull.Value)
                             inputInvoice.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
-                        if (reader["Description"] != null)
+                        if (reader["Description"] != DBNull.Value)
                             inputInvoice.Description = reader["Description"].ToString();
-                        if (reader["Path"] != null)
+                        if (reader["Path"] != DBNull.Value)
                             inputInvoice.Path = reader["Path"].ToString();
 
                         inputInvoice.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             inputInvoice.CreatedBy = new User();
-                            if (reader["CreatedById"] != null)
+                            if (reader["CreatedById"] != DBNull.Value)
                                 inputInvoice.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
-                            if (reader["CreatedById"] != null)
+                            if (reader["CreatedById"] != DBNull.Value)
                                 inputInvoice.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
-                            if (reader["CreatedByFirstName"] != null)
+                            if (reader["CreatedByFirstName"] != DBNull.Value)
                                 inputInvoice.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
-                            if (reader["CreatedByLastName"] != null)
+                            if (reader["CreatedByLastName"] != DBNull.Value)
                                 inputInvoice.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             inputInvoice.Company = new Company();
-                            if (reader["CompanyId"] != null)
+                            if (reader["CompanyId"] != DBNull.Value)
                                 inputInvoice.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
-                            if (reader["CompanyId"] != null)
+                            if (reader["CompanyId"] != DBNull.Value)
                                 inputInvoice.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
-                            if (reader["CompanyName"] != null)
+                            if (reader["CompanyName"] != DBNull.Value)
                                 inputInvoice.Company.Name = reader["CompanyName"].ToString();
                         }
 

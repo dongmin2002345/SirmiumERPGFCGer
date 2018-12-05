@@ -52,7 +52,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteCalculation.Id = Int32.Parse(reader["ConstructionSiteCalculationId"].ToString());
                         constructionSiteCalculation.Identifier = Guid.Parse(reader["ConstructionSiteCalculationIdentifier"].ToString());
                         
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.ConstructionSite = new ConstructionSite();
                             constructionSiteCalculation.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -62,25 +62,25 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["NumOfEmployees"] != null)
+                        if (reader["NumOfEmployees"] != DBNull.Value)
                             constructionSiteCalculation.NumOfEmployees = Int32.Parse(reader["NumOfEmployees"].ToString());
-                        if (reader["EmployeePrice"] != null)
+                        if (reader["EmployeePrice"] != DBNull.Value)
                             constructionSiteCalculation.EmployeePrice = decimal.Parse(reader["EmployeePrice"].ToString());
-                        if (reader["NumOfMonths"] != null)
+                        if (reader["NumOfMonths"] != DBNull.Value)
                             constructionSiteCalculation.NumOfMonths = Int32.Parse(reader["NumOfMonths"].ToString());
-                        if (reader["OldValue"] != null)
+                        if (reader["OldValue"] != DBNull.Value)
                             constructionSiteCalculation.OldValue = decimal.Parse(reader["OldValue"].ToString());
-                        if (reader["NewValue"] != null)
+                        if (reader["NewValue"] != DBNull.Value)
                             constructionSiteCalculation.NewValue = decimal.Parse(reader["NewValue"].ToString());
-                        if (reader["ValueDifference"] != null)
+                        if (reader["ValueDifference"] != DBNull.Value)
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
-                        if (reader["PlusMinus"] != null)
+                        if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteCalculation.CreatedBy = new User();
                             constructionSiteCalculation.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -89,7 +89,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.Company = new Company();
                             constructionSiteCalculation.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -142,7 +142,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteCalculation.Id = Int32.Parse(reader["ConstructionSiteCalculationId"].ToString());
                         constructionSiteCalculation.Identifier = Guid.Parse(reader["ConstructionSiteCalculationIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.ConstructionSite = new ConstructionSite();
                             constructionSiteCalculation.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -152,25 +152,25 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["NumOfEmployees"] != null)
+                        if (reader["NumOfEmployees"] != DBNull.Value)
                             constructionSiteCalculation.NumOfEmployees = Int32.Parse(reader["NumOfEmployees"].ToString());
-                        if (reader["EmployeePrice"] != null)
+                        if (reader["EmployeePrice"] != DBNull.Value)
                             constructionSiteCalculation.EmployeePrice = decimal.Parse(reader["EmployeePrice"].ToString());
-                        if (reader["NumOfMonths"] != null)
+                        if (reader["NumOfMonths"] != DBNull.Value)
                             constructionSiteCalculation.NumOfMonths = Int32.Parse(reader["NumOfMonths"].ToString());
-                        if (reader["OldValue"] != null)
+                        if (reader["OldValue"] != DBNull.Value)
                             constructionSiteCalculation.OldValue = decimal.Parse(reader["OldValue"].ToString());
-                        if (reader["NewValue"] != null)
+                        if (reader["NewValue"] != DBNull.Value)
                             constructionSiteCalculation.NewValue = decimal.Parse(reader["NewValue"].ToString());
-                        if (reader["ValueDifference"] != null)
+                        if (reader["ValueDifference"] != DBNull.Value)
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
-                        if (reader["PlusMinus"] != null)
+                        if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteCalculation.CreatedBy = new User();
                             constructionSiteCalculation.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -179,7 +179,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.Company = new Company();
                             constructionSiteCalculation.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -233,7 +233,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteCalculation.Id = Int32.Parse(reader["ConstructionSiteCalculationId"].ToString());
                         constructionSiteCalculation.Identifier = Guid.Parse(reader["ConstructionSiteCalculationIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.ConstructionSite = new ConstructionSite();
                             constructionSiteCalculation.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -243,25 +243,25 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["NumOfEmployees"] != null)
+                        if (reader["NumOfEmployees"] != DBNull.Value)
                             constructionSiteCalculation.NumOfEmployees = Int32.Parse(reader["NumOfEmployees"].ToString());
-                        if (reader["EmployeePrice"] != null)
+                        if (reader["EmployeePrice"] != DBNull.Value)
                             constructionSiteCalculation.EmployeePrice = decimal.Parse(reader["EmployeePrice"].ToString());
-                        if (reader["NumOfMonths"] != null)
+                        if (reader["NumOfMonths"] != DBNull.Value)
                             constructionSiteCalculation.NumOfMonths = Int32.Parse(reader["NumOfMonths"].ToString());
-                        if (reader["OldValue"] != null)
+                        if (reader["OldValue"] != DBNull.Value)
                             constructionSiteCalculation.OldValue = decimal.Parse(reader["OldValue"].ToString());
-                        if (reader["NewValue"] != null)
+                        if (reader["NewValue"] != DBNull.Value)
                             constructionSiteCalculation.NewValue = decimal.Parse(reader["NewValue"].ToString());
-                        if (reader["ValueDifference"] != null)
+                        if (reader["ValueDifference"] != DBNull.Value)
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
-                        if (reader["PlusMinus"] != null)
+                        if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteCalculation.CreatedBy = new User();
                             constructionSiteCalculation.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -270,7 +270,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.Company = new Company();
                             constructionSiteCalculation.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -324,7 +324,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSiteCalculation.Id = Int32.Parse(reader["ConstructionSiteCalculationId"].ToString());
                         constructionSiteCalculation.Identifier = Guid.Parse(reader["ConstructionSiteCalculationIdentifier"].ToString());
 
-                        if (reader["ConstructionSiteId"] != null)
+                        if (reader["ConstructionSiteId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.ConstructionSite = new ConstructionSite();
                             constructionSiteCalculation.ConstructionSiteId = Int32.Parse(reader["ConstructionSiteId"].ToString());
@@ -334,25 +334,25 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
-                        if (reader["NumOfEmployees"] != null)
+                        if (reader["NumOfEmployees"] != DBNull.Value)
                             constructionSiteCalculation.NumOfEmployees = Int32.Parse(reader["NumOfEmployees"].ToString());
-                        if (reader["EmployeePrice"] != null)
+                        if (reader["EmployeePrice"] != DBNull.Value)
                             constructionSiteCalculation.EmployeePrice = decimal.Parse(reader["EmployeePrice"].ToString());
-                        if (reader["NumOfMonths"] != null)
+                        if (reader["NumOfMonths"] != DBNull.Value)
                             constructionSiteCalculation.NumOfMonths = Int32.Parse(reader["NumOfMonths"].ToString());
-                        if (reader["OldValue"] != null)
+                        if (reader["OldValue"] != DBNull.Value)
                             constructionSiteCalculation.OldValue = decimal.Parse(reader["OldValue"].ToString());
-                        if (reader["NewValue"] != null)
+                        if (reader["NewValue"] != DBNull.Value)
                             constructionSiteCalculation.NewValue = decimal.Parse(reader["NewValue"].ToString());
-                        if (reader["ValueDifference"] != null)
+                        if (reader["ValueDifference"] != DBNull.Value)
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
-                        if (reader["PlusMinus"] != null)
+                        if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             constructionSiteCalculation.CreatedBy = new User();
                             constructionSiteCalculation.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -361,7 +361,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             constructionSiteCalculation.Company = new Company();
                             constructionSiteCalculation.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
