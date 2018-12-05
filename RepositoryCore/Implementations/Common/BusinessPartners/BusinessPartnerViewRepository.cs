@@ -61,7 +61,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                         businessPartner.Code = reader["BusinessPartnerCode"].ToString();
                         businessPartner.InternalCode = reader["BusinessPartnerInternalCode"]?.ToString();
-                        businessPartner.Name = reader["BusinessPartnerName"].ToString();
+                        if (reader["BusinessPartnerName"] != DBNull.Value)
+                            businessPartner.Name = reader["BusinessPartnerName"].ToString();
 
                         if (reader["PIB"] != DBNull.Value)
                             businessPartner.PIB = reader["PIB"].ToString();
@@ -215,7 +216,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                         businessPartner.Code = reader["BusinessPartnerCode"].ToString();
                         businessPartner.InternalCode = reader["BusinessPartnerInternalCode"]?.ToString();
-                        businessPartner.Name = reader["BusinessPartnerName"].ToString();
+                        if (reader["BusinessPartnerName"] != DBNull.Value)
+                            businessPartner.Name = reader["BusinessPartnerName"].ToString();
 
                         if (reader["PIB"] != DBNull.Value)
                             businessPartner.PIB = reader["PIB"].ToString();
@@ -368,7 +370,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                         businessPartner.Code = reader["BusinessPartnerCode"].ToString();
                         businessPartner.InternalCode = reader["BusinessPartnerInternalCode"]?.ToString();
-                        businessPartner.Name = reader["BusinessPartnerName"].ToString();
+                        if (reader["BusinessPartnerName"] != DBNull.Value)
+                            businessPartner.Name = reader["BusinessPartnerName"].ToString();
 
                         if (reader["PIB"] != DBNull.Value)
                             businessPartner.PIB = reader["PIB"].ToString();
