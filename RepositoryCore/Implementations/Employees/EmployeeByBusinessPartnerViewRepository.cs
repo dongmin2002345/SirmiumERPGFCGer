@@ -58,7 +58,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByBusinessPartner.EndDate = DateTime.Parse(reader["EndDate"].ToString());
                         employeeByBusinessPartner.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.Employee = new Employee();
                             employeeByBusinessPartner.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -68,10 +68,10 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByBusinessPartner.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["EmployeeCount"] != null)
+                        if (reader["EmployeeCount"] != DBNull.Value)
                             employeeByBusinessPartner.EmployeeCount = Int32.Parse(reader["EmployeeCount"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.BusinessPartner = new BusinessPartner();
                             employeeByBusinessPartner.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -84,7 +84,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByBusinessPartner.Active = bool.Parse(reader["Active"].ToString());
                         employeeByBusinessPartner.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.CreatedBy = new User();
                             employeeByBusinessPartner.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -93,7 +93,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByBusinessPartner.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.Company = new Company();
                             employeeByBusinessPartner.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -153,7 +153,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByBusinessPartner.EndDate = DateTime.Parse(reader["EndDate"].ToString());
                         employeeByBusinessPartner.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.Employee = new Employee();
                             employeeByBusinessPartner.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -163,10 +163,10 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByBusinessPartner.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["EmployeeCount"] != null)
+                        if (reader["EmployeeCount"] != DBNull.Value)
                             employeeByBusinessPartner.EmployeeCount = Int32.Parse(reader["EmployeeCount"].ToString());
 
-                        if (reader["BusinessPartnerId"] != null)
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.BusinessPartner = new BusinessPartner();
                             employeeByBusinessPartner.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
@@ -179,7 +179,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByBusinessPartner.Active = bool.Parse(reader["Active"].ToString());
                         employeeByBusinessPartner.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.CreatedBy = new User();
                             employeeByBusinessPartner.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -188,7 +188,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByBusinessPartner.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeByBusinessPartner.Company = new Company();
                             employeeByBusinessPartner.CompanyId = Int32.Parse(reader["CompanyId"].ToString());

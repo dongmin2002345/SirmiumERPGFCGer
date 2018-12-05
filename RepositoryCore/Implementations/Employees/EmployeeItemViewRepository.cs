@@ -54,7 +54,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeItem.Id = Int32.Parse(reader["EmployeeItemId"].ToString());
                         employeeItem.Identifier = Guid.Parse(reader["EmployeeItemIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeItem.Employee = new Employee();
                             employeeItem.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -64,7 +64,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["FamilyMemberId"] != null)
+                        if (reader["FamilyMemberId"] != DBNull.Value)
                         {
                             employeeItem.FamilyMember = new FamilyMember();
                             employeeItem.FamilyMemberId = Int32.Parse(reader["FamilyMemberId"].ToString());
@@ -74,17 +74,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.FamilyMember.Name = reader["FamilyMemberName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             employeeItem.Name = reader["Name"].ToString();
-                        if (reader["DateOfBirth"] != null)
+                        if (reader["DateOfBirth"] != DBNull.Value)
                             employeeItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             employeeItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
 
                         employeeItem.Active = bool.Parse(reader["Active"].ToString());
                         employeeItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeItem.CreatedBy = new User();
                             employeeItem.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -93,7 +93,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeItem.Company = new Company();
                             employeeItem.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -149,7 +149,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeItem.Id = Int32.Parse(reader["EmployeeItemId"].ToString());
                         employeeItem.Identifier = Guid.Parse(reader["EmployeeItemIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeItem.Employee = new Employee();
                             employeeItem.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -159,7 +159,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["FamilyMemberId"] != null)
+                        if (reader["FamilyMemberId"] != DBNull.Value)
                         {
                             employeeItem.FamilyMember = new FamilyMember();
                             employeeItem.FamilyMemberId = Int32.Parse(reader["FamilyMemberId"].ToString());
@@ -169,17 +169,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.FamilyMember.Name = reader["FamilyMemberName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             employeeItem.Name = reader["Name"].ToString();
-                        if (reader["DateOfBirth"] != null)
+                        if (reader["DateOfBirth"] != DBNull.Value)
                             employeeItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             employeeItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
 
                         employeeItem.Active = bool.Parse(reader["Active"].ToString());
                         employeeItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeItem.CreatedBy = new User();
                             employeeItem.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -188,7 +188,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeItem.Company = new Company();
                             employeeItem.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -245,7 +245,7 @@ namespace RepositoryCore.Implementations.Employees
                         employeeItem.Id = Int32.Parse(reader["EmployeeItemId"].ToString());
                         employeeItem.Identifier = Guid.Parse(reader["EmployeeItemIdentifier"].ToString());
 
-                        if (reader["EmployeeId"] != null)
+                        if (reader["EmployeeId"] != DBNull.Value)
                         {
                             employeeItem.Employee = new Employee();
                             employeeItem.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
@@ -255,7 +255,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.Employee.Name = reader["EmployeeName"].ToString();
                         }
 
-                        if (reader["FamilyMemberId"] != null)
+                        if (reader["FamilyMemberId"] != DBNull.Value)
                         {
                             employeeItem.FamilyMember = new FamilyMember();
                             employeeItem.FamilyMemberId = Int32.Parse(reader["FamilyMemberId"].ToString());
@@ -265,17 +265,17 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.FamilyMember.Name = reader["FamilyMemberName"].ToString();
                         }
 
-                        if (reader["Name"] != null)
+                        if (reader["Name"] != DBNull.Value)
                             employeeItem.Name = reader["Name"].ToString();
-                        if (reader["DateOfBirth"] != null)
+                        if (reader["DateOfBirth"] != DBNull.Value)
                             employeeItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             employeeItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
 
                         employeeItem.Active = bool.Parse(reader["Active"].ToString());
                         employeeItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             employeeItem.CreatedBy = new User();
                             employeeItem.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -284,7 +284,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             employeeItem.Company = new Company();
                             employeeItem.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
