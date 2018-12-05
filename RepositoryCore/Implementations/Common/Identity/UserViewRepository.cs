@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.Common.Identity
         //                user.Active = bool.Parse(reader["Active"].ToString());
         //                user.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-        //                if (reader["CreatedById"] != null)
+        //                if (reader["CreatedById"] != DBNull.Value)
         //                {
         //                    user.CreatedBy = new User();
         //                    user.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -65,7 +65,7 @@ namespace RepositoryCore.Implementations.Common.Identity
         //                    user.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
         //                }
 
-        //                if (reader["CompanyId"] != null)
+        //                if (reader["CompanyId"] != DBNull.Value)
         //                {
         //                    user.Company = new Company();
         //                    user.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -120,7 +120,7 @@ namespace RepositoryCore.Implementations.Common.Identity
         //    //            user.Active = bool.Parse(reader["Active"].ToString());
         //    //            user.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-        //    //            if (reader["CreatedById"] != null)
+        //    //            if (reader["CreatedById"] != DBNull.Value)
         //    //            {
         //    //                user.CreatedBy = new User();
         //    //                user.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -129,7 +129,7 @@ namespace RepositoryCore.Implementations.Common.Identity
         //    //                user.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
         //    //            }
 
-        //    //            if (reader["CompanyId"] != null)
+        //    //            if (reader["CompanyId"] != DBNull.Value)
         //    //            {
         //    //                user.Company = new Company();
         //    //                user.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
