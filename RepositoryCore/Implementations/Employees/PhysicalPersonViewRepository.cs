@@ -70,10 +70,13 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         physicalPerson.SurName = reader["PhysicalPersonSurName"].ToString();
                         physicalPerson.ConstructionSiteCode = reader["PhysicalPersonConstructionSiteCode"]?.ToString();
                         physicalPerson.ConstructionSiteName = reader["PhysicalPersonConstructionSiteName"]?.ToString();
-                        physicalPerson.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
-                        physicalPerson.Gender = Int32.Parse(reader["Gender"].ToString());
 
-                        if (reader["CountryId"] != null)
+                        if (reader["DateOfBirth"] != DBNull.Value)
+                            physicalPerson.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
+                        if (reader["Gender"] != DBNull.Value)
+                            physicalPerson.Gender = Int32.Parse(reader["Gender"].ToString());
+
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             physicalPerson.Country = new Country();
                             physicalPerson.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -83,7 +86,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null) 
+                        if (reader["RegionId"] != DBNull.Value)
                         {
                             physicalPerson.Region = new Region();
                             physicalPerson.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -93,7 +96,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Region.Name = reader["RegionName"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null)  
+                        if (reader["MunicipalityId"] != DBNull.Value)
                         {
                             physicalPerson.Municipality = new Municipality();
                             physicalPerson.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -103,7 +106,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
-                        if (reader["CityId"] != null) 
+                        if (reader["CityId"] != DBNull.Value)
                         {
                             physicalPerson.City = new City();
                             physicalPerson.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -114,11 +117,11 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         }
 
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             physicalPerson.Address = reader["Address"].ToString();
 
 
-                        if (reader["PassportCountryId"] != null) 
+                        if (reader["PassportCountryId"] != DBNull.Value)
                         {
                             physicalPerson.PassportCountry = new Country();
                             physicalPerson.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
@@ -128,7 +131,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
-                        if (reader["PassportCityId"] != null) 
+                        if (reader["PassportCityId"] != DBNull.Value)
                         {
                             physicalPerson.PassportCity = new City();
                             physicalPerson.PassportCityId = Int32.Parse(reader["PassportCityId"].ToString());
@@ -139,15 +142,15 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         }
 
 
-                        if (reader["Passport"] != null)
+                        if (reader["Passport"] != DBNull.Value)
                             physicalPerson.Passport = reader["Passport"].ToString();
-                        if (reader["VisaFrom"] != null)
+                        if (reader["VisaFrom"] != DBNull.Value)
                             physicalPerson.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
-                        if (reader["VisaTo"] != null)
+                        if (reader["VisaTo"] != DBNull.Value)
                             physicalPerson.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
 
 
-                        if (reader["ResidenceCountryId"] != null) 
+                        if (reader["ResidenceCountryId"] != DBNull.Value)
                         {
                             physicalPerson.ResidenceCountry = new Country();
                             physicalPerson.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
@@ -157,7 +160,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
-                        if (reader["ResidenceCityId"] != null) 
+                        if (reader["ResidenceCityId"] != DBNull.Value)
                         {
                             physicalPerson.ResidenceCity = new City();
                             physicalPerson.ResidenceCityId = Int32.Parse(reader["ResidenceCityId"].ToString());
@@ -167,25 +170,27 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.ResidenceCity.Name = reader["ResidenceCityName"].ToString();
                         }
 
-                        if (reader["ResidenceAddress"] != null)
+
+                        if (reader["ResidenceAddress"] != DBNull.Value)
                             physicalPerson.ResidenceAddress = reader["ResidenceAddress"].ToString();
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             physicalPerson.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-                        if (reader["VisaDate"] != null)
+                        if (reader["VisaDate"] != DBNull.Value)
                             physicalPerson.VisaDate = DateTime.Parse(reader["VisaDate"].ToString());
-                        if (reader["VisaValidFrom"] != null)
+                        if (reader["VisaValidFrom"] != DBNull.Value)
                             physicalPerson.VisaValidFrom = DateTime.Parse(reader["VisaValidFrom"].ToString());
-                        if (reader["VisaValidTo"] != null)
+                        if (reader["VisaValidTo"] != DBNull.Value)
                             physicalPerson.VisaValidTo = DateTime.Parse(reader["VisaValidTo"].ToString());
-                        if (reader["WorkPermitFrom"] != null)
+                        if (reader["WorkPermitFrom"] != DBNull.Value)
                             physicalPerson.WorkPermitFrom = DateTime.Parse(reader["WorkPermitFrom"].ToString());
-                        if (reader["WorkPermitTo"] != null)
+                        if (reader["WorkPermitTo"] != DBNull.Value)
                             physicalPerson.WorkPermitTo = DateTime.Parse(reader["WorkPermitTo"].ToString());
+
 
                         physicalPerson.Active = bool.Parse(reader["Active"].ToString());
                         physicalPerson.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             physicalPerson.CreatedBy = new User();
                             physicalPerson.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -194,7 +199,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             physicalPerson.Company = new Company();
                             physicalPerson.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
@@ -257,6 +262,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 {
                     if (reader.Read())
                     {
+                        physicalPerson = new PhysicalPerson();
                         physicalPerson.Id = Int32.Parse(reader["PhysicalPersonId"].ToString());
                         physicalPerson.Identifier = Guid.Parse(reader["PhysicalPersonIdentifier"].ToString());
                         physicalPerson.Code = reader["PhysicalPersonCode"]?.ToString();
@@ -265,10 +271,12 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         physicalPerson.SurName = reader["PhysicalPersonSurName"].ToString();
                         physicalPerson.ConstructionSiteCode = reader["PhysicalPersonConstructionSiteCode"]?.ToString();
                         physicalPerson.ConstructionSiteName = reader["PhysicalPersonConstructionSiteName"]?.ToString();
-                        physicalPerson.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
-                        physicalPerson.Gender = Int32.Parse(reader["Gender"].ToString());
+                        if (reader["DateOfBirth"] != DBNull.Value)
+                            physicalPerson.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
+                        if (reader["Gender"] != DBNull.Value)
+                            physicalPerson.Gender = Int32.Parse(reader["Gender"].ToString());
 
-                        if (reader["CountryId"] != null)
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             physicalPerson.Country = new Country();
                             physicalPerson.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -278,7 +286,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null) 
+                        if (reader["RegionId"] != DBNull.Value)
                         {
                             physicalPerson.Region = new Region();
                             physicalPerson.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -288,7 +296,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Region.Name = reader["RegionName"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null) 
+                        if (reader["MunicipalityId"] != DBNull.Value)
                         {
                             physicalPerson.Municipality = new Municipality();
                             physicalPerson.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -298,7 +306,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
-                        if (reader["CityId"] != null) 
+                        if (reader["CityId"] != DBNull.Value)
                         {
                             physicalPerson.City = new City();
                             physicalPerson.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -309,11 +317,11 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         }
 
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             physicalPerson.Address = reader["Address"].ToString();
 
 
-                        if (reader["PassportCountryId"] != null) 
+                        if (reader["PassportCountryId"] != DBNull.Value)
                         {
                             physicalPerson.PassportCountry = new Country();
                             physicalPerson.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
@@ -323,7 +331,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
-                        if (reader["PassportCityId"] != null) 
+                        if (reader["PassportCityId"] != DBNull.Value)
                         {
                             physicalPerson.PassportCity = new City();
                             physicalPerson.PassportCityId = Int32.Parse(reader["PassportCityId"].ToString());
@@ -333,15 +341,16 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.PassportCity.Name = reader["PassportCityName"].ToString();
                         }
 
-                        if (reader["Passport"] != null)
+
+                        if (reader["Passport"] != DBNull.Value)
                             physicalPerson.Passport = reader["Passport"].ToString();
-                        if (reader["VisaFrom"] != null)
+                        if (reader["VisaFrom"] != DBNull.Value)
                             physicalPerson.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
-                        if (reader["VisaTo"] != null)
+                        if (reader["VisaTo"] != DBNull.Value)
                             physicalPerson.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
 
 
-                        if (reader["ResidenceCountryId"] != null) 
+                        if (reader["ResidenceCountryId"] != DBNull.Value)
                         {
                             physicalPerson.ResidenceCountry = new Country();
                             physicalPerson.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
@@ -351,7 +360,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
-                        if (reader["ResidenceCityId"] != null) 
+                        if (reader["ResidenceCityId"] != DBNull.Value)
                         {
                             physicalPerson.ResidenceCity = new City();
                             physicalPerson.ResidenceCityId = Int32.Parse(reader["ResidenceCityId"].ToString());
@@ -362,26 +371,26 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         }
 
 
-                        if (reader["ResidenceAddress"] != null)
+                        if (reader["ResidenceAddress"] != DBNull.Value)
                             physicalPerson.ResidenceAddress = reader["ResidenceAddress"].ToString();
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             physicalPerson.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-                        if (reader["VisaDate"] != null)
+                        if (reader["VisaDate"] != DBNull.Value)
                             physicalPerson.VisaDate = DateTime.Parse(reader["VisaDate"].ToString());
-                        if (reader["VisaValidFrom"] != null)
+                        if (reader["VisaValidFrom"] != DBNull.Value)
                             physicalPerson.VisaValidFrom = DateTime.Parse(reader["VisaValidFrom"].ToString());
-                        if (reader["VisaValidTo"] != null)
+                        if (reader["VisaValidTo"] != DBNull.Value)
                             physicalPerson.VisaValidTo = DateTime.Parse(reader["VisaValidTo"].ToString());
-                        if (reader["WorkPermitFrom"] != null)
+                        if (reader["WorkPermitFrom"] != DBNull.Value)
                             physicalPerson.WorkPermitFrom = DateTime.Parse(reader["WorkPermitFrom"].ToString());
-                        if (reader["WorkPermitTo"] != null)
+                        if (reader["WorkPermitTo"] != DBNull.Value)
                             physicalPerson.WorkPermitTo = DateTime.Parse(reader["WorkPermitTo"].ToString());
 
 
                         physicalPerson.Active = bool.Parse(reader["Active"].ToString());
                         physicalPerson.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             physicalPerson.CreatedBy = new User();
                             physicalPerson.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -390,13 +399,14 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             physicalPerson.Company = new Company();
                             physicalPerson.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
                             physicalPerson.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
                             physicalPerson.Company.Name = reader["CompanyName"].ToString();
                         }
+
                     }
                 }
             }
@@ -460,10 +470,13 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         physicalPerson.SurName = reader["PhysicalPersonSurName"].ToString();
                         physicalPerson.ConstructionSiteCode = reader["PhysicalPersonConstructionSiteCode"]?.ToString();
                         physicalPerson.ConstructionSiteName = reader["PhysicalPersonConstructionSiteName"]?.ToString();
-                        physicalPerson.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
-                        physicalPerson.Gender = Int32.Parse(reader["Gender"].ToString());
 
-                        if (reader["CountryId"] != null)
+                        if (reader["DateOfBirth"] != DBNull.Value)
+                            physicalPerson.DateOfBirth = DateTime.Parse(reader["DateOfBirth"]?.ToString());
+                        if (reader["Gender"] != DBNull.Value)
+                            physicalPerson.Gender = Int32.Parse(reader["Gender"].ToString());
+
+                        if (reader["CountryId"] != DBNull.Value)
                         {
                             physicalPerson.Country = new Country();
                             physicalPerson.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -473,7 +486,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Country.Name = reader["CountryName"].ToString();
                         }
 
-                        if (reader["RegionId"] != null) 
+                        if (reader["RegionId"] != DBNull.Value) 
                         {
                             physicalPerson.Region = new Region();
                             physicalPerson.RegionId = Int32.Parse(reader["RegionId"].ToString());
@@ -483,7 +496,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Region.Name = reader["RegionName"].ToString();
                         }
 
-                        if (reader["MunicipalityId"] != null) 
+                        if (reader["MunicipalityId"] != DBNull.Value) 
                         {
                             physicalPerson.Municipality = new Municipality();
                             physicalPerson.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
@@ -493,7 +506,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
-                        if (reader["CityId"] != null) 
+                        if (reader["CityId"] != DBNull.Value) 
                         {
                             physicalPerson.City = new City();
                             physicalPerson.CityId = Int32.Parse(reader["CityId"].ToString());
@@ -504,11 +517,11 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         }
 
 
-                        if (reader["Address"] != null)
+                        if (reader["Address"] != DBNull.Value)
                             physicalPerson.Address = reader["Address"].ToString();
 
 
-                        if (reader["PassportCountryId"] != null) 
+                        if (reader["PassportCountryId"] != DBNull.Value) 
                         {
                             physicalPerson.PassportCountry = new Country();
                             physicalPerson.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
@@ -518,7 +531,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
-                        if (reader["PassportCityId"] != null) 
+                        if (reader["PassportCityId"] != DBNull.Value) 
                         {
                             physicalPerson.PassportCity = new City();
                             physicalPerson.PassportCityId = Int32.Parse(reader["PassportCityId"].ToString());
@@ -529,15 +542,15 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         }
 
 
-                        if (reader["Passport"] != null)
+                        if (reader["Passport"] != DBNull.Value)
                             physicalPerson.Passport = reader["Passport"].ToString();
-                        if (reader["VisaFrom"] != null)
+                        if (reader["VisaFrom"] != DBNull.Value)
                             physicalPerson.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
-                        if (reader["VisaTo"] != null)
+                        if (reader["VisaTo"] != DBNull.Value)
                             physicalPerson.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
 
 
-                        if (reader["ResidenceCountryId"] != null) 
+                        if (reader["ResidenceCountryId"] != DBNull.Value) 
                         {
                             physicalPerson.ResidenceCountry = new Country();
                             physicalPerson.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
@@ -547,7 +560,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
-                        if (reader["ResidenceCityId"] != null) 
+                        if (reader["ResidenceCityId"] != DBNull.Value) 
                         {
                             physicalPerson.ResidenceCity = new City();
                             physicalPerson.ResidenceCityId = Int32.Parse(reader["ResidenceCityId"].ToString());
@@ -558,26 +571,26 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                         }
 
 
-                        if (reader["ResidenceAddress"] != null)
+                        if (reader["ResidenceAddress"] != DBNull.Value)
                             physicalPerson.ResidenceAddress = reader["ResidenceAddress"].ToString();
-                        if (reader["EmbassyDate"] != null)
+                        if (reader["EmbassyDate"] != DBNull.Value)
                             physicalPerson.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-                        if (reader["VisaDate"] != null)
+                        if (reader["VisaDate"] != DBNull.Value)
                             physicalPerson.VisaDate = DateTime.Parse(reader["VisaDate"].ToString());
-                        if (reader["VisaValidFrom"] != null)
+                        if (reader["VisaValidFrom"] != DBNull.Value)
                             physicalPerson.VisaValidFrom = DateTime.Parse(reader["VisaValidFrom"].ToString());
-                        if (reader["VisaValidTo"] != null)
+                        if (reader["VisaValidTo"] != DBNull.Value)
                             physicalPerson.VisaValidTo = DateTime.Parse(reader["VisaValidTo"].ToString());
-                        if (reader["WorkPermitFrom"] != null)
+                        if (reader["WorkPermitFrom"] != DBNull.Value)
                             physicalPerson.WorkPermitFrom = DateTime.Parse(reader["WorkPermitFrom"].ToString());
-                        if (reader["WorkPermitTo"] != null)
+                        if (reader["WorkPermitTo"] != DBNull.Value)
                             physicalPerson.WorkPermitTo = DateTime.Parse(reader["WorkPermitTo"].ToString());
 
 
                         physicalPerson.Active = bool.Parse(reader["Active"].ToString());
                         physicalPerson.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
-                        if (reader["CreatedById"] != null)
+                        if (reader["CreatedById"] != DBNull.Value)
                         {
                             physicalPerson.CreatedBy = new User();
                             physicalPerson.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
@@ -586,7 +599,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
                         }
 
-                        if (reader["CompanyId"] != null)
+                        if (reader["CompanyId"] != DBNull.Value)
                         {
                             physicalPerson.Company = new Company();
                             physicalPerson.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
