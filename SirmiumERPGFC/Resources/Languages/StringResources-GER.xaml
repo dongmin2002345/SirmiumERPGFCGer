@@ -375,5 +375,8 @@
     <system:String x:Key="Fizičko_lice_Crta_Ambasada_porodica">Individuelle Person - Familienbotschaft</system:String>
     <system:String x:Key="Gradilište">Baustelle</system:String>
     <system:String x:Key="Ograničenja">Einschränkungen</system:String>
+    <system:String x:Key="RAČUNI">KONTEN</system:String>
+    <system:String x:Key="Korisnici">Benutzer</system:String>
+
 
 </ResourceDictionary>

@@ -158,7 +158,7 @@
                 </Fluent:RibbonGroupBox>  
             </Fluent:RibbonTabItem>
 
-            <Fluent:RibbonTabItem Header="RAČUNI" KeyTip="RAC">
+            <Fluent:RibbonTabItem Header="{DynamicResource RAČUNI}" KeyTip="RAC">
 
                 <Fluent:RibbonGroupBox Header="{DynamicResource Ulazni_računi}">
                     <Fluent:Button Click="mniInputInvoices_Click" Header="{DynamicResource Ulazni_računi}" KeyTip="IZL" Width="70">
@@ -191,15 +191,15 @@
                 <Fluent:RibbonGroupBox Header="{DynamicResource Ograničenja}">
                     <Fluent:Button Click="mniLimitations_Click" Header="{DynamicResource Ograničenja}" KeyTip="OGR" Width="70">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\Ogranicenja01.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
 
-                <Fluent:RibbonGroupBox Header="Korisnici">
-                    <Fluent:Button x:Name="mniUsers" Click="mniUsers_Click" Header="Korisnici" KeyTip="OGR" Width="70">
+                <Fluent:RibbonGroupBox Header="{DynamicResource Korisnici}">
+                    <Fluent:Button x:Name="mniUsers" Click="mniUsers_Click" Header="{DynamicResource Korisnici}" KeyTip="OGR" Width="70">
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\Korisnici01.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
