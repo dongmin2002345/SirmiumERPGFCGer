@@ -35,6 +35,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
 
+                ProContractDate = constructionSite.ProContractDate,
                 ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
 
@@ -79,6 +80,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
 
+                ProContractDate = constructionSite.ProContractDate,
                 ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
 
@@ -104,6 +106,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Name = constructionSiteViewModel.Name,
                 MaxWorkers = constructionSiteViewModel.MaxWorkers,
 
+                ProContractDate = constructionSiteViewModel.ProContractDate,
                 ContractStart = constructionSiteViewModel.ContractStart,
                 ContractExpiration = constructionSiteViewModel.ContractExpiration,
 

@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "SELECT constructionSite.Id AS ConstructionSiteId, constructionSite.Identifier AS ConstructionSiteIdentifier, constructionSite.Code AS ConstructionSiteCode, constructionSite.InternalCode AS ConstructionSiteInternalCode, constructionSite.Name AS ConstructionSiteName, " +
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.Code AS CityCode, city.Name AS CityName, " +
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
-                "constructionSite.Address, constructionSite.MaxWorkers, constructionSite.ContractStart, constructionSite.ContractExpiration, constructionSite.Active AS Active, " +
+                "constructionSite.Address, constructionSite.MaxWorkers, constructionSite.ProContractDate, constructionSite.ContractStart, constructionSite.ContractExpiration, constructionSite.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (constructionSite.UpdatedAt), (city.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

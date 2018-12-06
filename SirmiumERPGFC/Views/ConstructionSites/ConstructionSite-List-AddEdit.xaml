@@ -72,11 +72,14 @@
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Maksimalni_broj_radnikaDvotacka}" />
                     <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtMaxNumOfEmployees"  Margin="2" Text="{Binding Path=CurrentConstructionSite.MaxWorkers}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Početak_ugovoraDvotacka}" />
-                    <DatePicker Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractStartDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractStart}" IsEnabled="True" />
+                    <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Datum predugovora: " />
+                    <DatePicker Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtProContractDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ProContractDate}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
-                    <DatePicker Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Početak_ugovoraDvotacka}" />
+                    <DatePicker Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractStartDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractStart}" IsEnabled="True" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
+                    <DatePicker Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
 
                 </Grid>
             </GroupBox>

@@ -129,6 +129,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         #endregion
 
 
+        #region ProContractDate
+        private DateTime _ProContractDate;
+
+        public DateTime ProContractDate
+        {
+            get { return _ProContractDate; }
+            set
+            {
+                if (_ProContractDate != value)
+                {
+                    _ProContractDate = value;
+                    NotifyPropertyChanged("ProContractDate");
+                }
+            }
+        }
+        #endregion
+
         #region ContractStart
         private DateTime _ContractStart;
 

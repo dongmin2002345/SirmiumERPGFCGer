@@ -22,6 +22,7 @@ namespace DomainCore.ConstructionSites
 
         public int MaxWorkers { get; set; }
 
+        public DateTime ProContractDate { get; set; }
         public DateTime ContractStart { get; set; }
         public DateTime ContractExpiration { get; set; }
     }

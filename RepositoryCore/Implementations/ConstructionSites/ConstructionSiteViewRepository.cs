@@ -33,7 +33,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Address, MaxWorkers, ContractStart, ContractExpiration, " +
+                "Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -81,6 +81,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.Address = reader["Address"].ToString();
                         if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
+                        if (reader["ProContractDate"] != DBNull.Value)
+                            constructionSite.ProContractDate = DateTime.Parse(reader["ProContractDate"].ToString());
                         if (reader["ContractStart"] != DBNull.Value)
                             constructionSite.ContractStart = DateTime.Parse(reader["ContractStart"].ToString());
                         if (reader["ContractExpiration"] != DBNull.Value)
@@ -132,7 +134,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Address, MaxWorkers, ContractStart, ContractExpiration, " +
+                "Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -179,6 +181,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.Address = reader["Address"].ToString();
                         if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
+                        if (reader["ProContractDate"] != DBNull.Value)
+                            constructionSite.ProContractDate = DateTime.Parse(reader["ProContractDate"].ToString());
                         if (reader["ContractStart"] != DBNull.Value)
                             constructionSite.ContractStart = DateTime.Parse(reader["ContractStart"].ToString());
                         if (reader["ContractExpiration"] != DBNull.Value)
@@ -226,7 +230,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Address, MaxWorkers, ContractStart, ContractExpiration, " +
+                "Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
@@ -275,6 +279,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.Address = reader["Address"].ToString();
                         if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
+                        if (reader["ProContractDate"] != DBNull.Value)
+                            constructionSite.ProContractDate = DateTime.Parse(reader["ProContractDate"].ToString());
                         if (reader["ContractStart"] != DBNull.Value)
                             constructionSite.ContractStart = DateTime.Parse(reader["ContractStart"].ToString());
                         if (reader["ContractExpiration"] != DBNull.Value)
@@ -383,6 +389,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.Name = constructionSite.Name;
                     dbEntry.Address = constructionSite.Address;
                     dbEntry.MaxWorkers = constructionSite.MaxWorkers;
+                    dbEntry.ProContractDate = constructionSite.ProContractDate;
                     dbEntry.ContractStart = constructionSite.ContractStart;
                     dbEntry.ContractExpiration = constructionSite.ContractExpiration;
 
