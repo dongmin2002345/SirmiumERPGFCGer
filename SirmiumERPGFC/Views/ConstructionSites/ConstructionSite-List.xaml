@@ -188,13 +188,14 @@
         </GroupBox>
 
         <!--Splitter-->
-        <GridSplitter Grid.Row="2" Grid.ColumnSpan="3" Height="2" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Row="2" Height="2" HorizontalAlignment="Stretch" />
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            
             <GroupBox Header="{DynamicResource Kalkulacije_u_okviru_gradilišta}" Grid.Column="0" VerticalAlignment="Stretch" Margin="2 1 1 2">
                 <Grid>
                     <Grid.RowDefinitions>

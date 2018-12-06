@@ -231,11 +231,10 @@
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="{DynamicResource Istorija_radnika}" Margin=" 2 0 0 0 ">
+            <GroupBox Grid.Column="0" Header="{DynamicResource Istorija_radnika}" Margin=" 2 1 1 1 ">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeCardDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgEmployeeCardDataLoading"
@@ -265,9 +264,7 @@
                 </Grid>
             </GroupBox>
 
-            <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="1" />
-
-            <GroupBox Grid.Column="2" Header="{DynamicResource Fajlovi_za_radnika}" Margin="0 0 2 0">
+            <GroupBox Grid.Column="1" Header="{DynamicResource Fajlovi_za_radnika}" Margin="1 1 2 1">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgEmployeeDocumentDataLoading"
@@ -305,19 +302,17 @@
             </GroupBox>
         </Grid>
         
-        <GridSplitter Grid.Row="4" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Row="4" Grid.Column="0" Height="2" HorizontalAlignment="Stretch" />
 
-        <Grid Grid.Row="5" Margin="2 1 1 2">
+        <Grid Grid.Row="5" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!--Listing-->
-            <GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="0">
+            <GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="0" Margin="2 1 1 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgFamilyMembers"
@@ -343,10 +338,8 @@
                 </Grid>
             </GroupBox>
             
-            <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="1" />
-
             <!--Listing-->
-            <GroupBox Header="{DynamicResource Zanimanja}" Grid.Column="2" Margin="1 1 1 2 ">
+            <GroupBox Header="{DynamicResource Zanimanja}" Grid.Column="1" Margin="1 1 1 2 ">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgProfessions"
@@ -369,10 +362,9 @@
                     </DataGrid>
                 </Grid>
             </GroupBox>
-            <GridSplitter VerticalAlignment="Stretch" Width="5" Grid.Column="3" />
 
             <!--Listing-->
-            <GroupBox Header="{DynamicResource Dozvole}" Grid.Column="4" Margin="1 1 2 2">
+            <GroupBox Header="{DynamicResource Dozvole}" Grid.Column="2" Margin="1 1 2 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dg"

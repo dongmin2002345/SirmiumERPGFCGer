@@ -110,12 +110,12 @@ namespace ServiceCore.Implementations.Employees
                 // Update items
                 var EmployeeLicencesFromDB = unitOfWork.GetEmployeeLicenceRepository().GetEmployeeItemsByEmployee(createdEmployee.Id);
                 foreach (var item in EmployeeLicencesFromDB)
-                    if (!EmployeeProfessions.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetEmployeeProfessionRepository().Delete(item.Identifier);
-                foreach (var item in EmployeeProfessions)
+                    if (!EmployeeLicences.Select(x => x.Identifier).Contains(item.Identifier))
+                        unitOfWork.GetEmployeeLicenceRepository().Delete(item.Identifier);
+                foreach (var item in EmployeeLicences)
                 {
                     item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
-                    unitOfWork.GetEmployeeProfessionRepository().Create(item.ConvertToEmployeeProfession());
+                    unitOfWork.GetEmployeeLicenceRepository().Create(item.ConvertToEmployeeLicence());
                 }
 
                 // Update items
