@@ -351,7 +351,6 @@
     <system:String x:Key="Ukupan_broj_gradilistaDvotacka">Gesamtzahl der Baustellen:</system:String>
     <system:String x:Key="Ukupan_broj_firmi_na_gradilištuDvotacka">Gesamtzahl der Firmen aud der Baustelle:</system:String>
     <system:String x:Key="Ukupan_broj_radnika_u_odabranoj_firmi_na_odabranom_gradilištuDvotacka">Gesamtzahl der Arbeiter in der auserwählten Firma auf der auserwählten Baustelle:</system:String>
-
     <system:String x:Key="PROMENI">ÄNDERN</system:String>
     <system:String x:Key="Dana">Tage</system:String>
     <system:String x:Key="Ugovor_gradilište">Baustellevertrag</system:String>
@@ -377,6 +376,7 @@
     <system:String x:Key="Ograničenja">Einschränkungen</system:String>
     <system:String x:Key="RAČUNI">KONTEN</system:String>
     <system:String x:Key="Korisnici">Benutzer</system:String>
+    <system:String x:Key="Datum_predugovoraDvotacka">Werkvertrages von:</system:String>
 
 
 </ResourceDictionary>

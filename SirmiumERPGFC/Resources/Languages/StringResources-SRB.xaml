@@ -352,7 +352,6 @@
     <system:String x:Key="Ukupan_broj_gradilistaDvotacka">Ukupan broj gradilista:</system:String>
     <system:String x:Key="Ukupan_broj_firmi_na_gradilištuDvotacka">Ukupan broj firmi na gradilištu:</system:String>
     <system:String x:Key="Ukupan_broj_radnika_u_odabranoj_firmi_na_odabranom_gradilištuDvotacka">Ukupan broj radnika u odabranoj firmi na odabranom gradilištu:</system:String>
-
     <system:String x:Key="PROMENI">PROMENI</system:String>
     <system:String x:Key="Dana">Dana</system:String>
     <system:String x:Key="Ugovor_gradilište">Ugovor gradilište</system:String>
@@ -378,7 +377,6 @@
     <system:String x:Key="Ograničenja">Ograničenja</system:String>
     <system:String x:Key="RAČUNI">RAČUNI</system:String>
     <system:String x:Key="Korisnici">Korisnici</system:String>
-   
-
+    <system:String x:Key="Datum_predugovoraDvotacka">Datum predugovora:</system:String>
 
 </ResourceDictionary>
