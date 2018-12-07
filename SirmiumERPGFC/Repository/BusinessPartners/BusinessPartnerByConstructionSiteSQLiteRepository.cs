@@ -188,10 +188,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@MaxNumOfEmployees", ((object)businessPartnerByConstructionSite.MaxNumOfEmployees) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerByConstructionSite.BusinessPartner?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerByConstructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerByConstructionSite.BusinessPartner?.Code) ?? DBNull.Value);
-                string businessPartnerName = businessPartnerByConstructionSite.BusinessPartner?.Name;
-                if (businessPartnerName == "")
-                    businessPartnerName = businessPartnerByConstructionSite.BusinessPartner?.NameGer;
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerByConstructionSite.BusinessPartner?.InternalCode) ?? DBNull.Value);
+                string businessPartnerName = businessPartnerByConstructionSite.BusinessPartner?.NameGer;
+                if (!String.IsNullOrEmpty(businessPartnerByConstructionSite.BusinessPartner?.Name))
+                    businessPartnerName += " (" + businessPartnerByConstructionSite.BusinessPartner?.Name + ")";
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerName) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)businessPartnerByConstructionSite.ConstructionSite?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)businessPartnerByConstructionSite.ConstructionSite?.Identifier) ?? DBNull.Value);

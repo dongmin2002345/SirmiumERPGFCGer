@@ -126,7 +126,8 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Prezime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Poslovni_partneri_Srbija}" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="NameGer" Header="{DynamicResource Poslovni_partneri_Nemačka}" Binding="{Binding NameGer}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PIB" Header="{DynamicResource PIB}" Binding="{Binding PIB}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>

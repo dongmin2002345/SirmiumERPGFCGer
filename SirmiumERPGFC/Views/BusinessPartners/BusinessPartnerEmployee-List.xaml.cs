@@ -282,24 +282,12 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDataLoading = true;
 
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                .GetAllBusinessPartners(MainWindow.CurrentCompanyId, new BusinessPartnerViewModel());
+                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, new BusinessPartnerViewModel(), currentPage, itemsPerPage);
 
-            int numOfGermanBusinessPartners = 0;
             if (response.Success)
             {
-                var tmp = new List<BusinessPartnerViewModel>();
-                foreach (var item in response.BusinessPartners?.Where(x => !String.IsNullOrEmpty(x.Name)) ?? new List<BusinessPartnerViewModel>())
-                {
-                    tmp.Add(item);
-                }
-                foreach (var item in response.BusinessPartners?.Where(x => !String.IsNullOrEmpty(x.NameGer)) ?? new List<BusinessPartnerViewModel>())
-                {
-                    item.Name = item.NameGer;
-                    numOfGermanBusinessPartners++;
-                    tmp.Add(item);
-                }
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());
                 totalItems = response.TotalItems;
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(tmp);
             }
             else
             {
@@ -311,7 +299,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
             int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
 
-            PaginationDisplay = itemFrom + " - " + BusinessPartnersFromDB.Count + " od " + (totalItems + numOfGermanBusinessPartners);
+            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
 
             BusinessPartnerDataLoading = false;
         }

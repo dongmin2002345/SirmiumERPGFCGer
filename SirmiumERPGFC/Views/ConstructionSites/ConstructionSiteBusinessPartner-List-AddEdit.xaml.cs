@@ -387,17 +387,12 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             BusinessPartnerDataLoading = true;
 
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                .GetAllBusinessPartners(MainWindow.CurrentCompanyId, BusinessPartnerOnConstructionSiteSearchObject);
+                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerOnConstructionSiteSearchObject, currentPage, itemsPerPage);
 
             if (response.Success)
             {
-                List<BusinessPartnerViewModel> bps = response.BusinessPartners;
-                foreach (var item in businessPartnersOnConstructionSites)
-                {
-                    bps.RemoveAll(x => x.Identifier == item.BusinessPartner.Identifier);
-                }
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(bps);
-                totalItems = BusinessPartnersFromDB.Count;
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());
+                totalItems = response.TotalItems;
             }
             else
             {

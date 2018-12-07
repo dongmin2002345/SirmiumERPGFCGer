@@ -88,10 +88,10 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 					selectCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + InputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-					selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateFrom + "%" : "");
-					selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateTo + "%" : "");
-					selectCommand.Parameters.AddWithValue("@DateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom + "%" : "");
-					selectCommand.Parameters.AddWithValue("@DateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetTo + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? (object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom : DBNull.Value);
+					selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? (object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo : DBNull.Value);
+					selectCommand.Parameters.AddWithValue("@DateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? (object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom : DBNull.Value);
+					selectCommand.Parameters.AddWithValue("@DateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo) != null ? (object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo : DBNull.Value);
 
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -144,12 +144,12 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 					selectCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + InputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-					selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateFrom + "%" : "");
-					selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceDateTo + "%" : "");
-					selectCommand.Parameters.AddWithValue("@DateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom + "%" : "");
-					selectCommand.Parameters.AddWithValue("@DateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo) != null ? "%" + InputInvoiceSearchObject.SearchBy_DateOfPaymetTo + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@InvoiceDateFrom", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom) != null ? (object)InputInvoiceSearchObject.SearchBy_InvoiceDateFrom : DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@InvoiceDateTo", ((object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo) != null ? (object)InputInvoiceSearchObject.SearchBy_InvoiceDateTo : DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymetFrom", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom) != null ? (object)InputInvoiceSearchObject.SearchBy_DateOfPaymetFrom : DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymetTo", ((object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo) != null ? (object)InputInvoiceSearchObject.SearchBy_DateOfPaymetTo : DBNull.Value);
 
-					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
 					query = selectCommand.ExecuteReader();
 

@@ -330,7 +330,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             BusinessPartnerDataLoading = true;
 
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                .GetAllBusinessPartners(MainWindow.CurrentCompanyId, new BusinessPartnerViewModel());
+                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, new BusinessPartnerViewModel(), currentPage, Int32.MaxValue);
 
             if (response.Success)
             {

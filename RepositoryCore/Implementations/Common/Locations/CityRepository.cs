@@ -82,6 +82,9 @@ namespace RepositoryCore.Implementations.Common.Locations
         {
             if (context.Cities.Where(x => x.Identifier != null && x.Identifier == city.Identifier).Count() == 0)
             {
+                if (context.Cities.Where(x => x.ZipCode == city.ZipCode).Count() > 0)
+                    throw new Exception("Grad sa datim ZIP kodom već postoji u bazi!");
+
                 city.Id = 0;
 
                 city.Code = GetNewCodeValue(city.CompanyId ?? 0);

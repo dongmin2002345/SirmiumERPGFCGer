@@ -168,7 +168,7 @@
                         <DataGridTextColumn SortMemberPath="SecondCode" Header="{DynamicResource Šifra_poreske_uprave}" Binding="{Binding SecondCode}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="City" Header="{DynamicResource Grad}" Binding="{Binding City.Name}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Bank1" Header="{DynamicResource Bank1}" Binding="{Binding Bank1}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Bank1.Name" Header="{DynamicResource Bank1}" Binding="{Binding Bank1.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IBAN1" Header="{DynamicResource IBAN1}" Binding="{Binding IBAN1}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SWIFT" Header="{DynamicResource BICKosaCrtaSwift}" Binding="{Binding SWIFT}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
