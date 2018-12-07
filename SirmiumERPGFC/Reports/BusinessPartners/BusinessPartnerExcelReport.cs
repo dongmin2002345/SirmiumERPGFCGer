@@ -107,7 +107,10 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounter] = businessPartners[i].Name;
+                string name = businessPartners[i].NameGer;
+                if (!String.IsNullOrEmpty(businessPartners[i].Name))
+                    name += " (" + businessPartners[i].Name + ")";
+                sheet1.Cells[rowCounter, columnCounter] = name;
 				columnCounter++;
 
 				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;

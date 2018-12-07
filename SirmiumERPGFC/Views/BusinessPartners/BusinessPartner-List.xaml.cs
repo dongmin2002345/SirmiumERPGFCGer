@@ -63,7 +63,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 		#endregion
 
 		#region BusinessPartnerLocationsFromDB
-		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB;
+		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB  = new ObservableCollection<BusinessPartnerLocationViewModel>();
 
 		public ObservableCollection<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB
 		{
@@ -419,7 +419,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             BusinessPartnerDataLoading = true;
 
-            var response = new BusinessPartnerSQLiteRepository().GetSerbianBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
+            var response = new BusinessPartnerSQLiteRepository().GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
             if (response.Success)
             {
                 BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());

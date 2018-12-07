@@ -291,6 +291,9 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
         {
             if (context.OutputInvoices.Where(x => x.Identifier != null && x.Identifier == taxAdministration.Identifier).Count() == 0)
             {
+                if (context.TaxAdministrations.Where(x => x.SecondCode == taxAdministration.SecondCode).Count() > 0)
+                    throw new Exception("Poreska administracija sa datom šifrom već postoji u bazi!");
+
                 taxAdministration.Id = 0;
 
                 taxAdministration.Code = GetNewCodeValue(taxAdministration.CompanyId ?? 0);

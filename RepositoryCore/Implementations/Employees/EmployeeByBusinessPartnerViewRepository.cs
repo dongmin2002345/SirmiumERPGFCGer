@@ -30,7 +30,7 @@ namespace RepositoryCore.Implementations.Employees
             List<EmployeeByBusinessPartner> EmployeeByBusinessPartners = new List<EmployeeByBusinessPartner>();
 
             string queryString =
-                "SELECT EmployeeByBusinessPartnerId, EmployeeByBusinessPartnerIdentifier, EmployeeByBusinessPartnerCode, StartDate, EndDate, RealEndDate " +
+                "SELECT EmployeeByBusinessPartnerId, EmployeeByBusinessPartnerIdentifier, EmployeeByBusinessPartnerCode, StartDate, EndDate, RealEndDate, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "EmployeeCount, " +
@@ -54,9 +54,12 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByBusinessPartner.Id = Int32.Parse(reader["EmployeeByBusinessPartnerId"].ToString());
                         employeeByBusinessPartner.Identifier = Guid.Parse(reader["EmployeeByBusinessPartnerIdentifier"].ToString());
                         employeeByBusinessPartner.Code = reader["EmployeeByBusinessPartnerCode"].ToString();
-                        employeeByBusinessPartner.StartDate = DateTime.Parse(reader["StartDate"].ToString());
-                        employeeByBusinessPartner.EndDate = DateTime.Parse(reader["EndDate"].ToString());
-                        employeeByBusinessPartner.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+                        if (reader["StartDate"] != DBNull.Value)
+                            employeeByBusinessPartner.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        if (reader["EndDate"] != DBNull.Value)
+                            employeeByBusinessPartner.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        if (reader["RealEndDate"] != DBNull.Value)
+                            employeeByBusinessPartner.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
 
                         if (reader["EmployeeId"] != DBNull.Value)
                         {
@@ -124,7 +127,7 @@ namespace RepositoryCore.Implementations.Employees
             List<EmployeeByBusinessPartner> EmployeeByBusinessPartners = new List<EmployeeByBusinessPartner>();
 
             string queryString =
-                "SELECT EmployeeByBusinessPartnerId, EmployeeByBusinessPartnerIdentifier, EmployeeByBusinessPartnerCode, StartDate, EndDate, RealEndDate " +
+                "SELECT EmployeeByBusinessPartnerId, EmployeeByBusinessPartnerIdentifier, EmployeeByBusinessPartnerCode, StartDate, EndDate, RealEndDate, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "EmployeeCount, " +
@@ -149,9 +152,12 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByBusinessPartner.Id = Int32.Parse(reader["EmployeeByBusinessPartnerId"].ToString());
                         employeeByBusinessPartner.Identifier = Guid.Parse(reader["EmployeeByBusinessPartnerIdentifier"].ToString());
                         employeeByBusinessPartner.Code = reader["EmployeeByBusinessPartnerCode"].ToString();
-                        employeeByBusinessPartner.StartDate = DateTime.Parse(reader["StartDate"].ToString());
-                        employeeByBusinessPartner.EndDate = DateTime.Parse(reader["EndDate"].ToString());
-                        employeeByBusinessPartner.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+                        if (reader["StartDate"] != DBNull.Value)
+                            employeeByBusinessPartner.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        if (reader["EndDate"] != DBNull.Value)
+                            employeeByBusinessPartner.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        if (reader["RealEndDate"] != DBNull.Value)
+                            employeeByBusinessPartner.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
 
                         if (reader["EmployeeId"] != DBNull.Value)
                         {

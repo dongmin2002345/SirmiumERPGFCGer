@@ -96,7 +96,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
+                    //new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
 
                     BusinessPartnerListResponse businessPartnerResp = new BusinessPartnerSQLiteRepository().GetBusinessPartnersForPopup(MainWindow.CurrentCompanyId, filterString);
                     if (businessPartnerResp.Success)

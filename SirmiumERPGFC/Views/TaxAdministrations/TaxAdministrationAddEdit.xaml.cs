@@ -233,7 +233,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtCode.Focus();
+                                txtSecondCode.Focus();
                             })
                         );
                     }

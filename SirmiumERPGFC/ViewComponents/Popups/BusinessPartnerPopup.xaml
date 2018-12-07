@@ -50,7 +50,7 @@
                               ItemsSource="{Binding Path=BusinessPartnersFromDB}"
                               SelectedItem="{Binding Path=CurrentBusinessPartner}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="InternalCode" Header="Šifra" Binding="{Binding InternalCode}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="Ime poslovnog partnera" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
