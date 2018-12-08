@@ -154,7 +154,7 @@
                         <DataGridTextColumn SortMemberPath="DueDate" Header="{DynamicResource Valuta}" Binding="{Binding DueDate}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding PDV}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PIO" Header="{DynamicResource PIO}" Binding="{Binding PIO}" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="IsInPDV" Header="{DynamicResource Obveznik_PDVCrticaa}" Binding="{Binding IsInPDV}" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="IsInPDV" Header="{DynamicResource Obveznik_PDVCrtaa}" Binding="{Binding IsInPDV}" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
