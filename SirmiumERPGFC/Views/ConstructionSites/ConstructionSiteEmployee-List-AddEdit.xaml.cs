@@ -479,6 +479,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     return;
                 }
 
+                new EmployeeByConstructionSiteSQLiteRepository().UpdateSyncStatus(employeeByConstructionSite.Identifier, response.EmployeeByConstructionSite.Code, response.EmployeeByConstructionSite.UpdatedAt, response.EmployeeByConstructionSite.Id, true);
                 MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
 
                 ContractStartDate = DateTime.Now;

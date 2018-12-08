@@ -222,7 +222,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerByConstructionSiteResponse UpdateSyncStatus(Guid identifier, int serverId, string code, DateTime? updatedAt, bool isSynced)
+        public BusinessPartnerByConstructionSiteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
         {
             BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
 

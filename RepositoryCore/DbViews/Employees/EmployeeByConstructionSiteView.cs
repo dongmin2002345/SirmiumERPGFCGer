@@ -34,7 +34,7 @@ namespace RepositoryCore.DbViews.Employees
                 "FROM EmployeeByConstructionSites employeeByConstructionSite " +
                 "LEFT JOIN Employees employee ON employeeByConstructionSite.EmployeeId = employee.Id " +
                 "LEFT JOIN BusinessPartners businessPartner ON employeeByConstructionSite.BusinessPartnerId = businessPartner.Id " +
-                "LEFT JOIN ConstructionSites constructionSite ON employeeByConstructionSite.BusinessPartnerId = constructionSite.Id " +
+                "LEFT JOIN ConstructionSites constructionSite ON employeeByConstructionSite.ConstructionSiteId = constructionSite.Id " +
                 "LEFT JOIN Users createdBy ON employeeByConstructionSite.CreatedById = createdBy.Id " +
                 "LEFT JOIN Companies company ON employeeByConstructionSite.CompanyId = company.Id;";
 

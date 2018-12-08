@@ -35,7 +35,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "EmployeeCount, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "BusinessPartnerCount" +
+                "BusinessPartnerCount, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeByConstructionSites " +
@@ -57,9 +57,12 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByConstructionSite.Id = Int32.Parse(reader["EmployeeByConstructionSiteId"].ToString());
                         employeeByConstructionSite.Identifier = Guid.Parse(reader["EmployeeByConstructionSiteIdentifier"].ToString());
                         employeeByConstructionSite.Code = reader["EmployeeByConstructionSiteCode"].ToString();
-                        employeeByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
-                        employeeByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
-                        employeeByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+                        if (reader["StartDate"] != DBNull.Value)
+                            employeeByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        if (reader["EndDate"] != DBNull.Value)
+                            employeeByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        if (reader["RealEndDate"] != DBNull.Value)
+                            employeeByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
 
                         if (reader["EmployeeId"] != DBNull.Value)
                         {
@@ -80,7 +83,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             employeeByConstructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             employeeByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
-                            employeeByConstructionSite.BusinessPartner.Code = reader["ConstructionSiteCode"].ToString();
+                            employeeByConstructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             employeeByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
@@ -145,7 +148,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "EmployeeCount, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "BusinessPartnerCount" +
+                "BusinessPartnerCount, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeByConstructionSites " +
@@ -169,9 +172,12 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByConstructionSite.Id = Int32.Parse(reader["EmployeeByConstructionSiteId"].ToString());
                         employeeByConstructionSite.Identifier = Guid.Parse(reader["EmployeeByConstructionSiteIdentifier"].ToString());
                         employeeByConstructionSite.Code = reader["EmployeeByConstructionSiteCode"].ToString();
-                        employeeByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
-                        employeeByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
-                        employeeByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+                        if (reader["StartDate"] != DBNull.Value)
+                            employeeByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        if (reader["EndDate"] != DBNull.Value)
+                            employeeByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        if (reader["RealEndDate"] != DBNull.Value)
+                            employeeByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
 
                         if (reader["EmployeeId"] != DBNull.Value)
                         {
@@ -192,7 +198,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             employeeByConstructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             employeeByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
-                            employeeByConstructionSite.BusinessPartner.Code = reader["ConstructionSiteCode"].ToString();
+                            employeeByConstructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             employeeByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
@@ -257,7 +263,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "EmployeeCount, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "BusinessPartnerCount" +
+                "BusinessPartnerCount, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeByConstructionSites " +
@@ -280,9 +286,12 @@ namespace RepositoryCore.Implementations.Employees
                         employeeByConstructionSite.Id = Int32.Parse(reader["EmployeeByConstructionSiteId"].ToString());
                         employeeByConstructionSite.Identifier = Guid.Parse(reader["EmployeeByConstructionSiteIdentifier"].ToString());
                         employeeByConstructionSite.Code = reader["EmployeeByConstructionSiteCode"].ToString();
-                        employeeByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
-                        employeeByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
-                        employeeByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+                        if (reader["StartDate"] != DBNull.Value)
+                            employeeByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        if (reader["EndDate"] != DBNull.Value)
+                            employeeByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        if (reader["RealEndDate"] != DBNull.Value)
+                            employeeByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
 
                         if (reader["EmployeeId"] != DBNull.Value)
                         {
@@ -303,7 +312,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             employeeByConstructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             employeeByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
-                            employeeByConstructionSite.BusinessPartner.Code = reader["ConstructionSiteCode"].ToString();
+                            employeeByConstructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             employeeByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
@@ -434,6 +443,8 @@ namespace RepositoryCore.Implementations.Employees
         {
             // Load EmployeeByConstructionSite that will be deleted
             EmployeeByConstructionSite dbEntry = context.EmployeeByConstructionSites
+                .Include(x => x.Employee)
+                .Include(x => x.CreatedBy)
                 .FirstOrDefault(x => x.Identifier == employeeByConstructionSite.Identifier);
 
             if (dbEntry != null)
