@@ -58,7 +58,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Employee = new Employee();
                             employeeCard.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeCard.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeCard.Employee.Identifier = Guid.Parse(reader["EmployeeCardTypeIdentifier"].ToString());
+                            employeeCard.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeCard.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeCard.Employee.Name = reader["EmployeeName"].ToString();
                         }
@@ -140,7 +140,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Employee = new Employee();
                             employeeCard.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeCard.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeCard.Employee.Identifier = Guid.Parse(reader["EmployeeCardTypeIdentifier"].ToString());
+                            employeeCard.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeCard.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeCard.Employee.Name = reader["EmployeeName"].ToString();
                         }
@@ -225,7 +225,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Employee = new Employee();
                             employeeCard.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
                             employeeCard.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                            employeeCard.Employee.Identifier = Guid.Parse(reader["EmployeeCardTypeIdentifier"].ToString());
+                            employeeCard.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeCard.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeCard.Employee.Name = reader["EmployeeName"].ToString();
                         }

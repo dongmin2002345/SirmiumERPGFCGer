@@ -9,6 +9,7 @@ namespace RepositoryCore.Abstractions.Employees
     {
         List<Employee> GetEmployees(int companyId);
         Employee GetEmployee(int employeeId);
+        Employee GetEmployeeEntity(int employeeId);
         List<Employee> GetEmployeesNewerThen(int companyId, DateTime lastUpdateTime);
 
         Employee Create(Employee Employee);

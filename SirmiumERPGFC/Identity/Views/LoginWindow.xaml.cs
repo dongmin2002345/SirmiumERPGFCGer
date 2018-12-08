@@ -119,6 +119,7 @@ namespace SirmiumERPGFC.Identity.Views
             new CompanySQLiteRepository().Sync(companyService);
             new UserSQLiteRepository().Sync(userService);
             new CompanyUserSQLiteRepository().Sync(compUserService);
+
             // Set company combobox
             List<CompanyViewModel> companiesFromDb = new List<CompanyViewModel>();
             try

@@ -193,6 +193,11 @@ namespace RepositoryCore.Implementations.Employees
             return dbEntry;
         }
 
+        public Employee GetEmployeeEntity(int employeeId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

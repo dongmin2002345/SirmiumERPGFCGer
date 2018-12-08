@@ -75,7 +75,7 @@ namespace ServiceCore.Implementations.Employees
             {
                 ConstructionSite constructionSite = unitOfWork.GetConstructionSiteRepository().GetConstructionSite(re.ConstructionSite.Id);
 
-                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee(re.Employee.Id);
+                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployeeEntity(re.Employee.Id);
                 employee.ConstructionSiteCode = constructionSite.InternalCode;
                 employee.ConstructionSiteName = constructionSite.Name;
                 employee.UpdatedAt = DateTime.Now;
@@ -118,7 +118,7 @@ namespace ServiceCore.Implementations.Employees
             {
                 EmployeeByConstructionSite deletedEmployeeByConstructionSite = unitOfWork.GetEmployeeByConstructionSiteRepository().Delete(re.ConvertToEmployeeByConstructionSite());
 
-                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployee((int)deletedEmployeeByConstructionSite.EmployeeId);
+                Employee employee = unitOfWork.GetEmployeeRepository().GetEmployeeEntity((int)deletedEmployeeByConstructionSite.EmployeeId);
                 ConstructionSite constructionSite = unitOfWork.GetConstructionSiteRepository().GetConstructionSite((int)deletedEmployeeByConstructionSite.ConstructionSiteId);
                 employee.ConstructionSiteCode = "";
                 employee.ConstructionSiteName = "";
@@ -130,9 +130,9 @@ namespace ServiceCore.Implementations.Employees
                     EmployeeId = deletedEmployeeByConstructionSite.Employee.Id,
                     CardDate = (DateTime)deletedEmployeeByConstructionSite.RealEndDate,
                     Description = "Radnik " + employee?.Name + " " + employee.SurName + " je prestao da radi na gradilištu " + constructionSite?.Name + ". Prestanak je od: " + ((DateTime)deletedEmployeeByConstructionSite.RealEndDate).ToString("dd.MM.yyyy"),
-                    CreatedById = deletedEmployeeByConstructionSite.CreatedBy?.Id,
+                    CreatedById = deletedEmployeeByConstructionSite.CreatedById,
                     PlusMinus = "-",
-                    CompanyId = deletedEmployeeByConstructionSite.Company?.Id,
+                    CompanyId = deletedEmployeeByConstructionSite.CompanyId,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };

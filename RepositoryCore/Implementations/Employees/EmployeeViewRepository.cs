@@ -427,6 +427,20 @@ namespace RepositoryCore.Implementations.Employees
             //    .FirstOrDefault(x => x.Id == employeeId && x.Active == true);
         }
 
+        public Employee GetEmployeeEntity(int employeeId)
+        {
+            return context.Employees
+                .Include(x => x.Country)
+                .Include(x => x.Region)
+                .Include(x => x.Municipality)
+                .Include(x => x.City)
+                .Include(x => x.PassportCountry)
+                .Include(x => x.PassportCity)
+                .Include(x => x.ResidenceCountry)
+                .Include(x => x.ResidenceCity)
+                .FirstOrDefault(x => x.Id == employeeId && x.Active == true);
+        }
+
         public List<Employee> GetEmployeesNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<Employee> Employees = new List<Employee>();
