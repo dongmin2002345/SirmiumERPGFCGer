@@ -164,6 +164,7 @@ namespace SirmiumERPGFC.Identity.Views
                     UserSQLiteRepository userSQLiteRepository = new UserSQLiteRepository();
                     UserViewModel userViewModel = new UserViewModel();
 
+
                     CompanyViewModel company = CompaniesFromDB.Where(x => x.Identifier != Guid.Empty).FirstOrDefault();
 
                     CompanyUserViewModel compUser = null;
@@ -218,6 +219,20 @@ namespace SirmiumERPGFC.Identity.Views
                         company.CompanyName,
                         userViewModel,
                         compUser);
+
+
+                    if (cbxLanguages.SelectedValue.ToString() == "Serbia")
+                    {
+                        ResourceDictionary dict = new ResourceDictionary();
+                        dict.Source = new Uri("..\\..\\Resources\\Languages\\StringResources-SRB.xaml", UriKind.Relative);
+                        App.Current.Resources.MergedDictionaries.Add(dict);
+                    }
+                    else
+                    {
+                        ResourceDictionary dict = new ResourceDictionary();
+                        dict.Source = new Uri("..\\..\\Resources\\Languages\\StringResources-GER.xaml", UriKind.Relative);
+                        App.Current.Resources.MergedDictionaries.Add(dict);
+                    }
 
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();

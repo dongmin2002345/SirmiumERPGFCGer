@@ -7,7 +7,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:SirmiumERPGFC.Identity.Views"
         mc:Ignorable="d"
-        Title="{DynamicResource login}" Height="148.5" Width="800"
+        Title="{DynamicResource login}" Height="175.5" Width="800"
         BorderBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="2"
         WindowStartupLocation="CenterScreen"
@@ -31,8 +31,11 @@
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource password}" />
         <PasswordBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtPasswordBox" Password="Secret123$" />
 
-        <!--<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource company}" />
-        <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="cbxCompanies" SelectedValuePath="Content" DisplayMemberPath="CompanyName"></ComboBox>-->
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource company}" />
+        <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="cbxLanguages" SelectedValuePath="Content" >
+            <ComboBoxItem Content="Germany" IsSelected="True"></ComboBoxItem>
+            <ComboBoxItem Content="Serbia"></ComboBoxItem>
+        </ComboBox>
 
         <!--    Cancel and Login buttons    -->
         <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="10 5 2 0">
