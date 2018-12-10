@@ -52,8 +52,8 @@
                               ItemsSource="{Binding Path=RegionsFromDB}"
                               SelectedItem="{Binding Path=CurrentRegion}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="RegionCode" Header="Šifra" Binding="{Binding RegionCode}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="RegionCode" Header="{DynamicResource Šifra}" Binding="{Binding RegionCode}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseRegionPopup" Click="btnCloseRegionPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">

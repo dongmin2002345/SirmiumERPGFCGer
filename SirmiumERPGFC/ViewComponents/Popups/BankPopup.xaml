@@ -51,8 +51,8 @@
                               ItemsSource="{Binding Path=BanksFromDB}"
                               SelectedItem="{Binding Path=CurrentBank}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Swift" Header="Swift" Binding="{Binding Swift}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="Swift" Header="{DynamicResource BICKosaCrtaSwift}" Binding="{Binding Swift}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseBankPopup" Click="btnCloseBankPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">

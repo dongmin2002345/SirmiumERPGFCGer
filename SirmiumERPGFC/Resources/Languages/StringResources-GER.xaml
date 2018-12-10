@@ -336,7 +336,7 @@
     <system:String x:Key="Poreska_Uprava">Steuerverwaltung</system:String>
     <system:String x:Key="Ulazni_računi">Eingangsrechnungen</system:String>
     <system:String x:Key="Izlazni_računi">Ausgangsrechnungen</system:String>
-    <system:String x:Key="IZVEZI_U_EXCEL">EXPORTIEREN NACH EXCEL</system:String>
+    <system:String x:Key="IZVEZI_U_EXCEL">EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SPEICHER DEN ERSTEN TEIL FORM</system:String>
     <system:String x:Key="IBANDvotacka">IBAN:</system:String>
     <system:String x:Key="Betriesb_brojDvotacka">Betriesb number:</system:String>
@@ -377,6 +377,23 @@
     <system:String x:Key="RAČUNI">KONTEN</system:String>
     <system:String x:Key="Korisnici">Benutzer</system:String>
     <system:String x:Key="Datum_predugovoraDvotacka">Werkvertrages von:</system:String>
+    <system:String x:Key="Podaci_su_uspešno_sinhronizovaniUzvičnik">Daten erfolgreich synchronisiert</system:String>
+    <system:String x:Key="Pristupna_prava">Zugriffsrechte</system:String>
+    <system:String x:Key="Ponovi_lozinku">Passwort wiederholen</system:String>
+    <system:String x:Key="Prava_pristupa_po_kompaniji">Die richtige Einstellung zum Unternehmen</system:String>
+    <system:String x:Key="Prava_pristupa">Zugriffsrechte</system:String>
+    <system:String x:Key="Banka_Tri_tačke">Bank ...</system:String>
+    <system:String x:Key="Podaci_o_bankama">Daten zu Banken</system:String>
+    <system:String x:Key="Morate_odabrati_banku_za_izmenuUzvičnik">Sie müssen eine Bank zum Bearbeiten auswählen!</system:String>
+    <system:String x:Key="Podaci_o_banci">Bankinformationen</system:String>
+    <system:String x:Key="Morate_odabrati_banku_za_brisanjeUzvičnik">Sie müssen eine Bank zum Löschen auswählen!</system:String>
+    <system:String x:Key="Greška_kod_brisanja_sa_serveraUzvičnik">Fehler beim Löschen vom Server!</system:String>
+    <system:String x:Key="Greška_kod_lokalnog_brisanjaUzvičnik">Lokaler Löschfehler!</system:String>
+    <system:String x:Key="Banka_je_uspešno_obrisanaUzvičnik">Die Bank wurde erfolgreich gelöscht!</system:String>
+    
+
+
+
 
 
 </ResourceDictionary>

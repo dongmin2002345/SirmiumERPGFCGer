@@ -133,7 +133,7 @@ namespace SirmiumERPGFC.Views.Banks
 
 
 		#region RefreshButtonContent
-		private string _RefreshButtonContent = " OSVEŽI ";
+		private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
 		public string RefreshButtonContent
 		{
@@ -196,8 +196,9 @@ namespace SirmiumERPGFC.Views.Banks
 			{
 				SyncData();
 
-				MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
-			});
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+
+            });
 			syncThread.IsBackground = true;
 			syncThread.Start();
 		}
@@ -242,13 +243,13 @@ namespace SirmiumERPGFC.Views.Banks
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Banka ... ";
-			new BankSQLiteRepository().Sync(bankService);
+			RefreshButtonContent = ((string)Application.Current.FindResource("Banka_Tri_tačke"));
+            new BankSQLiteRepository().Sync(bankService);
 
 			DisplayData();
 
-			RefreshButtonContent = " OSVEŽI ";
-			RefreshButtonEnabled = true;
+			RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            RefreshButtonEnabled = true;
 		}
 
 		#endregion
@@ -270,8 +271,8 @@ namespace SirmiumERPGFC.Views.Banks
 		{
 			if (CurrentBank == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati banku za izmenu!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_banku_za_izmenuUzvičnik"));
+                return;
 			}
 
 			Bank_List_AddEdit addEditForm = new Bank_List_AddEdit(CurrentBank, false);
@@ -283,8 +284,8 @@ namespace SirmiumERPGFC.Views.Banks
 		{
 			if (CurrentBank == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati banku za brisanje!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_banku_za_brisanjeUzvičnik"));
+                return;
 			}
 
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
@@ -297,22 +298,22 @@ namespace SirmiumERPGFC.Views.Banks
 				BankResponse response = bankService.Delete(CurrentBank.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
 				response = new BankSQLiteRepository().Delete(CurrentBank.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
-				MainWindow.SuccessMessage = "Banka je uspešno obrisana!";
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Banka_je_uspešno_obrisanaUzvičnik"));
 
-				Thread displayThread = new Thread(() => SyncData());
+                Thread displayThread = new Thread(() => SyncData());
 				displayThread.IsBackground = true;
 				displayThread.Start();
 			}

@@ -36,7 +36,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!--    User data    -->
-                <GroupBox Header="Podaci o korisniku" Margin="2" Grid.Row="0" Grid.ColumnSpan="2">
+                <GroupBox Header="{DynamicResource OSNOVNI_PODACI}" Margin="2" Grid.Row="0" Grid.ColumnSpan="2">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -45,33 +45,34 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="53*" />
+                            <ColumnDefinition Width="143*"/>
+                            <ColumnDefinition Width="196*" />
 
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="196*" />
+                            <ColumnDefinition Width="196*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Korisničko ime *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0"  Grid.Column="1" Margin="2" x:Name="txtUsername" Text="{Binding Path=CurrentUser.Username}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Korisničko_ime}" VerticalAlignment="Center" Margin="5,7" Grid.ColumnSpan="2" />
+                        <TextBox Grid.Row="0"  Grid.Column="2" Margin="2" x:Name="txtUsername" Text="{Binding Path=CurrentUser.Username}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Email *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="0"  Grid.Column="3" Margin="2" x:Name="txtEmail" Text="{Binding Path=CurrentUser.Email}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource EmailDvotacka}" VerticalAlignment="Center" Margin="5,7" />
+                        <TextBox Grid.Row="0"  Grid.Column="4" Margin="2" x:Name="txtEmail" Text="{Binding Path=CurrentUser.Email}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Ime korisnika *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="1"  Grid.Column="1" Margin="2" x:Name="txtFirstName" Text="{Binding Path=CurrentUser.FirstName}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Ime}" VerticalAlignment="Center" Margin="5,7" Grid.ColumnSpan="2" />
+                        <TextBox Grid.Row="1"  Grid.Column="2" Margin="2" x:Name="txtFirstName" Text="{Binding Path=CurrentUser.FirstName}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Prezime korisnika *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="1"  Grid.Column="3" Margin="2" x:Name="txtLastName" Text="{Binding Path=CurrentUser.LastName}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource Prezime}" VerticalAlignment="Center" Margin="5,7" />
+                        <TextBox Grid.Row="1"  Grid.Column="4" Margin="2" x:Name="txtLastName" Text="{Binding Path=CurrentUser.LastName}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Lozinka *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <PasswordBox Grid.Row="2"  Grid.Column="1" Margin="2" x:Name="txtPassword"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Lozinka}" VerticalAlignment="Center" Margin="5,7" Grid.ColumnSpan="2" />
+                        <PasswordBox Grid.Row="2"  Grid.Column="2" Margin="2" x:Name="txtPassword"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="2" Text="Ponovi lozinku *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <PasswordBox Grid.Row="2"  Grid.Column="3" Margin="2" x:Name="txtPasswordRepeat"/>
+                        <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource Ponovi_lozinku}" VerticalAlignment="Center" Margin="5,7" />
+                        <PasswordBox Grid.Row="2"  Grid.Column="4" Margin="2" x:Name="txtPasswordRepeat"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Poslovni partner" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <popups1:BusinessPartnerPopup Grid.Row="3" Grid.Column="1" x:Name="businessPartnerPopup"
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource Poslovni_partner}" VerticalAlignment="Center" Margin="5,7" Grid.ColumnSpan="2" />
+                        <popups1:BusinessPartnerPopup Grid.Row="3" Grid.Column="2" x:Name="businessPartnerPopup"
                                                  CurrentBusinessPartner="{Binding Path=CurrentUser.BusinessPartner, Mode=TwoWay}"/>
 
                     </Grid>
@@ -88,7 +89,7 @@
                 </Grid>
 
                 <!--    Company data    -->
-                <GroupBox Header="Prava pristupa po kompaniji" Margin="2" Grid.Row="3" Grid.ColumnSpan="2">
+                <GroupBox Header="{DynamicResource Prava_pristupa_po_kompaniji}" Margin="2" Grid.Row="3" Grid.ColumnSpan="2">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -144,7 +145,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Firma:" Margin="2" />
+                            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Naziv_kompanijeDvotacka}" Margin="2" />
                             <ComboBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="cbxCompanies"
                               ItemsSource="{Binding Path=CompaniesFromDB}"
                               SelectedItem="{Binding Path=UserRolesItemForm.Company}"
@@ -158,20 +159,20 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="35*" />
+                                <RowDefinition Height="44*" />
                             </Grid.RowDefinitions>
-                            <Button x:Name="btnSaveCompanyUser" Grid.Row="0" Grid.Column="0" Click="btnSaveCompanyUser_Click" Margin="2" >
+                            <Button x:Name="btnSaveCompanyUser" Grid.Row="0" Grid.Column="0" Click="btnSaveCompanyUser_Click" Margin="2"  Background="#007ACC">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                    <TextBlock Text=" Sačuvaj odabir " />
+                                    <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                    <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Bold"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button x:Name="btnCancelCompanyUser" Grid.Row="0" Grid.Column="1" Click="btnCancelCompanyUser_Click" Margin="2" >
+                            <Button x:Name="btnCancelCompanyUser" Grid.Row="0" Grid.Column="1" Click="btnCancelCompanyUser_Click" Margin="2" Background="#007ACC">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                    <TextBlock Text=" Odustani " />
+                                    <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <TextBlock Text="{DynamicResource ODUSTANI}" />
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -193,9 +194,9 @@
                               SelectedItem="{Binding Path=SelectedCompanyUserDG}"
                           >
                             <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="CompanyName" Header="Ime firme" Binding="{Binding Company.CompanyName}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="CompanyName" Header="{DynamicResource Ime_firmeDvotacka}" Binding="{Binding Company.CompanyName}" Width="*" IsReadOnly="True" />
                                 <!--<DataGridTextColumn SortMemberPath="PIBNumber" Header="PIB" Binding="{Binding Company.PIBNumber}" Width="*" IsReadOnly="True" />-->
-                                <DataGridTextColumn SortMemberPath="UserRoles" Header="Prava pristupa" Binding="{Binding UserRoles, Converter={StaticResource userRoleConverter}}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="UserRoles" Header="{DynamicResource Prava_pristupa}" Binding="{Binding UserRoles, Converter={StaticResource userRoleConverter}}" Width="*" IsReadOnly="True" />
 
                                 <DataGridTemplateColumn Header="" Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -232,16 +233,16 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="2">
+                <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="2" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\002-save.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Proknjiži " FontSize="20" />
+                        <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock FontSize="20"  Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2">
+                <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Zatvori " FontSize="20" />
+                        <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" Foreground="White" FontWeight="Bold" />
                     </StackPanel>
                 </Button>
             </Grid>

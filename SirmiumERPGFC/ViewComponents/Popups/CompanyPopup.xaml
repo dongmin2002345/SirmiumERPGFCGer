@@ -48,8 +48,8 @@
                               ItemsSource="{Binding Path=CompaniesFromDB}"
                               SelectedItem="{Binding Path=CurrentCompany}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="CompanyCode" Header="Šifra" Binding="{Binding CompanyCode}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="CompanyName" Header="Ime" Binding="{Binding CompanyName}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="CompanyCode" Header="{DynamicResource Šifra}" Binding="{Binding CompanyCode}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="CompanyName" Header="{DynamicResource Naziv}" Binding="{Binding CompanyName}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseCompanyPopup" Click="btnCloseCompanyPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">

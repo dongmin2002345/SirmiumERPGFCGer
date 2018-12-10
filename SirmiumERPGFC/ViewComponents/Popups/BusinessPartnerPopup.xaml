@@ -50,8 +50,8 @@
                               ItemsSource="{Binding Path=BusinessPartnersFromDB}"
                               SelectedItem="{Binding Path=CurrentBusinessPartner}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="InternalCode" Header="Šifra" Binding="{Binding InternalCode}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime poslovnog partnera" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseBusinessPartnerPopup" Click="btnCloseBusinessPartnerPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">

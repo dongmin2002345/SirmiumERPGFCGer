@@ -29,7 +29,7 @@
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="2 2 2 1" Header="Pretraga " IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="2 2 2 1" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -45,29 +45,29 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Korisničko ime"  Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="{DynamicResource Korisničko_imeDvotacka}"  Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByRemedyName" Grid.Column="1" 
                          Text="{Binding Path=UserSearchObject.Search_UserName, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="E-mail"  Grid.Column="2" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock Text="{DynamicResource ECrticamailDvotacka}"  Grid.Column="2" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="3" 
                          Text="{Binding Path=UserSearchObject.Search_Email, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="0" Grid.Column="4">
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="0" Grid.Column="4" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\search.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                        <TextBlock Text=" Prikaži " />
+                        <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
+                        <TextBlock Text="{DynamicResource PRIKAŽI}" />
                     </StackPanel>
                 </Button>
             </Grid>
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="Korisnici" Margin="2 1 2 1" Grid.Row="1" VerticalAlignment="Stretch">
+        <GroupBox Header="{DynamicResource Korisnici}" Margin="2 1 2 1" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -76,40 +76,40 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1">
-                    <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150">
+                    <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\plus.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text=" Dodaj " />
+                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
-                    <Button Grid.Column="2" x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" Width="150" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}">
+                    <Button Grid.Column="2" x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" Width="150" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\refresh.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" FontSize="16" />
+                            <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" FontSize="16" Foreground="White" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
-                    <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                    <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron0.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="btnPrevPage" Click="btnPrevPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                    <Button x:Name="btnPrevPage" Click="btnPrevPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <Image Source="..\..\Resources\Icons\StrelicaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
                     <TextBox IsEnabled="False" Margin="2" Text="{Binding Path=PaginationDisplay}"/>
-                    <Button x:Name="btnNextPage" Click="btnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                    <Button x:Name="btnNextPage" Click="btnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron2.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <Image Source="..\..\Resources\Icons\StrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="btnLastPage" Click="btnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                    <Button x:Name="btnLastPage" Click="btnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\chevron3.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                            <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -135,11 +135,11 @@
                           SelectedItem="{Binding Path=CurrentUser, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Username" Header="Korisničko ime" Binding="{Binding Username}" Width="auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="FirstName" Header="Ime" Binding="{Binding FirstName}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="LastName" Header="Prezime" Binding="{Binding LastName}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Email" Header="E-mail" Binding="{Binding Email}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                        <DataGridTextColumn SortMemberPath="Username" Header="{DynamicResource Korisničko_ime}" Binding="{Binding Username}" Width="auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="FirstName" Header="{DynamicResource Ime}" Binding="{Binding FirstName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="LastName" Header="{DynamicResource Prezime}" Binding="{Binding LastName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrticamail}" Binding="{Binding Email}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
                                     <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
@@ -175,7 +175,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Header="Pristupna prava" Margin="2 1 2 2" Grid.Row="2">
+        <GroupBox Header="{DynamicResource Pristupna_prava}" Margin="2 1 2 2" Grid.Row="2">
             <DataGrid x:Name="dgCompanies"
                       Margin="2"
                           AutoGenerateColumns="False"
@@ -191,8 +191,8 @@
                           VerticalScrollBarVisibility="Auto"
                       ItemsSource="{Binding Path=CompanyUsersFromDB}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Naziv" Binding="{Binding Company.CompanyName}" />
-                    <DataGridTextColumn Header="Pristupna prava" Binding="{Binding UserRoles, Converter={StaticResource userRoleConverter}}" Width="*" />
+                    <DataGridTextColumn Header="{DynamicResource Naziv}" Binding="{Binding Company.CompanyName}" />
+                    <DataGridTextColumn Header="{DynamicResource Pristupna_prava}" Binding="{Binding UserRoles, Converter={StaticResource userRoleConverter}}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
