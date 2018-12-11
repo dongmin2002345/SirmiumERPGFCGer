@@ -51,8 +51,8 @@
                               ItemsSource="{Binding Path=SectorsFromDB}"
                               SelectedItem="{Binding Path=CurrentSector}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="SecondCode" Header="Šifra" Binding="{Binding SecondCode}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="SecondCode" Header="{DynamicResource Šifra}" Binding="{Binding SecondCode}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseSectorPopup" Click="btnCloseSectorPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">

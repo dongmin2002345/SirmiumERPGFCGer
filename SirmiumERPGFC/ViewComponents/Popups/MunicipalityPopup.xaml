@@ -52,8 +52,8 @@
                               ItemsSource="{Binding Path=MunicipalitysFromDB}"
                               SelectedItem="{Binding Path=CurrentMunicipality}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="MunicipalityCode" Header="Šifra" Binding="{Binding MunicipalityCode}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Ime" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="MunicipalityCode" Header="{DynamicResource Šifra}" Binding="{Binding MunicipalityCode}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseMunicipalityPopup" Click="btnCloseMunicipalityPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">

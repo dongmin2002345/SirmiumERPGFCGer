@@ -348,7 +348,7 @@ namespace SirmiumERPGFC.Views.Employees
 
 
         #region RefreshButtonContent
-        private string _RefreshButtonContent = " OSVEŽI ";
+        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string RefreshButtonContent
         {
@@ -417,7 +417,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -577,7 +577,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             PopulateData();
 
-            RefreshButtonContent = " OSVEŽI ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             RefreshButtonEnabled = true;
         }
 

@@ -378,5 +378,22 @@
     <system:String x:Key="RAČUNI">RAČUNI</system:String>
     <system:String x:Key="Korisnici">Korisnici</system:String>
     <system:String x:Key="Datum_predugovoraDvotacka">Datum predugovora:</system:String>
+    <system:String x:Key="Podaci_su_uspešno_sinhronizovaniUzvičnik">Podaci su uspešno sinhronizovani!</system:String>
+    <system:String x:Key="Pristupna_prava">Pristupna prava</system:String>
+    <system:String x:Key="Ponovi_lozinku">Ponovi lozinku</system:String>
+    <system:String x:Key="Prava_pristupa_po_kompaniji">Prava pristupa po kompaniji</system:String>
+    <system:String x:Key="Prava_pristupa">Prava pristupa</system:String>
+    <system:String x:Key="Banka_Tri_tačke">Banka ...</system:String>
+    <system:String x:Key="Podaci_o_bankama">Podaci o bankama</system:String>
+    <system:String x:Key="Morate_odabrati_banku_za_izmenuUzvičnik">Morate odabrati banku za izmenu!</system:String>
+    <system:String x:Key="Podaci_o_banci">Podaci o banci</system:String>
+    <system:String x:Key="Morate_odabrati_banku_za_brisanjeUzvičnik">Morate odabrati banku za brisanje!</system:String>
+    <system:String x:Key="Greška_kod_brisanja_sa_serveraUzvičnik">Greška kod brisanja sa servera!</system:String>
+    <system:String x:Key="Greška_kod_lokalnog_brisanjaUzvičnik">Greška kod lokalnog brisanja!</system:String>
+    <system:String x:Key="Banka_je_uspešno_obrisanaUzvičnik">Banka je uspešno obrisana!</system:String>
+
+
+
+
 
 </ResourceDictionary>

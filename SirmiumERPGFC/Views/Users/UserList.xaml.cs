@@ -197,7 +197,7 @@ namespace SirmiumERPGFC.Views.Users
 
 
         #region RefreshButtonContent
-        private string _RefreshButtonContent = " Osveži ";
+        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string RefreshButtonContent
         {
@@ -320,7 +320,7 @@ namespace SirmiumERPGFC.Views.Users
 
             DisplayData();
 
-            RefreshButtonContent = " Osveži ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             RefreshButtonEnabled = true;
         }
         #endregion
