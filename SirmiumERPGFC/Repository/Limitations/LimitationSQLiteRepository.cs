@@ -68,7 +68,7 @@ namespace SirmiumERPGFC.Repository.Limitations
             "@PersonPassportLimit, @PersonEmbasyLimit, @PersonVisaTakeOffLimit, @PersonVisaLimit, @PersonWorkLicenceLimit, @PersonDriveLicenceLimit, @PersonEmbasyFamilyLimit, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-        public LimitationResponse GetLimitation(Guid identifier)
+        public LimitationResponse GetLimitation(int companyId)
         {
             LimitationResponse response = new LimitationResponse();
             LimitationViewModel limitation = new LimitationViewModel();
@@ -81,8 +81,8 @@ namespace SirmiumERPGFC.Repository.Limitations
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Limitations " +
-                        "WHERE Identifier = @Identifier;", db);
-                    selectCommand.Parameters.AddWithValue("@Identifier", identifier);
+                        "WHERE CompanyId = @CompanyId;", db);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
@@ -255,7 +255,7 @@ namespace SirmiumERPGFC.Repository.Limitations
             }
         }
 
-        public LimitationResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
+        public LimitationResponse UpdateSyncStatus(Guid identifier, DateTime? updatedAt, int serverId, bool isSynced)
         {
             LimitationResponse response = new LimitationResponse();
 
@@ -268,13 +268,11 @@ namespace SirmiumERPGFC.Repository.Limitations
 
                 insertCommand.CommandText = "UPDATE Limitations SET " +
                     "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
                     "UpdatedAt = @UpdatedAt, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);

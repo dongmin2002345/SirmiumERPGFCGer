@@ -28,19 +28,10 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.TaxAdministrations
 {
-    /// <summary>
-    /// Interaction logic for TaxAdministrationAddEdit.xaml
-    /// </summary>
     public partial class TaxAdministrationAddEdit : UserControl, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Event for handling output invoice create and update
-        /// </summary>
         public event TaxAdministrationHandler TaxAdministrationCreatedUpdated;
 
-        /// <summary>
-        /// Service for accessing output invoice
-        /// </summary>
         ITaxAdministrationService taxAdministrationService;
 
         #region CurrentTaxAdministration

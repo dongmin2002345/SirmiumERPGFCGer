@@ -123,6 +123,7 @@ namespace RepositoryCore.Context
         public DbSet<TaxAdministration> TaxAdministrations { get; set; }
 
         public DbSet<Limitation> Limitations { get; set; }
+        public DbSet<LimitationEmail> LimitationEmails { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 

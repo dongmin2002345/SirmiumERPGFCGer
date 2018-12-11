@@ -50,6 +50,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 		IBankRepository GetBankRepository();
 		ILicenceTypeRepository GetLicenceTypeRepository();
         ILimitationRepository GetLimitationRepository();
+        ILimitationEmailRepository GetLimitationEmailRepository();
 
         IConstructionSiteRepository GetConstructionSiteRepository();
         IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository();

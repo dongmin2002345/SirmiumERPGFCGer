@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Configurator;
+using Microsoft.EntityFrameworkCore;
+using RepositoryCore.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -28,12 +31,19 @@ namespace SirmiumERPWeb.Tasks
 
                 //waits certan time and run the code
                 Thread.Sleep(ts);
-                SendEmail();
+                new MailTask().SendEmail();
             }
         }
 
-        static void SendEmail()
+        void SendEmail()
         {
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                builder.UseSqlServer(new Config().GetConfiguration()["ConnectionString"]);
+
+            ApplicationDbContext context = new ApplicationDbContext(builder.Options);
+
+            var limitation = context.Limitations.FirstOrDefault();
+
             Console.WriteLine("Method is called.");
         }
     }

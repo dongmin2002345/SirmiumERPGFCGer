@@ -78,8 +78,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
 		private ILicenceTypeRepository licenceTypeRepository;
         private IAgencyRepository agencyRepository;
         private ILimitationRepository limitationRepository;
+        private ILimitationEmailRepository limitationEmailRepository;
 
-		private IPhysicalPersonRepository physicalPersonRepository;
+        private IPhysicalPersonRepository physicalPersonRepository;
 	
 
 		private IEmployeeRepository employeeRepository;
@@ -322,6 +323,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (limitationRepository == null)
                 limitationRepository = new LimitationRepository(context);
             return limitationRepository;
+        }
+
+        public ILimitationEmailRepository GetLimitationEmailRepository()
+        {
+            if (limitationEmailRepository == null)
+                limitationEmailRepository = new LimitationEmailRepository(context);
+            return limitationEmailRepository;
         }
 
         public IConstructionSiteCalculationRepository GetConstructionSiteCalculationRepository()

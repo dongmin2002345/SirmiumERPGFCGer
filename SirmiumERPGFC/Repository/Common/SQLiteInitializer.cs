@@ -77,6 +77,18 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     SqliteCommand createTableLimitation = new SqliteCommand(LimitationSQLiteRepository.LimitationTableCreatePart, db);
                     createTableLimitation.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE LimitationEmails", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    SqliteCommand createTableLimitationEmail = new SqliteCommand(LimitationEmailSQLiteRepository.LimitationEmailTableCreatePart, db);
+                    createTableLimitationEmail.ExecuteReader();
                     #endregion
 
                     #region Users

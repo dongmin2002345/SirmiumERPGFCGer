@@ -48,16 +48,6 @@ namespace DataMapper.Mappers.Common.Locations
             return regionViewModel;
         }
 
-        public static List<RegionViewModel> ConvertToRegionViewModelListLite(this IEnumerable<Region> regions)
-        {
-            List<RegionViewModel> regionViewModels = new List<RegionViewModel>();
-            foreach (Region region in regions)
-            {
-                regionViewModels.Add(region.ConvertToRegionViewModelLite());
-            }
-            return regionViewModels;
-        }
-
         public static RegionViewModel ConvertToRegionViewModelLite(this Region region)
         {
             RegionViewModel regionViewModel = new RegionViewModel()

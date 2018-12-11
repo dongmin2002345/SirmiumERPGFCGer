@@ -192,6 +192,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IBankService, BankService>();
 			services.AddScoped<ILicenceTypeService, LicenceTypeService>();
             services.AddScoped<ILimitationService, LimitationService>();
+            services.AddScoped<ILimitationEmailService, LimitationEmailService>();
 
             services.AddScoped<IConstructionSiteService, ConstructionSiteService>();
             services.AddScoped<IConstructionSiteCalculationService, ConstructionSiteCalculationService>();
@@ -288,7 +289,7 @@ namespace SirmiumERPWeb
             ConstructionSiteView.CreateView();
 
 
-            Thread mailThread = new Thread(() => MailTask.SendMailTime("20:59:00"));
+            Thread mailThread = new Thread(() => MailTask.SendMailTime("07:19:00"));
             mailThread.IsBackground = true;
             mailThread.Start();
         }

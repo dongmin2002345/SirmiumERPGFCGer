@@ -228,6 +228,9 @@ namespace ApiExtension.Sender
 			#region Limitations
 			{ typeof(LimitationViewModel), "Limitation" },
             { typeof(List<LimitationViewModel>), "Limitation" },
+
+            { typeof(LimitationEmailViewModel), "LimitationEmail" },
+            { typeof(List<LimitationEmailViewModel>), "LimitationEmail" },
             #endregion
 
 			#region LicenceTypes
