@@ -165,6 +165,12 @@ namespace SirmiumERPGFC.Views.Sectors
                 return;
 			}
 
+            if (CurrentSector.Country == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Ime_drzave"));
+                return;
+            }
+
 			#endregion
 
 			Thread th = new Thread(() =>
