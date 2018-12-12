@@ -206,6 +206,9 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "IBAN", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "BetriebsNumber", "NVARCHAR(48) NULL");
 
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "VatDeductionFrom", "DATETIME NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "VatDeductionTo", "DATETIME NULL");
+
                     if (withTableDrop)
                     {
                         try

@@ -39,7 +39,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
-                "TaxNr, CommercialNr, ContactPersonGer, " +
+                "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -140,6 +140,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.CommercialNr = reader["CommercialNr"].ToString();
                         if (reader["ContactPersonGer"] != DBNull.Value)
                             businessPartner.ContactPersonGer = reader["ContactPersonGer"].ToString();
+                        if (reader["VatDeductionFrom"] != DBNull.Value)
+                            businessPartner.VatDeductionFrom = DateTime.Parse(reader["VatDeductionFrom"].ToString());
+                        if (reader["VatDeductionTo"] != DBNull.Value)
+                            businessPartner.VatDeductionTo = DateTime.Parse(reader["VatDeductionTo"].ToString());
 
                         businessPartner.Active = bool.Parse(reader["Active"].ToString());
                         businessPartner.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -193,7 +197,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
-                "TaxNr, CommercialNr, ContactPersonGer, " +
+                "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
@@ -295,6 +299,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.CommercialNr = reader["CommercialNr"].ToString();
                         if (reader["ContactPersonGer"] != DBNull.Value)
                             businessPartner.ContactPersonGer = reader["ContactPersonGer"].ToString();
+                        if (reader["VatDeductionFrom"] != DBNull.Value)
+                            businessPartner.VatDeductionFrom = DateTime.Parse(reader["VatDeductionFrom"].ToString());
+                        if (reader["VatDeductionTo"] != DBNull.Value)
+                            businessPartner.VatDeductionTo = DateTime.Parse(reader["VatDeductionTo"].ToString());
 
                         businessPartner.Active = bool.Parse(reader["Active"].ToString());
                         businessPartner.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -349,7 +357,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
-                "TaxNr, CommercialNr, ContactPersonGer, " +
+                "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
                 "WHERE BusinessPartnerId = @BusinessPartnerId AND Active = 1;";
@@ -449,6 +457,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.CommercialNr = reader["CommercialNr"].ToString();
                         if (reader["ContactPersonGer"] != DBNull.Value)
                             businessPartner.ContactPersonGer = reader["ContactPersonGer"].ToString();
+                        if (reader["VatDeductionFrom"] != DBNull.Value)
+                            businessPartner.VatDeductionFrom = DateTime.Parse(reader["VatDeductionFrom"].ToString());
+                        if (reader["VatDeductionTo"] != DBNull.Value)
+                            businessPartner.VatDeductionTo = DateTime.Parse(reader["VatDeductionTo"].ToString());
 
                         businessPartner.Active = bool.Parse(reader["Active"].ToString());
                         businessPartner.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -578,6 +590,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.IsInPDV = businessPartner.IsInPDV;
 
                     dbEntry.JBKJS = businessPartner.JBKJS;
+
+                    dbEntry.VatDeductionFrom = businessPartner.VatDeductionFrom;
+                    dbEntry.VatDeductionTo = businessPartner.VatDeductionTo;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

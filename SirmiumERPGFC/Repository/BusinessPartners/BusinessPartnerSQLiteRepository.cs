@@ -14,52 +14,54 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
     public class BusinessPartnerSQLiteRepository
     {
         public static string BusinessPartnerTableCreatePart =
-               "CREATE TABLE IF NOT EXISTS BusinessPartners " +
-               "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-               "ServerId INTEGER NULL, " +
-               "Identifier GUID, " +
-               "Code NVARCHAR(48) NULL, " +
-               "InternalCode NVARCHAR(48) NULL, " +
-               "Name NVARCHAR(48) NULL, " +
-               "PIB NVARCHAR(48) NULL, " +
-               "PIO NVARCHAR(48) NULL, " +
-               "PDV NVARCHAR(48) NULL, " +
-               "IdentificationNumber NVARCHAR(48) NULL, " +
-               "Rebate DOUBLE NULL, " +
-               "DueDate INTEGER NULL, " +
-               "WebSite NVARCHAR(2048) NULL, " +
-               "ContactPerson NVARCHAR(2048) NULL, " +
-               "IsInPdv BOOL NULL, " +
-               "JBKJS NVARCHAR(48) NULL, " +
-               "NameGer NVARCHAR(2048) NULL, " +
-               "IsInPDVGer BOOL NULL, " +
-               "TaxAdministrationId INTEGER NULL, " +
-               "TaxAdministrationIdentifier GUID NULL, " +
-               "TaxAdministrationCode NVARCHAR(48) NULL, " +
-               "TaxAdministrationName NVARCHAR(2048) NULL, " +
-               "IBAN NVARCHAR(48) NULL, " +
-               "BetriebsNumber NVARCHAR(48) NULL, " +
-               "TaxNr NVARCHAR(2048) NULL, " +
-               "CommercialNr NVARCHAR(2048) NULL, " +
-               "ContactPersonGer NVARCHAR(2048) NULL, " +
-               "CountryId INTEGER NULL, " +
-               "CountryIdentifier GUID NULL, " +
-               "CountryCode NVARCHAR(48) NULL, " +
-               "CountryName NVARCHAR(2048) NULL, " +
-               "SectorId INTEGER NULL, " +
-               "SectorIdentifier GUID NULL, " +
-               "SectorCode NVARCHAR(48) NULL, " +
-               "SectorName NVARCHAR(2048) NULL, " +
-               "AgencyId INTEGER NULL, " +
-               "AgencyIdentifier GUID NULL, " +
-               "AgencyCode NVARCHAR(48) NULL, " +
-               "AgencyName NVARCHAR(2048) NULL, " +
-               "IsSynced BOOL NULL, " +
-               "UpdatedAt DATETIME NULL, " +
-               "CreatedById INTEGER NULL, " +
-               "CreatedByName NVARCHAR(2048) NULL, " +
-               "CompanyId INTEGER NULL, " +
-               "CompanyName NVARCHAR(2048) NULL)";
+            "CREATE TABLE IF NOT EXISTS BusinessPartners " +
+            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "ServerId INTEGER NULL, " +
+            "Identifier GUID, " +
+            "Code NVARCHAR(48) NULL, " +
+            "InternalCode NVARCHAR(48) NULL, " +
+            "Name NVARCHAR(48) NULL, " +
+            "PIB NVARCHAR(48) NULL, " +
+            "PIO NVARCHAR(48) NULL, " +
+            "PDV NVARCHAR(48) NULL, " +
+            "IdentificationNumber NVARCHAR(48) NULL, " +
+            "Rebate DOUBLE NULL, " +
+            "DueDate INTEGER NULL, " +
+            "WebSite NVARCHAR(2048) NULL, " +
+            "ContactPerson NVARCHAR(2048) NULL, " +
+            "IsInPdv BOOL NULL, " +
+            "JBKJS NVARCHAR(48) NULL, " +
+            "NameGer NVARCHAR(2048) NULL, " +
+            "IsInPDVGer BOOL NULL, " +
+            "TaxAdministrationId INTEGER NULL, " +
+            "TaxAdministrationIdentifier GUID NULL, " +
+            "TaxAdministrationCode NVARCHAR(48) NULL, " +
+            "TaxAdministrationName NVARCHAR(2048) NULL, " +
+            "IBAN NVARCHAR(48) NULL, " +
+            "BetriebsNumber NVARCHAR(48) NULL, " +
+            "TaxNr NVARCHAR(2048) NULL, " +
+            "CommercialNr NVARCHAR(2048) NULL, " +
+            "ContactPersonGer NVARCHAR(2048) NULL, " +
+            "CountryId INTEGER NULL, " +
+            "CountryIdentifier GUID NULL, " +
+            "CountryCode NVARCHAR(48) NULL, " +
+            "CountryName NVARCHAR(2048) NULL, " +
+            "SectorId INTEGER NULL, " +
+            "SectorIdentifier GUID NULL, " +
+            "SectorCode NVARCHAR(48) NULL, " +
+            "SectorName NVARCHAR(2048) NULL, " +
+            "AgencyId INTEGER NULL, " +
+            "AgencyIdentifier GUID NULL, " +
+            "AgencyCode NVARCHAR(48) NULL, " +
+            "AgencyName NVARCHAR(2048) NULL, " +
+            "VatDeductionFrom DATETIME NULL, " +
+            "VatDeductionTo DATETIME NULL, " +
+            "IsSynced BOOL NULL, " +
+            "UpdatedAt DATETIME NULL, " +
+            "CreatedById INTEGER NULL, " +
+            "CreatedByName NVARCHAR(2048) NULL, " +
+            "CompanyId INTEGER NULL, " +
+            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, PDV, IdentificationNumber, " +
@@ -68,7 +70,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "IBAN, BetriebsNumber, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
-            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
+            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
@@ -78,7 +80,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "IBAN, BetriebsNumber, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
-            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
+            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @PIB, @PIO, @PDV, @IdentificationNumber, " +
@@ -87,7 +89,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@IBAN, @BetriebsNumber, @TaxNr, @CommercialNr, @ContactPersonGer, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
-            "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, " +
+            "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, @VatDeductionFrom, @VatDeductionTo, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public BusinessPartnerListResponse GetBusinessPartnersByPage(int companyId, BusinessPartnerViewModel businessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
@@ -150,6 +152,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
                         dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
+                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -244,6 +248,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
                         dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
+                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -324,6 +330,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
                         dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
+                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -414,6 +422,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
                         dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
+                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -545,6 +555,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@AgencyIdentifier", ((object)businessPartner.Agency?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@AgencyCode", ((object)businessPartner.Agency?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartner.Agency?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@VatDeductionFrom", ((object)businessPartner.VatDeductionFrom) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@VatDeductionTo", ((object)businessPartner.VatDeductionTo) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", businessPartner.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartner.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

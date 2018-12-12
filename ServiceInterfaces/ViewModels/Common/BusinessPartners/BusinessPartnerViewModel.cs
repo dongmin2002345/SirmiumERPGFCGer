@@ -431,6 +431,42 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+
+        #region VatDeductionFrom
+        private DateTime? _VatDeductionFrom;
+
+        public DateTime? VatDeductionFrom
+        {
+            get { return _VatDeductionFrom; }
+            set
+            {
+                if (_VatDeductionFrom != value)
+                {
+                    _VatDeductionFrom = value;
+                    NotifyPropertyChanged("VatDeductionFrom");
+                }
+            }
+        }
+        #endregion
+
+        #region VatDeductionTo
+        private DateTime? _VatDeductionTo;
+
+        public DateTime? VatDeductionTo
+        {
+            get { return _VatDeductionTo; }
+            set
+            {
+                if (_VatDeductionTo != value)
+                {
+                    _VatDeductionTo = value;
+                    NotifyPropertyChanged("VatDeductionTo");
+                }
+            }
+        }
+        #endregion
+
+
         #endregion
 
 

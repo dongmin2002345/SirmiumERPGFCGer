@@ -53,6 +53,9 @@ namespace DomainCore.Common.BusinessPartners
 
         public string ContactPersonGer { get; set; }
 
+        public DateTime? VatDeductionFrom { get; set; }
+        public DateTime? VatDeductionTo { get; set; }
+
         #endregion
 
         public List<BusinessPartnerLocation> Locations { get; set; }

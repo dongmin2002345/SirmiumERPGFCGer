@@ -1329,8 +1329,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
-                new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
-
                 CurrentBusinessPartner.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentBusinessPartner.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
