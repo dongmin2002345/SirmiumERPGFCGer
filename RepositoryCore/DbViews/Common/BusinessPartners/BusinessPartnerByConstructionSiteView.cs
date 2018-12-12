@@ -30,12 +30,13 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +
                 "FROM BusinessPartnerByConstructionSites businessPartnerByConstructionSite " +
-                "LEFT JOIN BusinessPartners businessPartner ON businessPartnerByConstructionSite.BusinessPartnerId = businessPartner.Id " +
-                "LEFT JOIN ConstructionSites constructionSite ON businessPartnerByConstructionSite.ConstructionSiteId = constructionSite.Id " +
+                "JOIN BusinessPartners businessPartner ON businessPartnerByConstructionSite.BusinessPartnerId = businessPartner.Id " +
+                "JOIN ConstructionSites constructionSite ON businessPartnerByConstructionSite.ConstructionSiteId = constructionSite.Id " +
                 "LEFT JOIN Users createdBy ON businessPartnerByConstructionSite.CreatedById = createdBy.Id " +
-                "LEFT JOIN Companies company ON businessPartnerByConstructionSite.CompanyId = company.Id;";
+                "LEFT JOIN Companies company ON businessPartnerByConstructionSite.CompanyId = company.Id " +
+                "WHERE constructionSite.Active = 1 AND businessPartner.Active = 1 ";
 
-            command = new SqlCommand(strSQLCommand, conn);
+        command = new SqlCommand(strSQLCommand, conn);
             returnvalue = (string)command.ExecuteScalar();
 
             conn.Close();

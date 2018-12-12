@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using ServiceInterfaces.ViewModels.ConstructionSites;
+using SirmiumERPGFC.Repository.ConstructionSites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 {
 	public class ConstructionSitesExcelReport
 	{
-		public static void Show(List<ConstructionSiteViewModel> constructionSites, List<ConstructionSiteCalculationViewModel> constructionSiteCalculation)
+		public static void Show(List<ConstructionSiteViewModel> constructionSites)
 		{
 			//Create excel workbook and sheet
 			Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
@@ -31,6 +32,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.PageSetup.FitToPagesWide = 1;
 			sheet1.PageSetup.Zoom = false;
 
+            decimal sumOfCalculations = 0;
 
 			// Set header rows
 			sheet1.PageSetup.PrintTitleRows = "$1:$2";
@@ -141,27 +143,32 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 				sheet1.Cells[rowCounter, columnCounter] = constructionSites[i].ContractExpiration.ToString("dd.MM.yyyy");
 				columnCounter++;
 
+                sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
+                sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
+                var calculationsByConstructionSite = new ConstructionSiteCalculationSQLiteRepository().GetConstructionSiteCalculationsByConstructionSite(MainWindow.CurrentCompanyId, constructionSites[i].Identifier);
+                sumOfCalculations += calculationsByConstructionSite?.ConstructionSiteCalculations?.Sum(x => x.ValueDifference) ?? 0;
+                sheet1.Cells[rowCounter, columnCounter] = calculationsByConstructionSite?.ConstructionSiteCalculations?.Sum(x => x.ValueDifference);
+                columnCounter++;
 
-				rowCounter++;
-
-				sheet1.Range[sheet1.Cells[rowCounter - 1, leftSideMin], sheet1.Cells[rowCounter - 1, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
-			}
-
-			for (int i = 0; i < constructionSiteCalculation?.Count; i++)
-			{
-				columnCounter = 9;
-
-				sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-				sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
-				sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounter] = constructionSiteCalculation[i].ValueDifference;
-				columnCounter++;
-
-				rowCounter++;
+                rowCounter++;
 
 				sheet1.Range[sheet1.Cells[rowCounter - 1, leftSideMin], sheet1.Cells[rowCounter - 1, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
 			}
-			rowCounter--;
+            
+			columnCounter = 9;
+
+			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
+			sheet1.Cells[rowCounter, columnCounter] = sumOfCalculations;
+			columnCounter++;
+
+			rowCounter++;
+
+			sheet1.Range[sheet1.Cells[rowCounter - 1, leftSideMin], sheet1.Cells[rowCounter - 1, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
+
+            rowCounter--;
 
 			// line
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;

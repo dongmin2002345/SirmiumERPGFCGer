@@ -622,7 +622,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             try
             {
-                ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList(), ConstructionSiteCalculationsFromDB.ToList());
+                ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList());
             }
             catch(Exception ex)
             {
