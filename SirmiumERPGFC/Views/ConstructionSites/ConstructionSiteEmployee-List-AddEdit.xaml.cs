@@ -29,6 +29,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #region 
         IEmployeeByConstructionSiteService employeeByConstructionSiteService;
+        IEmployeeByBusinessPartnerService employeeByBusinessPartnerService;
         IEmployeeService employeeService;
         IConstructionSiteService constructionSiteService;
         #endregion
@@ -322,6 +323,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         public ConstructionSiteEmployee_List_AddEdit(ConstructionSiteViewModel constructionSiteViewModel, BusinessPartnerViewModel businessPartnerViewModel)
         {
             employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();
+            employeeByBusinessPartnerService = DependencyResolver.Kernel.Get<IEmployeeByBusinessPartnerService>();
             employeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
             constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
 
@@ -415,6 +417,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             SyncButtonContent = ((string)Application.Current.FindResource("RadTačka_na_gradilistu_TriTacke"));
             new EmployeeByConstructionSiteSQLiteRepository().Sync(employeeByConstructionSiteService);
+
+            SyncButtonContent = ((string)Application.Current.FindResource("RadTačka_na_gradilistu_TriTacke"));
+            new EmployeeByBusinessPartnerSQLiteRepository().Sync(employeeByBusinessPartnerService);
 
             DisplayEmployeesNotOnConstructionSiteData();
             DisplayEmployeesOnConstructionSiteData();
