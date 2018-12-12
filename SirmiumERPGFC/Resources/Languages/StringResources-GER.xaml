@@ -337,7 +337,7 @@
     <system:String x:Key="Ulazni_računi">Eingangsrechnungen</system:String>
     <system:String x:Key="Izlazni_računi">Ausgangsrechnungen</system:String>
     <system:String x:Key="IZVEZI_U_EXCEL">EXCEL</system:String>
-    <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SPEICHER DEN ERSTEN TEIL FORM</system:String>
+    <system:String x:Key="SAČUVAJ_ZAGLAVLJE">RETTE DEN GEDANKEN</system:String>
     <system:String x:Key="IBANDvotacka">IBAN:</system:String>
     <system:String x:Key="Betriesb_brojDvotacka">Betriesb number:</system:String>
     <system:String x:Key="Šifra_poreske_uprave">Steuerverwaltung-Code</system:String>
@@ -510,7 +510,7 @@
     <system:String x:Key="Podaci_o_gradilistima">Erbauerdaten</system:String>
     <system:String x:Key="Morate_odabrati_gradiliste_za_izmenuUzvičnik">Sie müssen die Bearbeitungsseite auswählen!</system:String>
     <system:String x:Key="Morate_odabrati_gradiliste_za_brisanjeUzvičnik">Sie müssen den Löscharbeitsbereich auswählen!</system:String>
-    <system:String x:Key="SNIHRONIZUJ">SNOHRONIZUJ</system:String>
+    <system:String x:Key="SNIHRONIZUJ">SYNCHRONISIERUNG</system:String>
     <system:String x:Key="Firme_TriTacke">Firme ...</system:String>
     <system:String x:Key="FirmeTačka_na_gradilistu_TriTacke">Firmen auf der Baustelle ...</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Firma_bez_gradilišta">Pflichtfeld: Firma ohne Baustelle</system:String>
