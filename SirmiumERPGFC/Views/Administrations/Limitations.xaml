@@ -65,7 +65,7 @@
 
             </GroupBox>
 
-            <GroupBox Grid.Row="1" Grid.Column="0" Header="{DynamicResource Pasoš}" Margin="2" Grid.ColumnSpan="5" >
+            <GroupBox Grid.Row="1" Grid.Column="0" Header="{DynamicResource RADNICI}" Margin="2" Grid.ColumnSpan="5" >
 
                 <Grid>
 
