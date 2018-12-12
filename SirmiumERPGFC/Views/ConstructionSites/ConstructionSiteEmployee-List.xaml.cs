@@ -1,4 +1,6 @@
 ﻿using Ninject;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.Messages.ConstructionSites;
@@ -29,6 +31,10 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #region Services
         IEmployeeByConstructionSiteService employeeByConstructionSiteService;
+        IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService;
+        IConstructionSiteService constructionSiteService;
+        IBusinessPartnerService businessPartnerService;
+        IEmployeeService employeeService;
         #endregion
 
         #region ConstructionSitesFromDB
@@ -347,6 +353,10 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         public ConstructionSiteEmployee_List()
         {
             employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();
+            businessPartnerByConstructionSiteService = DependencyResolver.Kernel.Get<IBusinessPartnerByConstructionSiteService>();
+            constructionSiteService = DependencyResolver.Kernel.Get<IConstructionSiteService>();
+            employeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
+            businessPartnerService = DependencyResolver.Kernel.Get<IBusinessPartnerService>();
 
             InitializeComponent();
 
@@ -463,7 +473,19 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             RefreshButtonEnabled = false;
 
             RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
+            new EmployeeSQLiteRepository().Sync(employeeService);
+
+            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
+            new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
+
+            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
+            new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
+
+            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeByConstructionSiteSQLiteRepository().Sync(employeeByConstructionSiteService);
+
+            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
+            new BusinessPartnerByConstructionSiteSQLiteRepository().Sync(businessPartnerByConstructionSiteService);
 
             DisplayData();
 
