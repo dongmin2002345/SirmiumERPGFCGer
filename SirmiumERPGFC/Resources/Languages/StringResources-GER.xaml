@@ -567,7 +567,9 @@
     <system:String x:Key="Poveži_radnike_sa_gradilištem">Verknüpfen Sie Arbeiter mit der Site</system:String>
     <system:String x:Key="Potvrda_brisanja_za">Löschbestätigung für</system:String>
     <system:String x:Key="Nakon_proknjižavanja_podatke_nije_moguće_promenitiUzvicnik_Da_li_ste_sigurniUpitnik">Daten können nach der erneuten Registrierung nicht geändert werden! Bist du sicher?</system:String>
-
+    <system:String x:Key="Odbitak_poreza">Freistellung</system:String>
+    <system:String x:Key="Odbitak_poreza_ODDvotacka">Freistellung VON:</system:String>
+    <system:String x:Key="Odbitak_poreza_DODvotacka">Freistellung BIS:</system:String>
 
 
 
