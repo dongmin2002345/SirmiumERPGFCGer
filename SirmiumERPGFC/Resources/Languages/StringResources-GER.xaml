@@ -562,9 +562,14 @@
     <system:String x:Key="Obavezno_poljeDvotačka_Ime_banke">Erforderliches Feld: Name der Bank</system:String>
     <system:String x:Key="Morate_uneti_korisničko_imeUzvičnik">Sie müssen einen Benutzernamen eingeben!</system:String>
     <system:String x:Key="Unete_lozinke_se_moraju_poklapatiUzvičnik">Die eingegebenen Passwörter müssen mit dem Propheten übereinstimmen!</system:String>
+    <system:String x:Key="Poveži_firme_sa_gradilištem">Verknüpfen Sie Firmen mit der Site</system:String>
+    <system:String x:Key="Poveži_radnike_sa_firmom">Verbinden Sie die Arbeiter mit der Firma</system:String>
+    <system:String x:Key="Poveži_radnike_sa_gradilištem">Verknüpfen Sie Arbeiter mit der Site</system:String>
 
 
-    
-    
-    
+
+
+
+
+
 </ResourceDictionary>

@@ -564,6 +564,11 @@
     <system:String x:Key="Unete_lozinke_se_moraju_poklapatiUzvičnik">Unete lozinke se moraju poklapati!</system:String>
     <system:String x:Key="Drzava_TriTačke">Drzava ...</system:String>
     <system:String x:Key="Nije_odabrano_gradilišteUzvičnik">Nije odabrano gradilište!</system:String>
+    <system:String x:Key="Poveži_firme_sa_gradilištem">Poveži firme sa gradilištem</system:String>
+    <system:String x:Key="Poveži_radnike_sa_firmom">Poveži radnike sa firmom</system:String>
+    <system:String x:Key="Poveži_radnike_sa_gradilištem">Poveži radnike sa gradilištem</system:String>
+
+
 
 
 
