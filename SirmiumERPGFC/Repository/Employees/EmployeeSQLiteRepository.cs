@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         SqlCommandSelectPart +
                         "FROM Employees " +
                         //"WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier) " +
-                        "WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites) " + 
+                        "WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites AND Active = 0) " + 
                         "AND Identifier IN (Select EmployeeIdentifier FROM EmployeeByBusinessPartners WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
