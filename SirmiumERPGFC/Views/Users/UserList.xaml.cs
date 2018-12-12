@@ -266,7 +266,7 @@ namespace SirmiumERPGFC.Views.Users
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -312,10 +312,10 @@ namespace SirmiumERPGFC.Views.Users
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Korisnici ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Korisnici_TriTacke"));
             new UserSQLiteRepository().Sync(userService);
 
-            RefreshButtonContent = " Prava pristupa ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Prava_pristupa_TriTacke"));
             new CompanyUserSQLiteRepository().Sync(compUserService);
 
             DisplayData();
@@ -341,7 +341,7 @@ namespace SirmiumERPGFC.Views.Users
         {
             if (CurrentUser == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati korisnika za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_korisnika_za_izmenuUzvičnik"));
                 return;
             }
 
@@ -354,7 +354,7 @@ namespace SirmiumERPGFC.Views.Users
         {
             if (CurrentUser == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati korisnika za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_korisnika_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -368,7 +368,7 @@ namespace SirmiumERPGFC.Views.Users
                 UserResponse response = userService.Delete(CurrentUser.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -376,12 +376,12 @@ namespace SirmiumERPGFC.Views.Users
                 response = new UserSQLiteRepository().Delete(CurrentUser.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Korisnik je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Korisnik_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayData());
                 displayThread.IsBackground = true;

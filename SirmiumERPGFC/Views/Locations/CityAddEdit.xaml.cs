@@ -92,7 +92,7 @@ namespace SirmiumERPGFC.Views.Locations
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -153,13 +153,13 @@ namespace SirmiumERPGFC.Views.Locations
 
             if (CurrentCity.ZipCode == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Postanski broj";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Postanski_broj"));
                 return;
             }
 
             if (String.IsNullOrEmpty(CurrentCity.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv grada";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_grada"));
                 return;
             }
 
@@ -167,7 +167,7 @@ namespace SirmiumERPGFC.Views.Locations
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentCity.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
@@ -179,8 +179,8 @@ namespace SirmiumERPGFC.Views.Locations
                 response = new CitySQLiteRepository().Create(CurrentCity);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -188,16 +188,16 @@ namespace SirmiumERPGFC.Views.Locations
                 response = cityService.Create(CurrentCity);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new CitySQLiteRepository().UpdateSyncStatus(response.City.Identifier, response.City.Code, response.City.UpdatedAt, response.City.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     CityCreatedUpdated();

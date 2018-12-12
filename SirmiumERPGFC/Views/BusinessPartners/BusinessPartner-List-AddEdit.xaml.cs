@@ -651,7 +651,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             else
             {
                 LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
             LocationDataLoading = false;
@@ -671,7 +671,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             else
             {
                 InstitutionsFromDB = new ObservableCollection<BusinessPartnerInstitutionViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
             InstitutionDataLoading = false;
@@ -691,7 +691,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             else
             {
                 PhonesFromDB = new ObservableCollection<BusinessPartnerPhoneViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
             PhoneDataLoading = false;
@@ -711,7 +711,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             else
             {
                 BanksFromDB = new ObservableCollection<BusinessPartnerBankViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
             BankDataLoading = false;
@@ -739,7 +739,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             else
             {
                 BusinessPartnerTypesFromDB = new ObservableCollection<BusinessPartnerTypeViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
             BusinessPartnerTypeDataLoading = false;
@@ -795,7 +795,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (String.IsNullOrEmpty(CurrentBusinessPartner.Name) && String.IsNullOrEmpty(CurrentBusinessPartner.NameGer))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv poslovnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_poslovnog_partneraUzvičnik"));
                 return;
             }
 
@@ -807,7 +807,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             var response = sqLite.Create(CurrentBusinessPartner);
             if (response.Success)
             {
-                MainWindow.SuccessMessage = "Zaglavlje je uspešno sačuvano";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvano"));
                 ItemsEnabled = true;
             }
             else
@@ -827,7 +827,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 String.IsNullOrEmpty(CurrentPhoneForm.Fax) &&
                 String.IsNullOrEmpty(CurrentPhoneForm.Email))
             {
-                MainWindow.WarningMessage = "Morate uneti osnovne podatke!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_uneti_osnovne_podatkeUzvičnik"));
                 return;
             }
 
@@ -863,13 +863,13 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("telefon", "");
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("telefon")), "");
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 new BusinessPartnerPhoneSQLiteRepository().Delete(CurrentPhoneDG.Identifier);
 
-                MainWindow.SuccessMessage = "Telefon je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Telefon_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => PopulatePhoneData());
                 displayThread.IsBackground = true;
@@ -894,19 +894,19 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBankForm.Country == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Država";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Država"));
                 return;
             }
 
             if (CurrentBankForm.Bank == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Banka";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Banka"));
                 return;
             }
 
             if (String.IsNullOrEmpty(CurrentBankForm.AccountNumber))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Broj računa";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Broj_računa"));
                 return;
             }
 
@@ -948,7 +948,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             {
                 new BusinessPartnerBankSQLiteRepository().Delete(CurrentBankDG.Identifier);
 
-                MainWindow.SuccessMessage = "Banka je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Banka_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => PopulateBankData());
                 displayThread.IsBackground = true;
@@ -973,7 +973,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentLocationForm.Address == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Adresa!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_AdresaUzvičnik"));
                 return;
             }
 
@@ -1009,13 +1009,13 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("lokaciju", "");
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("lokaciju")), "");
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 new BusinessPartnerLocationSQLiteRepository().Delete(CurrentLocationDG.Identifier);
 
-                MainWindow.SuccessMessage = "Lokacija je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Lokacija_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => PopulateLocationData());
                 displayThread.IsBackground = true;
@@ -1040,7 +1040,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentInstitutionForm.Institution == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_NazivUzvičnik"));
                 return;
             }
 
@@ -1076,13 +1076,13 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("organizacionu jedinicu", "");
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("organizacionu_jedinicu")), "");
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 new BusinessPartnerInstitutionSQLiteRepository().Delete(CurrentInstitutionDG.Identifier);
 
-                MainWindow.SuccessMessage = "Organizaciona jedinica je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Organizaciona_jedinica_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => PopulateInstitutionData());
                 displayThread.IsBackground = true;
@@ -1126,19 +1126,19 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (String.IsNullOrEmpty(CurrentBusinessPartnerDocumentForm.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
                 return;
             }
 
             if (String.IsNullOrEmpty(CurrentBusinessPartnerDocumentForm.Path))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Putanja";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Putanja"));
                 return;
             }
 
             if (CurrentBusinessPartnerDocumentForm.CreateDate == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Datum kreiranja";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_kreiranja"));
                 return;
             }
 
@@ -1188,7 +1188,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             {
                 new BusinessPartnerDocumentSQLiteRepository().Delete(CurrentBusinessPartnerDocumentDG.Identifier);
 
-                MainWindow.SuccessMessage = "Dokument je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dokument_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayDocumentData());
                 displayThread.IsBackground = true;
@@ -1208,13 +1208,13 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (String.IsNullOrEmpty(CurrentBusinessPartnerNoteForm.Note))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Napomena";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
                 return;
             }
 
             if (CurrentBusinessPartnerNoteForm.NoteDate == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Datum napomene";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_napomene"));
                 return;
             }
 
@@ -1253,13 +1253,13 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("stavku_radnika")), "");
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 new BusinessPartnerNoteSQLiteRepository().Delete(CurrentBusinessPartnerNoteDG.Identifier);
 
-                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayBusinessPartnerNoteData());
                 displayThread.IsBackground = true;
@@ -1293,9 +1293,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
 
             if (operationSuccessfull)
-                MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
             else
-                MainWindow.ErrorMessage = "Greško kod čuvanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greško_kod_čuvanja_podatakaUzvičnik"));
         }
 
         private void btnCancelType_Click(object sender, RoutedEventArgs e)
@@ -1316,8 +1316,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (CurrentBusinessPartner.Name == null &&
                 CurrentBusinessPartner.NameGer == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Naziv!";
-                SubmitButtonContent = " PROKNJIŽI ";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_NazivUzvičnik"));
+                SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                 SubmitButtonEnabled = true;
                 return;
             }
@@ -1326,7 +1326,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             Thread th = new Thread(() =>
             {
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
@@ -1350,7 +1350,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 if (response.Success)
                 {
                     new BusinessPartnerSQLiteRepository().UpdateSyncStatus(CurrentBusinessPartner.Identifier, response.BusinessPartner.Code, response.BusinessPartner.UpdatedAt, response.BusinessPartner.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
 
                     BusinessPartnerCreatedUpdated();
 
@@ -1370,7 +1370,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
                     MainWindow.ErrorMessage = response.Message;
 
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
             });

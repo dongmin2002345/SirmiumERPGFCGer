@@ -211,7 +211,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			{
 				SyncData();
 
-				MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
 			});
 			syncThread.IsBackground = true;
 			syncThread.Start();
@@ -257,8 +257,8 @@ namespace SirmiumERPGFC.Views.InputInvoices
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Ulazne fakture ... ";
-			new InputInvoiceSQLiteRepository().Sync(inputInvoiceService);
+			RefreshButtonContent = ((string)Application.Current.FindResource("Ulazne_fakture_TriTacke"));
+            new InputInvoiceSQLiteRepository().Sync(inputInvoiceService);
 
 			DisplayData();
 
@@ -278,56 +278,56 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 			InputInvoiceAddEdit addEditForm = new InputInvoiceAddEdit(inputInvoice, true, false);
 			addEditForm.InputInvoiceCreatedUpdated += new InputInvoiceHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "ULAZNE FAKTURE", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("ULAZNE_FAKTURE")), 95, addEditForm);
 		}
 
 		private void btnEdit_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentInputInvoice == null)
 			{
-				MainWindow.WarningMessage = "Nije moguće menjati ulayne fakture!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_moguće_menjati_ulayne_faktureUzvičnik"));
+                return;
 			}
 
 			InputInvoiceAddEdit InputInvoiceAddEditForm = new InputInvoiceAddEdit(CurrentInputInvoice, false);
 			InputInvoiceAddEditForm.InputInvoiceCreatedUpdated += new InputInvoiceHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "ULAZNE FAKTURE", 95, InputInvoiceAddEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("ULAZNE_FAKTURE")), 95, InputInvoiceAddEditForm);
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentInputInvoice == null)
 			{
-				MainWindow.WarningMessage = "Nije moguće menjati ulazne fakture!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_moguće_menjati_ulazne_faktureUzvičnik"));
+                return;
 			}
 
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
 			// Create confirmation window
-			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("ULAZNE FAKTURE", CurrentInputInvoice.Code + CurrentInputInvoice.InvoiceNumber);
+			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("ULAZNE_FAKTURE")), CurrentInputInvoice.Code + CurrentInputInvoice.InvoiceNumber);
 			var showDialog = deleteConfirmationForm.ShowDialog();
 			if (showDialog != null && showDialog.Value)
 			{
 				InputInvoiceResponse response = inputInvoiceService.Delete(CurrentInputInvoice.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
 				response = new InputInvoiceSQLiteRepository().Delete(CurrentInputInvoice.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
-				MainWindow.SuccessMessage = "Ulazni avansni račun je uspešno obrisana!";
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Ulazni_avansni_račun_je_uspešno_obrisanaUzvičnik"));
 
-				Thread displayThread = new Thread(() => SyncData());
+                Thread displayThread = new Thread(() => SyncData());
 				displayThread.IsBackground = true;
 				displayThread.Start();
 			}

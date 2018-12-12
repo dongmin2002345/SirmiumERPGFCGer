@@ -194,7 +194,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -247,7 +247,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Tip PP. ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Tip_PPTačka_TriTacke"));
             new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
 
             DisplayData();
@@ -267,41 +267,41 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             BusinessPartner_Type_AddEdit addEditForm = new BusinessPartner_Type_AddEdit(businessPartnerType, true);
             addEditForm.BusinessPartnerTypeCreatedUpdated += new BusinessPartnerTypeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o vrsti", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_vrsti")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentBusinessPartnerType == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati vrstu za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_vrstu_za_izmenuUzvičnik"));
                 return;
             }
 
             BusinessPartner_Type_AddEdit addEditForm = new BusinessPartner_Type_AddEdit(CurrentBusinessPartnerType, false);
             addEditForm.BusinessPartnerTypeCreatedUpdated += new BusinessPartnerTypeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o vrsti", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_vrsti")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentBusinessPartnerType == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati lek za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_lek_za_brisanjeUzvičnik"));
                 return;
             }
 
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
             // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("tip poslovnog partnera", CurrentBusinessPartnerType.Name + CurrentBusinessPartnerType.Code);
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("tip_poslovnog_partnera")), CurrentBusinessPartnerType.Name + CurrentBusinessPartnerType.Code);
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 BusinessPartnerTypeResponse response = businessPartnerTypeService.Delete(CurrentBusinessPartnerType.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik")); ;
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -309,12 +309,12 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 response = new BusinessPartnerTypeSQLiteRepository().Delete(CurrentBusinessPartnerType.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Vrsta je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Vrsta_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayData());
                 displayThread.IsBackground = true;

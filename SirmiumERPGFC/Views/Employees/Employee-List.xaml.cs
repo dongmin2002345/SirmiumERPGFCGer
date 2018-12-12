@@ -474,7 +474,7 @@ namespace SirmiumERPGFC.Views.Employees
             else
             {
                 EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
             EmployeeItemDataLoading = false;
@@ -564,10 +564,10 @@ namespace SirmiumERPGFC.Views.Employees
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Radnici ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeSQLiteRepository().Sync(employeeService);
 
-            RefreshButtonContent = " Stavke ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeItemSQLiteRepository().Sync(employeeItemService);
             new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService);
             new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService);
@@ -593,27 +593,27 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_List_AddEdit EmployeeAddEditForm = new Employee_List_AddEdit(Employee, true, false);
             EmployeeAddEditForm.EmployeeCreated += new EmployeeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o radnicima", 95, EmployeeAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_radnicima")), 95, EmployeeAddEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati stavku za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_izmenuUzvičnik"));
                 return;
             }
 
             Employee_List_AddEdit EmployeeAddEditForm = new Employee_List_AddEdit(CurrentEmployee, false, false);
             EmployeeAddEditForm.EmployeeCreated += new EmployeeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o radnicima", 90, EmployeeAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_radnicima")), 90, EmployeeAddEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati stavku za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -627,14 +627,14 @@ namespace SirmiumERPGFC.Views.Employees
                 EmployeeResponse response = employeeService.Delete(CurrentEmployee.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                 }
 
                 var result = new EmployeeSQLiteRepository().Delete(CurrentEmployee.Identifier);
                 if (result.Success)
                 {
-                    MainWindow.SuccessMessage = "Podaci su uspešno obrisani!";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
                     Thread displayThread = new Thread(() => PopulateData());
                     displayThread.IsBackground = true;

@@ -282,7 +282,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -407,19 +407,19 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Radnici ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeSQLiteRepository().Sync(employeeService);
 
-            SyncButtonContent = " Gradilišta ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Gradilišta_TriTacke"));
             new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
 
-            SyncButtonContent = " Rad. na gradilistu ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("RadTačka_na_gradilistu_TriTacke"));
             new EmployeeByConstructionSiteSQLiteRepository().Sync(employeeByConstructionSiteService);
 
             DisplayEmployeesNotOnConstructionSiteData();
             DisplayEmployeesOnConstructionSiteData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -445,7 +445,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (CurrentEmployeeNotOnConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Radnik bez gradilišta";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Radnik_bez_gradilišta"));
                 return;
             }
 
@@ -468,19 +468,19 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteSQLiteRepository().Create(employeeByConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
                     return;
                 }
 
                 response = employeeByConstructionSiteService.Create(employeeByConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
                     return;
                 }
 
                 new EmployeeByConstructionSiteSQLiteRepository().UpdateSyncStatus(employeeByConstructionSite.Identifier, response.EmployeeByConstructionSite.Code, response.EmployeeByConstructionSite.UpdatedAt, response.EmployeeByConstructionSite.Id, true);
-                MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
 
                 ContractStartDate = DateTime.Now;
                 ContractEndDate = DateTime.Now;
@@ -498,7 +498,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (CurrentEmployeeOnConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Radnik na odabranom gradilištu";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Radnik_na_odabranom_gradilištu"));
                 return;
             }
 
@@ -517,14 +517,14 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(CurrentEmployeeOnConstructionSite);
                     if (!response.Success)
                     {
-                        MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                         return;
                     }
 
                     response = new EmployeeByConstructionSiteSQLiteRepository().Delete(CurrentEmployeeOnConstructionSite.Identifier);
                     if (!response.Success)
                     {
-                        MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                         return;
                     }
 

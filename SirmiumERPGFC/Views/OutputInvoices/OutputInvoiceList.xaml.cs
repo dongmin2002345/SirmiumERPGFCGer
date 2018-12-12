@@ -209,7 +209,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -255,7 +255,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Izlazne fakture ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Izlazne_fakture_TriTacke"));
             new OutputInvoiceSQLiteRepository().Sync(outputInvoiceService);
 
             DisplayData();
@@ -275,27 +275,27 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             OutputInvoiceAddEdit addEditForm = new OutputInvoiceAddEdit(OutputInvoice, true);
             addEditForm.OutputInvoiceCreatedUpdated += new OutputInvoiceHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o izlaznim fakturama", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_izlaznim_fakturama")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentOutputInvoice == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati fakturu za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fakturu_za_izmenuUzvičnik"));
                 return;
             }
 
             OutputInvoiceAddEdit addEditForm = new OutputInvoiceAddEdit(CurrentOutputInvoice, false);
             addEditForm.OutputInvoiceCreatedUpdated += new OutputInvoiceHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o izlaznim fakturama", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_izlaznim_fakturama")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentOutputInvoice == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati fakturu za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fakturu_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -309,7 +309,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 OutputInvoiceResponse response = outputInvoiceService.Delete(CurrentOutputInvoice.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -317,12 +317,12 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Faktura je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Faktura_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

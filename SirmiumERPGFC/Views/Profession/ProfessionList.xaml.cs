@@ -198,7 +198,7 @@ namespace SirmiumERPGFC.Views.Profession
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -244,7 +244,7 @@ namespace SirmiumERPGFC.Views.Profession
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Zanimanja ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Zanimanja_TriTacke"));
             new ProfessionSQLiteRepository().Sync(professionService);
 
             DisplayData();
@@ -265,27 +265,27 @@ namespace SirmiumERPGFC.Views.Profession
 
             ProfessionAddEdit addEditForm = new ProfessionAddEdit(profession, true);
             addEditForm.ProfessionCreatedUpdated += new ProfessionHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o zanimanjima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_zanimanjima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentProfession == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati zanimanje za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_zanimanje_za_izmenuUzvičnik"));
                 return;
             }
 
             ProfessionAddEdit addEditForm = new ProfessionAddEdit(CurrentProfession, false);
             addEditForm.ProfessionCreatedUpdated += new ProfessionHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o zanimanjima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_zanimanjima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentProfession == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati zanimanje za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_zanimanje_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -299,7 +299,7 @@ namespace SirmiumERPGFC.Views.Profession
                 ProfessionResponse response = professionService.Delete(CurrentProfession.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -307,12 +307,12 @@ namespace SirmiumERPGFC.Views.Profession
                 response = new ProfessionSQLiteRepository().Delete(CurrentProfession.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Grad je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

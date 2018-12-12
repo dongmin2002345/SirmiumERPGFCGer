@@ -318,7 +318,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -404,16 +404,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Gradilišta ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Gradilišta_TriTacke"));
             new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
 
-            RefreshButtonContent = " Kalkulacije ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Kalkulacije_TriTacke"));
             new ConstructionSiteCalculationSQLiteRepository().Sync(constructionSiteCalculationService);
 
-            RefreshButtonContent = " Dokumenti ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Dokumenti_TriTacke"));
             new ConstructionSiteDocumentSQLiteRepository().Sync(constructionSiteDocumentService);
 
-            RefreshButtonContent = " Napomene ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Napomene_TriTacke"));
             new ConstructionSiteNoteSQLiteRepository().Sync(constructionSiteNoteService);
 
             DisplayConstructionSiteData();
@@ -435,27 +435,27 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSite_List_AddEdit addEditForm = new ConstructionSite_List_AddEdit(constructionSite, true);
             addEditForm.ConstructionSiteCreatedUpdated += new ConstructionSiteHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati gradiliste za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_gradiliste_za_izmenuUzvičnik"));
                 return;
             }
 
             ConstructionSite_List_AddEdit addEditForm = new ConstructionSite_List_AddEdit(CurrentConstructionSite, false);
             addEditForm.ConstructionSiteCreatedUpdated += new ConstructionSiteHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati gradiliste za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_gradiliste_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -469,7 +469,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 ConstructionSiteResponse response = constructionSiteService.Delete(CurrentConstructionSite.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -477,12 +477,12 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Grad je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;
@@ -584,7 +584,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             if (CurrentConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Nije odabrano gradilište!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_odabrano_gradilišteUzvičnik"));
                 return;
             }
 
@@ -596,14 +596,14 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSite_List_Calculation_Add addForm = new ConstructionSite_List_Calculation_Add(constructionSiteCalculation);
             addForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, addForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, addForm);
         }
 
         private void btnRemoveEmployees_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Nije odabrano gradilište!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_odabrano_gradilišteUzvičnik"));
                 return;
             }
 
@@ -615,7 +615,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSite_List_Calculation_Remove removeForm = new ConstructionSite_List_Calculation_Remove(constructionSiteCalculation);
             removeForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o gradilistima", 95, removeForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, removeForm);
         }
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)

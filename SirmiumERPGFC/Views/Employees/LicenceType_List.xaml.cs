@@ -195,8 +195,8 @@ namespace SirmiumERPGFC.Views.Employees
 			{
 				SyncData();
 
-				MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
-			});
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+            });
 			syncThread.IsBackground = true;
 			syncThread.Start();
 		}
@@ -241,8 +241,8 @@ namespace SirmiumERPGFC.Views.Employees
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Tip dozvole ... ";
-			new LicenceTypeSQLiteRepository().Sync(licenceTypeService);
+			RefreshButtonContent = ((string)Application.Current.FindResource("Tip_dozvole_TriTacke"));
+            new LicenceTypeSQLiteRepository().Sync(licenceTypeService);
 
 			DisplayData();
 
@@ -262,28 +262,28 @@ namespace SirmiumERPGFC.Views.Employees
 
 			LicenceType_List_AddEdit addEditForm = new LicenceType_List_AddEdit(licenceType, true);
 			addEditForm.LicenceTypeCreatedUpdated += new LicenceTypeHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o dozvolu", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_dozvolu")), 95, addEditForm);
 		}
 
 		private void btnEdit_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentLicenceType == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati dozvolu za izmenu!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_dozvolu_za_izmenuUzvičnik"));
+                return;
 			}
 
 			LicenceType_List_AddEdit addEditForm = new LicenceType_List_AddEdit(CurrentLicenceType, false);
 			addEditForm.LicenceTypeCreatedUpdated += new LicenceTypeHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o dozvoli", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_dozvolu")), 95, addEditForm);
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentLicenceType == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati dozvolu za brisanje!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_dozvolu_za_brisanjeUzvičnik"));
+                return;
 			}
 
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
@@ -296,22 +296,22 @@ namespace SirmiumERPGFC.Views.Employees
 				LicenceTypeResponse response = licenceTypeService.Delete(CurrentLicenceType.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
 				response = new LicenceTypeSQLiteRepository().Delete(CurrentLicenceType.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
-				MainWindow.SuccessMessage = "Dozvola je uspešno obrisana!";
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dozvola_je_uspešno_obrisanaUzvičnik"));
 
-				Thread displayThread = new Thread(() => SyncData());
+                Thread displayThread = new Thread(() => SyncData());
 				displayThread.IsBackground = true;
 				displayThread.Start();
 			}

@@ -109,9 +109,9 @@ namespace SirmiumERPGFC.Views.Employees
 
 
 		#region SaveButtonContent
-		private string _SaveButtonContent = " SAČUVAJ ";
+		private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
-		public string SaveButtonContent
+        public string SaveButtonContent
 		{
 			get { return _SaveButtonContent; }
 			set
@@ -178,8 +178,8 @@ namespace SirmiumERPGFC.Views.Employees
 
 			Thread th = new Thread(() =>
 			{
-				SaveButtonContent = " Čuvanje u toku... ";
-				SaveButtonEnabled = false;
+				SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
+                SaveButtonEnabled = false;
 
 				CurrentPhysicalPerson.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
 				CurrentPhysicalPerson.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
@@ -191,26 +191,26 @@ namespace SirmiumERPGFC.Views.Employees
 				response = new PhysicalPersonSQLiteRepository().Create(CurrentPhysicalPerson);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 					return;
 				}
 
 				response = physicalPersonService.Create(CurrentPhysicalPerson);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 				}
 
 				if (response.Success)
 				{
 					new PhysicalPersonSQLiteRepository().UpdateSyncStatus(response.PhysicalPerson.Identifier, response.PhysicalPerson.Code, response.PhysicalPerson.UpdatedAt, response.PhysicalPerson.Id, true);
-					MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 
 					PhysicalPersonCreatedUpdated();
 

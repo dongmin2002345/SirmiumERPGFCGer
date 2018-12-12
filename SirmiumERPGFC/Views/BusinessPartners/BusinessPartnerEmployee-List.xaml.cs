@@ -260,7 +260,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -308,7 +308,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Radnici ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeByBusinessPartnerSQLiteRepository().Sync(employeeByBusinessPartnerService);
 
             DisplayData();
@@ -375,7 +375,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.OpenFlyout(this, "Unos zaposlenih", 95, new BusinessPartnerEmployee_List_AddEdit(CurrentBusinessPartner));
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Unos_zaposlenih")), 95, new BusinessPartnerEmployee_List_AddEdit(CurrentBusinessPartner));
         }
 
         #region INotifyPropertyChanged implementation

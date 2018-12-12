@@ -195,7 +195,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Clanovi porodice ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Clanovi_porodice_TriTacke"));
             new FamilyMemberSQLiteRepository().Sync(familyMemberService);
 
             DisplayData();
@@ -261,27 +261,27 @@ namespace SirmiumERPGFC.Views.Employees
 
             FamilyMember_List_AddEdit addEditForm = new FamilyMember_List_AddEdit(FamilyMember, true);
             addEditForm.FamilyMemberCreatedUpdated += new FamilyMemberHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o clanovima porodice", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_clanovima_porodice")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentFamilyMember == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati clana za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_clana_za_izmenuUzvičnik")); ;
                 return;
             }
 
             FamilyMember_List_AddEdit addEditForm = new FamilyMember_List_AddEdit(CurrentFamilyMember, false);
             addEditForm.FamilyMemberCreatedUpdated += new FamilyMemberHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o clanovima porodice", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_clanovima_porodice")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentFamilyMember == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati clana za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_clana_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -295,7 +295,7 @@ namespace SirmiumERPGFC.Views.Employees
                 FamilyMemberResponse response = familyMemberService.Delete(CurrentFamilyMember.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -303,12 +303,12 @@ namespace SirmiumERPGFC.Views.Employees
                 response = new FamilyMemberSQLiteRepository().Delete(CurrentFamilyMember.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Grad je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

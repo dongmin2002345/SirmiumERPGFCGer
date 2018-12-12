@@ -198,8 +198,8 @@ namespace SirmiumERPGFC.Views.Sectors
 			{
 				SyncData();
 
-				MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
-			});
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+            });
 			syncThread.IsBackground = true;
 			syncThread.Start();
 		}
@@ -244,8 +244,8 @@ namespace SirmiumERPGFC.Views.Sectors
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Sektori ... ";
-			new SectorSQLiteRepository().Sync(sectorService);
+			RefreshButtonContent = ((string)Application.Current.FindResource("Sektori_TriTacke"));
+            new SectorSQLiteRepository().Sync(sectorService);
 
 			DisplayData();
 
@@ -265,56 +265,56 @@ namespace SirmiumERPGFC.Views.Sectors
 
 			Sector_AddEdit addEditForm = new Sector_AddEdit(sector, true);
 			addEditForm.SectorCreatedUpdated += new SectorHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o sektrorima", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_sektrorima")), 95, addEditForm);
 		}
 
 		private void btnEdit_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentSector == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati sektor za izmenu!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_sektor_za_izmenuUzvičnik"));
+                return;
 			}
 
 			Sector_AddEdit addEditForm = new Sector_AddEdit(CurrentSector, false);
 			addEditForm.SectorCreatedUpdated += new SectorHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o sektorima", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_sektrorima")), 95, addEditForm);
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentSector == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati sektor za brisanje!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_sektor_za_brisanjeUzvičnik"));
+                return;
 			}
 
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
 			// Create confirmation window
-			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("sektor", CurrentSector.Code + " " + CurrentSector.Name);
+			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("Sektori_TriTacke")), CurrentSector.Code + " " + CurrentSector.Name);
 			var showDialog = deleteConfirmationForm.ShowDialog();
 			if (showDialog != null && showDialog.Value)
 			{
 				SectorResponse response = sectorService.Delete(CurrentSector.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
 				response = new SectorSQLiteRepository().Delete(CurrentSector.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
-				MainWindow.SuccessMessage = "Sektor je uspešno obrisan!";
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Sektor_je_uspešno_obrisanUzvičnik"));
 
-				Thread displayThread = new Thread(() => SyncData());
+                Thread displayThread = new Thread(() => SyncData());
 				displayThread.IsBackground = true;
 				displayThread.Start();
 			}

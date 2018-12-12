@@ -195,7 +195,7 @@ namespace SirmiumERPGFC.Views.Sectors
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Views.Sectors
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Delatnosti ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Delatnosti_TriTacke"));
             new AgencySQLiteRepository().Sync(AgencyService);
 
             DisplayData();
@@ -268,7 +268,7 @@ namespace SirmiumERPGFC.Views.Sectors
         {
             if (CurrentAgency == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati delatnost za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_delatnost_za_izmenuUzvičnik"));
                 return;
             }
 
@@ -281,7 +281,7 @@ namespace SirmiumERPGFC.Views.Sectors
         {
             if (CurrentAgency == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati delatnost za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_delatnost_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -295,7 +295,7 @@ namespace SirmiumERPGFC.Views.Sectors
                 AgencyResponse response = AgencyService.Delete(CurrentAgency.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -303,12 +303,12 @@ namespace SirmiumERPGFC.Views.Sectors
                 response = new AgencySQLiteRepository().Delete(CurrentAgency.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Grad je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;
