@@ -20,7 +20,7 @@ namespace SirmiumERPWeb.Helpers
         static string FROM_MAIL = "testsmerp123@gmail.com";
         static string FROM_PASSWD = "Secret123$";
 
-        static string SUBJECT_DEFAULT = "Izvestaj - na dan {0}";
+        static string SUBJECT_DEFAULT = "Izvestaj - na dan / Bericht für {0}";
 
         public static void SendLimitations(List<LimitationEmailViewModel> users)
         {
@@ -43,7 +43,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Gradilista kojima istice ugovor:</p>";
+                message += "<p>Gradilista kojima istice ugovor / Baustellen deren Vertrag abläuft:</p>";
                 message += "<ul>";
                 var constructionSitesNearExpiration = context.ConstructionSites
                     .Where(x => x.ContractExpiration != null 
@@ -56,7 +56,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Firme kojima istice ugovor sa gradilistem:</p>";
+                message += "<p>Firme kojima istice ugovor sa gradilistem / Firmen deren Vertrag mit der Baustelle abläuft:</p>";
                 message += "<ul>";
                 var businessPartnerConstructionSiteNearExpiration = context.BusinessPartnerByConstructionSites
                     .Include(x => x.BusinessPartner)
@@ -73,7 +73,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Radnici kojima istice ugovor sa gradilistem:</p>";
+                message += "<p>Radnici kojima istice ugovor sa gradilistem / Arbeiter deren Vertrag mit der Baustelle abläuft:</p>";
                 message += "<ul>";
                 var employeeConstructionSiteNearExpiration = context.EmployeeByConstructionSites
                     .Include(x => x.Employee)
@@ -90,7 +90,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Radnici kojima istice ugovor sa firmom:</p>";
+                message += "<p>Radnici kojima istice ugovor sa firmom / Arbeiter deren Vertrag mit der Firma abläuft:</p>";
                 message += "<ul>";
                 var employeeBusinessPartnerNearExpiration = context.EmployeeByBusinessPartners
                     .Include(x => x.Employee)
@@ -107,7 +107,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Rodjendani poslovnih partnera:</p>";
+                message += "<p>Rodjendani poslovnih partnera / Geburtstage der Geschäftspartner:</p>";
                 message += "<ul>";
                 var employeeBirthdayLimit = context.BusinessPartnerPhones
                     .Include(x => x.BusinessPartner)
@@ -125,7 +125,7 @@ namespace SirmiumERPWeb.Helpers
 
 
 
-                message += "<p>Datum isteka pasoša radnika:</p>";
+                message += "<p>Datum isteka pasoša radnika / Ablaufdatum des Reisepasses von Mitarbeitern:</p>";
                 message += "<ul>";
                 var employeePassportLimit = context.Employees
                     .Where(x => x.VisaTo != null &&
@@ -139,7 +139,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum odlaska u ambasadu radnika:</p>";
+                message += "<p>Datum odlaska u ambasadu radnika / Das Datum an dem der Mitarbeiter die Botschaft besuchen muss:</p>";
                 message += "<ul>";
                 var employeeEmbasyLimit = context.Employees
                     .Where(x => x.EmbassyDate != null &&
@@ -153,7 +153,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum podizanja vize radnika:</p>";
+                message += "<p>Datum podizanja vize radnika / Das Datum an dem der Mitarbeiter sein Visum erhalten hat:</p>";
                 message += "<ul>";
                 var employeeVisaTekeOffLimit = context.Employees
                     .Where(x => x.VisaDate != null &&
@@ -167,7 +167,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
                 
 
-                message += "<p>Datum isteka vize radnika:</p>";
+                message += "<p>Datum isteka vize radnika / Visumablauf der Mitarbeiter:</p>";
                 message += "<ul>";
                 var employeeVisaLimit = context.Employees
                     .Where(x => x.VisaValidTo != null &&
@@ -181,7 +181,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum isteka radne dozvole radnika:</p>";
+                message += "<p>Datum isteka radne dozvole radnika / Arbeitsvertrag Ablauf der Mitarbeiter:</p>";
                 message += "<ul>";
                 var employeeWorkLicenceLimit = context.Employees
                     .Where(x => x.WorkPermitTo != null &&
@@ -195,7 +195,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum isteka dozvole radnika:</p>";
+                message += "<p>Datum isteka dozvole radnika / Lizenzablauf der Mitarbeiter:</p>";
                 message += "<ul>";
                 var employeeDriveLicenceLimit = context.EmployeeLicences
                     .Include(x => x.Licence)
@@ -212,7 +212,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum ambasade za člana porodice radnika:</p>";
+                message += "<p>Datum ambasade za člana porodice radnika / Das Datum an dem das Familienmitglied des Mitarbeiters die Botschaft besuchen muss:</p>";
                 message += "<ul>";
                 var employeeEmbasyFamilyLimit = context.EmployeeItems
                     .Include(x => x.Employee)
@@ -233,7 +233,7 @@ namespace SirmiumERPWeb.Helpers
 
 
 
-                message += "<p>Datum isteka pasoša fizičkog lica:</p>";
+                message += "<p>Datum isteka pasoša fizičkog lica / Ablaufdatum des Reisepasses der natürlichen Person:</p>";
                 message += "<ul>";
                 var personPassportLimit = context.PhysicalPersons
                     .Where(x => x.VisaTo != null &&
@@ -247,7 +247,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum odlaska u ambasadu fizičkog licaa:</p>";
+                message += "<p>Datum odlaska u ambasadu fizičkog licaa / Das Datum an dem die natürliche Person die Botschaft besuchen muss:</p>";
                 message += "<ul>";
                 var personEmbasyLimit = context.PhysicalPersons
                     .Where(x => x.EmbassyDate != null &&
@@ -261,7 +261,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum podizanja vize Fizičkog lica:</p>";
+                message += "<p>Datum podizanja vize Fizičkog lica / Das Datum an dem die natürliche Person ihr Visum erhalten hat:</p>";
                 message += "<ul>";
                 var personVisaTekeOffLimit = context.PhysicalPersons
                     .Where(x => x.VisaDate != null &&
@@ -275,7 +275,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum isteka vize fizičkog lica:</p>";
+                message += "<p>Datum isteka vize fizičkog lica / Visumablauf der natürlichen Person:</p>";
                 message += "<ul>";
                 var personVisaLimit = context.PhysicalPersons
                     .Where(x => x.VisaValidTo != null &&
@@ -289,7 +289,7 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
-                message += "<p>Datum isteka radne dozvole fizičkog lica:</p>";
+                message += "<p>Datum isteka radne dozvole fizičkog lica / Ablaufdatum der Arbeitserlaubnis einer natürlichen Person:</p>";
                 message += "<ul>";
                 var personWorkLicenceLimit = context.PhysicalPersons
                     .Where(x => x.WorkPermitTo != null &&
