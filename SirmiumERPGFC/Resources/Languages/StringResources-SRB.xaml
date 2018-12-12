@@ -567,6 +567,9 @@
     <system:String x:Key="Poveži_firme_sa_gradilištem">Poveži firme sa gradilištem</system:String>
     <system:String x:Key="Poveži_radnike_sa_firmom">Poveži radnike sa firmom</system:String>
     <system:String x:Key="Poveži_radnike_sa_gradilištem">Poveži radnike sa gradilištem</system:String>
+    <system:String x:Key="Potvrda_brisanja_za">Potvrda brisanja za</system:String>
+    <system:String x:Key="Nakon_proknjižavanja_podatke_nije_moguće_promenitiUzvicnik_Da_li_ste_sigurniUpitnik">Nakon proknjižavanja podatke nije moguće promeniti! Da li ste sigurni?</system:String>
+
 
 
 

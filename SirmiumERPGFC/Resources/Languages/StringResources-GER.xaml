@@ -565,6 +565,8 @@
     <system:String x:Key="Poveži_firme_sa_gradilištem">Verknüpfen Sie Firmen mit der Site</system:String>
     <system:String x:Key="Poveži_radnike_sa_firmom">Verbinden Sie die Arbeiter mit der Firma</system:String>
     <system:String x:Key="Poveži_radnike_sa_gradilištem">Verknüpfen Sie Arbeiter mit der Site</system:String>
+    <system:String x:Key="Potvrda_brisanja_za">Löschbestätigung für</system:String>
+    <system:String x:Key="Nakon_proknjižavanja_podatke_nije_moguće_promenitiUzvicnik_Da_li_ste_sigurniUpitnik">Daten können nach der erneuten Registrierung nicht geändert werden! Bist du sicher?</system:String>
 
 
 

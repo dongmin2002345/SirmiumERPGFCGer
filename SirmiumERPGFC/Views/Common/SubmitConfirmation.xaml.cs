@@ -19,7 +19,7 @@ namespace SirmiumERPGFC.Views.Common
         public SubmitConfirmation()
         {
             InitializeComponent();
-            tbSubmitMessage.Text = "Nakon proknjižavanja podatke nije moguće promeniti! Da li ste sigurni?";
+            tbSubmitMessage.Text = ((string)Application.Current.FindResource("Nakon_proknjižavanja_podatke_nije_moguće_promenitiUzvicnik_Da_li_ste_sigurniUpitnik"));
             btnOK.Focus();
         }
 
