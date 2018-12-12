@@ -114,6 +114,7 @@ namespace SirmiumERPWeb.Helpers
                     .Where(x => x.Birthday != null && 
                         DateTime.Now.AddDays(limitation.EmployeeBirthdayLimit).DayOfYear >= ((DateTime)x.Birthday).Date.DayOfYear && 
                         DateTime.Now.DayOfYear <= ((DateTime)x.Birthday).Date.DayOfYear &&
+                        x.BusinessPartner.Active == true &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeBirthdayLimit)
