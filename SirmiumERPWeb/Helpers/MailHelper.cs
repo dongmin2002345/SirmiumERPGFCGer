@@ -46,7 +46,9 @@ namespace SirmiumERPWeb.Helpers
                 message += "<p>Gradilista kojima istice ugovor:</p>";
                 message += "<ul>";
                 var constructionSitesNearExpiration = context.ConstructionSites
-                    .Where(x => x.ContractExpiration != null && DateTime.Now.AddDays(limitation.ConstructionSiteLimit) > x.ContractExpiration.Date && x.Active == true)
+                    .Where(x => x.ContractExpiration != null 
+                        && DateTime.Now.AddDays(limitation.ConstructionSiteLimit) > x.ContractExpiration.Date 
+                        && x.Active == true)
                     .ToList();
                 foreach (var item in constructionSitesNearExpiration)
                     message += "<li>" + item.Name + " (ističe " + item.ContractExpiration.ToString("dd.MM.yyyy") + ")</li>";
@@ -59,7 +61,11 @@ namespace SirmiumERPWeb.Helpers
                 var businessPartnerConstructionSiteNearExpiration = context.BusinessPartnerByConstructionSites
                     .Include(x => x.BusinessPartner)
                     .Include(x => x.ConstructionSite)
-                    .Where(x => x.EndDate != null && DateTime.Now.AddDays(limitation.BusinessPartnerConstructionSiteLimit) > x.EndDate.Date && x.Active == true)
+                    .Where(x => x.EndDate != null 
+                        && DateTime.Now.AddDays(limitation.BusinessPartnerConstructionSiteLimit) > x.EndDate.Date 
+                        && x.BusinessPartner.Active == true
+                        && x.ConstructionSite.Active == true
+                        && x.Active == true)
                     .ToList();
                 foreach (var item in businessPartnerConstructionSiteNearExpiration)
                     message += "<li>Firma: " + item.BusinessPartner?.NameGer + ", gradilište: " + item.ConstructionSite.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
@@ -72,7 +78,11 @@ namespace SirmiumERPWeb.Helpers
                 var employeeConstructionSiteNearExpiration = context.EmployeeByConstructionSites
                     .Include(x => x.Employee)
                     .Include(x => x.ConstructionSite)
-                    .Where(x => x.EndDate != null && DateTime.Now.AddDays(limitation.EmployeeConstructionSiteLimit) > x.EndDate.Date && x.Active == true)
+                    .Where(x => x.EndDate != null 
+                        && DateTime.Now.AddDays(limitation.EmployeeConstructionSiteLimit) > x.EndDate.Date 
+                        && x.Employee.Active == true
+                        && x.ConstructionSite.Active == true
+                        && x.Active == true)
                     .ToList();
                 foreach (var item in employeeConstructionSiteNearExpiration)
                     message += "<li>Radnik: " + item.Employee?.Name + " " + item.Employee?.SurName + ", gradilište: " + item.ConstructionSite.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
@@ -85,7 +95,11 @@ namespace SirmiumERPWeb.Helpers
                 var employeeBusinessPartnerNearExpiration = context.EmployeeByBusinessPartners
                     .Include(x => x.Employee)
                     .Include(x => x.BusinessPartner)
-                    .Where(x => x.EndDate != null && DateTime.Now.AddDays(limitation.EmployeeBusinessPartnerLimit) > x.EndDate.Date && x.Active == true)
+                    .Where(x => x.EndDate != null 
+                        && DateTime.Now.AddDays(limitation.EmployeeBusinessPartnerLimit) > x.EndDate.Date 
+                        && x.Employee.Active == true
+                        && x.BusinessPartner.Active == true
+                        && x.Active == true)
                     .ToList();
                 foreach (var item in employeeBusinessPartnerNearExpiration)
                     message += "<li>Radnik: " + item.Employee?.Name + " " + item.Employee?.SurName + ", firma: " + item.BusinessPartner?.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
@@ -188,7 +202,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeDriveLicenceLimit)
-                    message += "<li>Ime: " + item.Licence?.Description + ", Radnik " + item.Employee?.Name + " " + item.Employee?.SurName + " (datum isteka " + item.ValidTo?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik " + item.Employee?.Name + " " + item.Employee?.SurName + ", Dozvola: " + item.Licence?.Description + "(datum isteka " + item.ValidTo?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
