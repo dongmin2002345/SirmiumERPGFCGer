@@ -163,6 +163,18 @@ namespace SirmiumERPGFC.Views.Sectors
                 return;
             }
 
+            if (CurrentAgency.Country == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Ime_drzave"));
+                return;
+            }
+
+            if (CurrentAgency.Sector == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_sektora"));
+                return;
+            }
+
             #endregion
 
             Thread th = new Thread(() =>
