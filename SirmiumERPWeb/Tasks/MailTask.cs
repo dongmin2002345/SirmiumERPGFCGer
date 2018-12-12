@@ -1,6 +1,10 @@
 ﻿using Configurator;
+using DataMapper.Mappers.Limitations;
+using DomainCore.Limitations;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Context;
+using ServiceInterfaces.ViewModels.Limitations;
+using SirmiumERPWeb.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +42,14 @@ namespace SirmiumERPWeb.Tasks
         void SendEmail()
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                builder.UseSqlServer(new Config().GetConfiguration()["ConnectionString"]);
+            builder.UseSqlServer(new Config().GetConfiguration()["ConnectionString"]);
 
             ApplicationDbContext context = new ApplicationDbContext(builder.Options);
+            
+            List<LimitationEmailViewModel> users = context.LimitationEmails.Where(x => x.Active).ConvertToLimitationEmailViewModelList();
 
-            var limitation = context.Limitations.FirstOrDefault();
+            MailHelper.SendLimitations(users);
+
 
             Console.WriteLine("Method is called.");
         }
