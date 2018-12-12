@@ -23,7 +23,7 @@ namespace SirmiumERPGFC.Views.Common
         public DeleteConfirmation(string categoryName, string objectName)
         {
             InitializeComponent();
-            tbDeleteMessage.Text = "Potvrda brisanja za " + categoryName + ": \n" + objectName;
+            tbDeleteMessage.Text = ((string)Application.Current.FindResource("Potvrda_brisanja_za")) + categoryName + ": \n" + objectName;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
