@@ -54,19 +54,23 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerByConstructionSite.Id = Int32.Parse(reader["BusinessPartnerByConstructionSiteId"].ToString());
                         businessPartnerByConstructionSite.Identifier = Guid.Parse(reader["BusinessPartnerByConstructionSiteIdentifier"].ToString());
                         businessPartnerByConstructionSite.Code = reader["BusinessPartnerByConstructionSiteCode"].ToString();
-                        businessPartnerByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
-                        businessPartnerByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
-                        businessPartnerByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
-                        businessPartnerByConstructionSite.MaxNumOfEmployees = Int32.Parse(reader["MaxNumOfEmployees"].ToString());
+                        if (reader["StartDate"] != DBNull.Value)
+                            businessPartnerByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        if (reader["EndDate"] != DBNull.Value)
+                            businessPartnerByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        if (reader["RealEndDate"] != DBNull.Value)
+                            businessPartnerByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+                        if (reader["MaxNumOfEmployees"] != DBNull.Value)
+                            businessPartnerByConstructionSite.MaxNumOfEmployees = Int32.Parse(reader["MaxNumOfEmployees"].ToString());
 
                         if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.BusinessPartner = new BusinessPartner();
                             businessPartnerByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             businessPartnerByConstructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            businessPartnerByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["FoodTypeIdentifier"].ToString());
-                            businessPartnerByConstructionSite.BusinessPartner.Code = reader["FoodTypeCode"].ToString();
-                            businessPartnerByConstructionSite.BusinessPartner.Name = reader["FoodTypeName"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            businessPartnerByConstructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
                         if (reader["BusinessPartnerCount"] != DBNull.Value)
@@ -151,19 +155,23 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerByConstructionSite.Id = Int32.Parse(reader["BusinessPartnerByConstructionSiteId"].ToString());
                         businessPartnerByConstructionSite.Identifier = Guid.Parse(reader["BusinessPartnerByConstructionSiteIdentifier"].ToString());
                         businessPartnerByConstructionSite.Code = reader["BusinessPartnerByConstructionSiteCode"].ToString();
-                        businessPartnerByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
-                        businessPartnerByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
-                        businessPartnerByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
-                        businessPartnerByConstructionSite.MaxNumOfEmployees = Int32.Parse(reader["MaxNumOfEmployees"].ToString());
+                        if (reader["StartDate"] != DBNull.Value)
+                            businessPartnerByConstructionSite.StartDate = DateTime.Parse(reader["StartDate"].ToString());
+                        if (reader["EndDate"] != DBNull.Value)
+                            businessPartnerByConstructionSite.EndDate = DateTime.Parse(reader["EndDate"].ToString());
+                        if (reader["RealEndDate"] != DBNull.Value)
+                            businessPartnerByConstructionSite.RealEndDate = DateTime.Parse(reader["RealEndDate"]?.ToString());
+                        if (reader["MaxNumOfEmployees"] != DBNull.Value)
+                            businessPartnerByConstructionSite.MaxNumOfEmployees = Int32.Parse(reader["MaxNumOfEmployees"].ToString());
 
                         if (reader["BusinessPartnerId"] != DBNull.Value)
                         {
                             businessPartnerByConstructionSite.BusinessPartner = new BusinessPartner();
                             businessPartnerByConstructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             businessPartnerByConstructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            businessPartnerByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["FoodTypeIdentifier"].ToString());
-                            businessPartnerByConstructionSite.BusinessPartner.Code = reader["FoodTypeCode"].ToString();
-                            businessPartnerByConstructionSite.BusinessPartner.Name = reader["FoodTypeName"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            businessPartnerByConstructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
 
                         if (reader["BusinessPartnerCount"] != DBNull.Value)
