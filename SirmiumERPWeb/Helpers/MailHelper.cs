@@ -199,6 +199,7 @@ namespace SirmiumERPWeb.Helpers
                     .Where(x => x.ValidTo != null &&
                         DateTime.Now.AddDays(limitation.EmployeeEmbasyFamilyLimit).DayOfYear > ((DateTime)x.ValidTo).DayOfYear &&
                         DateTime.Now.DayOfYear <= ((DateTime)x.ValidTo).DayOfYear &&
+                        x.Employee.Active == true &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeDriveLicenceLimit)
@@ -214,6 +215,7 @@ namespace SirmiumERPWeb.Helpers
                     .Where(x => x.EmbassyDate != null &&
                         DateTime.Now.AddDays(limitation.EmployeeEmbasyFamilyLimit).DayOfYear > ((DateTime)x.EmbassyDate).DayOfYear &&
                         DateTime.Now.DayOfYear <= ((DateTime)x.EmbassyDate).DayOfYear &&
+                        x.Employee.Active == true &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeEmbasyFamilyLimit)
