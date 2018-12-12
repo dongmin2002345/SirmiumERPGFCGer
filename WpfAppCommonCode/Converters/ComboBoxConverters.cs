@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -17,23 +18,23 @@ namespace WpfAppCommonCode.Converters
             {
                 bool tmpValue = (bool)value;
                 if (tmpValue)
-                    return "Da";
+                    return (string)Application.Current.FindResource("DA");
                 else
-                    return "Ne";
+                    return (string)Application.Current.FindResource("NE");
             }
-            return "Ne";
+            return (string)Application.Current.FindResource("NE");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is ComboBoxItem)
             {
-                if (((ComboBoxItem)value).Content.ToString() == "Da")
+                if (((ComboBoxItem)value).Content.ToString() == (string)Application.Current.FindResource("DA"))
                 {
                     return true;
                 }
             }
-            else if (value.ToString() == "Da")
+            else if (value.ToString() == (string)Application.Current.FindResource("DA"))
                 return true;
 
             return false;
@@ -105,16 +106,16 @@ namespace WpfAppCommonCode.Converters
             if (value is int)
             {
                 if ((int)value == 1)
-                    return "Da";
+                    return (string)Application.Current.FindResource("DA");
                 else
-                    return "Ne";
+                    return (string)Application.Current.FindResource("NE");
             }
-            return "Ne";
+            return (string)Application.Current.FindResource("NE");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.ToString() == "Da")
+            if (value.ToString() == (string)Application.Current.FindResource("DA"))
                 return 1;
 
             return 0;

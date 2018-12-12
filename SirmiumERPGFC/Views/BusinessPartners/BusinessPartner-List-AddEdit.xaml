@@ -127,6 +127,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -187,6 +188,12 @@
                         <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Kontakt_osobaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPersonGer"  
                              Text="{Binding Path=CurrentBusinessPartner.ContactPersonGer}"/>
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="DATUM OD" Margin="5 0 5 0" />
+                        <DatePicker Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtNewDateFrom" SelectedDate="{Binding Path=CurrentPhoneForm.NewDateFrom, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Text="DATUM DO" Margin="5 0 5 0" />
+                        <DatePicker Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtNewDateTo" SelectedDate="{Binding Path=CurrentPhoneForm.NewDateTo, Mode=TwoWay}"/>
 
                     </Grid>
                 </GroupBox>

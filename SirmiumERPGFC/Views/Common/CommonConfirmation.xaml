@@ -26,13 +26,17 @@
                     Style="{StaticResource AccentedSquareButtonStyle}"
                     VerticalAlignment="Center"
                     Margin="5" Width="100"
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal">DA</Button>
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal">
+                <TextBlock Text="{DynamicResource DA}" FontWeight="Bold" />
+            </Button>
             <Button x:Name="btnCancel"
                     Click="btnCancel_Click"
                     Style="{StaticResource AccentedSquareButtonStyle}"
                     VerticalAlignment="Center"
                     Margin="5" Width="100" 
-                    Controls:ControlsHelper.ContentCharacterCasing="Normal">NE</Button>
+                    Controls:ControlsHelper.ContentCharacterCasing="Normal">
+                <TextBlock Text="{DynamicResource NE}" FontWeight="Bold" />
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
