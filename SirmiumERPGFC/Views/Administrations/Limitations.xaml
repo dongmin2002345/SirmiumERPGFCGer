@@ -139,6 +139,8 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Fizičko_lice_Crta_Radna_dozvola}" HorizontalAlignment="Left" Margin="2"/>
                     <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="2" Text="{Binding Path=CurrentLimitation.PersonWorkLicenceLimit, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Text="Odbitak poreza" HorizontalAlignment="Left" Margin="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Margin="2" Text="{Binding Path=CurrentLimitation.PersonDriveLicenceLimit, Mode=TwoWay}" />
                 </Grid>
 
             </GroupBox>

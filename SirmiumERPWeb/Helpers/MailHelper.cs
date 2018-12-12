@@ -56,6 +56,19 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
+                message += "<p>Odbitak poreza / Baustellen deren Vertrag abläuft:</p>";
+                message += "<ul>";
+                var vatDeductionNearExpiration = context.BusinessPartners
+                    .Where(x => x.VatDeductionTo != null
+                        && DateTime.Now.AddDays(limitation.PersonDriveLicenceLimit).Date >= x.VatDeductionTo
+                        && x.Active == true)
+                    .ToList();
+                foreach (var item in vatDeductionNearExpiration)
+                    message += "<li>Odbitak poreza:  (" + item.InternalCode + ") " + item.NameGer + " (ističe " + ((DateTime)item.VatDeductionTo).ToString("dd.MM.yyyy") + ")</li>";
+                message += "</ul>";
+                message += "<hr/>";
+
+
                 message += "<p>Firme kojima istice ugovor sa gradilistem / Firmen deren Vertrag mit der Baustelle abläuft:</p>";
                 message += "<ul>";
                 var businessPartnerConstructionSiteNearExpiration = context.BusinessPartnerByConstructionSites
