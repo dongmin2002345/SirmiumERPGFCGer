@@ -276,7 +276,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " SINHRONIZUJ ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("SINHRONIZUJ"));
 
         public string SyncButtonContent
         {
@@ -400,19 +400,19 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Radnici ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeSQLiteRepository().Sync(employeeService);
 
-            SyncButtonContent = " Firme ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Firme_TriTacke"));
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
 
-            SyncButtonContent = " Rad. u firmi ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("RadTačka_u_firmi_TriTacke"));
             new EmployeeByBusinessPartnerSQLiteRepository().Sync(employeeByBusinessPartnerService);
 
             DisplayEmployeesNotOnBusinessPartnerData();
             DisplayEmployeesOnBusinessPartnerData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
 
         }
@@ -438,7 +438,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentEmployeeNotOnBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Radnik bez firme";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Radnik_bez_firme"));
                 return;
             }
 
@@ -460,19 +460,19 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 EmployeeByBusinessPartnerResponse response = new EmployeeByBusinessPartnerSQLiteRepository().Create(employeeByBusinessPartner);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
                     return;
                 }
 
                 response = employeeByBusinessPartnerService.Create(employeeByBusinessPartner);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
                     return;
                 }
 
                 new EmployeeByBusinessPartnerSQLiteRepository().UpdateSyncStatus(employeeByBusinessPartner.Identifier, response.EmployeeByBusinessPartner.Code, response.EmployeeByBusinessPartner.UpdatedAt, response.EmployeeByBusinessPartner.Id, true);
-                MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
 
                 ContractStartDate = DateTime.Now;
                 ContractEndDate = DateTime.Now;
@@ -492,7 +492,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentEmployeeOnBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Radnik u odabranoj firmi";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Radnik_u_odabranoj_firmi"));
                 return;
             }
 
@@ -511,14 +511,14 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     EmployeeByBusinessPartnerResponse response = employeeByBusinessPartnerService.Delete(CurrentEmployeeOnBusinessPartner);
                     if (!response.Success)
                     {
-                        MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                         return;
                     }
 
                     response = new EmployeeByBusinessPartnerSQLiteRepository().Delete(CurrentEmployeeOnBusinessPartner.Identifier, CurrentBusinessPartner.Identifier);
                     if (!response.Success)
                     {
-                        MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                         return;
                     }
 

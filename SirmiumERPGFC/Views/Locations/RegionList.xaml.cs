@@ -194,7 +194,7 @@ namespace SirmiumERPGFC.Views.Locations
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -240,7 +240,7 @@ namespace SirmiumERPGFC.Views.Locations
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Regioni ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Regioni_TriTacke"));
             new RegionSQLiteRepository().Sync(regionService);
 
             DisplayData();
@@ -260,27 +260,27 @@ namespace SirmiumERPGFC.Views.Locations
 
             RegionAddEdit addEditForm = new RegionAddEdit(region, true);
             addEditForm.RegionCreatedUpdated += new RegionHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o regionu", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_regionu")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentRegion == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati region za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_region_za_izmenuUzvičnik"));
                 return;
             }
 
             RegionAddEdit addEditForm = new RegionAddEdit(CurrentRegion, false);
             addEditForm.RegionCreatedUpdated += new RegionHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o regionima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_regionima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentRegion == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati region za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_region_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -294,7 +294,7 @@ namespace SirmiumERPGFC.Views.Locations
                 RegionResponse response = regionService.Delete(CurrentRegion.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -302,12 +302,12 @@ namespace SirmiumERPGFC.Views.Locations
                 response = new RegionSQLiteRepository().Delete(CurrentRegion.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = " Region je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Region_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

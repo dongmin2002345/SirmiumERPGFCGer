@@ -286,7 +286,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " SNIHRONIZUJ ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("SNIHRONIZUJ"));
 
         public string SyncButtonContent
         {
@@ -413,18 +413,18 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Firme ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Firme_TriTacke"));
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
 
-            SyncButtonContent = " Gradilišta ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Gradilišta_TriTacke"));
             new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
 
-            SyncButtonContent = " Firme. na gradilistu ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("FirmeTačka_na_gradilistu_TriTacke"));
             new BusinessPartnerByConstructionSiteSQLiteRepository().Sync(businessPartnerByConstructionSiteService);
 
             DisplayBusinessPartnersOnConstructionSiteData();
 
-            SyncButtonContent = " SNIHRONIZUJ ";
+            SyncButtonContent = ((string)Application.Current.FindResource("SNIHRONIZUJ"));
             SyncButtonEnabled = true;
         }
 
@@ -450,7 +450,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Firma bez gradilišta";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Firma_bez_gradilišta"));
                 return;
             }
 
@@ -473,19 +473,19 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteSQLiteRepository().Create(businessPartnerByConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
                     return;
                 }
 
                 response = businessPartnerByConstructionSiteService.Create(businessPartnerByConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
                     return;
                 }
 
                 new BusinessPartnerByConstructionSiteSQLiteRepository().UpdateSyncStatus(businessPartnerByConstructionSite.Identifier, response.BusinessPartnerByConstructionSite.Code, response.BusinessPartnerByConstructionSite.UpdatedAt, response.BusinessPartnerByConstructionSite.Id, true);
-                MainWindow.SuccessMessage = "Podaci su uspešno uneti!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
 
                 ContractStartDate = DateTime.Now;
                 ContractEndDate = DateTime.Now;
@@ -503,7 +503,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (CurrentBusinessPartnerOnConstructionSite == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Poslovni partner na odabranom gradilištu";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Poslovni_partner_na_odabranom_gradilištu"));
                 return;
             }
 
@@ -523,7 +523,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     BusinessPartnerByConstructionSiteResponse response = businessPartnerByConstructionSiteService.Delete(CurrentBusinessPartnerOnConstructionSite);
                     if (!response.Success)
                     {
-                        MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                         return;
                     }
 
@@ -544,7 +544,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     response = new BusinessPartnerByConstructionSiteSQLiteRepository().Delete(CurrentBusinessPartnerOnConstructionSite.BusinessPartner.Identifier, CurrentConstructionSite.Identifier);
                     if (!response.Success)
                     {
-                        MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                         return;
                     }
 

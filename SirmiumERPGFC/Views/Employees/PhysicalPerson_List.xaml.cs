@@ -194,8 +194,8 @@ namespace SirmiumERPGFC.Views.Employees
 			{
 				SyncData();
 
-				MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
-			});
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+            });
 			syncThread.IsBackground = true;
 			syncThread.Start();
 		}
@@ -240,8 +240,8 @@ namespace SirmiumERPGFC.Views.Employees
 		{
 			RefreshButtonEnabled = false;
 
-			RefreshButtonContent = " Fizička lica ... ";
-			new PhysicalPersonSQLiteRepository().Sync(physicalPersonService);
+			RefreshButtonContent = ((string)Application.Current.FindResource("Fizička_lica_TriTacke"));
+            new PhysicalPersonSQLiteRepository().Sync(physicalPersonService);
 
 			DisplayData();
 
@@ -261,28 +261,28 @@ namespace SirmiumERPGFC.Views.Employees
 
 			PhysicalPerson_AddEdit addEditForm = new PhysicalPerson_AddEdit(physicalPerson, true);
 			addEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o fizičkim licima", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_fizičkim_licima")), 95, addEditForm);
 		}
 
 		private void btnEdit_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentPhysicalPerson == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati fizičko lice za izmenu!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fizičko_lice_za_izmenuUzvičnik"));
+                return;
 			}
 
 			PhysicalPerson_AddEdit addEditForm = new PhysicalPerson_AddEdit(CurrentPhysicalPerson, false);
 			addEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o fizičkom licu", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_fizičkom_licu")), 95, addEditForm);
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentPhysicalPerson == null)
 			{
-				MainWindow.WarningMessage = "Morate odabrati fizičko lice za brisanje!";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fizičko_lice_za_brisanjeUzvičnik"));
+                return;
 			}
 
 			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
@@ -295,22 +295,22 @@ namespace SirmiumERPGFC.Views.Employees
 				PhysicalPersonResponse response = physicalPersonService.Delete(CurrentPhysicalPerson.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
 				response = new PhysicalPersonSQLiteRepository().Delete(CurrentPhysicalPerson.Identifier);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
-					SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 					return;
 				}
 
-				MainWindow.SuccessMessage = "Banka je uspešno obrisana!";
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Banka_je_uspešno_obrisanaUzvičnik"));
 
-				Thread displayThread = new Thread(() => SyncData());
+                Thread displayThread = new Thread(() => SyncData());
 				displayThread.IsBackground = true;
 				displayThread.Start();
 			}

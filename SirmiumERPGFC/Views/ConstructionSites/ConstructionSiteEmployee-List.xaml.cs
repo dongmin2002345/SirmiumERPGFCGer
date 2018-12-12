@@ -369,7 +369,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -462,7 +462,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Radnici ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeByConstructionSiteSQLiteRepository().Sync(employeeByConstructionSiteService);
 
             DisplayData();
@@ -523,7 +523,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.OpenFlyout(this, "Radnici po gradilištu", 95, new ConstructionSiteEmployee_List_AddEdit(CurrentConstructionSite, CurrentBusinessPartnerOnConstructionSite.BusinessPartner));
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Radnici_po_gradilištu")), 95, new ConstructionSiteEmployee_List_AddEdit(CurrentConstructionSite, CurrentBusinessPartnerOnConstructionSite.BusinessPartner));
         }
 
         #region INotifyPropertyChanged implementation

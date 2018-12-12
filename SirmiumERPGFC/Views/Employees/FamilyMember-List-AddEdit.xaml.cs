@@ -93,7 +93,7 @@ namespace SirmiumERPGFC.Views.Employees
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -154,7 +154,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (String.IsNullOrEmpty(CurrentFamilyMember.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv ";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
                 return;
             }
 
@@ -162,7 +162,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentFamilyMember.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
@@ -175,8 +175,8 @@ namespace SirmiumERPGFC.Views.Employees
                 response = new FamilyMemberSQLiteRepository().Create(CurrentFamilyMember);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -184,16 +184,16 @@ namespace SirmiumERPGFC.Views.Employees
                 response = familyMemberService.Create(CurrentFamilyMember);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new FamilyMemberSQLiteRepository().UpdateSyncStatus(response.FamilyMember.Identifier, response.FamilyMember.Code, response.FamilyMember.UpdatedAt, response.FamilyMember.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     FamilyMemberCreatedUpdated();

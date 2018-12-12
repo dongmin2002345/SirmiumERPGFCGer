@@ -264,7 +264,7 @@ namespace SirmiumERPGFC.Views.Banks
 
 			Bank_List_AddEdit addEditForm = new Bank_List_AddEdit(bank, true);
 			addEditForm.BankCreatedUpdated += new BankHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o bankama", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_bankama")), 95, addEditForm);
 		}
 
 		private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -277,7 +277,7 @@ namespace SirmiumERPGFC.Views.Banks
 
 			Bank_List_AddEdit addEditForm = new Bank_List_AddEdit(CurrentBank, false);
 			addEditForm.BankCreatedUpdated += new BankHandler(SyncData);
-			FlyoutHelper.OpenFlyout(this, "Podaci o banci", 95, addEditForm);
+			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_bankama")), 95, addEditForm);
 		}
 
 		private void btnDelete_Click(object sender, RoutedEventArgs e)

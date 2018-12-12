@@ -97,7 +97,7 @@ namespace SirmiumERPGFC.Views.Locations
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -158,7 +158,7 @@ namespace SirmiumERPGFC.Views.Locations
 
             if (String.IsNullOrEmpty(CurrentMunicipality.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv opštine";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_opštine"));
                 return;
             }
 
@@ -166,7 +166,7 @@ namespace SirmiumERPGFC.Views.Locations
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentMunicipality.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
@@ -178,8 +178,8 @@ namespace SirmiumERPGFC.Views.Locations
                 response = new MunicipalitySQLiteRepository().Create(CurrentMunicipality);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -187,16 +187,16 @@ namespace SirmiumERPGFC.Views.Locations
                 response = MunicipalityService.Create(CurrentMunicipality);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new MunicipalitySQLiteRepository().UpdateSyncStatus(response.Municipality.Identifier, response.Municipality.Code, response.Municipality.UpdatedAt, response.Municipality.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     MunicipalityCreatedUpdated();

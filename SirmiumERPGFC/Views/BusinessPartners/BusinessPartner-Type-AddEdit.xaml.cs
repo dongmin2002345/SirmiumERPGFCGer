@@ -59,7 +59,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -110,7 +110,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " Sačuvaj i proknjiži ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Sačuvaj_i_proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -171,7 +171,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (String.IsNullOrEmpty(CurrentBusinessPartnerType.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Ime vrste";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Ime_vrste"));
                 return;
             }
 
@@ -179,7 +179,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentBusinessPartnerType.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
@@ -192,8 +192,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 response = new BusinessPartnerTypeSQLiteRepository().Create(CurrentBusinessPartnerType);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -201,16 +201,16 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 response = businessPartnerTypeService.Create(CurrentBusinessPartnerType);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new BusinessPartnerTypeSQLiteRepository().UpdateSyncStatus(response.BusinessPartnerType.Identifier, response.BusinessPartnerType.Code, response.BusinessPartnerType.UpdatedAt, response.BusinessPartnerType.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     BusinessPartnerTypeCreatedUpdated();

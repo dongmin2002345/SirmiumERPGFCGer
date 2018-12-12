@@ -252,7 +252,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -369,7 +369,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv gradilista";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_gradilista"));
                 return;
             }
 
@@ -384,7 +384,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
             if (response.Success)
             {
-                MainWindow.SuccessMessage = "Zaglavlje je uspešno sačuvano!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvanoUzvičnik"));
                 IsHeaderCreated = true;
 
                 txtDocumentName.Focus();
@@ -405,7 +405,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv gradilista";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_gradilista"));
                 return;
             }
 
@@ -413,7 +413,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentConstructionSite.IsSynced = false;
@@ -425,8 +425,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -437,16 +437,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru! " + response.Message;
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik")) + response.Message;
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new ConstructionSiteSQLiteRepository().UpdateSyncStatus(response.ConstructionSite.Identifier, response.ConstructionSite.Code, response.ConstructionSite.UpdatedAt, response.ConstructionSite.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     ConstructionSiteCreatedUpdated();
@@ -521,19 +521,19 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
                 return;
             }
 
             if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Path))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Putanja";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Putanja"));
                 return;
             }
 
             if (CurrentConstructionSiteDocumentForm.CreateDate == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Datum kreiranja";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_kreiranja"));
                 return;
             }
 
@@ -584,7 +584,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentDG.Identifier);
 
-                MainWindow.SuccessMessage = "Dokument je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dokument_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayDocumentData());
                 displayThread.IsBackground = true;
@@ -604,13 +604,13 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (String.IsNullOrEmpty(CurrentConstructionSiteNoteForm.Note))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Napomena";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
                 return;
             }
 
             if (CurrentConstructionSiteNoteForm.NoteDate == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Datum napomene";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_napomene"));
                 return;
             }
 
@@ -650,13 +650,13 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku radnika", "");
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("stavku_radnika")), "");
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteDG.Identifier);
 
-                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
                 displayThread.IsBackground = true;

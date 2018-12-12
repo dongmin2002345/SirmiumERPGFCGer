@@ -287,7 +287,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
         #region BusinessPartnerButtonContent
-        private string _BusinessPartnerButtonContent = " Sinhronizacija poslovnih partnera ";
+        private string _BusinessPartnerButtonContent = ((string)Application.Current.FindResource("Sinhronizacija_poslovnih_partnera"));
 
         public string BusinessPartnerButtonContent
         {
@@ -400,7 +400,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -484,28 +484,28 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Firme ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Firme_TriTacke"));
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
 
-            RefreshButtonContent = " Telefoni ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Telefoni_TriTacke"));
             new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService);
 
-            RefreshButtonContent = " Lokacije ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Lokacije_TriTacke"));
             new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService);
 
-            RefreshButtonContent = " Banke ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Banke_TriTacke"));
             new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService);
 
-            RefreshButtonContent = " Institucije ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Institucije_TriTacke"));
             new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService);
 
-            RefreshButtonContent = " Dokumenti ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Dokumenti_TriTacke"));
             new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService);
 
-            RefreshButtonContent = " Tipovi ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Tipovi_TriTacke"));
             new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
 
-            RefreshButtonContent = " Napomene ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Napomene_TriTacke"));
             new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService);
 
             DisplayData();
@@ -525,47 +525,47 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(businessPartnerViewModel, false);
             addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(DisplayData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o poslovnim partnerima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(CurrentBusinessPartner, true);
             addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(DisplayData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o poslovnim partnerima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.ErrorMessage = ("Morate odabrati poslovnog partnera za brisanje!");
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnog_partnera_za_brisanjeUzvičnik"));
                 return;
             }
 
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
             // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("poslovnog partnera", CurrentBusinessPartner.Name);
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("poslovnog_partnera")), CurrentBusinessPartner.Name);
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
                 BusinessPartnerResponse response = businessPartnerService.Delete(CurrentBusinessPartner.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                 }
 
                 response = new BusinessPartnerSQLiteRepository().Delete(CurrentBusinessPartner.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Poslovni partner je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Poslovni_partner_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayData());
                 displayThread.IsBackground = true;
@@ -584,35 +584,35 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Firme ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Firme_TriTacke"));
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
 
-            RefreshButtonContent = " Telefoni ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Telefoni_TriTacke"));
             new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService);
 
-            RefreshButtonContent = " Lokacije ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Lokacije_TriTacke"));
             new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService);
 
-            RefreshButtonContent = " Banke ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Banke_TriTacke"));
             new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService);
 
-            RefreshButtonContent = " Institucije ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Institucije_TriTacke"));
             new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService);
 
-            RefreshButtonContent = " Tipovi ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Tipovi_TriTacke"));
             new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
 
-            RefreshButtonContent = " Dokumenti ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Dokumenti_TriTacke"));
             new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService);
 
-            RefreshButtonContent = " Napomene ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Napomene_TriTacke"));
             new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService);
 
 
 
             DisplayData();
 
-            RefreshButtonContent = " OSVEŽI ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             RefreshButtonEnabled = true;
         }
 

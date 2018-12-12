@@ -140,7 +140,7 @@ namespace SirmiumERPGFC.Views.Home
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -166,7 +166,7 @@ namespace SirmiumERPGFC.Views.Home
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Podsetnici ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Podsetnici_TriTacke"));
             new ToDoSQLiteRepository().Sync(toDoService);
 
             DisplayData();
@@ -181,7 +181,7 @@ namespace SirmiumERPGFC.Views.Home
         {
             if (CurrentToDo == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati stavku za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -196,18 +196,18 @@ namespace SirmiumERPGFC.Views.Home
                 if (!response.Success)
                 {
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                 }
 
                 response = new ToDoSQLiteRepository().Delete(CurrentToDo.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Stavka je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

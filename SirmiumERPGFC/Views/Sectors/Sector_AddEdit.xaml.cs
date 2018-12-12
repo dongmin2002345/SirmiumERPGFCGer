@@ -94,9 +94,9 @@ namespace SirmiumERPGFC.Views.Sectors
 
 
 		#region SaveButtonContent
-		private string _SaveButtonContent = " SAČUVAJ ";
+		private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
-		public string SaveButtonContent
+        public string SaveButtonContent
 		{
 			get { return _SaveButtonContent; }
 			set
@@ -155,22 +155,22 @@ namespace SirmiumERPGFC.Views.Sectors
 
 			if (CurrentSector.SecondCode == null)
 			{
-				MainWindow.WarningMessage = "Obavezno polje: Šifra";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Šifra"));
+                return;
 			}
 
 			if (String.IsNullOrEmpty(CurrentSector.Name))
 			{
-				MainWindow.WarningMessage = "Obavezno polje: Naziv sektora";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_sektora"));
+                return;
 			}
 
 			#endregion
 
 			Thread th = new Thread(() =>
 			{
-				SaveButtonContent = " Čuvanje u toku... ";
-				SaveButtonEnabled = false;
+				SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
+                SaveButtonEnabled = false;
 
 				CurrentSector.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
 				CurrentSector.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
@@ -182,26 +182,26 @@ namespace SirmiumERPGFC.Views.Sectors
 				response = new SectorSQLiteRepository().Create(CurrentSector);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 					return;
 				}
 
 				response = sectorService.Create(CurrentSector);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 				}
 
 				if (response.Success)
 				{
 					new SectorSQLiteRepository().UpdateSyncStatus(response.Sector.Identifier, response.Sector.Code, response.Sector.UpdatedAt, response.Sector.Id, true);
-					MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 
 					SectorCreatedUpdated();
 

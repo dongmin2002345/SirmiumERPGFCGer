@@ -166,7 +166,7 @@ namespace SirmiumERPGFC.Views.Users
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -201,7 +201,7 @@ namespace SirmiumERPGFC.Views.Users
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " Sačuvaj i proknjiži ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Sačuvaj_i_proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -394,7 +394,7 @@ namespace SirmiumERPGFC.Views.Users
             {
                 new CompanyUserSQLiteRepository().Delete(SelectedCompanyUserDG.Identifier);
 
-                MainWindow.SuccessMessage = "Stavka je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayItems());
                 displayThread.IsBackground = true;
@@ -415,7 +415,7 @@ namespace SirmiumERPGFC.Views.Users
 
             if (!IsHeaderCreated)
             {
-                MainWindow.WarningMessage = "Zaglavlje nije sačuvano";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Zaglavlje_nije_sačuvano"));
                 return;
             }
 
@@ -467,7 +467,7 @@ namespace SirmiumERPGFC.Views.Users
 
                 if (CurrentUser.Id < 1 && String.IsNullOrEmpty(txtPassword.Password))
                 {
-                    MainWindow.ErrorMessage = "Morate uneti korisničko ime!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Morate_uneti_korisničko_imeUzvičnik"));
                     return;
                 }
 
@@ -475,7 +475,7 @@ namespace SirmiumERPGFC.Views.Users
             {
                 if (txtPassword.Password != txtPasswordRepeat.Password)
                 {
-                    MainWindow.ErrorMessage = "Unete lozinke se moraju poklapati!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Unete_lozinke_se_moraju_poklapatiUzvičnik"));
                     return;
                 }
                 else
@@ -519,7 +519,7 @@ namespace SirmiumERPGFC.Views.Users
 
             if (!IsHeaderCreated)
             {
-                MainWindow.WarningMessage = "Zaglavlje nije sačuvano";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Zaglavlje_nije_sačuvano"));
                 return;
             }
 
@@ -527,7 +527,7 @@ namespace SirmiumERPGFC.Views.Users
 
             Thread th = new Thread(() =>
             {
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentUser.CompanyUsers = CompanyUsersFromDB.ToList();
@@ -537,8 +537,8 @@ namespace SirmiumERPGFC.Views.Users
                 if (response.Success)
                 {
                     new UserSQLiteRepository().UpdateSyncStatus(CurrentUser.Identifier, response.User.Id, true, response.User.UpdatedAt);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " Proknjiži ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     UserCreatedUpdated();
@@ -559,9 +559,9 @@ namespace SirmiumERPGFC.Views.Users
                 }
                 else
                 {
-                    MainWindow.ErrorMessage = "Greška kod čuvanja na serveru!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
 
-                    SubmitButtonContent = " Proknjiži ";
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
             });

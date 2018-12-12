@@ -57,7 +57,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -107,7 +107,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentConstructionSiteCalculation.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
@@ -120,8 +120,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 response = new ConstructionSiteCalculationSQLiteRepository().Create(CurrentConstructionSiteCalculation);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -129,8 +129,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 response = constructionSiteCalculationService.Create(CurrentConstructionSiteCalculation);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
@@ -143,8 +143,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                         response.ConstructionSiteCalculation.ValueDifference,
                         response.ConstructionSiteCalculation.NewValue,
                         true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     ConstructionSiteCalculationCreatedUpdated();

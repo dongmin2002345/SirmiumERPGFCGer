@@ -196,7 +196,7 @@ namespace SirmiumERPGFC.Views.Locations
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -242,7 +242,7 @@ namespace SirmiumERPGFC.Views.Locations
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Gradovi ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Gradovi_TriTacke"));
             new CitySQLiteRepository().Sync(cityService);
 
             DisplayData();
@@ -262,27 +262,27 @@ namespace SirmiumERPGFC.Views.Locations
 
             CityAddEdit addEditForm = new CityAddEdit(city, true);
             addEditForm.CityCreatedUpdated += new CityHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o gradovima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradovima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentCity == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati grad za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_grad_za_izmenuUzvičnik"));
                 return;
             }
 
             CityAddEdit addEditForm = new CityAddEdit(CurrentCity, false);
             addEditForm.CityCreatedUpdated += new CityHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o lekovima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_lekovima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentCity == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati grad za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_grad_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -296,7 +296,7 @@ namespace SirmiumERPGFC.Views.Locations
                 CityResponse response = cityService.Delete(CurrentCity.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -304,12 +304,12 @@ namespace SirmiumERPGFC.Views.Locations
                 response = new CitySQLiteRepository().Delete(CurrentCity.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Grad je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

@@ -240,7 +240,7 @@ namespace SirmiumERPGFC.Views.Locations
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Opštine ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Opštine_TriTacke"));
             new MunicipalitySQLiteRepository().Sync(municipalityService);
 
             DisplayData();
@@ -260,27 +260,27 @@ namespace SirmiumERPGFC.Views.Locations
 
             MunicipalityAddEdit addEditForm = new MunicipalityAddEdit(Municipality, true);
             addEditForm.MunicipalityCreatedUpdated += new MunicipalityHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o opštinama", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_opštinama")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentMunicipality == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati opštinu za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_opštinu_za_izmenuUzvičnik"));
                 return;
             }
 
             MunicipalityAddEdit addEditForm = new MunicipalityAddEdit(CurrentMunicipality, false);
             addEditForm.MunicipalityCreatedUpdated += new MunicipalityHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o opštinama", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_opštinama")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentMunicipality == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati opštinu za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_opštinu_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -294,7 +294,7 @@ namespace SirmiumERPGFC.Views.Locations
                 MunicipalityResponse response = municipalityService.Delete(CurrentMunicipality.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
@@ -302,12 +302,12 @@ namespace SirmiumERPGFC.Views.Locations
                 response = new MunicipalitySQLiteRepository().Delete(CurrentMunicipality.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Opština je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Opština_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

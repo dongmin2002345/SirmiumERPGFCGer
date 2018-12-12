@@ -94,7 +94,7 @@ namespace SirmiumERPGFC.Views.Profession
 
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " SAČUVAJ ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -155,13 +155,13 @@ namespace SirmiumERPGFC.Views.Profession
 
             if (CurrentProfession.SecondCode == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Šifra";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Šifra"));
                 return;
             }
 
             if (String.IsNullOrEmpty(CurrentProfession.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv zanimanja";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_zanimanja"));
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace SirmiumERPGFC.Views.Profession
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Čuvanje u toku... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentProfession.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
@@ -182,8 +182,8 @@ namespace SirmiumERPGFC.Views.Profession
                 response = new ProfessionSQLiteRepository().Create(CurrentProfession);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -191,16 +191,16 @@ namespace SirmiumERPGFC.Views.Profession
                 response = professionService.Create(CurrentProfession);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new ProfessionSQLiteRepository().UpdateSyncStatus(response.Profession.Identifier, response.Profession.Code, response.Profession.UpdatedAt, response.Profession.Id, true);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " SAČUVAJ ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     ProfessionCreatedUpdated();

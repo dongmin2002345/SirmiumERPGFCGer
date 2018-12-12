@@ -97,9 +97,9 @@ namespace SirmiumERPGFC.Views.Banks
 
 
 		#region SaveButtonContent
-		private string _SaveButtonContent = " SAČUVAJ ";
+		private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
-		public string SaveButtonContent
+        public string SaveButtonContent
 		{
 			get { return _SaveButtonContent; }
 			set
@@ -158,16 +158,16 @@ namespace SirmiumERPGFC.Views.Banks
 
 			if (String.IsNullOrEmpty(CurrentBank.Name))
 			{
-				MainWindow.WarningMessage = "Obavezno polje: Ime banke";
-				return;
+				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Ime_banke"));
+                return;
 			}
 
 			#endregion
 
 			Thread th = new Thread(() =>
 			{
-				SaveButtonContent = " Čuvanje u toku... ";
-				SaveButtonEnabled = false;
+				SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
+                SaveButtonEnabled = false;
 
 				CurrentBank.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
 				CurrentBank.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
@@ -179,26 +179,26 @@ namespace SirmiumERPGFC.Views.Banks
 				response = new BankSQLiteRepository().Create(CurrentBank);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 					return;
 				}
 
 				response = bankService.Create(CurrentBank);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 				}
 
 				if (response.Success)
 				{
 					new BankSQLiteRepository().UpdateSyncStatus(response.Bank.Identifier, response.Bank.Code, response.Bank.UpdatedAt, response.Bank.Id, true);
-					MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-					SaveButtonContent = " SAČUVAJ ";
-					SaveButtonEnabled = true;
+					MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+                    SaveButtonEnabled = true;
 
 					BankCreatedUpdated();
 
