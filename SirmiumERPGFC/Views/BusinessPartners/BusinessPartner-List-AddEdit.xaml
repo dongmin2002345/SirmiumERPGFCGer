@@ -190,10 +190,12 @@
                              Text="{Binding Path=CurrentBusinessPartner.ContactPersonGer}"/>
 
                         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="DATUM OD" Margin="5 0 5 0" />
-                        <DatePicker Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtNewDateFrom" SelectedDate="{Binding Path=CurrentPhoneForm.NewDateFrom, Mode=TwoWay}"/>
+                        <DatePicker Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtVatDeductionFrom" 
+                                    SelectedDate="{Binding Path=CurrentBusinessPartner.VatDeductionFrom, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Text="DATUM DO" Margin="5 0 5 0" />
-                        <DatePicker Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtNewDateTo" SelectedDate="{Binding Path=CurrentPhoneForm.NewDateTo, Mode=TwoWay}"/>
+                        <DatePicker Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtVatDeductionTo" 
+                                    SelectedDate="{Binding Path=CurrentBusinessPartner.VatDeductionTo, Mode=TwoWay}"/>
 
                     </Grid>
                 </GroupBox>

@@ -524,14 +524,14 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             businessPartnerViewModel.Identifier = Guid.NewGuid();
 
             BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(businessPartnerViewModel, false);
-            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(DisplayData);
+            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(CurrentBusinessPartner, true);
-            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(DisplayData);
+            addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, addEditForm);
         }
 

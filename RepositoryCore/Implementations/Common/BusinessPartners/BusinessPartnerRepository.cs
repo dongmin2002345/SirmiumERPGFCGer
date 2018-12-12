@@ -157,6 +157,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                     dbEntry.JBKJS = businessPartner.JBKJS;
 
+                    dbEntry.VatDeductionFrom = businessPartner.VatDeductionFrom;
+                    dbEntry.VatDeductionTo = businessPartner.VatDeductionTo;
+
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

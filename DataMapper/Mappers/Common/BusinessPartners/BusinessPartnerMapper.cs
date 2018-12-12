@@ -62,6 +62,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 CommercialNr = businessPartner.CommercialNr,
                 ContactPersonGer = businessPartner.ContactPersonGer,
 
+                VatDeductionFrom = businessPartner.VatDeductionFrom, 
+                VatDeductionTo = businessPartner.VatDeductionTo,
+
                 IsActive = businessPartner.Active,
 
                 CreatedBy = businessPartner.CreatedBy?.ConvertToUserViewModelLite(),
@@ -108,6 +111,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 CommercialNr = businessPartner.CommercialNr,
                 ContactPersonGer = businessPartner.ContactPersonGer,
 
+                VatDeductionFrom = businessPartner.VatDeductionFrom,
+                VatDeductionTo = businessPartner.VatDeductionTo,
+
                 IsActive = businessPartner.Active,
 
                 UpdatedAt = businessPartner.UpdatedAt,
@@ -153,6 +159,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 TaxNr = businessPartnerViewModel.TaxNr,
                 CommercialNr = businessPartnerViewModel.CommercialNr,
                 ContactPersonGer = businessPartnerViewModel.ContactPersonGer,
+
+                VatDeductionFrom = businessPartnerViewModel.VatDeductionFrom,
+                VatDeductionTo = businessPartnerViewModel.VatDeductionTo,
 
                 CreatedById = businessPartnerViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerViewModel.Company?.Id ?? null,
