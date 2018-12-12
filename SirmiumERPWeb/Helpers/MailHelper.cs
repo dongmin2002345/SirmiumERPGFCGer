@@ -51,7 +51,7 @@ namespace SirmiumERPWeb.Helpers
                         && x.Active == true)
                     .ToList();
                 foreach (var item in constructionSitesNearExpiration)
-                    message += "<li>" + item.Name + " (ističe " + item.ContractExpiration.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Gradilište:  (" + item.InternalCode + ") " + item.Name + " (ističe " + item.ContractExpiration.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -68,7 +68,7 @@ namespace SirmiumERPWeb.Helpers
                         && x.Active == true)
                     .ToList();
                 foreach (var item in businessPartnerConstructionSiteNearExpiration)
-                    message += "<li>Firma: " + item.BusinessPartner?.NameGer + ", gradilište: " + item.ConstructionSite.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Firma: (" + item.BusinessPartner.InternalCode + ") " + item.BusinessPartner?.NameGer + ", gradilište: (" + item.ConstructionSite?.InternalCode + ")  " + item.ConstructionSite.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -85,7 +85,7 @@ namespace SirmiumERPWeb.Helpers
                         && x.Active == true)
                     .ToList();
                 foreach (var item in employeeConstructionSiteNearExpiration)
-                    message += "<li>Radnik: " + item.Employee?.Name + " " + item.Employee?.SurName + ", gradilište: " + item.ConstructionSite.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.Employee.EmployeeCode + ") " + item.Employee?.Name + " " + item.Employee?.SurName + ", gradilište: (" + item.ConstructionSite?.InternalCode + ")  " + item.ConstructionSite.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -102,7 +102,7 @@ namespace SirmiumERPWeb.Helpers
                         && x.Active == true)
                     .ToList();
                 foreach (var item in employeeBusinessPartnerNearExpiration)
-                    message += "<li>Radnik: " + item.Employee?.Name + " " + item.Employee?.SurName + ", firma: " + item.BusinessPartner?.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.Employee.EmployeeCode + ") " + item.Employee?.Name + " " + item.Employee?.SurName + ", firma: (" + item.BusinessPartner?.InternalCode + ")  " + item.BusinessPartner?.Name + " (ističe " + item.EndDate.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -116,7 +116,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeBirthdayLimit)
-                    message += "<li>Radnik: " + item.Name + " " + item.SurName + " (rodjendan " + item.DateOfBirth.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.EmployeeCode + ") " + item.Name + " " + item.SurName + " (rodjendan " + item.DateOfBirth.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -130,7 +130,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeePassportLimit)
-                    message += "<li>Radnik: " + item.Name + " " + item.SurName + " (istek pasoša " + item.VisaTo?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.EmployeeCode + ") " + item.Name + " " + item.SurName + " (istek pasoša " + item.VisaTo?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -144,7 +144,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeEmbasyLimit)
-                    message += "<li>Radnik: " + item.Name + " " + item.SurName + " (odlazak u ambasadu " + item.EmbassyDate?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.EmployeeCode + ") " + item.Name + " " + item.SurName + " (odlazak u ambasadu " + item.EmbassyDate?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -158,7 +158,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeVisaTekeOffLimit)
-                    message += "<li>Radnik: " + item.Name + " " + item.SurName + " (podizanje vize " + item.VisaDate?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.EmployeeCode + ") " + item.Name + " " + item.SurName + " (podizanje vize " + item.VisaDate?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
                 
@@ -172,7 +172,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeVisaLimit)
-                    message += "<li>Radnik: " + item.Name + " " + item.SurName + " (istek vize " + item.VisaValidTo?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.EmployeeCode + ") " + item.Name + " " + item.SurName + " (istek vize " + item.VisaValidTo?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -186,7 +186,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeWorkLicenceLimit)
-                    message += "<li>Radnik: " + item.Name + " " + item.SurName + " (istek radne dozvole " + item.WorkPermitTo?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik: (" + item.EmployeeCode + ") " + item.Name + " " + item.SurName + " (istek radne dozvole " + item.WorkPermitTo?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -202,7 +202,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeDriveLicenceLimit)
-                    message += "<li>Radnik " + item.Employee?.Name + " " + item.Employee?.SurName + ", Dozvola: " + item.Licence?.Description + "(datum isteka " + item.ValidTo?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik (" + item.Employee.EmployeeCode + ") " + item.Employee?.Name + " " + item.Employee?.SurName + ", Dozvola: " + item.Licence?.Description + " (datum isteka " + item.ValidTo?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
@@ -217,7 +217,7 @@ namespace SirmiumERPWeb.Helpers
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeEmbasyFamilyLimit)
-                    message += "<li>Ime: " + item.Name + ", Radnik " + item.Employee?.Name + " " + item.Employee?.SurName + " (datum  ambasade za člana porodice " + item.EmbassyDate?.ToString("dd.MM.yyyy") + ")</li>";
+                    message += "<li>Radnik (" + item.Employee.EmployeeCode + ") " + item.Employee?.Name + " " + item.Employee?.SurName + ", Ime: " + item.Name + " (datum  ambasade za člana porodice " + item.EmbassyDate?.ToString("dd.MM.yyyy") + ")</li>";
                 message += "</ul>";
                 message += "<hr/>";
 
