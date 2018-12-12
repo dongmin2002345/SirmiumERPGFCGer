@@ -32,11 +32,12 @@ namespace RepositoryCore.DbViews.Employees
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +
                 "FROM EmployeeByConstructionSites employeeByConstructionSite " +
-                "LEFT JOIN Employees employee ON employeeByConstructionSite.EmployeeId = employee.Id " +
-                "LEFT JOIN BusinessPartners businessPartner ON employeeByConstructionSite.BusinessPartnerId = businessPartner.Id " +
-                "LEFT JOIN ConstructionSites constructionSite ON employeeByConstructionSite.ConstructionSiteId = constructionSite.Id " +
+                "JOIN Employees employee ON employeeByConstructionSite.EmployeeId = employee.Id " +
+                "JOIN BusinessPartners businessPartner ON employeeByConstructionSite.BusinessPartnerId = businessPartner.Id " +
+                "JOIN ConstructionSites constructionSite ON employeeByConstructionSite.ConstructionSiteId = constructionSite.Id " +
                 "LEFT JOIN Users createdBy ON employeeByConstructionSite.CreatedById = createdBy.Id " +
-                "LEFT JOIN Companies company ON employeeByConstructionSite.CompanyId = company.Id;";
+                "LEFT JOIN Companies company ON employeeByConstructionSite.CompanyId = company.Id " +
+                "WHERE constructionSite.Active = 1 AND businessPartner.Active = 1 AND employee.Active = 1;";
 
             command = new SqlCommand(strSQLCommand, conn);
             returnvalue = (string)command.ExecuteScalar();
