@@ -224,6 +224,83 @@ namespace SirmiumERPWeb.Helpers
                 message += "<hr/>";
 
 
+
+
+
+
+
+                message += "<p>Datum isteka pasoša fizičkog lica:</p>";
+                message += "<ul>";
+                var personPassportLimit = context.PhysicalPersons
+                    .Where(x => x.VisaTo != null &&
+                        DateTime.Now.AddDays(limitation.PersonPassportLimit).DayOfYear > ((DateTime)x.VisaTo).DayOfYear &&
+                        DateTime.Now.DayOfYear <= ((DateTime)x.VisaTo).DayOfYear &&
+                        x.Active == true)
+                    .ToList();
+                foreach (var item in personPassportLimit)
+                    message += "<li>Fizičko lice: (" + item.PhysicalPersonCode + ") " + item.Name + " " + item.SurName + " (istek pasoša " + item.VisaTo?.ToString("dd.MM.yyyy") + ")</li>";
+                message += "</ul>";
+                message += "<hr/>";
+
+
+                message += "<p>Datum odlaska u ambasadu fizičkog licaa:</p>";
+                message += "<ul>";
+                var personEmbasyLimit = context.PhysicalPersons
+                    .Where(x => x.EmbassyDate != null &&
+                        DateTime.Now.AddDays(limitation.PersonEmbasyLimit).DayOfYear > ((DateTime)x.EmbassyDate).DayOfYear &&
+                        DateTime.Now.DayOfYear <= ((DateTime)x.EmbassyDate).DayOfYear &&
+                        x.Active == true)
+                    .ToList();
+                foreach (var item in personEmbasyLimit)
+                    message += "<li>Fizičko lice: (" + item.PhysicalPersonCode + ") " + item.Name + " " + item.SurName + " (odlazak u ambasadu " + item.EmbassyDate?.ToString("dd.MM.yyyy") + ")</li>";
+                message += "</ul>";
+                message += "<hr/>";
+
+
+                message += "<p>Datum podizanja vize Fizičkog lica:</p>";
+                message += "<ul>";
+                var personVisaTekeOffLimit = context.PhysicalPersons
+                    .Where(x => x.VisaDate != null &&
+                        DateTime.Now.AddDays(limitation.PersonVisaTakeOffLimit).DayOfYear > ((DateTime)x.VisaDate).DayOfYear &&
+                        DateTime.Now.DayOfYear <= ((DateTime)x.VisaDate).DayOfYear &&
+                        x.Active == true)
+                    .ToList();
+                foreach (var item in personVisaTekeOffLimit)
+                    message += "<li>Fizičko lice: (" + item.PhysicalPersonCode + ") " + item.Name + " " + item.SurName + " (podizanje vize " + item.VisaDate?.ToString("dd.MM.yyyy") + ")</li>";
+                message += "</ul>";
+                message += "<hr/>";
+
+
+                message += "<p>Datum isteka vize fizičkog lica:</p>";
+                message += "<ul>";
+                var personVisaLimit = context.PhysicalPersons
+                    .Where(x => x.VisaValidTo != null &&
+                        DateTime.Now.AddDays(limitation.PersonVisaLimit).DayOfYear > ((DateTime)x.VisaValidTo).DayOfYear &&
+                        DateTime.Now.DayOfYear <= ((DateTime)x.VisaValidTo).DayOfYear &&
+                        x.Active == true)
+                    .ToList();
+                foreach (var item in personVisaLimit)
+                    message += "<li>Fizičko lice: (" + item.PhysicalPersonCode + ") " + item.Name + " " + item.SurName + " (istek vize " + item.VisaValidTo?.ToString("dd.MM.yyyy") + ")</li>";
+                message += "</ul>";
+                message += "<hr/>";
+
+
+                message += "<p>Datum isteka radne dozvole fizičkog lica:</p>";
+                message += "<ul>";
+                var personWorkLicenceLimit = context.PhysicalPersons
+                    .Where(x => x.WorkPermitTo != null &&
+                        DateTime.Now.AddDays(limitation.PersonWorkLicenceLimit).DayOfYear > ((DateTime)x.WorkPermitTo).DayOfYear &&
+                        DateTime.Now.DayOfYear <= ((DateTime)x.WorkPermitTo).DayOfYear &&
+                        x.Active == true)
+                    .ToList();
+                foreach (var item in personWorkLicenceLimit)
+                    message += "<li>Fizičko lice: (" + item.PhysicalPersonCode + ") " + item.Name + " " + item.SurName + " (istek radne dozvole " + item.WorkPermitTo?.ToString("dd.MM.yyyy") + ")</li>";
+                message += "</ul>";
+                message += "<hr/>";
+                
+
+
+
                 message += "</body>";
                 message += "</html>";
 
