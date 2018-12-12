@@ -289,7 +289,7 @@ namespace SirmiumERPWeb
             ConstructionSiteView.CreateView();
 
 
-            Thread mailThread = new Thread(() => MailTask.SendMailTime("07:51:00"));
+            Thread mailThread = new Thread(() => MailTask.SendMailTime("15:34:00"));
             mailThread.IsBackground = true;
             mailThread.Start();
         }
