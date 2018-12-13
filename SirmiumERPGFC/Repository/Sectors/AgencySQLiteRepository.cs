@@ -143,18 +143,14 @@ namespace SirmiumERPGFC.Repository.Sectors
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM Agencies " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
+                        "WHERE (@Filter IS NULL OR @Filter = '' OR Code LIKE @Filter OR Name LIKE @Filter) " +
                         "AND SectorIdentifier = @SectorIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
-                    selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@CountryName", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Filter", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SectorIdentifier", sectorIdentifier);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", ((object)companyId) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();

@@ -48,6 +48,7 @@ namespace SirmiumERPWeb.Helpers
                 var constructionSitesNearExpiration = context.ConstructionSites
                     .Where(x => x.ContractExpiration != null 
                         && DateTime.Now.AddDays(limitation.ConstructionSiteLimit).Date >= x.ContractExpiration.Date 
+                        && x.ContractExpiration.Date.AddDays(10) >= DateTime.Now.Date
                         && x.Active == true)
                     .ToList();
                 foreach (var item in constructionSitesNearExpiration)
@@ -61,6 +62,7 @@ namespace SirmiumERPWeb.Helpers
                 var vatDeductionNearExpiration = context.BusinessPartners
                     .Where(x => x.VatDeductionTo != null
                         && DateTime.Now.AddDays(limitation.PersonDriveLicenceLimit).Date >= x.VatDeductionTo
+                        && ((DateTime)x.VatDeductionTo).Date.AddDays(10) >= DateTime.Now.Date
                         && x.Active == true)
                     .ToList();
                 foreach (var item in vatDeductionNearExpiration)
@@ -75,7 +77,8 @@ namespace SirmiumERPWeb.Helpers
                     .Include(x => x.BusinessPartner)
                     .Include(x => x.ConstructionSite)
                     .Where(x => x.EndDate != null 
-                        && DateTime.Now.AddDays(limitation.BusinessPartnerConstructionSiteLimit).Date >= x.EndDate.Date 
+                        && DateTime.Now.AddDays(limitation.BusinessPartnerConstructionSiteLimit).Date >= x.EndDate.Date
+                        && ((DateTime)x.EndDate).Date.AddDays(10) >= DateTime.Now.Date
                         && x.BusinessPartner.Active == true
                         && x.ConstructionSite.Active == true
                         && x.Active == true)
@@ -92,7 +95,8 @@ namespace SirmiumERPWeb.Helpers
                     .Include(x => x.Employee)
                     .Include(x => x.ConstructionSite)
                     .Where(x => x.EndDate != null 
-                        && DateTime.Now.AddDays(limitation.EmployeeConstructionSiteLimit).Date >= x.EndDate.Date 
+                        && DateTime.Now.AddDays(limitation.EmployeeConstructionSiteLimit).Date >= x.EndDate.Date
+                        && ((DateTime)x.EndDate).Date.AddDays(10) >= DateTime.Now.Date
                         && x.Employee.Active == true
                         && x.ConstructionSite.Active == true
                         && x.Active == true)
@@ -109,7 +113,8 @@ namespace SirmiumERPWeb.Helpers
                     .Include(x => x.Employee)
                     .Include(x => x.BusinessPartner)
                     .Where(x => x.EndDate != null 
-                        && DateTime.Now.AddDays(limitation.EmployeeBusinessPartnerLimit).Date >= x.EndDate.Date 
+                        && DateTime.Now.AddDays(limitation.EmployeeBusinessPartnerLimit).Date >= x.EndDate.Date
+                        && ((DateTime)x.EndDate).Date.AddDays(10) >= DateTime.Now.Date
                         && x.Employee.Active == true
                         && x.BusinessPartner.Active == true
                         && x.Active == true)
@@ -143,7 +148,8 @@ namespace SirmiumERPWeb.Helpers
                 var employeePassportLimit = context.Employees
                     .Where(x => x.VisaTo != null &&
                         DateTime.Now.AddDays(limitation.EmployeePassportLimit).Date >= ((DateTime)x.VisaTo) &&
-                        DateTime.Now.Date <= ((DateTime)x.VisaTo).Date &&
+                        ((DateTime)x.VisaTo).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.VisaTo).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeePassportLimit)
@@ -157,7 +163,8 @@ namespace SirmiumERPWeb.Helpers
                 var employeeEmbasyLimit = context.Employees
                     .Where(x => x.EmbassyDate != null &&
                         DateTime.Now.AddDays(limitation.EmployeeEmbasyLimit).Date >= ((DateTime)x.EmbassyDate).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.EmbassyDate).Date &&
+                        ((DateTime)x.EmbassyDate).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.EmbassyDate).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeEmbasyLimit)
@@ -171,7 +178,8 @@ namespace SirmiumERPWeb.Helpers
                 var employeeVisaTekeOffLimit = context.Employees
                     .Where(x => x.VisaDate != null &&
                         DateTime.Now.AddDays(limitation.EmployeeVisaTakeOffLimit).Date >= ((DateTime)x.VisaDate).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.VisaDate).Date &&
+                        ((DateTime)x.VisaDate).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.VisaDate).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeVisaTekeOffLimit)
@@ -185,7 +193,8 @@ namespace SirmiumERPWeb.Helpers
                 var employeeVisaLimit = context.Employees
                     .Where(x => x.VisaValidTo != null &&
                         DateTime.Now.AddDays(limitation.EmployeeVisaLimit).Date >= ((DateTime)x.VisaValidTo).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.VisaValidTo).Date &&
+                        ((DateTime)x.VisaValidTo).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.VisaValidTo).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeVisaLimit)
@@ -199,7 +208,8 @@ namespace SirmiumERPWeb.Helpers
                 var employeeWorkLicenceLimit = context.Employees
                     .Where(x => x.WorkPermitTo != null &&
                         DateTime.Now.AddDays(limitation.EmployeeWorkLicenceLimit).Date >= ((DateTime)x.WorkPermitTo).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.WorkPermitTo).Date &&
+                        ((DateTime)x.WorkPermitTo).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.WorkPermitTo).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in employeeWorkLicenceLimit)
@@ -215,7 +225,8 @@ namespace SirmiumERPWeb.Helpers
                     .Include(x => x.Employee)
                     .Where(x => x.ValidTo != null &&
                         DateTime.Now.AddDays(limitation.EmployeeEmbasyFamilyLimit).Date >= ((DateTime)x.ValidTo).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.ValidTo).Date &&
+                        ((DateTime)x.ValidTo).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.ValidTo).Date &&
                         x.Employee.Active == true &&
                         x.Active == true)
                     .ToList();
@@ -231,7 +242,8 @@ namespace SirmiumERPWeb.Helpers
                     .Include(x => x.Employee)
                     .Where(x => x.EmbassyDate != null &&
                         DateTime.Now.AddDays(limitation.EmployeeEmbasyFamilyLimit).Date >= ((DateTime)x.EmbassyDate).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.EmbassyDate).Date &&
+                        ((DateTime)x.EmbassyDate).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.EmbassyDate).Date &&
                         x.Employee.Active == true &&
                         x.Active == true)
                     .ToList();
@@ -251,7 +263,8 @@ namespace SirmiumERPWeb.Helpers
                 var personPassportLimit = context.PhysicalPersons
                     .Where(x => x.VisaTo != null &&
                         DateTime.Now.AddDays(limitation.PersonPassportLimit).Date >= ((DateTime)x.VisaTo).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.VisaTo).Date &&
+                        ((DateTime)x.VisaTo).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.VisaTo).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in personPassportLimit)
@@ -265,7 +278,8 @@ namespace SirmiumERPWeb.Helpers
                 var personEmbasyLimit = context.PhysicalPersons
                     .Where(x => x.EmbassyDate != null &&
                         DateTime.Now.AddDays(limitation.PersonEmbasyLimit).Date >= ((DateTime)x.EmbassyDate).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.EmbassyDate).Date &&
+                        ((DateTime)x.EmbassyDate).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.EmbassyDate).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in personEmbasyLimit)
@@ -279,7 +293,8 @@ namespace SirmiumERPWeb.Helpers
                 var personVisaTekeOffLimit = context.PhysicalPersons
                     .Where(x => x.VisaDate != null &&
                         DateTime.Now.AddDays(limitation.PersonVisaTakeOffLimit).Date >= ((DateTime)x.VisaDate).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.VisaDate).Date &&
+                        ((DateTime)x.VisaDate).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.VisaDate).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in personVisaTekeOffLimit)
@@ -293,7 +308,8 @@ namespace SirmiumERPWeb.Helpers
                 var personVisaLimit = context.PhysicalPersons
                     .Where(x => x.VisaValidTo != null &&
                         DateTime.Now.AddDays(limitation.PersonVisaLimit).Date >= ((DateTime)x.VisaValidTo).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.VisaValidTo).Date &&
+                        ((DateTime)x.VisaValidTo).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.VisaValidTo).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in personVisaLimit)
@@ -307,7 +323,8 @@ namespace SirmiumERPWeb.Helpers
                 var personWorkLicenceLimit = context.PhysicalPersons
                     .Where(x => x.WorkPermitTo != null &&
                         DateTime.Now.AddDays(limitation.PersonWorkLicenceLimit).Date >= ((DateTime)x.WorkPermitTo).Date &&
-                        DateTime.Now.Date <= ((DateTime)x.WorkPermitTo).Date &&
+                        ((DateTime)x.WorkPermitTo).Date.AddDays(10) >= DateTime.Now.Date &&
+                        //DateTime.Now.Date <= ((DateTime)x.WorkPermitTo).Date &&
                         x.Active == true)
                     .ToList();
                 foreach (var item in personWorkLicenceLimit)
