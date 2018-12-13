@@ -427,7 +427,7 @@ namespace SirmiumERPGFC.Repository.Locations
             }
         }
 
-        public CityResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
+        public CityResponse UpdateSyncStatus(Guid identifier, DateTime? updatedAt, int serverId, bool isSynced)
         {
             CityResponse response = new CityResponse();
 
@@ -440,13 +440,11 @@ namespace SirmiumERPGFC.Repository.Locations
 
                 insertCommand.CommandText = "UPDATE Cities SET " +
                     "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
                     "UpdatedAt = @UpdatedAt, " +
                     "ServerId = @ServerId " +
                     "WHERE Identifier = @Identifier ";
 
                 insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
                 insertCommand.Parameters.AddWithValue("@ServerId", serverId);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
