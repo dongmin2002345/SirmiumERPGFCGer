@@ -20,7 +20,7 @@ namespace SirmiumERPWeb.Helpers
         static string FROM_MAIL = "testsmerp123@gmail.com";
         static string FROM_PASSWD = "Secret123$";
 
-        static string SUBJECT_DEFAULT = "Izvestaj - na dan / Bericht für {0}";
+        static string SUBJECT_DEFAULT = "Izvestaj - na dan / Bericht - pro Tag {0}";
 
         public static void SendLimitations(List<LimitationEmailViewModel> users)
         {
@@ -39,7 +39,7 @@ namespace SirmiumERPWeb.Helpers
                 var message = "<html>";
                 message += "<body>";
 
-                message += "<h2>Izvestaj za " + DateTime.Now.ToString("dd.MM.yyyy") + "</h2>";
+                message += "<h2>Izvestaj za / Bericht für  " + DateTime.Now.ToString("dd.MM.yyyy") + "</h2>";
                 message += "<hr/>";
 
 
