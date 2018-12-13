@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.Employees
                 "SELECT employeeByConstructionSite.Id AS EmployeeByConstructionSiteId, employeeByConstructionSite.Identifier AS EmployeeByConstructionSiteIdentifier, employeeByConstructionSite.Code AS EmployeeByConstructionSiteCode, employeeByConstructionSite.StartDate, employeeByConstructionSite.EndDate, employeeByConstructionSite.RealEndDate, " +
                 "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
                 "employeeByConstructionSite.EmployeeCount, " +
-                "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, " +
+                "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.NameGer AS BusinessPartnerName, " +
                 "employeeByConstructionSite.BusinessPartnerCount, " +
                 "constructionSite.Id AS ConstructionSiteId, constructionSite.Identifier AS ConstructionSiteIdentifier, constructionSite.Code AS ConstructionSiteCode, constructionSite.Name AS ConstructionSiteName, " +
                 "employeeByConstructionSite.Active AS Active, " +

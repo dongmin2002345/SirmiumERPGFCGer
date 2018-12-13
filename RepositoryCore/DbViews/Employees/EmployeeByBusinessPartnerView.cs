@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.Employees
                 "SELECT employeeByBusinessPartner.Id AS EmployeeByBusinessPartnerId, employeeByBusinessPartner.Identifier AS EmployeeByBusinessPartnerIdentifier, employeeByBusinessPartner.Code AS EmployeeByBusinessPartnerCode, employeeByBusinessPartner.StartDate, employeeByBusinessPartner.EndDate, employeeByBusinessPartner.RealEndDate, " +
                 "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
                 "employeeByBusinessPartner.EmployeeCount, " +
-                "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, " +
+                "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.NameGer AS BusinessPartnerName, " +
                 "employeeByBusinessPartner.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (employeeByBusinessPartner.UpdatedAt), (employee.UpdatedAt), (businessPartner.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
