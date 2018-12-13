@@ -564,7 +564,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #region IsInPdvOptions
         public ObservableCollection<String> IsInPdvOptions
         {
-            get { return new ObservableCollection<String>(new List<string>() { "Da", "Ne" }); }
+            get { return new ObservableCollection<String>(new List<string>() { (string)Application.Current.FindResource("DA"), (string)Application.Current.FindResource("NE") }); }
         }
         #endregion
 

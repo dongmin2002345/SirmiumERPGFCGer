@@ -140,7 +140,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.BusinessPartner = new BusinessPartner();
                             businessPartnerDocument.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             businessPartnerDocument.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            businessPartnerDocument.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerDocumentTypeIdentifier"].ToString());
+                            businessPartnerDocument.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                             businessPartnerDocument.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             businessPartnerDocument.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
@@ -225,7 +225,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.BusinessPartner = new BusinessPartner();
                             businessPartnerDocument.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
                             businessPartnerDocument.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                            businessPartnerDocument.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerDocumentTypeIdentifier"].ToString());
+                            businessPartnerDocument.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                             businessPartnerDocument.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             businessPartnerDocument.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
