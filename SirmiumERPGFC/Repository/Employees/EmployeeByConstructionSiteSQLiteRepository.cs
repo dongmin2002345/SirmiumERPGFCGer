@@ -127,6 +127,8 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public void Sync(IEmployeeByConstructionSiteService employeeByConstructionSiteService)
         {
+            DeleteAll();
+
             SyncEmployeeByConstructionSiteRequest request = new SyncEmployeeByConstructionSiteRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);

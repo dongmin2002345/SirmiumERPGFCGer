@@ -111,6 +111,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public void Sync(IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService)
         {
+            DeleteAll();
+
             SyncBusinessPartnerByConstructionSiteRequest request = new SyncBusinessPartnerByConstructionSiteRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
