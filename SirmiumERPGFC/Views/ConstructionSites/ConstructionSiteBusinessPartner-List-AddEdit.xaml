@@ -144,7 +144,7 @@
                           SelectedItem="{Binding Path=CurrentBusinessPartnerOnConstructionSite, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="BusinessPartner.Code" Header="{DynamicResource Šifra}" Binding="{Binding BusinessPartner.Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BusinessPartner.InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding BusinessPartner.InternalCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partneri_Srbija}" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.PIB" Header="{DynamicResource PIB}" Binding="{Binding BusinessPartner.PIB}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="MaxNumOfEmployees" Header="{DynamicResource Br._Radnika}" Binding="{Binding MaxNumOfEmployees}" IsReadOnly="True" />
