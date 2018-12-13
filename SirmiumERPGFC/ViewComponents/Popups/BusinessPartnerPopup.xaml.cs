@@ -25,9 +25,6 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.ViewComponents.Popups
 {
-    /// <summary>
-    /// Interaction logic for BusinessPartnerPopup.xaml
-    /// </summary>
     public partial class BusinessPartnerPopup : UserControl, INotifyPropertyChanged
     {
         IBusinessPartnerService businessPartnerService;
