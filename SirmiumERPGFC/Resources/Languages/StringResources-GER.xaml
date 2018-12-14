@@ -18,7 +18,7 @@
     <system:String x:Key="Banke">Banken</system:String>
     <system:String x:Key="BICKosaCrtaSwift">BIC / Swift</system:String>
     <system:String x:Key="BICKosaCrtaSWIFTDvotacka">BIC / SWIFT:</system:String>
-    <system:String x:Key="BrTacka_Radnika">Anzahl der Mitarbeiter</system:String>
+    <system:String x:Key="MaxBrTacka_Radnika">Max Anzahl der Mitarbeiter</system:String>
     <system:String x:Key="BrTacka_radnika_koji_odlazeDvotacka">Anzahl der Mitarbeiter die gehen:</system:String>
     <system:String x:Key="Broj_fakture">Fakturnummer</system:String>
     <system:String x:Key="Broj_faktureDvotacka">Fakturnummer:</system:String>

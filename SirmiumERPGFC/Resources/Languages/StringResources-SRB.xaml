@@ -19,7 +19,7 @@
     <system:String x:Key="Banke">Banke</system:String>
     <system:String x:Key="BICKosaCrtaSwift">BIC/Swift</system:String>
     <system:String x:Key="BICKosaCrtaSWIFTDvotacka">BIC/SWIFT:</system:String>
-    <system:String x:Key="BrTacka_Radnika">Br. Radnika</system:String>
+    <system:String x:Key="MaxBrTacka_Radnika">Max Br. Radnika</system:String>
     <system:String x:Key="BrTacka_radnika_koji_odlazeDvotacka">Br. radnika koji odlaze:</system:String>
     <system:String x:Key="Broj_fakture">Broj fakture</system:String>
     <system:String x:Key="Broj_faktureDvotacka">Broj fakture:</system:String>

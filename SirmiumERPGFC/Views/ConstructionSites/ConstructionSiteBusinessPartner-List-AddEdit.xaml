@@ -147,7 +147,7 @@
                         <DataGridTextColumn SortMemberPath="BusinessPartner.InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding BusinessPartner.InternalCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partneri_Srbija}" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.PIB" Header="{DynamicResource PIB}" Binding="{Binding BusinessPartner.PIB}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="MaxNumOfEmployees" Header="{DynamicResource Br._Radnika}" Binding="{Binding MaxNumOfEmployees}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="MaxNumOfEmployees" Header="{DynamicResource MaxBrTacka_Radnika}" Binding="{Binding MaxNumOfEmployees}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="StartDate" Header="{DynamicResource Ugovor_od}" Binding="{Binding StartDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="EndDate" Header="{DynamicResource Ugovor_od}" Binding="{Binding EndDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                     </DataGrid.Columns>
