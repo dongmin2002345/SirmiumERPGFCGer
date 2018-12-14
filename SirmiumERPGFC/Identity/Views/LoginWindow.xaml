@@ -35,6 +35,7 @@
         <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="cbxLanguages" SelectedValuePath="Content" >
             <ComboBoxItem Content="Germany" IsSelected="True"></ComboBoxItem>
             <ComboBoxItem Content="Serbia"></ComboBoxItem>
+            <ComboBoxItem Content="England"></ComboBoxItem>
         </ComboBox>
 
         <!--    Cancel and Login buttons    -->

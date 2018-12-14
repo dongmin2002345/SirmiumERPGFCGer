@@ -227,10 +227,16 @@ namespace SirmiumERPGFC.Identity.Views
                         dict.Source = new Uri("..\\..\\Resources\\Languages\\StringResources-SRB.xaml", UriKind.Relative);
                         App.Current.Resources.MergedDictionaries.Add(dict);
                     }
-                    else
+                    else if (cbxLanguages.SelectedValue.ToString() == "Germany")
                     {
                         ResourceDictionary dict = new ResourceDictionary();
                         dict.Source = new Uri("..\\..\\Resources\\Languages\\StringResources-GER.xaml", UriKind.Relative);
+                        App.Current.Resources.MergedDictionaries.Add(dict);
+                    }
+                    else
+                    {
+                        ResourceDictionary dict = new ResourceDictionary();
+                        dict.Source = new Uri("..\\..\\Resources\\Languages\\StringResources-ENG.xaml", UriKind.Relative);
                         App.Current.Resources.MergedDictionaries.Add(dict);
                     }
 
