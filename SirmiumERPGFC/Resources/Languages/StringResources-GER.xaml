@@ -570,6 +570,7 @@
     <system:String x:Key="Odbitak_poreza">Freistellung</system:String>
     <system:String x:Key="Odbitak_poreza_ODDvotacka">Freistellung VON:</system:String>
     <system:String x:Key="Odbitak_poreza_DODvotacka">Freistellung BIS:</system:String>
+    <system:String x:Key="Drzava_TriTačke">Land ...</system:String>
 
 
 
