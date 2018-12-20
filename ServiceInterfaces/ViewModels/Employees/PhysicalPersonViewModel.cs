@@ -474,89 +474,89 @@ namespace ServiceInterfaces.ViewModels.Employees
 				}
 			}
 		}
-		#endregion
+        #endregion
 
 
-		#region EmployeeItems
-		private ObservableCollection<EmployeeItemViewModel> _EmployeeItems;
+        #region PhysicalPersonItems
+        private ObservableCollection<PhysicalPersonItemViewModel> _PhysicalPersonItems;
 
-		public ObservableCollection<EmployeeItemViewModel> EmployeeItems
-		{
-			get { return _EmployeeItems; }
+		public ObservableCollection<PhysicalPersonItemViewModel> PhysicalPersonItems
+        {
+			get { return _PhysicalPersonItems; }
 			set
 			{
-				if (_EmployeeItems != value)
+				if (_PhysicalPersonItems != value)
 				{
-					_EmployeeItems = value;
-					NotifyPropertyChanged("EmployeeItems");
+					_PhysicalPersonItems = value;
+					NotifyPropertyChanged("PhysicalPersonItems");
 				}
 			}
 		}
 		#endregion
 
-		#region EmployeeProfessions
-		private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessions;
+		#region PhysicalPersonProfessions
+		private ObservableCollection<PhysicalPersonProfessionViewModel> _PhysicalPersonProfessions;
 
-		public ObservableCollection<EmployeeProfessionItemViewModel> EmployeeProfessions
+		public ObservableCollection<PhysicalPersonProfessionViewModel> PhysicalPersonProfessions
 		{
-			get { return _EmployeeProfessions; }
+			get { return _PhysicalPersonProfessions; }
 			set
 			{
-				if (_EmployeeProfessions != value)
+				if (_PhysicalPersonProfessions != value)
 				{
-					_EmployeeProfessions = value;
-					NotifyPropertyChanged("EmployeeProfessions");
+					_PhysicalPersonProfessions = value;
+					NotifyPropertyChanged("PhysicalPersonProfessions");
 				}
 			}
 		}
 		#endregion
 
-		#region EmployeeLicences
-		private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicences;
+		#region PhysicalPersonLicences
+		private ObservableCollection<PhysicalPersonLicenceViewModel> _PhysicalPersonLicences;
 
-		public ObservableCollection<EmployeeLicenceItemViewModel> EmployeeLicences
+		public ObservableCollection<PhysicalPersonLicenceViewModel> PhysicalPersonLicences
 		{
-			get { return _EmployeeLicences; }
+			get { return _PhysicalPersonLicences; }
 			set
 			{
-				if (_EmployeeLicences != value)
+				if (_PhysicalPersonLicences != value)
 				{
-					_EmployeeLicences = value;
-					NotifyPropertyChanged("EmployeeLicences");
+					_PhysicalPersonLicences = value;
+					NotifyPropertyChanged("PhysicalPersonLicences");
 				}
 			}
 		}
 		#endregion
 
-		#region EmployeeDocuments
-		private ObservableCollection<EmployeeDocumentViewModel> _EmployeeDocuments;
+		#region PhysicalPersonDocuments
+		private ObservableCollection<PhysicalPersonDocumentViewModel> _PhysicalPersonDocuments;
 
-		public ObservableCollection<EmployeeDocumentViewModel> EmployeeDocuments
+		public ObservableCollection<PhysicalPersonDocumentViewModel> PhysicalPersonDocuments
 		{
-			get { return _EmployeeDocuments; }
+			get { return _PhysicalPersonDocuments; }
 			set
 			{
-				if (_EmployeeDocuments != value)
+				if (_PhysicalPersonDocuments != value)
 				{
-					_EmployeeDocuments = value;
-					NotifyPropertyChanged("EmployeeDocuments");
+					_PhysicalPersonDocuments = value;
+					NotifyPropertyChanged("PhysicalPersonDocuments");
 				}
 			}
 		}
 		#endregion
 
-		#region EmployeeNotes
-		private ObservableCollection<EmployeeNoteViewModel> _EmployeeNotes;
+		#region PhysicalPersonNotes
+		private ObservableCollection<PhysicalPersonNoteViewModel> _PhysicalPersonNotes;
 
-		public ObservableCollection<EmployeeNoteViewModel> EmployeeNotes
+		public ObservableCollection<PhysicalPersonNoteViewModel> PhysicalPersonNotes
 		{
-			get { return _EmployeeNotes; }
+			get { return _PhysicalPersonNotes; }
 			set
 			{
-				if (_EmployeeNotes != value)
+				if (_PhysicalPersonNotes != value)
 				{
-					_EmployeeNotes = value;
-					NotifyPropertyChanged("EmployeeNotes");
+					_PhysicalPersonNotes = value;
+					NotifyPropertyChanged("PhysicalPersonNotes");
 				}
 			}
 		}

@@ -390,6 +390,27 @@ namespace SirmiumERPGFC.Repository.Common
             }
         }
 
+        public static PhysicalPersonViewModel GetPhysicalPerson(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+            {
+                var viewModel = new PhysicalPersonViewModel();
+                viewModel.Id = query.GetInt32(counter++);
+                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.Name = query.GetString(counter++);
+
+
+                return viewModel;
+            }
+        }
+
+
         public static ConstructionSiteViewModel GetConstructionSite(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))

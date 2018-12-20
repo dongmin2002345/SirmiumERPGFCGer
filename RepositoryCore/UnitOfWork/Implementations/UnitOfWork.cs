@@ -81,9 +81,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private ILimitationEmailRepository limitationEmailRepository;
 
         private IPhysicalPersonRepository physicalPersonRepository;
-	
+        private IPhysicalPersonItemRepository physicalPersonItemRepository;
+        private IPhysicalPersonNoteRepository physicalPersonNoteRepository;
+        private IPhysicalPersonCardRepository physicalPersonCardRepository;
+        private IPhysicalPersonDocumentRepository physicalPersonDocumentRepository;
+        private IPhysicalPersonLicenceRepository physicalPersonLicenceRepository;
+        private IPhysicalPersonProfessionRepository physicalPersonProfessionRepository;
 
-		private IEmployeeRepository employeeRepository;
+        private IEmployeeRepository employeeRepository;
         private IEmployeeItemRepository employeeItemRepository;
         private IEmployeeNoteRepository employeeNoteRepository;
         private IEmployeeCardRepository employeeCardRepository;
@@ -431,8 +436,51 @@ namespace RepositoryCore.UnitOfWork.Implementations
 			return physicalPersonRepository;
 		}
 
-		
-		public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
+        public IPhysicalPersonProfessionRepository GetPhysicalPersonProfessionRepository()
+        {
+            if (physicalPersonProfessionRepository == null)
+                physicalPersonProfessionRepository = new PhysicalPersonProfessionViewRepository(context);
+            return physicalPersonProfessionRepository;
+        }
+
+        public IPhysicalPersonLicenceRepository GetPhysicalPersonLicenceRepository()
+        {
+            if (physicalPersonLicenceRepository == null)
+                physicalPersonLicenceRepository = new PhysicalPersonLicenceViewRepository(context);
+            return physicalPersonLicenceRepository;
+        }
+
+        public IPhysicalPersonItemRepository GetPhysicalPersonItemRepository()
+        {
+            if (physicalPersonItemRepository == null)
+                physicalPersonItemRepository = new PhysicalPersonItemViewRepository(context);
+            return physicalPersonItemRepository;
+        }
+
+        public IPhysicalPersonNoteRepository GetPhysicalPersonNoteRepository()
+        {
+            if (physicalPersonNoteRepository == null)
+                physicalPersonNoteRepository = new PhysicalPersonNoteViewRepository(context);
+            return physicalPersonNoteRepository;
+        }
+
+        public IPhysicalPersonCardRepository GetPhysicalPersonCardRepository()
+        {
+            if (physicalPersonCardRepository == null)
+                physicalPersonCardRepository = new PhysicalPersonCardViewRepository(context);
+            return physicalPersonCardRepository;
+        }
+
+        public IPhysicalPersonDocumentRepository GetPhysicalPersonDocumentRepository()
+        {
+            if (physicalPersonDocumentRepository == null)
+                physicalPersonDocumentRepository = new PhysicalPersonDocumentViewRepository(context);
+            return physicalPersonDocumentRepository;
+        }
+
+
+
+        public IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository()
         {
             if (businessPartnerByConstructionSiteRepository == null)
                 businessPartnerByConstructionSiteRepository = new BusinessPartnerByConstructionSiteViewRepository(context);

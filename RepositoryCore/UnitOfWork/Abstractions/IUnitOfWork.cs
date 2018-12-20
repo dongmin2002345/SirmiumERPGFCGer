@@ -66,9 +66,15 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IEmployeeProfessionRepository GetEmployeeProfessionRepository();
 
 		IPhysicalPersonRepository GetPhysicalPersonRepository();
+        IPhysicalPersonItemRepository GetPhysicalPersonItemRepository();
+        IPhysicalPersonNoteRepository GetPhysicalPersonNoteRepository();
+        IPhysicalPersonCardRepository GetPhysicalPersonCardRepository();
+        IPhysicalPersonDocumentRepository GetPhysicalPersonDocumentRepository();
+        IPhysicalPersonLicenceRepository GetPhysicalPersonLicenceRepository();
+        IPhysicalPersonProfessionRepository GetPhysicalPersonProfessionRepository();
 
 
-		IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository();
+        IEmployeeByConstructionSiteRepository GetEmployeeByConstructionSiteRepository();
         IFamilyMemberRepository GetFamilyMemberRepository();
 
         IEmployeeByBusinessPartnerRepository GetEmployeeByBusinessPartnerRepository();

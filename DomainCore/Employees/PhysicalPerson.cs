@@ -57,8 +57,8 @@ namespace DomainCore.Employees
 		public DateTime? WorkPermitFrom { get; set; }
 		public DateTime? WorkPermitTo { get; set; }
 
-		//public List<PhysicalPersonItem> PhysicalPersonItems { get; set; }
-		//public List<PhysicalPersonLicence> PhysicalPersonLicences { get; set; }
-		//public List<PhysicalPersonProfession> PhysicalPersonProfessions { get; set; }
-	}
+        public List<PhysicalPersonItem> PhysicalPersonItems { get; set; }
+        public List<PhysicalPersonLicence> PhysicalPersonLicences { get; set; }
+        public List<PhysicalPersonProfession> PhysicalPersonProfessions { get; set; }
+    }
 }

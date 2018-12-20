@@ -81,6 +81,12 @@
     <Compile Include="Implementations\Employees\EmployeeService.cs" />
     <Compile Include="Implementations\Employees\FamilyMemberService.cs" />
     <Compile Include="Implementations\Employees\LicenceTypeService.cs" />
+    <Compile Include="Implementations\Employees\PhysicalPersonCardService.cs" />
+    <Compile Include="Implementations\Employees\PhysicalPersonDocumentService.cs" />
+    <Compile Include="Implementations\Employees\PhysicalPersonItemService.cs" />
+    <Compile Include="Implementations\Employees\PhysicalPersonLicenceService.cs" />
+    <Compile Include="Implementations\Employees\PhysicalPersonNoteService.cs" />
+    <Compile Include="Implementations\Employees\PhysicalPersonProfessionService.cs" />
     <Compile Include="Implementations\Employees\PhysicalPersonService.cs" />
     <Compile Include="Implementations\Limitations\LimitationEmailService.cs" />
     <Compile Include="Implementations\Limitations\LimitationService.cs" />
