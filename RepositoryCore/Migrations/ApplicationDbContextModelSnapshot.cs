@@ -1929,6 +1929,238 @@ namespace RepositoryCore.Migrations
                     b.ToTable("PhysicalPersons");
                 });
 
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("CardDate");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<string>("Description");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<int?>("PhysicalPersonId");
+
+                    b.Property<string>("PlusMinus");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("PhysicalPersonId");
+
+                    b.ToTable("PhysicalPersonCards");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<int?>("PhysicalPersonId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("PhysicalPersonId");
+
+                    b.ToTable("PhysicalPersonDocuments");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<DateTime>("DateOfBirth");
+
+                    b.Property<DateTime?>("EmbassyDate");
+
+                    b.Property<int?>("FamilyMemberId");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("PhysicalPersonId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("FamilyMemberId");
+
+                    b.HasIndex("PhysicalPersonId");
+
+                    b.ToTable("PhysicalPersonItems");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonLicence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<int?>("CountryId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<int?>("LicenceId");
+
+                    b.Property<int?>("PhysicalPersonId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<DateTime?>("ValidFrom");
+
+                    b.Property<DateTime?>("ValidTo");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("LicenceId");
+
+                    b.HasIndex("PhysicalPersonId");
+
+                    b.ToTable("PhysicalPersonLicences");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Note");
+
+                    b.Property<DateTime>("NoteDate");
+
+                    b.Property<int?>("PhysicalPersonId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("PhysicalPersonId");
+
+                    b.ToTable("PhysicalPersonNotes");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonProfession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<int?>("CountryId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<int?>("PhysicalPersonId");
+
+                    b.Property<int?>("ProfessionId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("PhysicalPersonId");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.ToTable("PhysicalPersonProfessions");
+                });
+
             modelBuilder.Entity("DomainCore.Limitations.Limitation", b =>
                 {
                     b.Property<int>("Id")
@@ -2798,6 +3030,116 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Locations.Country", "ResidenceCountry")
                         .WithMany()
                         .HasForeignKey("ResidenceCountryId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonCard", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.PhysicalPerson", "PhysicalPerson")
+                        .WithMany()
+                        .HasForeignKey("PhysicalPersonId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonDocument", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.PhysicalPerson", "PhysicalPerson")
+                        .WithMany()
+                        .HasForeignKey("PhysicalPersonId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonItem", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.FamilyMember", "FamilyMember")
+                        .WithMany()
+                        .HasForeignKey("FamilyMemberId");
+
+                    b.HasOne("DomainCore.Employees.PhysicalPerson", "PhysicalPerson")
+                        .WithMany("PhysicalPersonItems")
+                        .HasForeignKey("PhysicalPersonId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonLicence", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.LicenceType", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId");
+
+                    b.HasOne("DomainCore.Employees.PhysicalPerson", "PhysicalPerson")
+                        .WithMany("PhysicalPersonLicences")
+                        .HasForeignKey("PhysicalPersonId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonNote", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.PhysicalPerson", "PhysicalPerson")
+                        .WithMany()
+                        .HasForeignKey("PhysicalPersonId");
+                });
+
+            modelBuilder.Entity("DomainCore.Employees.PhysicalPersonProfession", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Employees.PhysicalPerson", "PhysicalPerson")
+                        .WithMany("PhysicalPersonProfessions")
+                        .HasForeignKey("PhysicalPersonId");
+
+                    b.HasOne("DomainCore.Common.Professions.Profession", "Profession")
+                        .WithMany()
+                        .HasForeignKey("ProfessionId");
                 });
 
             modelBuilder.Entity("DomainCore.Limitations.Limitation", b =>

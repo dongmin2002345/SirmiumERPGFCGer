@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Employees"
              xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="2300" d:DesignWidth="843">
 
     <Control.Background>
         <SolidColorBrush Color="White" />
@@ -26,13 +27,18 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
                 <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Dodavanje_radnika}" Margin="2">
                 <Grid>
@@ -243,31 +249,509 @@
                 </Grid>
             
             </GroupBox>
+
+                <!--    Save button    -->
+                <Grid Grid.Row="4" Margin="2 2 2 2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="3" x:Name="btnSaveHeader" Click="btnSaveHeader_Click" Margin="5 0 0 0" Background="#007ACC">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock FontSize="25" Text="{DynamicResource SAČUVAJ_ZAGLAVLJE}" Foreground="White" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <GroupBox Header="{DynamicResource Zanimanje}" Margin="2 1 2 1" Grid.Row="5" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
+                        <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry2" 
+                                        CurrentCountry="{Binding Path=CurrentPhysicalPersonProfessionItemForm.Country, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ZanimanjeDvotacka}" />
+                        <popups:ProfessionPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popProfession" 
+                                        CurrentProfession="{Binding Path=CurrentPhysicalPersonProfessionItemForm.Profession, Mode=TwoWay}"/>
+
+                        <Button x:Name="btnAddProfessionItem" Grid.Row="1" Grid.Column="4" Click="btnAddProfessionItem_Click" Margin="2" Background="#007ACC" >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="btnCancelProfessionItem" Grid.Row="1" Grid.Column="5" Click="btnCancelProfessionItem_Click" Margin="2" Background="#007ACC" >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="6" IsActive="{Binding LoadingProfessionItems, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgProfessionItems"
+                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
+                              Margin="5" MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource AzureDataGrid}"
+                              PreviewMouseWheel="PreviewMouseWheelEv"
+                              ItemsSource="{Binding Path=PhysicalPersonProfessionItemsFromDB}"
+                              SelectedItem="{Binding Path=CurrentProfessionDG, Mode=TwoWay}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Country.Code" Header="{DynamicResource Šifra_države}" Binding="{Binding Country.Code}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Profession.SecondCode" Header="{DynamicResource Šifra_zanimanja}" Binding="{Binding Profession.SecondCode}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Profession.Name" Header="{DynamicResource Zanimanje}" Binding="{Binding Profession.Name}" Width="*" IsReadOnly="True"/>
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnEditProfession" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditProfession_Click">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="btnDeleteProfession" Click="btnDeleteProfession_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+
+                <GroupBox Header="{DynamicResource Stavke_dozvole}" Margin="2 1 2 1" Grid.Row="6" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
+                        <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry3" 
+                                      CurrentCountry="{Binding Path=CurrentPhysicalPersonLicenceItemForm.Country, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource DozvolaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <popups:LicenceTypePopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popLicenceType" 
+                                      CurrentLicenceType="{Binding Path=CurrentPhysicalPersonLicenceItemForm.Licence, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Važi_odDvotacka}" />
+                        <DatePicker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
+                                    Text="{Binding Path=CurrentPhysicalPersonLicenceItemForm.ValidFrom,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Važi_doDvotacka}" />
+                        <DatePicker Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
+                                    Text="{Binding Path=CurrentPhysicalPersonLicenceItemForm.ValidTo,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                        <Button x:Name="btnAddDItem" Grid.Row="2" Grid.Column="4" Click="btnAddDItem_Click" Margin="2" Background="#007ACC" >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="btnCancelDItem" Grid.Row="2" Grid.Column="5" Click="btnCancelDItem_Click" Margin="2" Background="#007ACC" >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+
+                        <Controls:ProgressRing Grid.Row="3" Grid.ColumnSpan="6" IsActive="{Binding LoadingLicenceItems, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgPhysicalPersonDItems"
+                              Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"
+                              Margin="5" MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource AzureDataGrid}"
+                              PreviewMouseWheel="PreviewMouseWheelEv"
+                              ItemsSource="{Binding Path=PhysicalPersonLicenceItemsFromDB}"
+                              SelectedItem="{Binding Path=CurrentLicenceDG, Mode=TwoWay}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Country.Code" Header="{DynamicResource Šifra_države}" Binding="{Binding Country.Code}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Licence.Code" Header="{DynamicResource Šifra_dozvole}" Binding="{Binding Licence.Code}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Licence.Description" Header="{DynamicResource Dozvola}" Binding="{Binding Licence.Description}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn SortMemberPath="ValidFrom" Header="{DynamicResource Važi_od}" Binding="{Binding ValidFrom}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Važi_do}" Binding="{Binding ValidTo}" Width="*" IsReadOnly="True"/>
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnEditLicence" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditLicence_Click">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="btnDeleteLicence" Click="btnDeleteLicence_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+
+                <GroupBox Header="{DynamicResource Spajanje_porodice}" Margin="2 1 2 1" Grid.Row="7" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Član_porodiceDvotacka}" />
+                        <popups:FamilyMemberPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popFamilyMember" 
+                                      CurrentFamilyMember="{Binding Path=CurrentPhysicalPersonItemForm.FamilyMember, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource ImeDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="0"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtName"
+                             Text="{Binding Path=CurrentPhysicalPersonItemForm.Name, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Datum_rođenjaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <DatePicker Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
+                                SelectedDate="{Binding Path=CurrentPhysicalPersonItemForm.DateOfBirth, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource Broj_pasošaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBox Grid.Row="1"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPassportNumber"
+                             Text="{Binding Path=CurrentPhysicalPersonItemForm.Passport, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Datum_ambasadeDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <DatePicker Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
+                                SelectedDate="{Binding Path=CurrentPhysicalPersonItemForm.EmbassyDate, Mode=TwoWay}"/>
+
+                        <Button x:Name="btnAddItem" Grid.Row="2" Grid.Column="4" Click="btnAddItem_Click" Margin="2" Background="#007ACC" >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="btnCancelItem" Grid.Row="2" Grid.Column="5" Click="btnCancelItem_Click" Margin="2" Background="#007ACC">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+
+                        <Controls:ProgressRing Grid.Row="8" Grid.ColumnSpan="6" IsActive="{Binding PhysicalPersonItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgPhysicalPersonItems"
+                              Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"
+                              Margin="5" MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource AzureDataGrid}"
+                              PreviewMouseWheel="PreviewMouseWheelEv"
+                              ItemsSource="{Binding Path=PhysicalPersonItemsFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonItemDG, Mode=TwoWay}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="{DynamicResource Član_porodice}" Binding="{Binding FamilyMember.Name}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenja}" Binding="{Binding Path=DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasade}" Binding="{Binding Path=EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnEdit" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEdit_Click">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="{DynamicResource Dokumenti}" Margin="2 1 2 1" Grid.Row="8" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Naziv_dokumentaDvotacka}" Margin="2" VerticalAlignment="Center" x:Name="txtDocumentName" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Path=CurrentPhysicalPersonDocumentForm.Name, Mode=TwoWay}" Margin="2"/>
+
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource Datum_unosaDvotacka}" Margin="2" VerticalAlignment="Center" />
+                        <DatePicker Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" SelectedDate="{Binding Path=CurrentPhysicalPersonDocumentForm.CreateDate, Mode=TwoWay}" Margin="2" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
+                        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding Path=CurrentPhysicalPersonDocumentForm.Path, Mode=TwoWay}" Margin="2" />
+                            <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource ODABERI}" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <Button x:Name="btnAddDocument" Grid.Row="1" Grid.Column="4" Click="btnAddDocument_Click" Margin="2" Background="#007ACC">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="btnCancelDocument" Grid.Row="1" Grid.Column="5" Click="btnCancelDocument_Click" Margin="2" Background="#007ACC">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular" />
+                            </StackPanel>
+                        </Button>
+
+
+                        <Controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="6" IsActive="{Binding PhysicalPersonItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgPhysicalPersonDocuments"
+                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
+                              Margin="5" MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              PreviewMouseWheel="PreviewMouseWheelEv"
+                              ItemsSource="{Binding Path=PhysicalPersonDocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonDocumentDG, Mode=TwoWay}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_kreiranja}" Binding="{Binding Path=CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource Putanja}" Binding="{Binding Path=Path}" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnEditDocument" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditDocument_Click">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="btnDeleteDocument" Click="btnDeleteDocument_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="{DynamicResource Napomene}" Margin="2 1 2 1" Grid.Row="9" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource NapomenaDvotacka}" />
+                        <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtNote" Height="50" TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentPhysicalPersonNoteForm.Note, Mode=TwoWay}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Datum_napomeneDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <DatePicker Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
+                                SelectedDate="{Binding Path=CurrentPhysicalPersonNoteForm.NoteDate, Mode=TwoWay}"/>
+
+                        <Button x:Name="btnAddNote" Grid.Row="1" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="btnCancelNote" Grid.Row="1" Grid.Column="5" Click="btnCancelNote_Click" Margin="2" Background="#007ACC" >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="6" IsActive="{Binding PhysicalPersonNoteDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgPhysicalPersonNotes"
+                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
+                              Margin="5" MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              PreviewMouseWheel="PreviewMouseWheelEv"
+                              ItemsSource="{Binding Path=PhysicalPersonNotesFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonNoteDG, Mode=TwoWay}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Note}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum_napomeneDvotacka}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnEditNote" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditNote_Click">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="btnDeleteNote" Click="btnDeleteNote_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+
             </Grid>
         </ScrollViewer>
+        
         <!--    Cancel and Save buttons    -->
-            <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnSave" Click="btnSave_Click" Margin="0 0 2 0" Grid.Column="2" IsEnabled="{Binding Path=SaveButtonEnabled, Mode=TwoWay}" Background="#007ACC">
-                    <StackPanel Orientation="Horizontal">
-                    <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock FontSize="20" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Bold"/>
-                    </StackPanel>
-                </Button>
-
-                <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="2 0 0 0" Grid.Column="3" Background="#007ACC">
-                    <StackPanel Orientation="Horizontal">
+            <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="2" Background="#007ACC">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text="{DynamicResource SNIMI}" FontSize="25" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2" Background="#007ACC">
+                <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                    <TextBlock Text="{DynamicResource ODUSTANI}" FontSize="20" Foreground="White" FontWeight="Bold"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
+                    <TextBlock Text="{DynamicResource ZATVORI}" FontSize="25" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+        </Grid>
 
     </Grid>
 </UserControl>

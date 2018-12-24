@@ -160,7 +160,26 @@ namespace ApiExtension.Sender
 				{ typeof(PhysicalPersonViewModel), "PhysicalPerson" },
 				{ typeof(List<PhysicalPersonViewModel>), "PhysicalPerson" },
 
-				{ typeof(EmployeeViewModel), "Employee" },
+                { typeof(PhysicalPersonItemViewModel), "PhysicalPersonItem" },
+                { typeof(List<PhysicalPersonItemViewModel>), "PhysicalPersonItem" },
+
+                { typeof(PhysicalPersonNoteViewModel), "PhysicalPersonNote" },
+                { typeof(List<PhysicalPersonNoteViewModel>), "PhysicalPersonNote" },
+
+                { typeof(PhysicalPersonDocumentViewModel), "PhysicalPersonDocument" },
+                { typeof(List<PhysicalPersonDocumentViewModel>), "PhysicalPersonDocument" },
+
+                { typeof(PhysicalPersonCardViewModel), "PhysicalPersonCard" },
+                { typeof(List<PhysicalPersonCardViewModel>), "PhysicalPersonCard" },
+
+                { typeof(PhysicalPersonLicenceViewModel), "PhysicalPersonLicence" },
+                { typeof(List<PhysicalPersonLicenceViewModel>), "PhysicalPersonLicence" },
+
+                { typeof(PhysicalPersonProfessionViewModel), "PhysicalPersonProfession" },
+                { typeof(List<PhysicalPersonProfessionViewModel>), "PhysicalPersonProfession" },
+
+
+                { typeof(EmployeeViewModel), "Employee" },
                 { typeof(List<EmployeeViewModel>), "Employee" },
 
                 { typeof(EmployeeItemViewModel), "EmployeeItem" },

@@ -482,10 +482,98 @@ namespace SirmiumERPGFC.Repository.Common
 					}
 					createTable = new SqliteCommand(PhysicalPersonSQLiteRepository.PhysicalPersonTableCreatePart, db);
 					createTable.ExecuteReader();
-					#endregion
 
-					#region Employees
-					if (withTableDrop)
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonItems", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhysicalPersonItemSQLiteRepository.PhysicalPersonItemTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("PhysicalPersonItems", "EmbassyDate", "DATETIME NULL");
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhysicalPersonNoteSQLiteRepository.PhysicalPersonNoteTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhysicalPersonDocumentSQLiteRepository.PhysicalPersonDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonCards", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhysicalPersonCardSQLiteRepository.PhysicalPersonCardTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("PhysicalPersonCards", "PlusMinus", "NVARCHAR(48) NULL");
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonProfessionItems", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhysicalPersonProfessionSQLiteRepository.PhysicalPersonItemTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonLicenceItems", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhysicalPersonLicenceSQLiteRepository.PhysicalPersonItemTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+
+
+
+
+                    #endregion
+
+                    #region Employees
+                    if (withTableDrop)
                     {
                         try
                         {

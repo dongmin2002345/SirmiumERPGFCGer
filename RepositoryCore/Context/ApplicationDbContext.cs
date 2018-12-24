@@ -96,6 +96,12 @@ namespace RepositoryCore.Context
         public DbSet<FamilyMember> FamilyMembers { get; set; }
 
 		public DbSet<PhysicalPerson> PhysicalPersons { get; set; }
+        public DbSet<PhysicalPersonItem> PhysicalPersonItems { get; set; }
+        public DbSet<PhysicalPersonNote> PhysicalPersonNotes { get; set; }
+        public DbSet<PhysicalPersonCard> PhysicalPersonCards { get; set; }
+        public DbSet<PhysicalPersonDocument> PhysicalPersonDocuments { get; set; }
+        public DbSet<PhysicalPersonLicence> PhysicalPersonLicences { get; set; }
+        public DbSet<PhysicalPersonProfession> PhysicalPersonProfessions { get; set; }
 
 
         public DbSet<Employee> Employees { get; set; }

@@ -79,8 +79,14 @@ namespace SirmiumERPGFC.Infrastructure
 				Kernel.Bind<ILimitationEmailService>().To<LimitationEmailService>();
 
                 Kernel.Bind<IPhysicalPersonService>().To<PhysicalPersonService>();
+                Kernel.Bind<IPhysicalPersonItemService>().To<PhysicalPersonItemService>();
+                Kernel.Bind<IPhysicalPersonNoteService>().To<PhysicalPersonNoteService>();
+                Kernel.Bind<IPhysicalPersonDocumentService>().To<PhysicalPersonDocumentService>();
+                Kernel.Bind<IPhysicalPersonCardService>().To<PhysicalPersonCardService>();
+                Kernel.Bind<IPhysicalPersonLicenceService>().To<PhysicalPersonLicenceService>();
+                Kernel.Bind<IPhysicalPersonProfessionService>().To<PhysicalPersonProfessionService>();
 
-				Kernel.Bind<IEmployeeService>().To<EmployeeService>();
+                Kernel.Bind<IEmployeeService>().To<EmployeeService>();
                 Kernel.Bind<IEmployeeItemService>().To<EmployeeItemService>();
                 Kernel.Bind<IEmployeeNoteService>().To<EmployeeNoteService>();
                 Kernel.Bind<IEmployeeDocumentService>().To<EmployeeDocumentService>();
