@@ -137,7 +137,8 @@ namespace RepositoryCore.Implementations.Common.Locations
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vCities " +
-                "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
+                "WHERE CompanyId = @CompanyId " +
+                "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

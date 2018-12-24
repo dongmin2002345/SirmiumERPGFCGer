@@ -459,7 +459,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vPhysicalPersons " +
-                "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
+                "WHERE CompanyId = @CompanyId " +
+                "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

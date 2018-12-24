@@ -129,7 +129,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerPhones " +
-                "WHERE BusinessPartnerId = @BusinessPartnerId AND Active = 1;";
+                "WHERE BusinessPartnerId = @BusinessPartnerId " +
+                "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

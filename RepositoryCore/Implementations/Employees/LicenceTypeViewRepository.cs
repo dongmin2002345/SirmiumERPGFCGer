@@ -112,7 +112,8 @@ namespace RepositoryCore.Implementations.Employees
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vLicenceTypes " +
-                "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
+                "WHERE CompanyId = @CompanyId " +
+                "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

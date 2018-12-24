@@ -113,7 +113,8 @@ namespace RepositoryCore.Implementations.Common.Professions
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vProfessions " +
-                "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
+                "WHERE CompanyId = @CompanyId " +
+                "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

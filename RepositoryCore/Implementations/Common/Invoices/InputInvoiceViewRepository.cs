@@ -154,7 +154,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, AmountGross, Currency, DateOfPaymet, Status, StatusDate, Description, Path, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoices " +
-                "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
+                "WHERE CompanyId = @CompanyId " +
+                "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
