@@ -157,8 +157,9 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
                 if (_AmountNet != value)
                 {
                     _AmountNet = value;
-                    AmountGross = AmountNet + Pdv;
                     NotifyPropertyChanged("AmountNet");
+                    Pdv = (AmountNet * PdvPercent) / 100;
+                    AmountGross = AmountNet + Pdv;
                 }
             }
         }
@@ -193,8 +194,8 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
                 if (_Pdv != value)
                 {
                     _Pdv = value;
-                    AmountGross = AmountNet + Pdv;
                     NotifyPropertyChanged("Pdv");
+                    AmountGross = AmountNet + Pdv;
                 }
             }
         }
