@@ -245,7 +245,7 @@
                     </Button>
                 </Grid>
 
-                <GroupBox Header="{DynamicResource Zanimanje}" Margin="2 1 2 1" Grid.Row="5">
+                <GroupBox Header="{DynamicResource Zanimanje}" Margin="2 1 2 1" Grid.Row="5" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
