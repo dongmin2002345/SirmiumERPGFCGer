@@ -27,10 +27,13 @@ namespace SirmiumERPGFC.Repository.Employees
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode INTEGER NULL, " +
                "EmployeeName NVARCHAR(2048) NULL, " +
+               "EmployeeInternalCode NVARCHAR(48) NULL, " +
                "BusinessPartnerId INTEGER NULL, " +
                "BusinessPartnerIdentifier GUID NULL, " +
                "BusinessPartnerCode INTEGER NULL, " +
                "BusinessPartnerName NVARCHAR(2048) NULL, " +
+               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
                "ConstructionSiteId INTEGER NULL, " +
                "ConstructionSiteIdentifier GUID NULL, " +
                "ConstructionSiteCode INTEGER NULL, " +
@@ -44,21 +47,21 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
            "SELECT ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
-           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
-           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
+           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeInternalCode,  " +
+           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeByConstructionSites " +
            "(Id, ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
-           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
-           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
+           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeInternalCode, " +
+           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer,  " +
            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
            "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, @RealEndDate, " +
-           "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName,  " +
-           "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName,  " +
+           "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName, @EmployeeInternalCode, " +
+           "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer,  " +
            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -75,8 +78,8 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         "SELECT ecs.ServerId, ecs.Identifier, ecs.Code, ecs.StartDate, ecs.EndDate, ecs.RealEndDate, " +
-                        "ecs.EmployeeId, ecs.EmployeeIdentifier, ecs.EmployeeCode, ecs.EmployeeName, e.SurName, e.Passport,  " +
-                        "ecs.BusinessPartnerId, ecs.BusinessPartnerIdentifier, ecs.BusinessPartnerCode, ecs.BusinessPartnerName,  " +
+                        "ecs.EmployeeId, ecs.EmployeeIdentifier, ecs.EmployeeCode, ecs.EmployeeName, ecs.EmployeeInternalCode, e.SurName, e.Passport,  " +
+                        "ecs.BusinessPartnerId, ecs.BusinessPartnerIdentifier, ecs.BusinessPartnerCode, ecs.BusinessPartnerName, ecs.BusinessPartnerInternalCode, ecs.BusinessPartnerNameGer,  " +
                         "ecs.ConstructionSiteId, ecs.ConstructionSiteIdentifier, ecs.ConstructionSiteCode, ecs.ConstructionSiteName,  " +
                         "ecs.IsSynced, ecs.UpdatedAt, ecs.CreatedById, ecs.CreatedByName, ecs.CompanyId, ecs.CompanyName " +
                         "FROM EmployeeByConstructionSites ecs, Employees e " +
@@ -127,8 +130,6 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public void Sync(IEmployeeByConstructionSiteService employeeByConstructionSiteService)
         {
-            DeleteAll();
-
             SyncEmployeeByConstructionSiteRequest request = new SyncEmployeeByConstructionSiteRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
@@ -207,10 +208,13 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByConstructionSite.Employee?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByConstructionSite.Employee?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)employeeByConstructionSite.Employee?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)employeeByConstructionSite.Employee?.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)employeeByConstructionSite.BusinessPartner?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)employeeByConstructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)employeeByConstructionSite.BusinessPartner?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)employeeByConstructionSite.BusinessPartner?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)employeeByConstructionSite.BusinessPartner?.InternalCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)employeeByConstructionSite.BusinessPartner?.NameGer) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)employeeByConstructionSite.ConstructionSite?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)employeeByConstructionSite.ConstructionSite?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)employeeByConstructionSite.ConstructionSite?.Code) ?? DBNull.Value);

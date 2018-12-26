@@ -22,6 +22,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "BusinessPartnerIdentifier GUID NULL, " +
             "BusinessPartnerCode NVARCHAR(2048) NULL, " +
             "BusinessPartnerName NVARCHAR(2048) NULL, " +
+               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
             "Phone NVARCHAR(2048) NULL, " +
             "Mobile NVARCHAR(2048) NULL, " +
             "Fax NVARCHAR(2048) NULL, " +
@@ -38,16 +40,16 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "SELECT ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerPhones " +
-            "(Id, ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "(Id, ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
+            "VALUES (NULL, @ServerId, @Identifier, @BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
             "@Phone, @Mobile, @Fax, @Email, @ContactPersonFirstName, @ContactPersonLastName, @Birthday, @Description, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -240,7 +242,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerPhone.BusinessPartner.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerPhone.BusinessPartner.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerPhone.BusinessPartner.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerPhone.BusinessPartner.Name) ?? businessPartnerPhone.BusinessPartner.NameGer);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerPhone.BusinessPartner.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerPhone.BusinessPartner.InternalCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerPhone.BusinessPartner.NameGer) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Phone", ((object)businessPartnerPhone.Phone) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Mobile", ((object)businessPartnerPhone.Mobile) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Fax", ((object)businessPartnerPhone.Fax) ?? DBNull.Value);

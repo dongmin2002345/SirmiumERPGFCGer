@@ -331,8 +331,8 @@ namespace SirmiumERPGFC.Repository.Common
                 {
                     Id = query.GetInt32(counter++),
                     Identifier = query.GetGuid(counter++),
-                    Code = query.GetString(counter++),
-                    Name = query.GetString(counter++)
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 
@@ -340,7 +340,7 @@ namespace SirmiumERPGFC.Repository.Common
         {
             if (query.IsDBNull(counter))
             {
-                counter += 4;
+                counter += 6;
                 return null;
             }
             else
@@ -349,7 +349,9 @@ namespace SirmiumERPGFC.Repository.Common
                     Id = query.GetInt32(counter++),
                     Identifier = query.GetGuid(counter++),
                     Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
-                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1) 
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    InternalCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    NameGer = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 
@@ -374,7 +376,7 @@ namespace SirmiumERPGFC.Repository.Common
         {
             if (query.IsDBNull(counter))
             {
-                counter += 4;
+                counter += 5;
                 return null;
             }
             else
@@ -384,6 +386,7 @@ namespace SirmiumERPGFC.Repository.Common
                 viewModel.Identifier = query.GetGuid(counter++);
                 viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter-1);
                 viewModel.Name = query.GetString(counter++);
+                viewModel.EmployeeCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
 
 
                 return viewModel;

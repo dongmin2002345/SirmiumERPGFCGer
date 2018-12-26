@@ -21,7 +21,8 @@ namespace SirmiumERPGFC.Repository.Employees
                "EmployeeId INTEGER NULL, " +
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode NVARCHAR(48) NULL, " +
-               "EmployeeName NVARCHAR(48) NULL, " +
+               "EmployeeName NVARCHAR(2048) NULL, " +
+               "EmployeeInternalCode NVARCHAR(48) NULL, " +
                "FamilyMemberId INTEGER NULL, " +
                "FamilyMemberIdentifier GUID NULL, " +
                "FamilyMemberCode NVARCHAR(48) NULL, " +
@@ -39,18 +40,18 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, FamilyMemberId, FamilyMemberIdentifier, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, FamilyMemberId, FamilyMemberIdentifier, " +
             "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeItems " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, FamilyMemberId, FamilyMemberIdentifier, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, FamilyMemberId, FamilyMemberIdentifier, " +
             "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @FamilyMemberId, @FamilyMemberIdentifier, " +
+            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @FamilyMemberId, @FamilyMemberIdentifier, " +
             "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @EmbassyDate, @Passport, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -293,6 +294,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeItem.Employee.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeItem.Employee.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeItem.Employee.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeItem.Employee.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@FamilyMemberId", ((object)EmployeeItem.FamilyMember.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@FamilyMemberIdentifier", ((object)EmployeeItem.Employee.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@FamilyMemberCode", ((object)EmployeeItem.FamilyMember.Code) ?? DBNull.Value);

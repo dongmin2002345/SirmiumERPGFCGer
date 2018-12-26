@@ -221,6 +221,9 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(BusinessPartnerDocumentSQLiteRepository.BusinessPartnerDocumentTableCreatePart, db);
                     createTable.ExecuteReader();
 
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerDocuments", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerDocuments", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
+
                     if (withTableDrop)
                     {
                         try
@@ -232,6 +235,9 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerNoteSQLiteRepository.BusinessPartnerNoteTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerNotes", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerNotes", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
 
                     #endregion
 
@@ -247,6 +253,9 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerLocationSQLiteRepository.BusinessPartnerLocationTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerLocations", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerLocations", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region BusinessPartnerOrganizationUnit
@@ -261,6 +270,9 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerOrganizationUnitSQLiteRepository.BusinessPartnerOrganizationUnitTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerOrganizationUnits", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerOrganizationUnits", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region BusinessPartnerPhone
@@ -279,6 +291,9 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "ContactPersonFirstName", "NVARCHAR(2048) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "ContactPersonLastName", "NVARCHAR(2048) NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "Birthday", "DATETIME NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerPhones", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region BusinessPartnerInstitution
@@ -294,6 +309,9 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(BusinessPartnerInstitutionSQLiteRepository.BusinessPartnerInstitutionTableCreatePart, db);
                     createTable.ExecuteReader();
 
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerInstitutions", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerInstitutions", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
+
                     #endregion
 
                     #region BusinessPartnerBank
@@ -308,6 +326,9 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerBankSQLiteRepository.BusinessPartnerBankTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerBanks", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerBanks", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region BusinessPartnerType
@@ -606,6 +627,8 @@ namespace SirmiumERPGFC.Repository.Common
 
                     SQLiteHelper.AddColumnIfNotExists("EmployeeItems", "EmbassyDate", "DATETIME NULL");
 
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeItems", "EmployeeInternalCode", "NVARCHAR(48) NULL");
+
 
                     if (withTableDrop)
                     {
@@ -619,6 +642,8 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(EmployeeNoteSQLiteRepository.EmployeeNoteTableCreatePart, db);
                     createTable.ExecuteReader();
 
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeNotes", "EmployeeInternalCode", "NVARCHAR(48) NULL");
+
 
                     if (withTableDrop)
                     {
@@ -631,6 +656,8 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(EmployeeDocumentSQLiteRepository.EmployeeDocumentTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeDocuments", "EmployeeInternalCode", "NVARCHAR(48) NULL");
 
 
                     if (withTableDrop)
@@ -647,6 +674,8 @@ namespace SirmiumERPGFC.Repository.Common
 
                     SQLiteHelper.AddColumnIfNotExists("EmployeeCards", "PlusMinus", "NVARCHAR(48) NULL");
 
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeCards", "EmployeeInternalCode", "NVARCHAR(48) NULL");
+
 
                     if (withTableDrop)
                     {
@@ -658,6 +687,8 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeProfessionItemSQLiteRepository.EmployeeItemTableCreatePart, db);
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeProfessionItems", "EmployeeInternalCode", "NVARCHAR(48) NULL");
                     createTable.ExecuteReader();
 
 
@@ -673,6 +704,8 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(EmployeeLicenceItemSQLiteRepository.EmployeeItemTableCreatePart, db);
                     createTable.ExecuteReader();
 
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeLicenceItems", "EmployeeInternalCode", "NVARCHAR(48) NULL");
+
 
                     if (withTableDrop)
                     {
@@ -685,7 +718,13 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(EmployeeByConstructionSiteSQLiteRepository.EmployeeByConstructionSiteTableCreatePart, db);
                     createTable.ExecuteReader();
+
                     SQLiteHelper.AddColumnIfNotExists("EmployeeByConstructionSites", "RealEndDate", "DATETIME NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByConstructionSites", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByConstructionSites", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByConstructionSites", "EmployeeInternalCode", "NVARCHAR(48) NULL");
 
                     if (withTableDrop)
                     {
@@ -698,7 +737,13 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(EmployeeByBusinessPartnerSQLiteRepository.EmployeeByBusinessPartnerTableCreatePart, db);
                     createTable.ExecuteReader();
+
                     SQLiteHelper.AddColumnIfNotExists("EmployeeByBusinessPartners", "RealEndDate", "DATETIME NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByBusinessPartners", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByBusinessPartners", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeByBusinessPartners", "EmployeeInternalCode", "NVARCHAR(48) NULL");
 
                     if (withTableDrop)
                     {
@@ -711,7 +756,11 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(BusinessPartnerByConstructionSiteSQLiteRepository.BusinessPartnerByConstructionSiteTableCreatePart, db);
                     createTable.ExecuteReader();
+
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartnerByConstructionSites", "RealEndDate", "DATETIME NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerByConstructionSites", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartnerByConstructionSites", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
 
                     #endregion
 
@@ -759,6 +808,9 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("OutputInvoices", "Path", "NVARCHAR(2018) NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("OutputInvoices", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("OutputInvoices", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region InputInvoices
@@ -775,6 +827,9 @@ namespace SirmiumERPGFC.Repository.Common
 					createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("InputInvoices", "Path", "NVARCHAR(2018) NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("InputInvoices", "BusinessPartnerInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("InputInvoices", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #endregion

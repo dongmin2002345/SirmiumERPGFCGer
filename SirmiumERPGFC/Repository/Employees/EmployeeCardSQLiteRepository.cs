@@ -21,7 +21,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "EmployeeId INTEGER NULL, " +
             "EmployeeIdentifier GUID NULL, " +
             "EmployeeCode NVARCHAR(48) NULL, " +
-            "EmployeeName NVARCHAR(48) NULL, " +
+            "EmployeeName NVARCHAR(2048) NULL, " +
+            "EmployeeInternalCode NVARCHAR(48) NULL, " +
             "CardDate DATETIME NULL, " +
             "Description NVARCHAR(2048) NULL, " +
             "PlusMinus NVARCHAR(48) NULL, " +
@@ -34,16 +35,16 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, CardDate, Description, PlusMinus, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, CardDate, Description, PlusMinus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeCards " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, CardDate, Description, PlusMinus, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, CardDate, Description, PlusMinus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @CardDate, @Description, @PlusMinus, " +
+            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @CardDate, @Description, @PlusMinus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public EmployeeCardListResponse GetEmployeeCardsByEmployee(int companyId, Guid EmployeeIdentifier)
@@ -226,6 +227,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeCard.Employee.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeCard.Employee.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeCard.Employee.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeCard.Employee.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CardDate", ((object)EmployeeCard.CardDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Description", ((object)EmployeeCard.Description) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@PlusMinus", ((object)EmployeeCard.PlusMinus) ?? DBNull.Value);

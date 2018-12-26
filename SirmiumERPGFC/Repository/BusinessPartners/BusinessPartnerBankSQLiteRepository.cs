@@ -22,6 +22,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                "BusinessPartnerIdentifier GUID NULL, " +
                "BusinessPartnerCode NVARCHAR(2048) NULL, " +
                "BusinessPartnerName NVARCHAR(2048) NULL, " +
+               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
                "BankId INTEGER NULL, " +
                "BankIdentifier GUID NULL, " +
                "BankCode NVARCHAR(2048) NULL, " +
@@ -40,7 +42,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, " + 
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "BankId, BankIdentifier, BankCode, BankName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "AccountNumber, " +
@@ -48,14 +50,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerBanks " +
             "(Id, ServerId, Identifier, " +
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "BankId, BankIdentifier, BankCode, BankName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "AccountNumber, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
-            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
+            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
             "@BankId, @BankIdentifier, @BankCode, @BankName, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@AccountNumber, " +
@@ -240,7 +242,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerBank.BusinessPartner.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerBank.BusinessPartner.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerBank.BusinessPartner.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerBank.BusinessPartner.Name) ?? businessPartnerBank.BusinessPartner.NameGer);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerBank.BusinessPartner.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerBank.BusinessPartner.InternalCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerBank.BusinessPartner.NameGer) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BankId", ((object)businessPartnerBank.Bank.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BankIdentifier", ((object)businessPartnerBank.Bank.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BankCode", ((object)businessPartnerBank.Bank.Code) ?? DBNull.Value);

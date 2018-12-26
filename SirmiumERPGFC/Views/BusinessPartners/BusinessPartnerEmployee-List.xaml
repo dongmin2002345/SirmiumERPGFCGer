@@ -183,12 +183,24 @@
                         ItemsSource="{Binding Path=EmployeesFromDB}"
                         SelectedItem="{Binding Path=CurrentEmployee}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="EmployeeCode" Header="{DynamicResource Šifra}" Binding="{Binding EmployeeCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SurName" Header="{DynamicResource Prezime}" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="{DynamicResource Pasoš}" Binding="{Binding Passport}" IsReadOnly="True"  />
                         <DataGridTextColumn SortMemberPath="ContractExpirationDate" Header="{DynamicResource Ugovor_ističe}" Binding="{Binding ContractExpirationDate}" IsReadOnly="True" />
-
+                        <DataGridTextColumn SortMemberPath="ConstructionSiteCode" Header="{DynamicResource Šifra_ZagradaGradilišteZagrada}" IsReadOnly="True">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} ( {1} )">
+                                    <Binding Path="ConstructionSiteCode" />
+                                    <Binding Path="ConstructionSiteName" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

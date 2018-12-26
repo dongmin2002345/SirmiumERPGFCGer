@@ -22,6 +22,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                      "BusinessPartnerIdentifier GUID NULL, " +
                      "BusinessPartnerCode NVARCHAR(48) NULL, " +
                      "BusinessPartnerName NVARCHAR(48) NULL, " +
+               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
                      "Note NVARCHAR(2048), " +
                      "NoteDate DATETIME NULL, " +
                      "IsSynced BOOL NULL, " +
@@ -33,16 +35,16 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, " +
-            "BusinessPartnerCode, BusinessPartnerName, Note, NoteDate, " +
+            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Note, NoteDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerNotes " +
             "(Id, ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, " +
-            "BusinessPartnerCode, BusinessPartnerName, Note, NoteDate, " +
+            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Note, NoteDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @BusinessPartnerId, @BusinessPartnerIdentifier, " +
-            "@BusinessPartnerCode, @BusinessPartnerName, @Note, @NoteDate, " +
+            "@BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, @Note, @NoteDate, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public BusinessPartnerNoteListResponse GetBusinessPartnerNotesByBusinessPartner(int companyId, Guid BusinessPartnerIdentifier)
@@ -275,6 +277,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)BusinessPartnerNote.BusinessPartner.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)BusinessPartnerNote.BusinessPartner.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)BusinessPartnerNote.BusinessPartner.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)BusinessPartnerNote.BusinessPartner.InternalCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)BusinessPartnerNote.BusinessPartner.NameGer) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Note", BusinessPartnerNote.Note);
                 insertCommand.Parameters.AddWithValue("@NoteDate", ((object)BusinessPartnerNote.NoteDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", BusinessPartnerNote.IsSynced);

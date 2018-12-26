@@ -22,8 +22,10 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 		  "BusinessPartnerId INTEGER NULL, " +
 		  "BusinessPartnerIdentifier GUID NULL, " +
 		  "BusinessPartnerCode NVARCHAR(48) NULL, " +
-		  "BusinessPartnerName NVARCHAR(48) NULL, " +
-		  "Supplier NVARCHAR(48) NULL, " +
+		  "BusinessPartnerName NVARCHAR(2048) NULL, " +
+               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
+          "Supplier NVARCHAR(48) NULL, " +
 		  "Address NVARCHAR(48) NULL, " +
 		  "InvoiceNumber NVARCHAR(48) NULL, " +
 		  "InvoiceDate DATETIME NULL, " +
@@ -45,18 +47,18 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 		  "CompanyName NVARCHAR(2048) NULL)";
 
 		public string SqlCommandSelectPart =
-			"SELECT ServerId, Identifier, Code, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "SELECT ServerId, Identifier, Code, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
 			"Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, " +
 			"AmountGross, Currency, DateOfPaymet, Status, StatusDate, Description, Path, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
 		public string SqlCommandInsertPart = "INSERT INTO InputInvoices " +
-			"(Id, ServerId, Identifier, Code, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "(Id, ServerId, Identifier, Code, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
 			"Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PDVPercent, PDV, " +
 			"AmountGross, Currency, DateOfPaymet, Status, StatusDate, Description, Path, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-			"VALUES (NULL, @ServerId, @Identifier, @Code, @BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
 			"@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PDVPercent, @PDV, " +
 			"@AmountGross, @Currency, @DateOfPaymet, @Status, @StatusDate, @Description, @Path, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -378,6 +380,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 				insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)InputInvoice.BusinessPartner?.Identifier) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)InputInvoice.BusinessPartner?.Code) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoice.BusinessPartner?.Name) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)InputInvoice.BusinessPartner?.InternalCode) ?? DBNull.Value);
+				insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)InputInvoice.BusinessPartner?.NameGer) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoice.Supplier) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@Address", ((object)InputInvoice.Address) ?? DBNull.Value);
 				insertCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoice.InvoiceNumber) ?? DBNull.Value);

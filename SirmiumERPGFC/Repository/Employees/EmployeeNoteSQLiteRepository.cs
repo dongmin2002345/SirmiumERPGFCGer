@@ -21,7 +21,8 @@ namespace SirmiumERPGFC.Repository.Employees
                   "EmployeeId INTEGER NULL, " +
                   "EmployeeIdentifier GUID NULL, " +
                   "EmployeeCode NVARCHAR(48) NULL, " +
-                  "EmployeeName NVARCHAR(48) NULL, " +
+                  "EmployeeName NVARCHAR(2048) NULL, " +
+                  "EmployeeInternalCode NVARCHAR(48) NULL, " +
                   "Note NVARCHAR(2048), " +
                   "NoteDate DATETIME NULL, " +
                   "IsSynced BOOL NULL, " +
@@ -33,16 +34,16 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, Note, NoteDate, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, Note, NoteDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeNotes " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, Note, NoteDate, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, Note, NoteDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @Note, @NoteDate, " +
+            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @Note, @NoteDate, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public EmployeeNoteListResponse GetEmployeeNotesByEmployee(int companyId, Guid EmployeeIdentifier)
@@ -275,6 +276,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeNote.Employee.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeNote.Employee.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeNote.Employee.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeNote.Employee.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Note", EmployeeNote.Note);
                 insertCommand.Parameters.AddWithValue("@NoteDate", ((object)EmployeeNote.NoteDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeNote.IsSynced);

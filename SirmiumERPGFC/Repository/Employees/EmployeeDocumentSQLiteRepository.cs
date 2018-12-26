@@ -21,7 +21,8 @@ namespace SirmiumERPGFC.Repository.Employees
                   "EmployeeId INTEGER NULL, " +
                   "EmployeeIdentifier GUID NULL, " +
                   "EmployeeCode NVARCHAR(48) NULL, " +
-                  "EmployeeName NVARCHAR(48) NULL, " +
+                  "EmployeeName NVARCHAR(2048) NULL, " +
+                  "EmployeeInternalCode NVARCHAR(48) NULL, " +
                   "Name NVARCHAR(2048), " +
                   "CreateDate DATETIME NULL, " +
                   "Path NVARCHAR(2048) NULL, " +
@@ -34,16 +35,16 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, Name, CreateDate, Path, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, Name, CreateDate, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeDocuments " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, Name, CreateDate, Path, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, Name, CreateDate, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @Name, @CreateDate, @Path, " +
+            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @Name, @CreateDate, @Path, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public EmployeeDocumentListResponse GetEmployeeDocumentsByEmployee(int companyId, Guid EmployeeIdentifier)
@@ -226,6 +227,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeDocument.Employee.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeDocument.Employee.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeDocument.Employee.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeDocument.Employee.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", EmployeeDocument.Name);
                 insertCommand.Parameters.AddWithValue("@CreateDate", ((object)EmployeeDocument.CreateDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Path", ((object)EmployeeDocument.Path) ?? DBNull.Value);

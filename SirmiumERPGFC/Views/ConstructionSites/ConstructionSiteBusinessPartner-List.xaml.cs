@@ -28,6 +28,8 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.ConstructionSites
 {
+    public delegate void ConstructionSiteBusinessPartnerHandler();
+
     public partial class ConstructionSiteBusinessPartner_List : UserControl, INotifyPropertyChanged
     {
         #region Attributes
@@ -414,7 +416,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Firme_po_gradilištima")), 95, new ConstructionSiteBusinessPartner_List_AddEdit(CurrentConstructionSite));
+            ConstructionSiteBusinessPartner_List_AddEdit addEditForm = new ConstructionSiteBusinessPartner_List_AddEdit(CurrentConstructionSite);
+            addEditForm.ConstructionSiteBusinessPartnerUpdated += new ConstructionSiteBusinessPartnerHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Firme_po_gradilištima")), 95, addEditForm);
         }
 
         #region INotifyPropertyChanged implementation

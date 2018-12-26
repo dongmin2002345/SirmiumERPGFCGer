@@ -26,10 +26,13 @@ namespace SirmiumERPGFC.Repository.Employees
                "EmployeeIdentifier GUID NULL, " +
                "EmployeeCode INTEGER NULL, " +
                "EmployeeName NVARCHAR(2048) NULL, " +
+               "EmployeeInternalCode NVARCHAR(48) NULL, " +
                "BusinessPartnerId INTEGER NULL, " +
                "BusinessPartnerIdentifier GUID NULL, " +
                "BusinessPartnerCode INTEGER NULL, " +
                "BusinessPartnerName NVARCHAR(2048) NULL, " +
+               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
                "IsSynced BOOL NULL, " +
                "UpdatedAt DATETIME NULL, " +
                "CreatedById INTEGER NULL, " +
@@ -39,19 +42,19 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
            "SELECT ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
-           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
-           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
+           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeInternalCode, " +
+           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeByBusinessPartners " +
            "(Id, ServerId, Identifier, Code, StartDate, EndDate, RealEndDate, " +
-           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName,  " +
-           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName,  " +
+           "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeInternalCode, " +
+           "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer,  " +
            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
            "VALUES (NULL, @ServerId, @Identifier, @Code, @StartDate, @EndDate, @RealEndDate, " +
-           "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName,  " +
-           "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName,  " +
+           "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName, @EmployeeInternalCode, " +
+           "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 
@@ -67,8 +70,8 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         "SELECT ebp.ServerId, ebp.Identifier, ebp.Code, ebp.StartDate, ebp.EndDate, ebp.RealEndDate, " +
-                        "ebp.EmployeeId, ebp.EmployeeIdentifier, ebp.EmployeeCode, ebp.EmployeeName, e.SurName, e.Passport,  " +
-                        "ebp.BusinessPartnerId, ebp.BusinessPartnerIdentifier, ebp.BusinessPartnerCode, ebp.BusinessPartnerName,  " +
+                        "ebp.EmployeeId, ebp.EmployeeIdentifier, ebp.EmployeeCode, ebp.EmployeeName, ebp.EmployeeInternalCode, e.SurName, e.Passport,  " +
+                        "ebp.BusinessPartnerId, ebp.BusinessPartnerIdentifier, ebp.BusinessPartnerCode, ebp.BusinessPartnerName, ebp.BusinessPartnerInternalCode, ebp.BusinessPartnerNameGer,  " +
                         "ebp.IsSynced, ebp.UpdatedAt, ebp.CreatedById, ebp.CreatedByName, ebp.CompanyId, ebp.CompanyName " +
                         "FROM EmployeeByBusinessPartners ebp, Employees e " +
                         "WHERE ebp.BusinessPartnerIdentifier = @BusinessPartnerIdentifier " + 
@@ -115,8 +118,6 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public void Sync(IEmployeeByBusinessPartnerService employeeByBusinessPartnerService)
         {
-            DeleteAll();
-
             SyncEmployeeByBusinessPartnerRequest request = new SyncEmployeeByBusinessPartnerRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
@@ -193,12 +194,15 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)employeeByBusinessPartner.RealEndDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)employeeByBusinessPartner.Employee?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByBusinessPartner.Employee?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByBusinessPartner.Employee?.Code) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByBusinessPartner.Employee?.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)employeeByBusinessPartner.Employee?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)employeeByBusinessPartner.Employee?.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)employeeByBusinessPartner.BusinessPartner?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)employeeByBusinessPartner.BusinessPartner?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)employeeByBusinessPartner.BusinessPartner?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)employeeByBusinessPartner.BusinessPartner?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)employeeByBusinessPartner.BusinessPartner?.InternalCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)employeeByBusinessPartner.BusinessPartner?.NameGer) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", employeeByBusinessPartner.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)employeeByBusinessPartner.UpdatedAt) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

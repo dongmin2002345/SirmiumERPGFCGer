@@ -473,10 +473,10 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             RefreshButtonEnabled = false;
 
             RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
-            new EmployeeSQLiteRepository().Sync(employeeService);
+            new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
 
             RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
-            new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
+            new EmployeeSQLiteRepository().Sync(employeeService);
 
             RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);

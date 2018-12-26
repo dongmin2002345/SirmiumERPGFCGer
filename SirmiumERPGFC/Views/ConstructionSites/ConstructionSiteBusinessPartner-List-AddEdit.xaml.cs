@@ -27,13 +27,18 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 {
     public partial class ConstructionSiteBusinessPartner_List_AddEdit : UserControl, INotifyPropertyChanged
     {
-        #region Attributes
+        #region Atributes
 
-        #region 
+        #region Services 
         IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService;
         IBusinessPartnerService businessPartnerService;
         IConstructionSiteService constructionSiteService;
         IEmployeeByConstructionSiteService employeeByConstructionSiteService;
+        #endregion
+
+
+        #region Events
+        public event ConstructionSiteBusinessPartnerHandler ConstructionSiteBusinessPartnerUpdated;
         #endregion
 
         #region CurrentConstructionSite
@@ -492,6 +497,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 MaxNumOfEmployees = 0;
 
                 DisplayBusinessPartnersOnConstructionSiteData();
+
+                //ConstructionSiteBusinessPartnerUpdated();
             });
             th.IsBackground = true;
             th.Start();
@@ -549,6 +556,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     }
 
                     DisplayBusinessPartnersOnConstructionSiteData();
+
+                    ConstructionSiteBusinessPartnerUpdated();
                 });
                 th.IsBackground = true;
                 th.Start();

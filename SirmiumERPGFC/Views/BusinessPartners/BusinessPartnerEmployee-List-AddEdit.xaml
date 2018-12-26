@@ -82,7 +82,7 @@
                           SelectedItem="{Binding Path=CurrentEmployeeNotOnBusinessPartner, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="EmployeeCode" Header="{DynamicResource Šifra}" Binding="{Binding EmployeeCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SurName" Header="{DynamicResource Prezime}" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="{DynamicResource Pasoš}" Binding="{Binding Passport}" IsReadOnly="True" />
@@ -142,7 +142,7 @@
                           SelectedItem="{Binding Path=CurrentEmployeeOnBusinessPartner, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Employee.Code" Header="{DynamicResource Šifra}" Binding="{Binding Employee.Code}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Employee.Name" Header="{DynamicResource Ime}" Binding="{Binding Employee.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Employee.SurName" Header="{DynamicResource Prezime}" Binding="{Binding Employee.SurName}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Employee.Passport" Header="{DynamicResource Pasoš}" Binding="{Binding Employee.Passport}" Width="*" IsReadOnly="True" />

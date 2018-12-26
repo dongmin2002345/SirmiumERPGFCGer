@@ -22,6 +22,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "BusinessPartnerIdentifier GUID NULL, " +
             "BusinessPartnerCode NVARCHAR(48) NULL, " +
             "BusinessPartnerName NVARCHAR(2048) NULL, " +
+               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
             "Address NVARCHAR(2048) NULL, " +
             "CountryId INTEGER NULL, " +
             "CountryIdentifier GUID NULL, " +
@@ -48,7 +50,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, " +
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "Address, CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
@@ -57,7 +59,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerLocations " +
             "(Id, ServerId, Identifier, " +
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "Address, CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
@@ -65,7 +67,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
-            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
+            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
             "@Address, @CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, " +
@@ -255,7 +257,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerLocation.BusinessPartner.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerLocation.BusinessPartner.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerLocation.BusinessPartner.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerLocation.BusinessPartner.Name) ?? businessPartnerLocation.BusinessPartner.NameGer);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerLocation.BusinessPartner.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerLocation.BusinessPartner.InternalCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerLocation.BusinessPartner.NameGer) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Address", ((object)businessPartnerLocation.Address) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartnerLocation.Country?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartnerLocation.Country?.Identifier) ?? DBNull.Value);

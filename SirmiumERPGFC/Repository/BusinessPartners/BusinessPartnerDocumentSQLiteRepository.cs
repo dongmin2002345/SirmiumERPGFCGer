@@ -22,6 +22,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                      "BusinessPartnerIdentifier GUID NULL, " +
                      "BusinessPartnerCode NVARCHAR(48) NULL, " +
                      "BusinessPartnerName NVARCHAR(48) NULL, " +
+                     "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+                     "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
                      "Name NVARCHAR(2048), " +
                      "CreateDate DATETIME NULL, " +
                      "Path NVARCHAR(2048) NULL, " +
@@ -34,16 +36,16 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, " +
-            "BusinessPartnerCode, BusinessPartnerName, Name, CreateDate, Path, " +
+            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Name, CreateDate, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerDocuments " +
             "(Id, ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, " +
-            "BusinessPartnerCode, BusinessPartnerName, Name, CreateDate, Path, " +
+            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Name, CreateDate, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @BusinessPartnerId, @BusinessPartnerIdentifier, " +
-            "@BusinessPartnerCode, @BusinessPartnerName, @Name, @CreateDate, @Path, " +
+            "@BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, @Name, @CreateDate, @Path, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public BusinessPartnerDocumentListResponse GetBusinessPartnerDocumentsByBusinessPartner(int companyId, Guid BusinessPartnerIdentifier)
@@ -226,6 +228,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)BusinessPartnerDocument.BusinessPartner.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)BusinessPartnerDocument.BusinessPartner.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)BusinessPartnerDocument.BusinessPartner.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)BusinessPartnerDocument.BusinessPartner.InternalCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)BusinessPartnerDocument.BusinessPartner.NameGer) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Name", BusinessPartnerDocument.Name);
                 insertCommand.Parameters.AddWithValue("@CreateDate", ((object)BusinessPartnerDocument.CreateDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Path", ((object)BusinessPartnerDocument.Path) ?? DBNull.Value);
