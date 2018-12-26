@@ -25,7 +25,8 @@ namespace SirmiumERPGFC.Repository.Employees
                   "ProfessionId INTEGER NULL, " +
                   "ProfessionIdentifier GUID NULL, " +
                   "ProfessionCode NVARCHAR(48) NULL, " +
-                  "ProfessionName NVARCHAR(48) NULL, " +
+                  "ProfessionName NVARCHAR(2048) NULL, " +
+                  "ProfessionSecondCode NVARCHAR(48) NULL, " +
                   "CountryId INTEGER NULL, " +
                   "CountryIdentifier GUID NULL, " +
                   "CountryCode NVARCHAR(48) NULL, " +
@@ -40,20 +41,20 @@ namespace SirmiumERPGFC.Repository.Employees
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, PhysicalPersonId, PhysicalPersonIdentifier, " +
             "PhysicalPersonCode, PhysicalPersonName, ProfessionId, ProfessionIdentifier, " +
-            "ProfessionCode, ProfessionName, CountryId, CountryIdentifier, " +
+            "ProfessionCode, ProfessionName, ProfessionSecondCode, CountryId, CountryIdentifier, " +
             "CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO PhysicalPersonProfessions " +
             "(Id, ServerId, Identifier, PhysicalPersonId, PhysicalPersonIdentifier, " +
             "PhysicalPersonCode, PhysicalPersonName, ProfessionId, ProfessionIdentifier, " +
-            "ProfessionCode, ProfessionName, CountryId, CountryIdentifier, " +
+            "ProfessionCode, ProfessionName, ProfessionSecondCode, CountryId, CountryIdentifier, " +
             "CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @PhysicalPersonId, @PhysicalPersonIdentifier, " +
             "@PhysicalPersonCode, @PhysicalPersonName, @ProfessionId, @ProfessionIdentifier, " +
-            "@ProfessionCode, @ProfessionName, @CountryId, @CountryIdentifier, " +
+            "@ProfessionCode, @ProfessionName, @ProfessionSecondCode, @CountryId, @CountryIdentifier, " +
             "@CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -239,8 +240,9 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@PhysicalPersonName", ((object)PhysicalPersonItem.PhysicalPerson?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionId", ((object)PhysicalPersonItem.Profession?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionIdentifier", ((object)PhysicalPersonItem.Profession?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)PhysicalPersonItem.Profession?.SecondCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)PhysicalPersonItem.Profession?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionName", ((object)PhysicalPersonItem.Profession?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionSecondCode", ((object)PhysicalPersonItem.Profession?.SecondCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)PhysicalPersonItem.Country?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)PhysicalPersonItem.Country?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryCode", ((object)PhysicalPersonItem.Country?.Code) ?? DBNull.Value);

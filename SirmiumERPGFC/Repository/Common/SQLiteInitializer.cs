@@ -566,12 +566,15 @@ namespace SirmiumERPGFC.Repository.Common
                     {
                         try
                         {
-                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonProfessionItems", db);
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonProfessions", db);
                             dropTable.ExecuteNonQuery();
                         }
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(PhysicalPersonProfessionSQLiteRepository.PhysicalPersonItemTableCreatePart, db);
+
+                    SQLiteHelper.AddColumnIfNotExists("PhysicalPersonProfessions", "ProfessionSecondCode", "NVARCHAR(48) NULL");
+
                     createTable.ExecuteReader();
 
 
@@ -689,6 +692,7 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(EmployeeProfessionItemSQLiteRepository.EmployeeItemTableCreatePart, db);
 
                     SQLiteHelper.AddColumnIfNotExists("EmployeeProfessionItems", "EmployeeInternalCode", "NVARCHAR(48) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("EmployeeProfessionItems", "ProfessionSecondCode", "NVARCHAR(48) NULL");
                     createTable.ExecuteReader();
 
 
@@ -702,9 +706,10 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeLicenceItemSQLiteRepository.EmployeeItemTableCreatePart, db);
-                    createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("EmployeeLicenceItems", "EmployeeInternalCode", "NVARCHAR(48) NULL");
+
+                    createTable.ExecuteReader();
 
 
                     if (withTableDrop)

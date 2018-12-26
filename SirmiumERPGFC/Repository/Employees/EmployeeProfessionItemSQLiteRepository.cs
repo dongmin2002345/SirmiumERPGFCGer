@@ -26,7 +26,8 @@ namespace SirmiumERPGFC.Repository.Employees
                "ProfessionId INTEGER NULL, " +
                "ProfessionIdentifier GUID NULL, " +
                "ProfessionCode NVARCHAR(48) NULL, " +
-               "ProfessionName NVARCHAR(48) NULL, " +
+               "ProfessionName NVARCHAR(2048) NULL, " +
+               "ProfessionSecond NVARCHAR(48) NULL, " +
                "CountryId INTEGER NULL, " +
                "CountryIdentifier GUID NULL, " +
                "CountryCode NVARCHAR(48) NULL, " +
@@ -39,23 +40,23 @@ namespace SirmiumERPGFC.Repository.Employees
                "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, EmployeeInternalCode, ProfessionId, ProfessionIdentifier, " +
-            "ProfessionCode, ProfessionName, CountryId, CountryIdentifier, " +
-            "CountryCode, CountryName, " +
+            "SELECT ServerId, Identifier, " +
+            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeInternalCode, " +
+            "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, ProfessionSecondCode, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeProfessionItems " +
-            "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, EmployeeInternalCode, ProfessionId, ProfessionIdentifier, " +
-            "ProfessionCode, ProfessionName, CountryId, CountryIdentifier, " +
-            "CountryCode, CountryName, " +
+            "(Id, ServerId, Identifier, " +
+            "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeInternalCode, " +
+            "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, ProfessionSecondCode, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @ProfessionId, @ProfessionIdentifier, " +
-            "@ProfessionCode, @ProfessionName, @EmployeeInternalCode, @CountryId, @CountryIdentifier, " +
-            "@CountryCode, @CountryName, " +
+            "VALUES (NULL, @ServerId, @Identifier, " +
+            "@EmployeeId, @EmployeeIdentifier, @EmployeeCode, @EmployeeName, @EmployeeInternalCode, " +
+            "@ProfessionId, @ProfessionIdentifier, @ProfessionCode, @ProfessionName, @ProfessionSecondCode, " +
+            "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 
@@ -241,8 +242,9 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeItem.Employee?.EmployeeCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionId", ((object)EmployeeItem.Profession?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionIdentifier", ((object)EmployeeItem.Profession?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)EmployeeItem.Profession?.SecondCode) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionCode", ((object)EmployeeItem.Profession?.Code) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProfessionName", ((object)EmployeeItem.Profession?.Name) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@ProfessionSecondCode", ((object)EmployeeItem.Profession?.SecondCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country?.Id) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country?.Identifier) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country?.Code) ?? DBNull.Value);
