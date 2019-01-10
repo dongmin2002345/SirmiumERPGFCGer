@@ -290,7 +290,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
 
         public TaxAdministration Create(TaxAdministration taxAdministration)
         {
-            if (context.OutputInvoices.Where(x => x.Identifier != null && x.Identifier == taxAdministration.Identifier).Count() == 0)
+            if (context.TaxAdministrations.Where(x => x.Identifier != null && x.Identifier == taxAdministration.Identifier).Count() == 0)
             {
                 if (context.TaxAdministrations.Where(x => x.SecondCode == taxAdministration.SecondCode).Count() > 0)
                     throw new Exception("Poreska administracija sa datom šifrom već postoji u bazi!");

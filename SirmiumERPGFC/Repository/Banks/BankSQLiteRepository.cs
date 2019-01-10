@@ -124,7 +124,7 @@ namespace SirmiumERPGFC.Repository.Banks
 			return response;
 		}
 
-		public BankListResponse GetBanksForPopup(int companyId, Guid countryIdentifier, string filterString)
+		public BankListResponse GetBanksForPopup(int companyId, string filterString)
 		{
 			BankListResponse response = new BankListResponse();
 			List<BankViewModel> Banks = new List<BankViewModel>();
@@ -140,13 +140,11 @@ namespace SirmiumERPGFC.Repository.Banks
 						"WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
 						"AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
 						"AND CompanyId = @CompanyId " +
-                        "AND CountryIdentifier = @CountryIdentifier " +
                         "ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage;", db);
 					selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
-					selectCommand.Parameters.AddWithValue("@CountryIdentifier", countryIdentifier);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
 					SqliteDataReader query = selectCommand.ExecuteReader();

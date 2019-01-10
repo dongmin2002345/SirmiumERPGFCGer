@@ -117,16 +117,11 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    if (CurrentCountry != null)
-                    {
-                        new BankSQLiteRepository().Sync(bankService);
+                    new BankSQLiteRepository().Sync(bankService);
 
-                        BankListResponse regionResp = new BankSQLiteRepository().GetBanksForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
-                        if (regionResp.Success)
-                            BanksFromDB = new ObservableCollection<BankViewModel>(regionResp.Banks ?? new List<BankViewModel>());
-                        else
-                            BanksFromDB = new ObservableCollection<BankViewModel>();
-                    }
+                    BankListResponse regionResp = new BankSQLiteRepository().GetBanksForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (regionResp.Success)
+                        BanksFromDB = new ObservableCollection<BankViewModel>(regionResp.Banks ?? new List<BankViewModel>());
                     else
                         BanksFromDB = new ObservableCollection<BankViewModel>();
                 })
