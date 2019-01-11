@@ -572,10 +572,9 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(PhysicalPersonProfessionSQLiteRepository.PhysicalPersonItemTableCreatePart, db);
+                    createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("PhysicalPersonProfessions", "ProfessionSecondCode", "NVARCHAR(48) NULL");
-
-                    createTable.ExecuteReader();
 
 
                     if (withTableDrop)
@@ -690,10 +689,10 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeProfessionItemSQLiteRepository.EmployeeItemTableCreatePart, db);
+                    createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("EmployeeProfessionItems", "EmployeeInternalCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("EmployeeProfessionItems", "ProfessionSecondCode", "NVARCHAR(48) NULL");
-                    createTable.ExecuteReader();
 
 
                     if (withTableDrop)
@@ -706,10 +705,9 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(EmployeeLicenceItemSQLiteRepository.EmployeeItemTableCreatePart, db);
+                    createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("EmployeeLicenceItems", "EmployeeInternalCode", "NVARCHAR(48) NULL");
-
-                    createTable.ExecuteReader();
 
 
                     if (withTableDrop)
