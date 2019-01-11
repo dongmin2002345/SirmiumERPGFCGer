@@ -73,7 +73,7 @@ namespace SirmiumERPGFC
             if (e != null && e.Exception != null)
             {
                 var ex = (Exception)e.Exception;
-                string logMessage = ex.Message; // (Environment.StackTrace);
+                string logMessage = ex.StackTrace; // (Environment.StackTrace);
 
                 string appPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
                 appPath += "\\DispatcherStackTrace.txt";
@@ -95,7 +95,7 @@ namespace SirmiumERPGFC
             if (e != null && e.ExceptionObject != null) {
                 var ex = (Exception)e.ExceptionObject;
                 //string logMessage = ex.ToLogString(Environment.StackTrace);
-                string logMessage = ex.Message;
+                string logMessage = ex.StackTrace;
 
                 string appPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
                 appPath += "\\CurrentDomainStackTrace.txt";
