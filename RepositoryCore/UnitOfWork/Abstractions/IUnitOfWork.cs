@@ -36,7 +36,9 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IBusinessPartnerNoteRepository GetBusinessPartnerNoteRepository();
 
         IOutputInvoiceRepository GetOutputInvoiceRepository();
+        IOutputInvoiceNoteRepository GetOutputInvoiceNoteRepository();
 		IInputInvoiceRepository GetInputInvoiceRepository();
+        IInputInvoiceNoteRepository GetInputInvoiceNoteRepository();
 
 		ICityRepository GetCityRepository();
         IRegionRepository GetRegionRepository();

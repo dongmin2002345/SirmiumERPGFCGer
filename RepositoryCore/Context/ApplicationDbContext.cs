@@ -82,9 +82,11 @@ namespace RepositoryCore.Context
         public DbSet<BusinessPartnerNote> BusinessPartnerNotes { get; set; }
 
         public DbSet<OutputInvoice> OutputInvoices { get; set; }
-		public DbSet<InputInvoice> InputInvoices { get; set; }
+        public DbSet<OutputInvoiceNote> OutputInvoiceNotes { get; set; }
+        public DbSet<InputInvoice> InputInvoices { get; set; }
+        public DbSet<InputInvoiceNote> InputInvoiceNotes { get; set; }
 
-		public DbSet<City> Cities { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
         public DbSet<Country> Countries { get; set; }

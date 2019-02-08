@@ -7,6 +7,7 @@ using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.InputInvoices;
+using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -70,10 +71,97 @@ namespace SirmiumERPGFC.Views.InputInvoices
 				});
 			}
 		}
-		#endregion
+        #endregion
 
-		#region IsCreateProcess
-		private bool _IsCreateProcess;
+
+        #region InputInvoiceNotesFromDB
+        private ObservableCollection<InputInvoiceNoteViewModel> _InputInvoiceNotesFromDB;
+
+        public ObservableCollection<InputInvoiceNoteViewModel> InputInvoiceNotesFromDB
+        {
+            get { return _InputInvoiceNotesFromDB; }
+            set
+            {
+                if (_InputInvoiceNotesFromDB != value)
+                {
+                    _InputInvoiceNotesFromDB = value;
+                    NotifyPropertyChanged("InputInvoiceNotesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentInputInvoiceNoteForm
+        private InputInvoiceNoteViewModel _CurrentInputInvoiceNoteForm = new InputInvoiceNoteViewModel() { NoteDate = DateTime.Now };
+
+        public InputInvoiceNoteViewModel CurrentInputInvoiceNoteForm
+        {
+            get { return _CurrentInputInvoiceNoteForm; }
+            set
+            {
+                if (_CurrentInputInvoiceNoteForm != value)
+                {
+                    _CurrentInputInvoiceNoteForm = value;
+                    NotifyPropertyChanged("CurrentInputInvoiceNoteForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentInputInvoiceNoteDG
+        private InputInvoiceNoteViewModel _CurrentInputInvoiceNoteDG;
+
+        public InputInvoiceNoteViewModel CurrentInputInvoiceNoteDG
+        {
+            get { return _CurrentInputInvoiceNoteDG; }
+            set
+            {
+                if (_CurrentInputInvoiceNoteDG != value)
+                {
+                    _CurrentInputInvoiceNoteDG = value;
+                    NotifyPropertyChanged("CurrentInputInvoiceNoteDG");
+                }
+            }
+        }
+        #endregion
+
+        #region InputInvoiceNoteDataLoading
+        private bool _InputInvoiceNoteDataLoading;
+
+        public bool InputInvoiceNoteDataLoading
+        {
+            get { return _InputInvoiceNoteDataLoading; }
+            set
+            {
+                if (_InputInvoiceNoteDataLoading != value)
+                {
+                    _InputInvoiceNoteDataLoading = value;
+                    NotifyPropertyChanged("InputInvoiceNoteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsHeaderCreated
+        private bool _IsHeaderCreated;
+
+        public bool IsHeaderCreated
+        {
+            get { return _IsHeaderCreated; }
+            set
+            {
+                if (_IsHeaderCreated != value)
+                {
+                    _IsHeaderCreated = value;
+                    NotifyPropertyChanged("IsHeaderCreated");
+                }
+            }
+        }
+        #endregion
+
+        #region IsCreateProcess
+        private bool _IsCreateProcess;
 
 		public bool IsCreateProcess
 		{
@@ -153,16 +241,80 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 			this.DataContext = this;
 
-			currentInputInvoice = InputInvoiceViewModel;
+            IsHeaderCreated = !isCreateProcess;
+
+            currentInputInvoice = InputInvoiceViewModel;
 			IsCreateProcess = isCreateProcess;
 			IsPopup = isPopup;
-		}
 
-		#endregion
+            Thread displayThread = new Thread(() =>
+            {
+                DisplayInputInvoiceNoteData();
+            });
+            displayThread.IsBackground = true;
+            displayThread.Start();
+        }
 
-		#region Save and Cancel button
+        #endregion
 
-		private void btnSave_Click(object sender, RoutedEventArgs e)
+        #region Display data
+
+        private void DisplayInputInvoiceNoteData()
+        {
+            InputInvoiceNoteDataLoading = true;
+
+            InputInvoiceNoteListResponse response = new InputInvoiceNoteSQLiteRepository()
+                .GetInputInvoiceNotesByInputInvoice(MainWindow.CurrentCompanyId, currentInputInvoice.Identifier);
+
+            if (response.Success)
+            {
+                InputInvoiceNotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>(
+                    response.InputInvoiceNotes ?? new List<InputInvoiceNoteViewModel>());
+            }
+            else
+            {
+                InputInvoiceNotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>();
+            }
+
+            InputInvoiceNoteDataLoading = false;
+        }
+
+        #endregion
+
+
+        private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(currentInputInvoice.InvoiceNumber))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Broj fakture";
+                return;
+            }
+
+            #endregion
+
+            currentInputInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            currentInputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            currentInputInvoice.IsSynced = false;
+
+            InputInvoiceResponse response = new InputInvoiceSQLiteRepository().Delete(currentInputInvoice.Identifier);
+            response = new InputInvoiceSQLiteRepository().Create(currentInputInvoice);
+            if (response.Success)
+            {
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvanoUzvičnik"));
+                IsHeaderCreated = true;
+
+                txtNote.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        #region Save and Cancel button
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
 		{
 			#region Validation
 
@@ -194,7 +346,8 @@ namespace SirmiumERPGFC.Views.InputInvoices
 					return;
 				}
 
-				response = InputInvoiceService.Create(currentInputInvoice);
+                currentInputInvoice.InputInvoiceNotes = InputInvoiceNotesFromDB;
+                response = InputInvoiceService.Create(currentInputInvoice);
 				if (!response.Success)
 				{
 					MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
@@ -254,10 +407,104 @@ namespace SirmiumERPGFC.Views.InputInvoices
 				FlyoutHelper.CloseFlyout(this);
 		}
 
-		#endregion
+        #endregion
 
-		#region INotifyPropertyChanged implementation
-		public event PropertyChangedEventHandler PropertyChanged;
+        #region Add, edit, delete and cancel note
+
+        private void btnAddNote_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentInputInvoiceNoteForm.Note))
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
+                return;
+            }
+
+            if (CurrentInputInvoiceNoteForm.NoteDate == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_napomene"));
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new InputInvoiceNoteSQLiteRepository().Delete(CurrentInputInvoiceNoteForm.Identifier);
+
+            CurrentInputInvoiceNoteForm.InputInvoice = currentInputInvoice;
+            CurrentInputInvoiceNoteForm.Identifier = Guid.NewGuid();
+            CurrentInputInvoiceNoteForm.IsSynced = false;
+            CurrentInputInvoiceNoteForm.UpdatedAt = DateTime.Now;
+            CurrentInputInvoiceNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentInputInvoiceNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new InputInvoiceNoteSQLiteRepository().Create(CurrentInputInvoiceNoteForm);
+            if (response.Success)
+            {
+                CurrentInputInvoiceNoteForm = new InputInvoiceNoteViewModel();
+
+                Thread displayThread = new Thread(() => DisplayInputInvoiceNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtNote.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnEditNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentInputInvoiceNoteForm = CurrentInputInvoiceNoteDG;
+        }
+
+        private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("stavku_radnika")), "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new InputInvoiceNoteSQLiteRepository().Delete(CurrentInputInvoiceNoteDG.Identifier);
+
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
+
+                Thread displayThread = new Thread(() => DisplayInputInvoiceNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        private void btnCancelNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentInputInvoiceNoteForm = new InputInvoiceNoteViewModel();
+        }
+
+        #endregion
+
+        #region Mouse wheel event 
+
+        private void PreviewMouseWheelEv(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged implementation
+        public event PropertyChangedEventHandler PropertyChanged;
 
 		// This method is called by the Set accessor of each property.
 		// The CallerMemberName attribute that is applied to the optional propertyName
@@ -287,6 +534,5 @@ namespace SirmiumERPGFC.Views.InputInvoices
             if (fileNames.Length > 0)
                 currentInputInvoice.Path = fileNames[0];
         }
-
     }
 }
