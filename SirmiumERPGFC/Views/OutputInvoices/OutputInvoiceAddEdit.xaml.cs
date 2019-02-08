@@ -9,6 +9,7 @@ using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.OutputInvoices;
+using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -76,6 +77,93 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                            ChooseStatusConverter.ChooseO,
                            ChooseStatusConverter.ChooseB,
                 });
+            }
+        }
+        #endregion
+
+
+        #region OutputInvoiceNotesFromDB
+        private ObservableCollection<OutputInvoiceNoteViewModel> _OutputInvoiceNotesFromDB;
+
+        public ObservableCollection<OutputInvoiceNoteViewModel> OutputInvoiceNotesFromDB
+        {
+            get { return _OutputInvoiceNotesFromDB; }
+            set
+            {
+                if (_OutputInvoiceNotesFromDB != value)
+                {
+                    _OutputInvoiceNotesFromDB = value;
+                    NotifyPropertyChanged("OutputInvoiceNotesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentOutputInvoiceNoteForm
+        private OutputInvoiceNoteViewModel _CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel() { NoteDate = DateTime.Now };
+
+        public OutputInvoiceNoteViewModel CurrentOutputInvoiceNoteForm
+        {
+            get { return _CurrentOutputInvoiceNoteForm; }
+            set
+            {
+                if (_CurrentOutputInvoiceNoteForm != value)
+                {
+                    _CurrentOutputInvoiceNoteForm = value;
+                    NotifyPropertyChanged("CurrentOutputInvoiceNoteForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentOutputInvoiceNoteDG
+        private OutputInvoiceNoteViewModel _CurrentOutputInvoiceNoteDG;
+
+        public OutputInvoiceNoteViewModel CurrentOutputInvoiceNoteDG
+        {
+            get { return _CurrentOutputInvoiceNoteDG; }
+            set
+            {
+                if (_CurrentOutputInvoiceNoteDG != value)
+                {
+                    _CurrentOutputInvoiceNoteDG = value;
+                    NotifyPropertyChanged("CurrentOutputInvoiceNoteDG");
+                }
+            }
+        }
+        #endregion
+
+        #region OutputInvoiceNoteDataLoading
+        private bool _OutputInvoiceNoteDataLoading;
+
+        public bool OutputInvoiceNoteDataLoading
+        {
+            get { return _OutputInvoiceNoteDataLoading; }
+            set
+            {
+                if (_OutputInvoiceNoteDataLoading != value)
+                {
+                    _OutputInvoiceNoteDataLoading = value;
+                    NotifyPropertyChanged("OutputInvoiceNoteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsHeaderCreated
+        private bool _IsHeaderCreated;
+
+        public bool IsHeaderCreated
+        {
+            get { return _IsHeaderCreated; }
+            set
+            {
+                if (_IsHeaderCreated != value)
+                {
+                    _IsHeaderCreated = value;
+                    NotifyPropertyChanged("IsHeaderCreated");
+                }
             }
         }
         #endregion
@@ -162,9 +250,42 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             this.DataContext = this;
 
+            IsHeaderCreated = !isCreateProcess;
+
             CurrentOutputInvoice = OutputInvoiceViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
+
+            Thread displayThread = new Thread(() =>
+            {
+                DisplayOutputInvoiceNoteData();
+            });
+            displayThread.IsBackground = true;
+            displayThread.Start();
+        }
+
+        #endregion
+
+        #region Display data
+
+        private void DisplayOutputInvoiceNoteData()
+        {
+            OutputInvoiceNoteDataLoading = true;
+
+            OutputInvoiceNoteListResponse response = new OutputInvoiceNoteSQLiteRepository()
+                .GetOutputInvoiceNotesByOutputInvoice(MainWindow.CurrentCompanyId, CurrentOutputInvoice.Identifier);
+
+            if (response.Success)
+            {
+                OutputInvoiceNotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>(
+                    response.OutputInvoiceNotes ?? new List<OutputInvoiceNoteViewModel>());
+            }
+            else
+            {
+                OutputInvoiceNotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>();
+            }
+
+            OutputInvoiceNoteDataLoading = false;
         }
 
         #endregion
@@ -203,6 +324,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                     return;
                 }
 
+                CurrentOutputInvoice.OutputInvoiceNotes = OutputInvoiceNotesFromDB;
                 response = outputInvoiceService.Create(CurrentOutputInvoice);
                 if (!response.Success)
                 {
@@ -269,6 +391,100 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         #endregion
 
+        #region Add, edit, delete and cancel note
+
+        private void btnAddNote_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentOutputInvoiceNoteForm.Note))
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
+                return;
+            }
+
+            if (CurrentOutputInvoiceNoteForm.NoteDate == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_napomene"));
+                return;
+            }
+
+            #endregion
+
+            // IF update process, first delete item
+            new OutputInvoiceNoteSQLiteRepository().Delete(CurrentOutputInvoiceNoteForm.Identifier);
+
+            CurrentOutputInvoiceNoteForm.OutputInvoice = CurrentOutputInvoice;
+            CurrentOutputInvoiceNoteForm.Identifier = Guid.NewGuid();
+            CurrentOutputInvoiceNoteForm.IsSynced = false;
+            CurrentOutputInvoiceNoteForm.UpdatedAt = DateTime.Now;
+            CurrentOutputInvoiceNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentOutputInvoiceNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            var response = new OutputInvoiceNoteSQLiteRepository().Create(CurrentOutputInvoiceNoteForm);
+            if (response.Success)
+            {
+                CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel();
+
+                Thread displayThread = new Thread(() => DisplayOutputInvoiceNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+
+                txtNote.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
+        }
+
+        private void btnEditNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentOutputInvoiceNoteForm = CurrentOutputInvoiceNoteDG;
+        }
+
+        private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
+        {
+            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("stavku_radnika")), "");
+            var showDialog = deleteConfirmationForm.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                new OutputInvoiceNoteSQLiteRepository().Delete(CurrentOutputInvoiceNoteDG.Identifier);
+
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
+
+                Thread displayThread = new Thread(() => DisplayOutputInvoiceNoteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        }
+
+        private void btnCancelNote_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel();
+        }
+
+        #endregion
+
+        #region Mouse wheel event 
+
+        private void PreviewMouseWheelEv(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
+        }
+
+        #endregion
+
         #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -295,6 +511,36 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             if (fileNames.Length > 0)
                 CurrentOutputInvoice.Path = fileNames[0];
+        }
+
+        private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentOutputInvoice.InvoiceNumber))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Broj fakture";
+                return;
+            }
+
+            #endregion
+
+            CurrentOutputInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+            CurrentOutputInvoice.IsSynced = false;
+
+            OutputInvoiceResponse response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
+            response = new OutputInvoiceSQLiteRepository().Create(CurrentOutputInvoice);
+            if (response.Success)
+            {
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvanoUzvičnik"));
+                IsHeaderCreated = true;
+
+                txtNote.Focus();
+            }
+            else
+                MainWindow.ErrorMessage = response.Message;
         }
     }
 }

@@ -59,9 +59,11 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerNoteRepository businessPartnerNoteRepository;
 
         private IOutputInvoiceRepository outputInvoiceRepository;
-		private IInputInvoiceRepository inputInvoiceRepository;
+        private IOutputInvoiceNoteRepository outputInvoiceNoteRepository;
+        private IInputInvoiceRepository inputInvoiceRepository;
+        private IInputInvoiceNoteRepository inputInvoiceNoteRepository;
 
-		private ICityRepository cityRepository;
+        private ICityRepository cityRepository;
         private IRegionRepository regionRepository;
         private IMunicipalityRepository municipalityRepository;
         private ICountryRepository countryRepository;
@@ -246,14 +248,29 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return outputInvoiceRepository;
         }
 
-		public IInputInvoiceRepository GetInputInvoiceRepository()
+        public IOutputInvoiceNoteRepository GetOutputInvoiceNoteRepository()
+        {
+            if (outputInvoiceNoteRepository == null)
+                outputInvoiceNoteRepository = new OutputInvoiceNoteViewRepository(context);
+            return outputInvoiceNoteRepository;
+        }
+
+        public IInputInvoiceRepository GetInputInvoiceRepository()
 		{
 			if (inputInvoiceRepository == null)
 				inputInvoiceRepository = new InputInvoiceViewRepository(context);
 			return inputInvoiceRepository;
 		}
 
-		public ICountryRepository GetCountryRepository()
+        public IInputInvoiceNoteRepository GetInputInvoiceNoteRepository()
+        {
+            if (inputInvoiceNoteRepository == null)
+                inputInvoiceNoteRepository = new InputInvoiceNoteViewRepository(context);
+            return inputInvoiceNoteRepository;
+        }
+
+
+        public ICountryRepository GetCountryRepository()
         {
             if (countryRepository == null)
                 countryRepository = new CountryViewRepository(context);

@@ -161,9 +161,11 @@ namespace SirmiumERPWeb
             services.AddScoped<IBusinessPartnerNoteService, BusinessPartnerNoteService>();
 
             services.AddScoped<IOutputInvoiceService, OutputInvoiceService>();
-			services.AddScoped<IInputInvoiceService, InputInvoiceService>();
+            services.AddScoped<IOutputInvoiceNoteService, OutputInvoiceNoteService>();
+            services.AddScoped<IInputInvoiceService, InputInvoiceService>();
+            services.AddScoped<IInputInvoiceNoteService, InputInvoiceNoteService>();
 
-			services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICityService, CityService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<IMunicipalityService, MunicipalityService>();
             services.AddScoped<ICountryService, CountryService>();
@@ -260,7 +262,9 @@ namespace SirmiumERPWeb
             //UserView.CreateView();
 
             InputInvoiceView.CreateView();
+            InputInvoiceNoteView.CreateView();
             OutputInvoiceView.CreateView();
+            OutputInvoiceNoteView.CreateView();
 
             CountryView.CreateView();
             RegionView.CreateView();
