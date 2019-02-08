@@ -629,5 +629,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
+		private void btnConstructionSiteExcel_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				ConstructionSiteExcelReport.Show(CurrentConstructionSite);
+			}
+			catch (Exception ex)
+			{
+				MainWindow.ErrorMessage = ex.Message;
+			}
+		}
 	}
 }

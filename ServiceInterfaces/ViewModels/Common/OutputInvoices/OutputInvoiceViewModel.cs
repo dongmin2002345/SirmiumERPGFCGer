@@ -2,6 +2,7 @@
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -316,6 +317,24 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
                 {
                     _Path = value;
                     NotifyPropertyChanged("Path");
+                }
+            }
+        }
+        #endregion
+
+
+        #region OutputInvoiceNotes
+        private ObservableCollection<OutputInvoiceNoteViewModel> _OutputInvoiceNotes;
+
+        public ObservableCollection<OutputInvoiceNoteViewModel> OutputInvoiceNotes
+        {
+            get { return _OutputInvoiceNotes; }
+            set
+            {
+                if (_OutputInvoiceNotes != value)
+                {
+                    _OutputInvoiceNotes = value;
+                    NotifyPropertyChanged("OutputInvoiceNotes");
                 }
             }
         }

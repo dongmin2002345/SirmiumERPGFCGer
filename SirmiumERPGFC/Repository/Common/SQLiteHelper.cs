@@ -3,7 +3,9 @@ using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
@@ -265,6 +267,38 @@ namespace SirmiumERPGFC.Repository.Common
                     Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
                     Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
                     Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
+                };
+        }
+
+        public static InputInvoiceViewModel GetInputInvoice(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 3;
+                return null;
+            }
+            else
+                return new InputInvoiceViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                };
+        }
+
+        public static OutputInvoiceViewModel GetOutputInvoice(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 3;
+                return null;
+            }
+            else
+                return new OutputInvoiceViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
                 };
         }
 

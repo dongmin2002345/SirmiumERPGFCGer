@@ -816,6 +816,20 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("OutputInvoices", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
+                    #region OutputInvoiceNotes
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE OutputInvoiceNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(OutputInvoiceNoteSQLiteRepository.OutputInvoiceNoteTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #region InputInvoices
                     if (withTableDrop)
 					{
@@ -835,9 +849,23 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("InputInvoices", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
+                    #region InputInvoiceNotes
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE InputInvoiceNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(InputInvoiceNoteSQLiteRepository.InputInvoiceNoteTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
                     #endregion
                 }
-			}
+            }
 
             catch (SqliteException e)
             {

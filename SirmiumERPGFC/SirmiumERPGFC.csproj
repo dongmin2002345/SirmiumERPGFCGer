@@ -186,6 +186,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerGerExcelReport.cs" />
+    <Compile Include="Reports\ConstructionSites\ConstructionSiteExcelReport.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerReport.cs" />
     <Compile Include="Reports\ConstructionSites\ConstructionSitesExcelReport.cs" />
     <Compile Include="Reports\Employees\EmployeeExcelReport.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Repository\Employees\PhysicalPersonNoteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\PhysicalPersonProfessionSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\PhysicalPersonSQLiteRepository.cs" />
+    <Compile Include="Repository\InputInvoices\InputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\InputInvoices\InputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Limitations\LimitationEmailSQLiteRepository.cs" />
     <Compile Include="Repository\Limitations\LimitationSQLiteRepository.cs" />
@@ -242,6 +244,7 @@
     <Compile Include="Repository\Locations\CountrySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
+    <Compile Include="Repository\OutputInvoices\OutputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
