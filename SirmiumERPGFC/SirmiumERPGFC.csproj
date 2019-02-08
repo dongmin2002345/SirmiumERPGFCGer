@@ -187,6 +187,7 @@
     <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerGerExcelReport.cs" />
     <Compile Include="Reports\ConstructionSites\ConstructionSiteExcelReport.cs" />
+    <Compile Include="Reports\BusinessPartners\BusinessPartnerReport.cs" />
     <Compile Include="Reports\ConstructionSites\ConstructionSitesExcelReport.cs" />
     <Compile Include="Reports\Employees\EmployeeExcelReport.cs" />
     <Compile Include="Reports\Employees\EmployeesExcelReport.cs" />

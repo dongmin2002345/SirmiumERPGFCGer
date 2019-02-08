@@ -172,6 +172,11 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button x:Name="btnEmployeeExcel" Click="btnBusinessPartnerReport_Click" Margin="2 0 2 0" CommandParameter="{Binding}" ToolTip="Izvezi u EXCEL">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\excel.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                            </StackPanel>
+                                        </Button>
                                         <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="2 0 0 0" CommandParameter="{Binding}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />

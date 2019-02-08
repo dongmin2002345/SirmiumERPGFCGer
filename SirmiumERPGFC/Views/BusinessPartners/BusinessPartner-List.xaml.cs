@@ -714,6 +714,18 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
-	}
+
+        private void btnBusinessPartnerReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusinessPartnerReport.Show(CurrentBusinessPartner);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+    }
 }
 
