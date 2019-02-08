@@ -53,7 +53,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 
 
 			int leftSideMin = 1;
-			int rightSideMax = 9;
+			int rightSideMax = 8;
 
 			int rowCounter = 1;
 
@@ -76,7 +76,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Size = 12;
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Merge();
 
-			sheet1.Cells[rowCounter, leftSideMin] = "OSNOVNI PODACI";
+			sheet1.Cells[rowCounter, leftSideMin] = "OSNOVNI PODACI/GRUNDDATEN ÜBER DIE BAUSTELLEN";
 
 			rowCounter++;
 			//rowCounter++; 
@@ -92,7 +92,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Šifra: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Šifra/Code: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -106,7 +106,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Šifra gradilišta: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Šifra gradilišta/Vertragsnummer: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -119,26 +119,11 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			columnCounter = leftSideMin;
 			rowCounter++;
 
-
 			sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Adresa: ";
-
-			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
-			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter + 1] = constructionSite.Address;
-
-			columnCounter += 4;
-
-			sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
-			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Ime: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Naziv gradilišta/Baustelle: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -146,23 +131,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
 			sheet1.Cells[rowCounter, columnCounter + 1] = constructionSite.Name;
 
-			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
-
-			columnCounter = leftSideMin;
-			rowCounter++;
-
-
-			sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
-			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Grad: ";
-
-			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
-			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
-			sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter + 1] = constructionSite.City?.Name;
+			
 
 			columnCounter += 4;
 
@@ -170,7 +139,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Država: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Država/Land: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -188,7 +157,39 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Maksimalni broj radnika: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Grad/Stadt: ";
+
+			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
+			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
+			sheet1.Cells[rowCounter, columnCounter + 1] = constructionSite.City?.Name;
+
+			columnCounter += 4;
+
+			sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
+			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
+			sheet1.Cells[rowCounter, columnCounter] = "Adresa/Adresse: ";
+
+			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
+			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
+			sheet1.Cells[rowCounter, columnCounter + 1] = constructionSite.Address;
+
+			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
+
+			columnCounter = leftSideMin;
+			rowCounter++;
+
+
+			sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
+			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
+			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
+			sheet1.Cells[rowCounter, columnCounter] = "Maksimalni broj radnika/Maximale Anzahl der Arbeiter: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -202,7 +203,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Datum predugovora: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Datum predugovora/Werkvertrages von: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -220,7 +221,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Početak ugovora: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Početak ugovora/Vertragsbeginn: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -234,7 +235,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
 			sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-			sheet1.Cells[rowCounter, columnCounter] = "Istek ugovora: ";
+			sheet1.Cells[rowCounter, columnCounter] = "Istek ugovora/Vertragsende: ";
 
 			sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
 			sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -261,13 +262,25 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Size = 12;
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Merge();
 
-			sheet1.Cells[rowCounter, leftSideMin] = "PODACI O DOKUMENTIMA";
+			sheet1.Cells[rowCounter, leftSideMin] = "DOKUMENTI/DOKUMENTE";
 
 			rowCounter++;
 
 			var constructionSiteDocuments = new ConstructionSiteDocumentSQLiteRepository().GetConstructionSiteDocumentsByConstructionSite(MainWindow.CurrentCompanyId, constructionSite.Identifier)?.ConstructionSiteDocuments ?? new List<ConstructionSiteDocumentViewModel>();
 
 			rowCounter++;
+
+			//sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
+			//sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			//sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
+			//sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
+			//sheet1.Cells[rowCounter, columnCounter] = "DATUM: ";
+
+			//sheet1.Range[sheet1.Cells[rowCounter, columnCounter + 1], sheet1.Cells[rowCounter, columnCounter + 3]].Merge();
+			//sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			//sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
+			//sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
+			//sheet1.Cells[rowCounter, columnCounter + 1] = constructionSiteDocuments.;
 
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Interior.Color = XlRgbColor.rgbLightGray;
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -278,11 +291,11 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 
 			sheet1.Cells[rowCounter, leftSideMin] = "RB.";
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin + 1], sheet1.Cells[rowCounter, leftSideMin + 2]].Merge();
-			sheet1.Cells[rowCounter, leftSideMin + 1] = "NAZIV DOKUMENTA";
+			sheet1.Cells[rowCounter, leftSideMin + 1] = "IME/NAME";
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin + 3], sheet1.Cells[rowCounter, leftSideMin + 6]].Merge();
-			sheet1.Cells[rowCounter, leftSideMin + 3] = "DATUM UNOSA";
-			sheet1.Cells[rowCounter, leftSideMin + 7] = "PUTANJA";
-			
+			sheet1.Cells[rowCounter, leftSideMin + 3] = "DATUM";
+			//sheet1.Cells[rowCounter, leftSideMin + 7] = "PUTANJA";
+
 
 			rowCounter++;
 			//rowCounter++; 
@@ -317,12 +330,12 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 				sheet1.Range[sheet1.Cells[rowCounter, columnCounterItem], sheet1.Cells[rowCounter, columnCounterItem + 3]].Merge();
 				sheet1.Cells[rowCounter, columnCounterItem] = constructionSiteDocuments[i].CreateDate?.ToString("dd.MM.yyyy");
 
-				columnCounterItem += 4;
+				//columnCounterItem += 4;
 
-				sheet1.Cells[rowCounter, columnCounterItem].HorizontalAlignment = XlHAlign.xlHAlignCenter;
-				sheet1.Cells[rowCounter, columnCounterItem].VerticalAlignment = XlVAlign.xlVAlignCenter;
-				sheet1.Cells[rowCounter, columnCounterItem].Font.Size = 10;
-				sheet1.Cells[rowCounter, columnCounterItem] = constructionSiteDocuments[i].Path;
+				//sheet1.Cells[rowCounter, columnCounterItem].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+				//sheet1.Cells[rowCounter, columnCounterItem].VerticalAlignment = XlVAlign.xlVAlignCenter;
+				//sheet1.Cells[rowCounter, columnCounterItem].Font.Size = 10;
+				//sheet1.Cells[rowCounter, columnCounterItem] = constructionSiteDocuments[i].Path;
 
 				sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
 
@@ -350,7 +363,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Size = 12;
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Merge();
 
-			sheet1.Cells[rowCounter, leftSideMin] = "NAPOMENE";
+			sheet1.Cells[rowCounter, leftSideMin] = "NAPOMENE/ANMERKUNG";
 
 			rowCounter++;
 
@@ -367,8 +380,8 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 
 			sheet1.Cells[rowCounter, leftSideMin] = "RB.";
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin + 1], sheet1.Cells[rowCounter, leftSideMin + 7]].Merge();
-			sheet1.Cells[rowCounter, leftSideMin + 1] = "NAPOMENA";
-			sheet1.Cells[rowCounter, leftSideMin + 8] = "DATUM NAPOMENE";
+			sheet1.Cells[rowCounter, leftSideMin + 1] = "NAPOMENA/ANMERKUNG";
+			sheet1.Cells[rowCounter, leftSideMin + 8] = "DATUM";
 
 			rowCounter++;
 			//rowCounter++; 
@@ -425,7 +438,7 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 
 			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]].Merge();
 			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]].Font.Size = 10;
-			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]] = "Odgovorno lice";
+			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]] = "Odgovorno lice/Verantwortliches Gesicht";
 
 			rowCounter++;
 			rowCounter++;
