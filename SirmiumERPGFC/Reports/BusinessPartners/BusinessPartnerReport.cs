@@ -119,7 +119,6 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
             columnCounter = leftSideMin;
             rowCounter++;
 
-
             sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -183,7 +182,6 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
 
             columnCounter = leftSideMin;
             rowCounter++;
-
 
             sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
@@ -394,7 +392,7 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
             sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
             sheet1.Cells[rowCounter, columnCounter + 1] = businessPartner.IsInPDVGer ? "Ne/Nein" : "Da/Ja";
 
-            //columnCounter += 4;
+            //columnCounter += 4; PROBLEM!!!
 
             //sheet1.Cells[rowCounter, columnCounter].Interior.Color = XlRgbColor.rgbLightGray;
             //sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
