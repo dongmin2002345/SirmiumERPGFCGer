@@ -39,6 +39,7 @@ namespace DomainCore.Employees
         public int? PassportCityId { get; set; }
         public City PassportCity { get; set; }
         public string Passport { get; set; }
+        public string PassportMup { get; set; }
 
         public DateTime? VisaFrom { get; set; }
         public DateTime? VisaTo { get; set; }

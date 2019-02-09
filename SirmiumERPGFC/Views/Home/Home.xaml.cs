@@ -233,12 +233,18 @@ namespace SirmiumERPGFC.Views.Home
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-
             ToDoViewModel toDo = new ToDoViewModel();
             toDo.Identifier = Guid.NewGuid();
             toDo.ToDoDate = DateTime.Now;
 
             ToDoAddEdit addEditForm = new ToDoAddEdit(toDo, true);
+            addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            ToDoAddEdit addEditForm = new ToDoAddEdit(CurrentToDo, false);
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
         }

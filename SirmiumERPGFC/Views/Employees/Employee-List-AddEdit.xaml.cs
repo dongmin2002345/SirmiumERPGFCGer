@@ -277,7 +277,7 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
         #region CurrentEmployeeDocumentForm
-        private EmployeeDocumentViewModel _CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
+        private EmployeeDocumentViewModel _CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel() { CreateDate = DateTime.Now };
 
         public EmployeeDocumentViewModel CurrentEmployeeDocumentForm
         {
@@ -877,6 +877,7 @@ namespace SirmiumERPGFC.Views.Employees
             if (response.Success)
             {
                 CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
+                CurrentEmployeeDocumentForm.CreateDate = DateTime.Now;
 
                 Thread displayThread = new Thread(() => DisplayDocumentData());
                 displayThread.IsBackground = true;
@@ -891,6 +892,7 @@ namespace SirmiumERPGFC.Views.Employees
         private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
         {
             CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
+            CurrentEmployeeDocumentForm.CreateDate = DateTime.Now;
         }
 
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)

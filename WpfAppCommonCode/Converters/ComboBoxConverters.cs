@@ -170,7 +170,7 @@ namespace WpfAppCommonCode.Converters
             if (value != null && value.ToString().Length > 0)
             {
                 double toRetTmp = 0;
-                bool success = Double.TryParse(value.ToString().Replace("'", "").Replace(',', '.'), NumberStyles.AllowDecimalPoint, clone, out toRetTmp);
+                bool success = Double.TryParse(value.ToString().Replace("'", "").Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, clone, out toRetTmp);
                 if (success)
                 {
                     toRet = Math.Round(toRetTmp, 2);

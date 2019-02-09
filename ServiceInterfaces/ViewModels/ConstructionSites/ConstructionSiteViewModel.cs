@@ -128,6 +128,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region Status
+        private int _Status;
+
+        public int Status
+        {
+            get { return _Status; }
+            set
+            {
+                if (_Status != value)
+                {
+                    _Status = value;
+                    NotifyPropertyChanged("Status");
+                }
+            }
+        }
+        #endregion
+
 
         #region ProContractDate
         private DateTime _ProContractDate;

@@ -450,6 +450,7 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryIdentifier", "GUID NULL");
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "Status", "INTEGER NULL");
 
                     if (withTableDrop)
                     {
@@ -614,6 +615,7 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ResidenceCountryIdentifier", "GUID NULL");
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ResidenceCountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ResidenceCountryName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("Employees", "PassportMup", "NVARCHAR(2048) NULL");
 
                     if (withTableDrop)
                     {

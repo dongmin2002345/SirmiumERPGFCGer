@@ -26,10 +26,10 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource username}" />
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtUsername" Text="Admin" />
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtUsername" Text="" />
 
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource password}" />
-        <PasswordBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtPasswordBox" Password="Secret123$" />
+        <PasswordBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtPasswordBox" Password="" />
 
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource company}" />
         <ComboBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="cbxLanguages" SelectedValuePath="Content" >

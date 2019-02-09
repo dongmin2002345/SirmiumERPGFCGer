@@ -119,8 +119,10 @@
     <system:String x:Key="Istorija_radnika">Istorija radnika</system:String>
     <system:String x:Key="Izlazne_fakture">Izlazne fakture</system:String>
     <system:String x:Key="Iznos_bruto">Iznos bruto</system:String>
+    <system:String x:Key="Iznos_bruto_euro">Iznos bruto (euro)</system:String>
     <system:String x:Key="Iznos_brutoDvotacka">Iznos bruto:</system:String>
     <system:String x:Key="Iznos_neto">Iznos neto</system:String>
+    <system:String x:Key="Iznos_neto_euro">Iznos neto (euro)</system:String>
     <system:String x:Key="Iznos_netoDvotacka">Iznos neto:</system:String>
     <system:String x:Key="JBKJSDvotacka">JBKJS:</system:String>
     <system:String x:Key="Kalkulacije_u_okviru_gradilišta">Kalkulacije u okviru gradilišta</system:String>
@@ -194,6 +196,7 @@
     <system:String x:Key="Oznaka_državeDvotacka">Oznaka države:</system:String>
     <system:String x:Key="Pasoš">Pasoš</system:String>
     <system:String x:Key="PDV">PDV</system:String>
+    <system:String x:Key="PDV_euro">PDV (euro)</system:String>
     <system:String x:Key="PDV_brojDvotacka">PDV broj:</system:String>
     <system:String x:Key="PDVProcenat">PDV%</system:String>
     <system:String x:Key="PDVProcenatDvotacka">PDV%:</system:String>
