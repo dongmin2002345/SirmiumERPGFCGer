@@ -151,6 +151,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.Address = employee.Address;
 
                     dbEntry.Passport = employee.Passport;
+                    dbEntry.PassportMup = employee.PassportMup;
                     dbEntry.VisaFrom = employee.VisaFrom;
                     dbEntry.VisaTo = employee.VisaTo;
 

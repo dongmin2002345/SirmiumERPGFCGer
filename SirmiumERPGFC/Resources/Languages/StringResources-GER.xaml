@@ -118,8 +118,10 @@
     <system:String x:Key="Istorija_radnika">Arbeitergeschichte</system:String>
     <system:String x:Key="Izlazne_fakture">Ausgangsrechnungen</system:String>
     <system:String x:Key="Iznos_bruto">Betrag Brutto</system:String>
+    <system:String x:Key="Iznos_bruto_euro">Betrag Brutto (euro)</system:String>
     <system:String x:Key="Iznos_brutoDvotacka">Betrag Brutto:</system:String>
     <system:String x:Key="Iznos_neto">Betrag Netto</system:String>
+    <system:String x:Key="Iznos_neto_euro">Betrag Netto (euro)</system:String>
     <system:String x:Key="Iznos_netoDvotacka">Betrag Netto:</system:String>
     <system:String x:Key="JBKJSDvotacka">JBKJS:</system:String>
     <system:String x:Key="Kalkulacije_u_okviru_gradilišta">Berechnungen innerhalb des Baustelle</system:String>
@@ -193,6 +195,7 @@
     <system:String x:Key="Oznaka_državeDvotacka">Ländercode:</system:String>
     <system:String x:Key="Pasoš">Reisepass</system:String>
     <system:String x:Key="PDV">MwSt</system:String>
+    <system:String x:Key="PDV_euro">MwSt (euro)</system:String>
     <system:String x:Key="PDV_brojDvotacka">USt-IdNr .:</system:String>
     <system:String x:Key="PDVProcenat">MwSt.%</system:String>
     <system:String x:Key="PDVProcenatDvotacka">MwSt%:</system:String>

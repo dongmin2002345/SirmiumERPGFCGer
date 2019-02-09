@@ -286,6 +286,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region PassportMup
+        private string _PassportMup;
+
+        public string PassportMup
+        {
+            get { return _PassportMup; }
+            set
+            {
+                if (_PassportMup != value)
+                {
+                    _PassportMup = value;
+                    NotifyPropertyChanged("PassportMup");
+                }
+            }
+        }
+        #endregion
+
         #region VisaFrom
         private DateTime? _VisaFrom = DateTime.Now;
 
