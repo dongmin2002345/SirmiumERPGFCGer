@@ -578,6 +578,8 @@
 
     <system:String x:Key="Obavezno_poljeDvotačka_Ime">Obavezno polje: Ime</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Datum_rodjenja">Obavezno polje: Datum rođenja</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Vrsta_dozvole">Obavezno polje: Vrsta dozvole</system:String>
+
 
 
 

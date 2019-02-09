@@ -1060,7 +1060,7 @@ namespace SirmiumERPGFC.Views.Employees
                     }
                     else
                     {
-                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik")); + response.Message;
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik")) + response.Message;
 
                         SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                         SubmitButtonEnabled = true;
