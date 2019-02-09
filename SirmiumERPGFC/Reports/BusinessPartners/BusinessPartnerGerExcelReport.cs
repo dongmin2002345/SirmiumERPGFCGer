@@ -75,7 +75,7 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Bold = true;
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Size = 8;
 
-			string[,] tabelaNasloviKolona = new string[,] { { "RB.", "NAZIV KOMPANIJE", "DRŽAVA", "DELATNOST", "PORESKI BROJ", "REGISTARSKI BROJ", "OPŠTINA", "GRAD", "ADRESA" } };
+			string[,] tabelaNasloviKolona = new string[,] { { "RB.", "NAZIV KOMPANIJE/NAME DES UNTERNEHMENS", "DRŽAVA/LAND", "DELATNOST/AKTIVITÄT", "PORESKI BROJ/STEUERNUMMER", "REGISTARSKI BROJ/REGISTRIERUNGSNUMMER", "OPŠTINA/GEMEINSCHAFT", "GRADSTADT", "ADRESA/ADRESSE" } };
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]] = tabelaNasloviKolona;
 
 			rowCounter++;
@@ -173,7 +173,7 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
 
 			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]].Merge();
 			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]].Font.Size = 10;
-			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]] = "Odgovorno lice";
+			sheet1.Range[sheet1.Cells[rowCounter, 5], sheet1.Cells[rowCounter, 6]] = "Odgovorno lice/Verantwortliche Person";
 
 			rowCounter++;
 			rowCounter++;
