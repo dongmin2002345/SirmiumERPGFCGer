@@ -204,7 +204,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="Telefoni" Margin="2 1 1 2">
+            <GroupBox Grid.Column="0" Header="{DynamicResource Telefoni}" Margin="2 1 1 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="5" Grid.ColumnSpan="6" IsActive="{Binding PhoneDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgPhones"
@@ -225,18 +225,18 @@
                               SelectedItem="{Binding Path=CurrentPhoneDG, Mode=TwoWay}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="ContactPersonFirstName" Header="Ime" Binding="{Binding ContactPersonFirstName}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="ContactPersonLastName" Header="Prezime" Binding="{Binding ContactPersonLastName}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Mobile" Header="Mobilni" Binding="{Binding Path=Mobile}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Phone" Header="Telefon" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Email" Header="E-mail" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Birthday" Header="Rodjendan" Binding="{Binding Path=Birthday, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="ContactPersonFirstName" Header="{DynamicResource Ime}" Binding="{Binding ContactPersonFirstName}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="ContactPersonLastName" Header="{DynamicResource Prezime}" Binding="{Binding ContactPersonLastName}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Mobile" Header="{DynamicResource Mobilni}" Binding="{Binding Path=Mobile}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Phone" Header="{DynamicResource Telefoni}" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrtamail}" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Birthday" Header="{DynamicResource Rodjendan}" Binding="{Binding Path=Birthday, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Column="1" Header="Dokumenti" Margin="1 1 2 2">
+            <GroupBox Grid.Column="1" Header="{DynamicResource Dokumenti}" Margin="1 1 2 2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="53*"/>
@@ -257,8 +257,8 @@
                             ItemsSource="{Binding Path=BusinessPartnerDocumentsFromDB}"
                               SelectedItem="{Binding Path=CurrentBusinessPartnerDocument, Mode=TwoWay}" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
-                            <DataGridTextColumn SortMemberPath="CreateDate" Header="Datum krerianja" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                            <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_kreiranja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                             <DataGridTemplateColumn Header="">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
