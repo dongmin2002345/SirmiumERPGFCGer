@@ -93,7 +93,7 @@
     <system:String x:Key="Fajlovi_za_radnika">Dateien für Mitarbeiter</system:String>
     <system:String x:Key="Fax">Fax</system:String>
     <system:String x:Key="FaxDvotacka">Fax:</system:String>
-    <system:String x:Key="FIRME">Unternhemen</system:String>
+    <system:String x:Key="FIRME">UNTERNEHMEN</system:String>
     <system:String x:Key="Firme_na_odabranom_gradilištu">Firmen auf der auserwählten Baustelle</system:String>
     <system:String x:Key="Firme_po_gradilištu">Firmen auf der Baustelle</system:String>
     <system:String x:Key="Firme_unutar_gradilišta">Firmen innerhalb der Baustelle</system:String>
@@ -300,7 +300,7 @@
     <system:String x:Key="Šifra_sektoraDvotacka">Sektorcode:</system:String>
     <system:String x:Key="Šifra_zanimanja">Tätigkeitscode</system:String>
     <system:String x:Key="Šifra_zanimanjaDvotacka">Berufscode:</system:String>
-    <system:String x:Key="ŠifraDvotacka">Kunden-Nr.</system:String>
+    <system:String x:Key="ŠifraDvotacka">Nummer</system:String>
     <system:String x:Key="Sin">Sohn</system:String>
     <system:String x:Key="Slobodan_tekstDvotacka">Anmerkung:</system:String>
     <system:String x:Key="Spajanje_porodice">Familienzusammenführung</system:String>
@@ -323,8 +323,8 @@
     <system:String x:Key="Unos_podsetnika">Erinnerung eingeben</system:String>
     <system:String x:Key="Unos_radnika_i_cena_za_gradilište">Mitarbeitereintrag und Baustellepreis</system:String>
     <system:String x:Key="Uzimanje_vizeDvotacka">Visum erhalten</system:String>
-    <system:String x:Key="Valuta">Währung</system:String>
-    <system:String x:Key="ValutaDvotacka">Währung:</system:String>
+    <system:String x:Key="Valuta">Valuta</system:String>
+    <system:String x:Key="ValutaDvotacka">Valuta:</system:String>
     <system:String x:Key="Važi_do">Gültig bis</system:String>
     <system:String x:Key="Važi_doDvotacka">Gültig bis:</system:String>
     <system:String x:Key="Važi_od">Gültig von</system:String>
@@ -403,7 +403,7 @@
     <system:String x:Key="Stavka_je_uspešno_obrisanaUzvičnik">Artikel erfolgreich gelöscht!</system:String>
     <system:String x:Key="Zaglavlje_nije_sačuvano">Kopfzeile nicht gespeichert</system:String>
     <system:String x:Key="Podaci_su_uspešno_sačuvaniUzvičnik">Daten erfolgreich gespeichert!</system:String>
-    <system:String x:Key="Proknjiži">Nachprüfen</system:String>
+    <system:String x:Key="Proknjiži">Speichern</system:String>
     <system:String x:Key="Greška_kod_čuvanja_na_serveruUzvičnik">Fehler beim Speichern des Servers!</system:String>
     <system:String x:Key="Korisnici_TriTacke">Benutzer ...</system:String>
     <system:String x:Key="Prava_pristupa_TriTacke">Richtiger Zugang ...</system:String>
@@ -575,7 +575,8 @@
     <system:String x:Key="Odbitak_poreza_DODvotacka">Freistellung BIS:</system:String>
     <system:String x:Key="Drzava_TriTačke">Land ...</system:String>
 
-
+    <system:String x:Key="Obavezno_poljeDvotačka_Ime">Pflichtfeld: Name</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Datum_rodjenja">Pflichtfeld: Geburtsdatum</system:String>
 
 
 

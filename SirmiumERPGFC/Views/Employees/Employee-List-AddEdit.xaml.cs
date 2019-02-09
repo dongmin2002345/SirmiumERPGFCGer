@@ -411,7 +411,7 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
         #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
+        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
 
         public string SaveButtonContent
         {
@@ -446,7 +446,7 @@ namespace SirmiumERPGFC.Views.Employees
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " Sačuvaj i proknjiži ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Sačuvaj_i_proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -730,7 +730,7 @@ namespace SirmiumERPGFC.Views.Employees
             var response = sqLite.Create(CurrentEmployee);
             if (response.Success)
             {
-                MainWindow.SuccessMessage = "Zaglavlje je uspešno sačuvano!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvanoUzvičnik"));
                 IsHeaderCreated = true;
 
                 popCountry2.txtCountry.Focus();
@@ -749,13 +749,13 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (String.IsNullOrEmpty(CurrentEmployeeItemForm.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Ime";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Ime"));
                 return;
             }
 
             if (CurrentEmployeeItemForm.DateOfBirth == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Datum rođenja";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_rodjenja"));
                 return;
             }
 
@@ -801,7 +801,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 new EmployeeItemSQLiteRepository().Delete(CurrentEmployeeItemDG.Identifier);
 
-                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayEmployeeItemData());
                 displayThread.IsBackground = true;
@@ -910,7 +910,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 new EmployeeDocumentSQLiteRepository().Delete(CurrentEmployeeDocumentDG.Identifier);
 
-                MainWindow.SuccessMessage = "Dokument je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dokument_je_uspešno_obrisanUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayDocumentData());
                 displayThread.IsBackground = true;
@@ -982,7 +982,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 new EmployeeNoteSQLiteRepository().Delete(CurrentEmployeeNoteDG.Identifier);
 
-                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayEmployeeNoteData());
                 displayThread.IsBackground = true;
@@ -1024,7 +1024,7 @@ namespace SirmiumERPGFC.Views.Employees
 
                 Thread th = new Thread(() =>
                 {
-                    SubmitButtonContent = " Čuvanje u toku... ";
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                     SubmitButtonEnabled = false;
 
                     CurrentEmployee.EmployeeItems = EmployeeItemsFromDB;
@@ -1038,8 +1038,8 @@ namespace SirmiumERPGFC.Views.Employees
                     if (response.Success)
                     {
                         new EmployeeSQLiteRepository().UpdateSyncStatus(CurrentEmployee.Identifier, response.Employee.Code, response.Employee.UpdatedAt, response.Employee.Id, true);
-                        MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                        SubmitButtonContent = " Proknjiži ";
+                        MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                        SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                         SubmitButtonEnabled = true;
 
                         EmployeeCreated();
@@ -1060,9 +1060,9 @@ namespace SirmiumERPGFC.Views.Employees
                     }
                     else
                     {
-                        MainWindow.ErrorMessage = "Greška kod čuvanja na serveru! " + response.Message;
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik")); + response.Message;
 
-                        SubmitButtonContent = " Proknjiži ";
+                        SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                         SubmitButtonEnabled = true;
                     }
                 });
@@ -1120,13 +1120,13 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployeeProfessionItemForm.Profession == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Zanimanje";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_zanimanja"));
                 return;
             }
 
             if (CurrentEmployeeProfessionItemForm.Country == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Država";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Država"));
                 return;
             }
 
@@ -1173,7 +1173,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployeeLicenceItemForm.Country == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Država";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Država"));
                 return;
             }
 
@@ -1238,7 +1238,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 new EmployeeProfessionItemSQLiteRepository().Delete(CurrentProfessionDG.Identifier);
 
-                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayProfessionItemData());
                 displayThread.IsBackground = true;
@@ -1281,7 +1281,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 new EmployeeLicenceItemSQLiteRepository().Delete(CurrentLicenceDG.Identifier);
 
-                MainWindow.SuccessMessage = "Stavka radnika je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
 
                 Thread displayThread = new Thread(() => DisplayLicenceItemData());
                 displayThread.IsBackground = true;

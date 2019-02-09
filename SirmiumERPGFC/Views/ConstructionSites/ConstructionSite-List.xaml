@@ -150,7 +150,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_gradilišta}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Status" Header="Status" Binding="{Binding Status, Converter={StaticResource StatusConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Status" Header="{DynamicResource Status}" Binding="{Binding Status, Converter={StaticResource StatusConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Grad}" Binding="{Binding City.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="MaxWorkers" Header="{DynamicResource Max_br_radnika}" Binding="{Binding MaxWorkers}" IsReadOnly="True" />

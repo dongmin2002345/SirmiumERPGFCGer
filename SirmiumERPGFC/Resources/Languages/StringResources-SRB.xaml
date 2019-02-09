@@ -576,6 +576,10 @@
     <system:String x:Key="Odbitak_poreza_ODDvotacka">Odbitak poreza OD:</system:String>
     <system:String x:Key="Odbitak_poreza_DODvotacka">Odbitak poreza DO:</system:String>
 
+    <system:String x:Key="Obavezno_poljeDvotačka_Ime">Obavezno polje: Ime</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Datum_rodjenja">Obavezno polje: Datum rođenja</system:String>
+
+
 
 
 
