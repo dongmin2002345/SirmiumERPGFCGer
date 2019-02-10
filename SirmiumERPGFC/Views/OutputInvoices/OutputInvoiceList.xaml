@@ -240,10 +240,10 @@
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="{DynamicResource Broj_fakture}" Binding="{Binding InvoiceNumber}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="InvoiceDate" Header="{DynamicResource Datum_fakture}" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountNet" Header="{DynamicResource Iznos_neto}" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="AmountNet" Header="{DynamicResource Iznos_neto_euro}" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PdvPercent" Header="{DynamicResource PDVProcenat}" Binding="{Binding PdvPercent}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Pdv" Header="{DynamicResource PDV}" Binding="{Binding Pdv}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountGross" Header="{DynamicResource Iznos_bruto}" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Pdv" Header="{DynamicResource PDV_euro}" Binding="{Binding Pdv}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="AmountGross" Header="{DynamicResource Iznos_bruto_euro}" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DateOfPayment" Header="{DynamicResource Datum_plaćanja}" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Status" Header="{DynamicResource Status}" Binding="{Binding Status, Converter={StaticResource cbxChooseStatusConverter} }" Width="*" IsReadOnly="True" />

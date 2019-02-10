@@ -121,6 +121,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.Name = constructionSite.Name;
                     dbEntry.Address = constructionSite.Address;
                     dbEntry.MaxWorkers = constructionSite.MaxWorkers;
+                    dbEntry.Status = constructionSite.Status;
                     dbEntry.ProContractDate = constructionSite.ProContractDate;
                     dbEntry.ContractStart = constructionSite.ContractStart;
                     dbEntry.ContractExpiration = constructionSite.ContractExpiration;

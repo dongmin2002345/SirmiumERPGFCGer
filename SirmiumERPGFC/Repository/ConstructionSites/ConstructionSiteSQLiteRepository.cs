@@ -23,6 +23,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "Name NVARCHAR(48) NULL, " +
            "Address NVARCHAR(48) NULL, " +
            "MaxWorkers NVARCHAR(48) NULL, " +
+           "Status INTEGER NULL, " +
            "ProContractDate DATETIME NULL, " +
            "ContractStart DATETIME NULL, " +
            "ContractExpiration DATETIME NULL, " +
@@ -42,19 +43,19 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
+            "SELECT ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, Status, ProContractDate, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSites " +
-            "(Id, ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
+            "(Id, ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, Status, ProContractDate, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (" +
-            "NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @Address, @MaxWorkers, @ProContractDate, @ContractStart, @ContractExpiration, " +
+            "NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @Address, @MaxWorkers, @Status, @ProContractDate, @ContractStart, @ContractExpiration, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -99,6 +100,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.MaxWorkers = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.ProContractDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractStart = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractExpiration = SQLiteHelper.GetDateTime(query, ref counter);
@@ -185,6 +187,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.MaxWorkers = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.ProContractDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractStart = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractExpiration = SQLiteHelper.GetDateTime(query, ref counter);
@@ -241,6 +244,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.MaxWorkers = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
                         dbEntry.ProContractDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractStart = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ContractExpiration = SQLiteHelper.GetDateTime(query, ref counter);
@@ -345,6 +349,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Parameters.AddWithValue("@Name", ((object)constructionSite.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Address", ((object)constructionSite.Address) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@MaxWorkers", ((object)constructionSite.MaxWorkers) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@Status", ((object)constructionSite.Status) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ProContractDate", ((object)constructionSite.ProContractDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ContractStart", ((object)constructionSite.ContractStart) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ContractExpiration", ((object)constructionSite.ContractExpiration) ?? DBNull.Value);

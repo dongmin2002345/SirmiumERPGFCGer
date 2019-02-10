@@ -57,6 +57,7 @@
     <Compile Include="Converters\Common\UserRoleConverter.cs" />
     <Compile Include="Converters\GenderConverter.cs" />
     <Compile Include="Converters\PlusMinusConverter.cs" />
+    <Compile Include="Converters\StatusConverter.cs" />
     <Compile Include="Converters\ToDoDateConverter.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Helpers\CustomWebClient.cs">
