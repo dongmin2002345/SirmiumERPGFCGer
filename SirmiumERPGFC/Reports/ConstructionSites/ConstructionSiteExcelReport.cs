@@ -379,9 +379,10 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Size = 8;
 
 			sheet1.Cells[rowCounter, leftSideMin] = "RB.";
-			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin + 1], sheet1.Cells[rowCounter, leftSideMin + 7]].Merge();
+			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin + 1], sheet1.Cells[rowCounter, leftSideMin + 2]].Merge();
 			sheet1.Cells[rowCounter, leftSideMin + 1] = "NAPOMENA/ANMERKUNG";
-			sheet1.Cells[rowCounter, leftSideMin + 8] = "DATUM";
+			sheet1.Range[sheet1.Cells[rowCounter, leftSideMin + 3], sheet1.Cells[rowCounter, leftSideMin + 6]].Merge();
+			sheet1.Cells[rowCounter, leftSideMin + 3] = "DATUM";
 
 			rowCounter++;
 			//rowCounter++; 
@@ -408,12 +409,13 @@ namespace SirmiumERPGFC.Reports.ConstructionSites
 				sheet1.Cells[rowCounter, columnCounterItem].Font.Size = 10;
 				sheet1.Range[sheet1.Cells[rowCounter, columnCounterItem], sheet1.Cells[rowCounter, columnCounterItem + 6]].Merge();
 				sheet1.Cells[rowCounter, columnCounterItem] = constructionSiteNote[i].Note;
-				columnCounterItem += 7;
+				columnCounterItem += 2;
 
 				sheet1.Cells[rowCounter, columnCounterItem].HorizontalAlignment = XlHAlign.xlHAlignCenter;
 				sheet1.Cells[rowCounter, columnCounterItem].VerticalAlignment = XlVAlign.xlVAlignCenter;
 				sheet1.Cells[rowCounter, columnCounterItem].Font.Size = 10;
 				sheet1.Cells[rowCounter, columnCounterItem] = constructionSiteNote[i].NoteDate.ToString("dd.MM.yyyy");
+
 
 				sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
 
