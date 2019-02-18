@@ -109,7 +109,7 @@ namespace RepositoryCore.Implementations.Employees
             if (context.Employees.Where(x => x.Identifier != null && x.Identifier == employee.Identifier).Count() == 0)
             {
                 if (context.Employees.Where(x => x.EmployeeCode == employee.EmployeeCode).Count() > 0)
-                    throw new Exception("Radnik sa datom šifrom već postoji u bazi!");
+                    throw new Exception("Radnik sa datom šifrom već postoji u bazi! / Arbeiter mit dem angegebenen Code ist bereits in der Datenbank vorhanden!");
 
                 employee.Id = 0;
 

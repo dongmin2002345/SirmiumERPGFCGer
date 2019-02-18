@@ -293,7 +293,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
             if (context.TaxAdministrations.Where(x => x.Identifier != null && x.Identifier == taxAdministration.Identifier).Count() == 0)
             {
                 if (context.TaxAdministrations.Where(x => x.SecondCode == taxAdministration.SecondCode).Count() > 0)
-                    throw new Exception("Poreska administracija sa datom šifrom već postoji u bazi!");
+                    throw new Exception("Poreska administracija sa datom šifrom već postoji u bazi! / Die Steuerverwaltung mit einem bestimmten Code ist bereits in der Datenbank vorhanden!");
 
                 taxAdministration.Id = 0;
 
