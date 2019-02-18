@@ -263,7 +263,7 @@ namespace RepositoryCore.Implementations.Common.Locations
             if (context.Cities.Where(x => x.Identifier != null && x.Identifier == city.Identifier).Count() == 0)
             {
                 if (context.Cities.Where(x => x.ZipCode == city.ZipCode).Count() > 0)
-                    throw new Exception("Grad sa datim ZIP kodom već postoji u bazi!");
+                    throw new Exception("Grad sa datim ZIP kodom već postoji u bazi! / Eine Stadt mit einer bestimmten Postleitzahl ist bereits in der Datenbank vorhanden!");
 
                 city.Id = 0;
 

@@ -97,7 +97,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             if (context.BusinessPartners.Where(x => x.Identifier != null && x.Identifier == businessPartner.Identifier).Count() == 0)
             {
                 if (context.BusinessPartners.Where(x => x.InternalCode == businessPartner.InternalCode).Count() > 0)
-                    throw new Exception("Firma sa datom šifrom već postoji u bazi!");
+                    throw new Exception("Firma sa datom šifrom već postoji u bazi! / Eine Firma mit einem bestimmten Code ist bereits in der Datenbank vorhanden");
 
                 businessPartner.Id = 0;
 
