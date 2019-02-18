@@ -105,8 +105,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM BusinessPartners " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name OR NameGer LIKE @Name) " +
+                        "AND (@PIB IS NULL OR @PIB = '' OR (SELECT GROUP_CONCAT(CityName) FROM BusinessPartnerLocations) LIKE @PIB) " +
                         "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
                         "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
                         "AND CompanyId = @CompanyId " +

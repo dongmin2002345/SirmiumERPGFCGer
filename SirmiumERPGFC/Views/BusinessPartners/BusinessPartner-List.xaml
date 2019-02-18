@@ -200,11 +200,44 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="{DynamicResource Telefoni}" Margin="2 1 1 2">
+            <GroupBox Grid.Column="0" Header="{DynamicResource Lokacije}" Margin="2 1 1 2">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="3" Grid.ColumnSpan="6" IsActive="{Binding LocationDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgLocations"
+                              Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6"
+                              Margin="2 5 2 5"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource AzureDataGrid}"
+                              ItemsSource="{Binding Path=LocationsFromDB}"
+                              SelectedItem="{Binding Path=CurrentLocationDG, Mode=TwoWay}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Path=Country.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Municipality.Name" Header="{DynamicResource Opština}" Binding="{Binding Path=Municipality.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Region.Name" Header="{DynamicResource RegionDvotacka}" Binding="{Binding Path=Region.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource GradDvotacka}" Binding="{Binding Path=City.Name}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Path=Address}" Width="*" IsReadOnly="True" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+            
+            <GroupBox Grid.Column="1" Header="{DynamicResource Telefoni}" Margin="1 1 1 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="5" Grid.ColumnSpan="6" IsActive="{Binding PhoneDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgPhones"
@@ -236,7 +269,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Column="1" Header="{DynamicResource Dokumenti}" Margin="1 1 2 2">
+            <GroupBox Grid.Column="2" Header="{DynamicResource Dokumenti}" Margin="1 1 2 2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="53*"/>

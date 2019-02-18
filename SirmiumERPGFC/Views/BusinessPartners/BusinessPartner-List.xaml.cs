@@ -98,6 +98,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                         {
                             DisplayDocumentData();
                             DisplayPhoneData();
+                            DisplayLocationData();
                         });
                         th.IsBackground = true;
                         th.Start();
@@ -136,6 +137,75 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     _BusinessPartnerDataLoading = value;
                     NotifyPropertyChanged("BusinessPartnerDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region LocationsFromDB
+        private ObservableCollection<BusinessPartnerLocationViewModel> _LocationsFromDB;
+
+        public ObservableCollection<BusinessPartnerLocationViewModel> LocationsFromDB
+        {
+            get { return _LocationsFromDB; }
+            set
+            {
+                if (_LocationsFromDB != value)
+                {
+                    _LocationsFromDB = value;
+                    NotifyPropertyChanged("LocationsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentLocationForm
+        private BusinessPartnerLocationViewModel _CurrentLocationForm = new BusinessPartnerLocationViewModel();
+
+        public BusinessPartnerLocationViewModel CurrentLocationForm
+        {
+            get { return _CurrentLocationForm; }
+            set
+            {
+                if (_CurrentLocationForm != value)
+                {
+                    _CurrentLocationForm = value;
+                    NotifyPropertyChanged("CurrentLocationForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentLocationDG
+        private BusinessPartnerLocationViewModel _CurrentLocationDG;
+
+        public BusinessPartnerLocationViewModel CurrentLocationDG
+        {
+            get { return _CurrentLocationDG; }
+            set
+            {
+                if (_CurrentLocationDG != value)
+                {
+                    _CurrentLocationDG = value;
+                    NotifyPropertyChanged("CurrentLocationDG");
+                }
+            }
+        }
+        #endregion
+
+        #region LocationDataLoading
+        private bool _LocationDataLoading;
+
+        public bool LocationDataLoading
+        {
+            get { return _LocationDataLoading; }
+            set
+            {
+                if (_LocationDataLoading != value)
+                {
+                    _LocationDataLoading = value;
+                    NotifyPropertyChanged("LocationDataLoading");
                 }
             }
         }
@@ -438,6 +508,26 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
 
             BusinessPartnerDataLoading = false;
+        }
+
+        private void DisplayLocationData()
+        {
+            LocationDataLoading = true;
+
+            BusinessPartnerLocationListResponse response = new BusinessPartnerLocationSQLiteRepository()
+                .GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>(
+                    response.BusinessPartnerLocations ?? new List<BusinessPartnerLocationViewModel>());
+            }
+            else
+            {
+                LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
+            }
+
+            LocationDataLoading = false;
         }
 
         private void DisplayPhoneData()
