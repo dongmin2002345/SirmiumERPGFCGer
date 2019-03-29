@@ -10,9 +10,9 @@ namespace WpfAppCommonCode.Converters
 {
     public class ChooseStatusConverter : IValueConverter
     {
-        public static string Choose = "Auswählen"; //odaberi
-        public static string ChooseO = "Offen";
-        public static string ChooseB = "Bezahlt";
+        public static string Choose = "ODABRATI (Auswählen)"; //odaberi
+        public static string ChooseO = "OTVORENO (Offen)";
+        public static string ChooseB = "PLAĆEN (Bezahlt)";
 
         public static List<String> GenderOptions = new List<string>()
         {
