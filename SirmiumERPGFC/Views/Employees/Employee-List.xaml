@@ -156,7 +156,9 @@
                               VerticalAlignment="Stretch"
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto"
-                              Style="{DynamicResource AzureDataGrid}"
+		                      RowHeaderWidth="25"
+		                      HeadersVisibility="All"
+		                      LoadingRow="dgEmployees_LoadingRow"
                               ItemsSource="{Binding Path=EmployeesFromDB}"
                               SelectedItem="{Binding Path=CurrentEmployee}" >
 

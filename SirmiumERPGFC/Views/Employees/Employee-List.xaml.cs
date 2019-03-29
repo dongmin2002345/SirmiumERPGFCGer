@@ -565,7 +565,10 @@ namespace SirmiumERPGFC.Views.Employees
             RefreshButtonEnabled = false;
 
             RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
-            new EmployeeSQLiteRepository().Sync(employeeService);
+            new EmployeeSQLiteRepository().Sync(employeeService, (synced, toSync) => {
+                if (toSync > 0)
+                    RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke")) + " (" + synced + "/" + toSync + ")";
+            });
 
             RefreshButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeItemSQLiteRepository().Sync(employeeItemService);
@@ -579,6 +582,11 @@ namespace SirmiumERPGFC.Views.Employees
 
             RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             RefreshButtonEnabled = true;
+        }
+
+        private void dgEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #endregion

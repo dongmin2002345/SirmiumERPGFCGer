@@ -764,15 +764,19 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IEmployeeService EmployeeService)
+        public void Sync(IEmployeeService EmployeeService, Action<int, int> callback = null)
         {
             SyncEmployeeRequest request = new SyncEmployeeRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
+            int toSync = 0;
+            int syncedItems = 0;
+
             EmployeeListResponse response = EmployeeService.Sync(request);
             if (response.Success)
             {
+                toSync = response?.Employees?.Count ?? 0;
                 List<EmployeeViewModel> EmployeesFromDB = response.Employees;
                 foreach (var Employee in EmployeesFromDB.OrderBy(x => x.Id))
                 {
@@ -781,6 +785,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     {
                         Employee.IsSynced = true;
                         Create(Employee);
+                        syncedItems++;
+                        callback?.Invoke(syncedItems, toSync);
                     }
                 }
             }
