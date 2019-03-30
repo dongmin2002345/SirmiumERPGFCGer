@@ -135,6 +135,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
                         "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -142,6 +143,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
                     selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(EmployeeSearchObject.Search_ConstructionSite) ? "%" + EmployeeSearchObject.Search_ConstructionSite + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -202,11 +204,13 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
                         "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
                     selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(EmployeeSearchObject.Search_ConstructionSite) ? "%" + EmployeeSearchObject.Search_ConstructionSite + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();

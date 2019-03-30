@@ -683,5 +683,22 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region Search_EmployeeCode
+        private string _Search_EmployeeCode;
+
+        public string Search_EmployeeCode
+        {
+            get { return _Search_EmployeeCode; }
+            set
+            {
+                if (_Search_EmployeeCode != value)
+                {
+                    _Search_EmployeeCode = value;
+                    NotifyPropertyChanged("Search_EmployeeCode");
+                }
+            }
+        }
+        #endregion
+
     }
 }

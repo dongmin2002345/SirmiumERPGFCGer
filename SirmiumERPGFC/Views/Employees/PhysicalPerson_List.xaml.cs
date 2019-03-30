@@ -763,25 +763,28 @@ namespace SirmiumERPGFC.Views.Employees
         }
         private void txtSearchByPhysicalPersonCode_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PhysicalPersonListResponse response = new PhysicalPersonSQLiteRepository()
-                 .GetPhysicalPersonsByPage(MainWindow.CurrentCompanyId, PhysicalPersonSearchObject, currentPage, itemsPerPage);
+            //PhysicalPersonListResponse response = new PhysicalPersonSQLiteRepository()
+            //     .GetPhysicalPersonsByPage(MainWindow.CurrentCompanyId, PhysicalPersonSearchObject, currentPage, itemsPerPage);
 
-            if (response.Success)
-            {
-                List<PhysicalPersonViewModel> filteredItems;
-                if (!String.IsNullOrEmpty(txtSearchByPhysicalPersonCode.Text))
-                    filteredItems = response.PhysicalPersons.Where(x => x.PhysicalPersonCode.Contains(txtSearchByPhysicalPersonCode.Text))?.ToList();
-                else
-                    filteredItems = response.PhysicalPersons;
+            //if (response.Success)
+            //{
+            //    List<PhysicalPersonViewModel> filteredItems;
+            //    if (!String.IsNullOrEmpty(txtSearchByPhysicalPersonCode.Text))
+            //        filteredItems = response.PhysicalPersons.Where(x => x.PhysicalPersonCode.Contains(txtSearchByPhysicalPersonCode.Text))?.ToList();
+            //    else
+            //        filteredItems = response.PhysicalPersons;
 
-                PhysicalPersonsFromDB = new ObservableCollection<PhysicalPersonViewModel>(
-                    filteredItems ?? new List<PhysicalPersonViewModel>());
-            }
-            else
-            {
-                PhysicalPersonsFromDB = new ObservableCollection<PhysicalPersonViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
-            }
+            //    PhysicalPersonsFromDB = new ObservableCollection<PhysicalPersonViewModel>(
+            //        filteredItems ?? new List<PhysicalPersonViewModel>());
+            //}
+            //else
+            //{
+            //    PhysicalPersonsFromDB = new ObservableCollection<PhysicalPersonViewModel>();
+            //    MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            //}
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
         }
     }
 }
