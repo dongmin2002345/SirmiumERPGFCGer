@@ -695,5 +695,7 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+      
+
     }
 }

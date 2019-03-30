@@ -256,6 +256,30 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             currentPage = 1;
 
+            Thread displayThread = new Thread(() => DisplayData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+            //currentPage = 1;
+
+            //Thread syncThread = new Thread(() =>
+            //{
+            //    SyncData();
+
+            //    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+            //});
+            //syncThread.IsBackground = true;
+            //syncThread.Start();
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            //currentPage = 1;
+
+            //Thread displayThread = new Thread(() => DisplayData());
+            //displayThread.IsBackground = true;
+            //displayThread.Start();
+            currentPage = 1;
+
             Thread syncThread = new Thread(() =>
             {
                 SyncData();
@@ -266,22 +290,12 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             syncThread.Start();
         }
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            currentPage = 1;
-
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-        }
-
         public void DisplayData()
         {
             BusinessPartnerDataLoading = true;
 
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, new BusinessPartnerViewModel(), currentPage, itemsPerPage);
+                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
 
             if (response.Success)
             {
@@ -379,25 +393,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
         {
-            BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                 .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
-
-            if (response.Success)
-            {
-                List<BusinessPartnerViewModel> filteredItems;
-                if (!String.IsNullOrEmpty(txtSearchByBusinessPartnerEmployeeCode.Text))
-                    filteredItems = response.BusinessPartners.Where(x => x.InternalCode.Contains(txtSearchByBusinessPartnerEmployeeCode.Text))?.ToList();
-                else
-                    filteredItems = response.BusinessPartners;
-
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(
-                    filteredItems ?? new List<BusinessPartnerViewModel>());
-            }
-            else
-            {
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
-            }
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
         }
 
         #region INotifyPropertyChanged implementation

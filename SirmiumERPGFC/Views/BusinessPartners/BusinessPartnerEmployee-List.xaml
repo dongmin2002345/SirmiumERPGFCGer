@@ -82,7 +82,7 @@
 
                     <TextBlock Text="Šifra:"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtSearchByBusinessPartnerEmployeeCode" Width="150"
-                                         Text="{Binding Path=BusinessPartnerEmployeeSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
+                                         Text="{Binding Path=BusinessPartnerSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
                                          TextChanged="txtSearchByBusinessPartnerEmployeeCode_TextChanged"
                                          Margin="2"
                                          Controls:TextBoxHelper.ClearTextButton="True"/>
