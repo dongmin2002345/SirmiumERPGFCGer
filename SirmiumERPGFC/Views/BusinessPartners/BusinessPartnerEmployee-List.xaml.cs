@@ -256,7 +256,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             currentPage = 1;
 
-            Thread syncThread = new Thread(() => 
+            Thread syncThread = new Thread(() =>
             {
                 SyncData();
 
@@ -264,7 +264,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             });
             syncThread.IsBackground = true;
             syncThread.Start();
-
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -376,6 +375,29 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Unos_zaposlenih")), 95, new BusinessPartnerEmployee_List_AddEdit(CurrentBusinessPartner));
+        }
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
+                 .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
+
+            if (response.Success)
+            {
+                List<BusinessPartnerViewModel> filteredItems;
+                if (!String.IsNullOrEmpty(txtSearchByBusinessPartnerEmployeeCode.Text))
+                    filteredItems = response.BusinessPartners.Where(x => x.InternalCode.Contains(txtSearchByBusinessPartnerEmployeeCode.Text))?.ToList();
+                else
+                    filteredItems = response.BusinessPartners;
+
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(
+                    filteredItems ?? new List<BusinessPartnerViewModel>());
+            }
+            else
+            {
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
+                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            }
         }
 
         #region INotifyPropertyChanged implementation

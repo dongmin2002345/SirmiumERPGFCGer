@@ -589,6 +589,29 @@ namespace SirmiumERPGFC.Views.Employees
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
+        private void txtSearchByEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EmployeeListResponse response = new EmployeeSQLiteRepository()
+                 .GetEmployeesByPage(MainWindow.CurrentCompanyId, EmployeeSearchObject, currentPage, itemsPerPage);
+
+            if (response.Success)
+            {
+                List<EmployeeViewModel> filteredItems;
+                if (!String.IsNullOrEmpty(txtSearchByEmployeeCode.Text))
+                    filteredItems = response.Employees.Where(x => x.EmployeeCode.Contains(txtSearchByEmployeeCode.Text))?.ToList();
+                else
+                    filteredItems = response.Employees;
+
+                EmployeesFromDB = new ObservableCollection<EmployeeViewModel>(
+                    filteredItems ?? new List<EmployeeViewModel>());
+            }
+            else
+            {
+                EmployeesFromDB = new ObservableCollection<EmployeeViewModel>();
+                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            }
+        }
+
         #endregion
 
         #region Add, edit and delete methods
@@ -786,6 +809,7 @@ namespace SirmiumERPGFC.Views.Employees
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
+        
     }
 }
 

@@ -19,6 +19,7 @@
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
         <syncedConverter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <cbxConverters:PlusMinusConverter x:Key="PlusMinusConverter" />
+       
     </UserControl.Resources>
 
     <Grid>
@@ -115,6 +116,13 @@
                             <TextBlock Text=" MS0129 " Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
+
+                    <TextBlock Text="Šifra:"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtSearchByEmployeeCode" Width="150"
+                                         Text="{Binding Path=EmployeeSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
+                                         TextChanged="txtSearchByEmployeeCode_TextChanged"
+                                         Margin="2"
+                                         Controls:TextBoxHelper.ClearTextButton="True"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">

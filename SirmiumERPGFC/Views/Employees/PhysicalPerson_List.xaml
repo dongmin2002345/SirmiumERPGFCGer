@@ -116,6 +116,15 @@
                             <TextBlock Text="{DynamicResource IZVEZI_U_EXCEL}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
+
+
+                    <TextBlock Text="Šifra:"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtSearchByPhysicalPersonCode" Width="150"
+                                         Text="{Binding Path=PhysicalPersonSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
+                                         TextChanged="txtSearchByPhysicalPersonCode_TextChanged"
+                                         Margin="2"
+                                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="2">
