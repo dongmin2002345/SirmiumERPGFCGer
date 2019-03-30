@@ -342,7 +342,7 @@
     <system:String x:Key="IZVEZI_U_EXCEL">EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">RETTE DEN GEDANKEN</system:String>
     <system:String x:Key="IBANDvotacka">IBAN:</system:String>
-    <system:String x:Key="Betriesb_brojDvotacka">Betriesb number:</system:String>
+    <system:String x:Key="Betriebs_brojDvotacka">Betriebs NR.:</system:String>
     <system:String x:Key="Šifra_poreske_uprave">Steuerverwaltung-Code</system:String>
     <system:String x:Key="Bank1">Bank 1</system:String>
     <system:String x:Key="IBAN1">IBAN 1</system:String>
