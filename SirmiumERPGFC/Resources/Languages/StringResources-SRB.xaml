@@ -343,7 +343,7 @@
     <system:String x:Key="IZVEZI_U_EXCEL">IZVEZI U EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SAČUVAJ ZAGLAVLJE</system:String>
     <system:String x:Key="IBANDvotacka">IBAN:</system:String>
-    <system:String x:Key="Betriesb_brojDvotacka">Betriesb broj:</system:String>
+    <system:String x:Key="Betriebs_brojDvotacka">Betriebs broj:</system:String>
     <system:String x:Key="Šifra_poreske_uprave">Šifra poreske uprave</system:String>
     <system:String x:Key="Bank1">Bank1</system:String>
     <system:String x:Key="IBAN1">IBAN1</system:String>
