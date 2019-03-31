@@ -375,6 +375,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             currentPage = 1;
 
+            Thread displayThread = new Thread(() => DisplayData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+           
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = 1;
+
             Thread syncThread = new Thread(() =>
             {
                 SyncData();
@@ -383,15 +393,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             });
             syncThread.IsBackground = true;
             syncThread.Start();
-        }
-
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            currentPage = 1;
-
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
         }
 
         public void DisplayData()
@@ -546,6 +547,13 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Radnici_po_gradilištu")), 95, new ConstructionSiteEmployee_List_AddEdit(CurrentConstructionSite, CurrentBusinessPartnerOnConstructionSite.BusinessPartner));
+        }
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
         }
 
         #region INotifyPropertyChanged implementation

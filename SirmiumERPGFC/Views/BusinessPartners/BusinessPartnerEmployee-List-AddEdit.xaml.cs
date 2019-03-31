@@ -109,6 +109,23 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
+        #region BusinessPartnerSearchObject
+        private BusinessPartnerViewModel _BusinessPartnerSearchObject = new BusinessPartnerViewModel();
+
+        public BusinessPartnerViewModel BusinessPartnerSearchObject
+        {
+            get { return _BusinessPartnerSearchObject; }
+            set
+            {
+                if (_BusinessPartnerSearchObject != value)
+                {
+                    _BusinessPartnerSearchObject = value;
+                    NotifyPropertyChanged("BusinessPartnerSearchObject");
+                }
+            }
+        }
+        #endregion
+
 
         #region EmployeesNotOnBusinessPartnerFromDB
         private ObservableCollection<EmployeeViewModel> _EmployeesNotOnBusinessPartnerFromDB;
@@ -274,6 +291,30 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
+        #region PaginationRight data
+
+        int currentPageRight = 1;
+        int itemsPerPageRight = 50;
+        int totalItemsRight = 0;
+
+        #region PaginationDisplayRight
+        private string _PaginationDisplayRight;
+
+        public string PaginationDisplayRight
+        {
+            get { return _PaginationDisplayRight; }
+            set
+            {
+                if (_PaginationDisplayRight != value)
+                {
+                    _PaginationDisplayRight = value;
+                    NotifyPropertyChanged("PaginationDisplayRight");
+                }
+            }
+        }
+        #endregion
+
+        #endregion
 
         #region SyncButtonContent
         private string _SyncButtonContent = ((string)Application.Current.FindResource("SINHRONIZUJ"));
@@ -339,7 +380,11 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void btnSearchEmployee_Click(object sender, RoutedEventArgs e)
         {
+            currentPage = 1;
 
+            Thread displayThread = new Thread(() => DisplayEmployeesNotOnBusinessPartnerData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
         }
 
         public void DisplayEmployeesOnBusinessPartnerData()
@@ -352,19 +397,19 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (response.Success)
             {
                 EmployeesOnBusinessPartnerFromDB = new ObservableCollection<EmployeeByBusinessPartnerViewModel>(response?.EmployeeByBusinessPartners ?? new List<EmployeeByBusinessPartnerViewModel>());
-                totalItems = response.TotalItems;
+                totalItemsRight = response.TotalItems;
             }
             else
             {
                 EmployeesOnBusinessPartnerFromDB = new ObservableCollection<EmployeeByBusinessPartnerViewModel>();
-                totalItems = 0;
+                totalItemsRight = 0;
                 MainWindow.ErrorMessage = response.Message;
             }
 
-            int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
-            int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
+            int itemFrom = totalItemsRight != 0 ? (currentPageRight - 1) * itemsPerPageRight + 1 : 0;
+            int itemTo = currentPageRight * itemsPerPageRight < totalItemsRight ? currentPageRight * itemsPerPageRight : totalItemsRight;
 
-            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+            PaginationDisplayRight = itemFrom + " - " + itemTo + " od " + totalItemsRight;
 
             EmployeeOnBusinessPartnerDataLoading = false;
         }
@@ -535,6 +580,70 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             FlyoutHelper.CloseFlyout(this);
         }
+
+        #region Pagination   
+
+
+        private void btnFirstPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage = 1;
+                Thread displayThread = new Thread(() => DisplayEmployeesNotOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                Thread displayThread = new Thread(() => DisplayEmployeesNotOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage < Math.Ceiling((double)this.totalItems / this.itemsPerPage))
+            {
+                currentPage++;
+                Thread displayThread = new Thread(() => DisplayEmployeesNotOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnLastPage_Click(object sender, RoutedEventArgs e)
+        {
+            int lastPage = (int)Math.Ceiling((double)this.totalItems / this.itemsPerPage);
+            if (currentPage < lastPage)
+            {
+                currentPage = lastPage;
+                Thread displayThread = new Thread(() => DisplayEmployeesNotOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        #endregion
+
+        
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayEmployeesNotOnBusinessPartnerData());
+            th.IsBackground = true;
+            th.Start();
+        }
+
+    
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

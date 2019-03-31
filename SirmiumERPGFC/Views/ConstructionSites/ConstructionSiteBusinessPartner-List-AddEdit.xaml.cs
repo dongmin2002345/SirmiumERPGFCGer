@@ -355,7 +355,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         private void btnSearchBusinessPartner_Click(object sender, RoutedEventArgs e)
         {
+            currentPage = 1;
 
+            Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
         }
 
         public void DisplayBusinessPartnersOnConstructionSiteData()
@@ -572,6 +576,66 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
 
         #endregion
+
+        #region Pagination   
+
+
+        private void btnFirstPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage = 1;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage < Math.Ceiling((double)this.totalItems / this.itemsPerPage))
+            {
+                currentPage++;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnLastPage_Click(object sender, RoutedEventArgs e)
+        {
+            int lastPage = (int)Math.Ceiling((double)this.totalItems / this.itemsPerPage);
+            if (currentPage < lastPage)
+            {
+                currentPage = lastPage;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        #endregion
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+            th.IsBackground = true;
+            th.Start();
+        }
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

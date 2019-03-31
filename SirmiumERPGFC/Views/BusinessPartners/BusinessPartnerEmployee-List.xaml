@@ -80,7 +80,7 @@
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="Šifra:"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtSearchByBusinessPartnerEmployeeCode" Width="150"
                                          Text="{Binding Path=BusinessPartnerSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
                                          TextChanged="txtSearchByBusinessPartnerEmployeeCode_TextChanged"

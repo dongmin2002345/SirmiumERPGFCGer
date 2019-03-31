@@ -302,6 +302,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region Search_InternalCode
+        private string _Search_InternalCode;
+
+        public string Search_InternalCode
+        {
+            get { return _Search_InternalCode; }
+            set
+            {
+                if (_Search_InternalCode != value)
+                {
+                    _Search_InternalCode = value;
+                    NotifyPropertyChanged("Search_InternalCode");
+                }
+            }
+        }
+        #endregion
+
     }
 }
 

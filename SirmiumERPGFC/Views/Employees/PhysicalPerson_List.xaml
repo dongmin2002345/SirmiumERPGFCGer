@@ -118,7 +118,7 @@
                     </Button>
 
 
-                    <TextBlock Text="Šifra:"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtSearchByPhysicalPersonCode" Width="150"
                                          Text="{Binding Path=PhysicalPersonSearchObject.Search_PhysicalPersonCode, UpdateSourceTrigger=PropertyChanged}"
                                          TextChanged="txtSearchByPhysicalPersonCode_TextChanged"

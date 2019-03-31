@@ -77,12 +77,14 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         //"AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
+                        "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@InternalCode", ((object)constructionSiteSearchObject.Search_InternalCode) != null ? "%" + constructionSiteSearchObject.Search_InternalCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -121,10 +123,12 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                        // "AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
+                        "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@InternalCode", ((object)constructionSiteSearchObject.Search_InternalCode) != null ? "%" + constructionSiteSearchObject.Search_InternalCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
