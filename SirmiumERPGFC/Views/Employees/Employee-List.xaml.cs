@@ -757,7 +757,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             try
             {
-                var employeeResponse = new EmployeeSQLiteRepository().GetEmployeesByPage(MainWindow.CurrentCompanyId, new EmployeeViewModel(), 1, Int32.MaxValue);
+                var employeeResponse = new EmployeeSQLiteRepository().GetEmployeesByPage(MainWindow.CurrentCompanyId, EmployeeSearchObject, 1, Int32.MaxValue);
                 EmployeesExcelReport.Show(employeeResponse.Employees);
             }
             catch(Exception ex)
