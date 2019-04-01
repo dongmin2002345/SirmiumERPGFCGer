@@ -71,7 +71,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     if (_CurrentConstructionSite != null)
                     {
                         BusinessPartnerByConstructionSiteListResponse response = new BusinessPartnerByConstructionSiteSQLiteRepository()
-                            .GetByConstructionSite(CurrentConstructionSite.Identifier);
+                            .GetByConstructionSite(CurrentConstructionSite.Identifier, "", 1, Int32.MaxValue);
 
                         if (response.Success)
                         {

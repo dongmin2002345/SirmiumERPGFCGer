@@ -150,7 +150,7 @@
                         <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Poslovni_partneri_Srbija}" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="NameGer" Header="{DynamicResource Poslovni_partneri_Nemačka}" Binding="{Binding NameGer}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PIB" Header="{DynamicResource PIB}" Binding="{Binding PIB}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="TaxNr" Header="{DynamicResource Poreski_brojDvotacka}" Binding="{Binding TaxNr}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DueDate" Header="{DynamicResource Valuta}" Binding="{Binding DueDate}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding PDV}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PIO" Header="{DynamicResource PIO}" Binding="{Binding PIO}" IsReadOnly="True"/>

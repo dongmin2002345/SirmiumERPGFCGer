@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
             List<ToDo> ToDos = new List<ToDo>();
 
             string queryString =
-                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, ToDoDate, " +
+                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -55,6 +55,8 @@ namespace RepositoryCore.Implementations.Common.ToDos
 
                         if (reader["ToDoDescription"] != DBNull.Value)
                             toDo.Description = reader["ToDoDescription"].ToString();
+                        if (reader["Path"] != DBNull.Value)
+                            toDo.Path = reader["Path"].ToString();
                         if (reader["ToDoDate"] != DBNull.Value)
                             toDo.ToDoDate = DateTime.Parse(reader["ToDoDate"].ToString());
 
@@ -83,17 +85,6 @@ namespace RepositoryCore.Implementations.Common.ToDos
                 }
             }
             return ToDos;
-
-
-            //List<ToDo> toDos = context.ToDos
-            //    .Include(x => x.Company)
-            //    .Include(x => x.CreatedBy)
-            //    .Where(x => x.Active == true && x.CompanyId == companyId)
-            //    .OrderByDescending(x => x.CreatedAt)
-            //    .AsNoTracking()
-            //    .ToList();
-
-            //return toDos;
         }
 
         public List<ToDo> GetToDosNewerThen(int companyId, DateTime lastUpdateTime)
@@ -101,7 +92,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
             List<ToDo> ToDos = new List<ToDo>();
 
             string queryString =
-                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, ToDoDate, " +
+                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
                 "WHERE CompanyId = @CompanyId " +
@@ -127,6 +118,8 @@ namespace RepositoryCore.Implementations.Common.ToDos
 
                         if (reader["ToDoDescription"] != DBNull.Value)
                             toDo.Description = reader["ToDoDescription"].ToString();
+                        if (reader["Path"] != DBNull.Value)
+                            toDo.Path = reader["Path"].ToString();
                         if (reader["ToDoDate"] != DBNull.Value)
                             toDo.ToDoDate = DateTime.Parse(reader["ToDoDate"].ToString());
 
@@ -155,16 +148,6 @@ namespace RepositoryCore.Implementations.Common.ToDos
                 }
             }
             return ToDos;
-
-            //List<ToDo> ToDos = context.ToDos
-            //    .Include(x => x.Company)
-            //    .Include(x => x.CreatedBy)
-            //    .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
-            //    .OrderByDescending(x => x.CreatedAt)
-            //    .AsNoTracking()
-            //    .ToList();
-
-            //return ToDos;
         }
 
         #endregion
@@ -199,6 +182,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
                     // Set properties
                     dbEntry.Name = toDo.Name;
                     dbEntry.Description = toDo.Description;
+                    dbEntry.Path = toDo.Path;
                     dbEntry.ToDoDate = toDo.ToDoDate;
 
                     // Set timestamp

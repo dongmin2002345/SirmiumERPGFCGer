@@ -58,7 +58,7 @@ namespace SirmiumERPGFC.Repository.Employees
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 
-        public EmployeeByBusinessPartnerListResponse GetByBusinessPartner(Guid businessPartnerIdentifier)
+        public EmployeeByBusinessPartnerListResponse GetByBusinessPartner(Guid businessPartnerIdentifier, string filterString, int currentPage = 1, int itemsPerPage = 50)
         {
             EmployeeByBusinessPartnerListResponse response = new EmployeeByBusinessPartnerListResponse();
             List<EmployeeByBusinessPartnerViewModel> employeeByBusinessPartners = new List<EmployeeByBusinessPartnerViewModel>();
@@ -70,13 +70,17 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         "SELECT ebp.ServerId, ebp.Identifier, ebp.Code, ebp.StartDate, ebp.EndDate, ebp.RealEndDate, " +
-                        "ebp.EmployeeId, ebp.EmployeeIdentifier, ebp.EmployeeCode, ebp.EmployeeName, ebp.EmployeeInternalCode, e.SurName, e.Passport,  " +
+                        "e.Id, e.Identifier, e.Code, e.Name, e.EmployeeCode, e.SurName, e.Passport,  " +
                         "ebp.BusinessPartnerId, ebp.BusinessPartnerIdentifier, ebp.BusinessPartnerCode, ebp.BusinessPartnerName, ebp.BusinessPartnerInternalCode, ebp.BusinessPartnerNameGer,  " +
                         "ebp.IsSynced, ebp.UpdatedAt, ebp.CreatedById, ebp.CreatedByName, ebp.CompanyId, ebp.CompanyName " +
                         "FROM EmployeeByBusinessPartners ebp, Employees e " +
                         "WHERE ebp.BusinessPartnerIdentifier = @BusinessPartnerIdentifier " + 
-                        "AND ebp.EmployeeIdentifier = e.Identifier", db);
+                        "AND ebp.EmployeeIdentifier = e.Identifier " +
+                        "ORDER BY ebp.EmployeeName " +
+                        "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
+                    selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
+                    selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
@@ -100,6 +104,20 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
                         employeeByBusinessPartners.Add(dbEntry);
                     }
+
+                    response.EmployeeByBusinessPartners = employeeByBusinessPartners;
+
+                    selectCommand = new SqliteCommand(
+                        "SELECT Count(*) " +
+                        "FROM EmployeeByBusinessPartners ebp, Employees e " +
+                        "WHERE ebp.BusinessPartnerIdentifier = @BusinessPartnerIdentifier " +
+                        "AND ebp.EmployeeIdentifier = e.Identifier;", db);
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
+
+                    query = selectCommand.ExecuteReader();
+
+                    if (query.Read())
+                        response.TotalItems = query.GetInt32(0);
                 }
                 catch (SqliteException error)
                 {

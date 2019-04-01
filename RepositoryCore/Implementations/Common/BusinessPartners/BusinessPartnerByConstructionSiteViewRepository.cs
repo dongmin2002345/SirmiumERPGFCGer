@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
             string queryString =
                 "SELECT BusinessPartnerByConstructionSiteId, BusinessPartnerByConstructionSiteIdentifier, BusinessPartnerByConstructionSiteCode, StartDate, EndDate, RealEndDate, MaxNumOfEmployees, " +
-                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
                 "BusinessPartnerCount, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -71,6 +71,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                             businessPartnerByConstructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             businessPartnerByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.InternalCode = reader["BusinessPartnerInternalCode"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.NameGer = reader["BusinessPartnerNameGer"].ToString();
                         }
 
                         if (reader["BusinessPartnerCount"] != DBNull.Value)
@@ -111,18 +113,6 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 }
             }
             return BusinessPartnerByConstructionSites;
-
-            //List<BusinessPartnerByConstructionSite> BusinessPartnerByConstructionSites = context.BusinessPartnerByConstructionSites
-            //    .Include(x => x.BusinessPartner)
-            //    .Include(x => x.ConstructionSite)
-            //    .Include(x => x.Company)
-            //    .Include(x => x.CreatedBy)
-            //    .Where(x => x.Active == true && x.CompanyId == companyId)
-            //    .OrderByDescending(x => x.CreatedAt)
-            //    .AsNoTracking()
-            //    .ToList();
-
-            //return BusinessPartnerByConstructionSites;
         }
 
         public List<BusinessPartnerByConstructionSite> GetBusinessPartnerByConstructionSitesNewerThen(int companyId, DateTime lastUpdateTime)
@@ -131,7 +121,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
             string queryString =
                 "SELECT BusinessPartnerByConstructionSiteId, BusinessPartnerByConstructionSiteIdentifier, BusinessPartnerByConstructionSiteCode, StartDate, EndDate, RealEndDate, MaxNumOfEmployees, " +
-                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
                 "BusinessPartnerCount, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -173,6 +163,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerByConstructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                             businessPartnerByConstructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             businessPartnerByConstructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.InternalCode = reader["BusinessPartnerInternalCode"].ToString();
+                            businessPartnerByConstructionSite.BusinessPartner.NameGer = reader["BusinessPartnerNameGer"].ToString();
                         }
 
                         if (reader["BusinessPartnerCount"] != DBNull.Value)
@@ -213,18 +205,6 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 }
             }
             return BusinessPartnerByConstructionSites;
-
-            //List<BusinessPartnerByConstructionSite> BusinessPartnerByConstructionSites = context.BusinessPartnerByConstructionSites
-            //    .Include(x => x.BusinessPartner)
-            //    .Include(x => x.ConstructionSite)
-            //    .Include(x => x.Company)
-            //    .Include(x => x.CreatedBy)
-            //    .Where(x => x.Company.Id == companyId && x.UpdatedAt > lastUpdateTime)
-            //    .OrderByDescending(x => x.CreatedAt)
-            //    .AsNoTracking()
-            //    .ToList();
-
-            //return BusinessPartnerByConstructionSites;
         }
 
         private string GetNewCodeValue(int companyId)

@@ -76,6 +76,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                            ChooseStatusConverter.Choose,
                            ChooseStatusConverter.ChooseO,
                            ChooseStatusConverter.ChooseB,
+                           ChooseStatusConverter.ChooseM,
                 });
             }
         }

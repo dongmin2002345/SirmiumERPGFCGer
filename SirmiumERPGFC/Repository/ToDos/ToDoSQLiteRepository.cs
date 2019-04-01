@@ -20,6 +20,8 @@ namespace SirmiumERPGFC.Repository.ToDos
             "Identifier GUID, " +
             "Name NVARCHAR(48) NULL, " +
             "Description NVARCHAR(2048) NULL, " +
+            "Path NVARCHAR(2048) NULL, " +
+            "ToDoDate DATETIME NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -28,14 +30,14 @@ namespace SirmiumERPGFC.Repository.ToDos
             "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Name, Description, ToDoDate, " +
+            "SELECT ServerId, Identifier, Name, Description, Path, ToDoDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ToDos " +
-            "(Id, ServerId, Identifier, Name, Description, ToDoDate, " +
+            "(Id, ServerId, Identifier, Name, Description, Path, ToDoDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Name, @Description, @ToDoDate, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Name, @Description, @Path, @ToDoDate, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         public ToDoListResponse GetToDos(int companyId, string filterString)
@@ -65,6 +67,7 @@ namespace SirmiumERPGFC.Repository.ToDos
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ToDoDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -114,6 +117,7 @@ namespace SirmiumERPGFC.Repository.ToDos
                         dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
                         dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.ToDoDate = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -211,6 +215,7 @@ namespace SirmiumERPGFC.Repository.ToDos
                 insertCommand.Parameters.AddWithValue("@Identifier", toDo.Identifier);
                 insertCommand.Parameters.AddWithValue("@Name", ((object)toDo.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Description", ((object)toDo.Description) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@Path", ((object)toDo.Path) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ToDoDate", ((object)toDo.ToDoDate) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@IsSynced", toDo.IsSynced);
                 insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)toDo.UpdatedAt) ?? DBNull.Value);

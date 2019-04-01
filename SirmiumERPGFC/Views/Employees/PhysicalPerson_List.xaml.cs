@@ -742,7 +742,8 @@ namespace SirmiumERPGFC.Views.Employees
 		{
             try
             {
-                PhysicalPersonsExcelReport.Show(PhysicalPersonsFromDB.ToList());
+                var personResponse = new PhysicalPersonSQLiteRepository().GetPhysicalPersonsByPage(MainWindow.CurrentCompanyId, new PhysicalPersonViewModel(), 1, Int32.MaxValue);
+                PhysicalPersonsExcelReport.Show(personResponse.PhysicalPersons);
             }
             catch(Exception ex)
             {

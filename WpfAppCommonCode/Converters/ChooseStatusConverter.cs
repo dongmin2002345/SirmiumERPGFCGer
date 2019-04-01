@@ -13,6 +13,7 @@ namespace WpfAppCommonCode.Converters
         public static string Choose = "ODABRATI (Auswählen)"; //odaberi
         public static string ChooseO = "OTVORENO (Offen)";
         public static string ChooseB = "PLAĆEN (Bezahlt)";
+        public static string ChooseM = "OPOMENA (Mahnung)";
 
         public static List<String> GenderOptions = new List<string>()
         {
@@ -39,6 +40,8 @@ namespace WpfAppCommonCode.Converters
                     return ChooseO;
                 else if (val == 2)
                     return ChooseB;
+                else if (val == 3)
+                    return ChooseM;
                 return Choose;
             }
 
@@ -55,6 +58,8 @@ namespace WpfAppCommonCode.Converters
                     return 1;//ChooseO
                 else if (value.ToString() == ChooseB)
                     return 2;//ChooseB
+                else if (value.ToString() == ChooseM)
+                    return 3;//ChooseM
             }
 
             return 0;

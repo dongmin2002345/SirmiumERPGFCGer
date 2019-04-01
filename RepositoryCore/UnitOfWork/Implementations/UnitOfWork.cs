@@ -152,7 +152,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IToDoRepository GetToDoRepository()
         {
             if (toDoRepository == null)
-                toDoRepository = new ToDoRepository(context);
+                toDoRepository = new ToDoViewRepository(context);
             return toDoRepository;
         }
 

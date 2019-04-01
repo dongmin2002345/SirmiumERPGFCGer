@@ -43,6 +43,25 @@ namespace ServiceInterfaces.ViewModels.Common.ToDos
         }
         #endregion
 
+
+        #region Path
+        private string _Path;
+
+        public string Path
+        {
+            get { return _Path; }
+            set
+            {
+                if (_Path != value)
+                {
+                    _Path = value;
+                    NotifyPropertyChanged("Path");
+                }
+            }
+        }
+        #endregion
+
+
         #region ToDoDate
         private DateTime _ToDoDate;
 

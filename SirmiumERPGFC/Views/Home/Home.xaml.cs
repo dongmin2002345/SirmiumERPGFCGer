@@ -248,5 +248,21 @@ namespace SirmiumERPGFC.Views.Home
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
         }
+
+        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentToDo.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

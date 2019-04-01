@@ -392,7 +392,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             EmployeeOnBusinessPartnerDataLoading = true;
 
             EmployeeByBusinessPartnerListResponse response = new EmployeeByBusinessPartnerSQLiteRepository()
-                .GetByBusinessPartner(CurrentBusinessPartner.Identifier);
+                .GetByBusinessPartner(CurrentBusinessPartner.Identifier, "", currentPageRight, itemsPerPageRight);
 
             if (response.Success)
             {
@@ -582,8 +582,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
 
         #region Pagination   
-
-
+        
         private void btnFirstPage_Click(object sender, RoutedEventArgs e)
         {
             if (currentPage > 1)
@@ -634,7 +633,59 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #endregion
 
-        
+        #region Pagination right  
+
+        private void btnFirstPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageRight > 1)
+            {
+                currentPageRight = 1;
+                Thread displayThread = new Thread(() => DisplayEmployeesOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnPrevPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageRight > 1)
+            {
+                currentPageRight--;
+                Thread displayThread = new Thread(() => DisplayEmployeesOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnNextPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageRight < Math.Ceiling((double)this.totalItemsRight / this.itemsPerPageRight))
+            {
+                currentPageRight++;
+                Thread displayThread = new Thread(() => DisplayEmployeesOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnLastPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            int lastPageRight = (int)Math.Ceiling((double)this.totalItemsRight / this.itemsPerPageRight);
+            if (currentPageRight < lastPageRight)
+            {
+                currentPageRight = lastPageRight;
+                Thread displayThread = new Thread(() => DisplayEmployeesOnBusinessPartnerData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        #endregion
+
+
 
         private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
         {
