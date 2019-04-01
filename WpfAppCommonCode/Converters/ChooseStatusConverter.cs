@@ -13,7 +13,7 @@ namespace WpfAppCommonCode.Converters
         public static string Choose = "ODABRATI (Auswählen)"; //odaberi
         public static string ChooseO = "OTVORENO (Offen)";
         public static string ChooseB = "PLAĆEN (Bezahlt)";
-        public static string ChooseM = "OPOMENA (Mahnung)";
+        public static string ChooseM = "OPOMENA (Mähnung)";
 
         public static List<String> GenderOptions = new List<string>()
         {
