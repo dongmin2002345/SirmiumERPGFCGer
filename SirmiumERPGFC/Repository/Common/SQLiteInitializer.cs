@@ -63,6 +63,7 @@ namespace SirmiumERPGFC.Repository.Common
                     createTableToDo.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("ToDos", "ToDoDate", "DATETIME NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "Path", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region Limitations
