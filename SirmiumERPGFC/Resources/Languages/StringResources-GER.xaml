@@ -37,6 +37,7 @@
     <system:String x:Key="Član_porodiceDvotacka">Familienmitglied:</system:String>
     <system:String x:Key="Članovi_porodice">Familienmitglieder</system:String>
     <system:String x:Key="DA">JA</system:String>
+    <system:String x:Key="Datum_radne_dozvole">Datum der Arbeitserlaubnis</system:String>
     <system:String x:Key="Datum">Datum</system:String>
     <system:String x:Key="Datum_ambasade">Datum wann man in die Botschaft gehen soll </system:String>
     <system:String x:Key="Datum_ambasadeDvotacka">Datum wann man in die Botschaft gehen soll :</system:String>

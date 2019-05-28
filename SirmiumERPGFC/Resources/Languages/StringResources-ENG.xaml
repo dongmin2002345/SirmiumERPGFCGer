@@ -36,6 +36,7 @@
     <system:String x:Key="Član_porodiceDvotacka">Family member:</system:String>
     <system:String x:Key="Članovi_porodice">Family members</system:String>
     <system:String x:Key="DA">YES</system:String>
+    <system:String x:Key="Datum_radne_dozvole">Date of work permit</system:String>
     <system:String x:Key="Datum">Date</system:String>
     <system:String x:Key="Datum_ambasade">Embassy date</system:String>
     <system:String x:Key="Datum_ambasadeDvotacka">Embassy date:</system:String>

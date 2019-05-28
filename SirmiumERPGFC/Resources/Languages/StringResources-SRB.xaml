@@ -59,6 +59,7 @@
     <system:String x:Key="Datum_prekida_ugovoraDvotacka">Datum prekida ugovora:</system:String>
     <system:String x:Key="Datum_radne_dozvole_do">Datum radne dozvole do</system:String>
     <system:String x:Key="Datum_radne_dozvole_od">Datum radne dozvole od</system:String>
+    <system:String x:Key="Datum_radne_dozvole">DATUM RADNE DOZVOLE</system:String>
     <system:String x:Key="Datum_rođenja">Datum rođenja</system:String>
     <system:String x:Key="Datum_rođenjaDvotacka">Datum rođenja:</system:String>
     <system:String x:Key="Datum_statusa">Datum statusa</system:String>

@@ -193,8 +193,19 @@
                         <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasade}" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="VisaValidFrom" Header="{DynamicResource Datum_vize_od}" Binding="{Binding VisaValidFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="VisaValidTo" Header="{DynamicResource Datum_vize_do}" Binding="{Binding VisaValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="WorkPermitFrom" Header="{DynamicResource Datum_radne_dozvole_od}" Binding="{Binding WorkPermitFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="WorkPermitTo" Header="{DynamicResource Datum_radne_dozvole_do}" Binding="{Binding WorkPermitTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BusinessPartnerCode" Header="{DynamicResource Šifra_ZagradaFirmeZagrada}" IsReadOnly="True">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} ( {1} )">
+                                    <Binding Path="BusinessPartnerCode" />
+                                    <Binding Path="BusinessPartnerName" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
@@ -404,7 +415,7 @@
             </GroupBox>
 
             <!--Listing-->
-            <GroupBox Header="{DynamicResource Dozvole}" Grid.Column="2" Margin="1 1 2 2">
+            <GroupBox Header="{DynamicResource Datum_radne_dozvole}" Grid.Column="2" Margin="1 1 2 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dg"
@@ -420,10 +431,9 @@
                         Style="{DynamicResource AzureDataGrid}"
                         ItemsSource="{Binding Path=EmployeeLicenceItemsFromDB}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Licence.Category" Header="{DynamicResource Kategorija}" Binding="{Binding Licence.Category}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Licence.Description" Header="{DynamicResource Dozvola}" Binding="{Binding Licence.Description}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Dozvola}" Binding="{Binding Country.Name}" IsReadOnly="True"  />
-                            <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Ističe}" Binding="{Binding ValidTo}" IsReadOnly="True"  />
+                            <DataGridTextColumn SortMemberPath="ValidFrom" Header="{DynamicResource Važi_od}" Binding="{Binding ValidFrom}" IsReadOnly="True" />
+
+                            <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Važi_do}" Binding="{Binding ValidTo}" IsReadOnly="True"  />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
