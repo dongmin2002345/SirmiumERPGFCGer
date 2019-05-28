@@ -193,19 +193,6 @@
                         <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasade}" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="VisaValidFrom" Header="{DynamicResource Datum_vize_od}" Binding="{Binding VisaValidFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="VisaValidTo" Header="{DynamicResource Datum_vize_do}" Binding="{Binding VisaValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="BusinessPartnerCode" Header="{DynamicResource Šifra_ZagradaFirmeZagrada}" IsReadOnly="True">
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding StringFormat="{}{0} ( {1} )">
-                                    <Binding Path="BusinessPartnerCode" />
-                                    <Binding Path="BusinessPartnerName" />
-                                </MultiBinding>
-                            </DataGridTextColumn.Binding>
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
