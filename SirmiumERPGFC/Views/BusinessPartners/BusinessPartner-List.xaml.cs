@@ -35,7 +35,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #region Services
         IBusinessPartnerService businessPartnerService;
-        IBusinessPartnerLocationService businessPartnerLocationService;
+		IBusinessPartnerLocationService businessPartnerLocationService;
         IBusinessPartnerPhoneService businessPartnerPhoneService;
         IBusinessPartnerOrganizationUnitService businessPartnerOrganizationUnitService;
         IBusinessPartnerDocumentService businessPartnerDocumentService;
@@ -63,7 +63,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 		#endregion
 
 		#region BusinessPartnerLocationsFromDB
-		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB  = new ObservableCollection<BusinessPartnerLocationViewModel>();
+		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
 
 		public ObservableCollection<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB
 		{
@@ -98,7 +98,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                         {
                             DisplayDocumentData();
                             DisplayPhoneData();
-                            DisplayLocationData();
+							DisplayNoteData();
                         });
                         th.IsBackground = true;
                         th.Start();
@@ -140,72 +140,72 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 }
             }
         }
-        #endregion
+		#endregion
 
 
-        #region LocationsFromDB
-        private ObservableCollection<BusinessPartnerLocationViewModel> _LocationsFromDB;
+		#region NotesFromDB
+		private ObservableCollection<BusinessPartnerNoteViewModel> _NotesFromDB;
 
-        public ObservableCollection<BusinessPartnerLocationViewModel> LocationsFromDB
-        {
-            get { return _LocationsFromDB; }
+        public ObservableCollection<BusinessPartnerNoteViewModel> NotesFromDB
+		{
+            get { return _NotesFromDB; }
             set
             {
-                if (_LocationsFromDB != value)
+                if (_NotesFromDB != value)
                 {
-                    _LocationsFromDB = value;
-                    NotifyPropertyChanged("LocationsFromDB");
+					_NotesFromDB = value;
+                    NotifyPropertyChanged("NotesFromDB");
                 }
             }
         }
-        #endregion
+		#endregion
 
-        #region CurrentLocationForm
-        private BusinessPartnerLocationViewModel _CurrentLocationForm = new BusinessPartnerLocationViewModel();
+		#region CurrentNoteForm
+		private BusinessPartnerNoteViewModel _CurrentNoteForm = new BusinessPartnerNoteViewModel();
 
-        public BusinessPartnerLocationViewModel CurrentLocationForm
-        {
-            get { return _CurrentLocationForm; }
+        public BusinessPartnerNoteViewModel CurrentNoteForm
+		{
+            get { return _CurrentNoteForm; }
             set
             {
-                if (_CurrentLocationForm != value)
+                if (_CurrentNoteForm != value)
                 {
-                    _CurrentLocationForm = value;
-                    NotifyPropertyChanged("CurrentLocationForm");
+					_CurrentNoteForm = value;
+                    NotifyPropertyChanged("CurrentNoteForm");
                 }
             }
         }
-        #endregion
+		#endregion
 
-        #region CurrentLocationDG
-        private BusinessPartnerLocationViewModel _CurrentLocationDG;
+		#region CurrentNoteDG
+		private BusinessPartnerNoteViewModel _CurrentNoteDG;
 
-        public BusinessPartnerLocationViewModel CurrentLocationDG
-        {
-            get { return _CurrentLocationDG; }
+        public BusinessPartnerNoteViewModel CurrentNoteDG
+		{
+            get { return _CurrentNoteDG; }
             set
             {
-                if (_CurrentLocationDG != value)
+                if (_CurrentNoteDG != value)
                 {
-                    _CurrentLocationDG = value;
-                    NotifyPropertyChanged("CurrentLocationDG");
+					_CurrentNoteDG = value;
+                    NotifyPropertyChanged("CurrentNoteDG");
                 }
             }
         }
-        #endregion
+		#endregion
 
-        #region LocationDataLoading
-        private bool _LocationDataLoading;
+		#region NoteDataLoading
+		private bool _NoteDataLoading;
 
-        public bool LocationDataLoading
-        {
-            get { return _LocationDataLoading; }
+        public bool NoteDataLoading
+		{
+            get { return _NoteDataLoading; }
             set
             {
-                if (_LocationDataLoading != value)
+                if (_NoteDataLoading != value)
                 {
-                    _LocationDataLoading = value;
-                    NotifyPropertyChanged("LocationDataLoading");
+					_NoteDataLoading = value;
+                    NotifyPropertyChanged("NoteDataLoading");
                 }
             }
         }
@@ -510,24 +510,24 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDataLoading = false;
         }
 
-        private void DisplayLocationData()
+        private void DisplayNoteData()
         {
-            LocationDataLoading = true;
+			NoteDataLoading = true;
 
-            BusinessPartnerLocationListResponse response = new BusinessPartnerLocationSQLiteRepository()
-                .GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+			BusinessPartnerNoteListResponse response = new BusinessPartnerNoteSQLiteRepository()
+                .GetBusinessPartnerNotesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
 
             if (response.Success)
             {
-                LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>(
-                    response.BusinessPartnerLocations ?? new List<BusinessPartnerLocationViewModel>());
+				NotesFromDB = new ObservableCollection<BusinessPartnerNoteViewModel>(
+                    response.BusinessPartnerNotes ?? new List<BusinessPartnerNoteViewModel>());
             }
             else
             {
-                LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
+				NotesFromDB = new ObservableCollection<BusinessPartnerNoteViewModel>();
             }
 
-            LocationDataLoading = false;
+			NoteDataLoading = false;
         }
 
         private void DisplayPhoneData()
