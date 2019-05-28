@@ -287,6 +287,7 @@
     <system:String x:Key="SektorDvotacka">Sektor:</system:String>
     <system:String x:Key="SEKTORI">Sektori</system:String>
     <system:String x:Key="Šifra">Šifra</system:String>
+    <system:String x:Key="Šifra_ZagradaFirmeZagrada">Šifra (Firme)</system:String>
     <system:String x:Key="Šifra_ZagradaGradilišteZagrada">Šifra (Gradilište)</system:String>
     <system:String x:Key="Šifra_ZagradagradilišteZagradaDvotacka">Šifra (gradilište):</system:String>
     <system:String x:Key="Šifra_dozvole">Šifra dozvole</system:String>

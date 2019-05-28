@@ -50,6 +50,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -109,6 +110,9 @@
 
                         <TextBlock Grid.Row="5" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradilišteDvotacka}" />
                         <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.ConstructionSiteCode}" IsEnabled="False" />
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource FirmeDvotacka}" />
+                        <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentEmployee.BusinessPartnerCode}" IsEnabled="False" />
 
                     </Grid>
                 </GroupBox>
