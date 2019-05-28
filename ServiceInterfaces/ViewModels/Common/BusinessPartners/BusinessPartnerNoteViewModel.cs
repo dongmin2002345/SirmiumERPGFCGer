@@ -44,7 +44,7 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         #endregion
 
         #region NoteDate
-        private DateTime _NoteDate;
+        private DateTime _NoteDate = DateTime.Now;
 
         public DateTime NoteDate
         {
