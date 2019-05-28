@@ -322,7 +322,7 @@
             </Grid.ColumnDefinitions>
 
             <!--Listing-->
-            <GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="0" Margin="2 1 1 2">
+            <!--<GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="0" Margin="2 1 1 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgFamilyMembers"
@@ -346,8 +346,38 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
+            </GroupBox>-->
+
+            <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="2 1 1 2">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0"  IsActive="{Binding NoteDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgNotes"
+                              Grid.Row="0" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource AzureDataGrid}"
+                              ItemsSource="{Binding Path=NotesFromDB}"
+                              SelectedItem="{Binding Path=CurrentNoteDG, Mode=TwoWay}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </GroupBox>
-            
+
             <!--Listing-->
             <GroupBox Header="{DynamicResource Zanimanja}" Grid.Column="1" Margin="1 1 1 2 ">
                 <Grid>

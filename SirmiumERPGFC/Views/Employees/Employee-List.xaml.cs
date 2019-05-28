@@ -85,7 +85,9 @@ namespace SirmiumERPGFC.Views.Employees
                             DisplayLicenceItemData();
                             DisplayDocumentData();
                             DisplayCardData();
-                        });
+							DisplayEmployeeNoteData();
+
+						});
                         displayItemThread.IsBackground = true;
                         displayItemThread.Start();
                     }
@@ -285,11 +287,79 @@ namespace SirmiumERPGFC.Views.Employees
                 }
             }
         }
-        #endregion
+		#endregion
+
+		#region NotesFromDB
+		private ObservableCollection<EmployeeNoteViewModel> _NotesFromDB;
+
+		public ObservableCollection<EmployeeNoteViewModel> NotesFromDB
+		{
+			get { return _NotesFromDB; }
+			set
+			{
+				if (_NotesFromDB != value)
+				{
+					_NotesFromDB = value;
+					NotifyPropertyChanged("NotesFromDB");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteForm
+		private EmployeeNoteViewModel _CurrentNoteForm = new EmployeeNoteViewModel();
+
+		public EmployeeNoteViewModel CurrentNoteForm
+		{
+			get { return _CurrentNoteForm; }
+			set
+			{
+				if (_CurrentNoteForm != value)
+				{
+					_CurrentNoteForm = value;
+					NotifyPropertyChanged("CurrentNoteForm");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteDG
+		private EmployeeNoteViewModel _CurrentNoteDG;
+
+		public EmployeeNoteViewModel CurrentNoteDG
+		{
+			get { return _CurrentNoteDG; }
+			set
+			{
+				if (_CurrentNoteDG != value)
+				{
+					_CurrentNoteDG = value;
+					NotifyPropertyChanged("CurrentNoteDG");
+				}
+			}
+		}
+		#endregion
+
+		#region NoteDataLoading
+		private bool _NoteDataLoading;
+
+		public bool NoteDataLoading
+		{
+			get { return _NoteDataLoading; }
+			set
+			{
+				if (_NoteDataLoading != value)
+				{
+					_NoteDataLoading = value;
+					NotifyPropertyChanged("NoteDataLoading");
+				}
+			}
+		}
+		#endregion
 
 
-        #region EmployeeCardsFromDB
-        private ObservableCollection<EmployeeCardViewModel> _EmployeeCardsFromDB;
+		#region EmployeeCardsFromDB
+		private ObservableCollection<EmployeeCardViewModel> _EmployeeCardsFromDB;
 
         public ObservableCollection<EmployeeCardViewModel> EmployeeCardsFromDB
         {
@@ -540,7 +610,27 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeDocumentDataLoading = false;
         }
 
-        private void DisplayCardData()
+		private void DisplayEmployeeNoteData()
+		{
+			NoteDataLoading = true;
+
+			EmployeeNoteListResponse response = new EmployeeNoteSQLiteRepository()
+				.GetEmployeeNotesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+			if (response.Success)
+			{
+				NotesFromDB = new ObservableCollection<EmployeeNoteViewModel>(
+					response.EmployeeNotes ?? new List<EmployeeNoteViewModel>());
+			}
+			else
+			{
+				NotesFromDB = new ObservableCollection<EmployeeNoteViewModel>();
+			}
+
+			NoteDataLoading = false;
+		}
+
+		private void DisplayCardData()
         {
             EmployeeCardDataLoading = true;
 
