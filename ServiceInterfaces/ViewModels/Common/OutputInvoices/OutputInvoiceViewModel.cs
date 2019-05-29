@@ -340,6 +340,23 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         }
         #endregion
 
+        #region OutputInvoiceDocuments
+        private ObservableCollection<OutputInvoiceDocumentViewModel> _OutputInvoiceDocuments;
+
+        public ObservableCollection<OutputInvoiceDocumentViewModel> OutputInvoiceDocuments
+        {
+            get { return _OutputInvoiceDocuments; }
+            set
+            {
+                if (_OutputInvoiceDocuments != value)
+                {
+                    _OutputInvoiceDocuments = value;
+                    NotifyPropertyChanged("OutputInvoiceDocuments");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;
