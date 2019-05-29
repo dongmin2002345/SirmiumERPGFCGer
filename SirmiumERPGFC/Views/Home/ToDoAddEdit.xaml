@@ -23,6 +23,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -40,6 +41,20 @@
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpisDvotacka}" />
                 <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" Text="{Binding Path=CurrentToDo.Description}" Height="100" TextWrapping="Wrap"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
+                <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding Path=CurrentToDo.Path, Mode=TwoWay}" Margin="2" />
+                    <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource ODABERI}" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
 
             </Grid>
         </GroupBox>

@@ -45,7 +45,7 @@ namespace ServiceInterfaces.ViewModels.Employees
         #endregion
 
         #region NoteDate
-        private DateTime _NoteDate;
+        private DateTime _NoteDate = DateTime.Now;
 
         public DateTime NoteDate
         {

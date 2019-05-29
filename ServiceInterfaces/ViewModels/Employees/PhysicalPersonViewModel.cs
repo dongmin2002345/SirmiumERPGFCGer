@@ -664,6 +664,23 @@ namespace ServiceInterfaces.ViewModels.Employees
 				}
 			}
 		}
-		#endregion
-	}
+        #endregion
+
+        #region Search_PhysicalPersonCode
+        private string _Search_PhysicalPersonCode;
+
+        public string Search_PhysicalPersonCode
+        {
+            get { return _Search_PhysicalPersonCode; }
+            set
+            {
+                if (_Search_PhysicalPersonCode != value)
+                {
+                    _Search_PhysicalPersonCode = value;
+                    NotifyPropertyChanged("Search_PhysicalPersonCode");
+                }
+            }
+        }
+        #endregion
+    }
 }

@@ -35,6 +35,8 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 		#region Services
 		IInputInvoiceService inputInvoiceService;
+		IInputInvoiceNoteService inputInvoiceNoteService;
+		IInputInvoiceDocumentService inputInvoiceDocumentService;
 		#endregion
 
 		#region InputInvoiceSearchObject
@@ -83,6 +85,21 @@ namespace SirmiumERPGFC.Views.InputInvoices
 				{
 					_CurrentInputInvoice = value;
 					NotifyPropertyChanged("CurrentInputInvoice");
+					if (_CurrentInputInvoice != null)
+					{
+						Thread displayItemThread = new Thread(() =>
+						{
+							
+							DisplayInputInvoiceDocumentData();
+							
+							DisplayInputInvoiceNoteData();
+
+						});
+						displayItemThread.IsBackground = true;
+						displayItemThread.Start();
+					}
+					else
+						NotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>();
 				}
 			}
 		}
@@ -104,6 +121,126 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			}
 		}
 		#endregion
+
+		#region InputInvoiceDocumentsFromDB
+		private ObservableCollection<InputInvoiceDocumentViewModel> _InputInvoiceDocumentsFromDB;
+
+		public ObservableCollection<InputInvoiceDocumentViewModel> InputInvoiceDocumentsFromDB
+		{
+			get { return _InputInvoiceDocumentsFromDB; }
+			set
+			{
+				if (_InputInvoiceDocumentsFromDB != value)
+				{
+					_InputInvoiceDocumentsFromDB = value;
+					NotifyPropertyChanged("InputInvoiceDocumentsFromDB");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentInputInvoiceDocument
+		private InputInvoiceDocumentViewModel _CurrentInputInvoiceDocument;
+
+		public InputInvoiceDocumentViewModel CurrentInputInvoiceDocument
+		{
+			get { return _CurrentInputInvoiceDocument; }
+			set
+			{
+				if (_CurrentInputInvoiceDocument != value)
+				{
+					_CurrentInputInvoiceDocument = value;
+					NotifyPropertyChanged("CurrentInputInvoiceDocument");
+				}
+			}
+		}
+		#endregion
+
+		#region InputInvoiceDocumentDataLoading
+		private bool _InputInvoiceDocumentDataLoading;
+
+		public bool InputInvoiceDocumentDataLoading
+		{
+			get { return _InputInvoiceDocumentDataLoading; }
+			set
+			{
+				if (_InputInvoiceDocumentDataLoading != value)
+				{
+					_InputInvoiceDocumentDataLoading = value;
+					NotifyPropertyChanged("InputInvoiceDocumentDataLoading");
+				}
+			}
+		}
+		#endregion
+
+		#region NotesFromDB
+		private ObservableCollection<InputInvoiceNoteViewModel> _NotesFromDB;
+
+		public ObservableCollection<InputInvoiceNoteViewModel> NotesFromDB
+		{
+			get { return _NotesFromDB; }
+			set
+			{
+				if (_NotesFromDB != value)
+				{
+					_NotesFromDB = value;
+					NotifyPropertyChanged("NotesFromDB");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteForm
+		private InputInvoiceNoteViewModel _CurrentNoteForm = new InputInvoiceNoteViewModel();
+
+		public InputInvoiceNoteViewModel CurrentNoteForm
+		{
+			get { return _CurrentNoteForm; }
+			set
+			{
+				if (_CurrentNoteForm != value)
+				{
+					_CurrentNoteForm = value;
+					NotifyPropertyChanged("CurrentNoteForm");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteDG
+		private InputInvoiceNoteViewModel _CurrentNoteDG;
+
+		public InputInvoiceNoteViewModel CurrentNoteDG
+		{
+			get { return _CurrentNoteDG; }
+			set
+			{
+				if (_CurrentNoteDG != value)
+				{
+					_CurrentNoteDG = value;
+					NotifyPropertyChanged("CurrentNoteDG");
+				}
+			}
+		}
+		#endregion
+
+		#region NoteDataLoading
+		private bool _NoteDataLoading;
+
+		public bool NoteDataLoading
+		{
+			get { return _NoteDataLoading; }
+			set
+			{
+				if (_NoteDataLoading != value)
+				{
+					_NoteDataLoading = value;
+					NotifyPropertyChanged("NoteDataLoading");
+				}
+			}
+		}
+		#endregion
+
 
 		#region StatusOptions
 		public ObservableCollection<String> StatusOptions
@@ -187,6 +324,8 @@ namespace SirmiumERPGFC.Views.InputInvoices
 		{
 			// Get required service
 			this.inputInvoiceService = DependencyResolver.Kernel.Get<IInputInvoiceService>();
+			this.inputInvoiceNoteService = DependencyResolver.Kernel.Get<IInputInvoiceNoteService>();
+			this.inputInvoiceDocumentService = DependencyResolver.Kernel.Get<IInputInvoiceDocumentService>();
 
 			// Draw all components
 			InitializeComponent();
@@ -253,12 +392,53 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			InputInvoiceDataLoading = false;
 		}
 
+		private void DisplayInputInvoiceNoteData()
+		{
+			NoteDataLoading = true;
+
+			InputInvoiceNoteListResponse response = new InputInvoiceNoteSQLiteRepository()
+				.GetInputInvoiceNotesByInputInvoice(MainWindow.CurrentCompanyId, CurrentInputInvoice.Identifier);
+
+			if (response.Success)
+			{
+				NotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>(
+					response.InputInvoiceNotes ?? new List<InputInvoiceNoteViewModel>());
+			}
+			else
+			{
+				NotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>();
+			}
+
+			NoteDataLoading = false;
+		}
+		private void DisplayInputInvoiceDocumentData()
+		{
+			InputInvoiceDocumentDataLoading = true;
+
+			InputInvoiceDocumentListResponse response = new InputInvoiceDocumentSQLiteRepository()
+				.GetInputInvoiceDocumentsByInputInvoice(MainWindow.CurrentCompanyId, CurrentInputInvoice.Identifier);
+
+			if (response.Success)
+			{
+				InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>(
+					response.InputInvoiceDocuments ?? new List<InputInvoiceDocumentViewModel>());
+			}
+			else
+			{
+				InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>();
+			}
+
+			InputInvoiceDocumentDataLoading = false;
+		}
+
 		private void SyncData()
 		{
 			RefreshButtonEnabled = false;
 
 			RefreshButtonContent = ((string)Application.Current.FindResource("Ulazne_fakture_TriTacke"));
             new InputInvoiceSQLiteRepository().Sync(inputInvoiceService);
+			new InputInvoiceNoteSQLiteRepository().Sync(inputInvoiceNoteService);
+			new InputInvoiceDocumentSQLiteRepository().Sync(inputInvoiceDocumentService);
 
 			DisplayData();
 
@@ -436,7 +616,27 @@ namespace SirmiumERPGFC.Views.InputInvoices
             }
         }
 
-        private void btnExcel_Click(object sender, RoutedEventArgs e)
+		#region Display documents
+
+		private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				System.Diagnostics.Process process = new System.Diagnostics.Process();
+				//string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+				Uri pdf = new Uri(CurrentInputInvoiceDocument.Path, UriKind.RelativeOrAbsolute);
+				process.StartInfo.FileName = pdf.LocalPath;
+				process.Start();
+			}
+			catch (Exception error)
+			{
+				MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+			}
+		}
+
+		#endregion
+
+		private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
             try
             {

@@ -59,6 +59,7 @@
     <system:String x:Key="Datum_prekida_ugovoraDvotacka">Datum prekida ugovora:</system:String>
     <system:String x:Key="Datum_radne_dozvole_do">Datum radne dozvole do</system:String>
     <system:String x:Key="Datum_radne_dozvole_od">Datum radne dozvole od</system:String>
+    <system:String x:Key="Datum_radne_dozvole">DATUM RADNE DOZVOLE</system:String>
     <system:String x:Key="Datum_rođenja">Datum rođenja</system:String>
     <system:String x:Key="Datum_rođenjaDvotacka">Datum rođenja:</system:String>
     <system:String x:Key="Datum_statusa">Datum statusa</system:String>
@@ -119,8 +120,10 @@
     <system:String x:Key="Istorija_radnika">Istorija radnika</system:String>
     <system:String x:Key="Izlazne_fakture">Izlazne fakture</system:String>
     <system:String x:Key="Iznos_bruto">Iznos bruto</system:String>
+    <system:String x:Key="Iznos_bruto_euro">Iznos bruto (euro)</system:String>
     <system:String x:Key="Iznos_brutoDvotacka">Iznos bruto:</system:String>
     <system:String x:Key="Iznos_neto">Iznos neto</system:String>
+    <system:String x:Key="Iznos_neto_euro">Iznos neto (euro)</system:String>
     <system:String x:Key="Iznos_netoDvotacka">Iznos neto:</system:String>
     <system:String x:Key="JBKJSDvotacka">JBKJS:</system:String>
     <system:String x:Key="Kalkulacije_u_okviru_gradilišta">Kalkulacije u okviru gradilišta</system:String>
@@ -194,6 +197,7 @@
     <system:String x:Key="Oznaka_državeDvotacka">Oznaka države:</system:String>
     <system:String x:Key="Pasoš">Pasoš</system:String>
     <system:String x:Key="PDV">PDV</system:String>
+    <system:String x:Key="PDV_euro">PDV (euro)</system:String>
     <system:String x:Key="PDV_brojDvotacka">PDV broj:</system:String>
     <system:String x:Key="PDVProcenat">PDV%</system:String>
     <system:String x:Key="PDVProcenatDvotacka">PDV%:</system:String>
@@ -283,6 +287,7 @@
     <system:String x:Key="SektorDvotacka">Sektor:</system:String>
     <system:String x:Key="SEKTORI">Sektori</system:String>
     <system:String x:Key="Šifra">Šifra</system:String>
+    <system:String x:Key="Šifra_ZagradaFirmeZagrada">Šifra (Firme)</system:String>
     <system:String x:Key="Šifra_ZagradaGradilišteZagrada">Šifra (Gradilište)</system:String>
     <system:String x:Key="Šifra_ZagradagradilišteZagradaDvotacka">Šifra (gradilište):</system:String>
     <system:String x:Key="Šifra_dozvole">Šifra dozvole</system:String>
@@ -340,7 +345,7 @@
     <system:String x:Key="IZVEZI_U_EXCEL">IZVEZI U EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SAČUVAJ ZAGLAVLJE</system:String>
     <system:String x:Key="IBANDvotacka">IBAN:</system:String>
-    <system:String x:Key="Betriesb_brojDvotacka">Betriesb broj:</system:String>
+    <system:String x:Key="Betriebs_brojDvotacka">Betriebs broj:</system:String>
     <system:String x:Key="Šifra_poreske_uprave">Šifra poreske uprave</system:String>
     <system:String x:Key="Bank1">Bank1</system:String>
     <system:String x:Key="IBAN1">IBAN1</system:String>
@@ -572,6 +577,12 @@
     <system:String x:Key="Odbitak_poreza">Odbitak poreza</system:String>
     <system:String x:Key="Odbitak_poreza_ODDvotacka">Odbitak poreza OD:</system:String>
     <system:String x:Key="Odbitak_poreza_DODvotacka">Odbitak poreza DO:</system:String>
+
+    <system:String x:Key="Obavezno_poljeDvotačka_Ime">Obavezno polje: Ime</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Datum_rodjenja">Obavezno polje: Datum rođenja</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Vrsta_dozvole">Obavezno polje: Vrsta dozvole</system:String>
+
+
 
 
 

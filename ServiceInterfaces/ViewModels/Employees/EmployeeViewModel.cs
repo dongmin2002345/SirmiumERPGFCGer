@@ -286,6 +286,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region PassportMup
+        private string _PassportMup;
+
+        public string PassportMup
+        {
+            get { return _PassportMup; }
+            set
+            {
+                if (_PassportMup != value)
+                {
+                    _PassportMup = value;
+                    NotifyPropertyChanged("PassportMup");
+                }
+            }
+        }
+        #endregion
+
         #region VisaFrom
         private DateTime? _VisaFrom = DateTime.Now;
 
@@ -661,6 +678,23 @@ namespace ServiceInterfaces.ViewModels.Employees
                 {
                     _Search_ConstructionSite = value;
                     NotifyPropertyChanged("Search_ConstructionSite");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_EmployeeCode
+        private string _Search_EmployeeCode;
+
+        public string Search_EmployeeCode
+        {
+            get { return _Search_EmployeeCode; }
+            set
+            {
+                if (_Search_EmployeeCode != value)
+                {
+                    _Search_EmployeeCode = value;
+                    NotifyPropertyChanged("Search_EmployeeCode");
                 }
             }
         }

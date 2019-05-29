@@ -289,6 +289,31 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
         #endregion
 
+        #region PaginationRight data
+
+        int currentPageRight = 1;
+        int itemsPerPageRight = 50;
+        int totalItemsRight = 0;
+
+        #region PaginationDisplayRight
+        private string _PaginationDisplayRight;
+
+        public string PaginationDisplayRight
+        {
+            get { return _PaginationDisplayRight; }
+            set
+            {
+                if (_PaginationDisplayRight != value)
+                {
+                    _PaginationDisplayRight = value;
+                    NotifyPropertyChanged("PaginationDisplayRight");
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
 
         #region SyncButtonContent
         private string _SyncButtonContent = ((string)Application.Current.FindResource("SNIHRONIZUJ"));
@@ -355,7 +380,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         private void btnSearchBusinessPartner_Click(object sender, RoutedEventArgs e)
         {
+            currentPage = 1;
 
+            Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
         }
 
         public void DisplayBusinessPartnersOnConstructionSiteData()
@@ -363,26 +392,26 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             BusinessPartnerOnConstructionSiteDataLoading = true;
 
             BusinessPartnerByConstructionSiteListResponse response = new BusinessPartnerByConstructionSiteSQLiteRepository()
-                .GetByConstructionSite(CurrentConstructionSite.Identifier);
+                .GetByConstructionSite(CurrentConstructionSite.Identifier, "", currentPageRight, itemsPerPageRight);
 
             if (response.Success)
             {
                 BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>(response?.BusinessPartnerByConstructionSites ?? new List<BusinessPartnerByConstructionSiteViewModel>());
-                totalItems = response.TotalItems;
+                totalItemsRight = response.TotalItems;
 
                 DisplayBusinessPartnersData(BusinessPartnersOnConstructionSiteFromDB);
             }
             else
             {
                 BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>();
-                totalItems = 0;
+                totalItemsRight = 0;
                 MainWindow.ErrorMessage = response.Message;
             }
 
-            int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
-            int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
+            int itemFrom = totalItemsRight != 0 ? (currentPageRight - 1) * itemsPerPageRight + 1 : 0;
+            int itemTo = currentPageRight * itemsPerPageRight < totalItemsRight ? currentPageRight * itemsPerPageRight : totalItemsRight;
 
-            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+            PaginationDisplayRight = itemFrom + " - " + itemTo + " od " + totalItemsRight;
 
             BusinessPartnerOnConstructionSiteDataLoading = false;
         }
@@ -572,6 +601,118 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
 
         #endregion
+
+        #region Pagination   
+
+
+        private void btnFirstPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage = 1;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage < Math.Ceiling((double)this.totalItems / this.itemsPerPage))
+            {
+                currentPage++;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnLastPage_Click(object sender, RoutedEventArgs e)
+        {
+            int lastPage = (int)Math.Ceiling((double)this.totalItems / this.itemsPerPage);
+            if (currentPage < lastPage)
+            {
+                currentPage = lastPage;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        #endregion
+
+        #region Pagination right  
+
+        private void btnFirstPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageRight > 1)
+            {
+                currentPageRight = 1;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnPrevPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageRight > 1)
+            {
+                currentPageRight--;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnNextPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageRight < Math.Ceiling((double)this.totalItemsRight / this.itemsPerPageRight))
+            {
+                currentPageRight++;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        private void btnLastPageRight_Click(object sender, RoutedEventArgs e)
+        {
+            int lastPageRight = (int)Math.Ceiling((double)this.totalItemsRight / this.itemsPerPageRight);
+            if (currentPageRight < lastPageRight)
+            {
+                currentPageRight = lastPageRight;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+
+        }
+
+        #endregion
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+            th.IsBackground = true;
+            th.Start();
+        }
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

@@ -311,6 +311,29 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
         #endregion
 
+        #region Pagination data BP
+        int currentPageBP = 1;
+        int itemsPerPageBP = 50;
+        int totalItemsBP = 0;
+
+        #region PaginationDisplayBP
+        private string _PaginationDisplayBP;
+
+        public string PaginationDisplayBP
+        {
+            get { return _PaginationDisplayBP; }
+            set
+            {
+                if (_PaginationDisplayBP != value)
+                {
+                    _PaginationDisplayBP = value;
+                    NotifyPropertyChanged("PaginationDisplayBP");
+                }
+            }
+        }
+        #endregion
+        #endregion
+
 
         #region RefreshButtonContent
         private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
@@ -375,6 +398,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             currentPage = 1;
 
+            Thread displayThread = new Thread(() => DisplayData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+           
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = 1;
+
             Thread syncThread = new Thread(() =>
             {
                 SyncData();
@@ -383,15 +416,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             });
             syncThread.IsBackground = true;
             syncThread.Start();
-        }
-
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            currentPage = 1;
-
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
         }
 
         public void DisplayData()
@@ -426,24 +450,24 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             BusinessPartnerOnConstructionSiteDataLoading = true;
 
             BusinessPartnerByConstructionSiteListResponse response = new BusinessPartnerByConstructionSiteSQLiteRepository()
-                .GetByConstructionSite(CurrentConstructionSite.Identifier);
+                .GetByConstructionSite(CurrentConstructionSite.Identifier, "", currentPageBP, itemsPerPageBP);
 
             if (response.Success)
             {
                 BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>(response?.BusinessPartnerByConstructionSites ?? new List<BusinessPartnerByConstructionSiteViewModel>());
-                totalItems = response.TotalItems;
+                totalItemsBP = response.TotalItems;
             }
             else
             {
                 BusinessPartnersOnConstructionSiteFromDB = new ObservableCollection<BusinessPartnerByConstructionSiteViewModel>();
-                totalItems = 0;
+                totalItemsBP = 0;
                 MainWindow.ErrorMessage = response.Message;
             }
 
-            int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
-            int itemTo = currentPage * itemsPerPage < totalItems ? currentPage * itemsPerPage : totalItems;
+            int itemFrom = totalItemsBP != 0 ? (currentPageBP - 1) * itemsPerPageBP + 1 : 0;
+            int itemTo = currentPageBP * itemsPerPageBP < totalItemsBP ? currentPageBP * itemsPerPageBP : totalItemsBP;
 
-            PaginationDisplay = itemFrom + " - " + itemTo + " od " + totalItems;
+            PaginationDisplayBP = itemFrom + " - " + itemTo + " od " + totalItemsBP;
 
             BusinessPartnerOnConstructionSiteDataLoading = false;
         }
@@ -543,9 +567,64 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
+        #region Pagination BP
+
+        private void btnFirstPageBP_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageBP > 1)
+            {
+                currentPageBP = 1;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnPrevPageBP_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageBP > 1)
+            {
+                currentPageBP--;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnNextPageBP_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPageBP < Math.Ceiling((double)this.totalItemsBP / this.itemsPerPageBP))
+            {
+                currentPageBP++;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnLastPageBP_Click(object sender, RoutedEventArgs e)
+        {
+            int lastPageBP = (int)Math.Ceiling((double)this.totalItemsBP / this.itemsPerPageBP);
+            if (currentPageBP < lastPageBP)
+            {
+                currentPageBP = lastPageBP;
+                Thread displayThread = new Thread(() => DisplayBusinessPartnersOnConstructionSiteData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+        #endregion
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Radnici_po_gradilištu")), 95, new ConstructionSiteEmployee_List_AddEdit(CurrentConstructionSite, CurrentBusinessPartnerOnConstructionSite.BusinessPartner));
+        }
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
         }
 
         #region INotifyPropertyChanged implementation

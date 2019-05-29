@@ -58,7 +58,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
 
-        public BusinessPartnerByConstructionSiteListResponse GetByConstructionSite(Guid constructionSiteIdentifier)
+        public BusinessPartnerByConstructionSiteListResponse GetByConstructionSite(Guid constructionSiteIdentifier, string filterString, int currentPage = 1, int itemsPerPage = 50)
         {
             BusinessPartnerByConstructionSiteListResponse response = new BusinessPartnerByConstructionSiteListResponse();
             List<BusinessPartnerByConstructionSiteViewModel> businessPartnerByConstructionSites = new List<BusinessPartnerByConstructionSiteViewModel>();
@@ -71,8 +71,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM BusinessPartnerByConstructionSites " +
-                        "WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier;", db);
+                        "WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier " +
+                        "ORDER BY Id " +
+                        "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
+                    selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
+                    selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
@@ -95,6 +99,19 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
                         businessPartnerByConstructionSites.Add(dbEntry);
                     }
+
+                    response.BusinessPartnerByConstructionSites = businessPartnerByConstructionSites;
+
+                    selectCommand = new SqliteCommand(
+                        "SELECT Count(*) " +
+                        "FROM BusinessPartnerByConstructionSites " +
+                        "WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier;", db);
+                    selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
+
+                    query = selectCommand.ExecuteReader();
+
+                    if (query.Read())
+                        response.TotalItems = query.GetInt32(0);
                 }
                 catch (SqliteException error)
                 {

@@ -63,6 +63,7 @@ namespace SirmiumERPGFC.Repository.Common
                     createTableToDo.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("ToDos", "ToDoDate", "DATETIME NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "Path", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region Limitations
@@ -450,6 +451,7 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryIdentifier", "GUID NULL");
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "Status", "INTEGER NULL");
 
                     if (withTableDrop)
                     {
@@ -614,6 +616,7 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ResidenceCountryIdentifier", "GUID NULL");
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ResidenceCountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("Employees", "ResidenceCountryName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("Employees", "PassportMup", "NVARCHAR(2048) NULL");
 
                     if (withTableDrop)
                     {
@@ -816,8 +819,36 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("OutputInvoices", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
-                    #region InputInvoices
+                    #region OutputInvoiceNotes
                     if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE OutputInvoiceNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(OutputInvoiceNoteSQLiteRepository.OutputInvoiceNoteTableCreatePart, db);
+                    createTable.ExecuteReader();
+					#endregion
+
+					#region OutputInvoiceDocuments
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE OutputInvoiceDocuments", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(OutputInvoiceDocumentSQLiteRepository.OutputInvoiceDocumentTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+
+					#region InputInvoices
+					if (withTableDrop)
 					{
 						try
 						{
@@ -835,8 +866,36 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("InputInvoices", "BusinessPartnerNameGer", "NVARCHAR(2048) NULL");
                     #endregion
 
-                    #endregion
-                }
+                    #region InputInvoiceNotes
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE InputInvoiceNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(InputInvoiceNoteSQLiteRepository.InputInvoiceNoteTableCreatePart, db);
+                    createTable.ExecuteReader();
+					#endregion
+
+					#region InputInvoiceDocuments
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE InputInvoiceDocuments", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(InputInvoiceDocumentSQLiteRepository.InputInvoiceDocumentTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+
+					#endregion
+				}
 			}
 
             catch (SqliteException e)

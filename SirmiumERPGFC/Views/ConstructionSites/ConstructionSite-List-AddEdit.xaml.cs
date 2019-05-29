@@ -25,6 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.ConstructionSites
 {
@@ -61,6 +62,20 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
 
+        #region StatusOptions
+        public ObservableCollection<String> StatusOptions
+        {
+            get
+            {
+                return new ObservableCollection<String>(new List<string>() {
+                    StatusConverter.UObradi,
+                    StatusConverter.Odbijen,
+                    StatusConverter.Odobren });
+            }
+        }
+        #endregion
+
+
         #region ConstructionSiteDocumentsFromDB
         private ObservableCollection<ConstructionSiteDocumentViewModel> _ConstructionSiteDocumentsFromDB;
 
@@ -79,7 +94,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
         #region CurrentConstructionSiteDocumentForm
-        private ConstructionSiteDocumentViewModel _CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+        private ConstructionSiteDocumentViewModel _CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel() { CreateDate = DateTime.Now };
 
         public ConstructionSiteDocumentViewModel CurrentConstructionSiteDocumentForm
         {
@@ -553,6 +568,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             if (response.Success)
             {
                 CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+                CurrentConstructionSiteDocumentForm.CreateDate = DateTime.Now;
 
                 Thread displayThread = new Thread(() => DisplayDocumentData());
                 displayThread.IsBackground = true;
@@ -567,6 +583,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
         {
             CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+            CurrentConstructionSiteDocumentForm.CreateDate = DateTime.Now;
         }
 
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)
@@ -630,6 +647,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             if (response.Success)
             {
                 CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
+                CurrentConstructionSiteNoteForm.NoteDate = DateTime.Now;
 
                 Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
                 displayThread.IsBackground = true;
@@ -669,6 +687,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         private void btnCancelNote_Click(object sender, RoutedEventArgs e)
         {
             CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
+            CurrentConstructionSiteNoteForm.NoteDate = DateTime.Now;
         }
 
         #endregion

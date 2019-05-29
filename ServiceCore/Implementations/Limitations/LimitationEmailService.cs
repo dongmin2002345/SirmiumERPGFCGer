@@ -96,7 +96,7 @@ namespace ServiceCore.Implementations.Limitations
 
                 unitOfWork.Save();
 
-                response.LimitationEmail = deletedLimitationEmail.ConvertToLimitationEmailViewModel();
+                response.LimitationEmail = deletedLimitationEmail?.ConvertToLimitationEmailViewModel();
                 response.Success = true;
             }
             catch (Exception ex)

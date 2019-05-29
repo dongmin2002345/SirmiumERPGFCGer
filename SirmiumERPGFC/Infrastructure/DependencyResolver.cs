@@ -62,7 +62,11 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IBusinessPartnerNoteService>().To<BusinessPartnerNoteService>();
 
                 Kernel.Bind<IOutputInvoiceService>().To<OutputInvoiceService>();
+                Kernel.Bind<IOutputInvoiceNoteService>().To<OutputInvoiceNoteService>();
+				Kernel.Bind<IOutputInvoiceDocumentService>().To<OutputInvoiceDocumentService>();
 				Kernel.Bind<IInputInvoiceService>().To<InputInvoiceService>();
+                Kernel.Bind<IInputInvoiceNoteService>().To<InputInvoiceNoteService>();
+				Kernel.Bind<IInputInvoiceDocumentService>().To<InputInvoiceDocumentService>();
 
 				Kernel.Bind<ICityService>().To<CityService>();
                 Kernel.Bind<IRegionService>().To<RegionService>();

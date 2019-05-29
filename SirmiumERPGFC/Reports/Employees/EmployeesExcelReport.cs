@@ -53,7 +53,7 @@ namespace SirmiumERPGFC.Reports.Employees
 
 
             int leftSideMin = 1;
-            int rightSideMax = 10;
+            int rightSideMax = 11;
 
             int rowCounter = 1;
 
@@ -75,7 +75,7 @@ namespace SirmiumERPGFC.Reports.Employees
             sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Bold = true;
             sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Font.Size = 8;
 
-            string[,] tabelaNasloviKolona = new string[,] { { "RB.", "IME", "PREZIME", "ŠIFRA GRADILIŠTA", "NAZIV GRADILIŠTA", "DATUM ROĐENJA", "BROJ PASOŠA", "DRŽAVA", "GRAD", "ADRESA" } };
+            string[,] tabelaNasloviKolona = new string[,] { { "RB.", "Šifra", "IME", "PREZIME", "ŠIFRA GRADILIŠTA", "NAZIV GRADILIŠTA", "DATUM ROĐENJA", "BROJ PASOŠA", "DRŽAVA", "GRAD", "ADRESA" } };
             sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]] = tabelaNasloviKolona;
 
             rowCounter++;
@@ -96,6 +96,12 @@ namespace SirmiumERPGFC.Reports.Employees
                 sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
                 sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
                 sheet1.Cells[rowCounter, columnCounter] = (i + 1) + ". ";
+                columnCounter++;
+
+                sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
+                sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
+                sheet1.Cells[rowCounter, columnCounter] = employees[i].EmployeeCode;
                 columnCounter++;
 
                 sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;

@@ -41,7 +41,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Address, " +
                 "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                 "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
-                "Passport, VisaFrom, VisaTo, " +
+                "Passport, PassportMup, VisaFrom, VisaTo, " +
                 "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                 "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " +
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -142,6 +142,8 @@ namespace RepositoryCore.Implementations.Employees
 
                         if (reader["Passport"] != DBNull.Value)
                             employee.Passport = reader["Passport"].ToString();
+                        if (reader["PassportMup"] != DBNull.Value)
+                            employee.PassportMup = reader["PassportMup"].ToString();
                         if (reader["VisaFrom"] != DBNull.Value)
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
                         if (reader["VisaTo"] != DBNull.Value)
@@ -243,7 +245,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Address, " +
                 "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                 "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
-                "Passport, VisaFrom, VisaTo, " +
+                "Passport, PassportMup, VisaFrom, VisaTo, " +
                 "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                 "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " +
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -342,6 +344,8 @@ namespace RepositoryCore.Implementations.Employees
 
                         if (reader["Passport"] != DBNull.Value)
                             employee.Passport = reader["Passport"].ToString();
+                        if (reader["PassportMup"] != DBNull.Value)
+                            employee.PassportMup = reader["PassportMup"].ToString();
                         if (reader["VisaFrom"] != DBNull.Value)
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
                         if (reader["VisaTo"] != DBNull.Value)
@@ -454,7 +458,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Address, " +
                 "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                 "PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
-                "Passport, VisaFrom, VisaTo, " +
+                "Passport, PassportMup, VisaFrom, VisaTo, " +
                 "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                 "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, " +
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -565,6 +569,8 @@ namespace RepositoryCore.Implementations.Employees
 
                         if (reader["Passport"] != DBNull.Value)
                             employee.Passport = reader["Passport"].ToString();
+                        if (reader["PassportMup"] != DBNull.Value)
+                            employee.PassportMup = reader["PassportMup"].ToString();
                         if (reader["VisaFrom"] != DBNull.Value)
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
                         if (reader["VisaTo"] != DBNull.Value)
@@ -690,7 +696,7 @@ namespace RepositoryCore.Implementations.Employees
             if (context.Employees.Where(x => x.Identifier != null && x.Identifier == employee.Identifier).Count() == 0)
             {
                 if (context.Employees.Where(x => x.EmployeeCode == employee.EmployeeCode).Count() > 0)
-                    throw new Exception("Radnik sa datom šifrom već postoji u bazi!");
+                    throw new Exception("Radnik sa datom šifrom već postoji u bazi! / Arbeiter mit dem angegebenen Code ist bereits in der Datenbank vorhanden!");
 
                 employee.Id = 0;
 
@@ -732,6 +738,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.Address = employee.Address;
 
                     dbEntry.Passport = employee.Passport;
+                    dbEntry.PassportMup = employee.PassportMup;
                     dbEntry.VisaFrom = employee.VisaFrom;
                     dbEntry.VisaTo = employee.VisaTo;
 

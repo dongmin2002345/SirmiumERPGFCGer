@@ -2,6 +2,7 @@
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -323,10 +324,44 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
         #endregion
 
 
-        #region Search
+        #region InputInvoiceNotes
+        private ObservableCollection<InputInvoiceNoteViewModel> _InputInvoiceNotes;
 
-        #region SearchBy_BusinessPartnerName
-        private string _SearchBy_BusinessPartnerName;
+        public ObservableCollection<InputInvoiceNoteViewModel> InputInvoiceNotes
+        {
+            get { return _InputInvoiceNotes; }
+            set
+            {
+                if (_InputInvoiceNotes != value)
+                {
+                    _InputInvoiceNotes = value;
+                    NotifyPropertyChanged("InputInvoiceNotes");
+                }
+            }
+        }
+		#endregion
+
+		#region InputInvoiceDocuments
+		private ObservableCollection<InputInvoiceDocumentViewModel> _InputInvoiceDocuments;
+
+		public ObservableCollection<InputInvoiceDocumentViewModel> InputInvoiceDocuments
+		{
+			get { return _InputInvoiceDocuments; }
+			set
+			{
+				if (_InputInvoiceDocuments != value)
+				{
+					_InputInvoiceDocuments = value;
+					NotifyPropertyChanged("InputInvoiceDocuments");
+				}
+			}
+		}
+		#endregion
+
+		#region Search
+
+		#region SearchBy_BusinessPartnerName
+		private string _SearchBy_BusinessPartnerName;
 
 		public string SearchBy_BusinessPartnerName
 		{

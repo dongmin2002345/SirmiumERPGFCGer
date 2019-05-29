@@ -233,7 +233,6 @@ namespace SirmiumERPGFC.Views.Home
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-
             ToDoViewModel toDo = new ToDoViewModel();
             toDo.Identifier = Guid.NewGuid();
             toDo.ToDoDate = DateTime.Now;
@@ -241,6 +240,29 @@ namespace SirmiumERPGFC.Views.Home
             ToDoAddEdit addEditForm = new ToDoAddEdit(toDo, true);
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            ToDoAddEdit addEditForm = new ToDoAddEdit(CurrentToDo, false);
+            addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
+        }
+
+        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentToDo.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }

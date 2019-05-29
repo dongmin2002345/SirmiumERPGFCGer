@@ -84,7 +84,9 @@ namespace SirmiumERPGFC.Views.Employees
                             DisplayLicenceData();
                             DisplayDocumentData();
                             DisplayCardData();
-                        });
+							DisplayPhysicalPersonNoteData();
+
+						});
                         displayItemThread.IsBackground = true;
                         displayItemThread.Start();
                     }
@@ -232,11 +234,79 @@ namespace SirmiumERPGFC.Views.Employees
                 }
             }
         }
-        #endregion
+		#endregion
+
+		#region NotesFromDB
+		private ObservableCollection<PhysicalPersonNoteViewModel> _NotesFromDB;
+
+		public ObservableCollection<PhysicalPersonNoteViewModel> NotesFromDB
+		{
+			get { return _NotesFromDB; }
+			set
+			{
+				if (_NotesFromDB != value)
+				{
+					_NotesFromDB = value;
+					NotifyPropertyChanged("NotesFromDB");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteForm
+		private PhysicalPersonNoteViewModel _CurrentNoteForm = new PhysicalPersonNoteViewModel();
+
+		public PhysicalPersonNoteViewModel CurrentNoteForm
+		{
+			get { return _CurrentNoteForm; }
+			set
+			{
+				if (_CurrentNoteForm != value)
+				{
+					_CurrentNoteForm = value;
+					NotifyPropertyChanged("CurrentNoteForm");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteDG
+		private PhysicalPersonNoteViewModel _CurrentNoteDG;
+
+		public PhysicalPersonNoteViewModel CurrentNoteDG
+		{
+			get { return _CurrentNoteDG; }
+			set
+			{
+				if (_CurrentNoteDG != value)
+				{
+					_CurrentNoteDG = value;
+					NotifyPropertyChanged("CurrentNoteDG");
+				}
+			}
+		}
+		#endregion
+
+		#region NoteDataLoading
+		private bool _NoteDataLoading;
+
+		public bool NoteDataLoading
+		{
+			get { return _NoteDataLoading; }
+			set
+			{
+				if (_NoteDataLoading != value)
+				{
+					_NoteDataLoading = value;
+					NotifyPropertyChanged("NoteDataLoading");
+				}
+			}
+		}
+		#endregion
 
 
-        #region PhysicalPersonDocumentsFromDB
-        private ObservableCollection<PhysicalPersonDocumentViewModel> _PhysicalPersonDocumentsFromDB;
+		#region PhysicalPersonDocumentsFromDB
+		private ObservableCollection<PhysicalPersonDocumentViewModel> _PhysicalPersonDocumentsFromDB;
 
         public ObservableCollection<PhysicalPersonDocumentViewModel> PhysicalPersonDocumentsFromDB
         {
@@ -500,7 +570,27 @@ namespace SirmiumERPGFC.Views.Employees
             LoadingProfessions = false;
         }
 
-        private void DisplayLicenceData()
+		private void DisplayPhysicalPersonNoteData()
+		{
+			NoteDataLoading = true;
+
+			PhysicalPersonNoteListResponse response = new PhysicalPersonNoteSQLiteRepository()
+				.GetPhysicalPersonNotesByPhysicalPerson(MainWindow.CurrentCompanyId, CurrentPhysicalPerson.Identifier);
+
+			if (response.Success)
+			{
+				NotesFromDB = new ObservableCollection<PhysicalPersonNoteViewModel>(
+					response.PhysicalPersonNotes ?? new List<PhysicalPersonNoteViewModel>());
+			}
+			else
+			{
+				NotesFromDB = new ObservableCollection<PhysicalPersonNoteViewModel>();
+			}
+
+			NoteDataLoading = false;
+		}
+
+		private void DisplayLicenceData()
         {
             LoadingLicences = true;
 
@@ -742,7 +832,8 @@ namespace SirmiumERPGFC.Views.Employees
 		{
             try
             {
-                PhysicalPersonsExcelReport.Show(PhysicalPersonsFromDB.ToList());
+                var personResponse = new PhysicalPersonSQLiteRepository().GetPhysicalPersonsByPage(MainWindow.CurrentCompanyId, PhysicalPersonSearchObject, 1, Int32.MaxValue);
+                PhysicalPersonsExcelReport.Show(personResponse.PhysicalPersons);
             }
             catch(Exception ex)
             {
@@ -760,6 +851,31 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 MainWindow.ErrorMessage = ex.Message;
             }
+        }
+        private void txtSearchByPhysicalPersonCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //PhysicalPersonListResponse response = new PhysicalPersonSQLiteRepository()
+            //     .GetPhysicalPersonsByPage(MainWindow.CurrentCompanyId, PhysicalPersonSearchObject, currentPage, itemsPerPage);
+
+            //if (response.Success)
+            //{
+            //    List<PhysicalPersonViewModel> filteredItems;
+            //    if (!String.IsNullOrEmpty(txtSearchByPhysicalPersonCode.Text))
+            //        filteredItems = response.PhysicalPersons.Where(x => x.PhysicalPersonCode.Contains(txtSearchByPhysicalPersonCode.Text))?.ToList();
+            //    else
+            //        filteredItems = response.PhysicalPersons;
+
+            //    PhysicalPersonsFromDB = new ObservableCollection<PhysicalPersonViewModel>(
+            //        filteredItems ?? new List<PhysicalPersonViewModel>());
+            //}
+            //else
+            //{
+            //    PhysicalPersonsFromDB = new ObservableCollection<PhysicalPersonViewModel>();
+            //    MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            //}
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
         }
     }
 }

@@ -134,14 +134,16 @@ namespace SirmiumERPGFC.Repository.Employees
 						"AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
 						"AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
 						"AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
-						"AND CompanyId = @CompanyId " +
+                        "AND (@PhysicalPersonCode IS NULL OR @PhysicalPersonCode = '' OR PhysicalPersonCode LIKE @PhysicalPersonCode) " +
+                        "AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
 					selectCommand.Parameters.AddWithValue("@Name", ((object)PhysicalPersonSearchObject.SearchBy_Name) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@SurName", ((object)PhysicalPersonSearchObject.SearchBy_SurName) != null ? "%" + PhysicalPersonSearchObject.SearchBy_SurName + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Passport", ((object)PhysicalPersonSearchObject.SearchBy_Passport) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Passport + "%" : "");
 					selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(PhysicalPersonSearchObject.Search_ConstructionSite) ? "%" + PhysicalPersonSearchObject.Search_ConstructionSite + "%" : "");
-					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    selectCommand.Parameters.AddWithValue("@PhysicalPersonCode", ((object)PhysicalPersonSearchObject.Search_PhysicalPersonCode) != null ? "%" + PhysicalPersonSearchObject.Search_PhysicalPersonCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
 					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
 
@@ -200,12 +202,14 @@ namespace SirmiumERPGFC.Repository.Employees
 						"AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
 						"AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
 						"AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
-						"AND CompanyId = @CompanyId;", db);
+                        "AND (@PhysicalPersonCode IS NULL OR @PhysicalPersonCode = '' OR PhysicalPersonCode LIKE @PhysicalPersonCode) " +
+                        "AND CompanyId = @CompanyId;", db);
 					selectCommand.Parameters.AddWithValue("@Name", ((object)PhysicalPersonSearchObject.SearchBy_Name) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@SurName", ((object)PhysicalPersonSearchObject.SearchBy_SurName) != null ? "%" + PhysicalPersonSearchObject.SearchBy_SurName + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Passport", ((object)PhysicalPersonSearchObject.SearchBy_Passport) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Passport + "%" : "");
 					selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(PhysicalPersonSearchObject.Search_ConstructionSite) ? "%" + PhysicalPersonSearchObject.Search_ConstructionSite + "%" : "");
-					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    selectCommand.Parameters.AddWithValue("@PhysicalPersonCode", ((object)PhysicalPersonSearchObject.Search_PhysicalPersonCode) != null ? "%" + PhysicalPersonSearchObject.Search_PhysicalPersonCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
 					query = selectCommand.ExecuteReader();
 

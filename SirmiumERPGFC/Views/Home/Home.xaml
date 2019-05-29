@@ -96,9 +96,19 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Promeni">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                </StackPanel>
+                                            </Button>
                                             <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Obriši">
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                 </StackPanel>
                                             </Button>
                                         </StackPanel>

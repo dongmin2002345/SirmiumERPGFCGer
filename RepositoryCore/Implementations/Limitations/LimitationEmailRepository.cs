@@ -86,7 +86,7 @@ namespace RepositoryCore.Implementations.Limitations
         {
             // Load LimitationEmail that will be deleted
             LimitationEmail dbEntry = context.LimitationEmails
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

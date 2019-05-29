@@ -82,9 +82,11 @@ namespace RepositoryCore.Context
         public DbSet<BusinessPartnerNote> BusinessPartnerNotes { get; set; }
 
         public DbSet<OutputInvoice> OutputInvoices { get; set; }
-		public DbSet<InputInvoice> InputInvoices { get; set; }
+        public DbSet<OutputInvoiceNote> OutputInvoiceNotes { get; set; }
+        public DbSet<InputInvoice> InputInvoices { get; set; }
+        public DbSet<InputInvoiceNote> InputInvoiceNotes { get; set; }
 
-		public DbSet<City> Cities { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -103,8 +105,10 @@ namespace RepositoryCore.Context
         public DbSet<PhysicalPersonLicence> PhysicalPersonLicences { get; set; }
         public DbSet<PhysicalPersonProfession> PhysicalPersonProfessions { get; set; }
 
+		public DbSet<InputInvoiceDocument> InputInvoiceDocuments { get; set; }
+		public DbSet<OutputInvoiceDocument> OutputInvoiceDocuments { get; set; }
 
-        public DbSet<Employee> Employees { get; set; }
+		public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeItem> EmployeeItems { get; set; }
         public DbSet<EmployeeNote> EmployeeNotes { get; set; }
         public DbSet<EmployeeCard> EmployeeCards { get; set; }

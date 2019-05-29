@@ -256,7 +256,31 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             currentPage = 1;
 
-            Thread syncThread = new Thread(() => 
+            Thread displayThread = new Thread(() => DisplayData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+            //currentPage = 1;
+
+            //Thread syncThread = new Thread(() =>
+            //{
+            //    SyncData();
+
+            //    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+            //});
+            //syncThread.IsBackground = true;
+            //syncThread.Start();
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            //currentPage = 1;
+
+            //Thread displayThread = new Thread(() => DisplayData());
+            //displayThread.IsBackground = true;
+            //displayThread.Start();
+            currentPage = 1;
+
+            Thread syncThread = new Thread(() =>
             {
                 SyncData();
 
@@ -264,17 +288,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             });
             syncThread.IsBackground = true;
             syncThread.Start();
-
-        }
-
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            currentPage = 1;
-
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
         }
 
         public void DisplayData()
@@ -282,7 +295,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDataLoading = true;
 
             BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
-                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, new BusinessPartnerViewModel(), currentPage, itemsPerPage);
+                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
 
             if (response.Success)
             {
@@ -376,6 +389,13 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Unos_zaposlenih")), 95, new BusinessPartnerEmployee_List_AddEdit(CurrentBusinessPartner));
+        }
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
         }
 
         #region INotifyPropertyChanged implementation

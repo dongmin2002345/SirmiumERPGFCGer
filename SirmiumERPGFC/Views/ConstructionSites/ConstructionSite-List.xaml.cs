@@ -76,7 +76,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     {
                         Thread th = new Thread(() => {
                             DisplayConstructionSiteCalculationData();
-                            DisplayDocumentData();
+							DisplayConstructionSiteNoteData();
+							DisplayDocumentData();
                         });
                         th.IsBackground = true;
                         th.Start();
@@ -247,11 +248,79 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 }
             }
         }
-        #endregion
+		#endregion
+
+		#region NotesFromDB
+		private ObservableCollection<ConstructionSiteNoteViewModel> _NotesFromDB;
+
+		public ObservableCollection<ConstructionSiteNoteViewModel> NotesFromDB
+		{
+			get { return _NotesFromDB; }
+			set
+			{
+				if (_NotesFromDB != value)
+				{
+					_NotesFromDB = value;
+					NotifyPropertyChanged("NotesFromDB");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteForm
+		private ConstructionSiteNoteViewModel _CurrentNoteForm = new ConstructionSiteNoteViewModel();
+
+		public ConstructionSiteNoteViewModel CurrentNoteForm
+		{
+			get { return _CurrentNoteForm; }
+			set
+			{
+				if (_CurrentNoteForm != value)
+				{
+					_CurrentNoteForm = value;
+					NotifyPropertyChanged("CurrentNoteForm");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentNoteDG
+		private ConstructionSiteNoteViewModel _CurrentNoteDG;
+
+		public ConstructionSiteNoteViewModel CurrentNoteDG
+		{
+			get { return _CurrentNoteDG; }
+			set
+			{
+				if (_CurrentNoteDG != value)
+				{
+					_CurrentNoteDG = value;
+					NotifyPropertyChanged("CurrentNoteDG");
+				}
+			}
+		}
+		#endregion
+
+		#region NoteDataLoading
+		private bool _NoteDataLoading;
+
+		public bool NoteDataLoading
+		{
+			get { return _NoteDataLoading; }
+			set
+			{
+				if (_NoteDataLoading != value)
+				{
+					_NoteDataLoading = value;
+					NotifyPropertyChanged("NoteDataLoading");
+				}
+			}
+		}
+		#endregion
 
 
-        #region RefreshButtonContent
-        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+		#region RefreshButtonContent
+		private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string RefreshButtonContent
         {
@@ -360,6 +429,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteDataLoading = false;
         }
 
+
+
         private void DisplayConstructionSiteCalculationData()
         {
             ConstructionSiteCalculationDataLoading = true;
@@ -380,7 +451,27 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteCalculationDataLoading = false;
         }
 
-        private void DisplayDocumentData()
+		private void DisplayConstructionSiteNoteData()
+		{
+			NoteDataLoading = true;
+
+			ConstructionSiteNoteListResponse response = new ConstructionSiteNoteSQLiteRepository()
+				.GetConstructionSiteNotesByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
+
+			if (response.Success)
+			{
+				NotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>(response.ConstructionSiteNotes ?? new List<ConstructionSiteNoteViewModel>());
+			}
+			else
+			{
+				NotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>();
+				MainWindow.ErrorMessage = response.Message;
+			}
+
+			NoteDataLoading = false;
+		}
+
+		private void DisplayDocumentData()
         {
             ConstructionSiteDocumentDataLoading = true;
 
@@ -629,5 +720,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
+		private void btnConstructionSiteExcel_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				ConstructionSiteExcelReport.Show(CurrentConstructionSite);
+			}
+			catch (Exception ex)
+			{
+				MainWindow.ErrorMessage = ex.Message;
+			}
+		}
 	}
 }

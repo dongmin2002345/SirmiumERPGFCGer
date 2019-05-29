@@ -37,6 +37,7 @@
     <system:String x:Key="Član_porodiceDvotacka">Familienmitglied:</system:String>
     <system:String x:Key="Članovi_porodice">Familienmitglieder</system:String>
     <system:String x:Key="DA">JA</system:String>
+    <system:String x:Key="Datum_radne_dozvole">Datum der Arbeitserlaubnis</system:String>
     <system:String x:Key="Datum">Datum</system:String>
     <system:String x:Key="Datum_ambasade">Datum wann man in die Botschaft gehen soll </system:String>
     <system:String x:Key="Datum_ambasadeDvotacka">Datum wann man in die Botschaft gehen soll :</system:String>
@@ -118,8 +119,10 @@
     <system:String x:Key="Istorija_radnika">Arbeitergeschichte</system:String>
     <system:String x:Key="Izlazne_fakture">Ausgangsrechnungen</system:String>
     <system:String x:Key="Iznos_bruto">Betrag Brutto</system:String>
+    <system:String x:Key="Iznos_bruto_euro">Betrag Brutto (euro)</system:String>
     <system:String x:Key="Iznos_brutoDvotacka">Betrag Brutto:</system:String>
     <system:String x:Key="Iznos_neto">Betrag Netto</system:String>
+    <system:String x:Key="Iznos_neto_euro">Betrag Netto (euro)</system:String>
     <system:String x:Key="Iznos_netoDvotacka">Betrag Netto:</system:String>
     <system:String x:Key="JBKJSDvotacka">JBKJS:</system:String>
     <system:String x:Key="Kalkulacije_u_okviru_gradilišta">Berechnungen innerhalb des Baustelle</system:String>
@@ -193,6 +196,7 @@
     <system:String x:Key="Oznaka_državeDvotacka">Ländercode:</system:String>
     <system:String x:Key="Pasoš">Reisepass</system:String>
     <system:String x:Key="PDV">MwSt</system:String>
+    <system:String x:Key="PDV_euro">MwSt (euro)</system:String>
     <system:String x:Key="PDV_brojDvotacka">USt-IdNr .:</system:String>
     <system:String x:Key="PDVProcenat">MwSt.%</system:String>
     <system:String x:Key="PDVProcenatDvotacka">MwSt%:</system:String>
@@ -297,8 +301,8 @@
     <system:String x:Key="Šifra_sektoraDvotacka">Sektorcode:</system:String>
     <system:String x:Key="Šifra_zanimanja">Tätigkeitscode</system:String>
     <system:String x:Key="Šifra_zanimanjaDvotacka">Berufscode:</system:String>
-    <system:String x:Key="ŠifraDvotacka">Nummer:</system:String>
-    <system:String x:Key="Sin">Sohn</system:String>
+    <system:String x:Key="ŠifraDvotacka">Nummer</system:String>
+    <system:String x:Key="Sin">Sin</system:String>
     <system:String x:Key="Slobodan_tekstDvotacka">Anmerkung:</system:String>
     <system:String x:Key="Spajanje_porodice">Familienzusammenführung</system:String>
     <system:String x:Key="Status">Status</system:String>
@@ -339,7 +343,7 @@
     <system:String x:Key="IZVEZI_U_EXCEL">EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">RETTE DEN GEDANKEN</system:String>
     <system:String x:Key="IBANDvotacka">IBAN:</system:String>
-    <system:String x:Key="Betriesb_brojDvotacka">Betriesb number:</system:String>
+    <system:String x:Key="Betriebs_brojDvotacka">Betriebs NR.:</system:String>
     <system:String x:Key="Šifra_poreske_uprave">Steuerverwaltung-Code</system:String>
     <system:String x:Key="Bank1">Bank 1</system:String>
     <system:String x:Key="IBAN1">IBAN 1</system:String>
@@ -400,7 +404,7 @@
     <system:String x:Key="Stavka_je_uspešno_obrisanaUzvičnik">Artikel erfolgreich gelöscht!</system:String>
     <system:String x:Key="Zaglavlje_nije_sačuvano">Kopfzeile nicht gespeichert</system:String>
     <system:String x:Key="Podaci_su_uspešno_sačuvaniUzvičnik">Daten erfolgreich gespeichert!</system:String>
-    <system:String x:Key="Proknjiži">Nachprüfen</system:String>
+    <system:String x:Key="Proknjiži">Speichern</system:String>
     <system:String x:Key="Greška_kod_čuvanja_na_serveruUzvičnik">Fehler beim Speichern des Servers!</system:String>
     <system:String x:Key="Korisnici_TriTacke">Benutzer ...</system:String>
     <system:String x:Key="Prava_pristupa_TriTacke">Richtiger Zugang ...</system:String>
@@ -572,7 +576,8 @@
     <system:String x:Key="Odbitak_poreza_DODvotacka">Freistellung BIS:</system:String>
     <system:String x:Key="Drzava_TriTačke">Land ...</system:String>
 
-
+    <system:String x:Key="Obavezno_poljeDvotačka_Ime">Pflichtfeld: Name</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Datum_rodjenja">Pflichtfeld: Geburtsdatum</system:String>
 
 
 

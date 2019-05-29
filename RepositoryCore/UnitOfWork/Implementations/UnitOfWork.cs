@@ -59,7 +59,11 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerNoteRepository businessPartnerNoteRepository;
 
         private IOutputInvoiceRepository outputInvoiceRepository;
+        private IOutputInvoiceNoteRepository outputInvoiceNoteRepository;
+		private IOutputInvoiceDocumentRepository outputInvoiceDocumentRepository;
 		private IInputInvoiceRepository inputInvoiceRepository;
+        private IInputInvoiceNoteRepository inputInvoiceNoteRepository;
+		private IInputInvoiceDocumentRepository inputInvoiceDocumentRepository;
 
 		private ICityRepository cityRepository;
         private IRegionRepository regionRepository;
@@ -150,7 +154,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         public IToDoRepository GetToDoRepository()
         {
             if (toDoRepository == null)
-                toDoRepository = new ToDoRepository(context);
+                toDoRepository = new ToDoViewRepository(context);
             return toDoRepository;
         }
 
@@ -246,12 +250,41 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return outputInvoiceRepository;
         }
 
+        public IOutputInvoiceNoteRepository GetOutputInvoiceNoteRepository()
+        {
+            if (outputInvoiceNoteRepository == null)
+                outputInvoiceNoteRepository = new OutputInvoiceNoteViewRepository(context);
+            return outputInvoiceNoteRepository;
+        }
+
+		public IOutputInvoiceDocumentRepository GetOutputInvoiceDocumentRepository()
+		{
+			if (outputInvoiceDocumentRepository == null)
+				outputInvoiceDocumentRepository = new OutputInvoiceDocumentViewRepository(context);
+			return outputInvoiceDocumentRepository;
+		}
+
 		public IInputInvoiceRepository GetInputInvoiceRepository()
 		{
 			if (inputInvoiceRepository == null)
 				inputInvoiceRepository = new InputInvoiceViewRepository(context);
 			return inputInvoiceRepository;
 		}
+
+        public IInputInvoiceNoteRepository GetInputInvoiceNoteRepository()
+        {
+            if (inputInvoiceNoteRepository == null)
+                inputInvoiceNoteRepository = new InputInvoiceNoteViewRepository(context);
+            return inputInvoiceNoteRepository;
+        }
+
+		public IInputInvoiceDocumentRepository GetInputInvoiceDocumentRepository()
+		{
+			if (inputInvoiceDocumentRepository == null)
+				inputInvoiceDocumentRepository = new InputInvoiceDocumentViewRepository(context);
+			return inputInvoiceDocumentRepository;
+		}
+
 
 		public ICountryRepository GetCountryRepository()
         {

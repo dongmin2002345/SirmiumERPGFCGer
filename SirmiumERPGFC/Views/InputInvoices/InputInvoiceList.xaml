@@ -27,13 +27,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
         <!--    Search box    -->
         <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
@@ -193,11 +190,11 @@
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="{DynamicResource Broj_fakture}" Binding="{Binding InvoiceNumber}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="InvoiceDate" Header="{DynamicResource Datum_fakture}" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountNet" Header="{DynamicResource Iznos_neto}" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="AmountNet" Header="{DynamicResource Iznos_neto_euro}" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
 
                         <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDVProcenat}" Binding="{Binding PDVPercent}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDVProcenat}" Binding="{Binding PDV, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountGross" Header="{DynamicResource Iznos_bruto}" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV_euro}" Binding="{Binding PDV, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="AmountGross" Header="{DynamicResource Iznos_bruto_euro}" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DateOfPaymet" Header="{DynamicResource Datum_plaćanja}" Binding="{Binding DateOfPaymet, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Status" Header="{DynamicResource Status}" Binding="{Binding Status, Converter={StaticResource cbxChooseStatusConverter}}" Width="*" IsReadOnly="True" />
@@ -322,5 +319,87 @@
                 </DataGrid>
             </Grid>
         </GroupBox>
+        
+        <GridSplitter Grid.Row="2" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="2 1 1 2">
+                <Grid>
+                    <Controls:ProgressRing Grid.Row="0"  IsActive="{Binding NoteDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <DataGrid x:Name="dgNotes"
+                              Grid.Row="0" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource AzureDataGrid}"
+                              ItemsSource="{Binding Path=NotesFromDB}"
+                              SelectedItem="{Binding Path=CurrentNoteDG, Mode=TwoWay}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="{DynamicResource Dokumenta}" Grid.Column="1" Margin="2 1 1 2">
+                            <Grid>
+                                <Controls:ProgressRing Grid.Row="0"  IsActive="{Binding DocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                                <DataGrid x:Name="dgDocuments"
+                              Grid.Row="0" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserResizeColumns="True"  
+                              GridLinesVisibility="All"
+                              HorizontalGridLinesBrush="Gray"
+                              VerticalAlignment="Stretch"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Style="{DynamicResource AzureDataGrid}"
+                              ItemsSource="{Binding Path=DocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentDocumentDG, Mode=TwoWay}">
+
+                                    <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+
+                                </DataGrid>
+                </Grid>
+            </GroupBox>
+          </Grid>  
+            
     </Grid>
 </UserControl>

@@ -177,7 +177,7 @@
                         <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtIBAN" 
                              Text="{Binding Path=CurrentBusinessPartner.IBAN}" />
 
-                        <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Betriesb_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Betriebs_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtBetriebsNumber"  
                              Text="{Binding Path=CurrentBusinessPartner.BetriebsNumber}"/>
 

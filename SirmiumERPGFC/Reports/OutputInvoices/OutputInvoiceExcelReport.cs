@@ -76,7 +76,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "POSLOVNI PARTNER: ";
+            sheet1.Cells[rowCounter, columnCounter] = "POSLOVNI PARTNER/GESCHÄFTSPARTNER: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -89,7 +89,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "DOBAVLJAČ: ";
+            sheet1.Cells[rowCounter, columnCounter] = "DOBAVLJAČ/LIEFERANT: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -102,7 +102,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "ADRESA: ";
+            sheet1.Cells[rowCounter, columnCounter] = "ADRESA/ADRESSE: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -115,7 +115,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "BROJ FAKTURE: ";
+            sheet1.Cells[rowCounter, columnCounter] = "BROJ FAKTURE/FAKTURNUMMER: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -128,7 +128,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "DATUM FAKTURE: ";
+            sheet1.Cells[rowCounter, columnCounter] = "DATUM FAKTURE/FAKTURDATUM: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -141,7 +141,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "IZNOS NETO: ";
+            sheet1.Cells[rowCounter, columnCounter] = "IZNOS NETO/BETRAG NETTO: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -180,7 +180,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "IZNOS BRUTO: ";
+            sheet1.Cells[rowCounter, columnCounter] = "IZNOS BRUTO/BETRAG BRUTTO: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -206,7 +206,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "DATUM PLAĆANJA: ";
+            sheet1.Cells[rowCounter, columnCounter] = "DATUM PLAĆANJA/ZAHLUNGSDATUM: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -232,7 +232,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
             sheet1.Cells[rowCounter, columnCounter].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter] = "DATUM STATUSA: ";
+            sheet1.Cells[rowCounter, columnCounter] = "DATUM STATUSA/STATUSDATUM: ";
 
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
@@ -250,7 +250,7 @@ namespace SirmiumERPGFC.Reports.OutputInvoices
 
             sheet1.Range[sheet1.Cells[rowCounter, 3], sheet1.Cells[rowCounter, 4]].Merge();
             sheet1.Range[sheet1.Cells[rowCounter, 3], sheet1.Cells[rowCounter, 4]].Font.Size = 10;
-            sheet1.Range[sheet1.Cells[rowCounter, 3], sheet1.Cells[rowCounter, 4]] = "Odgovorno lice";
+            sheet1.Range[sheet1.Cells[rowCounter, 3], sheet1.Cells[rowCounter, 4]] = "Odgovorno lice/Verantwortliche Person";
 
             rowCounter++;
             rowCounter++;

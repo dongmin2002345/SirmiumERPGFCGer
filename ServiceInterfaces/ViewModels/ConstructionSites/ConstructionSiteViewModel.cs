@@ -128,6 +128,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region Status
+        private int _Status;
+
+        public int Status
+        {
+            get { return _Status; }
+            set
+            {
+                if (_Status != value)
+                {
+                    _Status = value;
+                    NotifyPropertyChanged("Status");
+                }
+            }
+        }
+        #endregion
+
 
         #region ProContractDate
         private DateTime _ProContractDate;
@@ -280,6 +297,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
                 {
                     _Search_City = value;
                     NotifyPropertyChanged("Search_City");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_InternalCode
+        private string _Search_InternalCode;
+
+        public string Search_InternalCode
+        {
+            get { return _Search_InternalCode; }
+            set
+            {
+                if (_Search_InternalCode != value)
+                {
+                    _Search_InternalCode = value;
+                    NotifyPropertyChanged("Search_InternalCode");
                 }
             }
         }

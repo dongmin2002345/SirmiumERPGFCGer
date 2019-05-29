@@ -300,7 +300,7 @@ namespace SirmiumERPGFC.Views.Administrations
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentLimitationEmail == null)
+            if (CurrentLimitationEmailDG == null)
             {
                 MainWindow.WarningMessage = "Morate odabrati LimitationEmail za brisanje!";
                 return;
@@ -309,11 +309,11 @@ namespace SirmiumERPGFC.Views.Administrations
             SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
 
             // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("LimitationEmail", CurrentLimitationEmail.Email);
+            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("LimitationEmail", CurrentLimitationEmailDG.Email);
             var showDialog = deleteConfirmationForm.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
-                LimitationEmailResponse response = limitationEmailService.Delete(CurrentLimitationEmail.Identifier);
+                LimitationEmailResponse response = limitationEmailService.Delete(CurrentLimitationEmailDG.Identifier);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
@@ -321,7 +321,7 @@ namespace SirmiumERPGFC.Views.Administrations
                     return;
                 }
 
-                response = new LimitationEmailSQLiteRepository().Delete(CurrentLimitationEmail.Identifier);
+                response = new LimitationEmailSQLiteRepository().Delete(CurrentLimitationEmailDG.Identifier);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";

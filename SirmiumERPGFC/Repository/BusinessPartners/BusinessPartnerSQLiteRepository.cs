@@ -103,17 +103,24 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM BusinessPartners " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
-                        "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
-                        "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
-                        "AND CompanyId = @CompanyId " +
-                        "ORDER BY IsSynced, Id DESC " +
+                        "SELECT bp.ServerId, bp.Identifier, bp.Code, bp.InternalCode, bp.Name, bp.PIB, bp.PIO, bp.PDV, bp.IdentificationNumber, " +
+                        "bp.Rebate, bp.DueDate, bp.WebSite, bp.ContactPerson, bp.IsInPdv, bp.JBKJS, " +
+                        "bp.NameGer, bp.IsInPDVGer, bp.TaxAdministrationId, bp.TaxAdministrationIdentifier, bp.TaxAdministrationCode, bp.TaxAdministrationName, " +
+                        "bp.IBAN, bp.BetriebsNumber, bp.TaxNr, bp.CommercialNr, bp.ContactPersonGer, " +
+                        "bp.CountryId, bp.CountryIdentifier, bp.CountryCode, bp.CountryName, " +
+                        "bp.SectorId, bp.SectorIdentifier, bp.SectorCode, bp.SectorName, " +
+                        "bp.AgencyId, bp.AgencyIdentifier, bp.AgencyCode, bp.AgencyName, bp.VatDeductionFrom, bp.VatDeductionTo, " +
+                        "bp.IsSynced, bp.UpdatedAt, bp.CreatedById, bp.CreatedByName, bp.CompanyId, bp.CompanyName " +
+                        "FROM BusinessPartners bp " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR bp.Name LIKE @Name OR bp.NameGer LIKE @Name) " +
+                        "AND (@PIB IS NULL OR @PIB = '' OR ((SELECT GROUP_CONCAT(cities.CityName) FROM BusinessPartnerLocations cities Where bp.Identifier = cities.BusinessPartnerIdentifier) LIKE @PIB)) " +
+                        "AND (@InternalCode IS NULL OR @InternalCode = '' OR bp.InternalCode LIKE @InternalCode) " +
+                        "AND (@AgencyName IS NULL OR @AgencyName = '' OR bp.AgencyName LIKE @AgencyName) " +
+                        "AND bp.CompanyId = @CompanyId " +
+                        "ORDER BY bp.IsSynced, bp.Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                    selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@PIB", ((object)businessPartnerSearchObject?.Search_PIB) != null ? "%" + businessPartnerSearchObject?.Search_PIB + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", (((object)businessPartnerSearchObject?.Search_Name) != null && businessPartnerSearchObject?.Search_Name != "") ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@PIB", (((object)businessPartnerSearchObject?.Search_PIB) != null && businessPartnerSearchObject?.Search_PIB != "") ? "%" + businessPartnerSearchObject?.Search_PIB + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InternalCode", ((object)businessPartnerSearchObject?.Search_Code) != null ? "%" + businessPartnerSearchObject?.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartnerSearchObject?.Search_Agency) != null ? "%" + businessPartnerSearchObject?.Search_Agency + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);

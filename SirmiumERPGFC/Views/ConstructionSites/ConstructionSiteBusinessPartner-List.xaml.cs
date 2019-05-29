@@ -71,7 +71,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     if (_CurrentConstructionSite != null)
                     {
                         BusinessPartnerByConstructionSiteListResponse response = new BusinessPartnerByConstructionSiteSQLiteRepository()
-                            .GetByConstructionSite(CurrentConstructionSite.Identifier);
+                            .GetByConstructionSite(CurrentConstructionSite.Identifier, "", 1, Int32.MaxValue);
 
                         if (response.Success)
                         {
@@ -280,6 +280,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             currentPage = 1;
 
+            Thread displayThread = new Thread(() => DisplayData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+            currentPage = 1;
+
+            
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
             Thread syncThread = new Thread(() =>
             {
                 SyncData();
@@ -288,15 +298,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             });
             syncThread.IsBackground = true;
             syncThread.Start();
-        }
-
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            currentPage = 1;
-
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
         }
 
         public void DisplayData()
@@ -419,6 +420,13 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteBusinessPartner_List_AddEdit addEditForm = new ConstructionSiteBusinessPartner_List_AddEdit(CurrentConstructionSite);
             addEditForm.ConstructionSiteBusinessPartnerUpdated += new ConstructionSiteBusinessPartnerHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Firme_po_gradilištima")), 95, addEditForm);
+        }
+
+        private void txtSearchByBusinessPartnerEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
         }
 
         #region INotifyPropertyChanged implementation

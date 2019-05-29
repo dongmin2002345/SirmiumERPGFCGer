@@ -29,6 +29,7 @@ namespace DataMapper.Mappers.Common.ToDos
 
                 Name = toDo.Name,
                 Description = toDo.Description,
+                Path = toDo.Path,
                 ToDoDate = toDo.ToDoDate,
 
                 IsActive = toDo.Active,
@@ -45,16 +46,6 @@ namespace DataMapper.Mappers.Common.ToDos
             return toDoViewModel;
         }
 
-        public static List<ToDoViewModel> ConvertToToDoViewModelListLite(this IEnumerable<ToDo> toDos)
-        {
-            List<ToDoViewModel> toDoViewModels = new List<ToDoViewModel>();
-            foreach (ToDo toDo in toDos)
-            {
-                toDoViewModels.Add(toDo.ConvertToToDoViewModelLite());
-            }
-            return toDoViewModels;
-        }
-
         public static ToDoViewModel ConvertToToDoViewModelLite(this ToDo toDo)
         {
             ToDoViewModel toDoViewModel = new ToDoViewModel()
@@ -64,6 +55,7 @@ namespace DataMapper.Mappers.Common.ToDos
 
                 Name = toDo.Name,
                 Description = toDo.Description,
+                Path = toDo.Path,
                 ToDoDate = toDo.ToDoDate,
 
                 IsActive = toDo.Active,
@@ -85,6 +77,7 @@ namespace DataMapper.Mappers.Common.ToDos
 
                 Name = toDoViewModel.Name,
                 Description = toDoViewModel.Description,
+                Path = toDoViewModel.Path,
                 ToDoDate = toDoViewModel.ToDoDate,
 
                 CreatedById = toDoViewModel.CreatedBy?.Id ?? null,

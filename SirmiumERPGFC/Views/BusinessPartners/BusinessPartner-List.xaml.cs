@@ -35,7 +35,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         #region Services
         IBusinessPartnerService businessPartnerService;
-        IBusinessPartnerLocationService businessPartnerLocationService;
+		IBusinessPartnerLocationService businessPartnerLocationService;
         IBusinessPartnerPhoneService businessPartnerPhoneService;
         IBusinessPartnerOrganizationUnitService businessPartnerOrganizationUnitService;
         IBusinessPartnerDocumentService businessPartnerDocumentService;
@@ -63,7 +63,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 		#endregion
 
 		#region BusinessPartnerLocationsFromDB
-		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB  = new ObservableCollection<BusinessPartnerLocationViewModel>();
+		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
 
 		public ObservableCollection<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB
 		{
@@ -98,6 +98,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                         {
                             DisplayDocumentData();
                             DisplayPhoneData();
+							DisplayNoteData();
                         });
                         th.IsBackground = true;
                         th.Start();
@@ -136,6 +137,75 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     _BusinessPartnerDataLoading = value;
                     NotifyPropertyChanged("BusinessPartnerDataLoading");
+                }
+            }
+        }
+		#endregion
+
+
+		#region NotesFromDB
+		private ObservableCollection<BusinessPartnerNoteViewModel> _NotesFromDB;
+
+        public ObservableCollection<BusinessPartnerNoteViewModel> NotesFromDB
+		{
+            get { return _NotesFromDB; }
+            set
+            {
+                if (_NotesFromDB != value)
+                {
+					_NotesFromDB = value;
+                    NotifyPropertyChanged("NotesFromDB");
+                }
+            }
+        }
+		#endregion
+
+		#region CurrentNoteForm
+		private BusinessPartnerNoteViewModel _CurrentNoteForm = new BusinessPartnerNoteViewModel();
+
+        public BusinessPartnerNoteViewModel CurrentNoteForm
+		{
+            get { return _CurrentNoteForm; }
+            set
+            {
+                if (_CurrentNoteForm != value)
+                {
+					_CurrentNoteForm = value;
+                    NotifyPropertyChanged("CurrentNoteForm");
+                }
+            }
+        }
+		#endregion
+
+		#region CurrentNoteDG
+		private BusinessPartnerNoteViewModel _CurrentNoteDG;
+
+        public BusinessPartnerNoteViewModel CurrentNoteDG
+		{
+            get { return _CurrentNoteDG; }
+            set
+            {
+                if (_CurrentNoteDG != value)
+                {
+					_CurrentNoteDG = value;
+                    NotifyPropertyChanged("CurrentNoteDG");
+                }
+            }
+        }
+		#endregion
+
+		#region NoteDataLoading
+		private bool _NoteDataLoading;
+
+        public bool NoteDataLoading
+		{
+            get { return _NoteDataLoading; }
+            set
+            {
+                if (_NoteDataLoading != value)
+                {
+					_NoteDataLoading = value;
+                    NotifyPropertyChanged("NoteDataLoading");
                 }
             }
         }
@@ -440,6 +510,26 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDataLoading = false;
         }
 
+        private void DisplayNoteData()
+        {
+			NoteDataLoading = true;
+
+			BusinessPartnerNoteListResponse response = new BusinessPartnerNoteSQLiteRepository()
+                .GetBusinessPartnerNotesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+				NotesFromDB = new ObservableCollection<BusinessPartnerNoteViewModel>(
+                    response.BusinessPartnerNotes ?? new List<BusinessPartnerNoteViewModel>());
+            }
+            else
+            {
+				NotesFromDB = new ObservableCollection<BusinessPartnerNoteViewModel>();
+            }
+
+			NoteDataLoading = false;
+        }
+
         private void DisplayPhoneData()
         {
             PhoneDataLoading = true;
@@ -714,6 +804,18 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
-	}
+
+        private void btnBusinessPartnerReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusinessPartnerReport.Show(CurrentBusinessPartner);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+    }
 }
 

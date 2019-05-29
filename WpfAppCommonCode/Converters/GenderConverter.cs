@@ -10,9 +10,9 @@ namespace WpfAppCommonCode.Converters
 {
     public class GenderConverter : IValueConverter
     {
-        public static string Choose = "Odaberi";
-        public static string ChooseM = "Muško";
-        public static string ChooseF = "Žensko";
+        public static string Choose = "Odaberiv (WÄHLEN)";
+        public static string ChooseM = "Muško (MÄNNLICH)";
+        public static string ChooseF = "Žensko (WEIBLICH)";
 
         public static List<String> GenderOptions = new List<string>()
         {

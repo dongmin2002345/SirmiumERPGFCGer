@@ -79,6 +79,13 @@
                             <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
+
+                    <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtSearchByBusinessPartnerEmployeeCode" Width="150"
+                                         Text="{Binding Path=ConstructionSiteSearchObject.Search_InternalCode, UpdateSourceTrigger=PropertyChanged}"
+                                         TextChanged="txtSearchByBusinessPartnerEmployeeCode_TextChanged"
+                                         Margin="2"
+                                         Controls:TextBoxHelper.ClearTextButton="True"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">

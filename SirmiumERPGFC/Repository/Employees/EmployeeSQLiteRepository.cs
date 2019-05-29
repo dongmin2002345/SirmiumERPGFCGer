@@ -54,6 +54,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "PassportCityCode NVARCHAR(2048) NULL, " +
             "PassportCityName NVARCHAR(2048) NULL, " +
             "Passport NVARCHAR(2048) NULL, " +
+            "PassportMup NVARCHAR(2048) NULL, " +
             "VisaFrom DATETIME NULL, " +
             "VisaTo DATETIME NULL, " +
 
@@ -88,7 +89,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
             "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
-            "Passport, VisaFrom, VisaTo, " +
+            "Passport, PassportMup, VisaFrom, VisaTo, " +
             "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
             "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, ResidenceAddress, " +
             "EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -100,7 +101,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
             "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
-            "Passport, VisaFrom, VisaTo, " +
+            "Passport, PassportMup, VisaFrom, VisaTo, " +
             "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
             "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, ResidenceAddress, " +
             "EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -111,7 +112,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "@DateOfBirth, @Gender, @CountryId, @CountryIdentifier, @CountryCode, @CountryName, @RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, @CityId, @CityIdentifier, @CityCode, @CityName, @Address, " +
             "@PassportCountryId, @PassportCountryIdentifier, @PassportCountryCode, @PassportCountryName, @PassportCityId, @PassportCityIdentifier, @PassportCityCode, @PassportCityName, " +
-            "@Passport, @VisaFrom, @VisaTo, " +
+            "@Passport, @PassportMup, @VisaFrom, @VisaTo, " +
             "@ResidenceCountryId, @ResidenceCountryIdentifier, @ResidenceCountryCode, @ResidenceCountryName, " +
             "@ResidenceCityId, @ResidenceCityIdentifier, @ResidenceCityCode, @ResidenceCityName, @ResidenceAddress, " +
             "@EmbassyDate, @VisaDate, @VisaValidFrom, @VisaValidTo, @WorkPermitFrom, @WorkPermitTo, " +
@@ -134,6 +135,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
                         "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -141,6 +143,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
                     selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(EmployeeSearchObject.Search_ConstructionSite) ? "%" + EmployeeSearchObject.Search_ConstructionSite + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -171,6 +174,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
@@ -200,11 +204,13 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
                         "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
                     selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(EmployeeSearchObject.Search_ConstructionSite) ? "%" + EmployeeSearchObject.Search_ConstructionSite + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -246,6 +252,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -254,6 +261,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -284,6 +292,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
@@ -309,16 +318,20 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM Employees " +
-                        //"WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier) " +
+                         //"WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier) " +
                         "WHERE Identifier NOT IN (SELECT EmployeeIdentifier FROM EmployeeByConstructionSites) " +
+                        "AND Identifier IN (Select EmployeeIdentifier FROM EmployeeByBusinessPartners WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -358,6 +371,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                         "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -365,6 +379,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -395,6 +410,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
@@ -424,11 +440,13 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                         "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -471,6 +489,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -478,6 +497,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -508,6 +528,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
@@ -537,11 +558,13 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -581,6 +604,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -588,6 +612,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -618,6 +643,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
@@ -647,11 +673,13 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
                         "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND CompanyId = @CompanyId;", db);
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeSearchObject.Search_EmployeeCode) != null ? "%" + EmployeeSearchObject.Search_EmployeeCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -719,6 +747,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
@@ -757,15 +786,19 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IEmployeeService EmployeeService)
+        public void Sync(IEmployeeService EmployeeService, Action<int, int> callback = null)
         {
             SyncEmployeeRequest request = new SyncEmployeeRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
+            int toSync = 0;
+            int syncedItems = 0;
+
             EmployeeListResponse response = EmployeeService.Sync(request);
             if (response.Success)
             {
+                toSync = response?.Employees?.Count ?? 0;
                 List<EmployeeViewModel> EmployeesFromDB = response.Employees;
                 foreach (var Employee in EmployeesFromDB.OrderBy(x => x.Id))
                 {
@@ -774,6 +807,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     {
                         Employee.IsSynced = true;
                         Create(Employee);
+                        syncedItems++;
+                        callback?.Invoke(syncedItems, toSync);
                     }
                 }
             }
@@ -867,6 +902,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Parameters.AddWithValue("@PassportCityCode", ((object)Employee.PassportCity?.ZipCode) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@PassportCityName", ((object)Employee.PassportCity?.Name) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@Passport", ((object)Employee.Passport) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@PassportMup", ((object)Employee.PassportMup) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@VisaFrom", ((object)Employee.VisaFrom) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@VisaTo", ((object)Employee.VisaTo) ?? DBNull.Value);
                 insertCommand.Parameters.AddWithValue("@ResidenceCountryId", ((object)Employee.ResidenceCountry?.Id) ?? DBNull.Value);

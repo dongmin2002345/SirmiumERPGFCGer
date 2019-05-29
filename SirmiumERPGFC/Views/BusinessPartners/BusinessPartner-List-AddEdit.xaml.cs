@@ -371,7 +371,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
         #region CurrentBusinessPartnerDocumentForm
-        private BusinessPartnerDocumentViewModel _CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
+        private BusinessPartnerDocumentViewModel _CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel() { CreateDate = DateTime.Now };
 
         public BusinessPartnerDocumentViewModel CurrentBusinessPartnerDocumentForm
         {
@@ -1157,6 +1157,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (response.Success)
             {
                 CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
+                CurrentBusinessPartnerDocumentForm.CreateDate = DateTime.Now;
 
                 Thread displayThread = new Thread(() => DisplayDocumentData());
                 displayThread.IsBackground = true;

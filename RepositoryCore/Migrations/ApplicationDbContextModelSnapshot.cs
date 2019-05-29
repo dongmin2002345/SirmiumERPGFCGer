@@ -745,6 +745,78 @@ namespace RepositoryCore.Migrations
                     b.ToTable("InputInvoices");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.InputInvoices.InputInvoiceDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<int?>("InputInvoiceId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("InputInvoiceId");
+
+                    b.ToTable("InputInvoiceDocuments");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.InputInvoices.InputInvoiceNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<int?>("InputInvoiceId");
+
+                    b.Property<string>("Note");
+
+                    b.Property<DateTime>("NoteDate");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("InputInvoiceId");
+
+                    b.ToTable("InputInvoiceNotes");
+                });
+
             modelBuilder.Entity("DomainCore.Common.Locations.City", b =>
                 {
                     b.Property<int>("Id")
@@ -966,6 +1038,78 @@ namespace RepositoryCore.Migrations
                     b.ToTable("OutputInvoices");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.OutputInvoices.OutputInvoiceDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("OutputInvoiceId");
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("OutputInvoiceId");
+
+                    b.ToTable("OutputInvoiceDocuments");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.OutputInvoices.OutputInvoiceNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Note");
+
+                    b.Property<DateTime>("NoteDate");
+
+                    b.Property<int?>("OutputInvoiceId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("OutputInvoiceId");
+
+                    b.ToTable("OutputInvoiceNotes");
+                });
+
             modelBuilder.Entity("DomainCore.Common.Professions.Profession", b =>
                 {
                     b.Property<int>("Id")
@@ -1158,6 +1302,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Path");
+
                     b.Property<DateTime>("ToDoDate");
 
                     b.Property<DateTime?>("UpdatedAt");
@@ -1206,6 +1352,8 @@ namespace RepositoryCore.Migrations
                     b.Property<string>("Name");
 
                     b.Property<DateTime>("ProContractDate");
+
+                    b.Property<int>("Status");
 
                     b.Property<DateTime?>("UpdatedAt");
 
@@ -1384,6 +1532,8 @@ namespace RepositoryCore.Migrations
                     b.Property<int?>("PassportCityId");
 
                     b.Property<int?>("PassportCountryId");
+
+                    b.Property<string>("PassportMup");
 
                     b.Property<int?>("RegionId");
 
@@ -2538,6 +2688,36 @@ namespace RepositoryCore.Migrations
                         .HasForeignKey("CreatedById");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.InputInvoices.InputInvoiceDocument", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Common.InputInvoices.InputInvoice", "InputInvoice")
+                        .WithMany()
+                        .HasForeignKey("InputInvoiceId");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.InputInvoices.InputInvoiceNote", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Common.InputInvoices.InputInvoice", "InputInvoice")
+                        .WithMany()
+                        .HasForeignKey("InputInvoiceId");
+                });
+
             modelBuilder.Entity("DomainCore.Common.Locations.City", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
@@ -2619,6 +2799,36 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.OutputInvoices.OutputInvoiceDocument", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Common.OutputInvoices.OutputInvoice", "OutputInvoice")
+                        .WithMany()
+                        .HasForeignKey("OutputInvoiceId");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.OutputInvoices.OutputInvoiceNote", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Common.OutputInvoices.OutputInvoice", "OutputInvoice")
+                        .WithMany()
+                        .HasForeignKey("OutputInvoiceId");
                 });
 
             modelBuilder.Entity("DomainCore.Common.Professions.Profession", b =>
