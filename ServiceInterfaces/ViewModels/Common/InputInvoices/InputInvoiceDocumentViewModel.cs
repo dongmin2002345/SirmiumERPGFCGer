@@ -44,7 +44,7 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
 		#endregion
 
 		#region CreateDate
-		private DateTime? _CreateDate;
+		private DateTime? _CreateDate = DateTime.Now;
 
 		public DateTime? CreateDate
 		{
