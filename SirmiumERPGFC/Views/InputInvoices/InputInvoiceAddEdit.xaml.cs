@@ -141,11 +141,79 @@ namespace SirmiumERPGFC.Views.InputInvoices
                 }
             }
         }
-        #endregion
+		#endregion
+
+		#region InputInvoiceDocumentsFromDB
+		private ObservableCollection<InputInvoiceDocumentViewModel> _InputInvoiceDocumentsFromDB;
+
+		public ObservableCollection<InputInvoiceDocumentViewModel> InputInvoiceDocumentsFromDB
+		{
+			get { return _InputInvoiceDocumentsFromDB; }
+			set
+			{
+				if (_InputInvoiceDocumentsFromDB != value)
+				{
+					_InputInvoiceDocumentsFromDB = value;
+					NotifyPropertyChanged("InputInvoiceDocumentsFromDB");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentInputInvoiceDocumentForm
+		private InputInvoiceDocumentViewModel _CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel() { CreateDate = DateTime.Now };
+
+		public InputInvoiceDocumentViewModel CurrentInputInvoiceDocumentForm
+		{
+			get { return _CurrentInputInvoiceDocumentForm; }
+			set
+			{
+				if (_CurrentInputInvoiceDocumentForm != value)
+				{
+					_CurrentInputInvoiceDocumentForm = value;
+					NotifyPropertyChanged("CurrentInputInvoiceDocumentForm");
+				}
+			}
+		}
+		#endregion
+
+		#region CurrentInputInvoiceDocumentDG
+		private InputInvoiceDocumentViewModel _CurrentInputInvoiceDocumentDG;
+
+		public InputInvoiceDocumentViewModel CurrentInputInvoiceDocumentDG
+		{
+			get { return _CurrentInputInvoiceDocumentDG; }
+			set
+			{
+				if (_CurrentInputInvoiceDocumentDG != value)
+				{
+					_CurrentInputInvoiceDocumentDG = value;
+					NotifyPropertyChanged("CurrentInputInvoiceDocumentDG");
+				}
+			}
+		}
+		#endregion
+
+		#region InputInvoiceDocumentDataLoading
+		private bool _InputInvoiceDocumentDataLoading;
+
+		public bool InputInvoiceDocumentDataLoading
+		{
+			get { return _InputInvoiceDocumentDataLoading; }
+			set
+			{
+				if (_InputInvoiceDocumentDataLoading != value)
+				{
+					_InputInvoiceDocumentDataLoading = value;
+					NotifyPropertyChanged("InputInvoiceDocumentDataLoading");
+				}
+			}
+		}
+		#endregion
 
 
-        #region IsHeaderCreated
-        private bool _IsHeaderCreated;
+		#region IsHeaderCreated
+		private bool _IsHeaderCreated;
 
         public bool IsHeaderCreated
         {
@@ -251,7 +319,8 @@ namespace SirmiumERPGFC.Views.InputInvoices
             Thread displayThread = new Thread(() =>
             {
                 DisplayInputInvoiceNoteData();
-            });
+				DisplayInputInvoiceDocumentData();
+			});
             displayThread.IsBackground = true;
             displayThread.Start();
         }
@@ -280,10 +349,30 @@ namespace SirmiumERPGFC.Views.InputInvoices
             InputInvoiceNoteDataLoading = false;
         }
 
-        #endregion
+		private void DisplayInputInvoiceDocumentData()
+		{
+			InputInvoiceDocumentDataLoading = true;
+
+			InputInvoiceDocumentListResponse response = new InputInvoiceDocumentSQLiteRepository()
+				.GetInputInvoiceDocumentsByInputInvoice(MainWindow.CurrentCompanyId, currentInputInvoice.Identifier);
+
+			if (response.Success)
+			{
+				InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>(
+					response.InputInvoiceDocuments ?? new List<InputInvoiceDocumentViewModel>());
+			}
+			else
+			{
+				InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>();
+			}
+
+			InputInvoiceDocumentDataLoading = false;
+		}
+
+		#endregion
 
 
-        private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
+		private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
@@ -348,7 +437,8 @@ namespace SirmiumERPGFC.Views.InputInvoices
 				}
 
                 currentInputInvoice.InputInvoiceNotes = InputInvoiceNotesFromDB;
-                response = InputInvoiceService.Create(currentInputInvoice);
+				currentInputInvoice.InputInvoiceDocuments = InputInvoiceDocumentsFromDB;
+				response = InputInvoiceService.Create(currentInputInvoice);
 				if (!response.Success)
 				{
 					MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
@@ -485,11 +575,115 @@ namespace SirmiumERPGFC.Views.InputInvoices
             CurrentInputInvoiceNoteForm = new InputInvoiceNoteViewModel();
         }
 
-        #endregion
+		#endregion
 
-        #region Mouse wheel event 
+		#region Add, edit, delete and cancel document
 
-        private void PreviewMouseWheelEv(object sender, System.Windows.Input.MouseWheelEventArgs e)
+		private void FileDIalog_FileOk(object sender, CancelEventArgs e)
+		{
+			System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+			string[] fileNames = dialog.FileNames;
+
+			if (fileNames.Length > 0)
+				CurrentInputInvoiceDocumentForm.Path = fileNames[0];
+		}
+
+		private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
+		{
+			System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+			fileDIalog.Multiselect = true;
+			fileDIalog.FileOk += FileDIalog_FileOk;
+			fileDIalog.Filter = "Image Files | *.pdf";
+			fileDIalog.ShowDialog();
+		}
+
+		private void btnAddDocument_Click(object sender, RoutedEventArgs e)
+		{
+			#region Validation
+
+			if (String.IsNullOrEmpty(CurrentInputInvoiceDocumentForm.Name))
+			{
+				MainWindow.WarningMessage = "Obavezno polje: Naziv";
+				return;
+			}
+
+			if (String.IsNullOrEmpty(CurrentInputInvoiceDocumentForm.Path))
+			{
+				MainWindow.WarningMessage = "Obavezno polje: Putanja";
+				return;
+			}
+
+			if (CurrentInputInvoiceDocumentForm.CreateDate == null)
+			{
+				MainWindow.WarningMessage = "Obavezno polje: Datum kreiranja";
+				return;
+			}
+
+			#endregion
+
+			// IF update process, first delete item
+			new InputInvoiceDocumentSQLiteRepository().Delete(CurrentInputInvoiceDocumentForm.Identifier);
+
+			CurrentInputInvoiceDocumentForm.InputInvoice = currentInputInvoice;
+			CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
+			CurrentInputInvoiceDocumentForm.IsSynced = false;
+			CurrentInputInvoiceDocumentForm.UpdatedAt = DateTime.Now;
+			CurrentInputInvoiceDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+			CurrentInputInvoiceDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+			var response = new InputInvoiceDocumentSQLiteRepository().Create(CurrentInputInvoiceDocumentForm);
+			if (response.Success)
+			{
+				CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
+				CurrentInputInvoiceDocumentForm.CreateDate = DateTime.Now;
+
+				Thread displayThread = new Thread(() => DisplayInputInvoiceDocumentData());
+				displayThread.IsBackground = true;
+				displayThread.Start();
+
+				txtDocumentName.Focus();
+			}
+			else
+				MainWindow.ErrorMessage = response.Message;
+		}
+
+		private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
+		{
+			CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
+			CurrentInputInvoiceDocumentForm.CreateDate = DateTime.Now;
+		}
+
+		private void btnEditDocument_Click(object sender, RoutedEventArgs e)
+		{
+			CurrentInputInvoiceDocumentForm = CurrentInputInvoiceDocumentDG;
+		}
+
+		private void btnDeleteDocument_Click(object sender, RoutedEventArgs e)
+		{
+			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dokument", "");
+			var showDialog = deleteConfirmationForm.ShowDialog();
+			if (showDialog != null && showDialog.Value)
+			{
+				new InputInvoiceDocumentSQLiteRepository().Delete(CurrentInputInvoiceDocumentDG.Identifier);
+
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dokument_je_uspešno_obrisanUzvičnik"));
+
+				Thread displayThread = new Thread(() => DisplayInputInvoiceDocumentData());
+				displayThread.IsBackground = true;
+				displayThread.Start();
+			}
+
+			SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+		}
+
+		#endregion
+
+		#region Mouse wheel event 
+
+		private void PreviewMouseWheelEv(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             if (!e.Handled)
             {
@@ -517,23 +711,6 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
         #endregion
 
-        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
-
-            fileDIalog.Multiselect = true;
-            fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "Image Files | *.pdf";
-            fileDIalog.ShowDialog();
-        }
-
-        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
-            string[] fileNames = dialog.FileNames;
-
-            if (fileNames.Length > 0)
-                currentInputInvoice.Path = fileNames[0];
-        }
+        
     }
 }

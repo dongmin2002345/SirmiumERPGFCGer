@@ -52,6 +52,7 @@
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerTypeService.cs" />
     <Compile Include="Implementations\Common\Companies\CompanyUserService.cs" />
+    <Compile Include="Implementations\Common\InputInvoices\InputInvoiceDocumentService.cs" />
     <Compile Include="Implementations\Common\InputInvoices\InputInvoiceNoteService.cs" />
     <Compile Include="Implementations\Common\InputInvoices\InputInvoiceService.cs" />
     <Compile Include="Implementations\Common\Locations\CityService.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Implementations\Common\Locations\CountryService.cs" />
     <Compile Include="Implementations\Common\Locations\MunicipalityService.cs" />
     <Compile Include="Implementations\Common\Locations\RegionService.cs" />
+    <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceDocumentService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceNoteService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceService.cs" />
     <Compile Include="Implementations\Common\Sectors\AgencyService.cs" />

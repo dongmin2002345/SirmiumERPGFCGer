@@ -60,10 +60,12 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IOutputInvoiceRepository outputInvoiceRepository;
         private IOutputInvoiceNoteRepository outputInvoiceNoteRepository;
-        private IInputInvoiceRepository inputInvoiceRepository;
+		private IOutputInvoiceDocumentRepository outputInvoiceDocumentRepository;
+		private IInputInvoiceRepository inputInvoiceRepository;
         private IInputInvoiceNoteRepository inputInvoiceNoteRepository;
+		private IInputInvoiceDocumentRepository inputInvoiceDocumentRepository;
 
-        private ICityRepository cityRepository;
+		private ICityRepository cityRepository;
         private IRegionRepository regionRepository;
         private IMunicipalityRepository municipalityRepository;
         private ICountryRepository countryRepository;
@@ -255,7 +257,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return outputInvoiceNoteRepository;
         }
 
-        public IInputInvoiceRepository GetInputInvoiceRepository()
+		public IOutputInvoiceDocumentRepository GetOutputInvoiceDocumentRepository()
+		{
+			if (outputInvoiceDocumentRepository == null)
+				outputInvoiceDocumentRepository = new OutputInvoiceDocumentViewRepository(context);
+			return outputInvoiceDocumentRepository;
+		}
+
+		public IInputInvoiceRepository GetInputInvoiceRepository()
 		{
 			if (inputInvoiceRepository == null)
 				inputInvoiceRepository = new InputInvoiceViewRepository(context);
@@ -269,8 +278,15 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return inputInvoiceNoteRepository;
         }
 
+		public IInputInvoiceDocumentRepository GetInputInvoiceDocumentRepository()
+		{
+			if (inputInvoiceDocumentRepository == null)
+				inputInvoiceDocumentRepository = new InputInvoiceDocumentViewRepository(context);
+			return inputInvoiceDocumentRepository;
+		}
 
-        public ICountryRepository GetCountryRepository()
+
+		public ICountryRepository GetCountryRepository()
         {
             if (countryRepository == null)
                 countryRepository = new CountryViewRepository(context);

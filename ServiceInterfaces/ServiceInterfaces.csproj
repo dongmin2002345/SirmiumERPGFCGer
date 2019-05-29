@@ -53,6 +53,7 @@
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerPhoneService.cs" />
     <Compile Include="Abstractions\Common\BusinessPartners\IBusinessPartnerService.cs" />
     <Compile Include="Abstractions\Common\Companies\ICompanyUserService.cs" />
+    <Compile Include="Abstractions\Common\InputInvoices\IInputInvoiceDocumentService.cs" />
     <Compile Include="Abstractions\Common\InputInvoices\IInputInvoiceNoteService.cs" />
     <Compile Include="Abstractions\Common\InputInvoices\IInputInvoiceService.cs" />
     <Compile Include="Abstractions\Common\Locations\ICityService.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Abstractions\Common\Locations\ICountryService.cs" />
     <Compile Include="Abstractions\Common\Locations\IMunicipalityService.cs" />
     <Compile Include="Abstractions\Common\Locations\IRegionService.cs" />
+    <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceDocumentService.cs" />
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceNoteService.cs" />
     <Compile Include="Abstractions\Common\OutputInvoices\IOutputInvoiceService.cs" />
     <Compile Include="Abstractions\Common\Sectors\IAgencyService.cs" />
@@ -134,10 +136,13 @@
     <Compile Include="Messages\Common\Companies\SyncCompanyRequest.cs" />
     <Compile Include="Messages\Common\Companies\SyncCompanyUserRequest.cs" />
     <Compile Include="Messages\Common\Identity\SyncUserRequest.cs" />
+    <Compile Include="Messages\Common\InputInvoices\InputInvoiceDocumentListResponse.cs" />
+    <Compile Include="Messages\Common\InputInvoices\InputInvoiceDocumentResponse.cs" />
     <Compile Include="Messages\Common\InputInvoices\InputInvoiceNoteListResponse.cs" />
     <Compile Include="Messages\Common\InputInvoices\InputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\InputInvoices\InputInvoiceNoteResponse.cs" />
     <Compile Include="Messages\Common\InputInvoices\InputInvoiceResponse.cs" />
+    <Compile Include="Messages\Common\InputInvoices\SyncInputInvoiceDocumentRequest.cs" />
     <Compile Include="Messages\Common\InputInvoices\SyncInputInvoiceNoteRequest.cs" />
     <Compile Include="Messages\Common\InputInvoices\SyncInputInvoiceRequest.cs" />
     <Compile Include="Messages\Common\Locations\CityListResponse.cs" />
@@ -156,10 +161,13 @@
     <Compile Include="Messages\Common\Locations\SyncMunicipalityRequest.cs" />
     <Compile Include="Messages\Common\Locations\SyncRegionRequest.cs" />
     <Compile Include="Messages\Common\Locations\SyncCountryRequest.cs" />
+    <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceDocumentListResponse.cs" />
+    <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceDocumentResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceNoteListResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceNoteResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceListResponse.cs" />
     <Compile Include="Messages\Common\OutputInvoices\OutputInvoiceResponse.cs" />
+    <Compile Include="Messages\Common\OutputInvoices\SyncOutputInvoiceDocumentRequest.cs" />
     <Compile Include="Messages\Common\OutputInvoices\SyncOutputInvoiceNoteRequest.cs" />
     <Compile Include="Messages\Common\OutputInvoices\SyncOutputInvoiceRequest.cs" />
     <Compile Include="Messages\Common\Professions\ProfessionCodeResponse.cs" />
@@ -267,6 +275,7 @@
     <Compile Include="ViewModels\Common\BusinessPartners\BusinessPartnerViewModel.cs" />
     <Compile Include="ViewModels\Common\Companies\CompanyUserViewModel.cs" />
     <Compile Include="ViewModels\Common\Identity\UserRoleViewModel.cs" />
+    <Compile Include="ViewModels\Common\InputInvoices\InputInvoiceDocumentViewModel.cs" />
     <Compile Include="ViewModels\Common\InputInvoices\InputInvoiceNoteViewModel.cs" />
     <Compile Include="ViewModels\Common\InputInvoices\InputInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\CityViewModel.cs" />
@@ -276,6 +285,7 @@
     <Compile Include="ViewModels\Common\Locations\CountryViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\MunicipalityViewModel.cs" />
     <Compile Include="ViewModels\Common\Locations\RegionViewModel.cs" />
+    <Compile Include="ViewModels\Common\OutputInvoices\OutputInvoiceDocumentViewModel.cs" />
     <Compile Include="ViewModels\Common\OutputInvoices\OutputInvoiceNoteViewModel.cs" />
     <Compile Include="ViewModels\Common\OutputInvoices\OutputInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Common\Sectors\AgencyViewModel.cs" />

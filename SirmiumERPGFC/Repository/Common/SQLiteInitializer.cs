@@ -831,10 +831,24 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(OutputInvoiceNoteSQLiteRepository.OutputInvoiceNoteTableCreatePart, db);
                     createTable.ExecuteReader();
-                    #endregion
+					#endregion
 
-                    #region InputInvoices
-                    if (withTableDrop)
+					#region OutputInvoiceDocuments
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE OutputInvoiceDocuments", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(OutputInvoiceDocumentSQLiteRepository.OutputInvoiceDocumentTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+
+					#region InputInvoices
+					if (withTableDrop)
 					{
 						try
 						{
@@ -864,11 +878,25 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(InputInvoiceNoteSQLiteRepository.InputInvoiceNoteTableCreatePart, db);
                     createTable.ExecuteReader();
-                    #endregion
+					#endregion
 
-                    #endregion
-                }
-            }
+					#region InputInvoiceDocuments
+					if (withTableDrop)
+					{
+						try
+						{
+							SqliteCommand dropTable = new SqliteCommand("DROP TABLE InputInvoiceDocuments", db);
+							dropTable.ExecuteNonQuery();
+						}
+						catch (Exception ex) { }
+					}
+					createTable = new SqliteCommand(InputInvoiceDocumentSQLiteRepository.InputInvoiceDocumentTableCreatePart, db);
+					createTable.ExecuteReader();
+					#endregion
+
+					#endregion
+				}
+			}
 
             catch (SqliteException e)
             {

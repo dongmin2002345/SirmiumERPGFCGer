@@ -115,6 +115,9 @@ namespace ApiExtension.Sender
 
                 { typeof(OutputInvoiceNoteViewModel), "OutputInvoiceNote" },
                 { typeof(List<OutputInvoiceNoteViewModel>), "OutputInvoiceNote" },
+
+				{ typeof(OutputInvoiceDocumentViewModel), "OutputInvoiceDocument" },
+				{ typeof(List<OutputInvoiceDocumentViewModel>), "OutputInvoiceDocument" },
                 #endregion
 
 				#region IntputInvoices
@@ -124,6 +127,9 @@ namespace ApiExtension.Sender
 
                 { typeof(InputInvoiceNoteViewModel), "InputInvoiceNote" },
                 { typeof(List<InputInvoiceNoteViewModel>), "InputInvoiceNote" },
+
+				{ typeof(InputInvoiceDocumentViewModel), "InputInvoiceDocument" },
+				{ typeof(List<InputInvoiceDocumentViewModel>), "InputInvoiceDocument" },
 
                 #endregion
 

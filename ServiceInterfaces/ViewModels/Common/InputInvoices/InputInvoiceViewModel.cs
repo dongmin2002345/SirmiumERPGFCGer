@@ -339,13 +339,29 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
                 }
             }
         }
-        #endregion
+		#endregion
 
+		#region InputInvoiceDocuments
+		private ObservableCollection<InputInvoiceDocumentViewModel> _InputInvoiceDocuments;
 
-        #region Search
+		public ObservableCollection<InputInvoiceDocumentViewModel> InputInvoiceDocuments
+		{
+			get { return _InputInvoiceDocuments; }
+			set
+			{
+				if (_InputInvoiceDocuments != value)
+				{
+					_InputInvoiceDocuments = value;
+					NotifyPropertyChanged("InputInvoiceDocuments");
+				}
+			}
+		}
+		#endregion
 
-        #region SearchBy_BusinessPartnerName
-        private string _SearchBy_BusinessPartnerName;
+		#region Search
+
+		#region SearchBy_BusinessPartnerName
+		private string _SearchBy_BusinessPartnerName;
 
 		public string SearchBy_BusinessPartnerName
 		{

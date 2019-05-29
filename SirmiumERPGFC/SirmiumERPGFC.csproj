@@ -233,6 +233,7 @@
     <Compile Include="Repository\Employees\PhysicalPersonNoteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\PhysicalPersonProfessionSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\PhysicalPersonSQLiteRepository.cs" />
+    <Compile Include="Repository\InputInvoices\InputInvoiceDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\InputInvoices\InputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\InputInvoices\InputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Limitations\LimitationEmailSQLiteRepository.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Repository\Locations\CountrySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\MunicipalitySQLiteRepository.cs" />
     <Compile Include="Repository\Locations\RegionSQLiteRepository.cs" />
+    <Compile Include="Repository\OutputInvoices\OutputInvoiceDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
