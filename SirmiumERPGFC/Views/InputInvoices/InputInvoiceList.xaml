@@ -356,9 +356,9 @@
                     </DataGrid>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="{DynamicResource Dokumenta}" Grid.Column="1" Margin="2 1 1 2">
+            <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="2 1 1 2">
                             <Grid>
-                                <Controls:ProgressRing Grid.Row="0"  IsActive="{Binding DocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                    <Controls:ProgressRing Grid.Row="0"  IsActive="{Binding InputInvoiceDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                                 <DataGrid x:Name="dgDocuments"
                               Grid.Row="0" 
                               Margin="2"
@@ -374,8 +374,8 @@
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto"
                               Style="{DynamicResource AzureDataGrid}"
-                              ItemsSource="{Binding Path=DocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentDocumentDG, Mode=TwoWay}">
+                              ItemsSource="{Binding Path=InputInvoiceDocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentInputInvoiceDocument, Mode=TwoWay}">
 
                                     <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />

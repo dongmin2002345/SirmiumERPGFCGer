@@ -322,7 +322,7 @@
                         </Button>
 
 
-                        <Controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="6" IsActive="{Binding InputInvoiceItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <Controls:ProgressRing Grid.Row="2" Grid.ColumnSpan="6" IsActive="{Binding InputInvoiceDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgInputInvoiceDocuments"
                               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="5" MinHeight="200"
