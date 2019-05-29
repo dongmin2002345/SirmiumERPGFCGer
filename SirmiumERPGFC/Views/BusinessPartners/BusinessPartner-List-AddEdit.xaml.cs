@@ -527,7 +527,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = " SPEICHERN ";
 
         public string SubmitButtonContent
         {

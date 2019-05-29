@@ -31,7 +31,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!--    Invoice data    -->
-                <GroupBox Header="Podaci o fakturi" Margin="5 5 5 0" Grid.Row="0" Grid.ColumnSpan="2">
+                <GroupBox Header="{DynamicResource Podaci_o_fakturi}" Margin="5 5 5 0" Grid.Row="0" Grid.ColumnSpan="2">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -85,7 +85,7 @@
                         <DatePicker Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtDateOfPaymet"
                                 SelectedDate="{Binding Path=currentInputInvoice.DateOfPaymet, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Status:" VerticalAlignment="Center" Margin="5 0 5 0" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource StatusDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  x:Name="cbxChooseStatusConverter" Margin="2"
                                             SelectedItem="{Binding Path=currentInputInvoice.Status, Converter={StaticResource cbxChooseStatusConverter}, Mode=TwoWay}"
                                             ItemsSource="{Binding Path=StatusOptions}">
@@ -117,7 +117,7 @@
                 </GroupBox>
 
                 <!--    Invoice informations    -->
-                <GroupBox Header="Detalji fakture:" Margin="5 5 5 5" Grid.Row="1" Grid.ColumnSpan="2"
+                <GroupBox Header="{DynamicResource Detalji_faktureDvotacka}" Margin="5 5 5 5" Grid.Row="1" Grid.ColumnSpan="2"
                       x:Name="gbItems">
                     <Grid>
                         <Grid.RowDefinitions>
