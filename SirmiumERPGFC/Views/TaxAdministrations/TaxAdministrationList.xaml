@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="5,5,5,0" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="2,1,2,2" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -93,7 +93,7 @@
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="{DynamicResource Poreska_Uprava}" Margin="5,2,5,0" Grid.Row="1" >
+        <GroupBox Header="{DynamicResource Poreska_Uprava}" Margin="2,1,2,2" Grid.Row="1" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
