@@ -129,15 +129,26 @@ namespace SirmiumERPGFC.Repository.Employees
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM Employees " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
-                        "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
-                        "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
-                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
-                        "AND CompanyId = @CompanyId " +
-                        "ORDER BY IsSynced, Id DESC " +
+                        "SELECT emp.ServerId, emp.Identifier, " +
+                        "emp.Code, emp.EmployeeCode, emp.Name, emp.SurName, emp.ConstructionSiteCode, emp.ConstructionSiteName, " +
+                        "emp.DateOfBirth, emp.Gender, emp.CountryId, emp.CountryIdentifier, emp.CountryCode, emp.CountryName, emp.RegionId, emp.RegionIdentifier, emp.RegionCode, emp.RegionName, " +
+                        "emp.MunicipalityId, emp.MunicipalityIdentifier, emp.MunicipalityCode, emp.MunicipalityName, emp.CityId, emp.CityIdentifier, emp.CityCode, emp.CityName, emp.Address, " +
+                        "emp.PassportCountryId, emp.PassportCountryIdentifier, emp.PassportCountryCode, emp.PassportCountryName, emp.PassportCityId, emp.PassportCityIdentifier, emp.PassportCityCode, emp.PassportCityName, " +
+                        "emp.Passport, emp.PassportMup, emp.VisaFrom, emp.VisaTo, " +
+                        "emp.ResidenceCountryId, emp.ResidenceCountryIdentifier, emp.ResidenceCountryCode, emp.ResidenceCountryName, " +
+                        "emp.ResidenceCityId, emp.ResidenceCityIdentifier, emp.ResidenceCityCode, emp.ResidenceCityName, emp.ResidenceAddress, " +
+                        "emp.EmbassyDate, emp.VisaDate, emp.VisaValidFrom, emp.VisaValidTo, emp.WorkPermitFrom, emp.WorkPermitTo, " +
+                        "empBP.BusinessPartnerId, empBP.BusinessPartnerIdentifier, empBP.BusinessPartnerCode, empBP.BusinessPartnerName, empBP.BusinessPartnerInternalCode, empBP.BusinessPartnerNameGer, " + 
+                        "emp.IsSynced, emp.UpdatedAt, emp.CreatedById, emp.CreatedByName, emp.CompanyId, emp.CompanyName " +
+                        "FROM Employees emp " +
+                        "LEFT JOIN EmployeeByBusinessPartners empBP ON emp.Identifier = empBP.EmployeeIdentifier " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR emp.Name LIKE @Name) " +
+                        "AND (@SurName IS NULL OR @SurName = '' OR emp.SurName LIKE @SurName) " +
+                        "AND (@Passport IS NULL OR @Passport = '' OR emp.Passport LIKE @Passport) " +
+                        "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR emp.ConstructionSiteCode LIKE @ConstructionSite OR emp.ConstructionSiteName LIKE @ConstructionSite) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR emp.EmployeeCode LIKE @EmployeeCode) " +
+                        "AND emp.CompanyId = @CompanyId " +
+                        "ORDER BY emp.IsSynced, emp.Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
@@ -188,6 +199,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
 
+                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+
                         dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -199,13 +212,15 @@ namespace SirmiumERPGFC.Repository.Employees
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
-                        "FROM Employees " +
-                       "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        "AND (@SurName IS NULL OR @SurName = '' OR SurName LIKE @SurName) " +
-                        "AND (@Passport IS NULL OR @Passport = '' OR Passport LIKE @Passport) " +
-                        "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
-                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
-                        "AND CompanyId = @CompanyId;", db);
+                        "FROM Employees emp " +
+                        "LEFT JOIN EmployeeByBusinessPartners empBP ON emp.Identifier = empBP.EmployeeIdentifier " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR emp.Name LIKE @Name) " +
+                        "AND (@SurName IS NULL OR @SurName = '' OR emp.SurName LIKE @SurName) " +
+                        "AND (@Passport IS NULL OR @Passport = '' OR emp.Passport LIKE @Passport) " +
+                        "AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR emp.ConstructionSiteCode LIKE @ConstructionSite OR emp.ConstructionSiteName LIKE @ConstructionSite) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR emp.EmployeeCode LIKE @EmployeeCode) " +
+                        "AND emp.CompanyId = @CompanyId " +
+                        "ORDER BY emp.IsSynced, emp.Id DESC;", db);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeSearchObject.SearchBy_Passport) != null ? "%" + EmployeeSearchObject.SearchBy_Passport + "%" : "");

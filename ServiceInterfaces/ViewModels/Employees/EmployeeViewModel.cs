@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using System;
 using System.Collections.Generic;
@@ -579,6 +580,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+
+        #region BusinessPartner
+        private BusinessPartnerViewModel _BusinessPartner;
+
+        public BusinessPartnerViewModel BusinessPartner
+        {
+            get { return _BusinessPartner; }
+            set
+            {
+                if (_BusinessPartner != value)
+                {
+                    _BusinessPartner = value;
+                    NotifyPropertyChanged("BusinessPartner");
+                }
+            }
+        }
+        #endregion
 
         #region IsSynced
         private bool _IsSynced;
