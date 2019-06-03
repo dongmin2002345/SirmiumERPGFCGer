@@ -211,6 +211,7 @@
     <system:String x:Key="Podaci_o_vizi_i_radnoj_dozvoli">Daten über das Visum und über die Arbeitserlaubnis</system:String>
     <system:String x:Key="Podaci_po_gradilištima">Baustelleninformationen</system:String>
     <system:String x:Key="Podsetnik_za_uraditi">Erinnerung zu erledigen</system:String>
+    <system:String x:Key="Privatni_podsetnik_za_uraditi">Eine private Erinnerung zu tun</system:String>
     <system:String x:Key="PolDvotacka">Geschlecht:</system:String>
     <system:String x:Key="Poreski_broj">Steuernummer</system:String>
     <system:String x:Key="Poreski_broj_ZagradaPIBKosaCrtaJMBGZagradaDvotacka">Steuernummer (PIB / JMBG):</system:String>

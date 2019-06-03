@@ -212,6 +212,7 @@
     <system:String x:Key="Podaci_o_vizi_i_radnoj_dozvoli">Podaci o vizi i radnoj dozvoli</system:String>
     <system:String x:Key="Podaci_po_gradilištima">Podaci po gradilištima</system:String>
     <system:String x:Key="Podsetnik_za_uraditi">Podsetnik za uraditi</system:String>
+    <system:String x:Key="Privatni_podsetnik_za_uraditi">Privatni podsetnik za uraditi</system:String>
     <system:String x:Key="PolDvotacka">Pol:</system:String>
     <system:String x:Key="Poreski_broj">Poreski broj</system:String>
     <system:String x:Key="Poreski_broj_ZagradaPIBKosaCrtaJMBGZagradaDvotacka">Poreski broj (PIB/JMBG):</system:String>

@@ -38,7 +38,7 @@
                 <TabItem Header="{DynamicResource Podsetnik_za_uraditi}">
                     <local:ToDoList x:Name="toDoList" />
                 </TabItem>
-                <TabItem Header="{DynamicResource Podsetnik_za_uraditi}">
+                <TabItem Header="{DynamicResource Privatni_podsetnik_za_uraditi}">
                     <local:ToDoPrivateList x:Name="toDoPrivateList" />
                 </TabItem>
                 <!--<TabItem Header="NAJVAZNIJE VESTI">

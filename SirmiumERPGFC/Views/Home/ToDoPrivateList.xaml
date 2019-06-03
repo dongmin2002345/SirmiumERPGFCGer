@@ -20,7 +20,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Margin="2 2 2 1" Header="{DynamicResource Podsetnik_za_uraditi}">
+        <GroupBox Grid.Row="0" Margin="2 2 2 1" Header="{DynamicResource Privatni_podsetnik_za_uraditi}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
