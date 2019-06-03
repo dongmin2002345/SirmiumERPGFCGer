@@ -80,14 +80,14 @@
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="{DynamicResource Sifra_gradilista_dvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtSearchByBusinessPartnerEmployeeCode" Width="150"
                                          Text="{Binding Path=ConstructionSiteSearchObject.Search_InternalCode, UpdateSourceTrigger=PropertyChanged}"
                                          TextChanged="txtSearchByBusinessPartnerEmployeeCode_TextChanged"
                                          Margin="2"
                                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                    <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="{DynamicResource Sifra_kompanije_dvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtSearchByBusinessPartnerCode" Width="150"
                                          Text="{Binding Path=ConstructionSiteSearchObject.Search_BusinessPartnerCode, UpdateSourceTrigger=PropertyChanged}"
                                          TextChanged="txtSearchByBusinessPartnerCode_TextChanged"

@@ -580,6 +580,9 @@
 
     <system:String x:Key="Obavezno_poljeDvotačka_Ime">Pflichtfeld: Name</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Datum_rodjenja">Pflichtfeld: Geburtsdatum</system:String>
+    <system:String x:Key="Istorija_fizickog_lica">Geschichte einer physischen Person</system:String>
+    <system:String x:Key="Sifra_gradilista_dvotacka">Bauordnung:</system:String>
+    <system:String x:Key="Sifra_kompanije_dvotacka">Buchungskreis:</system:String>
 
 
 

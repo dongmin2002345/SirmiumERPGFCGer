@@ -574,6 +574,9 @@
     <system:String x:Key="Odbitak_poreza">Tax deduction</system:String>
     <system:String x:Key="Odbitak_poreza_ODDvotacka">Tax deduction FROM:</system:String>
     <system:String x:Key="Odbitak_poreza_DODvotacka">Tax deduction TO:</system:String>
+    <system:String x:Key="Istorija_fizickog_lica">History of a physical person</system:String>
+    <system:String x:Key="Sifra_gradilista_dvotacka">Building code:</system:String>
+    <system:String x:Key="Sifra_kompanije_dvotacka">Company code:</system:String>
 
 
 

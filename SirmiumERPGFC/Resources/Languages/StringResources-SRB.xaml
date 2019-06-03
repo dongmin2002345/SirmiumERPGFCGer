@@ -582,6 +582,9 @@
     <system:String x:Key="Obavezno_poljeDvotačka_Ime">Obavezno polje: Ime</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Datum_rodjenja">Obavezno polje: Datum rođenja</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Vrsta_dozvole">Obavezno polje: Vrsta dozvole</system:String>
+    <system:String x:Key="Istorija_fizickog_lica">Istorija fizickog lica</system:String>
+    <system:String x:Key="Sifra_gradilista_dvotacka">Šifra gradilišta:</system:String>
+    <system:String x:Key="Sifra_kompanije_dvotacka">Šifra kompanije:</system:String>
 
 
 
