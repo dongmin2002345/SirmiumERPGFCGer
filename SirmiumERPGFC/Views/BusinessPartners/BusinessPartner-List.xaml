@@ -14,6 +14,17 @@
     </UserControl.Background>
 
     <UserControl.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
@@ -259,7 +270,13 @@
                               SelectedItem="{Binding Path=CurrentNoteDG, Mode=TwoWay}">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" />
+                            <DataGridTextColumn Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" >
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" Value="{Binding Note}"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
                             <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                             
                         </DataGrid.Columns>

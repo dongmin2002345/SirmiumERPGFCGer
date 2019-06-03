@@ -57,6 +57,23 @@ namespace SirmiumERPGFC.Views.Home
         }
         #endregion
 
+        #region IsPrivate
+        private bool _IsPrivate;
+
+        public bool IsPrivate
+        {
+            get { return _IsPrivate; }
+            set
+            {
+                if (_IsPrivate != value)
+                {
+                    _IsPrivate = value;
+                    NotifyPropertyChanged("IsPrivate");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsCreateProcess
         private bool _IsCreateProcess;
@@ -131,7 +148,7 @@ namespace SirmiumERPGFC.Views.Home
 
         #region Constructor
 
-        public ToDoAddEdit(ToDoViewModel toDoViewModel, bool isCreateProcess, bool isPopup = false)
+        public ToDoAddEdit(ToDoViewModel toDoViewModel, bool isPrivate, bool isCreateProcess, bool isPopup = false)
         {
             toDoService = DependencyResolver.Kernel.Get<IToDoService>();
 
@@ -140,6 +157,7 @@ namespace SirmiumERPGFC.Views.Home
             this.DataContext = this;
 
             CurrentToDo = toDoViewModel;
+            IsPrivate = isPrivate;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
         }
@@ -191,7 +209,7 @@ namespace SirmiumERPGFC.Views.Home
                 if (response.Success)
                 {
                     new ToDoSQLiteRepository().UpdateSyncStatus(response.ToDo.Identifier, response.ToDo.UpdatedAt, response.ToDo.Id, true);
-                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
@@ -202,6 +220,7 @@ namespace SirmiumERPGFC.Views.Home
                         CurrentToDo = new ToDoViewModel();
                         CurrentToDo.Identifier = Guid.NewGuid();
                         CurrentToDo.ToDoDate = DateTime.Now;
+                        CurrentToDo.IsPrivate = IsPrivate;
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
