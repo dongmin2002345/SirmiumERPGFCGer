@@ -319,6 +319,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region Search_BusinessPartnerCode
+        private string _Search_BusinessPartnerCode;
+
+        public string Search_BusinessPartnerCode
+        {
+            get { return _Search_BusinessPartnerCode; }
+            set
+            {
+                if (_Search_BusinessPartnerCode != value)
+                {
+                    _Search_BusinessPartnerCode = value;
+                    NotifyPropertyChanged("Search_BusinessPartnerCode");
+                }
+            }
+        }
+        #endregion
+
     }
 }
 

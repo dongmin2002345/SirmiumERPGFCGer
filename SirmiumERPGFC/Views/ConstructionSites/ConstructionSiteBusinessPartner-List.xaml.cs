@@ -429,6 +429,13 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             th.Start();
         }
 
+        private void txtSearchByBusinessPartnerCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
+        }
+
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
