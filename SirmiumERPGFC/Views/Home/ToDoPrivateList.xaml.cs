@@ -214,14 +214,14 @@ namespace SirmiumERPGFC.Views.Home
             toDo.ToDoDate = DateTime.Now;
             toDo.IsPrivate = true;
 
-            ToDoAddEdit addEditForm = new ToDoAddEdit(toDo, true);
+            ToDoAddEdit addEditForm = new ToDoAddEdit(toDo, true, true);
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            ToDoAddEdit addEditForm = new ToDoAddEdit(CurrentToDo, false);
+            ToDoAddEdit addEditForm = new ToDoAddEdit(CurrentToDo, true, false);
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
         }
