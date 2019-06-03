@@ -435,9 +435,8 @@
                         Style="{DynamicResource AzureDataGrid}"
                         ItemsSource="{Binding Path=EmployeeLicenceItemsFromDB}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="ValidFrom" Header="{DynamicResource Važi_od}" Binding="{Binding ValidFrom}" IsReadOnly="True" />
-
-                            <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Važi_do}" Binding="{Binding ValidTo}" IsReadOnly="True"  />
+                            <DataGridTextColumn SortMemberPath="WorkPermitFrom" Header="{DynamicResource Važi_od}" Binding="{Binding WorkPermitFrom}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="WorkPermitTo" Header="{DynamicResource Važi_do}" Binding="{Binding WorkPermitTo}" IsReadOnly="True"  />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
