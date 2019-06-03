@@ -210,6 +210,7 @@
     <system:String x:Key="Podaci_o_vizi_i_radnoj_dozvoli">Visa and Work Permit Data</system:String>
     <system:String x:Key="Podaci_po_gradilištima">Data by construction site</system:String>
     <system:String x:Key="Podsetnik_za_uraditi">Reminder to do</system:String>
+    <system:String x:Key="Privatni_podsetnik_za_uraditi">PRIVATE reminder to do</system:String>
     <system:String x:Key="PolDvotacka">Gender:</system:String>
     <system:String x:Key="Poreski_broj">Tax number</system:String>
     <system:String x:Key="Poreski_broj_ZagradaPIBKosaCrtaJMBGZagradaDvotacka">Tax number (PIB / JMBG):</system:String>
