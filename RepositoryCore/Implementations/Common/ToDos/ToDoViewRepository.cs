@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
             List<ToDo> ToDos = new List<ToDo>();
 
             string queryString =
-                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, " +
+                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, IsPrivate, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -59,6 +59,8 @@ namespace RepositoryCore.Implementations.Common.ToDos
                             toDo.Path = reader["Path"].ToString();
                         if (reader["ToDoDate"] != DBNull.Value)
                             toDo.ToDoDate = DateTime.Parse(reader["ToDoDate"].ToString());
+                        if (reader["IsPrivate"] != DBNull.Value)
+                            toDo.IsPrivate = Boolean.Parse(reader["IsPrivate"].ToString());
 
                         toDo.Active = bool.Parse(reader["Active"].ToString());
                         toDo.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -92,7 +94,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
             List<ToDo> ToDos = new List<ToDo>();
 
             string queryString =
-                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, " +
+                "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, IsPrivate, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
                 "WHERE CompanyId = @CompanyId " +
@@ -122,6 +124,8 @@ namespace RepositoryCore.Implementations.Common.ToDos
                             toDo.Path = reader["Path"].ToString();
                         if (reader["ToDoDate"] != DBNull.Value)
                             toDo.ToDoDate = DateTime.Parse(reader["ToDoDate"].ToString());
+                        if (reader["IsPrivate"] != DBNull.Value)
+                            toDo.IsPrivate = Boolean.Parse(reader["IsPrivate"].ToString());
 
                         toDo.Active = bool.Parse(reader["Active"].ToString());
                         toDo.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -184,6 +188,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
                     dbEntry.Description = toDo.Description;
                     dbEntry.Path = toDo.Path;
                     dbEntry.ToDoDate = toDo.ToDoDate;
+                    dbEntry.IsPrivate = toDo.IsPrivate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

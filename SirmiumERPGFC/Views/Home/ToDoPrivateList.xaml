@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Home.ToDoPrivateList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Home"
+             xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
+        <cbxConverters:ToDoDateConverter x:Key="ToDoDateConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Margin="2 2 2 1" Header="{DynamicResource Podsetnik_za_uraditi}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Grid.Column="0" Width="150" Background="#007ACC">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Regular"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}" Grid.Column="1" Width="150" Background="#007ACC" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <DataGrid x:Name="dgToDos"
+                          Grid.Row="2"
+                          Margin="2"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          CanUserResizeColumns="True"  
+                          IsManipulationEnabled="False"
+                          GridLinesVisibility="All"
+                          HorizontalGridLinesBrush="Gray"
+                          VerticalAlignment="Stretch"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          ItemsSource="{Binding Path=ToDosFromDB}"
+                          SelectedItem="{Binding Path=CurrentToDo, Mode=TwoWay}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn SortMemberPath="ToDoDate" Header="{DynamicResource Datum}" Binding="{Binding ToDoDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="CreatedBy.FullName" Header="{DynamicResource Kreirao}" Binding="{Binding CreatedBy.FullName}" IsReadOnly="True" />
+
+                        <DataGridTemplateColumn Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Promeni">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Obriši">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Background" Value="{Binding ToDoDate, Converter={StaticResource ToDoDateConverter}}"  />
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Margin="2 1 2 2" Header="{DynamicResource Sadržaj}">
+            <Grid>
+                <TextBox x:Name="txtDescription" TextWrapping="Wrap" FontSize="20"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

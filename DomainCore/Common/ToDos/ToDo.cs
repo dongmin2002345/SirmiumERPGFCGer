@@ -12,6 +12,8 @@ namespace DomainCore.Common.ToDos
 
         public string Path { get; set; }
 
+        public bool IsPrivate { get; set; }
+
         public DateTime ToDoDate { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Common.ToDos
             strSQLCommand =
                 "CREATE VIEW vToDos AS " +
                 "SELECT toDo.Id AS ToDoId, toDo.Identifier AS ToDoIdentifier, " +
-                "toDo.Name AS ToDoName, toDo.Description AS ToDoDescription, toDo.Path, toDo.ToDoDate, " +
+                "toDo.Name AS ToDoName, toDo.Description AS ToDoDescription, toDo.Path, toDo.ToDoDate, toDo.IsPrivate, " +
                 "toDo.Active, toDo.UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

@@ -377,6 +377,12 @@
     <Compile Include="Views\Home\ToDoAddEdit.xaml.cs">
       <DependentUpon>ToDoAddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Home\ToDoList.xaml.cs">
+      <DependentUpon>ToDoList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\ToDoPrivateList.xaml.cs">
+      <DependentUpon>ToDoPrivateList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InputInvoices\InputInvoiceAddEdit.xaml.cs">
       <DependentUpon>InputInvoiceAddEdit.xaml</DependentUpon>
     </Compile>
@@ -683,6 +689,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Home\ToDoAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Home\ToDoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Home\ToDoPrivateList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

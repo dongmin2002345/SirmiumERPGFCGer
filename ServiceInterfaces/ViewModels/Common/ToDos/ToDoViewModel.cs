@@ -78,7 +78,23 @@ namespace ServiceInterfaces.ViewModels.Common.ToDos
             }
         }
         #endregion
-        
+
+        #region IsPrivate
+        private bool _IsPrivate;
+
+        public bool IsPrivate
+        {
+            get { return _IsPrivate; }
+            set
+            {
+                if (_IsPrivate != value)
+                {
+                    _IsPrivate = value;
+                    NotifyPropertyChanged("IsPrivate");
+                }
+            }
+        }
+        #endregion
 
         #region IsSynced
         private bool _IsSynced;
