@@ -288,7 +288,7 @@
     <system:String x:Key="SEKTORI">Sektor</system:String>
     <system:String x:Key="Šifra">Nummer</system:String>
     <system:String x:Key="Šifra_ZagradaFirmeZagrada">Code (Firmen)</system:String>
-    <system:String x:Key="Šifra_ZagradaGradilišteZagrada">Vertragsnummer</system:String>
+    <system:String x:Key="Šifra_ZagradaGradilišteZagrada">Code (Gebäude)</system:String>
     <system:String x:Key="Šifra_ZagradagradilišteZagradaDvotacka">Vertragsnummer</system:String>
     <system:String x:Key="Šifra_dozvole">Lizenzcode</system:String>
     <system:String x:Key="Šifra_države">Ländercode</system:String>
