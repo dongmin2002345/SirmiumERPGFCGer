@@ -574,13 +574,13 @@ namespace SirmiumERPGFC.Views.Employees
         {
             LoadingLicenceItems = true;
 
-            EmployeeLicenceItemListResponse response = new EmployeeLicenceItemSQLiteRepository()
-                .GetEmployeeLicencesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
-
-            if (response.Success)
+            if (CurrentEmployee != null)
             {
                 EmployeeLicenceItemsFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>(
-                    response.EmployeeLicenceItems ?? new List<EmployeeLicenceItemViewModel>());
+                    new List<EmployeeLicenceItemViewModel>()
+                    {
+                        new EmployeeLicenceItemViewModel() { ValidFrom = CurrentEmployee.WorkPermitFrom, ValidTo = CurrentEmployee.WorkPermitTo }
+                    });
             }
             else
             {
