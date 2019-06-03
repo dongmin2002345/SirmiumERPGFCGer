@@ -199,7 +199,7 @@
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn SortMemberPath="BusinessPartner.InternalCode" Header="{DynamicResource Šifra_ZagradaGradilišteZagrada}" IsReadOnly="True">
+                        <DataGridTextColumn SortMemberPath="BusinessPartner.InternalCode" Header="{DynamicResource Šifra_ZagradaFirmeZagrada}" IsReadOnly="True">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat="{}{0} ( {1} )">
                                     <Binding Path="BusinessPartner.InternalCode" />
