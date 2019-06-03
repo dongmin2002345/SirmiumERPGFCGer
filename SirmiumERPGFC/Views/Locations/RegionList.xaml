@@ -30,7 +30,7 @@
         </Grid.ColumnDefinitions>
 
         <!--    Search box    -->
-        <Expander x:Name="searchExpander" Margin="2,1,2,2" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
+        <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
