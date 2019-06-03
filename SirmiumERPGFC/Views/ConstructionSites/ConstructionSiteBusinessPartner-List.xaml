@@ -86,6 +86,13 @@
                                          TextChanged="txtSearchByBusinessPartnerEmployeeCode_TextChanged"
                                          Margin="2"
                                          Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                    <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtSearchByBusinessPartnerCode" Width="150"
+                                         Text="{Binding Path=ConstructionSiteSearchObject.Search_BusinessPartnerCode, UpdateSourceTrigger=PropertyChanged}"
+                                         TextChanged="txtSearchByBusinessPartnerCode_TextChanged"
+                                         Margin="2"
+                                         Controls:TextBoxHelper.ClearTextButton="True"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
