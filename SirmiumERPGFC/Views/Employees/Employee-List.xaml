@@ -198,11 +198,12 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn SortMemberPath="BusinessPartner.BusinessPartnerInternalCode" Header="{DynamicResource Šifra_ZagradaGradilišteZagrada}" IsReadOnly="True">
+
+                        <DataGridTextColumn SortMemberPath="BusinessPartner.InternalCode" Header="{DynamicResource Šifra_ZagradaGradilišteZagrada}" IsReadOnly="True">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding StringFormat="{}{0} ( {1} )">
-                                    <Binding Path="BusinessPartner.BusinessPartnerInternalCode" />
-                                    <Binding Path="BusinessPartner.BusinessPartnerNameGer" />
+                                    <Binding Path="BusinessPartner.InternalCode" />
+                                    <Binding Path="BusinessPartner.NameGer" />
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                             <DataGridTextColumn.ElementStyle>
@@ -211,7 +212,8 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Datum_rođenja}" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BusinessPartner" Header="{DynamicResource Adresa}" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
+
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenja}" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="{DynamicResource Broj_pasoša}" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
