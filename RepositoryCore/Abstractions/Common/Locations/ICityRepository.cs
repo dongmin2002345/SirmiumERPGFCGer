@@ -10,7 +10,9 @@ namespace RepositoryCore.Abstractions.Common.Locations
         List<City> GetCities(int companyId);
         List<City> GetCitiesNewerThen(int companyId, DateTime lastUpdateTime);
 
-        City Create(City city);
+		City GetCity(int cityId);
+
+		City Create(City city);
         City Delete(Guid identifier);
     }
 }

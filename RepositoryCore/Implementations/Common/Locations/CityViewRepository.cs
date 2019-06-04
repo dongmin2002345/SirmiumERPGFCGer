@@ -52,11 +52,14 @@ namespace RepositoryCore.Implementations.Common.Locations
                         city = new City();
                         city.Id = Int32.Parse(reader["CityId"].ToString());
                         city.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                        city.Code = reader["CityCode"].ToString();
-                        city.Name = reader["CityName"].ToString();
-                        city.ZipCode = reader["ZipCode"]?.ToString();
-                        
-                        if (reader["CountryId"] != DBNull.Value)
+						if (reader["CityCode"] != DBNull.Value)
+							city.Code = reader["CityCode"]?.ToString();
+						if (reader["CityName"] != DBNull.Value)
+							city.Name = reader["CityName"]?.ToString();
+						if (reader["CityZipCode"] != DBNull.Value)
+							city.ZipCode = reader["CityZipCode"].ToString();
+
+						if (reader["CountryId"] != DBNull.Value)
                         {
                             city.Country = new Country();
                             city.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -156,11 +159,14 @@ namespace RepositoryCore.Implementations.Common.Locations
                         city = new City();
                         city.Id = Int32.Parse(reader["CityId"].ToString());
                         city.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                        city.Code = reader["CityCode"].ToString();
-                        city.Name = reader["CityName"].ToString();
-                        city.ZipCode = reader["ZipCode"]?.ToString();
+						if (reader["CityCode"] != DBNull.Value)
+							city.Code = reader["CityCode"]?.ToString();
+						if (reader["CityName"] != DBNull.Value)
+							city.Name = reader["CityName"]?.ToString();
+						if (reader["CityZipCode"] != DBNull.Value)
+							city.ZipCode = reader["CityZipCode"].ToString();
 
-                        if (reader["CountryId"] != DBNull.Value)
+						if (reader["CountryId"] != DBNull.Value)
                         {
                             city.Country = new Country();
                             city.CountryId = Int32.Parse(reader["CountryId"].ToString());
@@ -230,7 +236,98 @@ namespace RepositoryCore.Implementations.Common.Locations
             //return cities;
         }
 
-        private string GetNewCodeValue(int companyId)
+		public City GetCity(int cityId)
+		{
+			City city = null;
+
+			string queryString =
+				 "SELECT CityId, CityIdentifier, CityCode, CityName, ZipCode, " +
+				"CountryId, CountryIdentifier, CountryCode, CountryName, " +
+				"RegionId, RegionIdentifier, RegionCode, RegionName, " +
+				"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+				"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+				"FROM vCities " +
+				"WHERE CityId = @CityId;";
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				SqlCommand command = connection.CreateCommand();
+				command.CommandText = queryString;
+				command.Parameters.Add(new SqlParameter("@CityId", cityId));
+
+				connection.Open();
+				using (SqlDataReader reader = command.ExecuteReader())
+				{
+					if (reader.Read())
+					{
+						city = new City();
+						city.Id = Int32.Parse(reader["CityId"].ToString());
+						city.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
+
+						if (reader["CityCode"] != DBNull.Value)
+							city.Code = reader["CityCode"]?.ToString();
+						if (reader["CityName"] != DBNull.Value)
+							city.Name = reader["CityName"]?.ToString();
+						if (reader["CityZipCode"] != DBNull.Value)
+							city.ZipCode = reader["CityZipCode"].ToString();
+
+						if (reader["CountryId"] != DBNull.Value)
+						{
+							city.Country = new Country();
+							city.CountryId = Int32.Parse(reader["CountryId"].ToString());
+							city.Country.Id = Int32.Parse(reader["CountryId"].ToString());
+							city.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+							city.Country.Code = reader["CountryCode"].ToString();
+							city.Country.Name = reader["CountryName"].ToString();
+						}
+
+						if (reader["RegionId"] != DBNull.Value)
+						{
+							city.Region = new Region();
+							city.RegionId = Int32.Parse(reader["RegionId"].ToString());
+							city.Region.Id = Int32.Parse(reader["RegionId"].ToString());
+							city.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
+							city.Region.Code = reader["RegionCode"].ToString();
+							city.Region.Name = reader["RegionName"].ToString();
+						}
+
+						if (reader["MunicipalityId"] != DBNull.Value)
+						{
+							city.Municipality = new Municipality();
+							city.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
+							city.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
+							city.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
+							city.Municipality.Code = reader["MunicipalityCode"].ToString();
+							city.Municipality.Name = reader["MunicipalityName"].ToString();
+						}
+
+						city.Active = bool.Parse(reader["Active"].ToString());
+						city.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
+
+						if (reader["CreatedById"] != DBNull.Value)
+						{
+							city.CreatedBy = new User();
+							city.CreatedById = Int32.Parse(reader["CreatedById"].ToString());
+							city.CreatedBy.Id = Int32.Parse(reader["CreatedById"].ToString());
+							city.CreatedBy.FirstName = reader["CreatedByFirstName"]?.ToString();
+							city.CreatedBy.LastName = reader["CreatedByLastName"]?.ToString();
+						}
+
+						if (reader["CompanyId"] != DBNull.Value)
+						{
+							city.Company = new Company();
+							city.CompanyId = Int32.Parse(reader["CompanyId"].ToString());
+							city.Company.Id = Int32.Parse(reader["CompanyId"].ToString());
+							city.Company.Name = reader["CompanyName"].ToString();
+						}
+					}
+				}
+			}
+
+			return city;
+		}
+
+		private string GetNewCodeValue(int companyId)
         {
             int count = context.Cities
                 .Union(context.ChangeTracker.Entries()

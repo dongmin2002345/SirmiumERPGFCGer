@@ -11,7 +11,6 @@ namespace ServiceInterfaces.Abstractions.Common.Locations
     public interface ICityService
     {
         CityListResponse GetCities(int companyId);
-        CityListResponse GetCitiesNewerThen(int companyId, DateTime? lastUpdateTime);
 
         CityResponse Create(CityViewModel City);
         CityResponse Delete(Guid identifier);

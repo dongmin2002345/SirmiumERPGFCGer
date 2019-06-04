@@ -37,22 +37,6 @@ namespace SirmiumERPWeb.Controllers.Locations
             return Json(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
         }
 
-        [HttpGet]
-        public JsonResult GetCitiesNewerThen(int companyId, DateTime? lastUpdateTime)
-        {
-            CityListResponse response;
-            try
-            {
-                response = cityService.GetCitiesNewerThen(companyId, lastUpdateTime);
-            }
-            catch (Exception ex)
-            {
-                response = null;
-                Console.WriteLine(ex.Message);
-            }
-            return new JsonResult(response, new Newtonsoft.Json.JsonSerializerSettings() { Formatting = Newtonsoft.Json.Formatting.Indented });
-        }
-
         [HttpPost]
         public JsonResult Create([FromBody] CityViewModel c)
         {

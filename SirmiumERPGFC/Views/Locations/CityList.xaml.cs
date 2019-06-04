@@ -126,44 +126,45 @@ namespace SirmiumERPGFC.Views.Locations
                 }
             }
         }
-        #endregion
+		#endregion
 
-        #endregion
+		#endregion
 
 
-        #region RefreshButtonContent
-        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+		#region SyncButtonContent
+		private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
-        public string RefreshButtonContent
-        {
-            get { return _RefreshButtonContent; }
-            set
-            {
-                if (_RefreshButtonContent != value)
-                {
-                    _RefreshButtonContent = value;
-                    NotifyPropertyChanged("RefreshButtonContent");
-                }
-            }
-        }
-        #endregion
+		public string SyncButtonContent
+		{
+			get { return _SyncButtonContent; }
+			set
+			{
+				if (_SyncButtonContent != value)
+				{
+					_SyncButtonContent = value;
+					NotifyPropertyChanged("SyncButtonContent");
+				}
+			}
+		}
+		#endregion
 
-        #region RefreshButtonEnabled
-        private bool _RefreshButtonEnabled = true;
+		#region SyncButtonEnabled
+		private bool _SyncButtonEnabled = true;
 
-        public bool RefreshButtonEnabled
-        {
-            get { return _RefreshButtonEnabled; }
-            set
-            {
-                if (_RefreshButtonEnabled != value)
-                {
-                    _RefreshButtonEnabled = value;
-                    NotifyPropertyChanged("RefreshButtonEnabled");
-                }
-            }
-        }
-        #endregion
+		public bool SyncButtonEnabled
+		{
+			get { return _SyncButtonEnabled; }
+			set
+			{
+				if (_SyncButtonEnabled != value)
+				{
+					_SyncButtonEnabled = value;
+					NotifyPropertyChanged("SyncButtonEnabled");
+				}
+			}
+		}
+		#endregion
+
 
         #endregion
 
@@ -178,25 +179,28 @@ namespace SirmiumERPGFC.Views.Locations
             InitializeComponent();
 
             this.DataContext = this;
+		}
 
-            Thread displayThread = new Thread(() => SyncData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-        }
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		{
+			Thread displayThread = new Thread(() => SyncData());
+			displayThread.IsBackground = true;
+			displayThread.Start();
+		}
 
-        #endregion
+		#endregion
 
-        #region Display data
+		#region Display data
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            currentPage = 1;
+		private void btnSync_Click(object sender, RoutedEventArgs e)
+		{
+			currentPage = 1;
 
-            Thread syncThread = new Thread(() =>
-            {
-                SyncData();
+			Thread syncThread = new Thread(() =>
+			{
+				SyncData();
 
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -211,7 +215,12 @@ namespace SirmiumERPGFC.Views.Locations
             displayThread.Start();
         }
 
-        public void DisplayData()
+		private void dgCities_LoadingRow(object sender, DataGridRowEventArgs e)
+		{
+			e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+		}
+
+		public void DisplayData()
         {
             CityDataLoading = true;
 
@@ -240,15 +249,30 @@ namespace SirmiumERPGFC.Views.Locations
 
         private void SyncData()
         {
-            RefreshButtonEnabled = false;
+			SyncButtonEnabled = false;
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Gradovi_TriTacke"));
-            new CitySQLiteRepository().Sync(cityService);
+			SyncButtonContent = ((string)Application.Current.FindResource("Gradovi_TriTacke"));
+			new CitySQLiteRepository().Sync(cityService, (synced, toSync) =>
+			{
+				if (toSync > 0)
+					SyncButtonContent = " Grad (" + synced + "/" + toSync + ")";
+			});
 
-            DisplayData();
+			DisplayData();
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            RefreshButtonEnabled = true;
+			SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+			SyncButtonEnabled = true;
+
+
+			//RefreshButtonEnabled = false;
+
+   //         RefreshButtonContent = ((string)Application.Current.FindResource("Gradovi_TriTacke"));
+   //         new CitySQLiteRepository().Sync(cityService);
+
+   //         DisplayData();
+
+   //         RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+   //         RefreshButtonEnabled = true;
         }
 
         #endregion
@@ -280,44 +304,79 @@ namespace SirmiumERPGFC.Views.Locations
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentCity == null)
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_grad_za_brisanjeUzvičnik"));
-                return;
-            }
+			Thread th = new Thread(() =>
+			{
+				CityDataLoading = true;
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+				if (CurrentCity == null)
+				{
+					MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_grad_za_brisanjeUzvičnik"));
+					CityDataLoading = false;
+					return;
+				}
 
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("grad", CurrentCity.ZipCode + " " + CurrentCity.Name);
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
-                CityResponse response = cityService.Delete(CurrentCity.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
+				CityResponse response = cityService.Delete(CurrentCity.Identifier);
+				if (!response.Success)
+				{
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+					CityDataLoading = false;
+					return;
+				}
 
-                response = new CitySQLiteRepository().Delete(CurrentCity.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
+				response = new CitySQLiteRepository().Delete(CurrentCity.Identifier);
+				if (!response.Success)
+				{
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+					CityDataLoading = false;
+					return;
+				}
 
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
+				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
 
-                Thread displayThread = new Thread(() => SyncData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
+				DisplayData();
 
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        }
+				CityDataLoading = false;
+			});
+			th.IsBackground = true;
+			th.Start();
+			//if (CurrentCity == null)
+			//{
+			//    MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_grad_za_brisanjeUzvičnik"));
+			//    return;
+			//}
+
+			//SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+			//// Create confirmation window
+			//DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("grad", CurrentCity.ZipCode + " " + CurrentCity.Name);
+			//var showDialog = deleteConfirmationForm.ShowDialog();
+			//if (showDialog != null && showDialog.Value)
+			//{
+			//    CityResponse response = cityService.Delete(CurrentCity.Identifier);
+			//    if (!response.Success)
+			//    {
+			//        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+			//        SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+			//        return;
+			//    }
+
+			//    response = new CitySQLiteRepository().Delete(CurrentCity.Identifier);
+			//    if (!response.Success)
+			//    {
+			//        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+			//        SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+			//        return;
+			//    }
+
+			//    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
+
+			//    Thread displayThread = new Thread(() => SyncData());
+			//    displayThread.IsBackground = true;
+			//    displayThread.Start();
+			//}
+
+			//SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+		}
         #endregion
 
         #region Pagination

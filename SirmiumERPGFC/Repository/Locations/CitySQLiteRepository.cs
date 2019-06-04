@@ -316,16 +316,20 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public void Sync(ICityService cityService)
+        public void Sync(ICityService cityService, Action<int, int> callback = null)
         {
             SyncCityRequest request = new SyncCityRequest();
             request.CompanyId = MainWindow.CurrentCompanyId;
             request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
-            CityListResponse response = cityService.Sync(request);
+			int toSync = 0;
+			int syncedItems = 0;
+
+			CityListResponse response = cityService.Sync(request);
             if (response.Success)
             {
-                List<CityViewModel> citiesFromDB = response.Cities;
+				toSync = response?.Cities?.Count ?? 0;
+				List<CityViewModel> citiesFromDB = response.Cities;
                 foreach (var city in citiesFromDB.OrderBy(x => x.Id))
                 {
                     Delete(city.Identifier);
@@ -333,7 +337,9 @@ namespace SirmiumERPGFC.Repository.Locations
                     {
                         city.IsSynced = true;
                         Create(city);
-                    }
+						syncedItems++;
+						callback?.Invoke(syncedItems, toSync);
+					}
                 }
             }
         }

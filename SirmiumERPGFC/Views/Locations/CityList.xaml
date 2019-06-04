@@ -9,15 +9,12 @@
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-
-    <Control.Background>
-        <SolidColorBrush Color="White" />
-    </Control.Background>
+             d:DesignHeight="450" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
+        <cbxConverters:MultiConverter x:Key="MultiConverter" />
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
     </UserControl.Resources>
 
@@ -85,22 +82,32 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1">
-                    <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150" Background="#007ACC">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnAdd" Grid.Column="0" Click="btnAdd_Click" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
+                    <Button x:Name="btnSync" Grid.Column="1" Click="btnSync_Click" Margin="2" IsEnabled="{Binding Path=SyncButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
+                            <TextBlock Text="{Binding Path=SyncButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
-                </StackPanel>
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="6">
                     <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -123,12 +130,12 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-
+                </Grid>
                 <!--Listing-->
                 <Controls:ProgressRing Grid.Row="2" IsActive="{Binding CityDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                 <DataGrid x:Name="dgCities"
-                          Grid.Row="1"
-                          Margin="5 5 5 0"
+                         Grid.Row="1"
+                          Margin="2"
                           AutoGenerateColumns="False"
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
@@ -140,7 +147,9 @@
                           VerticalAlignment="Stretch"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
-                          Style="{DynamicResource AzureDataGrid}"
+		                  RowHeaderWidth="25"
+		                  HeadersVisibility="All"
+		                  LoadingRow="dgCities_LoadingRow"
                           ItemsSource="{Binding Path=CitiesFromDB}"
                           SelectedItem="{Binding Path=CurrentCity, Mode=TwoWay}">
 
@@ -166,24 +175,65 @@
                         <DataGridTemplateColumn Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="0" CommandParameter="{Binding}" ToolTip="Promeni">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                            </StackPanel>
-                                        </Button>
-                                        <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Obriši">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                            </StackPanel>
-                                        </Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                            <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="1 2 2 2" CommandParameter="{Binding}" Width="30" ToolTip="Promeni">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\_edit.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button x:Name="btnDeletePopup" Margin="1 2 2 2" CommandParameter="{Binding}" Width="30" ToolTip="Obriši" >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\_delete.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+                                                <Popup.IsOpen>
+                                                    <MultiBinding Converter="{StaticResource MultiConverter}">
+                                                        <Binding ElementName="btnDeletePopup" Path="IsFocused" Mode="OneWay"/>
+                                                        <Binding ElementName="btnDelete" Path="IsMouseCaptured" Mode="OneWay"/>
+                                                    </MultiBinding>
+                                                </Popup.IsOpen>
+                                                <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="DarkGreen" BorderThickness="5" CornerRadius="15">
+                                                    <Grid Width="300" Margin="10">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <TextBlock Text="Da li ste sigurni da želite da obrišete odabrni podatak?" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap"/>
+                                                        <Separator Grid.Row="1" Margin="2" />
+
+                                                        <Grid Grid.Row="2">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Button Grid.Column="0" x:Name="btnDelete" Click="btnDelete_Click" Margin="2" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    <TextBlock Text=" DA "  FontWeight="Bold" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                            <Button Grid.Column="1" x:Name="btnCancel" Margin="2" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    <TextBlock Text=" NE "  FontWeight="Bold" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+             
         </GroupBox>
     </Grid>
 </UserControl>

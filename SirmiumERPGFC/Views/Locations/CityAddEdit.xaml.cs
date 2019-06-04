@@ -88,42 +88,42 @@ namespace SirmiumERPGFC.Views.Locations
                 }
             }
         }
-        #endregion
+		#endregion
 
+		#region SubmitButtonContent
+		private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
-        #region SaveButtonContent
-        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+		public string SubmitButtonContent
+		{
+			get { return _SubmitButtonContent; }
+			set
+			{
+				if (_SubmitButtonContent != value)
+				{
+					_SubmitButtonContent = value;
+					NotifyPropertyChanged("SubmitButtonContent");
+				}
+			}
+		}
+		#endregion
 
-        public string SaveButtonContent
-        {
-            get { return _SaveButtonContent; }
-            set
-            {
-                if (_SaveButtonContent != value)
-                {
-                    _SaveButtonContent = value;
-                    NotifyPropertyChanged("SaveButtonContent");
-                }
-            }
-        }
-        #endregion
+		#region SubmitButtonEnabled
+		private bool _SubmitButtonEnabled = true;
 
-        #region SaveButtonEnabled
-        private bool _SaveButtonEnabled = true;
+		public bool SubmitButtonEnabled
+		{
+			get { return _SubmitButtonEnabled; }
+			set
+			{
+				if (_SubmitButtonEnabled != value)
+				{
+					_SubmitButtonEnabled = value;
+					NotifyPropertyChanged("SubmitButtonEnabled");
+				}
+			}
+		}
+		#endregion
 
-        public bool SaveButtonEnabled
-        {
-            get { return _SaveButtonEnabled; }
-            set
-            {
-                if (_SaveButtonEnabled != value)
-                {
-                    _SaveButtonEnabled = value;
-                    NotifyPropertyChanged("SaveButtonEnabled");
-                }
-            }
-        }
-        #endregion
 
         #endregion
 
@@ -147,7 +147,7 @@ namespace SirmiumERPGFC.Views.Locations
 
         #region Cancel and Save buttons
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
@@ -167,8 +167,8 @@ namespace SirmiumERPGFC.Views.Locations
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
-                SaveButtonEnabled = false;
+				SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
+				SubmitButtonEnabled = false;
 
                 CurrentCity.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentCity.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
@@ -180,8 +180,8 @@ namespace SirmiumERPGFC.Views.Locations
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
+					SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
+                    SubmitButtonEnabled = true;
                     return;
                 }
 
@@ -189,16 +189,16 @@ namespace SirmiumERPGFC.Views.Locations
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
+					SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
+                    SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new CitySQLiteRepository().UpdateSyncStatus(response.City.Identifier, response.City.UpdatedAt, response.City.Id, true);
                     MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
+					SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
+                    SubmitButtonEnabled = true;
 
                     CityCreatedUpdated();
 

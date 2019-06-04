@@ -32,27 +32,6 @@ namespace ServiceWebApi.Implementations.Common.Locations
             return response;
         }
 
-        public CityListResponse GetCitiesNewerThen(int companyId, DateTime? lastUpdateTime)
-        {
-            CityListResponse response = new CityListResponse();
-            try
-            {
-                response = WpfApiHandler.GetFromApi<List<CityViewModel>, CityListResponse>("GetCitiesNewerThen", new Dictionary<string, string>()
-                {
-                    { "CompanyId", companyId.ToString() },
-                    { "LastUpdateTime", lastUpdateTime.ToString() }
-                });
-            }
-            catch (Exception ex)
-            {
-                response.Cities = new List<CityViewModel>();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
         public CityResponse Create(CityViewModel city)
         {
             CityResponse response = new CityResponse();

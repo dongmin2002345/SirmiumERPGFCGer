@@ -10,11 +10,7 @@
              mc:Ignorable="d"
              BorderBrush="{DynamicResource AccentColorBrush}"
              BorderThickness="2"
-             d:DesignHeight="450" d:DesignWidth="800">
-
-    <Control.Background>
-        <SolidColorBrush Color="White" />
-    </Control.Background>
+             d:DesignHeight="450" d:DesignWidth="800" Background="White">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
@@ -35,30 +31,28 @@
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Poštanski_brojDvotacka}" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtZipCode"  Margin="2" Text="{Binding Path=CurrentCity.ZipCode}" IsEnabled="True" />
+                    <TextBox Grid.Row="0" Grid.Column="1"  x:Name="txtZipCode"  Margin="2" Text="{Binding Path=CurrentCity.ZipCode}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_gradaDvotacka}" />
-                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtName" Margin="2" Text="{Binding Path=CurrentCity.Name}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_gradaDvotacka}" />
+                    <TextBox Grid.Row="0" Grid.Column="3"  x:Name="txtName" Margin="2" Text="{Binding Path=CurrentCity.Name}" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
-                    <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
+                    <popups:CountryPopup Grid.Row="1" Grid.Column="1"  x:Name="popCountry" 
                                         CurrentCountry="{Binding Path=CurrentCity.Country, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource RegionDvotacka}" />
-                    <popups:RegionPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSpecies" 
+                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource RegionDvotacka}" />
+                    <popups:RegionPopup Grid.Row="1" Grid.Column="3"  x:Name="popSpecies" 
                                                 CurrentCountry="{Binding Path=CurrentCity.Country, Mode=TwoWay}"
                                                 CurrentRegion="{Binding Path=CurrentCity.Region, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpštinaDvotacka}" />
-                    <popups:MunicipalityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popLitter" 
+                    <popups:MunicipalityPopup Grid.Row="2" Grid.Column="1"  x:Name="popLitter" 
                                         CurrentRegion="{Binding Path=CurrentCity.Region, Mode=TwoWay}"
                                         CurrentMunicipality="{Binding Path=CurrentCity.Municipality, Mode=TwoWay}"/>
 
@@ -74,10 +68,10 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnSave" Click="btnSave_Click" Margin="5 0 0 0" Grid.Column="2" IsEnabled="{Binding Path=SaveButtonEnabled, Mode=TwoWay}" Background="#007ACC">
+                <Button  x:Name="btnSubmit" Click="btnSubmit_Click" Margin="5 0 0 0" Grid.Column="2" IsEnabled="{Binding Path=SubmitButtonEnabled, Mode=TwoWay}" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock FontSize="20" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Bold"/>
+                        <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
 

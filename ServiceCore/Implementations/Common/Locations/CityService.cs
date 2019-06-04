@@ -38,36 +38,6 @@ namespace ServiceCore.Implementations.Common.Locations
             return response;
         }
 
-        public CityListResponse GetCitiesNewerThen(int companyId, DateTime? lastUpdateTime)
-        {
-            CityListResponse response = new CityListResponse();
-            try
-            {
-                if (lastUpdateTime != null)
-                {
-                    response.Cities = unitOfWork.GetCityRepository()
-                        .GetCitiesNewerThen(companyId, (DateTime)lastUpdateTime)
-                        .ConvertToCityViewModelList();
-                }
-                else
-                {
-                    response.Cities = unitOfWork.GetCityRepository()
-                        .GetCities(companyId)
-                        .ConvertToCityViewModelList();
-                }
-                response.Success = true;
-            }
-            catch (Exception ex)
-            {
-                response.Cities = new List<CityViewModel>();
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-
         public CityResponse Create(CityViewModel city)
         {
             CityResponse response = new CityResponse();

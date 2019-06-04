@@ -11,6 +11,5 @@ namespace ServiceInterfaces.Messages.Common.Locations
     {
         public int CompanyId { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
-        public List<CityViewModel> UnSyncedCities { get; set; }
     }
 }
