@@ -363,11 +363,12 @@ namespace SirmiumERPGFC.Repository.Locations
                         selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from Cities WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
-                        if (query.Read())
-                        {
-                            return query.GetDateTime(0);
-                        }
-                    }
+						if (query.Read())
+						{
+							int counter = 0;
+							return SQLiteHelper.GetDateTimeNullable(query, ref counter);
+						}
+					}
                 }
                 catch (Exception ex)
                 {
