@@ -56,8 +56,8 @@ namespace RepositoryCore.Implementations.Common.Locations
 							city.Code = reader["CityCode"]?.ToString();
 						if (reader["CityName"] != DBNull.Value)
 							city.Name = reader["CityName"]?.ToString();
-						if (reader["CityZipCode"] != DBNull.Value)
-							city.ZipCode = reader["CityZipCode"].ToString();
+						if (reader["ZipCode"] != DBNull.Value)
+							city.ZipCode = reader["ZipCode"].ToString();
 
 						if (reader["CountryId"] != DBNull.Value)
                         {
@@ -163,8 +163,8 @@ namespace RepositoryCore.Implementations.Common.Locations
 							city.Code = reader["CityCode"]?.ToString();
 						if (reader["CityName"] != DBNull.Value)
 							city.Name = reader["CityName"]?.ToString();
-						if (reader["CityZipCode"] != DBNull.Value)
-							city.ZipCode = reader["CityZipCode"].ToString();
+						if (reader["ZipCode"] != DBNull.Value)
+							city.ZipCode = reader["ZipCode"].ToString();
 
 						if (reader["CountryId"] != DBNull.Value)
                         {
@@ -268,8 +268,8 @@ namespace RepositoryCore.Implementations.Common.Locations
 							city.Code = reader["CityCode"]?.ToString();
 						if (reader["CityName"] != DBNull.Value)
 							city.Name = reader["CityName"]?.ToString();
-						if (reader["CityZipCode"] != DBNull.Value)
-							city.ZipCode = reader["CityZipCode"].ToString();
+						if (reader["ZipCode"] != DBNull.Value)
+							city.ZipCode = reader["ZipCode"].ToString();
 
 						if (reader["CountryId"] != DBNull.Value)
 						{
