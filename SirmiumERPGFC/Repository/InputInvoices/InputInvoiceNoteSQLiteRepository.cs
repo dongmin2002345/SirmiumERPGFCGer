@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.InputInvoices
@@ -197,26 +198,43 @@ namespace SirmiumERPGFC.Repository.InputInvoices
             return response;
         }
 
-        public void Sync(IInputInvoiceNoteService InputInvoiceNoteService)
+        public void Sync(IInputInvoiceNoteService InputInvoiceNoteService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedNotes(MainWindow.CurrentCompanyId);
-            SyncInputInvoiceNoteRequest request = new SyncInputInvoiceNoteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            InputInvoiceNoteListResponse response = InputInvoiceNoteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<InputInvoiceNoteViewModel> InputInvoiceNotesFromDB = response.InputInvoiceNotes;
-                foreach (var InputInvoiceNote in InputInvoiceNotesFromDB.OrderBy(x => x.Id))
+                SyncInputInvoiceNoteRequest request = new SyncInputInvoiceNoteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                InputInvoiceNoteListResponse response = InputInvoiceNoteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(InputInvoiceNote.Identifier);
-                    if (InputInvoiceNote.IsActive)
+                    toSync = response?.InputInvoiceNotes?.Count ?? 0;
+                    List<InputInvoiceNoteViewModel> InputInvoiceNotesFromDB = response.InputInvoiceNotes;
+                    foreach (var InputInvoiceNote in InputInvoiceNotesFromDB.OrderBy(x => x.Id))
                     {
-                        InputInvoiceNote.IsSynced = true;
-                        Create(InputInvoiceNote);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(InputInvoiceNote.Identifier);
+                            if (InputInvoiceNote.IsActive)
+                            {
+                                InputInvoiceNote.IsSynced = true;
+                                Create(InputInvoiceNote);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

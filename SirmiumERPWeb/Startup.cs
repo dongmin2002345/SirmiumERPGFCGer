@@ -295,7 +295,14 @@ namespace SirmiumERPWeb
             EmployeeProfessionView.CreateView();
             FamilyMemberView.CreateView();
             LicenceTypeView.CreateView();
+
             PhysicalPersonView.CreateView();
+            PhysicalPersonItemView.CreateView();
+            PhysicalPersonNoteView.CreateView();
+            PhysicalPersonLicenceView.CreateView();
+            PhysicalPersonDocumentView.CreateView();
+            PhysicalPersonCardView.CreateView();
+            PhysicalPersonProfessionView.CreateView();
 
             ConstructionSiteCalculationView.CreateView();
             ConstructionSiteDocumentView.CreateView();

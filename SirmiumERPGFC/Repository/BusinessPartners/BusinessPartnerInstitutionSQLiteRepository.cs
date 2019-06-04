@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -164,25 +165,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerInstitutionService BusinessPartnerInstitutionService)
+        public void Sync(IBusinessPartnerInstitutionService BusinessPartnerInstitutionService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerInstitutionRequest request = new SyncBusinessPartnerInstitutionRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerInstitutionListResponse response = BusinessPartnerInstitutionService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerInstitutionViewModel> BusinessPartnerInstitutionsFromDB = response.BusinessPartnerInstitutions;
-                foreach (var BusinessPartnerInstitution in BusinessPartnerInstitutionsFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerInstitutionRequest request = new SyncBusinessPartnerInstitutionRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerInstitutionListResponse response = BusinessPartnerInstitutionService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(BusinessPartnerInstitution.Identifier);
-                    if (BusinessPartnerInstitution.IsActive)
+                    toSync = response?.BusinessPartnerInstitutions?.Count ?? 0;
+                    List<BusinessPartnerInstitutionViewModel> BusinessPartnerInstitutionsFromDB = response.BusinessPartnerInstitutions;
+                    foreach (var BusinessPartnerInstitution in BusinessPartnerInstitutionsFromDB.OrderBy(x => x.Id))
                     {
-                        BusinessPartnerInstitution.IsSynced = true;
-                        Create(BusinessPartnerInstitution);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(BusinessPartnerInstitution.Identifier);
+                            if (BusinessPartnerInstitution.IsActive)
+                            {
+                                BusinessPartnerInstitution.IsSynced = true;
+                                Create(BusinessPartnerInstitution);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

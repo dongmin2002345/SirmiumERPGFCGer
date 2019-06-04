@@ -59,7 +59,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartner = new BusinessPartner();
                         businessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
                         businessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
-                        businessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                        businessPartner.Code = reader["BusinessPartnerCode"]?.ToString();
                         businessPartner.InternalCode = reader["BusinessPartnerInternalCode"]?.ToString();
                         if (reader["BusinessPartnerName"] != DBNull.Value)
                             businessPartner.Name = reader["BusinessPartnerName"].ToString();

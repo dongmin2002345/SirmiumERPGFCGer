@@ -205,23 +205,26 @@ namespace SirmiumERPGFC
             {
                 Application.Current.Dispatcher.BeginInvoke((System.Action)(() =>
                 {
-                    Notifier notifier = new Notifier(cfg =>
+                    try
                     {
-                        cfg.PositionProvider = new WindowPositionProvider(
-                            parentWindow: Application.Current.Windows.OfType<MainWindow>().FirstOrDefault(),
-                            corner: Corner.TopRight,
-                            offsetX: 10,
-                            offsetY: 10);
+                        Notifier notifier = new Notifier(cfg =>
+                        {
+                            cfg.PositionProvider = new WindowPositionProvider(
+                                parentWindow: Application.Current.Windows.OfType<MainWindow>().FirstOrDefault(),
+                                corner: Corner.TopRight,
+                                offsetX: 10,
+                                offsetY: 10);
 
-                        cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                            notificationLifetime: TimeSpan.FromSeconds(3),
-                            maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+                            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                                notificationLifetime: TimeSpan.FromSeconds(3),
+                                maximumNotificationCount: MaximumNotificationCount.FromCount(3));
 
-                        cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
-                    });
+                            cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
+                        });
 
-                    notifier.ShowError(value);
-
+                        notifier.ShowError(value);
+                    }
+                    catch(Exception ex) { }
                     _ErrorMessage = value;
                 }));
             }

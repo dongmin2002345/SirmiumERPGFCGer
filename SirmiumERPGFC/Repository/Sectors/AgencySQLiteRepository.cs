@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Sectors
@@ -237,25 +238,43 @@ namespace SirmiumERPGFC.Repository.Sectors
             return response;
         }
 
-        public void Sync(IAgencyService AgencyService)
+        public void Sync(IAgencyService AgencyService, Action<int, int> callback = null)
         {
-            SyncAgencyRequest request = new SyncAgencyRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            AgencyListResponse response = AgencyService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<AgencyViewModel> AgenciesFromDB = response.Agencies;
-                foreach (var Agency in AgenciesFromDB.OrderBy(x => x.Id))
+                SyncAgencyRequest request = new SyncAgencyRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                AgencyListResponse response = AgencyService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(Agency.Identifier);
-                    if (Agency.IsActive)
+                    toSync = response?.Agencies?.Count ?? 0;
+                    List<AgencyViewModel> AgenciesFromDB = response.Agencies;
+                    foreach (var Agency in AgenciesFromDB.OrderBy(x => x.Id))
                     {
-                        Agency.IsSynced = true;
-                        Create(Agency);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(Agency.Identifier);
+                            if (Agency.IsActive)
+                            {
+                                Agency.IsSynced = true;
+                                Create(Agency);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

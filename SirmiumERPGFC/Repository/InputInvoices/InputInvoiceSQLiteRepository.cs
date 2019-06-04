@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.InputInvoices
@@ -302,27 +303,45 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			return response;
 		}
 
-		public void Sync(IInputInvoiceService inputInvoiceService)
-		{
-			SyncInputInvoiceRequest request = new SyncInputInvoiceRequest();
-			request.CompanyId = MainWindow.CurrentCompanyId;
-			request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public void Sync(IInputInvoiceService inputInvoiceService, Action<int, int> callback = null)
+        {
+            try
+            {
+                SyncInputInvoiceRequest request = new SyncInputInvoiceRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
-			InputInvoiceListResponse response = inputInvoiceService.Sync(request);
-			if (response.Success)
-			{
-				List<InputInvoiceViewModel> inputInvoicesFromDB = response.InputInvoices;
-				foreach (var inputInvoice in inputInvoicesFromDB.OrderBy(x => x.Id))
-				{
-					Delete(inputInvoice.Identifier);
-                    if (inputInvoice.IsActive)
+                int toSync = 0;
+                int syncedItems = 0;
+
+                InputInvoiceListResponse response = inputInvoiceService.Sync(request);
+                if (response.Success)
+                {
+                    toSync = response?.InputInvoices?.Count ?? 0;
+                    List<InputInvoiceViewModel> inputInvoicesFromDB = response.InputInvoices;
+                    foreach (var inputInvoice in inputInvoicesFromDB.OrderBy(x => x.Id))
                     {
-                        inputInvoice.IsSynced = true;
-                        Create(inputInvoice);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(inputInvoice.Identifier);
+                            if (inputInvoice.IsActive)
+                            {
+                                inputInvoice.IsSynced = true;
+                                Create(inputInvoice);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
-				}
-			}
-		}
+                }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 
 		public DateTime? GetLastUpdatedAt(int companyId)
 		{

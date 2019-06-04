@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -234,27 +235,45 @@ namespace SirmiumERPGFC.Repository.Employees
 			return response;
 		}
 
-		public void Sync(ILicenceTypeService licenceTypeService)
-		{
-			SyncLicenceTypeRequest request = new SyncLicenceTypeRequest();
-			request.CompanyId = MainWindow.CurrentCompanyId;
-			request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public void Sync(ILicenceTypeService licenceTypeService, Action<int, int> callback = null)
+        {
+            try
+            {
+                SyncLicenceTypeRequest request = new SyncLicenceTypeRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
-			LicenceTypeListResponse response = licenceTypeService.Sync(request);
-			if (response.Success)
-			{
-				List<LicenceTypeViewModel> licenceTypesFromDB = response.LicenceTypes;
-				foreach (var licenceType in licenceTypesFromDB.OrderBy(x => x.Id))
-				{
-					Delete(licenceType.Identifier);
-                    if (licenceType.IsActive)
+                int toSync = 0;
+                int syncedItems = 0;
+
+                LicenceTypeListResponse response = licenceTypeService.Sync(request);
+                if (response.Success)
+                {
+                    toSync = response?.LicenceTypes?.Count ?? 0;
+                    List<LicenceTypeViewModel> licenceTypesFromDB = response.LicenceTypes;
+                    foreach (var licenceType in licenceTypesFromDB.OrderBy(x => x.Id))
                     {
-                        licenceType.IsSynced = true;
-                        Create(licenceType);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(licenceType.Identifier);
+                            if (licenceType.IsActive)
+                            {
+                                licenceType.IsSynced = true;
+                                Create(licenceType);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
-				}
-			}
-		}
+                }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 
 		public DateTime? GetLastUpdatedAt(int companyId)
 		{

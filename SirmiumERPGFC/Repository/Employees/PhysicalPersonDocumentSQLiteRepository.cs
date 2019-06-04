@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -150,25 +151,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IPhysicalPersonDocumentService PhysicalPersonDocumentService)
+        public void Sync(IPhysicalPersonDocumentService PhysicalPersonDocumentService, Action<int, int> callback = null)
         {
-            SyncPhysicalPersonDocumentRequest request = new SyncPhysicalPersonDocumentRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            PhysicalPersonDocumentListResponse response = PhysicalPersonDocumentService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<PhysicalPersonDocumentViewModel> PhysicalPersonDocumentsFromDB = response.PhysicalPersonDocuments;
-                foreach (var PhysicalPersonDocument in PhysicalPersonDocumentsFromDB.OrderBy(x => x.Id))
+                SyncPhysicalPersonDocumentRequest request = new SyncPhysicalPersonDocumentRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                PhysicalPersonDocumentListResponse response = PhysicalPersonDocumentService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(PhysicalPersonDocument.Identifier);
-                    if (PhysicalPersonDocument.IsActive)
+                    toSync = response?.PhysicalPersonDocuments?.Count ?? 0;
+                    List<PhysicalPersonDocumentViewModel> PhysicalPersonDocumentsFromDB = response.PhysicalPersonDocuments;
+                    foreach (var PhysicalPersonDocument in PhysicalPersonDocumentsFromDB.OrderBy(x => x.Id))
                     {
-                        PhysicalPersonDocument.IsSynced = true;
-                        Create(PhysicalPersonDocument);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(PhysicalPersonDocument.Identifier);
+                            if (PhysicalPersonDocument.IsActive)
+                            {
+                                PhysicalPersonDocument.IsSynced = true;
+                                Create(PhysicalPersonDocument);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -167,25 +168,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerPhoneService BusinessPartnerPhoneService)
+        public void Sync(IBusinessPartnerPhoneService BusinessPartnerPhoneService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerPhoneRequest request = new SyncBusinessPartnerPhoneRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerPhoneListResponse response = BusinessPartnerPhoneService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerPhoneViewModel> BusinessPartnerPhonesFromDB = response.BusinessPartnerPhones;
-                foreach (var BusinessPartnerPhone in BusinessPartnerPhonesFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerPhoneRequest request = new SyncBusinessPartnerPhoneRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerPhoneListResponse response = BusinessPartnerPhoneService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(BusinessPartnerPhone.Identifier);
-                    if (BusinessPartnerPhone.IsActive)
+                    toSync = response?.BusinessPartnerPhones?.Count ?? 0;
+                    List<BusinessPartnerPhoneViewModel> BusinessPartnerPhonesFromDB = response.BusinessPartnerPhones;
+                    foreach (var BusinessPartnerPhone in BusinessPartnerPhonesFromDB.OrderBy(x => x.Id))
                     {
-                        BusinessPartnerPhone.IsSynced = true;
-                        Create(BusinessPartnerPhone);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(BusinessPartnerPhone.Identifier);
+                            if (BusinessPartnerPhone.IsActive)
+                            {
+                                BusinessPartnerPhone.IsSynced = true;
+                                Create(BusinessPartnerPhone);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

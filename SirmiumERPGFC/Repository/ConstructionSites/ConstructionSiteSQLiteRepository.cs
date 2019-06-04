@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ConstructionSites
@@ -278,25 +279,43 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return response;
         }
 
-        public void Sync(IConstructionSiteService constructionSiteService)
+        public void Sync(IConstructionSiteService constructionSiteService, Action<int, int> callback = null)
         {
-            SyncConstructionSiteRequest request = new SyncConstructionSiteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            ConstructionSiteListResponse response = constructionSiteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<ConstructionSiteViewModel> constructionSitesFromDB = response.ConstructionSites;
-                foreach (var constructionSite in constructionSitesFromDB.OrderBy(x => x.Id))
+                SyncConstructionSiteRequest request = new SyncConstructionSiteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                ConstructionSiteListResponse response = constructionSiteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(constructionSite.Identifier);
-                    if (constructionSite.IsActive)
+                    toSync = response?.ConstructionSites?.Count ?? 0;
+                    List<ConstructionSiteViewModel> constructionSitesFromDB = response.ConstructionSites;
+                    foreach (var constructionSite in constructionSitesFromDB.OrderBy(x => x.Id))
                     {
-                        constructionSite.IsSynced = true;
-                        Create(constructionSite);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(constructionSite.Identifier);
+                            if (constructionSite.IsActive)
+                            {
+                                constructionSite.IsSynced = true;
+                                Create(constructionSite);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

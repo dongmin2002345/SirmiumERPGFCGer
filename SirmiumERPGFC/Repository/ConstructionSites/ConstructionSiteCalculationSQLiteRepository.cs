@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ConstructionSites
@@ -221,27 +222,43 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return response;
         }
 
-        public void Sync(IConstructionSiteCalculationService ConstructionSiteCalculationService)
+        public void Sync(IConstructionSiteCalculationService ConstructionSiteCalculationService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
-            SyncConstructionSiteCalculationRequest request = new SyncConstructionSiteCalculationRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-
-            ConstructionSiteCalculationListResponse response = ConstructionSiteCalculationService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<ConstructionSiteCalculationViewModel> ConstructionSiteCalculationsFromDB = response.ConstructionSiteCalculations;
-                foreach (var ConstructionSiteCalculation in ConstructionSiteCalculationsFromDB.OrderBy(x => x.Id))
+                SyncConstructionSiteCalculationRequest request = new SyncConstructionSiteCalculationRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                ConstructionSiteCalculationListResponse response = ConstructionSiteCalculationService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(ConstructionSiteCalculation.Identifier);
-                    if (ConstructionSiteCalculation.IsActive)
+                    toSync = response?.ConstructionSiteCalculations?.Count ?? 0;
+                    List<ConstructionSiteCalculationViewModel> ConstructionSiteCalculationsFromDB = response.ConstructionSiteCalculations;
+                    foreach (var ConstructionSiteCalculation in ConstructionSiteCalculationsFromDB.OrderBy(x => x.Id))
                     {
-                        ConstructionSiteCalculation.IsSynced = true;
-                        Create(ConstructionSiteCalculation);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(ConstructionSiteCalculation.Identifier);
+                            if (ConstructionSiteCalculation.IsActive)
+                            {
+                                ConstructionSiteCalculation.IsSynced = true;
+                                Create(ConstructionSiteCalculation);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

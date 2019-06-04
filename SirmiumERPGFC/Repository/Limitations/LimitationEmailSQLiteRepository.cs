@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Limitations
@@ -157,25 +158,43 @@ namespace SirmiumERPGFC.Repository.Limitations
             return response;
         }
 
-        public void Sync(ILimitationEmailService LimitationEmailService)
+        public void Sync(ILimitationEmailService LimitationEmailService, Action<int, int> callback = null)
         {
-            SyncLimitationEmailRequest request = new SyncLimitationEmailRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            LimitationEmailListResponse response = LimitationEmailService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<LimitationEmailViewModel> LimitationEmailsFromDB = response.LimitationEmails;
-                foreach (var LimitationEmail in LimitationEmailsFromDB.OrderBy(x => x.Id))
+                SyncLimitationEmailRequest request = new SyncLimitationEmailRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                LimitationEmailListResponse response = LimitationEmailService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(LimitationEmail.Identifier);
-                    if (LimitationEmail.IsActive)
+                    toSync = response?.LimitationEmails?.Count ?? 0;
+                    List<LimitationEmailViewModel> LimitationEmailsFromDB = response.LimitationEmails;
+                    foreach (var LimitationEmail in LimitationEmailsFromDB.OrderBy(x => x.Id))
                     {
-                        LimitationEmail.IsSynced = true;
-                        Create(LimitationEmail);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(LimitationEmail.Identifier);
+                            if (LimitationEmail.IsActive)
+                            {
+                                LimitationEmail.IsSynced = true;
+                                Create(LimitationEmail);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

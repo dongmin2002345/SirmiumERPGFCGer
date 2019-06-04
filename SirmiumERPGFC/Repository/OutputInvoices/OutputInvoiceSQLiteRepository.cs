@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.OutputInvoices
@@ -299,25 +300,43 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             return response;
         }
 
-        public void Sync(IOutputInvoiceService outputInvoiceService)
+        public void Sync(IOutputInvoiceService outputInvoiceService, Action<int, int> callback = null)
         {
-            SyncOutputInvoiceRequest request = new SyncOutputInvoiceRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            OutputInvoiceListResponse response = outputInvoiceService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<OutputInvoiceViewModel> outputInvoicesFromDB = response.OutputInvoices;
-                foreach (var outputInvoice in outputInvoicesFromDB.OrderBy(x => x.Id))
+                SyncOutputInvoiceRequest request = new SyncOutputInvoiceRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                OutputInvoiceListResponse response = outputInvoiceService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(outputInvoice.Identifier);
-                    if (outputInvoice.IsActive)
+                    toSync = response?.OutputInvoices?.Count ?? 0;
+                    List<OutputInvoiceViewModel> outputInvoicesFromDB = response.OutputInvoices;
+                    foreach (var outputInvoice in outputInvoicesFromDB.OrderBy(x => x.Id))
                     {
-                        outputInvoice.IsSynced = true;
-                        Create(outputInvoice);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(outputInvoice.Identifier);
+                            if (outputInvoice.IsActive)
+                            {
+                                outputInvoice.IsSynced = true;
+                                Create(outputInvoice);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Locations
@@ -231,25 +232,43 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public void Sync(ICountryService countryService)
+        public void Sync(ICountryService countryService, Action<int, int> callback = null)
         {
-            SyncCountryRequest request = new SyncCountryRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            CountryListResponse response = countryService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<CountryViewModel> countriesFromDB = response.Countries;
-                foreach (var country in countriesFromDB.OrderBy(x => x.Id))
+                SyncCountryRequest request = new SyncCountryRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                CountryListResponse response = countryService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(country.Identifier);
-                    if (country.IsActive)
+                    toSync = response?.Countries?.Count ?? 0;
+                    List<CountryViewModel> countriesFromDB = response.Countries;
+                    foreach (var country in countriesFromDB.OrderBy(x => x.Id))
                     {
-                        country.IsSynced = true;
-                        Create(country);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(country.Identifier);
+                            if (country.IsActive)
+                            {
+                                country.IsSynced = true;
+                                Create(country);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

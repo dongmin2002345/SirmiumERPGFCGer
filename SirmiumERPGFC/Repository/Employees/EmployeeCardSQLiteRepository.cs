@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -151,25 +152,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IEmployeeCardService EmployeeCardService)
+        public void Sync(IEmployeeCardService EmployeeCardService, Action<int, int> callback = null)
         {
-            SyncEmployeeCardRequest request = new SyncEmployeeCardRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            EmployeeCardListResponse response = EmployeeCardService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<EmployeeCardViewModel> EmployeeCardsFromDB = response.EmployeeCards;
-                foreach (var EmployeeCard in EmployeeCardsFromDB.OrderBy(x => x.Id))
+                SyncEmployeeCardRequest request = new SyncEmployeeCardRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                EmployeeCardListResponse response = EmployeeCardService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(EmployeeCard.Identifier);
-                    if (EmployeeCard.IsActive)
+                    toSync = response?.EmployeeCards?.Count ?? 0;
+                    List<EmployeeCardViewModel> EmployeeCardsFromDB = response.EmployeeCards;
+                    foreach (var EmployeeCard in EmployeeCardsFromDB.OrderBy(x => x.Id))
                     {
-                        EmployeeCard.IsSynced = true;
-                        Create(EmployeeCard);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(EmployeeCard.Identifier);
+                            if (EmployeeCard.IsActive)
+                            {
+                                EmployeeCard.IsSynced = true;
+                                Create(EmployeeCard);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

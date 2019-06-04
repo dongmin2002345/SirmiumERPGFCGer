@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -128,25 +129,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService)
+        public void Sync(IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerByConstructionSiteRequest request = new SyncBusinessPartnerByConstructionSiteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerByConstructionSiteListResponse response = businessPartnerByConstructionSiteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerByConstructionSiteViewModel> businessPartnerByConstructionSiteFromDB = response.BusinessPartnerByConstructionSites;
-                foreach (var businessPartnerByConstructionSite in businessPartnerByConstructionSiteFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerByConstructionSiteRequest request = new SyncBusinessPartnerByConstructionSiteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerByConstructionSiteListResponse response = businessPartnerByConstructionSiteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(businessPartnerByConstructionSite.BusinessPartner.Identifier, businessPartnerByConstructionSite.ConstructionSite.Identifier);
-                    if (businessPartnerByConstructionSite.IsActive)
+                    toSync = response?.BusinessPartnerByConstructionSites?.Count ?? 0;
+                    List<BusinessPartnerByConstructionSiteViewModel> businessPartnerByConstructionSiteFromDB = response.BusinessPartnerByConstructionSites;
+                    foreach (var businessPartnerByConstructionSite in businessPartnerByConstructionSiteFromDB.OrderBy(x => x.Id))
                     {
-                        businessPartnerByConstructionSite.IsSynced = true;
-                        Create(businessPartnerByConstructionSite);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(businessPartnerByConstructionSite.BusinessPartner.Identifier, businessPartnerByConstructionSite.ConstructionSite.Identifier);
+                            if (businessPartnerByConstructionSite.IsActive)
+                            {
+                                businessPartnerByConstructionSite.IsSynced = true;
+                                Create(businessPartnerByConstructionSite);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

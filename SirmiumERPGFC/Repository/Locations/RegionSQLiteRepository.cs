@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Locations
@@ -235,25 +236,43 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public void Sync(IRegionService regionService)
+        public void Sync(IRegionService regionService, Action<int, int> callback = null)
         {
-            SyncRegionRequest request = new SyncRegionRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            RegionListResponse response = regionService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<RegionViewModel> regionsFromDB = response.Regions;
-                foreach (var region in regionsFromDB.OrderBy(x => x.Id))
+                SyncRegionRequest request = new SyncRegionRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                RegionListResponse response = regionService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(region.Identifier);
-                    if (region.IsActive)
+                    toSync = response?.Regions?.Count ?? 0;
+                    List<RegionViewModel> regionsFromDB = response.Regions;
+                    foreach (var region in regionsFromDB.OrderBy(x => x.Id))
                     {
-                        region.IsSynced = true;
-                        Create(region);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(region.Identifier);
+                            if (region.IsActive)
+                            {
+                                region.IsSynced = true;
+                                Create(region);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -134,25 +135,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IEmployeeByBusinessPartnerService employeeByBusinessPartnerService)
+        public void Sync(IEmployeeByBusinessPartnerService employeeByBusinessPartnerService, Action<int, int> callback = null)
         {
-            SyncEmployeeByBusinessPartnerRequest request = new SyncEmployeeByBusinessPartnerRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            EmployeeByBusinessPartnerListResponse response = employeeByBusinessPartnerService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<EmployeeByBusinessPartnerViewModel> employeeByBusinessPartnerFromDB = response.EmployeeByBusinessPartners;
-                foreach (var employeeByBusinessPartner in employeeByBusinessPartnerFromDB.OrderBy(x => x.Id))
+                SyncEmployeeByBusinessPartnerRequest request = new SyncEmployeeByBusinessPartnerRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                EmployeeByBusinessPartnerListResponse response = employeeByBusinessPartnerService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(employeeByBusinessPartner.Employee.Identifier, employeeByBusinessPartner.BusinessPartner.Identifier);
-                    if (employeeByBusinessPartner.IsActive)
+                    toSync = response?.EmployeeByBusinessPartners?.Count ?? 0;
+                    List<EmployeeByBusinessPartnerViewModel> employeeByBusinessPartnerFromDB = response.EmployeeByBusinessPartners;
+                    foreach (var employeeByBusinessPartner in employeeByBusinessPartnerFromDB.OrderBy(x => x.Id))
                     {
-                        employeeByBusinessPartner.IsSynced = true;
-                        Create(employeeByBusinessPartner);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(employeeByBusinessPartner.Employee.Identifier, employeeByBusinessPartner.BusinessPartner.Identifier);
+                            if (employeeByBusinessPartner.IsActive)
+                            {
+                                employeeByBusinessPartner.IsSynced = true;
+                                Create(employeeByBusinessPartner);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

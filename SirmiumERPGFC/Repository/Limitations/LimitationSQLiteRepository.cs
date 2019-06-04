@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Limitations
@@ -136,25 +137,43 @@ namespace SirmiumERPGFC.Repository.Limitations
             return response;
         }
 
-        public void Sync(ILimitationService limitationService)
+        public void Sync(ILimitationService limitationService, Action<int, int> callback = null)
         {
-            SyncLimitationRequest request = new SyncLimitationRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            LimitationListResponse response = limitationService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<LimitationViewModel> limitationsFromDB = response.Limitations;
-                foreach (var limitation in limitationsFromDB.OrderBy(x => x.Id))
+                SyncLimitationRequest request = new SyncLimitationRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                LimitationListResponse response = limitationService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(limitation.Identifier);
-                    if (limitation.IsActive)
+                    toSync = response?.Limitations?.Count ?? 0;
+                    List<LimitationViewModel> limitationsFromDB = response.Limitations;
+                    foreach (var limitation in limitationsFromDB.OrderBy(x => x.Id))
                     {
-                        limitation.IsSynced = true;
-                        Create(limitation);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(limitation.Identifier);
+                            if (limitation.IsActive)
+                            {
+                                limitation.IsSynced = true;
+                                Create(limitation);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.TaxAdministrations
@@ -287,25 +288,43 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             return response;
         }
 
-        public void Sync(ITaxAdministrationService taxAdministrationService)
+        public void Sync(ITaxAdministrationService taxAdministrationService, Action<int, int> callback = null)
         {
-            SyncTaxAdministrationRequest request = new SyncTaxAdministrationRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            TaxAdministrationListResponse response = taxAdministrationService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<TaxAdministrationViewModel> taxAdministrationsFromDB = response.TaxAdministrations;
-                foreach (var taxAdministration in taxAdministrationsFromDB.OrderBy(x => x.Id))
+                SyncTaxAdministrationRequest request = new SyncTaxAdministrationRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                TaxAdministrationListResponse response = taxAdministrationService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(taxAdministration.Identifier);
-                    if (taxAdministration.IsActive)
+                    toSync = response?.TaxAdministrations?.Count ?? 0;
+                    List<TaxAdministrationViewModel> taxAdministrationsFromDB = response.TaxAdministrations;
+                    foreach (var taxAdministration in taxAdministrationsFromDB.OrderBy(x => x.Id))
                     {
-                        taxAdministration.IsSynced = true;
-                        Create(taxAdministration);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(taxAdministration.Identifier);
+                            if (taxAdministration.IsActive)
+                            {
+                                taxAdministration.IsSynced = true;
+                                Create(taxAdministration);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

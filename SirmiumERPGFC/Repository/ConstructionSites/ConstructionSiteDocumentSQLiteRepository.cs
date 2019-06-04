@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ConstructionSites
@@ -202,26 +203,43 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return response;
         }
 
-        public void Sync(IConstructionSiteDocumentService ConstructionSiteDocumentService)
+        public void Sync(IConstructionSiteDocumentService ConstructionSiteDocumentService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedDocuments(MainWindow.CurrentCompanyId);
-            SyncConstructionSiteDocumentRequest request = new SyncConstructionSiteDocumentRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            ConstructionSiteDocumentListResponse response = ConstructionSiteDocumentService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<ConstructionSiteDocumentViewModel> ConstructionSiteDocumentsFromDB = response.ConstructionSiteDocuments;
-                foreach (var ConstructionSiteDocument in ConstructionSiteDocumentsFromDB.OrderBy(x => x.Id))
+                SyncConstructionSiteDocumentRequest request = new SyncConstructionSiteDocumentRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                ConstructionSiteDocumentListResponse response = ConstructionSiteDocumentService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(ConstructionSiteDocument.Identifier);
-                    if (ConstructionSiteDocument.IsActive)
+                    toSync = response?.ConstructionSiteDocuments?.Count ?? 0;
+                    List<ConstructionSiteDocumentViewModel> ConstructionSiteDocumentsFromDB = response.ConstructionSiteDocuments;
+                    foreach (var ConstructionSiteDocument in ConstructionSiteDocumentsFromDB.OrderBy(x => x.Id))
                     {
-                        ConstructionSiteDocument.IsSynced = true;
-                        Create(ConstructionSiteDocument);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(ConstructionSiteDocument.Identifier);
+                            if (ConstructionSiteDocument.IsActive)
+                            {
+                                ConstructionSiteDocument.IsSynced = true;
+                                Create(ConstructionSiteDocument);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

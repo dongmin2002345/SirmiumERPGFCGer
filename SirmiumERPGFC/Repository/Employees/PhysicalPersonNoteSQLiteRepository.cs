@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -198,26 +199,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IPhysicalPersonNoteService PhysicalPersonNoteService)
+        public void Sync(IPhysicalPersonNoteService PhysicalPersonNoteService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedNotes(MainWindow.CurrentCompanyId);
-            SyncPhysicalPersonNoteRequest request = new SyncPhysicalPersonNoteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            PhysicalPersonNoteListResponse response = PhysicalPersonNoteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<PhysicalPersonNoteViewModel> PhysicalPersonNotesFromDB = response.PhysicalPersonNotes;
-                foreach (var PhysicalPersonNote in PhysicalPersonNotesFromDB.OrderBy(x => x.Id))
+                SyncPhysicalPersonNoteRequest request = new SyncPhysicalPersonNoteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                PhysicalPersonNoteListResponse response = PhysicalPersonNoteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(PhysicalPersonNote.Identifier);
-                    if (PhysicalPersonNote.IsActive)
+                    toSync = response?.PhysicalPersonNotes?.Count ?? 0;
+                    List<PhysicalPersonNoteViewModel> PhysicalPersonNotesFromDB = response.PhysicalPersonNotes;
+                    foreach (var PhysicalPersonNote in PhysicalPersonNotesFromDB.OrderBy(x => x.Id))
                     {
-                        PhysicalPersonNote.IsSynced = true;
-                        Create(PhysicalPersonNote);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(PhysicalPersonNote.Identifier);
+                            if (PhysicalPersonNote.IsActive)
+                            {
+                                PhysicalPersonNote.IsSynced = true;
+                                Create(PhysicalPersonNote);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

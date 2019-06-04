@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Users
@@ -319,23 +320,44 @@ namespace SirmiumERPGFC.Repository.Users
             return response;
         }
 
-        public void Sync(IUserService userService)
+        public void Sync(IUserService userService, Action<int, int> callback = null)
         {
-            SyncUserRequest request = new SyncUserRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            UserListResponse response = userService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<UserViewModel> usersFromDB = response.Users;
-                foreach (var user in usersFromDB.OrderBy(x => x.Id))
+                SyncUserRequest request = new SyncUserRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                UserListResponse response = userService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(user.Identifier);
-                    user.IsSynced = true;
-                    if (user.IsActive)
-                        Create(user);
+                    toSync = response?.Users?.Count ?? 0;
+                    List<UserViewModel> usersFromDB = response.Users;
+                    foreach (var user in usersFromDB.OrderBy(x => x.Id))
+                    {
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(user.Identifier);
+                            user.IsSynced = true;
+                            if (user.IsActive)
+                            {
+                                user.IsSynced = true;
+                                Create(user);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
+                    }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

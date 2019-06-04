@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -182,25 +183,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerLocationService BusinessPartnerLocationService)
+        public void Sync(IBusinessPartnerLocationService BusinessPartnerLocationService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerLocationRequest request = new SyncBusinessPartnerLocationRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerLocationListResponse response = BusinessPartnerLocationService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB = response.BusinessPartnerLocations;
-                foreach (var BusinessPartnerLocation in BusinessPartnerLocationsFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerLocationRequest request = new SyncBusinessPartnerLocationRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerLocationListResponse response = BusinessPartnerLocationService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(BusinessPartnerLocation.Identifier);
-                    if (BusinessPartnerLocation.IsActive)
+                    toSync = response?.BusinessPartnerLocations?.Count ?? 0;
+                    List<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB = response.BusinessPartnerLocations;
+                    foreach (var BusinessPartnerLocation in BusinessPartnerLocationsFromDB.OrderBy(x => x.Id))
                     {
-                        BusinessPartnerLocation.IsSynced = true;
-                        Create(BusinessPartnerLocation);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(BusinessPartnerLocation.Identifier);
+                            if (BusinessPartnerLocation.IsActive)
+                            {
+                                BusinessPartnerLocation.IsSynced = true;
+                                Create(BusinessPartnerLocation);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

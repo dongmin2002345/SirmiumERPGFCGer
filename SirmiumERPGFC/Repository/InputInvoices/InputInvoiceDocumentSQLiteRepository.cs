@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.InputInvoices
@@ -149,27 +150,45 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			return response;
 		}
 
-		public void Sync(IInputInvoiceDocumentService InputInvoiceDocumentService)
-		{
-			SyncInputInvoiceDocumentRequest request = new SyncInputInvoiceDocumentRequest();
-			request.CompanyId = MainWindow.CurrentCompanyId;
-			request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public void Sync(IInputInvoiceDocumentService InputInvoiceDocumentService, Action<int, int> callback = null)
+        {
+            try
+            {
+                SyncInputInvoiceDocumentRequest request = new SyncInputInvoiceDocumentRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
-			InputInvoiceDocumentListResponse response = InputInvoiceDocumentService.Sync(request);
-			if (response.Success)
-			{
-				List<InputInvoiceDocumentViewModel> InputInvoiceDocumentsFromDB = response.InputInvoiceDocuments;
-				foreach (var InputInvoiceDocument in InputInvoiceDocumentsFromDB.OrderBy(x => x.Id))
-				{
-					Delete(InputInvoiceDocument.Identifier);
-					if (InputInvoiceDocument.IsActive)
-					{
-						InputInvoiceDocument.IsSynced = true;
-						Create(InputInvoiceDocument);
-					}
-				}
-			}
-		}
+                int toSync = 0;
+                int syncedItems = 0;
+
+                InputInvoiceDocumentListResponse response = InputInvoiceDocumentService.Sync(request);
+                if (response.Success)
+                {
+                    toSync = response?.InputInvoiceDocuments?.Count ?? 0;
+                    List<InputInvoiceDocumentViewModel> InputInvoiceDocumentsFromDB = response.InputInvoiceDocuments;
+                    foreach (var InputInvoiceDocument in InputInvoiceDocumentsFromDB.OrderBy(x => x.Id))
+                    {
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(InputInvoiceDocument.Identifier);
+                            if (InputInvoiceDocument.IsActive)
+                            {
+                                InputInvoiceDocument.IsSynced = true;
+                                Create(InputInvoiceDocument);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
+                    }
+                }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 
 		public DateTime? GetLastUpdatedAt(int companyId)
 		{

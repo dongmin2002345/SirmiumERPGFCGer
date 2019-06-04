@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -152,25 +153,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerDocumentService BusinessPartnerDocumentService)
+        public void Sync(IBusinessPartnerDocumentService BusinessPartnerDocumentService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerDocumentRequest request = new SyncBusinessPartnerDocumentRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerDocumentListResponse response = BusinessPartnerDocumentService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerDocumentViewModel> BusinessPartnerDocumentsFromDB = response.BusinessPartnerDocuments;
-                foreach (var BusinessPartnerDocument in BusinessPartnerDocumentsFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerDocumentRequest request = new SyncBusinessPartnerDocumentRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerDocumentListResponse response = BusinessPartnerDocumentService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(BusinessPartnerDocument.Identifier);
-                    if (BusinessPartnerDocument.IsActive)
+                    toSync = response?.BusinessPartnerDocuments?.Count ?? 0;
+                    List<BusinessPartnerDocumentViewModel> BusinessPartnerDocumentsFromDB = response.BusinessPartnerDocuments;
+                    foreach (var BusinessPartnerDocument in BusinessPartnerDocumentsFromDB.OrderBy(x => x.Id))
                     {
-                        BusinessPartnerDocument.IsSynced = true;
-                        Create(BusinessPartnerDocument);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(BusinessPartnerDocument.Identifier);
+                            if (BusinessPartnerDocument.IsActive)
+                            {
+                                BusinessPartnerDocument.IsSynced = true;
+                                Create(BusinessPartnerDocument);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

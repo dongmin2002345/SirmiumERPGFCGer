@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Companies
@@ -402,22 +403,43 @@ namespace SirmiumERPGFC.Repository.Companies
             return null;
         }
 
-        public void Sync(ICompanyUserService userService)
+        public void Sync(ICompanyUserService userService, Action<int, int> callback = null)
         {
-            SyncCompanyUserRequest request = new SyncCompanyUserRequest();
-            request.LastUpdatedAt = GetLastUpdatedAt();
-
-            CompanyUserListResponse response = userService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<CompanyUserViewModel> usersFromDB = response.CompanyUsers;
-                foreach (var user in usersFromDB.OrderBy(x => x.Id))
+                SyncCompanyUserRequest request = new SyncCompanyUserRequest();
+                request.LastUpdatedAt = GetLastUpdatedAt();
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                CompanyUserListResponse response = userService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(user.Identifier);
-                    user.IsSynced = true;
-                    if (user.IsActive)
-                        Create(user);
+                    toSync = response?.CompanyUsers?.Count ?? 0;
+                    List<CompanyUserViewModel> usersFromDB = response.CompanyUsers;
+                    foreach (var user in usersFromDB.OrderBy(x => x.Id))
+                    {
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(user.Identifier);
+                            user.IsSynced = true;
+                            if (user.IsActive)
+                            {
+                                user.IsSynced = true;
+                                Create(user);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
+                    }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
     }

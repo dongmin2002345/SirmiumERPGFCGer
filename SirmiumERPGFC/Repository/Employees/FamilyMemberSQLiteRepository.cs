@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -213,25 +214,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IFamilyMemberService familyMemberService)
+        public void Sync(IFamilyMemberService familyMemberService, Action<int, int> callback = null)
         {
-            SyncFamilyMemberRequest request = new SyncFamilyMemberRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            FamilyMemberListResponse response = familyMemberService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<FamilyMemberViewModel> familyMembersFromDB = response.FamilyMembers;
-                foreach (var FamilyMember in familyMembersFromDB.OrderBy(x => x.Id))
+                SyncFamilyMemberRequest request = new SyncFamilyMemberRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                FamilyMemberListResponse response = familyMemberService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(FamilyMember.Identifier);
-                    if (FamilyMember.IsActive)
+                    toSync = response?.FamilyMembers?.Count ?? 0;
+                    List<FamilyMemberViewModel> familyMembersFromDB = response.FamilyMembers;
+                    foreach (var FamilyMember in familyMembersFromDB.OrderBy(x => x.Id))
                     {
-                        FamilyMember.IsSynced = true;
-                        Create(FamilyMember);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(FamilyMember.Identifier);
+                            if (FamilyMember.IsActive)
+                            {
+                                FamilyMember.IsSynced = true;
+                                Create(FamilyMember);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

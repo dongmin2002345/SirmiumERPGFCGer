@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Banks
@@ -231,27 +232,45 @@ namespace SirmiumERPGFC.Repository.Banks
 			return response;
 		}
 
-		public void Sync(IBankService bankService)
-		{
-			SyncBankRequest request = new SyncBankRequest();
-			request.CompanyId = MainWindow.CurrentCompanyId;
-			request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public void Sync(IBankService bankService, Action<int, int> callback = null)
+        {
+            try
+            {
+                SyncBankRequest request = new SyncBankRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
-			BankListResponse response = bankService.Sync(request);
-			if (response.Success)
-			{
-				List<BankViewModel> banksFromDB = response.Banks;
-				foreach (var bank in banksFromDB.OrderBy(x => x.Id))
-				{
-					Delete(bank.Identifier);
-                    if (bank.IsActive)
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BankListResponse response = bankService.Sync(request);
+                if (response.Success)
+                {
+                    toSync = response?.Banks?.Count ?? 0;
+                    List<BankViewModel> banksFromDB = response.Banks;
+                    foreach (var bank in banksFromDB.OrderBy(x => x.Id))
                     {
-                        bank.IsSynced = true;
-                        Create(bank);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(bank.Identifier);
+                            if (bank.IsActive)
+                            {
+                                bank.IsSynced = true;
+                                Create(bank);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
-				}
-			}
-		}
+                }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 
 		public DateTime? GetLastUpdatedAt(int companyId)
 		{

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Sectors
@@ -232,27 +233,45 @@ namespace SirmiumERPGFC.Repository.Sectors
 			return response;
 		}
 
-		public void Sync(ISectorService sectorService)
-		{
-			SyncSectorRequest request = new SyncSectorRequest();
-			request.CompanyId = MainWindow.CurrentCompanyId;
-			request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public void Sync(ISectorService sectorService, Action<int, int> callback = null)
+        {
+            try
+            {
+                SyncSectorRequest request = new SyncSectorRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
-			SectorListResponse response = sectorService.Sync(request);
-			if (response.Success)
-			{
-				List<SectorViewModel> sectorsFromDB = response.Sectors;
-				foreach (var sector in sectorsFromDB.OrderBy(x => x.Id))
-				{
-					Delete(sector.Identifier);
-                    if (sector.IsActive)
+                int toSync = 0;
+                int syncedItems = 0;
+
+                SectorListResponse response = sectorService.Sync(request);
+                if (response.Success)
+                {
+                    toSync = response?.Sectors?.Count ?? 0;
+                    List<SectorViewModel> sectorsFromDB = response.Sectors;
+                    foreach (var sector in sectorsFromDB.OrderBy(x => x.Id))
                     {
-                        sector.IsSynced = true;
-                        Create(sector);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(sector.Identifier);
+                            if (sector.IsActive)
+                            {
+                                sector.IsSynced = true;
+                                Create(sector);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
-				}
-			}
-		}
+                }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 
 		public DateTime? GetLastUpdatedAt(int companyId)
 		{

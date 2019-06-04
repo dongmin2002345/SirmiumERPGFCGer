@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -199,26 +200,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IEmployeeNoteService EmployeeNoteService)
+        public void Sync(IEmployeeNoteService EmployeeNoteService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedNotes(MainWindow.CurrentCompanyId);
-            SyncEmployeeNoteRequest request = new SyncEmployeeNoteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            EmployeeNoteListResponse response = EmployeeNoteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<EmployeeNoteViewModel> EmployeeNotesFromDB = response.EmployeeNotes;
-                foreach (var EmployeeNote in EmployeeNotesFromDB.OrderBy(x => x.Id))
+                SyncEmployeeNoteRequest request = new SyncEmployeeNoteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                EmployeeNoteListResponse response = EmployeeNoteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(EmployeeNote.Identifier);
-                    if (EmployeeNote.IsActive)
+                    toSync = response?.EmployeeNotes?.Count ?? 0;
+                    List<EmployeeNoteViewModel> EmployeeNotesFromDB = response.EmployeeNotes;
+                    foreach (var EmployeeNote in EmployeeNotesFromDB.OrderBy(x => x.Id))
                     {
-                        EmployeeNote.IsSynced = true;
-                        Create(EmployeeNote);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(EmployeeNote.Identifier);
+                            if (EmployeeNote.IsActive)
+                            {
+                                EmployeeNote.IsSynced = true;
+                                Create(EmployeeNote);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

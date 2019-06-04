@@ -29,7 +29,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
             string queryString =
                 "SELECT InputInvoiceNoteId, InputInvoiceNoteIdentifier, " +
-                "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, InputInvoiceName, " +
+                "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
                 "Note, NoteDate, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoiceNotes " +
@@ -109,7 +109,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
             string queryString =
                 "SELECT InputInvoiceNoteId, InputInvoiceNoteIdentifier, " +
-                "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, InputInvoiceName, " +
+                "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
                 "Note, NoteDate, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoiceNotes " +
@@ -179,7 +179,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
             string queryString =
                 "SELECT InputInvoiceNoteId, InputInvoiceNoteIdentifier, " +
-                "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, InputInvoiceName, " +
+                "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
                 "Note, NoteDate, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoiceNotes " +

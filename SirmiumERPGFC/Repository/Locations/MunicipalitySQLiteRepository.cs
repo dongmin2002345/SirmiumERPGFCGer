@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Locations
@@ -250,25 +251,43 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
-        public void Sync(IMunicipalityService municipalityService)
+        public void Sync(IMunicipalityService municipalityService, Action<int, int> callback = null)
         {
-            SyncMunicipalityRequest request = new SyncMunicipalityRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            MunicipalityListResponse response = municipalityService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<MunicipalityViewModel> municipalitiesFromDB = response.Municipalities;
-                foreach (var municipality in municipalitiesFromDB.OrderBy(x => x.Id))
+                SyncMunicipalityRequest request = new SyncMunicipalityRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                MunicipalityListResponse response = municipalityService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(municipality.Identifier);
-                    if (municipality.IsActive)
+                    toSync = response?.Municipalities?.Count ?? 0;
+                    List<MunicipalityViewModel> municipalitiesFromDB = response.Municipalities;
+                    foreach (var municipality in municipalitiesFromDB.OrderBy(x => x.Id))
                     {
-                        municipality.IsSynced = true;
-                        Create(municipality);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(municipality.Identifier);
+                            if (municipality.IsActive)
+                            {
+                                municipality.IsSynced = true;
+                                Create(municipality);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

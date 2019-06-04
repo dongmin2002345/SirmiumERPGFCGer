@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.OutputInvoices
@@ -197,26 +198,43 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             return response;
         }
 
-        public void Sync(IOutputInvoiceNoteService OutputInvoiceNoteService)
+        public void Sync(IOutputInvoiceNoteService OutputInvoiceNoteService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedNotes(MainWindow.CurrentCompanyId);
-            SyncOutputInvoiceNoteRequest request = new SyncOutputInvoiceNoteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            OutputInvoiceNoteListResponse response = OutputInvoiceNoteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<OutputInvoiceNoteViewModel> OutputInvoiceNotesFromDB = response.OutputInvoiceNotes;
-                foreach (var OutputInvoiceNote in OutputInvoiceNotesFromDB.OrderBy(x => x.Id))
+                SyncOutputInvoiceNoteRequest request = new SyncOutputInvoiceNoteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                OutputInvoiceNoteListResponse response = OutputInvoiceNoteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(OutputInvoiceNote.Identifier);
-                    if (OutputInvoiceNote.IsActive)
+                    toSync = response?.OutputInvoiceNotes?.Count ?? 0;
+                    List<OutputInvoiceNoteViewModel> OutputInvoiceNotesFromDB = response.OutputInvoiceNotes;
+                    foreach (var OutputInvoiceNote in OutputInvoiceNotesFromDB.OrderBy(x => x.Id))
                     {
-                        OutputInvoiceNote.IsSynced = true;
-                        Create(OutputInvoiceNote);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(OutputInvoiceNote.Identifier);
+                            if (OutputInvoiceNote.IsActive)
+                            {
+                                OutputInvoiceNote.IsSynced = true;
+                                Create(OutputInvoiceNote);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

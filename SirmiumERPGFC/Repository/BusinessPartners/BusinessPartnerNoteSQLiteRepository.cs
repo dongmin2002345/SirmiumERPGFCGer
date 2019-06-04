@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -200,26 +201,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerNoteService BusinessPartnerNoteService)
+        public void Sync(IBusinessPartnerNoteService BusinessPartnerNoteService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedNotes(MainWindow.CurrentCompanyId);
-            SyncBusinessPartnerNoteRequest request = new SyncBusinessPartnerNoteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerNoteListResponse response = BusinessPartnerNoteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerNoteViewModel> BusinessPartnerNotesFromDB = response.BusinessPartnerNotes;
-                foreach (var BusinessPartnerNote in BusinessPartnerNotesFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerNoteRequest request = new SyncBusinessPartnerNoteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerNoteListResponse response = BusinessPartnerNoteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(BusinessPartnerNote.Identifier);
-                    if (BusinessPartnerNote.IsActive)
+                    toSync = response?.BusinessPartnerNotes?.Count ?? 0;
+                    List<BusinessPartnerNoteViewModel> BusinessPartnerNotesFromDB = response.BusinessPartnerNotes;
+                    foreach (var BusinessPartnerNote in BusinessPartnerNotesFromDB.OrderBy(x => x.Id))
                     {
-                        BusinessPartnerNote.IsSynced = true;
-                        Create(BusinessPartnerNote);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(BusinessPartnerNote.Identifier);
+                            if (BusinessPartnerNote.IsActive)
+                            {
+                                BusinessPartnerNote.IsSynced = true;
+                                Create(BusinessPartnerNote);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

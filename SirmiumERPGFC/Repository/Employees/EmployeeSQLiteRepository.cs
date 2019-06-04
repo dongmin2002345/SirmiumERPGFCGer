@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -803,29 +804,41 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public void Sync(IEmployeeService EmployeeService, Action<int, int> callback = null)
         {
-            SyncEmployeeRequest request = new SyncEmployeeRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            int toSync = 0;
-            int syncedItems = 0;
-
-            EmployeeListResponse response = EmployeeService.Sync(request);
-            if (response.Success)
+            try
             {
-                toSync = response?.Employees?.Count ?? 0;
-                List<EmployeeViewModel> EmployeesFromDB = response.Employees;
-                foreach (var Employee in EmployeesFromDB.OrderBy(x => x.Id))
+                SyncEmployeeRequest request = new SyncEmployeeRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                EmployeeListResponse response = EmployeeService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(Employee.Identifier);
-                    if (Employee.IsActive)
+                    toSync = response?.Employees?.Count ?? 0;
+                    List<EmployeeViewModel> EmployeesFromDB = response.Employees;
+                    foreach (var Employee in EmployeesFromDB.OrderBy(x => x.Id))
                     {
-                        Employee.IsSynced = true;
-                        Create(Employee);
-                        syncedItems++;
-                        callback?.Invoke(syncedItems, toSync);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(Employee.Identifier);
+                            if (Employee.IsActive)
+                            {
+                                Employee.IsSynced = true;
+                                Create(Employee);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

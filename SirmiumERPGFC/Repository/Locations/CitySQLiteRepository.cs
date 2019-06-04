@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Locations
@@ -318,29 +319,41 @@ namespace SirmiumERPGFC.Repository.Locations
 
         public void Sync(ICityService cityService, Action<int, int> callback = null)
         {
-            SyncCityRequest request = new SyncCityRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-			int toSync = 0;
-			int syncedItems = 0;
-
-			CityListResponse response = cityService.Sync(request);
-            if (response.Success)
+            try
             {
-				toSync = response?.Cities?.Count ?? 0;
-				List<CityViewModel> citiesFromDB = response.Cities;
-                foreach (var city in citiesFromDB.OrderBy(x => x.Id))
+                SyncCityRequest request = new SyncCityRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                CityListResponse response = cityService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(city.Identifier);
-                    if (city.IsActive)
+                    toSync = response?.Cities?.Count ?? 0;
+                    List<CityViewModel> citiesFromDB = response.Cities;
+                    foreach (var city in citiesFromDB.OrderBy(x => x.Id))
                     {
-                        city.IsSynced = true;
-                        Create(city);
-						syncedItems++;
-						callback?.Invoke(syncedItems, toSync);
-					}
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(city.Identifier);
+                            if (city.IsActive)
+                            {
+                                city.IsSynced = true;
+                                Create(city);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
+                    }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

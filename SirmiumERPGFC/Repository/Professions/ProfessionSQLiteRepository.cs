@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Professions
@@ -236,25 +237,43 @@ namespace SirmiumERPGFC.Repository.Professions
             return response;
         }
 
-        public void Sync(IProfessionService professionService)
+        public void Sync(IProfessionService professionService, Action<int, int> callback = null)
         {
-            SyncProfessionRequest request = new SyncProfessionRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            ProfessionListResponse response = professionService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<ProfessionViewModel> professionsFromDB = response.Professions;
-                foreach (var profession in professionsFromDB.OrderBy(x => x.Id))
+                SyncProfessionRequest request = new SyncProfessionRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                ProfessionListResponse response = professionService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(profession.Identifier);
-                    if (profession.IsActive)
+                    toSync = response?.Professions?.Count ?? 0;
+                    List<ProfessionViewModel> professionsFromDB = response.Professions;
+                    foreach (var profession in professionsFromDB.OrderBy(x => x.Id))
                     {
-                        profession.IsSynced = true;
-                        Create(profession);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(profession.Identifier);
+                            if (profession.IsActive)
+                            {
+                                profession.IsSynced = true;
+                                Create(profession);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

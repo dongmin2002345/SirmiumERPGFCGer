@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -266,25 +267,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerTypeService businessPartnerTypeService)
+        public void Sync(IBusinessPartnerTypeService businessPartnerTypeService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerTypeRequest request = new SyncBusinessPartnerTypeRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerTypeListResponse response = businessPartnerTypeService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerTypeViewModel> businessPartnerTypesFromDB = response.BusinessPartnerTypes;
-                foreach (var businessPartnerType in businessPartnerTypesFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerTypeRequest request = new SyncBusinessPartnerTypeRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerTypeListResponse response = businessPartnerTypeService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(businessPartnerType.Identifier);
-                    if (businessPartnerType.IsActive)
+                    toSync = response?.BusinessPartnerTypes?.Count ?? 0;
+                    List<BusinessPartnerTypeViewModel> businessPartnerTypesFromDB = response.BusinessPartnerTypes;
+                    foreach (var businessPartnerType in businessPartnerTypesFromDB.OrderBy(x => x.Id))
                     {
-                        businessPartnerType.IsSynced = true;
-                        Create(businessPartnerType);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(businessPartnerType.Identifier);
+                            if (businessPartnerType.IsActive)
+                            {
+                                businessPartnerType.IsSynced = true;
+                                Create(businessPartnerType);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

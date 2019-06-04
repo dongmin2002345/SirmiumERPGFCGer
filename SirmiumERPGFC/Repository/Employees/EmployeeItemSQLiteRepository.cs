@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -217,26 +218,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IEmployeeItemService EmployeeItemService)
+        public void Sync(IEmployeeItemService EmployeeItemService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
-            SyncEmployeeItemRequest request = new SyncEmployeeItemRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            EmployeeItemListResponse response = EmployeeItemService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<EmployeeItemViewModel> EmployeeItemsFromDB = response.EmployeeItems;
-                foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
+                SyncEmployeeItemRequest request = new SyncEmployeeItemRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                EmployeeItemListResponse response = EmployeeItemService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(EmployeeItem.Identifier);
-                    if (EmployeeItem.IsActive)
+                    toSync = response?.EmployeeItems?.Count ?? 0;
+                    List<EmployeeItemViewModel> EmployeeItemsFromDB = response.EmployeeItems;
+                    foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
                     {
-                        EmployeeItem.IsSynced = true;
-                        Create(EmployeeItem);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(EmployeeItem.Identifier);
+                            if (EmployeeItem.IsActive)
+                            {
+                                EmployeeItem.IsSynced = true;
+                                Create(EmployeeItem);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

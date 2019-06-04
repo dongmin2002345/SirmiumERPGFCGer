@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -167,25 +168,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerBankService BusinessPartnerBankService)
+        public void Sync(IBusinessPartnerBankService BusinessPartnerBankService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerBankRequest request = new SyncBusinessPartnerBankRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerBankListResponse response = BusinessPartnerBankService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerBankViewModel> BusinessPartnerBanksFromDB = response.BusinessPartnerBanks;
-                foreach (var BusinessPartnerBank in BusinessPartnerBanksFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerBankRequest request = new SyncBusinessPartnerBankRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerBankListResponse response = BusinessPartnerBankService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(BusinessPartnerBank.Identifier);
-                    if (BusinessPartnerBank.IsActive)
+                    toSync = response?.BusinessPartnerBanks?.Count ?? 0;
+                    List<BusinessPartnerBankViewModel> BusinessPartnerBanksFromDB = response.BusinessPartnerBanks;
+                    foreach (var BusinessPartnerBank in BusinessPartnerBanksFromDB.OrderBy(x => x.Id))
                     {
-                        BusinessPartnerBank.IsSynced = true;
-                        Create(BusinessPartnerBank);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(BusinessPartnerBank.Identifier);
+                            if (BusinessPartnerBank.IsActive)
+                            {
+                                BusinessPartnerBank.IsSynced = true;
+                                Create(BusinessPartnerBank);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

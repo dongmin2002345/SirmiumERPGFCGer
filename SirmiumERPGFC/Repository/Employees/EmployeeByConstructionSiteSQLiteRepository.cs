@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -147,25 +148,43 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IEmployeeByConstructionSiteService employeeByConstructionSiteService)
+        public void Sync(IEmployeeByConstructionSiteService employeeByConstructionSiteService, Action<int, int> callback = null)
         {
-            SyncEmployeeByConstructionSiteRequest request = new SyncEmployeeByConstructionSiteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            EmployeeByConstructionSiteListResponse response = employeeByConstructionSiteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<EmployeeByConstructionSiteViewModel> employeeByConstructionSiteFromDB = response.EmployeeByConstructionSites;
-                foreach (var employeeByConstructionSite in employeeByConstructionSiteFromDB.OrderBy(x => x.Id))
+                SyncEmployeeByConstructionSiteRequest request = new SyncEmployeeByConstructionSiteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                EmployeeByConstructionSiteListResponse response = employeeByConstructionSiteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(employeeByConstructionSite.Identifier);
-                    if (employeeByConstructionSite.IsActive)
+                    toSync = response?.EmployeeByConstructionSites?.Count ?? 0;
+                    List<EmployeeByConstructionSiteViewModel> employeeByConstructionSiteFromDB = response.EmployeeByConstructionSites;
+                    foreach (var employeeByConstructionSite in employeeByConstructionSiteFromDB.OrderBy(x => x.Id))
                     {
-                        employeeByConstructionSite.IsSynced = true;
-                        Create(employeeByConstructionSite);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(employeeByConstructionSite.Identifier);
+                            if (employeeByConstructionSite.IsActive)
+                            {
+                                employeeByConstructionSite.IsSynced = true;
+                                Create(employeeByConstructionSite);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

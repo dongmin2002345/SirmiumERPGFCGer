@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
@@ -390,28 +391,45 @@ namespace SirmiumERPGFC.Repository.Employees
 			return response;
 		}
 
-		public void Sync(IPhysicalPersonService PhysicalPersonService)
-		{
-			var unSynced = GetUnSyncedItems(MainWindow.CurrentCompanyId);
-			SyncPhysicalPersonRequest request = new SyncPhysicalPersonRequest();
-			request.CompanyId = MainWindow.CurrentCompanyId;
-			request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+        public void Sync(IPhysicalPersonService PhysicalPersonService, Action<int, int> callback = null)
+        {
+            try
+            {
+                SyncPhysicalPersonRequest request = new SyncPhysicalPersonRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
-			PhysicalPersonListResponse response = PhysicalPersonService.Sync(request);
-			if (response.Success)
-			{
-				List<PhysicalPersonViewModel> PhysicalPersonsFromDB = response.PhysicalPersons;
-				foreach (var PhysicalPerson in PhysicalPersonsFromDB.OrderBy(x => x.Id))
-				{
-					Delete(PhysicalPerson.Identifier);
-					if (PhysicalPerson.IsActive)
-					{
-						PhysicalPerson.IsSynced = true;
-						Create(PhysicalPerson);
-					}
-				}
-			}
-		}
+                int toSync = 0;
+                int syncedItems = 0;
+
+                PhysicalPersonListResponse response = PhysicalPersonService.Sync(request);
+                if (response.Success)
+                {
+                    toSync = response?.PhysicalPersons?.Count ?? 0;
+                    List<PhysicalPersonViewModel> PhysicalPersonsFromDB = response.PhysicalPersons;
+                    foreach (var PhysicalPerson in PhysicalPersonsFromDB.OrderBy(x => x.Id))
+                    {
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(PhysicalPerson.Identifier);
+                            if (PhysicalPerson.IsActive)
+                            {
+                                PhysicalPerson.IsSynced = true;
+                                Create(PhysicalPerson);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
+                    }
+                }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
 
 		public DateTime? GetLastUpdatedAt(int companyId)
 		{

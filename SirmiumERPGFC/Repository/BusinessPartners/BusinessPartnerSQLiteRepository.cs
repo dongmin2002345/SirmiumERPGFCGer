@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
@@ -453,25 +454,43 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
-        public void Sync(IBusinessPartnerService bpService)
+        public void Sync(IBusinessPartnerService bpService, Action<int, int> callback = null)
         {
-            SyncBusinessPartnerRequest request = new SyncBusinessPartnerRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            BusinessPartnerListResponse response = bpService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<BusinessPartnerViewModel> businessPartnersFromDB = response.BusinessPartners;
-                foreach (var bp in businessPartnersFromDB.OrderBy(x => x.Id))
+                SyncBusinessPartnerRequest request = new SyncBusinessPartnerRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                BusinessPartnerListResponse response = bpService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(bp.Identifier);
-                    if (bp.IsActive)
+                    toSync = response?.BusinessPartners?.Count ?? 0;
+                    List<BusinessPartnerViewModel> businessPartnersFromDB = response.BusinessPartners;
+                    foreach (var bp in businessPartnersFromDB.OrderBy(x => x.Id))
                     {
-                        bp.IsSynced = true;
-                        Create(bp);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(bp.Identifier);
+                            if (bp.IsActive)
+                            {
+                                bp.IsSynced = true;
+                                Create(bp);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

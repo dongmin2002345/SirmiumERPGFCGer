@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ToDos
@@ -200,25 +201,43 @@ namespace SirmiumERPGFC.Repository.ToDos
             return response;
         }
 
-        public void Sync(IToDoService toDoService)
+        public void Sync(IToDoService toDoService, Action<int, int> callback = null)
         {
-            SyncToDoRequest request = new SyncToDoRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            ToDoListResponse response = toDoService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<ToDoViewModel> toDosFromDB = response.ToDos;
-                foreach (var toDo in toDosFromDB.OrderBy(x => x.Id))
+                SyncToDoRequest request = new SyncToDoRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                ToDoListResponse response = toDoService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(toDo.Identifier);
-                    if (toDo.IsActive)
+                    toSync = response?.ToDos?.Count ?? 0;
+                    List<ToDoViewModel> toDosFromDB = response.ToDos;
+                    foreach (var toDo in toDosFromDB.OrderBy(x => x.Id))
                     {
-                        toDo.IsSynced = true;
-                        Create(toDo);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(toDo.Identifier);
+                            if (toDo.IsActive)
+                            {
+                                toDo.IsSynced = true;
+                                Create(toDo);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 

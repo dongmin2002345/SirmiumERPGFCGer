@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ConstructionSites
@@ -198,26 +199,43 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return response;
         }
 
-        public void Sync(IConstructionSiteNoteService ConstructionSiteNoteService)
+        public void Sync(IConstructionSiteNoteService ConstructionSiteNoteService, Action<int, int> callback = null)
         {
-            var unSynced = GetUnSyncedNotes(MainWindow.CurrentCompanyId);
-            SyncConstructionSiteNoteRequest request = new SyncConstructionSiteNoteRequest();
-            request.CompanyId = MainWindow.CurrentCompanyId;
-            request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
-
-            ConstructionSiteNoteListResponse response = ConstructionSiteNoteService.Sync(request);
-            if (response.Success)
+            try
             {
-                List<ConstructionSiteNoteViewModel> ConstructionSiteNotesFromDB = response.ConstructionSiteNotes;
-                foreach (var ConstructionSiteNote in ConstructionSiteNotesFromDB.OrderBy(x => x.Id))
+                SyncConstructionSiteNoteRequest request = new SyncConstructionSiteNoteRequest();
+                request.CompanyId = MainWindow.CurrentCompanyId;
+                request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                ConstructionSiteNoteListResponse response = ConstructionSiteNoteService.Sync(request);
+                if (response.Success)
                 {
-                    Delete(ConstructionSiteNote.Identifier);
-                    if (ConstructionSiteNote.IsActive)
+                    toSync = response?.ConstructionSiteNotes?.Count ?? 0;
+                    List<ConstructionSiteNoteViewModel> ConstructionSiteNotesFromDB = response.ConstructionSiteNotes;
+                    foreach (var ConstructionSiteNote in ConstructionSiteNotesFromDB.OrderBy(x => x.Id))
                     {
-                        ConstructionSiteNote.IsSynced = true;
-                        Create(ConstructionSiteNote);
+                        ThreadPool.QueueUserWorkItem((k) =>
+                        {
+                            Delete(ConstructionSiteNote.Identifier);
+                            if (ConstructionSiteNote.IsActive)
+                            {
+                                ConstructionSiteNote.IsSynced = true;
+                                Create(ConstructionSiteNote);
+                                syncedItems++;
+                                callback?.Invoke(syncedItems, toSync);
+                            }
+                        });
                     }
                 }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
             }
         }
 
