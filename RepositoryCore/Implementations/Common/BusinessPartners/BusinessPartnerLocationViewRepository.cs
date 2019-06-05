@@ -95,9 +95,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Municipality = new Municipality();
                             businessPartnerLocation.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
                             businessPartnerLocation.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
-                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Municipality.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Municipality.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
+                            businessPartnerLocation.Municipality.Code = reader["MunicipalityCode"].ToString();
+                            businessPartnerLocation.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
                         if (reader["RegionId"] != DBNull.Value)
@@ -105,9 +105,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region = new Region();
                             businessPartnerLocation.RegionId = Int32.Parse(reader["RegionId"].ToString());
                             businessPartnerLocation.Region.Id = Int32.Parse(reader["RegionId"].ToString());
-                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Region.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Region.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
+                            businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
+                            businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
 
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
@@ -135,20 +135,6 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 }
             }
             return BusinessPartnerLocations;
-
-            //List<BusinessPartnerLocation> businessPartnerLocationes = context.BusinessPartnerLocations
-            //    .Include(x => x.BusinessPartner)
-            //    .Include(x => x.Country)
-            //    .Include(x => x.City)
-            //    .Include(x => x.Municipality)
-            //    .Include(x => x.Region)
-            //    .Include(x => x.Company)
-            //    .Include(x => x.CreatedBy)
-            //    .Where(x => x.Active == true && x.CompanyId == companyId)
-            //    .AsNoTracking()
-            //    .ToList();
-
-            //return businessPartnerLocationes;
         }
 
         public List<BusinessPartnerLocation> GetBusinessPartnerLocationssByBusinessPartner(int businessPartnerId)
@@ -221,9 +207,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Municipality = new Municipality();
                             businessPartnerLocation.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
                             businessPartnerLocation.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
-                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Municipality.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Municipality.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
+                            businessPartnerLocation.Municipality.Code = reader["MunicipalityCode"].ToString();
+                            businessPartnerLocation.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
                         if (reader["RegionId"] != DBNull.Value)
@@ -231,9 +217,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region = new Region();
                             businessPartnerLocation.RegionId = Int32.Parse(reader["RegionId"].ToString());
                             businessPartnerLocation.Region.Id = Int32.Parse(reader["RegionId"].ToString());
-                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Region.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Region.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
+                            businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
+                            businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
 
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
@@ -349,9 +335,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Municipality = new Municipality();
                             businessPartnerLocation.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
                             businessPartnerLocation.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
-                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Municipality.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Municipality.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
+                            businessPartnerLocation.Municipality.Code = reader["MunicipalityCode"].ToString();
+                            businessPartnerLocation.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
                         if (reader["RegionId"] != DBNull.Value)
@@ -359,9 +345,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region = new Region();
                             businessPartnerLocation.RegionId = Int32.Parse(reader["RegionId"].ToString());
                             businessPartnerLocation.Region.Id = Int32.Parse(reader["RegionId"].ToString());
-                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Region.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Region.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
+                            businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
+                            businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
 
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
@@ -474,9 +460,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Municipality = new Municipality();
                             businessPartnerLocation.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
                             businessPartnerLocation.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
-                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Municipality.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Municipality.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
+                            businessPartnerLocation.Municipality.Code = reader["MunicipalityCode"].ToString();
+                            businessPartnerLocation.Municipality.Name = reader["MunicipalityName"].ToString();
                         }
 
                         if (reader["RegionId"] != DBNull.Value)
@@ -484,9 +470,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region = new Region();
                             businessPartnerLocation.RegionId = Int32.Parse(reader["RegionId"].ToString());
                             businessPartnerLocation.Region.Id = Int32.Parse(reader["RegionId"].ToString());
-                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.Region.Code = reader["CityCode"].ToString();
-                            businessPartnerLocation.Region.Name = reader["CityName"].ToString();
+                            businessPartnerLocation.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
+                            businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
+                            businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
 
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
