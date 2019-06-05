@@ -41,7 +41,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type Button}">
+    <!--<Style TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
@@ -64,7 +64,56 @@
                 <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
         </Style.Triggers>
+    </Style>-->
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="DarkGreen" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="Black" BorderThickness="1.5">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                        TextElement.FontWeight="Regular">
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="LightGreen" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="LightGreen" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="LightGreen" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="BorderThickness" Value="2" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Background" Value="DarkGray" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="BorderThickness" Value="2" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Background" Value="DarkGreen" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
+
 
     <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
         <!--<Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />-->

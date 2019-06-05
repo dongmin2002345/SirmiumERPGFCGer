@@ -241,7 +241,10 @@ namespace SirmiumERPGFC.Views.Locations
             RefreshButtonEnabled = false;
 
             RefreshButtonContent = ((string)Application.Current.FindResource("Opštine_TriTacke"));
-            new MunicipalitySQLiteRepository().Sync(municipalityService);
+            new MunicipalitySQLiteRepository().Sync(municipalityService, (synced, toSync) => {
+                if (toSync > 0)
+                    RefreshButtonContent = ((string)Application.Current.FindResource("Opštine_TriTacke")) + " (" + synced + "/" + toSync + ")";
+            });
 
             DisplayData();
 
