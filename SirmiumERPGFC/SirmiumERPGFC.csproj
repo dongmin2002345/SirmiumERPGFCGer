@@ -949,6 +949,7 @@
     <Content Include="Resources\Icons\delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\DeletePlavi.png" />
     <Content Include="Resources\Icons\delivery-man.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -966,6 +967,7 @@
     <Content Include="Resources\Icons\edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\EditPlavi.png" />
     <Content Include="Resources\Icons\excel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

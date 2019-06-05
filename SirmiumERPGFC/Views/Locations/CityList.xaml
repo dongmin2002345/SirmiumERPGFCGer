@@ -175,15 +175,15 @@
                         <DataGridTemplateColumn Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
-                                            <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="1 2 2 2" CommandParameter="{Binding}" Width="30" ToolTip="Promeni">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="Blue">
+                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="1 2 2 2" CommandParameter="{Binding}" Width="30" ToolTip="Promeni" >
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="..\..\Resources\Icons\_edit.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\EditPlavi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                                 </StackPanel>
                                             </Button>
-                                            <Button x:Name="btnDeletePopup" Margin="1 2 2 2" CommandParameter="{Binding}" Width="30" ToolTip="Obriši" >
+                                        <Button x:Name="btnDeletePopup" Margin="1 2 2 2" CommandParameter="{Binding}" Width="30" ToolTip="Obriši" >
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="..\..\Resources\Icons\_delete.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\DeletePlavi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                                 </StackPanel>
                                             </Button>
                                             <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
