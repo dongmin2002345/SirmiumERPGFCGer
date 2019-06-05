@@ -67,15 +67,16 @@
     </Style>-->
 
     <Style TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="DarkGreen" />
+        <Setter Property="Background" Value="#007ACC" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="Transparent" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="MinHeight" Value="22" />
+        <Setter Property="MinWidth" Value="22" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="Black" BorderThickness="1.5">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="3" BorderBrush="Black" BorderThickness="1.5">
                         <ContentPresenter HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                           RecognizesAccessKey="True"
@@ -86,17 +87,17 @@
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="BorderThickness" Value="2"/>
                             <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Background" Value="LightGreen" />
+                            <Setter Property="Background" Value="#007ACC" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter Property="BorderThickness" Value="2"/>
                             <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Background" Value="LightGreen" />
+                            <Setter Property="Background" Value="#007ACC" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderThickness" Value="2"/>
                             <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Background" Value="LightGreen" />
+                            <Setter Property="Background" Value="#007ACC" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="BorderThickness" Value="2" />
@@ -106,7 +107,7 @@
                         <Trigger Property="IsEnabled" Value="True">
                             <Setter Property="BorderThickness" Value="2" />
                             <Setter Property="Foreground" Value="White" />
-                            <Setter Property="Background" Value="DarkGreen" />
+                            <Setter Property="Background" Value="#007ACC" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

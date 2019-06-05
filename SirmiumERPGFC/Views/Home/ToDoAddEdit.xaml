@@ -51,7 +51,8 @@
                     <TextBox Grid.Column="0" Text="{Binding Path=CurrentToDo.Path, Mode=TwoWay}" Margin="2" />
                     <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{DynamicResource ODABERI}" />
+                            <Image Source="..\..\Resources\Icons\UploadBeli.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="{DynamicResource ODABERI}" FontSize="20" Foreground="White" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
                 </Grid>
