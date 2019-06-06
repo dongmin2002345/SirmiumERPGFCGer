@@ -155,8 +155,6 @@ namespace SirmiumERPGFC.Repository.Limitations
                     List<LimitationViewModel> limitationsFromDB = response.Limitations;
                     foreach (var limitation in limitationsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(limitation.Identifier);
                             if (limitation.IsActive)
                             {
@@ -165,7 +163,6 @@ namespace SirmiumERPGFC.Repository.Limitations
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

@@ -147,8 +147,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     List<BusinessPartnerByConstructionSiteViewModel> businessPartnerByConstructionSiteFromDB = response.BusinessPartnerByConstructionSites;
                     foreach (var businessPartnerByConstructionSite in businessPartnerByConstructionSiteFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(businessPartnerByConstructionSite.BusinessPartner.Identifier, businessPartnerByConstructionSite.ConstructionSite.Identifier);
                             if (businessPartnerByConstructionSite.IsActive)
                             {
@@ -157,7 +155,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

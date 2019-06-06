@@ -254,8 +254,6 @@ namespace SirmiumERPGFC.Repository.Locations
                     List<RegionViewModel> regionsFromDB = response.Regions;
                     foreach (var region in regionsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(region.Identifier);
                             if (region.IsActive)
                             {
@@ -264,7 +262,6 @@ namespace SirmiumERPGFC.Repository.Locations
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

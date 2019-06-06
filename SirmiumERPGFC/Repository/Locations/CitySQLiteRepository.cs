@@ -335,8 +335,6 @@ namespace SirmiumERPGFC.Repository.Locations
                     List<CityViewModel> citiesFromDB = response.Cities;
                     foreach (var city in citiesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(city.Identifier);
                             if (city.IsActive)
                             {
@@ -345,7 +343,6 @@ namespace SirmiumERPGFC.Repository.Locations
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

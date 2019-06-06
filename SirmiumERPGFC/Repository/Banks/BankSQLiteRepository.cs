@@ -250,8 +250,6 @@ namespace SirmiumERPGFC.Repository.Banks
                     List<BankViewModel> banksFromDB = response.Banks;
                     foreach (var bank in banksFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(bank.Identifier);
                             if (bank.IsActive)
                             {
@@ -260,7 +258,6 @@ namespace SirmiumERPGFC.Repository.Banks
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

@@ -297,8 +297,6 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     List<ConstructionSiteViewModel> constructionSitesFromDB = response.ConstructionSites;
                     foreach (var constructionSite in constructionSitesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(constructionSite.Identifier);
                             if (constructionSite.IsActive)
                             {
@@ -307,7 +305,6 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

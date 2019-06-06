@@ -318,8 +318,6 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                     List<OutputInvoiceViewModel> outputInvoicesFromDB = response.OutputInvoices;
                     foreach (var outputInvoice in outputInvoicesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(outputInvoice.Identifier);
                             if (outputInvoice.IsActive)
                             {
@@ -328,7 +326,6 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

@@ -166,8 +166,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<EmployeeByConstructionSiteViewModel> employeeByConstructionSiteFromDB = response.EmployeeByConstructionSites;
                     foreach (var employeeByConstructionSite in employeeByConstructionSiteFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(employeeByConstructionSite.Identifier);
                             if (employeeByConstructionSite.IsActive)
                             {
@@ -176,7 +174,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

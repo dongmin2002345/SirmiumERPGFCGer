@@ -216,8 +216,6 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                     List<InputInvoiceNoteViewModel> InputInvoiceNotesFromDB = response.InputInvoiceNotes;
                     foreach (var InputInvoiceNote in InputInvoiceNotesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(InputInvoiceNote.Identifier);
                             if (InputInvoiceNote.IsActive)
                             {
@@ -226,7 +224,6 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

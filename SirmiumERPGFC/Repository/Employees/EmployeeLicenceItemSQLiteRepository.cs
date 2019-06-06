@@ -187,8 +187,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<EmployeeLicenceItemViewModel> EmployeeItemsFromDB = response.EmployeeLicenceItems;
                     foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(EmployeeItem.Identifier);
                             if (EmployeeItem.IsActive)
                             {
@@ -197,7 +195,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

@@ -170,8 +170,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<EmployeeDocumentViewModel> EmployeeDocumentsFromDB = response.EmployeeDocuments;
                     foreach (var EmployeeDocument in EmployeeDocumentsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(EmployeeDocument.Identifier);
                             if (EmployeeDocument.IsActive)
                             {
@@ -180,7 +178,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

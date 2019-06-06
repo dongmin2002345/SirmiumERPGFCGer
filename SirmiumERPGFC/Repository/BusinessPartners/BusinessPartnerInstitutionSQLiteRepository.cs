@@ -183,8 +183,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     List<BusinessPartnerInstitutionViewModel> BusinessPartnerInstitutionsFromDB = response.BusinessPartnerInstitutions;
                     foreach (var BusinessPartnerInstitution in BusinessPartnerInstitutionsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(BusinessPartnerInstitution.Identifier);
                             if (BusinessPartnerInstitution.IsActive)
                             {
@@ -193,7 +191,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

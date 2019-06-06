@@ -315,8 +315,6 @@ namespace SirmiumERPGFC.Repository.Companies
                     List<CompanyViewModel> companiesFromDB = response.Companies;
                     foreach (var user in companiesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(user.Identifier);
                             if (user.IsActive)
                             {
@@ -325,7 +323,6 @@ namespace SirmiumERPGFC.Repository.Companies
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

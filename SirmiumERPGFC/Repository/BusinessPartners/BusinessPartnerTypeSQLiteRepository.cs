@@ -285,8 +285,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     List<BusinessPartnerTypeViewModel> businessPartnerTypesFromDB = response.BusinessPartnerTypes;
                     foreach (var businessPartnerType in businessPartnerTypesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(businessPartnerType.Identifier);
                             if (businessPartnerType.IsActive)
                             {
@@ -295,7 +293,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

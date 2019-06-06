@@ -256,8 +256,6 @@ namespace SirmiumERPGFC.Repository.Sectors
                     List<AgencyViewModel> AgenciesFromDB = response.Agencies;
                     foreach (var Agency in AgenciesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(Agency.Identifier);
                             if (Agency.IsActive)
                             {
@@ -266,7 +264,6 @@ namespace SirmiumERPGFC.Repository.Sectors
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

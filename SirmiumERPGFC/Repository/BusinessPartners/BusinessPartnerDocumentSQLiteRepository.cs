@@ -171,8 +171,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     List<BusinessPartnerDocumentViewModel> BusinessPartnerDocumentsFromDB = response.BusinessPartnerDocuments;
                     foreach (var BusinessPartnerDocument in BusinessPartnerDocumentsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(BusinessPartnerDocument.Identifier);
                             if (BusinessPartnerDocument.IsActive)
                             {
@@ -181,7 +179,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

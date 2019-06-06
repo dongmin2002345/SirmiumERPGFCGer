@@ -186,8 +186,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     List<BusinessPartnerPhoneViewModel> BusinessPartnerPhonesFromDB = response.BusinessPartnerPhones;
                     foreach (var BusinessPartnerPhone in BusinessPartnerPhonesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(BusinessPartnerPhone.Identifier);
                             if (BusinessPartnerPhone.IsActive)
                             {
@@ -196,7 +194,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

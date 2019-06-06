@@ -269,8 +269,6 @@ namespace SirmiumERPGFC.Repository.Locations
                     List<MunicipalityViewModel> municipalitiesFromDB = response.Municipalities;
                     foreach (var municipality in municipalitiesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(municipality.Identifier);
                             if (municipality.IsActive)
                             {
@@ -279,7 +277,6 @@ namespace SirmiumERPGFC.Repository.Locations
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

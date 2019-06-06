@@ -251,8 +251,6 @@ namespace SirmiumERPGFC.Repository.Sectors
                     List<SectorViewModel> sectorsFromDB = response.Sectors;
                     foreach (var sector in sectorsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(sector.Identifier);
                             if (sector.IsActive)
                             {
@@ -261,7 +259,6 @@ namespace SirmiumERPGFC.Repository.Sectors
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

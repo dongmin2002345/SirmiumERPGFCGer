@@ -240,8 +240,6 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     List<ConstructionSiteCalculationViewModel> ConstructionSiteCalculationsFromDB = response.ConstructionSiteCalculations;
                     foreach (var ConstructionSiteCalculation in ConstructionSiteCalculationsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(ConstructionSiteCalculation.Identifier);
                             if (ConstructionSiteCalculation.IsActive)
                             {
@@ -250,7 +248,6 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

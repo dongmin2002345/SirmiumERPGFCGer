@@ -219,8 +219,6 @@ namespace SirmiumERPGFC.Repository.ToDos
                     List<ToDoViewModel> toDosFromDB = response.ToDos;
                     foreach (var toDo in toDosFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(toDo.Identifier);
                             if (toDo.IsActive)
                             {
@@ -229,7 +227,6 @@ namespace SirmiumERPGFC.Repository.ToDos
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

@@ -218,8 +218,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<EmployeeNoteViewModel> EmployeeNotesFromDB = response.EmployeeNotes;
                     foreach (var EmployeeNote in EmployeeNotesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(EmployeeNote.Identifier);
                             if (EmployeeNote.IsActive)
                             {
@@ -228,7 +226,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

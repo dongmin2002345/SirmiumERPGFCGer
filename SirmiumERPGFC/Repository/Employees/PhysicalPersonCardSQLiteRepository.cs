@@ -169,8 +169,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<PhysicalPersonCardViewModel> PhysicalPersonCardsFromDB = response.PhysicalPersonCards;
                     foreach (var PhysicalPersonCard in PhysicalPersonCardsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(PhysicalPersonCard.Identifier);
                             if (PhysicalPersonCard.IsActive)
                             {
@@ -179,7 +177,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

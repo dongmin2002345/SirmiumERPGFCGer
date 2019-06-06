@@ -232,8 +232,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<FamilyMemberViewModel> familyMembersFromDB = response.FamilyMembers;
                     foreach (var FamilyMember in familyMembersFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(FamilyMember.Identifier);
                             if (FamilyMember.IsActive)
                             {
@@ -242,7 +240,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

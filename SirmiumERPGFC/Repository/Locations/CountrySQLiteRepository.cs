@@ -250,8 +250,6 @@ namespace SirmiumERPGFC.Repository.Locations
                     List<CountryViewModel> countriesFromDB = response.Countries;
                     foreach (var country in countriesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(country.Identifier);
                             if (country.IsActive)
                             {
@@ -260,7 +258,6 @@ namespace SirmiumERPGFC.Repository.Locations
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

@@ -253,8 +253,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<LicenceTypeViewModel> licenceTypesFromDB = response.LicenceTypes;
                     foreach (var licenceType in licenceTypesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(licenceType.Identifier);
                             if (licenceType.IsActive)
                             {
@@ -263,7 +261,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

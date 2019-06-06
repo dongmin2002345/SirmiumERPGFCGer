@@ -153,8 +153,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<EmployeeByBusinessPartnerViewModel> employeeByBusinessPartnerFromDB = response.EmployeeByBusinessPartners;
                     foreach (var employeeByBusinessPartner in employeeByBusinessPartnerFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(employeeByBusinessPartner.Employee.Identifier, employeeByBusinessPartner.BusinessPartner.Identifier);
                             if (employeeByBusinessPartner.IsActive)
                             {
@@ -163,7 +161,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

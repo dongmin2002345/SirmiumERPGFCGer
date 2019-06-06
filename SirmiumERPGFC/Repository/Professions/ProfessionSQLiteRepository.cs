@@ -255,8 +255,6 @@ namespace SirmiumERPGFC.Repository.Professions
                     List<ProfessionViewModel> professionsFromDB = response.Professions;
                     foreach (var profession in professionsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(profession.Identifier);
                             if (profession.IsActive)
                             {
@@ -265,7 +263,6 @@ namespace SirmiumERPGFC.Repository.Professions
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

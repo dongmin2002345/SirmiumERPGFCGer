@@ -170,8 +170,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<EmployeeCardViewModel> EmployeeCardsFromDB = response.EmployeeCards;
                     foreach (var EmployeeCard in EmployeeCardsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(EmployeeCard.Identifier);
                             if (EmployeeCard.IsActive)
                             {
@@ -180,7 +178,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

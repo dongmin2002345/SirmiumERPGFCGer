@@ -168,8 +168,6 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                     List<InputInvoiceDocumentViewModel> InputInvoiceDocumentsFromDB = response.InputInvoiceDocuments;
                     foreach (var InputInvoiceDocument in InputInvoiceDocumentsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(InputInvoiceDocument.Identifier);
                             if (InputInvoiceDocument.IsActive)
                             {
@@ -178,7 +176,6 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

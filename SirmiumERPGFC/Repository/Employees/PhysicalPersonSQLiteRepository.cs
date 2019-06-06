@@ -409,8 +409,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<PhysicalPersonViewModel> PhysicalPersonsFromDB = response.PhysicalPersons;
                     foreach (var PhysicalPerson in PhysicalPersonsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(PhysicalPerson.Identifier);
                             if (PhysicalPerson.IsActive)
                             {
@@ -419,7 +417,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

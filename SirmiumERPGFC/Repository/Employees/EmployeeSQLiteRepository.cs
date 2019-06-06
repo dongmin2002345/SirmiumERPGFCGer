@@ -820,8 +820,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<EmployeeViewModel> EmployeesFromDB = response.Employees;
                     foreach (var Employee in EmployeesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(Employee.Identifier);
                             if (Employee.IsActive)
                             {
@@ -830,7 +828,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

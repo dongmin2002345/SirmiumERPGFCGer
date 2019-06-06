@@ -338,8 +338,6 @@ namespace SirmiumERPGFC.Repository.Users
                     List<UserViewModel> usersFromDB = response.Users;
                     foreach (var user in usersFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(user.Identifier);
                             user.IsSynced = true;
                             if (user.IsActive)
@@ -349,7 +347,6 @@ namespace SirmiumERPGFC.Repository.Users
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

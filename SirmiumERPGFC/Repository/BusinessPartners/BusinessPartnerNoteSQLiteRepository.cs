@@ -219,8 +219,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     List<BusinessPartnerNoteViewModel> BusinessPartnerNotesFromDB = response.BusinessPartnerNotes;
                     foreach (var BusinessPartnerNote in BusinessPartnerNotesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(BusinessPartnerNote.Identifier);
                             if (BusinessPartnerNote.IsActive)
                             {
@@ -229,7 +227,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

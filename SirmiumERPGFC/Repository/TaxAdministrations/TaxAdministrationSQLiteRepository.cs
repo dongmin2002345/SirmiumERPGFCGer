@@ -306,8 +306,6 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                     List<TaxAdministrationViewModel> taxAdministrationsFromDB = response.TaxAdministrations;
                     foreach (var taxAdministration in taxAdministrationsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(taxAdministration.Identifier);
                             if (taxAdministration.IsActive)
                             {
@@ -316,7 +314,6 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

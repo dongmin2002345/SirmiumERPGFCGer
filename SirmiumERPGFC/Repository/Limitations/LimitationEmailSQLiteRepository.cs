@@ -176,8 +176,6 @@ namespace SirmiumERPGFC.Repository.Limitations
                     List<LimitationEmailViewModel> LimitationEmailsFromDB = response.LimitationEmails;
                     foreach (var LimitationEmail in LimitationEmailsFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(LimitationEmail.Identifier);
                             if (LimitationEmail.IsActive)
                             {
@@ -186,7 +184,6 @@ namespace SirmiumERPGFC.Repository.Limitations
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

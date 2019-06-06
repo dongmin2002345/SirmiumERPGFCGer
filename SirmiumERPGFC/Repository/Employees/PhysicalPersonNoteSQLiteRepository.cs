@@ -217,8 +217,6 @@ namespace SirmiumERPGFC.Repository.Employees
                     List<PhysicalPersonNoteViewModel> PhysicalPersonNotesFromDB = response.PhysicalPersonNotes;
                     foreach (var PhysicalPersonNote in PhysicalPersonNotesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(PhysicalPersonNote.Identifier);
                             if (PhysicalPersonNote.IsActive)
                             {
@@ -227,7 +225,6 @@ namespace SirmiumERPGFC.Repository.Employees
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else

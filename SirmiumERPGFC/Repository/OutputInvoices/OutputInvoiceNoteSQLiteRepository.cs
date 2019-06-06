@@ -216,8 +216,6 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                     List<OutputInvoiceNoteViewModel> OutputInvoiceNotesFromDB = response.OutputInvoiceNotes;
                     foreach (var OutputInvoiceNote in OutputInvoiceNotesFromDB.OrderBy(x => x.Id))
                     {
-                        ThreadPool.QueueUserWorkItem((k) =>
-                        {
                             Delete(OutputInvoiceNote.Identifier);
                             if (OutputInvoiceNote.IsActive)
                             {
@@ -226,7 +224,6 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                                 syncedItems++;
                                 callback?.Invoke(syncedItems, toSync);
                             }
-                        });
                     }
                 }
                 else
