@@ -335,12 +335,12 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <Button x:Name="btnEditProfession" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditProfession_Click">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                                 <Button x:Name="btnDeleteProfession" Click="btnDeleteProfession_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -432,12 +432,12 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <Button x:Name="btnEditLicence" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditLicence_Click">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                                 <Button x:Name="btnDeleteLicence" Click="btnDeleteLicence_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -531,12 +531,12 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <Button x:Name="btnEdit" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEdit_Click">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                                 <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -627,12 +627,12 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <Button x:Name="btnEditDocument" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditDocument_Click">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                                 <Button x:Name="btnDeleteDocument" Click="btnDeleteDocument_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -709,12 +709,12 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <Button x:Name="btnEditNote" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditNote_Click">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                                 <Button x:Name="btnDeleteNote" Click="btnDeleteNote_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>

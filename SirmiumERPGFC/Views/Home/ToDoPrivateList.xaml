@@ -76,7 +76,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Promeni">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\ExcelBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
                                         </Button>
                                         <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Obriši">

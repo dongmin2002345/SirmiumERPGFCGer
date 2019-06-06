@@ -176,12 +176,12 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="1 2 2 2" CommandParameter="{Binding}" ToolTip="Promeni" >
+                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="2 1 1 1" CommandParameter="{Binding}" ToolTip="Promeni" >
                                                 <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                 </StackPanel>
                                             </Button>
-                                        <Button x:Name="btnDeletePopup" Margin="1 2 2 2" CommandParameter="{Binding}" ToolTip="Obriši" >
+                                        <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" ToolTip="Obriši" >
                                                 <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                 </StackPanel>
@@ -193,7 +193,7 @@
                                                         <Binding ElementName="btnDelete" Path="IsMouseCaptured" Mode="OneWay"/>
                                                     </MultiBinding>
                                                 </Popup.IsOpen>
-                                                <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="DarkGreen" BorderThickness="5" CornerRadius="15">
+                                                    <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="#007ACC" BorderThickness="5" CornerRadius="15">
                                                     <Grid Width="300" Margin="10">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="Auto" />

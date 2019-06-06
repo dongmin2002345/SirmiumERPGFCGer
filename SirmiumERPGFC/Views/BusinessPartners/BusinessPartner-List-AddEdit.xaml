@@ -311,12 +311,12 @@
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                 <Button x:Name="btnEditPhone" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditPhone_Click">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\edit.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\ExcelBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                                     </StackPanel>
                                                 </Button>
                                                 <Button x:Name="btnDeletePhone" Click="btnDeletePhone_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18"  RenderOptions.BitmapScalingMode="HighQuality"/>
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -420,7 +420,7 @@
                                                 </Button>
                                                 <Button x:Name="btnDeleteLocation" Click="btnDeleteLocation_Click" Margin="2 0 2 0" CommandParameter="{Binding}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Image Source="..\..\Resources\Icons\delete.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18"  RenderOptions.BitmapScalingMode="HighQuality"/>
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
