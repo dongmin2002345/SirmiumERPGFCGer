@@ -193,7 +193,7 @@ namespace SirmiumERPGFC.Views.Home
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("SAČUVAJ"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
                 }
@@ -202,7 +202,7 @@ namespace SirmiumERPGFC.Views.Home
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("SAČUVAJ"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
@@ -210,7 +210,7 @@ namespace SirmiumERPGFC.Views.Home
                 {
                     new ToDoSQLiteRepository().UpdateSyncStatus(response.ToDo.Identifier, response.ToDo.UpdatedAt, response.ToDo.Id, true);
                     MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("SAČUVAJ"));
+                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
                     ToDoCreatedUpdated();
