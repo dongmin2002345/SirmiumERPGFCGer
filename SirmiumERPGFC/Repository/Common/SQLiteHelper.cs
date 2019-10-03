@@ -12,15 +12,13 @@ using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Common
 {
     public class SQLiteHelper
     {
+        public static string SqLiteTableName = "Filename=SirmiumERPGFC.db";
+
         public static void AddColumnIfNotExists(string table, string column, string columnType)
         {
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
