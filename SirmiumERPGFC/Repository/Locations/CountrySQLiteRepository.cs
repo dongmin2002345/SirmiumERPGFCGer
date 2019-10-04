@@ -5,15 +5,14 @@ using ServiceInterfaces.ViewModels.Common.Locations;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Locations
 {
+    
     public class CountrySQLiteRepository
     {
+        #region SQL
+
         public static string CountryTableCreatePart =
            "CREATE TABLE IF NOT EXISTS Countries " +
            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -42,6 +41,52 @@ namespace SirmiumERPGFC.Repository.Locations
             "VALUES (NULL, @ServerId, @Identifier, @Code, @AlfaCode, @NumericCode, @Mark, @Name, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private CountryViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            CountryViewModel dbEntry = new CountryViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.AlfaCode = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.NumericCode = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Mark = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, CountryViewModel country)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", country.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", country.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)country.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AlfaCode", ((object)country.AlfaCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@NumericCode", ((object)country.NumericCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Mark", ((object)country.Mark) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)country.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", country.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)country.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public CountryListResponse GetCountriesByPage(int companyId, CountryViewModel countrySearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             CountryListResponse response = new CountryListResponse();
@@ -62,6 +107,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced DESC, Name ASC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)countrySearchObject.Search_Name) != null ? "%" + countrySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@AlfaCode", ((object)countrySearchObject.Search_AlfaCode) != null ? "%" + countrySearchObject.Search_AlfaCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@NumericCode", ((object)countrySearchObject.Search_NumericCode) != null ? "%" + countrySearchObject.Search_NumericCode + "%" : "");
@@ -74,19 +120,7 @@ namespace SirmiumERPGFC.Repository.Locations
 
                     while (query.Read())
                     {
-                        int counter = 0;
-                        CountryViewModel dbEntry = new CountryViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.AlfaCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NumericCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Mark = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        CountryViewModel dbEntry = Read(query);
                         Countries.Add(dbEntry);
                     }
 
@@ -99,6 +133,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         "AND (@Mark IS NULL OR @Mark = '' OR Mark LIKE @Mark) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name = @Name) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)countrySearchObject.Search_Name) != null ? "%" + countrySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@AlfaCode", ((object)countrySearchObject.Search_AlfaCode) != null ? "%" + countrySearchObject.Search_AlfaCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@NumericCode", ((object)countrySearchObject.NumericCode) != null ? "%" + countrySearchObject.NumericCode + "%" : "");
@@ -142,6 +177,7 @@ namespace SirmiumERPGFC.Repository.Locations
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -149,22 +185,8 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        CountryViewModel dbEntry = new CountryViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.AlfaCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NumericCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Mark = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        countries.Add(dbEntry);
-                    }
+                        countries.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -200,22 +222,8 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        CountryViewModel dbEntry = new CountryViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.AlfaCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NumericCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Mark = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        Country = dbEntry;
-                    }
+                        Country = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -232,6 +240,10 @@ namespace SirmiumERPGFC.Repository.Locations
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(ICountryService countryService, Action<int, int> callback = null)
         {
             try
@@ -247,17 +259,41 @@ namespace SirmiumERPGFC.Repository.Locations
                 if (response.Success)
                 {
                     toSync = response?.Countries?.Count ?? 0;
-                    List<CountryViewModel> countriesFromDB = response.Countries;
-                    foreach (var country in countriesFromDB.OrderBy(x => x.Id))
+                    List<CountryViewModel> countrysFromDB = response.Countries;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(country.Identifier);
-                            if (country.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM Countries WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var country in countrysFromDB)
                             {
-                                country.IsSynced = true;
-                                Create(country);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", country.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (country.IsActive)
+                                {
+                                    country.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, country);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -271,7 +307,7 @@ namespace SirmiumERPGFC.Repository.Locations
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
             {
                 db.Open();
                 try
@@ -303,37 +339,25 @@ namespace SirmiumERPGFC.Repository.Locations
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public CountryResponse Create(CountryViewModel country)
         {
             CountryResponse response = new CountryResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", country.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", country.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)country.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@AlfaCode", ((object)country.AlfaCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@NumericCode", ((object)country.NumericCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Mark", ((object)country.Mark) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)country.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", country.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)country.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, country);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -349,53 +373,15 @@ namespace SirmiumERPGFC.Repository.Locations
             }
         }
 
-        public CountryResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAT, int serverId, bool isSynced)
-        {
-            CountryResponse response = new CountryResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE Countries SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAT);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public CountryResponse Delete(Guid identifier)
         {
             CountryResponse response = new CountryResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
             {
                 db.Open();
 
@@ -403,12 +389,11 @@ namespace SirmiumERPGFC.Repository.Locations
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM Countries WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM Countries WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -430,7 +415,7 @@ namespace SirmiumERPGFC.Repository.Locations
 
             try
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                 {
                     db.Open();
                     db.EnableExtensions(true);
@@ -442,7 +427,7 @@ namespace SirmiumERPGFC.Repository.Locations
                     insertCommand.CommandText = "DELETE FROM Countries";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -465,5 +450,7 @@ namespace SirmiumERPGFC.Repository.Locations
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }
