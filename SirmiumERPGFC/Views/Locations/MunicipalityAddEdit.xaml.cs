@@ -194,7 +194,6 @@ namespace SirmiumERPGFC.Views.Locations
 
                 if (response.Success)
                 {
-                    new MunicipalitySQLiteRepository().UpdateSyncStatus(response.Municipality.Identifier, response.Municipality.Code, response.Municipality.UpdatedAt, response.Municipality.Id, true);
                     MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
