@@ -309,8 +309,10 @@ namespace SirmiumERPWeb
             ConstructionSiteNoteView.CreateView();
             ConstructionSiteView.CreateView();
 
+            var mailingTime = new Config().GetConfiguration()["MailTime"];
+            Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));
 
-            Thread mailThread = new Thread(() => MailTask.SendMailTime("09:00:00"));
+            Thread mailThread = new Thread(() => MailTask.SendMailTime(mailingTime));
             mailThread.IsBackground = true;
             mailThread.Start();
         }

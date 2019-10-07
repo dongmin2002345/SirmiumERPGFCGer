@@ -26,6 +26,10 @@ namespace SirmiumERPWeb.Helpers
         {
             try
             {
+                // ispravka u slucaju da se pojavi korisnik sa nedefinisanom email adresom
+                users = users.Where(x => !String.IsNullOrEmpty(x.Email) && !String.IsNullOrEmpty(x.Name) && !string.IsNullOrEmpty(x.LastName)).ToList();
+
+
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
                 builder.UseSqlServer(new Config().GetConfiguration()["ConnectionString"]);
 

@@ -7,7 +7,7 @@ namespace Configurator
 {
     public class Config
     {
-        string configFile = Directory.GetCurrentDirectory() + "\\Config.json";
+        string configFile = Directory.GetCurrentDirectory() + "/Config.json";
 
         Dictionary<string, string> Settings { get; set; }
 
@@ -20,13 +20,14 @@ namespace Configurator
             Settings["ConnectionString"] = "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true";
             Settings["ApiConnectionString"] = "Server=(localdb)\\MSSQLLocalDB;Database=SirmiumERPGFC;Trusted_Connection=True;MultipleActiveResultSets=true";
             Settings["ServerUrl"] = "http://0.0.0.0:5005/";
+            Settings["MailTime"] = "09:00:00";
             //Settings["ConnectionString"] = "Server=ML350G5\\sd2016;Database=SirmiumERPDB;Trusted_Connection=True;MultipleActiveResultSets=true";
             //Settings["ApiConnectionString"] = "Server=ML350G5\\sd2016;Database=SirmiumERPDB;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 
             if (!File.Exists(configFile))
             {
-                File.WriteAllText(configFile, JsonConvert.SerializeObject(Settings));
+                File.WriteAllText(configFile, JsonConvert.SerializeObject(Settings, Formatting.Indented));
             }
             string content = File.ReadAllText(configFile);
             Settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
@@ -38,7 +39,7 @@ namespace Configurator
 
         public void SaveConfiguration()
         {
-            File.WriteAllText(configFile, JsonConvert.SerializeObject(Settings));
+            File.WriteAllText(configFile, JsonConvert.SerializeObject(Settings, Formatting.Indented));
         }
     }
 }
