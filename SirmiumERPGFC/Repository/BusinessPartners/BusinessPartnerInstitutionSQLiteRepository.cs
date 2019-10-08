@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
 {
     public class BusinessPartnerInstitutionSQLiteRepository
     {
+        #region SQL
+
         public static string BusinessPartnerInstitutionTableCreatePart =
                "CREATE TABLE IF NOT EXISTS BusinessPartnerInstitutions " +
                "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -53,6 +51,63 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@Institution, @Username, @Password, @ContactPerson, @Phone, @Fax, @Email, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private BusinessPartnerInstitutionViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            BusinessPartnerInstitutionViewModel dbEntry = new BusinessPartnerInstitutionViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.Institution = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Phone = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, BusinessPartnerInstitutionViewModel businessPartnerInstitution)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerInstitution.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerInstitution.Identifier);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerInstitution.BusinessPartner.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerInstitution.BusinessPartner.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerInstitution.BusinessPartner.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerInstitution.BusinessPartner.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerInstitution.BusinessPartner.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerInstitution.BusinessPartner.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Institution", ((object)businessPartnerInstitution.Institution) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Username", ((object)businessPartnerInstitution.Username) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Password", ((object)businessPartnerInstitution.Password) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartnerInstitution.ContactPerson) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Phone", ((object)businessPartnerInstitution.Phone) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Fax", ((object)businessPartnerInstitution.Fax) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Email", ((object)businessPartnerInstitution.Email) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerInstitution.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerInstitution.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public BusinessPartnerInstitutionListResponse GetBusinessPartnerInstitutionsByBusinessPartner(int companyId, Guid businessPartnerIdentifier)
         {
             BusinessPartnerInstitutionListResponse response = new BusinessPartnerInstitutionListResponse();
@@ -69,31 +124,15 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerInstitutionViewModel dbEntry = new BusinessPartnerInstitutionViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Institution = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Phone = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerInstitutions.Add(dbEntry);
-                    }
+                        businessPartnerInstitutions.Add(Read(query));
+                    
 
                 }
                 catch (SqliteException error)
@@ -130,25 +169,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerInstitutionViewModel dbEntry = new BusinessPartnerInstitutionViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Institution = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Phone = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Fax = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerInstitution = dbEntry;
-                    }
+                        businessPartnerInstitution = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -165,6 +187,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IBusinessPartnerInstitutionService BusinessPartnerInstitutionService, Action<int, int> callback = null)
         {
             try
@@ -180,17 +206,41 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 if (response.Success)
                 {
                     toSync = response?.BusinessPartnerInstitutions?.Count ?? 0;
-                    List<BusinessPartnerInstitutionViewModel> BusinessPartnerInstitutionsFromDB = response.BusinessPartnerInstitutions;
-                    foreach (var BusinessPartnerInstitution in BusinessPartnerInstitutionsFromDB.OrderBy(x => x.Id))
+                    List<BusinessPartnerInstitutionViewModel> businessPartnerInstitutionsFromDB = response.BusinessPartnerInstitutions;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(BusinessPartnerInstitution.Identifier);
-                            if (BusinessPartnerInstitution.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM BusinessPartnerInstitutions WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var businessPartnerInstitution in businessPartnerInstitutionsFromDB)
                             {
-                                BusinessPartnerInstitution.IsSynced = true;
-                                Create(BusinessPartnerInstitution);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", businessPartnerInstitution.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (businessPartnerInstitution.IsActive)
+                                {
+                                    businessPartnerInstitution.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, businessPartnerInstitution);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -236,6 +286,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public BusinessPartnerInstitutionResponse Create(BusinessPartnerInstitutionViewModel businessPartnerInstitution)
         {
             BusinessPartnerInstitutionResponse response = new BusinessPartnerInstitutionResponse();
@@ -244,37 +298,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerInstitution.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerInstitution.Identifier);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerInstitution.BusinessPartner.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerInstitution.BusinessPartner.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerInstitution.BusinessPartner.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerInstitution.BusinessPartner.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerInstitution.BusinessPartner.InternalCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerInstitution.BusinessPartner.NameGer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Institution", ((object)businessPartnerInstitution.Institution) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Username", ((object)businessPartnerInstitution.Username) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Password", ((object)businessPartnerInstitution.Password) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartnerInstitution.ContactPerson) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Phone", ((object)businessPartnerInstitution.Phone) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Fax", ((object)businessPartnerInstitution.Fax) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Email", ((object)businessPartnerInstitution.Email) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerInstitution.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerInstitution.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, businessPartnerInstitution);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -290,47 +320,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerInstitutionResponse UpdateSyncStatus(Guid identifier, int serverId, string code, DateTime? updatedAt, bool isSynced)
-        {
-            BusinessPartnerInstitutionResponse response = new BusinessPartnerInstitutionResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE BusinessPartnerInstitutions SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public BusinessPartnerInstitutionResponse Delete(Guid identifier)
         {
@@ -349,7 +341,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -383,7 +375,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     insertCommand.CommandText = "DELETE FROM BusinessPartnerInstitutions";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -406,5 +398,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -518,7 +517,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     return;
                 }
 
-                new BusinessPartnerByConstructionSiteSQLiteRepository().UpdateSyncStatus(businessPartnerByConstructionSite.Identifier, response.BusinessPartnerByConstructionSite.Code, response.BusinessPartnerByConstructionSite.UpdatedAt, response.BusinessPartnerByConstructionSite.Id, true);
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
 
                 ContractStartDate = DateTime.Now;

@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
 {
     public class BusinessPartnerByConstructionSiteSQLiteRepository
     {
+        #region SQL
+
         public static string BusinessPartnerByConstructionSiteTableCreatePart =
             "CREATE TABLE IF NOT EXISTS BusinessPartnerByConstructionSites " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -58,6 +56,63 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private BusinessPartnerByConstructionSiteViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            BusinessPartnerByConstructionSiteViewModel dbEntry = new BusinessPartnerByConstructionSiteViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.MaxNumOfEmployees = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, BusinessPartnerByConstructionSiteViewModel businessPartnerByConstructionSite)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerByConstructionSite.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerByConstructionSite.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerByConstructionSite.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StartDate", ((object)businessPartnerByConstructionSite.StartDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EndDate", ((object)businessPartnerByConstructionSite.EndDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)businessPartnerByConstructionSite.EndDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@MaxNumOfEmployees", ((object)businessPartnerByConstructionSite.MaxNumOfEmployees) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerByConstructionSite.BusinessPartner?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerByConstructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerByConstructionSite.BusinessPartner?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerByConstructionSite.BusinessPartner?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerByConstructionSite.BusinessPartner?.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerByConstructionSite.BusinessPartner?.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)businessPartnerByConstructionSite.ConstructionSite?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)businessPartnerByConstructionSite.ConstructionSite?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)businessPartnerByConstructionSite.ConstructionSite?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)businessPartnerByConstructionSite.ConstructionSite?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerByConstructionSite.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerByConstructionSite.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
 
         public BusinessPartnerByConstructionSiteListResponse GetByConstructionSite(Guid constructionSiteIdentifier, string filterString, int currentPage = 1, int itemsPerPage = 50)
         {
@@ -75,6 +130,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier " +
                         "ORDER BY Id " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -82,24 +138,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerByConstructionSiteViewModel dbEntry = new BusinessPartnerByConstructionSiteViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.MaxNumOfEmployees = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerByConstructionSites.Add(dbEntry);
-                    }
+                        businessPartnerByConstructionSites.Add(Read(query));
+                    
 
                     response.BusinessPartnerByConstructionSites = businessPartnerByConstructionSites;
 
@@ -129,6 +169,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService, Action<int, int> callback = null)
         {
             try
@@ -144,17 +188,41 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 if (response.Success)
                 {
                     toSync = response?.BusinessPartnerByConstructionSites?.Count ?? 0;
-                    List<BusinessPartnerByConstructionSiteViewModel> businessPartnerByConstructionSiteFromDB = response.BusinessPartnerByConstructionSites;
-                    foreach (var businessPartnerByConstructionSite in businessPartnerByConstructionSiteFromDB.OrderBy(x => x.Id))
+                    List<BusinessPartnerByConstructionSiteViewModel> businessPartnerByConstructionSitesFromDB = response.BusinessPartnerByConstructionSites;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(businessPartnerByConstructionSite.BusinessPartner.Identifier, businessPartnerByConstructionSite.ConstructionSite.Identifier);
-                            if (businessPartnerByConstructionSite.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM BusinessPartnerByConstructionSites WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var businessPartnerByConstructionSite in businessPartnerByConstructionSitesFromDB)
                             {
-                                businessPartnerByConstructionSite.IsSynced = true;
-                                Create(businessPartnerByConstructionSite);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", businessPartnerByConstructionSite.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (businessPartnerByConstructionSite.IsActive)
+                                {
+                                    businessPartnerByConstructionSite.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, businessPartnerByConstructionSite);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -200,6 +268,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public BusinessPartnerByConstructionSiteResponse Create(BusinessPartnerByConstructionSiteViewModel businessPartnerByConstructionSite)
         {
             BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
@@ -208,39 +280,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerByConstructionSite.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerByConstructionSite.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerByConstructionSite.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@StartDate", ((object)businessPartnerByConstructionSite.StartDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EndDate", ((object)businessPartnerByConstructionSite.EndDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)businessPartnerByConstructionSite.EndDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@MaxNumOfEmployees", ((object)businessPartnerByConstructionSite.MaxNumOfEmployees) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerByConstructionSite.BusinessPartner?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerByConstructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerByConstructionSite.BusinessPartner?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerByConstructionSite.BusinessPartner?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerByConstructionSite.BusinessPartner?.InternalCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerByConstructionSite.BusinessPartner?.NameGer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)businessPartnerByConstructionSite.ConstructionSite?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)businessPartnerByConstructionSite.ConstructionSite?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)businessPartnerByConstructionSite.ConstructionSite?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)businessPartnerByConstructionSite.ConstructionSite?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerByConstructionSite.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerByConstructionSite.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, businessPartnerByConstructionSite);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -256,47 +302,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerByConstructionSiteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            BusinessPartnerByConstructionSiteResponse response = new BusinessPartnerByConstructionSiteResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE BusinessPartnerByConstructionSites SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " + 
-                    "UpdatedAt = @UpdatedAt, " + 
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public BusinessPartnerByConstructionSiteResponse Delete(Guid businessPartnerIdentifier, Guid constructionSiteIdentifier)
         {
@@ -310,13 +318,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier AND ConstructionSiteIdentifier = @ConstructionSiteIdentifier";
+                insertCommand.CommandText ="DELETE FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier AND ConstructionSiteIdentifier = @ConstructionSiteIdentifier";
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                 insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -350,7 +358,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     insertCommand.CommandText = "DELETE FROM BusinessPartnerByConstructionSites";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -373,5 +381,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

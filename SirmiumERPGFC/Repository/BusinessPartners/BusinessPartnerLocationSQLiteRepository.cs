@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
 {
     public class BusinessPartnerLocationSQLiteRepository
     {
+        #region SQL
+
         public static string BusinessPartnerLocationTableCreatePart =
             "CREATE TABLE IF NOT EXISTS BusinessPartnerLocations " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -64,7 +62,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "Address, CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
-              "RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            "RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
@@ -72,8 +70,73 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@Address, @CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, " +
-              "@RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
+            "@RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
+
+        #region Helper methods
+
+        private BusinessPartnerLocationViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            BusinessPartnerLocationViewModel dbEntry = new BusinessPartnerLocationViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+            dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+            dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, BusinessPartnerLocationViewModel businessPartnerLocation)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerLocation.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerLocation.Identifier);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerLocation.BusinessPartner.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerLocation.BusinessPartner.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerLocation.BusinessPartner.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerLocation.BusinessPartner.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerLocation.BusinessPartner.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerLocation.BusinessPartner.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Address", ((object)businessPartnerLocation.Address) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartnerLocation.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartnerLocation.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartnerLocation.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartnerLocation.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityId", ((object)businessPartnerLocation.City?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)businessPartnerLocation.City?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityCode", ((object)businessPartnerLocation.City?.ZipCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityName", ((object)businessPartnerLocation.City?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)businessPartnerLocation.Municipality?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)businessPartnerLocation.Municipality?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)businessPartnerLocation.Municipality?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)businessPartnerLocation.Municipality?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionId", ((object)businessPartnerLocation.Region?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)businessPartnerLocation.Region?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)businessPartnerLocation.Region?.RegionCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionName", ((object)businessPartnerLocation.Region?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerLocation.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerLocation.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
 
         public BusinessPartnerLocationListResponse GetBusinessPartnerLocationsByBusinessPartner(int companyId, Guid businessPartnerIdentifier)
         {
@@ -91,29 +154,15 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerLocationViewModel dbEntry = new BusinessPartnerLocationViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
-                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerLocations.Add(dbEntry);
-                    }
+                        businessPartnerLocations.Add(Read(query));
+                    
 
                 }
                 catch (SqliteException error)
@@ -150,23 +199,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerLocationViewModel dbEntry = new BusinessPartnerLocationViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
-                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerLocation = dbEntry;
-                    }
+                        businessPartnerLocation = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -183,6 +217,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IBusinessPartnerLocationService BusinessPartnerLocationService, Action<int, int> callback = null)
         {
             try
@@ -198,17 +236,41 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 if (response.Success)
                 {
                     toSync = response?.BusinessPartnerLocations?.Count ?? 0;
-                    List<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB = response.BusinessPartnerLocations;
-                    foreach (var BusinessPartnerLocation in BusinessPartnerLocationsFromDB.OrderBy(x => x.Id))
+                    List<BusinessPartnerLocationViewModel> businessPartnerLocationsFromDB = response.BusinessPartnerLocations;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(BusinessPartnerLocation.Identifier);
-                            if (BusinessPartnerLocation.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM BusinessPartnerLocations WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var businessPartnerLocation in businessPartnerLocationsFromDB)
                             {
-                                BusinessPartnerLocation.IsSynced = true;
-                                Create(BusinessPartnerLocation);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", businessPartnerLocation.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (businessPartnerLocation.IsActive)
+                                {
+                                    businessPartnerLocation.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, businessPartnerLocation);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -254,6 +316,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public BusinessPartnerLocationResponse Create(BusinessPartnerLocationViewModel businessPartnerLocation)
         {
             BusinessPartnerLocationResponse response = new BusinessPartnerLocationResponse();
@@ -262,46 +328,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
                 
-                insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerLocation.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerLocation.Identifier);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)businessPartnerLocation.BusinessPartner.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerLocation.BusinessPartner.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)businessPartnerLocation.BusinessPartner.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)businessPartnerLocation.BusinessPartner.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)businessPartnerLocation.BusinessPartner.InternalCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)businessPartnerLocation.BusinessPartner.NameGer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Address", ((object)businessPartnerLocation.Address) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartnerLocation.Country?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartnerLocation.Country?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartnerLocation.Country?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartnerLocation.Country?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityId", ((object)businessPartnerLocation.City?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)businessPartnerLocation.City?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityCode", ((object)businessPartnerLocation.City?.ZipCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityName", ((object)businessPartnerLocation.City?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)businessPartnerLocation.Municipality?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)businessPartnerLocation.Municipality?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)businessPartnerLocation.Municipality?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)businessPartnerLocation.Municipality?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@RegionId", ((object)businessPartnerLocation.Region?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)businessPartnerLocation.Region?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@RegionCode", ((object)businessPartnerLocation.Region?.RegionCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@RegionName", ((object)businessPartnerLocation.Region?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerLocation.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerLocation.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
+                    insertCommand = AddCreateParameters(insertCommand, businessPartnerLocation);
                     insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
@@ -318,47 +350,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerLocationResponse UpdateSyncStatus(Guid identifier, int serverId, string code, DateTime? updatedAt, bool isSynced)
-        {
-            BusinessPartnerLocationResponse response = new BusinessPartnerLocationResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE BusinessPartnerLocations SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public BusinessPartnerLocationResponse Delete(Guid identifier)
         {
@@ -372,12 +366,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM BusinessPartnerLocations WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM BusinessPartnerLocations WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -409,9 +403,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
                     //Use parameterized query to prevent SQL injection attacks
                     insertCommand.CommandText = "DELETE FROM BusinessPartnerLocations";
+                    
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -434,5 +429,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

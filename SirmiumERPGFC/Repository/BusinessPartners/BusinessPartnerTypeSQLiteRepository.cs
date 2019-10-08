@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
 {
     public class BusinessPartnerTypeSQLiteRepository
     {
+        #region SQL
+
         public static string BusinessPartnerTypeTableCreatePart =
             "CREATE TABLE IF NOT EXISTS BusinessPartnerTypes " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -41,6 +39,50 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "VALUES (NULL, @ServerId, @Identifier,  @Code, @Name, @IsBuyer, @IsSupplier, @IsSynced, @UpdatedAt, " +
             "@CreatedById, @CreatedByName, @CompanyId, @CompanyName);";
 
+        #endregion
+
+        #region Helper methods
+
+        private BusinessPartnerTypeViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            BusinessPartnerTypeViewModel dbEntry = new BusinessPartnerTypeViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsBuyer = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.IsSupplier = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, BusinessPartnerTypeViewModel businessPartnerType)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerType.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerType.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerType.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerType.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsBuyer", ((object)businessPartnerType.IsBuyer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSupplier", ((object)businessPartnerType.IsSupplier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerType.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerType.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public BusinessPartnerTypeListResponse GetBusinessPartnerTypes(int companyId)
         {
             BusinessPartnerTypeListResponse response = new BusinessPartnerTypeListResponse();
@@ -61,21 +103,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerTypeViewModel dbEntry = new BusinessPartnerTypeViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsBuyer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSupplier = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerTypes.Add(dbEntry);
-                    }
+                        businessPartnerTypes.Add(Read(query));
+                    
 
                 }
                 catch (SqliteException error)
@@ -110,6 +139,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerTypeSearchObject.Search_Name) != null ? "%" + businessPartnerTypeSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -118,22 +148,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerTypeViewModel dbEntry = new BusinessPartnerTypeViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsBuyer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSupplier = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        BusinessPartnerTypes.Add(dbEntry);
-                    }
-
+                        BusinessPartnerTypes.Add(Read(query));
+                    
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
@@ -179,27 +195,15 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "WHERE Identifier IN (SELECT BusinessPartnerTypeIdentifier from BusinessPartnerBusinessPartnerTypes where BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerTypeViewModel dbEntry = new BusinessPartnerTypeViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsBuyer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSupplier = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerTypes.Add(dbEntry);
-                    }
+                        businessPartnerTypes.Add(Read(query));
+                    
 
                 }
                 catch (SqliteException error)
@@ -236,21 +240,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerTypeViewModel dbEntry = new BusinessPartnerTypeViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsBuyer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSupplier = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartnerType = dbEntry;
-                    }
+                        businessPartnerType = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -266,6 +257,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.BusinessPartnerType = businessPartnerType;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IBusinessPartnerTypeService businessPartnerTypeService, Action<int, int> callback = null)
         {
@@ -283,16 +278,40 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 {
                     toSync = response?.BusinessPartnerTypes?.Count ?? 0;
                     List<BusinessPartnerTypeViewModel> businessPartnerTypesFromDB = response.BusinessPartnerTypes;
-                    foreach (var businessPartnerType in businessPartnerTypesFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(businessPartnerType.Identifier);
-                            if (businessPartnerType.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM BusinessPartnerTypes WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var businessPartnerType in businessPartnerTypesFromDB)
                             {
-                                businessPartnerType.IsSynced = true;
-                                Create(businessPartnerType);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", businessPartnerType.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (businessPartnerType.IsActive)
+                                {
+                                    businessPartnerType.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, businessPartnerType);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -338,6 +357,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public BusinessPartnerTypeResponse Create(BusinessPartnerTypeViewModel businessPartnerType)
         {
             BusinessPartnerTypeResponse response = new BusinessPartnerTypeResponse();
@@ -346,28 +369,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", businessPartnerType.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", businessPartnerType.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartnerType.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerType.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsBuyer", ((object)businessPartnerType.IsBuyer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSupplier", ((object)businessPartnerType.IsSupplier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerType.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerType.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, businessPartnerType);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -383,47 +391,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerTypeResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            BusinessPartnerTypeResponse response = new BusinessPartnerTypeResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE BusinessPartnerTypes SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public BusinessPartnerTypeResponse Delete(Guid identifier)
         {
@@ -437,12 +407,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM BusinessPartnerTypes WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM BusinessPartnerTypes WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -476,7 +446,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     insertCommand.CommandText = "DELETE FROM BusinessPartnerTypes";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -499,5 +469,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

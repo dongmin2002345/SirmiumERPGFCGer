@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
 {
     public class BusinessPartnerSQLiteRepository
     {
+        #region SQL
+
         public static string BusinessPartnerTableCreatePart =
             "CREATE TABLE IF NOT EXISTS BusinessPartners " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -93,6 +91,106 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, @VatDeductionFrom, @VatDeductionTo, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region  Helper methods
+
+        private BusinessPartnerViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
+            dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+            dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
+            dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, BusinessPartnerViewModel businessPartner)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", businessPartner.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", businessPartner.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartner.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InternalCode", ((object)businessPartner.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)businessPartner.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PIB", ((object)businessPartner.PIB) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PIO", ((object)businessPartner.PIO) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PDV", ((object)businessPartner.PDV) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IdentificationNumber", ((object)businessPartner.IdentificationNumber) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Rebate", ((object)businessPartner.Rebate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DueDate", ((object)businessPartner.DueDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@WebSite", ((object)businessPartner.WebSite) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartner.ContactPerson) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsInPdv", ((object)businessPartner.IsInPDV) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@JBKJS", ((object)businessPartner.JBKJS) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@NameGer", ((object)businessPartner.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsInPDVGer", ((object)businessPartner.IsInPDVGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TaxAdministrationId", ((object)businessPartner.TaxAdministration?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TaxAdministrationIdentifier", ((object)businessPartner.TaxAdministration?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TaxAdministrationCode", ((object)businessPartner.TaxAdministration?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TaxAdministrationName", ((object)businessPartner.TaxAdministration?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IBAN", ((object)businessPartner.IBAN) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BetriebsNumber", ((object)businessPartner.BetriebsNumber) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TaxNr", ((object)businessPartner.TaxNr) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CommercialNr", ((object)businessPartner.CommercialNr) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ContactPersonGer", ((object)businessPartner.ContactPersonGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorId", ((object)businessPartner.Sector?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)businessPartner.Sector?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorName", ((object)businessPartner.Sector?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartner.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartner.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartner.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartner.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AgencyId", ((object)businessPartner.Agency?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AgencyIdentifier", ((object)businessPartner.Agency?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AgencyCode", ((object)businessPartner.Agency?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartner.Agency?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@VatDeductionFrom", ((object)businessPartner.VatDeductionFrom) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@VatDeductionTo", ((object)businessPartner.VatDeductionTo) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", businessPartner.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartner.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public BusinessPartnerListResponse GetBusinessPartnersByPage(int companyId, BusinessPartnerViewModel businessPartnerSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             BusinessPartnerListResponse response = new BusinessPartnerListResponse();
@@ -120,6 +218,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND bp.CompanyId = @CompanyId " +
                         "ORDER BY bp.IsSynced, bp.Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", (((object)businessPartnerSearchObject?.Search_Name) != null && businessPartnerSearchObject?.Search_Name != "") ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", (((object)businessPartnerSearchObject?.Search_PIB) != null && businessPartnerSearchObject?.Search_PIB != "") ? "%" + businessPartnerSearchObject?.Search_PIB + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InternalCode", ((object)businessPartnerSearchObject?.Search_Code) != null ? "%" + businessPartnerSearchObject?.Search_Code + "%" : "");
@@ -131,43 +230,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
-                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
-                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
-                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartners.Add(dbEntry);
-                    }
+                        businessPartners.Add(Read(query));
+                    
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
@@ -177,6 +241,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
                         "AND (@AgencyName IS NULL OR @AgencyName = '' OR AgencyName LIKE @AgencyName) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)businessPartnerSearchObject?.Search_Name) != null ? "%" + businessPartnerSearchObject?.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", ((object)businessPartnerSearchObject?.Search_PIB) != null ? "%" + businessPartnerSearchObject?.Search_PIB + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InternalCode", ((object)businessPartnerSearchObject?.Search_Code) != null ? "%" + businessPartnerSearchObject?.Search_Code + "%" : "");
@@ -220,6 +285,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -227,43 +293,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
-                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
-                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
-                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartners.Add(dbEntry);
-                    }
+                        businessPartners.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -299,6 +330,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)BusinessPartnerSearchObject.Search_Name) != null ? "%" + BusinessPartnerSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", ((object)BusinessPartnerSearchObject.Search_PIB) != null ? "%" + BusinessPartnerSearchObject.Search_PIB + "%" : "");
@@ -309,43 +341,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
-                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
-                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
-                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        BusinessPartners.Add(dbEntry);
-                    }
+                        BusinessPartners.Add(Read(query));
+                    
 
                     response.BusinessPartners = BusinessPartners;
 
@@ -356,6 +353,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@PIB IS NULL OR @PIB = '' OR PIB LIKE @PIB) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)BusinessPartnerSearchObject.Search_Name) != null ? "%" + BusinessPartnerSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@PIB", ((object)BusinessPartnerSearchObject.Search_PIB) != null ? "%" + BusinessPartnerSearchObject.Search_PIB + "%" : "");
@@ -401,43 +399,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        BusinessPartnerViewModel dbEntry = new BusinessPartnerViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
-                        dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
-                        dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
-                        dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        businessPartner = dbEntry;
-                    }
+                        businessPartner = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -453,6 +416,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.BusinessPartner = businessPartner;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IBusinessPartnerService bpService, Action<int, int> callback = null)
         {
@@ -470,16 +437,40 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 {
                     toSync = response?.BusinessPartners?.Count ?? 0;
                     List<BusinessPartnerViewModel> businessPartnersFromDB = response.BusinessPartners;
-                    foreach (var bp in businessPartnersFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(bp.Identifier);
-                            if (bp.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM BusinessPartners WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var businessPartner in businessPartnersFromDB)
                             {
-                                bp.IsSynced = true;
-                                Create(bp);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", businessPartner.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (businessPartner.IsActive)
+                                {
+                                    businessPartner.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, businessPartner);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -526,6 +517,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public BusinessPartnerResponse Create(BusinessPartnerViewModel businessPartner)
         {
             BusinessPartnerResponse response = new BusinessPartnerResponse();
@@ -534,62 +529,13 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", businessPartner.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", businessPartner.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)businessPartner.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@InternalCode", ((object)businessPartner.InternalCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)businessPartner.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@PIB", ((object)businessPartner.PIB) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@PIO", ((object)businessPartner.PIO) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@PDV", ((object)businessPartner.PDV) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IdentificationNumber", ((object)businessPartner.IdentificationNumber) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Rebate", ((object)businessPartner.Rebate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@DueDate", ((object)businessPartner.DueDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@WebSite", ((object)businessPartner.WebSite) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartner.ContactPerson) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsInPdv", ((object)businessPartner.IsInPDV) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@JBKJS", ((object)businessPartner.JBKJS) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@NameGer", ((object)businessPartner.NameGer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsInPDVGer", ((object)businessPartner.IsInPDVGer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@TaxAdministrationId", ((object)businessPartner.TaxAdministration?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@TaxAdministrationIdentifier", ((object)businessPartner.TaxAdministration?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@TaxAdministrationCode", ((object)businessPartner.TaxAdministration?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@TaxAdministrationName", ((object)businessPartner.TaxAdministration?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IBAN", ((object)businessPartner.IBAN) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BetriebsNumber", ((object)businessPartner.BetriebsNumber) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@TaxNr", ((object)businessPartner.TaxNr) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CommercialNr", ((object)businessPartner.CommercialNr) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ContactPersonGer", ((object)businessPartner.ContactPersonGer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorId", ((object)businessPartner.Sector?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)businessPartner.Sector?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorName", ((object)businessPartner.Sector?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartner.Country?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartner.Country?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartner.Country?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartner.Country?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@AgencyId", ((object)businessPartner.Agency?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@AgencyIdentifier", ((object)businessPartner.Agency?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@AgencyCode", ((object)businessPartner.Agency?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@AgencyName", ((object)businessPartner.Agency?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@VatDeductionFrom", ((object)businessPartner.VatDeductionFrom) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@VatDeductionTo", ((object)businessPartner.VatDeductionTo) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", businessPartner.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartner.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, businessPartner);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -605,47 +551,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            BusinessPartnerResponse response = new BusinessPartnerResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE BusinessPartners SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public BusinessPartnerResponse Delete(Guid identifier)
         {
@@ -659,12 +567,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM BusinessPartners WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM BusinessPartners WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -698,7 +606,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     insertCommand.CommandText = "DELETE FROM BusinessPartners";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -721,5 +629,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

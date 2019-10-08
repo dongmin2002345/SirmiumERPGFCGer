@@ -1,15 +1,14 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Messages.Base;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SirmiumERPGFC.Repository.BusinessPartners
 {
     public class BusinessPartnerBusinessPartnerTypeSQLiteRepository
     {
+        #region SQL
+
         public static string BusinessPartnerBusinessPartnerTypeTableCreatePart =
             "CREATE TABLE IF NOT EXISTS BusinessPartnerBusinessPartnerTypes " +
             "(BusinessPartnerIdentifier GUID, " +
@@ -19,6 +18,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "(BusinessPartnerIdentifier, BusinessPartnerTypeIdentifier) " +
             "VALUES (@BusinessPartnerIdentifier, @BusinessPartnerTypeIdentifier)";
 
+        #endregion
+
+        #region Create
+
         public BaseResponse Create(Guid businessPartnerIdentifier, Guid businessPartnerTypeIdentifier)
         {
             BaseResponse response = new BaseResponse();
@@ -27,10 +30,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
@@ -38,7 +38,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -53,6 +53,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 return response;
             }
         }
+
+        #endregion
+
+        #region Delete
 
         public BaseResponse Delete(Guid businessPartnerIdentifier)
         {
@@ -66,12 +70,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM BusinessPartnerBusinessPartnerTypes WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier";
+                insertCommand.CommandText = "DELETE FROM BusinessPartnerBusinessPartnerTypes WHERE BusinessPartnerIdentifier = @BusinessPartnerIdentifier";
                 insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", businessPartnerIdentifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -87,5 +91,6 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
+        #endregion
     }
 }
