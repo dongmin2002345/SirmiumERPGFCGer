@@ -30,7 +30,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 			string queryString =
 				"SELECT InputInvoiceDocumentId, InputInvoiceDocumentIdentifier, " +
 				"InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
-				"Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
 				"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
 				"CompanyId, CompanyName " +
 				"FROM vInputInvoiceDocuments " +
@@ -68,8 +68,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 							inputInvoiceDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
 						if (reader["Path"] != DBNull.Value)
 							inputInvoiceDocument.Path = reader["Path"].ToString();
-
-						inputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            inputInvoiceDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        inputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
 						inputInvoiceDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
 						if (reader["CreatedById"] != DBNull.Value)
@@ -104,7 +105,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 			string queryString =
 				"SELECT InputInvoiceDocumentId, InputInvoiceDocumentIdentifier, " +
 				"InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
-				"Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
 				"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
 				"CompanyId, CompanyName " +
 				"FROM vInputInvoiceDocuments " +
@@ -142,8 +143,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 							inputInvoiceDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
 						if (reader["Path"] != DBNull.Value)
 							inputInvoiceDocument.Path = reader["Path"].ToString();
-
-						inputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            inputInvoiceDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        inputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
 						inputInvoiceDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
 						if (reader["CreatedById"] != DBNull.Value)
@@ -179,7 +181,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 			string queryString =
 				"SELECT InputInvoiceDocumentId, InputInvoiceDocumentIdentifier, " +
 				"InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
-				"Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
 				"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
 				"CompanyId, CompanyName " +
 				"FROM vInputInvoiceDocuments " +
@@ -219,8 +221,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 							inputInvoiceDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
 						if (reader["Path"] != DBNull.Value)
 							inputInvoiceDocument.Path = reader["Path"].ToString();
-
-						inputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            inputInvoiceDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        inputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
 						inputInvoiceDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
 						if (reader["CreatedById"] != DBNull.Value)
@@ -273,9 +276,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 					dbEntry.Name = InputInvoiceDocument.Name;
 					dbEntry.CreateDate = InputInvoiceDocument.CreateDate;
 					dbEntry.Path = InputInvoiceDocument.Path;
-
-					// Set timestamp
-					dbEntry.UpdatedAt = DateTime.Now;
+                    dbEntry.ItemStatus = InputInvoiceDocument.ItemStatus;
+                    // Set timestamp
+                    dbEntry.UpdatedAt = DateTime.Now;
 				}
 
 				return dbEntry;

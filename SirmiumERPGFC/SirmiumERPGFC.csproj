@@ -389,6 +389,12 @@
     <Compile Include="Views\InputInvoices\InputInvoiceList.xaml.cs">
       <DependentUpon>InputInvoiceList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InputInvoices\InputInvoice_Document_AddEdit.xaml.cs">
+      <DependentUpon>InputInvoice_Document_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InputInvoices\InputInvoice_Note_AddEdit.xaml.cs">
+      <DependentUpon>InputInvoice_Note_AddEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
     </Compile>
@@ -705,6 +711,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InputInvoices\InputInvoiceList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputInvoices\InputInvoice_Document_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputInvoices\InputInvoice_Note_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

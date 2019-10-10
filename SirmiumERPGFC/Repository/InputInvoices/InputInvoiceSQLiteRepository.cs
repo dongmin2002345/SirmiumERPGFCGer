@@ -2,6 +2,7 @@
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Messages.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
+using ServiceWebApi.Implementations.Common.InputInvoices;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,77 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			"@AmountGross, @Currency, @DateOfPaymet, @Status, @StatusDate, @Description, @Path, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-		public InputInvoiceListResponse GetInputInvoicesByPage(int companyId, InputInvoiceViewModel InputInvoiceSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        #region Helper methods
+
+        private static InputInvoiceViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            InputInvoiceViewModel dbEntry = new InputInvoiceViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.Supplier = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.AmountNet = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.PDVPercent = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.PDV = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+          
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            return dbEntry;
+        }
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, InputInvoiceViewModel InputInvoice)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", InputInvoice.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", InputInvoice.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)InputInvoice.Code) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)InputInvoice.BusinessPartner?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)InputInvoice.BusinessPartner?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)InputInvoice.BusinessPartner?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoice.BusinessPartner?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)InputInvoice.BusinessPartner?.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)InputInvoice.BusinessPartner?.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoice.Supplier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Address", ((object)InputInvoice.Address) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoice.InvoiceNumber) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceDate", ((object)InputInvoice.InvoiceDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AmountNet", ((object)InputInvoice.AmountNet) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PDVPercent", ((object)InputInvoice.PDVPercent) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PDV", ((object)InputInvoice.PDV) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AmountGross", ((object)InputInvoice.AmountGross) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Currency", ((object)InputInvoice.Currency) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DateOfPaymet", ((object)InputInvoice.DateOfPaymet) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Status", ((object)InputInvoice.Status) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusDate", ((object)InputInvoice.StatusDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Description", ((object)InputInvoice.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)InputInvoice.Path) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", InputInvoice.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)InputInvoice.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        public InputInvoiceListResponse GetInputInvoicesByPage(int companyId, InputInvoiceViewModel InputInvoiceSearchObject, int currentPage = 1, int itemsPerPage = 50)
 		{
 			InputInvoiceListResponse response = new InputInvoiceListResponse();
 			List<InputInvoiceViewModel> InputInvoices = new List<InputInvoiceViewModel>();
@@ -104,31 +175,9 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
 					while (query.Read())
 					{
-						int counter = 0;
-						InputInvoiceViewModel dbEntry = new InputInvoiceViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-						dbEntry.Supplier = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.AmountNet = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.PDVPercent = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.PDV = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						InputInvoices.Add(dbEntry);
+						
+                        InputInvoiceViewModel dbEntry = Read(query);
+                        InputInvoices.Add(dbEntry);
 					}
 
 
@@ -199,31 +248,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
 					while (query.Read())
 					{
-						int counter = 0;
-						InputInvoiceViewModel dbEntry = new InputInvoiceViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-						dbEntry.Supplier = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.AmountNet = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.PDVPercent = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.PDV = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						InputInvoices.Add(dbEntry);
+                        InputInvoiceViewModel dbEntry = Read(query);
+                        InputInvoices.Add(dbEntry);
 					}
 				}
 				catch (SqliteException error)
@@ -261,32 +287,9 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
 					if (query.Read())
 					{
-						int counter = 0;
-						InputInvoiceViewModel dbEntry = new InputInvoiceViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-						dbEntry.Supplier = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.AmountNet = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.PDVPercent = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.PDV = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
-						dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.DateOfPaymet = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						InputInvoice = dbEntry;
-					}
+                        InputInvoiceViewModel dbEntry = Read(query);
+                        InputInvoice = dbEntry;
+                    }
 				}
 				catch (SqliteException error)
 				{
@@ -318,17 +321,41 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 if (response.Success)
                 {
                     toSync = response?.InputInvoices?.Count ?? 0;
-                    List<InputInvoiceViewModel> inputInvoicesFromDB = response.InputInvoices;
-                    foreach (var inputInvoice in inputInvoicesFromDB.OrderBy(x => x.Id))
+                    var items = new List<InputInvoiceViewModel>(response.InputInvoices);
+
+                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
-                            Delete(inputInvoice.Identifier);
-                            if (inputInvoice.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM InputInvoices WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var item in items)
                             {
-                                inputInvoice.IsSynced = true;
-                                Create(inputInvoice);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", item.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (item.IsActive)
+                                {
+                                    item.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, item);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -339,32 +366,32 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
-
-		public DateTime? GetLastUpdatedAt(int companyId)
+        public DateTime? GetLastUpdatedAt(int companyId)
 		{
 			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
 			{
 				db.Open();
 				try
 				{
-					SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from InputInvoices WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
-					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-					SqliteDataReader query = selectCommand.ExecuteReader();
-					int count = query.Read() ? query.GetInt32(0) : 0;
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from InputInvoices WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+                    int count = query.Read() ? query.GetInt32(0) : 0;
 
-					if (count == 0)
-						return null;
-					else
-					{
-						selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from InputInvoices WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
-						selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
-						query = selectCommand.ExecuteReader();
-						if (query.Read())
-						{
-							return query.GetDateTime(0);
-						}
-					}
-				}
+                    if (count == 0)
+                        return null;
+                    else
+                    {
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from InputInvoices WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
+                        selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                        query = selectCommand.ExecuteReader();
+                        if (query.Read())
+                        {
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        }
+                    }
+                }
 				catch (Exception ex)
 				{
 					MainWindow.ErrorMessage = ex.Message;
@@ -381,90 +408,16 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
 			{
 				db.Open();
+                SqliteCommand insertCommand = db.CreateCommand();
+                insertCommand.CommandText = SqlCommandInsertPart;
 
-				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
 
-				//Use parameterized query to prevent SQL injection attacks
-				insertCommand.CommandText = SqlCommandInsertPart;
-
-				insertCommand.Parameters.AddWithValue("@ServerId", InputInvoice.Id);
-				insertCommand.Parameters.AddWithValue("@Identifier", InputInvoice.Identifier);
-				insertCommand.Parameters.AddWithValue("@Code", ((object)InputInvoice.Code) ?? DBNull.Value);
-
-				insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)InputInvoice.BusinessPartner?.Id) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)InputInvoice.BusinessPartner?.Identifier) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)InputInvoice.BusinessPartner?.Code) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoice.BusinessPartner?.Name) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)InputInvoice.BusinessPartner?.InternalCode) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)InputInvoice.BusinessPartner?.NameGer) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoice.Supplier) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Address", ((object)InputInvoice.Address) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoice.InvoiceNumber) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@InvoiceDate", ((object)InputInvoice.InvoiceDate) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@AmountNet", ((object)InputInvoice.AmountNet) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@PDVPercent", ((object)InputInvoice.PDVPercent) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@PDV", ((object)InputInvoice.PDV) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@AmountGross", ((object)InputInvoice.AmountGross) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Currency", ((object)InputInvoice.Currency) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@DateOfPaymet", ((object)InputInvoice.DateOfPaymet) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Status", ((object)InputInvoice.Status) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@StatusDate", ((object)InputInvoice.StatusDate) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Description", ((object)InputInvoice.Description) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Path", ((object)InputInvoice.Path) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@IsSynced", InputInvoice.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)InputInvoice.UpdatedAt) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-				insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
-				try
-				{
-					insertCommand.ExecuteReader();
-				}
-				catch (SqliteException error)
-				{
-					MainWindow.ErrorMessage = error.Message;
-					response.Success = false;
-					response.Message = error.Message;
-					return response;
-				}
-				db.Close();
-
-				response.Success = true;
-				return response;
-			}
-		}
-
-		public InputInvoiceResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-		{
-			InputInvoiceResponse response = new InputInvoiceResponse();
-
-			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-			{
-				db.Open();
-
-				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
-
-				insertCommand.CommandText = "UPDATE InputInvoices SET " +
-					"IsSynced = @IsSynced, " +
-					"Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
 
                 try
 				{
-					insertCommand.ExecuteReader();
-				}
+                    insertCommand = AddCreateParameters(insertCommand, InputInvoice);
+                    insertCommand.ExecuteNonQuery();
+                }
 				catch (SqliteException error)
 				{
 					MainWindow.ErrorMessage = error.Message;
@@ -478,6 +431,48 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 				return response;
 			}
 		}
+
+		//public InputInvoiceResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
+		//{
+		//	InputInvoiceResponse response = new InputInvoiceResponse();
+
+		//	using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+		//	{
+		//		db.Open();
+
+		//		SqliteCommand insertCommand = new SqliteCommand();
+		//		insertCommand.Connection = db;
+
+		//		insertCommand.CommandText = "UPDATE InputInvoices SET " +
+		//			"IsSynced = @IsSynced, " +
+		//			"Code = @Code, " +
+  //                  "UpdatedAt = @UpdatedAt, " +
+  //                  "ServerId = @ServerId " +
+  //                  "WHERE Identifier = @Identifier ";
+
+		//		insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+  //              insertCommand.Parameters.AddWithValue("@Code", code);
+  //              insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
+  //              insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+		//		insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+
+  //              try
+		//		{
+		//			insertCommand.ExecuteReader();
+		//		}
+		//		catch (SqliteException error)
+		//		{
+		//			MainWindow.ErrorMessage = error.Message;
+		//			response.Success = false;
+		//			response.Message = error.Message;
+		//			return response;
+		//		}
+		//		db.Close();
+
+		//		response.Success = true;
+		//		return response;
+		//	}
+		//}
 
 		public InputInvoiceResponse Delete(Guid identifier)
 		{
@@ -512,46 +507,46 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			}
 		}
 
-		public InputInvoiceResponse DeleteAll()
-		{
-			InputInvoiceResponse response = new InputInvoiceResponse();
+		//public InputInvoiceResponse DeleteAll()
+		//{
+		//	InputInvoiceResponse response = new InputInvoiceResponse();
 
-			try
-			{
-				using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-				{
-					db.Open();
-					db.EnableExtensions(true);
+		//	try
+		//	{
+		//		using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+		//		{
+		//			db.Open();
+		//			db.EnableExtensions(true);
 
-					SqliteCommand insertCommand = new SqliteCommand();
-					insertCommand.Connection = db;
+		//			SqliteCommand insertCommand = new SqliteCommand();
+		//			insertCommand.Connection = db;
 
-					//Use parameterized query to prevent SQL injection attacks
-					insertCommand.CommandText = "DELETE FROM InputInvoices";
-					try
-					{
-						insertCommand.ExecuteReader();
-					}
-					catch (SqliteException error)
-					{
-						response.Success = false;
-						response.Message = error.Message;
+		//			//Use parameterized query to prevent SQL injection attacks
+		//			insertCommand.CommandText = "DELETE FROM InputInvoices";
+		//			try
+		//			{
+		//				insertCommand.ExecuteReader();
+		//			}
+		//			catch (SqliteException error)
+		//			{
+		//				response.Success = false;
+		//				response.Message = error.Message;
 
-						MainWindow.ErrorMessage = error.Message;
-						return response;
-					}
-					db.Close();
-				}
-			}
-			catch (SqliteException error)
-			{
-				response.Success = false;
-				response.Message = error.Message;
-				return response;
-			}
+		//				MainWindow.ErrorMessage = error.Message;
+		//				return response;
+		//			}
+		//			db.Close();
+		//		}
+		//	}
+		//	catch (SqliteException error)
+		//	{
+		//		response.Success = false;
+		//		response.Message = error.Message;
+		//		return response;
+		//	}
 
-			response.Success = true;
-			return response;
-		}
+		//	response.Success = true;
+		//	return response;
+		//}
 	}
 }

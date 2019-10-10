@@ -31,7 +31,7 @@ namespace DataMapper.Mappers.Common.InputInvoices
 
                 Note = InputInvoiceNote.Note,
                 NoteDate = InputInvoiceNote.NoteDate,
-
+                ItemStatus = InputInvoiceNote.ItemStatus,
                 IsActive = InputInvoiceNote.Active,
 
                 CreatedBy = InputInvoiceNote.CreatedBy?.ConvertToUserViewModelLite(),
@@ -53,7 +53,7 @@ namespace DataMapper.Mappers.Common.InputInvoices
 
                 Note = InputInvoiceNote.Note,
                 NoteDate = InputInvoiceNote.NoteDate,
-
+                ItemStatus = InputInvoiceNote.ItemStatus,
                 IsActive = InputInvoiceNote.Active,
 
                 UpdatedAt = InputInvoiceNote.UpdatedAt,
@@ -74,7 +74,7 @@ namespace DataMapper.Mappers.Common.InputInvoices
 
                 Note = InputInvoiceNoteViewModel.Note,
                 NoteDate = InputInvoiceNoteViewModel.NoteDate,
-
+                ItemStatus = InputInvoiceNoteViewModel.ItemStatus,
                 CreatedById = InputInvoiceNoteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = InputInvoiceNoteViewModel.Company?.Id ?? null,
 

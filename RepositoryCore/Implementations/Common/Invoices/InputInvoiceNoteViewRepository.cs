@@ -30,7 +30,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             string queryString =
                 "SELECT InputInvoiceNoteId, InputInvoiceNoteIdentifier, " +
                 "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoiceNotes " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -64,7 +64,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             inputInvoiceNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             inputInvoiceNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            inputInvoiceNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         inputInvoiceNote.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoiceNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -110,7 +111,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             string queryString =
                 "SELECT InputInvoiceNoteId, InputInvoiceNoteIdentifier, " +
                 "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoiceNotes " +
                 "WHERE InputInvoiceId = @InputInvoiceId AND Active = 1;";
@@ -145,7 +146,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             inputInvoiceNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             inputInvoiceNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            inputInvoiceNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         inputInvoiceNote.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoiceNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -180,7 +182,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             string queryString =
                 "SELECT InputInvoiceNoteId, InputInvoiceNoteIdentifier, " +
                 "InputInvoiceId, InputInvoiceIdentifier, InputInvoiceCode, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vInputInvoiceNotes " +
                 "WHERE CompanyId = @CompanyId " +
@@ -217,7 +219,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             inputInvoiceNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             inputInvoiceNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            inputInvoiceNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         inputInvoiceNote.Active = bool.Parse(reader["Active"].ToString());
                         inputInvoiceNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -270,7 +273,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     // Set properties
                     dbEntry.Note = InputInvoiceNote.Note;
                     dbEntry.NoteDate = InputInvoiceNote.NoteDate;
-
+                    dbEntry.ItemStatus = InputInvoiceNote.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

@@ -12,5 +12,7 @@ namespace DomainCore.Common.InputInvoices
 
         public string Note { get; set; }
         public DateTime NoteDate { get; set; }
+
+        public int ItemStatus { get; set; }
     }
 }

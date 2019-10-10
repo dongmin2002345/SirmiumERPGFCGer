@@ -276,51 +276,51 @@ namespace SirmiumERPGFC.Views.InputInvoices
 				}
 			}
 		}
-		#endregion
-		#endregion
+        #endregion
+        #endregion
 
-		#region RefreshButtonContent
-		private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+        #region SyncButtonContent
+        private string _SyncButtonContent = " OSVEŽI ";
 
-        public string RefreshButtonContent
-		{
-			get { return _RefreshButtonContent; }
-			set
-			{
-				if (_RefreshButtonContent != value)
-				{
-					_RefreshButtonContent = value;
-					NotifyPropertyChanged("RefreshButtonContent");
-				}
-			}
-		}
-		#endregion
+        public string SyncButtonContent
+        {
+            get { return _SyncButtonContent; }
+            set
+            {
+                if (_SyncButtonContent != value)
+                {
+                    _SyncButtonContent = value;
+                    NotifyPropertyChanged("SyncButtonContent");
+                }
+            }
+        }
+        #endregion
 
-		#region RefreshButtonEnabled
-		private bool _RefreshButtonEnabled = true;
+        #region SyncButtonEnabled
+        private bool _SyncButtonEnabled = true;
 
-		public bool RefreshButtonEnabled
-		{
-			get { return _RefreshButtonEnabled; }
-			set
-			{
-				if (_RefreshButtonEnabled != value)
-				{
-					_RefreshButtonEnabled = value;
-					NotifyPropertyChanged("RefreshButtonEnabled");
-				}
-			}
-		}
-		#endregion
+        public bool SyncButtonEnabled
+        {
+            get { return _SyncButtonEnabled; }
+            set
+            {
+                if (_SyncButtonEnabled != value)
+                {
+                    _SyncButtonEnabled = value;
+                    NotifyPropertyChanged("SyncButtonEnabled");
+                }
+            }
+        }
+        #endregion
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		/// <summary>
-		/// FinancialInvoiceList constructor
-		/// </summary>
-		public InputInvoiceList()
+        /// <summary>
+        /// FinancialInvoiceList constructor
+        /// </summary>
+        public InputInvoiceList()
 		{
 			// Get required service
 			this.inputInvoiceService = DependencyResolver.Kernel.Get<IInputInvoiceService>();
@@ -407,7 +407,8 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			else
 			{
 				NotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>();
-			}
+                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            }
 
 			NoteDataLoading = false;
 		}
@@ -426,31 +427,86 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			else
 			{
 				InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>();
-			}
+                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+            }
 
 			InputInvoiceDocumentDataLoading = false;
 		}
 
-		private void SyncData()
-		{
-			RefreshButtonEnabled = false;
+        private void SyncData()
+        {
+            SyncButtonEnabled = false;
 
-			RefreshButtonContent = ((string)Application.Current.FindResource("Ulazne_fakture_TriTacke"));
-            new InputInvoiceSQLiteRepository().Sync(inputInvoiceService);
-			new InputInvoiceNoteSQLiteRepository().Sync(inputInvoiceNoteService);
-			new InputInvoiceDocumentSQLiteRepository().Sync(inputInvoiceDocumentService);
+            SyncButtonContent = " Računi ... ";
+            new InputInvoiceSQLiteRepository().Sync(inputInvoiceService, (synced, toSync) => {
+                SyncButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
+            });
 
-			DisplayData();
+            SyncButtonContent = " Stavke ... ";
+            new InputInvoiceNoteSQLiteRepository().Sync(inputInvoiceNoteService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-			RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            RefreshButtonEnabled = true;
-		}
+            SyncButtonContent = " Stavke ... ";
+            new InputInvoiceDocumentSQLiteRepository().Sync(inputInvoiceDocumentService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-		#endregion
+            DisplayData();
+            CurrentInputInvoice = null;
+            NotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>();
+            InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>();
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
 
-		#region Add, edit, delete, lock and cancel
+        private void SyncItemData()
+        {
+            SyncButtonEnabled = false;
 
-		private void btnAdd_Click(object sender, RoutedEventArgs e)
+            SyncButtonContent = " Stavke ... ";
+            new InputInvoiceNoteSQLiteRepository().Sync(inputInvoiceNoteService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayInputInvoiceNoteData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncDocumentData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new InputInvoiceDocumentSQLiteRepository().Sync(inputInvoiceDocumentService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayInputInvoiceDocumentData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+        private void DgInputInvoices_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgInputInvoiceNotes_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgInputInvoiceDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        #endregion
+
+        #region Add, edit, delete, lock and cancel
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
 		{
 			InputInvoiceViewModel inputInvoice = new InputInvoiceViewModel();
 			inputInvoice.Identifier = Guid.NewGuid();
@@ -515,12 +571,45 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
 		}
 
-		
-		#endregion
+        private void BtnAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
 
-		#region Pagination
+            if (CurrentInputInvoice == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
 
-		private void btnFirstPage_Click(object sender, RoutedEventArgs e)
+            #endregion
+
+            InputInvoice_Note_AddEdit inputInvoiceNoteAddEditForm = new InputInvoice_Note_AddEdit(CurrentInputInvoice);
+            inputInvoiceNoteAddEditForm.InputInvoiceCreatedUpdated += new InputInvoiceHandler(SyncItemData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, inputInvoiceNoteAddEditForm);
+        }
+
+        private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentInputInvoice == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
+
+            #endregion
+
+            InputInvoice_Document_AddEdit inputInvoiceDocumentAddEditForm = new InputInvoice_Document_AddEdit(CurrentInputInvoice);
+            inputInvoiceDocumentAddEditForm.InputInvoiceCreatedUpdated += new InputInvoiceHandler(SyncDocumentData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, inputInvoiceDocumentAddEditForm);
+        }
+
+        #endregion
+
+        #region Pagination
+
+        private void btnFirstPage_Click(object sender, RoutedEventArgs e)
 		{
 			if (currentPage > 1)
 			{
