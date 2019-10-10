@@ -257,8 +257,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 				InputInvoiceDocument.Id = 0;
 
 				InputInvoiceDocument.Active = true;
-
-				context.InputInvoiceDocuments.Add(InputInvoiceDocument);
+                InputInvoiceDocument.UpdatedAt = DateTime.Now;
+                InputInvoiceDocument.CreatedAt = DateTime.Now;
+                context.InputInvoiceDocuments.Add(InputInvoiceDocument);
 				return InputInvoiceDocument;
 			}
 			else
@@ -271,9 +272,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 				{
 					dbEntry.CompanyId = InputInvoiceDocument.CompanyId ?? null;
 					dbEntry.CreatedById = InputInvoiceDocument.CreatedById ?? null;
-
-					// Set properties
-					dbEntry.Name = InputInvoiceDocument.Name;
+                    dbEntry.InputInvoiceId = InputInvoiceDocument.InputInvoiceId ?? null;
+                    // Set properties
+                    dbEntry.Name = InputInvoiceDocument.Name;
 					dbEntry.CreateDate = InputInvoiceDocument.CreateDate;
 					dbEntry.Path = InputInvoiceDocument.Path;
                     dbEntry.ItemStatus = InputInvoiceDocument.ItemStatus;

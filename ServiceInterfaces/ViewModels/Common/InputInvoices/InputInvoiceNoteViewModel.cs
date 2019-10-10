@@ -59,6 +59,7 @@ namespace ServiceInterfaces.ViewModels.Common.InputInvoices
             }
         }
         #endregion
+
         #region ItemStatus
         private int _ItemStatus;
 
