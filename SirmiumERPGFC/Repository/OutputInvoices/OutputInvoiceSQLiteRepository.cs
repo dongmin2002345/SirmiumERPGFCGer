@@ -64,6 +64,75 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             "@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PdvPercent, @Pdv, @AmountGross, @Currency, @DateOfPayment, @Status, @StatusDate, @Description, @Path, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #region Helper methods
+
+        private static OutputInvoiceViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            OutputInvoiceViewModel dbEntry = new OutputInvoiceViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.Supplier = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.AmountNet = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.PdvPercent = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Pdv = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.DateOfPayment = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            return dbEntry;
+        }
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, OutputInvoiceViewModel OutputInvoice)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", OutputInvoice.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", OutputInvoice.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)OutputInvoice.Code) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)OutputInvoice.BusinessPartner?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)OutputInvoice.BusinessPartner?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)OutputInvoice.BusinessPartner?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)OutputInvoice.BusinessPartner?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)OutputInvoice.BusinessPartner?.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)OutputInvoice.BusinessPartner?.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Supplier", ((object)OutputInvoice.Supplier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Address", ((object)OutputInvoice.Address) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)OutputInvoice.InvoiceNumber) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceDate", ((object)OutputInvoice.InvoiceDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AmountNet", ((object)OutputInvoice.AmountNet) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PDVPercent", ((object)OutputInvoice.PdvPercent) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PDV", ((object)OutputInvoice.Pdv) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@AmountGross", ((object)OutputInvoice.AmountGross) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Currency", ((object)OutputInvoice.Currency) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DateOfPaymet", ((object)OutputInvoice.DateOfPayment) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Status", ((object)OutputInvoice.Status) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusDate", ((object)OutputInvoice.StatusDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Description", ((object)OutputInvoice.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)OutputInvoice.Path) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", OutputInvoice.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)OutputInvoice.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
         public OutputInvoiceListResponse GetOutputInvoicesByPage(int companyId, OutputInvoiceViewModel OutputInvoiceSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             OutputInvoiceListResponse response = new OutputInvoiceListResponse();
@@ -103,30 +172,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 
                     while (query.Read())
                     {
-                        int counter = 0;
-                        OutputInvoiceViewModel dbEntry = new OutputInvoiceViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
-                        dbEntry.Supplier = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.AmountNet = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.PdvPercent = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Pdv = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.AmountGross = SQLiteHelper.GetDecimal(query, ref counter);
-                        dbEntry.Currency = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.DateOfPayment = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Status = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        OutputInvoiceViewModel dbEntry = Read(query);
                         OutputInvoices.Add(dbEntry);
                     }
 

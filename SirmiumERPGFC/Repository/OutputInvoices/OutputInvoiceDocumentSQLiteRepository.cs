@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using SirmiumERPGFC.Repository.Common;
@@ -25,7 +26,8 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 				 "Name NVARCHAR(2048), " +
 				 "CreateDate DATETIME NULL, " +
 				 "Path NVARCHAR(2048) NULL, " +
-				 "IsSynced BOOL NULL, " +
+                 "ItemStatus INTEGER NOT NULL, " +
+                 "IsSynced BOOL NULL, " +
 				 "UpdatedAt DATETIME NULL, " +
 				 "CreatedById INTEGER NULL, " +
 				 "CreatedByName NVARCHAR(2048) NULL, " +
@@ -34,19 +36,61 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 
 		public string SqlCommandSelectPart =
 			"SELECT ServerId, Identifier, OutputInvoiceId, OutputInvoiceIdentifier, " +
-			"OutputInvoiceCode, Name, CreateDate, Path, " +
+            "OutputInvoiceCode, Name, CreateDate, Path, ItemStatus,  " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
 		public string SqlCommandInsertPart = "INSERT INTO OutputInvoiceDocuments " +
 			"(Id, ServerId, Identifier, OutputInvoiceId, OutputInvoiceIdentifier, " +
-			"OutputInvoiceCode, Name, CreateDate, Path, " +
+            "OutputInvoiceCode, Name, CreateDate, Path, ItemStatus,  " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
 			"VALUES (NULL, @ServerId, @Identifier, @OutputInvoiceId, @OutputInvoiceIdentifier, " +
-			"@OutputInvoiceCode, @Name, @CreateDate, @Path, " +
+            "@OutputInvoiceCode, @Name, @CreateDate, @Path, @ItemStatus,  " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-		public OutputInvoiceDocumentListResponse GetOutputInvoiceDocumentsByOutputInvoice(int companyId, Guid OutputInvoiceIdentifier)
+        #region Helper methods
+        private static OutputInvoiceDocumentViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            OutputInvoiceDocumentViewModel dbEntry = new OutputInvoiceDocumentViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.OutputInvoice = SQLiteHelper.GetOutputInvoice(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, OutputInvoiceDocumentViewModel OutputInvoiceDocument)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", OutputInvoiceDocument.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", OutputInvoiceDocument.Identifier);
+            insertCommand.Parameters.AddWithValue("@OutputInvoiceId", ((object)OutputInvoiceDocument.OutputInvoice.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@OutputInvoiceIdentifier", ((object)OutputInvoiceDocument.OutputInvoice.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@OutputInvoiceCode", ((object)OutputInvoiceDocument.OutputInvoice.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", OutputInvoiceDocument.Name);
+            insertCommand.Parameters.AddWithValue("@CreateDate", ((object)OutputInvoiceDocument.CreateDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)OutputInvoiceDocument.Path) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)OutputInvoiceDocument.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", OutputInvoiceDocument.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)OutputInvoiceDocument.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        public OutputInvoiceDocumentListResponse GetOutputInvoiceDocumentsByOutputInvoice(int companyId, Guid OutputInvoiceIdentifier)
 		{
 			OutputInvoiceDocumentListResponse response = new OutputInvoiceDocumentListResponse();
 			List<OutputInvoiceDocumentViewModel> OutputInvoiceDocuments = new List<OutputInvoiceDocumentViewModel>();
@@ -77,7 +121,8 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
 						dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
 						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
 						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
 						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
@@ -118,23 +163,12 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					if (query.Read())
-					{
-						int counter = 0;
-						OutputInvoiceDocumentViewModel dbEntry = new OutputInvoiceDocumentViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.OutputInvoice = SQLiteHelper.GetOutputInvoice(query, ref counter);
-						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						OutputInvoiceDocument = dbEntry;
-					}
-				}
+                    if (query.Read())
+                    {
+                        OutputInvoiceDocumentViewModel dbEntry = Read(query);
+                        OutputInvoiceDocument = dbEntry;
+                    }
+                }
 				catch (SqliteException error)
 				{
 					MainWindow.ErrorMessage = error.Message;
@@ -227,90 +261,72 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 
 			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
 			{
-				db.Open();
+                db.Open();
+                SqliteCommand insertCommand = db.CreateCommand();
+                insertCommand.CommandText = SqlCommandInsertPart;
 
-				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
+                try
+                {
+                    insertCommand = AddCreateParameters(insertCommand, OutputInvoiceDocument);
+                    insertCommand.ExecuteNonQuery();
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
 
-				//Use parameterized query to prevent SQL injection attacks
-				insertCommand.CommandText = SqlCommandInsertPart;
+                response.Success = true;
+                return response;
+            }
+        }
 
-				insertCommand.Parameters.AddWithValue("@ServerId", OutputInvoiceDocument.Id);
-				insertCommand.Parameters.AddWithValue("@Identifier", OutputInvoiceDocument.Identifier);
-				insertCommand.Parameters.AddWithValue("@OutputInvoiceId", ((object)OutputInvoiceDocument.OutputInvoice.Id) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@OutputInvoiceIdentifier", ((object)OutputInvoiceDocument.OutputInvoice.Identifier) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@OutputInvoiceCode", ((object)OutputInvoiceDocument.OutputInvoice.Code) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Name", OutputInvoiceDocument.Name);
-				insertCommand.Parameters.AddWithValue("@CreateDate", ((object)OutputInvoiceDocument.CreateDate) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Path", ((object)OutputInvoiceDocument.Path) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@IsSynced", OutputInvoiceDocument.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)OutputInvoiceDocument.UpdatedAt) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-				insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+        //public OutputInvoiceDocumentResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
+        //{
+        //	OutputInvoiceDocumentResponse response = new OutputInvoiceDocumentResponse();
 
-				try
-				{
-					insertCommand.ExecuteReader();
-				}
-				catch (SqliteException error)
-				{
-					MainWindow.ErrorMessage = error.Message;
-					response.Success = false;
-					response.Message = error.Message;
-					return response;
-				}
-				db.Close();
+        //	using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //	{
+        //		db.Open();
 
-				response.Success = true;
-				return response;
-			}
-		}
+        //		SqliteCommand insertCommand = new SqliteCommand();
+        //		insertCommand.Connection = db;
 
-		public OutputInvoiceDocumentResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-		{
-			OutputInvoiceDocumentResponse response = new OutputInvoiceDocumentResponse();
+        //		insertCommand.CommandText = "UPDATE OutputInvoiceDocuments SET " +
+        //			"IsSynced = @IsSynced, " +
+        //			"Code = @Code, " +
+        //			"UpdatedAt = @UpdatedAt, " +
+        //			"ServerId = @ServerId " +
+        //			"WHERE Identifier = @Identifier ";
 
-			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-			{
-				db.Open();
+        //		insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+        //		insertCommand.Parameters.AddWithValue("@Code", code);
+        //		insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
+        //		insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+        //		insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
-				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
+        //		try
+        //		{
+        //			insertCommand.ExecuteReader();
+        //		}
+        //		catch (SqliteException error)
+        //		{
+        //			MainWindow.ErrorMessage = error.Message;
+        //			response.Success = false;
+        //			response.Message = error.Message;
+        //			return response;
+        //		}
+        //		db.Close();
 
-				insertCommand.CommandText = "UPDATE OutputInvoiceDocuments SET " +
-					"IsSynced = @IsSynced, " +
-					"Code = @Code, " +
-					"UpdatedAt = @UpdatedAt, " +
-					"ServerId = @ServerId " +
-					"WHERE Identifier = @Identifier ";
+        //		response.Success = true;
+        //		return response;
+        //	}
+        //}
 
-				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-				insertCommand.Parameters.AddWithValue("@Code", code);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-				insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-				try
-				{
-					insertCommand.ExecuteReader();
-				}
-				catch (SqliteException error)
-				{
-					MainWindow.ErrorMessage = error.Message;
-					response.Success = false;
-					response.Message = error.Message;
-					return response;
-				}
-				db.Close();
-
-				response.Success = true;
-				return response;
-			}
-		}
-
-		public OutputInvoiceDocumentResponse Delete(Guid identifier)
+        public OutputInvoiceDocumentResponse Delete(Guid identifier)
 		{
 			OutputInvoiceDocumentResponse response = new OutputInvoiceDocumentResponse();
 
@@ -343,47 +359,80 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 			}
 		}
 
-		public OutputInvoiceDocumentResponse DeleteAll()
-		{
-			OutputInvoiceDocumentResponse response = new OutputInvoiceDocumentResponse();
+		//public OutputInvoiceDocumentResponse DeleteAll()
+		//{
+		//	OutputInvoiceDocumentResponse response = new OutputInvoiceDocumentResponse();
 
-			try
-			{
-				using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-				{
-					db.Open();
-					db.EnableExtensions(true);
+		//	try
+		//	{
+		//		using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+		//		{
+		//			db.Open();
+		//			db.EnableExtensions(true);
 
-					SqliteCommand insertCommand = new SqliteCommand();
-					insertCommand.Connection = db;
+		//			SqliteCommand insertCommand = new SqliteCommand();
+		//			insertCommand.Connection = db;
 
-					//Use parameterized query to prevent SQL injection attacks
-					insertCommand.CommandText = "DELETE FROM OutputInvoiceDocuments";
-					try
-					{
-						insertCommand.ExecuteReader();
-					}
-					catch (SqliteException error)
-					{
-						response.Success = false;
-						response.Message = error.Message;
+		//			//Use parameterized query to prevent SQL injection attacks
+		//			insertCommand.CommandText = "DELETE FROM OutputInvoiceDocuments";
+		//			try
+		//			{
+		//				insertCommand.ExecuteReader();
+		//			}
+		//			catch (SqliteException error)
+		//			{
+		//				response.Success = false;
+		//				response.Message = error.Message;
 
-						MainWindow.ErrorMessage = error.Message;
-						return response;
-					}
-					db.Close();
-				}
-			}
-			catch (SqliteException error)
-			{
-				response.Success = false;
-				response.Message = error.Message;
-				return response;
-			}
+		//				MainWindow.ErrorMessage = error.Message;
+		//				return response;
+		//			}
+		//			db.Close();
+		//		}
+		//	}
+		//	catch (SqliteException error)
+		//	{
+		//		response.Success = false;
+		//		response.Message = error.Message;
+		//		return response;
+		//	}
 
-			response.Success = true;
-			return response;
-		}
-	}
+		//	response.Success = true;
+		//	return response;
+		//}
+        public OutputInvoiceDocumentResponse SetStatusDeleted(Guid identifier)
+        {
+            OutputInvoiceDocumentResponse response = new OutputInvoiceDocumentResponse();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE InputInvoiceDocuments SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
+                {
+                    insertCommand.ExecuteReader();
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
+                return response;
+            }
+        }
+    }
 }
 

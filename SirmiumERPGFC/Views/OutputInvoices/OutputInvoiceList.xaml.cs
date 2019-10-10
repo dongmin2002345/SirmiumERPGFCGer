@@ -42,6 +42,23 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         IOutputInvoiceDocumentService outputInvoiceDocumentService;
         #endregion
 
+        #region OutputInvoiceSearchObject
+        private OutputInvoiceViewModel _OutputInvoiceSearchObject = new OutputInvoiceViewModel();
+
+        public OutputInvoiceViewModel OutputInvoiceSearchObject
+        {
+            get { return _OutputInvoiceSearchObject; }
+            set
+            {
+                if (_OutputInvoiceSearchObject != value)
+                {
+                    _OutputInvoiceSearchObject = value;
+                    NotifyPropertyChanged("OutputInvoiceSearchObject");
+                }
+            }
+        }
+        #endregion
+
         #region OutputInvoicesFromDB
         private ObservableCollection<OutputInvoiceViewModel> _OutputInvoicesFromDB;
 
@@ -86,37 +103,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                     }
                     else
                         NotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>();
-                }
-            }
-        }
-        #endregion
-
-        #region StatusOptions
-        public ObservableCollection<String> StatusOptions
-        {
-            get
-            {
-                return new ObservableCollection<String>(new List<string>() {
-                           ChooseStatusConverter.ChooseO,
-                           ChooseStatusConverter.ChooseB,
-
-                });
-            }
-        }
-        #endregion
-
-        #region OutputInvoiceSearchObject
-        private OutputInvoiceViewModel _OutputInvoiceSearchObject = new OutputInvoiceViewModel();
-
-        public OutputInvoiceViewModel OutputInvoiceSearchObject
-        {
-            get { return _OutputInvoiceSearchObject; }
-            set
-            {
-                if (_OutputInvoiceSearchObject != value)
-                {
-                    _OutputInvoiceSearchObject = value;
-                    NotifyPropertyChanged("OutputInvoiceSearchObject");
                 }
             }
         }
@@ -282,36 +268,49 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         #endregion
         #endregion
 
-
-        #region RefreshButtonContent
-        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-
-        public string RefreshButtonContent
+        #region StatusOptions
+        public ObservableCollection<String> StatusOptions
         {
-            get { return _RefreshButtonContent; }
+            get
+            {
+                return new ObservableCollection<String>(new List<string>() {
+                           ChooseStatusConverter.ChooseO,
+                           ChooseStatusConverter.ChooseB,
+
+                });
+            }
+        }
+        #endregion
+
+        #region SyncButtonContent
+        private string _SyncButtonContent = " OSVEŽI ";
+
+        public string SyncButtonContent
+        {
+            get { return _SyncButtonContent; }
             set
             {
-                if (_RefreshButtonContent != value)
+                if (_SyncButtonContent != value)
                 {
-                    _RefreshButtonContent = value;
-                    NotifyPropertyChanged("RefreshButtonContent");
+                    _SyncButtonContent = value;
+                    NotifyPropertyChanged("SyncButtonContent");
                 }
             }
         }
         #endregion
 
-        #region RefreshButtonEnabled
-        private bool _RefreshButtonEnabled = true;
+        #region SyncButtonEnabled
+        private bool _SyncButtonEnabled = true;
 
-        public bool RefreshButtonEnabled
+        public bool SyncButtonEnabled
         {
-            get { return _RefreshButtonEnabled; }
+            get { return _SyncButtonEnabled; }
             set
             {
-                if (_RefreshButtonEnabled != value)
+                if (_SyncButtonEnabled != value)
                 {
-                    _RefreshButtonEnabled = value;
-                    NotifyPropertyChanged("RefreshButtonEnabled");
+                    _SyncButtonEnabled = value;
+                    NotifyPropertyChanged("SyncButtonEnabled");
                 }
             }
         }
@@ -432,28 +431,83 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         private void SyncData()
         {
-            RefreshButtonEnabled = false;
+            SyncButtonEnabled = false;
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Izlazne_fakture_TriTacke"));
-            new OutputInvoiceSQLiteRepository().Sync(outputInvoiceService);
-            new OutputInvoiceNoteSQLiteRepository().Sync(outputInvoiceNoteService);
-            new OutputInvoiceDocumentSQLiteRepository().Sync(outputInvoiceDocumentService);
+            SyncButtonContent = " Računi ... ";
+            new OutputInvoiceSQLiteRepository().Sync(outputInvoiceService, (synced, toSync) => {
+                SyncButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new OutputInvoiceNoteSQLiteRepository().Sync(outputInvoiceNoteService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new OutputInvoiceDocumentSQLiteRepository().Sync(outputInvoiceDocumentService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
             DisplayData();
+            CurrentOutputInvoice = null;
+            NotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>();
+            OutputInvoiceDocumentsFromDB = new ObservableCollection<OutputInvoiceDocumentViewModel>();
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+        private void SyncItemData()
+        {
+            SyncButtonEnabled = false;
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            RefreshButtonEnabled = true;
+            SyncButtonContent = " Stavke ... ";
+            new OutputInvoiceNoteSQLiteRepository().Sync(outputInvoiceNoteService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayOutputInvoiceNoteData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
         }
 
+        private void SyncDocumentData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new OutputInvoiceDocumentSQLiteRepository().Sync(outputInvoiceDocumentService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayOutputInvoiceDocumentData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+        private void DgOutputInvoices_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgOutputInvoiceNotes_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgOutputInvoiceDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
         #endregion
 
-        #region Add, edit and delete methods
+        #region Add, edit, delete, lock and cancel
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            OutputInvoiceViewModel OutputInvoice = new OutputInvoiceViewModel();
-            OutputInvoice.Identifier = Guid.NewGuid();
+            OutputInvoiceViewModel outputInvoice = new OutputInvoiceViewModel();
+            outputInvoice.Identifier = Guid.NewGuid();
+            outputInvoice.InvoiceDate = DateTime.Now;
 
-            OutputInvoiceAddEdit addEditForm = new OutputInvoiceAddEdit(OutputInvoice, true);
+            OutputInvoiceAddEdit addEditForm = new OutputInvoiceAddEdit(outputInvoice, true,false);
             addEditForm.OutputInvoiceCreatedUpdated += new OutputInvoiceHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_izlaznim_fakturama")), 95, addEditForm);
         }
@@ -512,40 +566,38 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
-        #endregion
-
-        private void btnShow_Click(object sender, RoutedEventArgs e)
+        private void BtnAddItem_Click(object sender, RoutedEventArgs e)
         {
-            try
+            #region Validation
+
+            if (CurrentOutputInvoice == null)
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentOutputInvoice.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
             }
-            catch (Exception error)
-            {
-                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+
+            #endregion
+
+            OutputInvoice_Note_AddEdit outputInvoiceNoteAddEditForm = new OutputInvoice_Note_AddEdit(CurrentOutputInvoice);
+            outputInvoiceNoteAddEditForm.OutputInvoiceCreatedUpdated += new OutputInvoiceHandler(SyncItemData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, outputInvoiceNoteAddEditForm);
         }
 
-        #region Display documents
-
-        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
         {
-            try
+            #region Validation
+
+            if (CurrentOutputInvoice == null)
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentOutputInvoiceDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
             }
-            catch (Exception error)
-            {
-                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+
+            #endregion
+
+            OutputInvoice_Document_AddEdit outputInvoiceDocumentAddEditForm = new OutputInvoice_Document_AddEdit(CurrentOutputInvoice);
+            outputInvoiceDocumentAddEditForm.OutputInvoiceCreatedUpdated += new OutputInvoiceHandler(SyncDocumentData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, outputInvoiceDocumentAddEditForm);
         }
 
         #endregion
@@ -602,6 +654,64 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
 
         #endregion
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OutputInvoicesExcelReport.Show(OutputInvoicesFromDB.ToList());
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+        private void btnShow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentOutputInvoice.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void btnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OutputInvoiceExcelReport.Show(CurrentOutputInvoice);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+        #region Display documents
+
+        private void btnShowDocument_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                Uri pdf = new Uri(CurrentOutputInvoiceDocument.Path, UriKind.RelativeOrAbsolute);
+                process.StartInfo.FileName = pdf.LocalPath;
+                process.Start();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        #endregion
+
+       
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
@@ -614,32 +724,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                OutputInvoicesExcelReport.Show(OutputInvoicesFromDB.ToList());
-            }
-            catch(Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
-		}
-
-        private void btnExcel_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                OutputInvoiceExcelReport.Show(CurrentOutputInvoice);
-            }
-            catch (Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
-        }
-
-       
 
         #endregion
         //#region OutputInvoicesLoading

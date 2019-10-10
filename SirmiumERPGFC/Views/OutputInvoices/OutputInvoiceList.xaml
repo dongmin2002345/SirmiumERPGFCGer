@@ -11,24 +11,29 @@
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Background="White">
 
     <UserControl.Resources>
-        <Style TargetType="ToolTip">
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
-                        </StackPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
-        <cbxConverters1:BoolStringConverter x:Key="BoolStringConverter" />
-        <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
-        <cbxConverters1:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
-        <cbxConverters1:StringDoubleConverter x:Key="stringToDoubleConverter" />
-
+        <ResourceDictionary>
+            <Style TargetType="ToolTip">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+            <cbxConverters1:BoolStringConverter x:Key="BoolStringConverter" />
+            <cbxConverters1:MultiConverter x:Key="MultiConverter" />
+            <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
+            <cbxConverters1:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
+            <cbxConverters1:StringDoubleConverter x:Key="stringToDoubleConverter" />
+            <!--<cbxConverters:DataGridFieldIsNullConverter x:Key="DataGridFieldIsNullConverter" />
+            <cbxConverters:DataGridFieldIsTrueConverter x:Key="DataGridFieldIsTrueConverter" />-->
+        </ResourceDictionary>
     </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -38,70 +43,6 @@
         </Grid.RowDefinitions>
 
         <!--    Search box    -->
-        <!--<Expander x:Name="searchExpander" Margin="5,5,5,0" Header="Pretraga" IsExpanded="False" Grid.Row="0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="130*" />
-                    <ColumnDefinition Width="17*" />
-                    <ColumnDefinition Width="113*"/>
-                    <ColumnDefinition Width="130*" />
-                    <ColumnDefinition Width="129*" />
-                    <ColumnDefinition Width="130*" />
-                    <ColumnDefinition Width="129*" />
-
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-
-                <TextBlock Text="Poslovni partner:"  Grid.Column="0" VerticalAlignment="Center" Margin="5,7" Height="16"/>
-                <TextBox x:Name="txtSearchByBussinesPartner" Grid.Column="1" 
-                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_BusinessPartner, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True" Grid.ColumnSpan="2"/>
-
-                <TextBlock Text="Dobavljač:" Grid.Column="3" VerticalAlignment="Center" Margin="5,7" Height="16"/>
-                <TextBox x:Name="txtSearchBySupplier" Grid.Column="4" 
-                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_Supplier, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-
-
-                <TextBlock Text="Broj fakture:" Grid.Column="5" VerticalAlignment="Center" Margin="5,7" Height="16"/>
-                <TextBox x:Name="txtSearchByInvoiceNumber" Grid.Column="6" 
-                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceNumber, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-
-
-                <TextBlock Text="Datum fakture od:"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Margin="5,7" Height="16"/>
-                <DatePicker x:Name="dtSearchByInvoiceDateFrom" Grid.Column="1" Grid.Row="1" 
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateFrom}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True" Grid.ColumnSpan="2"/>
-
-                <TextBlock Text="Datum fakture do:"  Grid.Column="3" VerticalAlignment="Center" Grid.Row="1" Margin="5,7" Height="16"/>
-                <DatePicker x:Name="dtSearchByInvoiceDateTo" Grid.Column="4" Grid.Row="1" 
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateTo}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-                <TextBlock Text="Datum plaćanja od"  Grid.Column="5" VerticalAlignment="Center" Grid.Row="1" Margin="5,7" Height="16"/>
-                <DatePicker x:Name="dtSearchByCalculationDateFrom" Grid.Column="6" Grid.Row="1" 
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymentFrom}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True"/>
-
-                <TextBlock Text="Datum plaćanja do:"  Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Margin="5,7" Height="16"/>
-                <DatePicker x:Name="dtSearchByCalculationDateTo" Grid.Column="1" Grid.Row="2" 
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymentTo}"
-                         Margin="2"
-                         Controls:TextBoxHelper.ClearTextButton="True" Grid.ColumnSpan="2"/>-->
-
         <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
@@ -111,104 +52,107 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="37*" />
-                    <ColumnDefinition Width="93*"/>
-                    <ColumnDefinition Width="130*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
-                    <ColumnDefinition Width="130*" />
-                    <ColumnDefinition Width="129*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
-                    <ColumnDefinition Width="130*" />
-                    <ColumnDefinition Width="129*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="{DynamicResource Poslovni_partnerDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,7,0,7"/>
-                <TextBox x:Name="txtSearchByAdvanceFinancialInvoiceCode" Grid.Column="2"  Grid.ColumnSpan="2"
-                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_BusinessPartner, UpdateSourceTrigger=PropertyChanged}"
+                <TextBlock Text="{DynamicResource Poslovni_partnerDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByAdvanceFinancialInvoiceCode" Grid.Column="1"  Grid.ColumnSpan="2"
+                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_BusinessPartnerName, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="{DynamicResource DobavljačDvotacka}"  Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,7,0,7"/>
-                <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="5" Grid.ColumnSpan="2"
+                <TextBlock Text="{DynamicResource DobavljačDvotacka}"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="4" Grid.ColumnSpan="2"
                          Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_Supplier, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="{DynamicResource Datum_fakture_odDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5,7,0,7"/>
-                <DatePicker x:Name="dtSearchByDatefrom" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2"
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateFrom, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="{DynamicResource Datum_fakture_odDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDatefrom" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateFrom}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="{DynamicResource Datum_fakture_doDvotacka}"  Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5,7,0,7"/>
-                <DatePicker x:Name="dtSearchByDateTo" Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="2"
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateTo, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="{DynamicResource Datum_fakture_doDvotacka}"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDateTo" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateTo}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="{DynamicResource Datum_plaćanja_odDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5,7,0,7"/>
-                <DatePicker x:Name="dtSearchByDateOfPaymentfrom" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymentFrom, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="{DynamicResource Datum_plaćanja_odDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDateOfPaymentfrom" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymetFrom}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="{DynamicResource Datum_plaćanja_doDvotacka}"  Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5,7,0,7"/>
-                <DatePicker x:Name="dtSearchByDateOfPaymentTo" Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="2"
-                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymentTo, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="{DynamicResource Datum_plaćanja_odDvotacka}"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDateOfPaymentTo" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymetTo}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <TextBlock Text="{DynamicResource Datum_plaćanja_doDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Margin="5,7,0,7"/>
-                <TextBox x:Name="txtSearchByInvoiceNumber" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"
-                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceNumber, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBlock Text="{DynamicResource Broj_faktureDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Margin="5"/>
+                <TextBox x:Name="txtSearchByInvoiceNumber" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceNumber}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2,2,2,0" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2" Background="#007ACC" Height="26" VerticalAlignment="Top">
+
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="{DynamicResource PRIKAŽI}" Foreground="White" FontWeight="Regular"/>
+                        <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text="{DynamicResource PRIKAŽI}" Foreground="White" FontWeight="Regular" />
                     </StackPanel>
                 </Button>
-
             </Grid>
         </Expander>
 
         <!--    List of all data    -->
-        <GroupBox Header="{DynamicResource Izlazne_fakture}" Margin="2,2,2,0" Grid.Row="1" >
+        <GroupBox Header="{DynamicResource Izlazne_fakture}" Margin="2,2,2,0" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="117*" />
+                    <RowDefinition Height="44*"/>
                 </Grid.RowDefinitions>
 
+                <!-- Add container -->
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Button x:Name="btnAddOutputInvoice" Click="btnAdd_Click" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
+                    <Button x:Name="btnAdd" Click="btnAdd_Click" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text="{DynamicResource DODAJ}"  Foreground="White" FontWeight="Regular"/>
+                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
-
                     <Button x:Name="btnRefresh" Click="btnRefresh_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}"  Foreground="White" FontWeight="Regular"/>
+                            <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="btnPrint" Click="btnPrint_Click" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Excel01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text="{DynamicResource IZVEZI_U_EXCEL}" Foreground="White" FontWeight="Regular"/>
+
+                            <TextBlock Text="{DynamicResource IZVEZI_U_EXCEL}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
 
                 </StackPanel>
 
+
+
                 <!-- Pagination -->
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
+                    <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center"  Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
@@ -218,47 +162,57 @@
                             <Image Source="..\..\Resources\Icons\StrelicaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
-                    <TextBox IsEnabled="False" Margin="2" Text="{Binding Path=PaginationDisplay}"/>
-                    <Button x:Name="btnNextPage" Click="btnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
+                    <TextBox Name="txtDisplayedItems" IsEnabled="False" Padding="2" Text="{Binding Path=PaginationDisplay}"/>
+                    <Button x:Name="btnNextPage" Click="btnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center " Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\StrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
+                            <Image Source="..\..\Resources\Icons\StrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="btnLastPage" Click="btnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
+                    <Button x:Name="btnLastPage" Click="btnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center"  Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                <Controls:ProgressRing Grid.Row="1" IsActive="{Binding OutputInvoiceDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                <DataGrid x:Name="dgOutputInvoices"
-                              Grid.Row="2" Margin="0 5 0 0"
-                              AutoGenerateColumns="False"   
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              CanUserResizeColumns="True"  
-                              GridLinesVisibility="All"
-                              HorizontalGridLinesBrush="Gray"
-                              Style="{DynamicResource AzureDataGrid}"
+
+                <!--Listing-->
+                <Controls:ProgressRing Grid.Row="1" IsActive="{Binding OutputInvoiceDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10" Margin="359,131,359,42.667"/>
+                <DataGrid x:Name="dgOutputInvoiceInvoices"
+                              Grid.Row="1"
+                              Margin="1 1 1 0"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          CanUserResizeColumns="True"  
+                          GridLinesVisibility="All"
+                          HorizontalGridLinesBrush="Gray"
+                          VerticalAlignment="Stretch"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto" 
+                          RowHeaderWidth="25"
+		                  HeadersVisibility="All"
+		                  LoadingRow="DgOutputInvoices_LoadingRow"
                               ItemsSource="{Binding Path=OutputInvoicesFromDB}"
-                              SelectedItem="{Binding Path=CurrentOutputInvoice}" >
+                              SelectedItem="{Binding Path=CurrentOutputInvoice, Mode=TwoWay}" Grid.RowSpan="2" >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource RTackabTacka}" Binding="{Binding Code}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="BussinesPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Supplier" Header="{DynamicResource Dobavljač}" Binding="{Binding Supplier}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="{DynamicResource Broj_fakture}" Binding="{Binding InvoiceNumber}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="InvoiceDate" Header="{DynamicResource Datum_fakture}" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountNet" Header="{DynamicResource Iznos_neto_euro}" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PdvPercent" Header="{DynamicResource PDVProcenat}" Binding="{Binding PdvPercent}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Pdv" Header="{DynamicResource PDV_euro}" Binding="{Binding Pdv}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountGross" Header="{DynamicResource Iznos_bruto_euro}" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="DateOfPayment" Header="{DynamicResource Datum_plaćanja}" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Status" Header="{DynamicResource Status}" Binding="{Binding Status, Converter={StaticResource cbxChooseStatusConverter} }" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="StatusDate" Header="{DynamicResource Datum_statusa}" Binding="{Binding StatusDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource RTackabTacka}" Binding="{Binding Code}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Supplier" Header="{DynamicResource Dobavljač}" Binding="{Binding Supplier}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="{DynamicResource Broj_fakture}" Binding="{Binding InvoiceNumber}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="InvoiceDate" Header="{DynamicResource Datum_fakture}" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="AmountNet" Header="{DynamicResource Iznos_neto_euro}" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
+
+                        <DataGridTextColumn SortMemberPath="PdvPercent" Header="{DynamicResource PDVProcenat}" Binding="{Binding PdvPercent}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Pdv" Header="{DynamicResource PDV_euro}" Binding="{Binding Pdv, Converter={StaticResource stringToDoubleConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="AmountGross" Header="{DynamicResource Iznos_bruto_euro}" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DateOfPayment" Header="{DynamicResource Datum_plaćanja}" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Status" Header="{DynamicResource Status}" Binding="{Binding Status, Converter={StaticResource cbxChooseStatusConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="StatusDate" Header="{DynamicResource Datum_statusa}" Binding="{Binding StatusDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
@@ -272,134 +226,234 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Header="">
+                        <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="0" CommandParameter="{Binding}" ToolTip="Promeni">
+
+                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Izmena dokumenta">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center"  Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
                                             </StackPanel>
                                         </Button>
-                                        <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Obriši">
+
+                                        <!--<Button  x:Name="btnDelete" Click="btnDelete_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Brisanje dokumenta">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center"  Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
                                             </StackPanel>
-                                        </Button>
-                                        <Button x:Name="btnShow" Click="btnShow_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaz dokumenta">
+                                        </Button>-->
+
+                                        <Button  x:Name="btnShow" Click="btnShow_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaz dokumenta">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\SearchBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\SearchBela.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
                                             </StackPanel>
                                         </Button>
 
                                         <Button  x:Name="btnExcel" Click="btnExcel_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Izvezi u EXCEL">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\ExcelBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\ExcelBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
                                             </StackPanel>
                                         </Button>
 
+                                        <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="Obriši">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\_delete.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+                                            <Popup.IsOpen>
+                                                <MultiBinding Converter="{StaticResource MultiConverter}">
+                                                    <Binding ElementName="btnDeletePopup" Path="IsFocused" Mode="OneWay"/>
+                                                    <Binding ElementName="btnDelete" Path="IsMouseCaptured" Mode="OneWay"/>
+                                                </MultiBinding>
+                                            </Popup.IsOpen>
+                                            <Border Height="Auto" HorizontalAlignment="Stretch" Background="White"  BorderThickness="5" CornerRadius="15" BorderBrush="SteelBlue">
+                                                <Grid Width="300" Margin="10">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <TextBlock Text="Da li ste sigurni da želite da obrišete odabrani podatak?" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                    <Separator Grid.Row="1" Margin="2" />
+
+                                                    <Grid Grid.Row="2">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Button Grid.Column="0" x:Name="btnDelete" Click="btnDelete_Click" Margin="2">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                <TextBlock Text=" DA "  FontWeight="Bold" Foreground="white"/>
+                                                            </StackPanel>
+                                                        </Button>
+                                                        <Button Grid.Column="1" x:Name="btnCancel" Margin="2">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                <TextBlock Text=" NE "  FontWeight="Bold" Foreground="white"/>
+                                                            </StackPanel>
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                        </Popup>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <!--<DataGridTextColumn SortMemberPath="Construction" Header="Gradilište" Binding="{Binding Construction}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="BusinessPartner" Header="Firma" Binding="{Binding BusinessPartner}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="InvoiceDate" Header="Datum računa" Binding="{Binding InvoiceDate}"  Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="CreatedBy.Username" Header="Kreirao/promenio" Binding="{Binding CreatedBy.Username}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="UpdatedAt" Header="Vreme izmene" Binding="{Binding UpdatedAt}" Width="*" IsReadOnly="True"  />-->
-
                     </DataGrid.Columns>
                 </DataGrid>
-
             </Grid>
         </GroupBox>
 
-        <GridSplitter Grid.Row="2" Grid.Column="0" Height="3" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Row="2" Height="2" Margin="0 1 0 1" HorizontalAlignment="Stretch" Background="DarkGreen"/>
 
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="2 1 1 2">
-                <Grid>
-                    <Controls:ProgressRing Grid.Row="0"  IsActive="{Binding NoteDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                    <DataGrid x:Name="dgNotes"
-                              Grid.Row="0" 
+        <TabControl TabStripPlacement="Top" Grid.Row="3" Grid.Column="0" Margin="0 1 0 0" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
+            <TabItem Header="{DynamicResource Napomena}">
+                <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="2 1 1 2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button x:Name="btnAddItem" Click="BtnAddItem_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="..\..\Resources\Icons\_edit.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                    <TextBlock Text=" Dodaj napomenu " FontWeight="Bold" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+
+                        <Separator Grid.Row="1" Margin="2" />
+
+                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding NoteDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgNotes"
+                              Grid.Row="2" 
                               Margin="2"
                               MinHeight="200"
                               AutoGenerateColumns="False"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              CanUserResizeColumns="True"  
-                              GridLinesVisibility="All"
-                              HorizontalGridLinesBrush="Gray"
-                              VerticalAlignment="Stretch"
-                              HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Auto"
-                              Style="{DynamicResource AzureDataGrid}"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgOutputInvoiceNotes_LoadingRow"
                               ItemsSource="{Binding Path=NotesFromDB}"
                               SelectedItem="{Binding Path=CurrentNoteDG, Mode=TwoWay}">
 
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" >
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Setter Property="ToolTip" Value="{Binding Note}"/>
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip" Value="{Binding Note}"/>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
 
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="2 1 2 2">
-                <Grid>
-                    <Controls:ProgressRing Grid.Row="0"  IsActive="{Binding OutputInvoiceDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                    <DataGrid x:Name="dgDocuments"
-                              Grid.Row="0" 
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                </GroupBox>
+            </TabItem>
+
+            <TabItem Header="{DynamicResource Dokumenti}">
+                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="2 1 2 2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="btnAddDocuments" Click="BtnAddDocuments_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="..\..\Resources\Icons\_edit.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                    <TextBlock Text=" Dodaj document " FontWeight="Bold" />
+                                </StackPanel>
+                            </Button>
+                            <!--<TextBlock Grid.Column="2" Text="Pretraga:" Margin="5 2 10 2" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="3" x:Name="txtSearchMedicalConditions" Margin="2" 
+                                     Text="{Binding Path=MedicalConditionSearchObject.Search_AnimalId, UpdateSourceTrigger=PropertyChanged}" 
+                                     TextChanged="TxtSearchMedicalConditions_TextChanged"
+                                     Controls:TextBoxHelper.ClearTextButton="True"/>-->
+                        </Grid>
+
+                        <Separator Grid.Row="1" Margin="2" />
+                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding OutputInvoiceDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgDocuments"
+                              Grid.Row="2" 
                               Margin="2"
                               MinHeight="200"
                               AutoGenerateColumns="False"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              CanUserResizeColumns="True"  
-                              GridLinesVisibility="All"
-                              HorizontalGridLinesBrush="Gray"
-                              VerticalAlignment="Stretch"
-                              HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Auto"
-                              Style="{DynamicResource AzureDataGrid}"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgOutputInvoiceDocuments_LoadingRow"
                               ItemsSource="{Binding Path=OutputInvoiceDocumentsFromDB}"
                               SelectedItem="{Binding Path=CurrentOutputInvoiceDocument, Mode=TwoWay}">
 
-                        <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
-                            <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                            <DataGridTemplateColumn Header="">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
-                                                </StackPanel>
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
 
-                        </DataGrid.Columns>
+                            </DataGrid.Columns>
 
-                    </DataGrid>
-                </Grid>
-            </GroupBox>
-        </Grid>
+                        </DataGrid>
+                    </Grid>
+                </GroupBox>
+
+            </TabItem>
+        </TabControl>
+
 
     </Grid>
 </UserControl>

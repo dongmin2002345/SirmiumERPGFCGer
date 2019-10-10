@@ -441,6 +441,12 @@
     <Compile Include="Views\OutputInvoices\OutputInvoiceList.xaml.cs">
       <DependentUpon>OutputInvoiceList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OutputInvoices\OutputInvoice_Document_AddEdit.xaml.cs">
+      <DependentUpon>OutputInvoice_Document_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OutputInvoices\OutputInvoice_Note_AddEdit.xaml.cs">
+      <DependentUpon>OutputInvoice_Note_AddEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sectors\AgencyAddEdit.xaml.cs">
       <DependentUpon>AgencyAddEdit.xaml</DependentUpon>
     </Compile>
@@ -779,6 +785,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OutputInvoices\OutputInvoiceList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OutputInvoices\OutputInvoice_Document_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OutputInvoices\OutputInvoice_Note_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

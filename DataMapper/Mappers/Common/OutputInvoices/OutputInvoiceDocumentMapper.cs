@@ -32,8 +32,9 @@ namespace DataMapper.Mappers.Common.OutputInvoices
 				Name = outputInvoiceDocument.Name,
 				CreateDate = outputInvoiceDocument.CreateDate,
 				Path = outputInvoiceDocument.Path,
+                ItemStatus = outputInvoiceDocument.ItemStatus,
 
-				IsActive = outputInvoiceDocument.Active,
+                IsActive = outputInvoiceDocument.Active,
 
 				CreatedBy = outputInvoiceDocument.CreatedBy?.ConvertToUserViewModelLite(),
 				Company = outputInvoiceDocument.Company?.ConvertToCompanyViewModelLite(),
@@ -55,8 +56,9 @@ namespace DataMapper.Mappers.Common.OutputInvoices
 				Name = outputInvoiceDocument.Name,
 				CreateDate = outputInvoiceDocument.CreateDate,
 				Path = outputInvoiceDocument.Path,
+                ItemStatus = outputInvoiceDocument.ItemStatus,
 
-				IsActive = outputInvoiceDocument.Active,
+                IsActive = outputInvoiceDocument.Active,
 
 				UpdatedAt = outputInvoiceDocument.UpdatedAt,
 				CreatedAt = outputInvoiceDocument.CreatedAt
@@ -77,8 +79,9 @@ namespace DataMapper.Mappers.Common.OutputInvoices
 				Name = outputInvoiceDocumentViewModel.Name,
 				CreateDate = outputInvoiceDocumentViewModel.CreateDate,
 				Path = outputInvoiceDocumentViewModel.Path,
+                ItemStatus = outputInvoiceDocumentViewModel.ItemStatus,
 
-				Active = outputInvoiceDocumentViewModel.IsActive,
+                Active = outputInvoiceDocumentViewModel.IsActive,
 
 				CreatedById = outputInvoiceDocumentViewModel.CreatedBy?.Id ?? null,
 				CompanyId = outputInvoiceDocumentViewModel.Company?.Id ?? null,

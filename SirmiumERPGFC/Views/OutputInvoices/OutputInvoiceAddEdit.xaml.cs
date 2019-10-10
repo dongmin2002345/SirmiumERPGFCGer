@@ -40,28 +40,28 @@ namespace SirmiumERPGFC.Views.OutputInvoices
     /// </summary>
     public partial class OutputInvoiceAddEdit : UserControl, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Event for handling output invoice create and update
-        /// </summary>
-        public event OutputInvoiceHandler OutputInvoiceCreatedUpdated;
+        #region Attributes
 
-        /// <summary>
-        /// Service for accessing output invoice
-        /// </summary>
+        #region Services
         IOutputInvoiceService outputInvoiceService;
+        #endregion
 
-        #region CurrentOutputInvoice
-        private OutputInvoiceViewModel _CurrentOutputInvoice;
+        #region Events
+        public event OutputInvoiceHandler OutputInvoiceCreatedUpdated;
+        #endregion
+
+        #region currentOutputInvoice
+        private OutputInvoiceViewModel _currentOutputInvoice;
 
         public OutputInvoiceViewModel CurrentOutputInvoice
         {
-            get { return _CurrentOutputInvoice; }
+            get { return _currentOutputInvoice; }
             set
             {
-                if (_CurrentOutputInvoice != value)
+                if (_currentOutputInvoice != value)
                 {
-                    _CurrentOutputInvoice = value;
-                    NotifyPropertyChanged("CurrentOutputInvoice");
+                    _currentOutputInvoice = value;
+                    NotifyPropertyChanged("currentOutputInvoice");
                 }
             }
         }
@@ -82,142 +82,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
         #endregion
 
-
-        #region OutputInvoiceNotesFromDB
-        private ObservableCollection<OutputInvoiceNoteViewModel> _OutputInvoiceNotesFromDB;
-
-        public ObservableCollection<OutputInvoiceNoteViewModel> OutputInvoiceNotesFromDB
-        {
-            get { return _OutputInvoiceNotesFromDB; }
-            set
-            {
-                if (_OutputInvoiceNotesFromDB != value)
-                {
-                    _OutputInvoiceNotesFromDB = value;
-                    NotifyPropertyChanged("OutputInvoiceNotesFromDB");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentOutputInvoiceNoteForm
-        private OutputInvoiceNoteViewModel _CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel() { NoteDate = DateTime.Now };
-
-        public OutputInvoiceNoteViewModel CurrentOutputInvoiceNoteForm
-        {
-            get { return _CurrentOutputInvoiceNoteForm; }
-            set
-            {
-                if (_CurrentOutputInvoiceNoteForm != value)
-                {
-                    _CurrentOutputInvoiceNoteForm = value;
-                    NotifyPropertyChanged("CurrentOutputInvoiceNoteForm");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentOutputInvoiceNoteDG
-        private OutputInvoiceNoteViewModel _CurrentOutputInvoiceNoteDG;
-
-        public OutputInvoiceNoteViewModel CurrentOutputInvoiceNoteDG
-        {
-            get { return _CurrentOutputInvoiceNoteDG; }
-            set
-            {
-                if (_CurrentOutputInvoiceNoteDG != value)
-                {
-                    _CurrentOutputInvoiceNoteDG = value;
-                    NotifyPropertyChanged("CurrentOutputInvoiceNoteDG");
-                }
-            }
-        }
-        #endregion
-
-        #region OutputInvoiceNoteDataLoading
-        private bool _OutputInvoiceNoteDataLoading;
-
-        public bool OutputInvoiceNoteDataLoading
-        {
-            get { return _OutputInvoiceNoteDataLoading; }
-            set
-            {
-                if (_OutputInvoiceNoteDataLoading != value)
-                {
-                    _OutputInvoiceNoteDataLoading = value;
-                    NotifyPropertyChanged("OutputInvoiceNoteDataLoading");
-                }
-            }
-        }
-        #endregion
-
-        #region OutputInvoiceDocumentsFromDB
-        private ObservableCollection<OutputInvoiceDocumentViewModel> _OutputInvoiceDocumentsFromDB;
-
-        public ObservableCollection<OutputInvoiceDocumentViewModel> OutputInvoiceDocumentsFromDB
-        {
-            get { return _OutputInvoiceDocumentsFromDB; }
-            set
-            {
-                if (_OutputInvoiceDocumentsFromDB != value)
-                {
-                    _OutputInvoiceDocumentsFromDB = value;
-                    NotifyPropertyChanged("OutputInvoiceDocumentsFromDB");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentOutputInvoiceDocumentForm
-        private OutputInvoiceDocumentViewModel _CurrentOutputInvoiceDocumentForm = new OutputInvoiceDocumentViewModel() { CreateDate = DateTime.Now };
-
-        public OutputInvoiceDocumentViewModel CurrentOutputInvoiceDocumentForm
-        {
-            get { return _CurrentOutputInvoiceDocumentForm; }
-            set
-            {
-                if (_CurrentOutputInvoiceDocumentForm != value)
-                {
-                    _CurrentOutputInvoiceDocumentForm = value;
-                    NotifyPropertyChanged("CurrentOutputInvoiceDocumentForm");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentOutputInvoiceDocumentDG
-        private OutputInvoiceDocumentViewModel _CurrentOutputInvoiceDocumentDG;
-
-        public OutputInvoiceDocumentViewModel CurrentOutputInvoiceDocumentDG
-        {
-            get { return _CurrentOutputInvoiceDocumentDG; }
-            set
-            {
-                if (_CurrentOutputInvoiceDocumentDG != value)
-                {
-                    _CurrentOutputInvoiceDocumentDG = value;
-                    NotifyPropertyChanged("CurrentOutputInvoiceDocumentDG");
-                }
-            }
-        }
-        #endregion
-
-        #region OutputInvoiceDocumentDataLoading
-        private bool _OutputInvoiceDocumentDataLoading;
-
-        public bool OutputInvoiceDocumentDataLoading
-        {
-            get { return _OutputInvoiceDocumentDataLoading; }
-            set
-            {
-                if (_OutputInvoiceDocumentDataLoading != value)
-                {
-                    _OutputInvoiceDocumentDataLoading = value;
-                    NotifyPropertyChanged("OutputInvoiceDocumentDataLoading");
-                }
-            }
-        }
-        #endregion
 
 
         #region IsHeaderCreated
@@ -271,39 +135,40 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
         #endregion
 
+        #region SubmitButtonContent
+        private string _SubmitButtonContent = " PROKNJIŽI ";
 
-        #region SaveButtonContent
-        private string _SaveButtonContent = " Sačuvaj ";
-
-        public string SaveButtonContent
+        public string SubmitButtonContent
         {
-            get { return _SaveButtonContent; }
+            get { return _SubmitButtonContent; }
             set
             {
-                if (_SaveButtonContent != value)
+                if (_SubmitButtonContent != value)
                 {
-                    _SaveButtonContent = value;
-                    NotifyPropertyChanged("SaveButtonContent");
+                    _SubmitButtonContent = value;
+                    NotifyPropertyChanged("SubmitButtonContent");
                 }
             }
         }
         #endregion
 
-        #region SaveButtonEnabled
-        private bool _SaveButtonEnabled = true;
+        #region SubmitButtonEnabled
+        private bool _SubmitButtonEnabled = true;
 
-        public bool SaveButtonEnabled
+        public bool SubmitButtonEnabled
         {
-            get { return _SaveButtonEnabled; }
+            get { return _SubmitButtonEnabled; }
             set
             {
-                if (_SaveButtonEnabled != value)
+                if (_SubmitButtonEnabled != value)
                 {
-                    _SaveButtonEnabled = value;
-                    NotifyPropertyChanged("SaveButtonEnabled");
+                    _SubmitButtonEnabled = value;
+                    NotifyPropertyChanged("SubmitButtonEnabled");
                 }
             }
         }
+        #endregion
+
         #endregion
 
 
@@ -324,341 +189,75 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             CurrentOutputInvoice = OutputInvoiceViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
-
-            Thread displayThread = new Thread(() =>
-            {
-                DisplayOutputInvoiceNoteData();
-            });
-            displayThread.IsBackground = true;
-            displayThread.Start();
         }
 
         #endregion
 
-        #region Display data
+        #region Submit and Cancel 
 
-        private void DisplayOutputInvoiceNoteData()
-        {
-            OutputInvoiceNoteDataLoading = true;
-
-            OutputInvoiceNoteListResponse response = new OutputInvoiceNoteSQLiteRepository()
-                .GetOutputInvoiceNotesByOutputInvoice(MainWindow.CurrentCompanyId, CurrentOutputInvoice.Identifier);
-
-            if (response.Success)
-            {
-                OutputInvoiceNotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>(
-                    response.OutputInvoiceNotes ?? new List<OutputInvoiceNoteViewModel>());
-            }
-            else
-            {
-                OutputInvoiceNotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>();
-            }
-
-            OutputInvoiceNoteDataLoading = false;
-        }
-
-        private void DisplayOutputInvoiceDocumentData()
-        {
-            OutputInvoiceDocumentDataLoading = true;
-
-            OutputInvoiceDocumentListResponse response = new OutputInvoiceDocumentSQLiteRepository()
-                .GetOutputInvoiceDocumentsByOutputInvoice(MainWindow.CurrentCompanyId, CurrentOutputInvoice.Identifier);
-
-            if (response.Success)
-            {
-                OutputInvoiceDocumentsFromDB = new ObservableCollection<OutputInvoiceDocumentViewModel>(
-                    response.OutputInvoiceDocuments ?? new List<OutputInvoiceDocumentViewModel>());
-            }
-            else
-            {
-                OutputInvoiceDocumentsFromDB = new ObservableCollection<OutputInvoiceDocumentViewModel>();
-            }
-
-            OutputInvoiceDocumentDataLoading = false;
-        }
-
-        #endregion
-
-        #region Save and Cancel button
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
-            if (String.IsNullOrEmpty(CurrentOutputInvoice.Supplier))
+            if (CurrentOutputInvoice?.BusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv dobavljača";
+                MainWindow.WarningMessage = "Obavezno polje: Poslovni partner";
                 return;
             }
 
             #endregion
 
-            Thread th = new Thread(() =>
-            {
-                SaveButtonContent = " Čuvanje u toku... ";
-                SaveButtonEnabled = false;
+            Thread td = new Thread(() => {
 
+                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonEnabled = false;
+
+                CurrentOutputInvoice.IsSynced = false;
                 CurrentOutputInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentOutputInvoice.IsSynced = false;
-
-                OutputInvoiceResponse response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
-                response = new OutputInvoiceSQLiteRepository().Create(CurrentOutputInvoice);
+                OutputInvoiceResponse response = new OutputInvoiceSQLiteRepository().Create(CurrentOutputInvoice);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SaveButtonContent = " Sačuvaj ";
-                    SaveButtonEnabled = true;
-                    return;
+                    MainWindow.ErrorMessage = "Greška kod čuvanja podataka!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
                 }
-
-                CurrentOutputInvoice.OutputInvoiceNotes = OutputInvoiceNotesFromDB;
-                CurrentOutputInvoice.OutputInvoiceDocuments = OutputInvoiceDocumentsFromDB;
 
                 response = outputInvoiceService.Create(CurrentOutputInvoice);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SaveButtonContent = " Sačuvaj ";
-                    SaveButtonEnabled = true;
+                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu. Greška kod čuvanja na serveru!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    new OutputInvoiceSQLiteRepository().UpdateSyncStatus(
-                        response.OutputInvoice.Identifier,
-                        response.OutputInvoice.Code,
-                        response.OutputInvoice.UpdatedAt,
-                        response.OutputInvoice.Id, 
-                        true);
-
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SaveButtonContent = " Sačuvaj ";
-                    SaveButtonEnabled = true;
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+
+                    new OutputInvoiceSQLiteRepository().Sync(outputInvoiceService);
 
                     OutputInvoiceCreatedUpdated();
 
-                    if (IsCreateProcess)
-                    {
-                        CurrentOutputInvoice = new OutputInvoiceViewModel();
-                        CurrentOutputInvoice.Identifier = Guid.NewGuid();
-
-                        Application.Current.Dispatcher.BeginInvoke(
-                            System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(() =>
-                            {
-                                txtOutoutInvoiceCode.Focus();
-                            })
-                        );
-                    }
-                    else
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(
-                            System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(() =>
-                            {
-                                if (IsPopup)
-                                    FlyoutHelper.CloseFlyout(this);
-                                else
-                                    FlyoutHelper.CloseFlyout(this);
-                            })
-                        );
-                    }
+                    Application.Current.Dispatcher.BeginInvoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(() =>
+                        {
+                            FlyoutHelper.CloseFlyout(this);
+                        })
+                    );
                 }
-
             });
-            th.IsBackground = true;
-            th.Start();
+            td.IsBackground = true;
+            td.Start();
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (IsPopup)
-                FlyoutHelper.CloseFlyout(this);
-            else
-                FlyoutHelper.CloseFlyout(this);
-        }
-
-        #endregion
-
-        #region Add, edit, delete and cancel note
-
-        private void btnAddNote_Click(object sender, RoutedEventArgs e)
-        {
-            #region Validation
-
-            if (String.IsNullOrEmpty(CurrentOutputInvoiceNoteForm.Note))
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
-                return;
-            }
-
-            if (CurrentOutputInvoiceNoteForm.NoteDate == null)
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_napomene"));
-                return;
-            }
-
-            #endregion
-
-            // IF update process, first delete item
-            new OutputInvoiceNoteSQLiteRepository().Delete(CurrentOutputInvoiceNoteForm.Identifier);
-
-            CurrentOutputInvoiceNoteForm.OutputInvoice = CurrentOutputInvoice;
-            CurrentOutputInvoiceNoteForm.Identifier = Guid.NewGuid();
-            CurrentOutputInvoiceNoteForm.IsSynced = false;
-            CurrentOutputInvoiceNoteForm.UpdatedAt = DateTime.Now;
-            CurrentOutputInvoiceNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentOutputInvoiceNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new OutputInvoiceNoteSQLiteRepository().Create(CurrentOutputInvoiceNoteForm);
-            if (response.Success)
-            {
-                CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel();
-
-                Thread displayThread = new Thread(() => DisplayOutputInvoiceNoteData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-
-                txtNote.Focus();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
-        }
-
-        private void btnEditNote_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentOutputInvoiceNoteForm = CurrentOutputInvoiceNoteDG;
-        }
-
-        private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
-        {
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("stavku_radnika")), "");
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
-                new OutputInvoiceNoteSQLiteRepository().Delete(CurrentOutputInvoiceNoteDG.Identifier);
-
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
-
-                Thread displayThread = new Thread(() => DisplayOutputInvoiceNoteData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        }
-
-        private void btnCancelNote_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel();
-        }
-
-        #endregion
-
-        #region Add, edit, delete and cancel document
-
-        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
-            string[] fileNames = dialog.FileNames;
-
-            if (fileNames.Length > 0)
-                CurrentOutputInvoiceDocumentForm.Path = fileNames[0];
-        }
-
-        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
-
-            fileDIalog.Multiselect = true;
-            fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "Image Files | *.pdf";
-            fileDIalog.ShowDialog();
-        }
-
-        private void btnAddDocument_Click(object sender, RoutedEventArgs e)
-        {
-            #region Validation
-
-            if (String.IsNullOrEmpty(CurrentOutputInvoiceDocumentForm.Name))
-            {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv";
-                return;
-            }
-
-            if (String.IsNullOrEmpty(CurrentOutputInvoiceDocumentForm.Path))
-            {
-                MainWindow.WarningMessage = "Obavezno polje: Putanja";
-                return;
-            }
-
-            if (CurrentOutputInvoiceDocumentForm.CreateDate == null)
-            {
-                MainWindow.WarningMessage = "Obavezno polje: Datum kreiranja";
-                return;
-            }
-
-            #endregion
-
-            // IF update process, first delete item
-            new OutputInvoiceDocumentSQLiteRepository().Delete(CurrentOutputInvoiceDocumentForm.Identifier);
-
-            CurrentOutputInvoiceDocumentForm.OutputInvoice = CurrentOutputInvoice;
-            CurrentOutputInvoiceDocumentForm.Identifier = Guid.NewGuid();
-            CurrentOutputInvoiceDocumentForm.IsSynced = false;
-            CurrentOutputInvoiceDocumentForm.UpdatedAt = DateTime.Now;
-            CurrentOutputInvoiceDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentOutputInvoiceDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new OutputInvoiceDocumentSQLiteRepository().Create(CurrentOutputInvoiceDocumentForm);
-            if (response.Success)
-            {
-                CurrentOutputInvoiceDocumentForm = new OutputInvoiceDocumentViewModel();
-                CurrentOutputInvoiceDocumentForm.CreateDate = DateTime.Now;
-
-                Thread displayThread = new Thread(() => DisplayOutputInvoiceDocumentData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-
-                txtDocumentName.Focus();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
-        }
-
-        private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentOutputInvoiceDocumentForm = new OutputInvoiceDocumentViewModel();
-            CurrentOutputInvoiceDocumentForm.CreateDate = DateTime.Now;
-        }
-
-        private void btnEditDocument_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentOutputInvoiceDocumentForm = CurrentOutputInvoiceDocumentDG;
-        }
-
-        private void btnDeleteDocument_Click(object sender, RoutedEventArgs e)
-        {
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dokument", "");
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
-                new OutputInvoiceDocumentSQLiteRepository().Delete(CurrentOutputInvoiceDocumentDG.Identifier);
-
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dokument_je_uspešno_obrisanUzvičnik"));
-
-                Thread displayThread = new Thread(() => DisplayOutputInvoiceDocumentData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+            FlyoutHelper.CloseFlyout(this);
         }
 
         #endregion
@@ -689,36 +288,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
         #endregion
 
-       
 
-        private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
-        {
-            #region Validation
-
-            if (String.IsNullOrEmpty(CurrentOutputInvoice.InvoiceNumber))
-            {
-                MainWindow.WarningMessage = "Obavezno polje: Broj fakture";
-                return;
-            }
-
-            #endregion
-
-            CurrentOutputInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentOutputInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            CurrentOutputInvoice.IsSynced = false;
-
-            OutputInvoiceResponse response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
-            response = new OutputInvoiceSQLiteRepository().Create(CurrentOutputInvoice);
-            if (response.Success)
-            {
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvanoUzvičnik"));
-                IsHeaderCreated = true;
-
-                txtNote.Focus();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
-        }
     }
 }

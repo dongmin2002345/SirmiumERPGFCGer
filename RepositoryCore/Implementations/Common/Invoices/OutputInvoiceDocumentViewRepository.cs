@@ -30,7 +30,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 			string queryString =
 				"SELECT OutputInvoiceDocumentId, OutputInvoiceDocumentIdentifier, " +
 				"OutputInvoiceId, OutputInvoiceIdentifier, OutputInvoiceCode, " +
-				"Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
 				"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
 				"CompanyId, CompanyName " +
 				"FROM vOutputInvoiceDocuments " +
@@ -68,8 +68,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 							outputInvoiceDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
 						if (reader["Path"] != DBNull.Value)
 							outputInvoiceDocument.Path = reader["Path"].ToString();
-
-						outputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            outputInvoiceDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        outputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
 						outputInvoiceDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
 						if (reader["CreatedById"] != DBNull.Value)
@@ -104,7 +105,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 			string queryString =
 				"SELECT OutputInvoiceDocumentId, OutputInvoiceDocumentIdentifier, " +
 				"OutputInvoiceId, OutputInvoiceIdentifier, OutputInvoiceCode, " +
-				"Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
 				"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
 				"CompanyId, CompanyName " +
 				"FROM vOutputInvoiceDocuments " +
@@ -142,8 +143,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 							outputInvoiceDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
 						if (reader["Path"] != DBNull.Value)
 							outputInvoiceDocument.Path = reader["Path"].ToString();
-
-						outputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            outputInvoiceDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        outputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
 						outputInvoiceDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
 						if (reader["CreatedById"] != DBNull.Value)
@@ -179,7 +181,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 			string queryString =
 				"SELECT OutputInvoiceDocumentId, OutputInvoiceDocumentIdentifier, " +
 				"OutputInvoiceId, OutputInvoiceIdentifier, OutputInvoiceCode, " +
-				"Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
 				"Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
 				"CompanyId, CompanyName " +
 				"FROM vOutputInvoiceDocuments " +
@@ -219,8 +221,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 							outputInvoiceDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
 						if (reader["Path"] != DBNull.Value)
 							outputInvoiceDocument.Path = reader["Path"].ToString();
-
-						outputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            outputInvoiceDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        outputInvoiceDocument.Active = bool.Parse(reader["Active"].ToString());
 						outputInvoiceDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
 						if (reader["CreatedById"] != DBNull.Value)
@@ -273,9 +276,10 @@ namespace RepositoryCore.Implementations.Common.Invoices
 					dbEntry.Name = OutputInvoiceDocument.Name;
 					dbEntry.CreateDate = OutputInvoiceDocument.CreateDate;
 					dbEntry.Path = OutputInvoiceDocument.Path;
+                    dbEntry.ItemStatus = OutputInvoiceDocument.ItemStatus;
 
-					// Set timestamp
-					dbEntry.UpdatedAt = DateTime.Now;
+                    // Set timestamp
+                    dbEntry.UpdatedAt = DateTime.Now;
 				}
 
 				return dbEntry;

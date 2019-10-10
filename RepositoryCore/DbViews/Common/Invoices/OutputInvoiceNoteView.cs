@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Common.Invoices
                 "CREATE VIEW vOutputInvoiceNotes AS " +
                 "SELECT outputInvoiceNote.Id AS OutputInvoiceNoteId, outputInvoiceNote.Identifier AS OutputInvoiceNoteIdentifier, " +
                 "outputInvoice.Id AS OutputInvoiceId, outputInvoice.Identifier AS OutputInvoiceIdentifier, outputInvoice.Code AS OutputInvoiceCode, " +
-                "outputInvoiceNote.Note, outputInvoiceNote.NoteDate, outputInvoiceNote.Active AS Active, " +
+                "outputInvoiceNote.Note, outputInvoiceNote.NoteDate, outputInvoiceNote.ItemStatus, outputInvoiceNote.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (outputInvoiceNote.UpdatedAt), (outputInvoice.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

@@ -75,11 +75,27 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
 				}
 			}
 		}
-		#endregion
+        #endregion
 
+        #region ItemStatus
+        private int _ItemStatus;
 
-		#region IsSynced
-		private bool _IsSynced;
+        public int ItemStatus
+        {
+            get { return _ItemStatus; }
+            set
+            {
+                if (_ItemStatus != value)
+                {
+                    _ItemStatus = value;
+                    NotifyPropertyChanged("ItemStatus");
+                }
+            }
+        }
+        #endregion
+
+        #region IsSynced
+        private bool _IsSynced;
 
 		public bool IsSynced
 		{

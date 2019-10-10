@@ -96,22 +96,6 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
             }
         }
         #endregion
-        //#region Construction
-        //private string _Construction;
-
-        //public string Construction
-        //{
-        //    get { return _Construction; }
-        //    set
-        //    {
-        //        if (_Construction != value)
-        //        {
-        //            _Construction = value;
-        //            NotifyPropertyChanged("Construction");
-        //        }
-        //    }
-        //}
-        //#endregion
 
         #region InvoiceDate
         private DateTime _InvoiceDate = DateTime.Now;
@@ -129,23 +113,6 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
             }
         }
         #endregion
-
-        //#region InvoiceType
-        //private string _InvoiceType;
-
-        //public string InvoiceType
-        //{
-        //    get { return _InvoiceType; }
-        //    set
-        //    {
-        //        if (_InvoiceType != value)
-        //        {
-        //            _InvoiceType = value;
-        //            NotifyPropertyChanged("InvoiceType");
-        //        }
-        //    }
-        //}
-        //#endregion
 
         #region AmountNet
         private decimal _AmountNet;
@@ -374,125 +341,6 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
             }
         }
         #endregion
-
-        //#region TrafficDate
-        //private DateTime _TrafficDate = DateTime.Now;
-
-        //public DateTime TrafficDate
-        //{
-        //    get { return _TrafficDate; }
-        //    set
-        //    {
-        //        if (_TrafficDate != value)
-        //        {
-        //            _TrafficDate = value;
-        //            NotifyPropertyChanged("TrafficDate");
-        //        }
-        //    }
-        //}
-        //#endregion
-
-        //#region Price
-        //private decimal _Price;
-
-        //public decimal Price
-        //{
-        //    get { return _Price; }
-        //    set
-        //    {
-        //        if (_Price != value)
-        //        {
-        //            _Price = value;
-        //            NotifyPropertyChanged("Price");
-        //        }
-        //    }
-        //}
-        //#endregion
-
-        //#region Rebate
-        //private decimal _Rebate;
-
-        //public decimal Rebate
-        //{
-        //    get { return _Rebate; }
-        //    set
-        //    {
-        //        if (_Rebate != value)
-        //        {
-        //            _Rebate = value;
-        //            NotifyPropertyChanged("Rebate");
-        //        }
-        //    }
-        //}
-        //#endregion
-
-        //#region RebateValue
-        //private decimal _RebateValue;
-
-        //public decimal RebateValue
-        //{
-        //    get { return _RebateValue; }
-        //    set
-        //    {
-        //        if (_RebateValue != value)
-        //        {
-        //            _RebateValue = value;
-        //            NotifyPropertyChanged("RebateValue");
-        //        }
-        //    }
-        //}
-        //#endregion
-
-        //#region Base
-        //private decimal _Base;
-
-        //public decimal Base
-        //{
-        //    get { return _Base; }
-        //    set
-        //    {
-        //        if (_Base != value)
-        //        {
-        //            _Base = value;
-        //            NotifyPropertyChanged("Base");
-        //        }
-        //    }
-        //}
-        //#endregion
-
-        //#region PDV
-        //private decimal _PDV;
-
-        //public decimal PDV
-        //{
-        //    get { return _PDV; }
-        //    set
-        //    {
-        //        if (_PDV != value)
-        //        {
-        //            _PDV = value;
-        //            NotifyPropertyChanged("PDV");
-        //        }
-        //    }
-        //}
-        //#endregion
-
-        //#region Total
-        //private decimal _Total;
-
-        //public decimal Total
-        //{
-        //    get { return _Total; }
-        //    set
-        //    {
-        //        if (_Total != value)
-        //        {
-        //            _Total = value;
-        //            NotifyPropertyChanged("Total");
-        //        }
-        //    }
-        //}
-        //#endregion
 
         #region Search
 
