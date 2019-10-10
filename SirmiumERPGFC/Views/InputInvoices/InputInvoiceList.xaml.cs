@@ -321,21 +321,24 @@ namespace SirmiumERPGFC.Views.InputInvoices
         /// FinancialInvoiceList constructor
         /// </summary>
         public InputInvoiceList()
-		{
-			// Get required service
-			this.inputInvoiceService = DependencyResolver.Kernel.Get<IInputInvoiceService>();
-			this.inputInvoiceNoteService = DependencyResolver.Kernel.Get<IInputInvoiceNoteService>();
-			this.inputInvoiceDocumentService = DependencyResolver.Kernel.Get<IInputInvoiceDocumentService>();
+        {
+            // Get required service
+            this.inputInvoiceService = DependencyResolver.Kernel.Get<IInputInvoiceService>();
+            this.inputInvoiceNoteService = DependencyResolver.Kernel.Get<IInputInvoiceNoteService>();
+            this.inputInvoiceDocumentService = DependencyResolver.Kernel.Get<IInputInvoiceDocumentService>();
 
-			// Draw all components
-			InitializeComponent();
+            // Draw all components
+            InitializeComponent();
 
-			this.DataContext = this;
-
-			Thread displayThread = new Thread(() => SyncData());
-			displayThread.IsBackground = true;
-			displayThread.Start();
-		}
+            this.DataContext = this;
+        }
+            private void UserControl_Loaded(object sender, RoutedEventArgs e)
+            {
+                Thread displayThread = new Thread(() => SyncData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        
 
 		#endregion
 
