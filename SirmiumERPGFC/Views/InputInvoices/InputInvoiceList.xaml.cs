@@ -537,7 +537,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
         {
             if (CurrentInputInvoice == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati stavku za brisanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                 return;
             }
 
@@ -545,7 +545,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
             var result = inputInvoiceService.Delete(CurrentInputInvoice.Identifier);
             if (result.Success)
             {
-                MainWindow.SuccessMessage = "Podaci su uspešno obrisani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;

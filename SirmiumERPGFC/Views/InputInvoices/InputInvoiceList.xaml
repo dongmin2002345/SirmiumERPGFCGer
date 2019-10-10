@@ -212,14 +212,18 @@
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="AmountNet" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True" >
                         <DataGridTextColumn.Header>
-                            <TextBlock Text="{DynamicResource Iznos_neto_euro}" TextWrapping="Wrap" MaxWidth="70" />
+                                <TextBlock Text="{DynamicResource Iznos_neto_euro}" TextWrapping="Wrap" MaxWidth="50" />
                         </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDVProcenat}" Binding="{Binding PDVPercent}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV_euro}" Binding="{Binding PDV, Converter={StaticResource stringToDoubleConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PDV" Binding="{Binding PDV, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True">
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{DynamicResource PDV_euro}" TextWrapping="Wrap" MaxWidth="70" />
+                        </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="AmountGross" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True" >
                         <DataGridTextColumn.Header>
-                            <TextBlock Text="{DynamicResource Iznos_bruto_euro}" TextWrapping="Wrap" MaxWidth="70" />
+                            <TextBlock Text="{DynamicResource Iznos_bruto_euro}" TextWrapping="Wrap" MaxWidth="50" />
                         </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency}" Width="Auto" IsReadOnly="True" />
@@ -262,11 +266,11 @@
                                             </StackPanel>
                                         </Button>
 
-                                        <Button  x:Name="btnShow" Click="btnShow_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaz dokumenta">
+                                        <!--<Button  x:Name="btnShow" Click="btnShow_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaz dokumenta">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\SearchBela.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"  />
                                             </StackPanel>
-                                        </Button>
+                                        </Button>-->
 
                                         <Button  x:Name="btnExcel" Click="btnExcel_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Izvezi u EXCEL">
                                             <StackPanel Orientation="Horizontal">
@@ -328,7 +332,7 @@
             </Grid>
         </GroupBox>
 
-        <GridSplitter Grid.Row="2" Height="2" Margin="0 1 0 1" HorizontalAlignment="Stretch" Background="DarkGreen"/>
+        <GridSplitter Grid.Row="2" Height="2" Margin="0 1 0 1" HorizontalAlignment="Stretch" Background="#007ACC"/>
 
         <TabControl TabStripPlacement="Top" Grid.Row="3" Grid.Column="0" Margin="0 1 0 0" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
             <TabItem Header="{DynamicResource Napomena}">
