@@ -74,14 +74,14 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
             OutputInvoiceResponse response = new OutputInvoiceResponse();
             try
             {
-                // Backup items
+                //Backup items
                 List<OutputInvoiceNoteViewModel> outputInvoiceNotes = outputInvoice
                     .OutputInvoiceNotes?.ToList() ?? new List<OutputInvoiceNoteViewModel>();
                 outputInvoice.OutputInvoiceNotes = null;
 
-                //List<OutputInvoiceDocumentViewModel> outputInvoiceDocuments = outputInvoice
-                //   .OutputInvoiceDocuments?.ToList() ?? new List<OutputInvoiceDocumentViewModel>();
-                //outputInvoice.OutputInvoiceDocuments = null;
+                List<OutputInvoiceDocumentViewModel> outputInvoiceDocuments = outputInvoice
+                   .OutputInvoiceDocuments?.ToList() ?? new List<OutputInvoiceDocumentViewModel>();
+                outputInvoice.OutputInvoiceDocuments = null;
 
                 OutputInvoice createdOutputInvoice = unitOfWork.GetOutputInvoiceRepository()
                     .Create(outputInvoice.ConvertToOutputInvoice());
@@ -97,14 +97,6 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
                         var createdItem = unitOfWork.GetOutputInvoiceNoteRepository().Create(item.ConvertToOutputInvoiceNote());
                     }
 
-                    //foreach (OutputInvoiceDocumentViewModel item in outputInvoiceDocuments
-                    //   .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<OutputInvoiceDocumentViewModel>())
-                    //{
-                    //    item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
-                    //    item.ItemStatus = ItemStatus.Submited;
-                    //    var createdItem = unitOfWork.GetOutputInvoiceDocumentRepository().Create(item.ConvertToOutputInvoiceDocument());
-                    //}
-
                     foreach (OutputInvoiceNoteViewModel item in outputInvoiceNotes
                         .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<OutputInvoiceNoteViewModel>())
                     {
@@ -114,14 +106,27 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
                         unitOfWork.GetOutputInvoiceNoteRepository().Delete(item.Identifier);
                     }
 
-                    //foreach (OutputInvoiceDocumentViewModel item in outputInvoiceDocuments
-                    //   .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<OutputInvoiceDocumentViewModel>())
-                    //{
-                    //    item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
-                    //    unitOfWork.GetOutputInvoiceDocumentRepository().Create(item.ConvertToOutputInvoiceDocument());
+                }
 
-                    //    unitOfWork.GetOutputInvoiceDocumentRepository().Delete(item.Identifier);
-                    //}
+                // Update items
+                if (outputInvoiceDocuments != null && outputInvoiceDocuments.Count > 0)
+                {
+                    foreach (OutputInvoiceDocumentViewModel item in outputInvoiceDocuments
+                       .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<OutputInvoiceDocumentViewModel>())
+                    {
+                        item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetOutputInvoiceDocumentRepository().Create(item.ConvertToOutputInvoiceDocument());
+                    }
+
+                    foreach (OutputInvoiceDocumentViewModel item in outputInvoiceDocuments
+                       .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<OutputInvoiceDocumentViewModel>())
+                    {
+                        item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
+                        unitOfWork.GetOutputInvoiceDocumentRepository().Create(item.ConvertToOutputInvoiceDocument());
+
+                        unitOfWork.GetOutputInvoiceDocumentRepository().Delete(item.Identifier);
+                    }
                 }
 
                 unitOfWork.Save();
