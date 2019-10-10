@@ -534,37 +534,20 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 return;
             }
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("fakturu", CurrentOutputInvoice.Code);
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
+            // Delete data
+            var result = outputInvoiceService.Delete(CurrentOutputInvoice.Identifier);
+            if (result.Success)
             {
-                OutputInvoiceResponse response = outputInvoiceService.Delete(CurrentOutputInvoice.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
-
-                response = new OutputInvoiceSQLiteRepository().Delete(CurrentOutputInvoice.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
-
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Faktura_je_uspešno_obrisanaUzvičnik"));
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
-
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+            else
+            {
+                MainWindow.ErrorMessage = result.Message;
+            }
         }
 
         private void BtnAddItem_Click(object sender, RoutedEventArgs e)
@@ -666,21 +649,21 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
-        private void btnShow_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentOutputInvoice.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
+        //private void btnShow_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        System.Diagnostics.Process process = new System.Diagnostics.Process();
+        //        //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+        //        Uri pdf = new Uri(CurrentOutputInvoice.Path, UriKind.RelativeOrAbsolute);
+        //        process.StartInfo.FileName = pdf.LocalPath;
+        //        process.Start();
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //    }
+        //}
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
             try

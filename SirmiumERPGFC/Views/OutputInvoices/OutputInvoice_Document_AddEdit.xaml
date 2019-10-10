@@ -114,7 +114,7 @@
                                         </Button>
                                         <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" IsEnabled="{Binding CanBeModified}" Width="30" ToolTip="Obriši">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\_delete.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
                                         </Button>
                                         <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
