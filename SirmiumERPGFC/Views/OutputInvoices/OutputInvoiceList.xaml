@@ -8,7 +8,9 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
-             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Background="White">
+             xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded" Background="White">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -29,8 +31,8 @@
             <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
             <cbxConverters1:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
             <cbxConverters1:StringDoubleConverter x:Key="stringToDoubleConverter" />
-            <!--<cbxConverters:DataGridFieldIsNullConverter x:Key="DataGridFieldIsNullConverter" />
-            <cbxConverters:DataGridFieldIsTrueConverter x:Key="DataGridFieldIsTrueConverter" />-->
+            <cbxConverters1:ItemStatusConverter x:Key="ItemStatusConverter" />
+            <cbxConverters1:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -198,20 +200,48 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource RTackabTacka}" Binding="{Binding Code}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BusinessPartner.Name"  Binding="{Binding BusinessPartner.Name}" IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Poslovni_partner}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="Supplier" Header="{DynamicResource Dobavljač}" Binding="{Binding Supplier}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="{DynamicResource Broj_fakture}" Binding="{Binding InvoiceNumber}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="InvoiceDate" Header="{DynamicResource Datum_fakture}" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountNet" Header="{DynamicResource Iznos_neto_euro}" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="InvoiceNumber" Binding="{Binding InvoiceNumber}" IsReadOnly="True">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Broj_fakture}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="InvoiceDate" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}"  IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_fakture}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="AmountNet" Binding="{Binding AmountNet, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Iznos_neto_euro}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
 
                         <DataGridTextColumn SortMemberPath="PdvPercent" Header="{DynamicResource PDVProcenat}" Binding="{Binding PdvPercent}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Pdv" Header="{DynamicResource PDV_euro}" Binding="{Binding Pdv, Converter={StaticResource stringToDoubleConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="AmountGross" Header="{DynamicResource Iznos_bruto_euro}" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="AmountGross" Binding="{Binding AmountGross, Converter={StaticResource stringToDoubleConverter}}"  IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Iznos_bruto_euro}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="DateOfPayment" Header="{DynamicResource Datum_plaćanja}" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DateOfPayment" Binding="{Binding DateOfPaymet, Converter={StaticResource cbxDatetimeToStringConverter}}"  IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_plaćanja}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="Status" Header="{DynamicResource Status}" Binding="{Binding Status, Converter={StaticResource cbxChooseStatusConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="StatusDate" Header="{DynamicResource Datum_statusa}" Binding="{Binding StatusDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="StatusDate" Binding="{Binding StatusDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_statusa}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
 
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
@@ -431,6 +461,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -446,7 +477,18 @@
                                 </DataGridTemplateColumn>
 
                             </DataGrid.Columns>
-
+                            <DataGrid.RowStyle>
+                                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                    <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                            <Setter Property="FontStyle" Value="Italic" />
+                                            <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
                         </DataGrid>
                     </Grid>
                 </GroupBox>

@@ -330,12 +330,13 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             InitializeComponent();
 
             this.DataContext = this;
-
+        }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
             Thread displayThread = new Thread(() => SyncData());
             displayThread.IsBackground = true;
             displayThread.Start();
         }
-
         #endregion
 
         #region Display data
