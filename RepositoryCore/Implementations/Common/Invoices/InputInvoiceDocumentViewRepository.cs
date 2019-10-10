@@ -257,8 +257,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 				InputInvoiceDocument.Id = 0;
 
 				InputInvoiceDocument.Active = true;
-
-				context.InputInvoiceDocuments.Add(InputInvoiceDocument);
+                InputInvoiceDocument.UpdatedAt = DateTime.Now;
+                InputInvoiceDocument.CreatedAt = DateTime.Now;
+                context.InputInvoiceDocuments.Add(InputInvoiceDocument);
 				return InputInvoiceDocument;
 			}
 			else
