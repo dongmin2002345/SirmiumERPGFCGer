@@ -184,7 +184,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 {
                     dbEntry.CompanyId = InputInvoiceNote.CompanyId ?? null;
                     dbEntry.CreatedById = InputInvoiceNote.CreatedById ?? null;
-
+                    dbEntry.InputInvoiceId = InputInvoiceNote.InputInvoiceId ?? null;
                     // Set properties
                     dbEntry.Note = InputInvoiceNote.Note;
                     dbEntry.NoteDate = InputInvoiceNote.NoteDate;
