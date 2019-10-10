@@ -1235,6 +1235,7 @@
     <Resource Include="Resources\Icons\Sunhronizuj.png" />
     <Resource Include="Resources\Icons\StrelicaDesna.png" />
     <Resource Include="Resources\Icons\StrelicaLeva.png" />
+    <Resource Include="Resources\Icons\submit.png" />
     <Content Include="Resources\Icons\telephone.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1273,6 +1274,8 @@
     <Resource Include="Resources\Icons\Zanimanja.png" />
     <Resource Include="Resources\Icons\Zatvori.png" />
     <Resource Include="Resources\Icons\Zanimanje.png" />
+    <Resource Include="Resources\Icons\_cancel.png" />
+    <Resource Include="Resources\Icons\_correct.png" />
     <Content Include="Resources\image005.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

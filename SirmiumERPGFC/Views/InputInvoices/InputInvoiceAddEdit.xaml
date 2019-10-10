@@ -28,10 +28,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                
 
                 <!--    Invoice data    -->
                 <GroupBox Header="{DynamicResource Podaci_o_fakturi}" Margin="2 2 2 1" Grid.Row="0" Grid.ColumnSpan="2">
@@ -183,15 +180,15 @@
 
                     <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2 0 1 2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\_submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
 
                     <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="1 0 2 2">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\_leftleft.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" ZATVORI " FontSize="20" FontWeight="Bold"/>
+                        <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
                 </Grid>
