@@ -533,46 +533,29 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("ULAZNE_FAKTURE")), 95, InputInvoiceAddEditForm);
 		}
 
-		private void btnDelete_Click(object sender, RoutedEventArgs e)
-		{
-			if (CurrentInputInvoice == null)
-			{
-				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_moguće_menjati_ulazne_faktureUzvičnik"));
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentInputInvoice == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati stavku za brisanje!";
                 return;
-			}
+            }
 
-			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-			// Create confirmation window
-			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("ULAZNE_FAKTURE")), CurrentInputInvoice.Code + CurrentInputInvoice.InvoiceNumber);
-			var showDialog = deleteConfirmationForm.ShowDialog();
-			if (showDialog != null && showDialog.Value)
-			{
-				InputInvoiceResponse response = inputInvoiceService.Delete(CurrentInputInvoice.Identifier);
-				if (!response.Success)
-				{
-					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-					return;
-				}
-
-				response = new InputInvoiceSQLiteRepository().Delete(CurrentInputInvoice.Identifier);
-				if (!response.Success)
-				{
-					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-					return;
-				}
-
-				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Ulazni_avansni_račun_je_uspešno_obrisanaUzvičnik"));
+            // Delete data
+            var result = inputInvoiceService.Delete(CurrentInputInvoice.Identifier);
+            if (result.Success)
+            {
+                MainWindow.SuccessMessage = "Podaci su uspešno obrisani!";
 
                 Thread displayThread = new Thread(() => SyncData());
-				displayThread.IsBackground = true;
-				displayThread.Start();
-			}
-
-			SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-		}
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+            else
+            {
+                MainWindow.ErrorMessage = result.Message;
+            }
+        }
 
         private void BtnAddItem_Click(object sender, RoutedEventArgs e)
         {
