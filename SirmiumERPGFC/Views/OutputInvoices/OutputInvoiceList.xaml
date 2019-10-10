@@ -231,7 +231,7 @@
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="DateOfPayment" Binding="{Binding DateOfPaymet, Converter={StaticResource cbxDatetimeToStringConverter}}"  IsReadOnly="True" >
+                        <DataGridTextColumn SortMemberPath="DateOfPayment" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}"  IsReadOnly="True" >
                             <DataGridTextColumn.Header>
                                 <TextBlock Text="{DynamicResource Datum_plaćanja}" TextWrapping="Wrap" MaxWidth="70" />
                             </DataGridTextColumn.Header>
