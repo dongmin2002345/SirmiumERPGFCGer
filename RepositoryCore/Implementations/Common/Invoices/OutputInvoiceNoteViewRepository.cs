@@ -256,6 +256,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
                 OutputInvoiceNote.Active = true;
 
+                OutputInvoiceNote.UpdatedAt = DateTime.Now;
+                OutputInvoiceNote.CreatedAt = DateTime.Now;
+
                 context.OutputInvoiceNotes.Add(OutputInvoiceNote);
                 return OutputInvoiceNote;
             }

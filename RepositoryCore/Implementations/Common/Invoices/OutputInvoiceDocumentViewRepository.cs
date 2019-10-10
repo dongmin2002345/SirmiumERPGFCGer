@@ -258,7 +258,10 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
 				OutputInvoiceDocument.Active = true;
 
-				context.OutputInvoiceDocuments.Add(OutputInvoiceDocument);
+                OutputInvoiceDocument.UpdatedAt = DateTime.Now;
+                OutputInvoiceDocument.CreatedAt = DateTime.Now;
+
+                context.OutputInvoiceDocuments.Add(OutputInvoiceDocument);
 				return OutputInvoiceDocument;
 			}
 			else

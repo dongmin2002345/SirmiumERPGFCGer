@@ -408,7 +408,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
 
                 //Use parameterized query to prevent SQL injection attacks
                 insertCommand.CommandText =
-                    "UPDATE InputInvoiceNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                    "UPDATE OutputInvoiceNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 try

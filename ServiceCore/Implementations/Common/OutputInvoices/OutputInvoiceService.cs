@@ -2,10 +2,12 @@
 using DomainCore.Common.OutputInvoices;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ServiceCore.Implementations.Common.OutputInvoices
@@ -67,14 +69,64 @@ namespace ServiceCore.Implementations.Common.OutputInvoices
             return response;
         }
 
-        public OutputInvoiceResponse Create(OutputInvoiceViewModel re)
+        public OutputInvoiceResponse Create(OutputInvoiceViewModel outputInvoice)
         {
             OutputInvoiceResponse response = new OutputInvoiceResponse();
             try
             {
-                OutputInvoice addedOutputInvoice = unitOfWork.GetOutputInvoiceRepository().Create(re.ConvertToOutputInvoice());
+                // Backup items
+                List<OutputInvoiceNoteViewModel> outputInvoiceNotes = outputInvoice
+                    .OutputInvoiceNotes?.ToList() ?? new List<OutputInvoiceNoteViewModel>();
+                outputInvoice.OutputInvoiceNotes = null;
+
+                //List<OutputInvoiceDocumentViewModel> outputInvoiceDocuments = outputInvoice
+                //   .OutputInvoiceDocuments?.ToList() ?? new List<OutputInvoiceDocumentViewModel>();
+                //outputInvoice.OutputInvoiceDocuments = null;
+
+                OutputInvoice createdOutputInvoice = unitOfWork.GetOutputInvoiceRepository()
+                    .Create(outputInvoice.ConvertToOutputInvoice());
+
+                // Update items
+                if (outputInvoiceNotes != null && outputInvoiceNotes.Count > 0)
+                {
+                    foreach (OutputInvoiceNoteViewModel item in outputInvoiceNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<OutputInvoiceNoteViewModel>())
+                    {
+                        item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetOutputInvoiceNoteRepository().Create(item.ConvertToOutputInvoiceNote());
+                    }
+
+                    //foreach (OutputInvoiceDocumentViewModel item in outputInvoiceDocuments
+                    //   .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<OutputInvoiceDocumentViewModel>())
+                    //{
+                    //    item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
+                    //    item.ItemStatus = ItemStatus.Submited;
+                    //    var createdItem = unitOfWork.GetOutputInvoiceDocumentRepository().Create(item.ConvertToOutputInvoiceDocument());
+                    //}
+
+                    foreach (OutputInvoiceNoteViewModel item in outputInvoiceNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<OutputInvoiceNoteViewModel>())
+                    {
+                        item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
+                        unitOfWork.GetOutputInvoiceNoteRepository().Create(item.ConvertToOutputInvoiceNote());
+
+                        unitOfWork.GetOutputInvoiceNoteRepository().Delete(item.Identifier);
+                    }
+
+                    //foreach (OutputInvoiceDocumentViewModel item in outputInvoiceDocuments
+                    //   .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<OutputInvoiceDocumentViewModel>())
+                    //{
+                    //    item.OutputInvoice = new OutputInvoiceViewModel() { Id = createdOutputInvoice.Id };
+                    //    unitOfWork.GetOutputInvoiceDocumentRepository().Create(item.ConvertToOutputInvoiceDocument());
+
+                    //    unitOfWork.GetOutputInvoiceDocumentRepository().Delete(item.Identifier);
+                    //}
+                }
+
                 unitOfWork.Save();
-                response.OutputInvoice = addedOutputInvoice.ConvertToOutputInvoiceViewModel();
+
+                response.OutputInvoice = createdOutputInvoice.ConvertToOutputInvoiceViewModel();
                 response.Success = true;
             }
             catch (Exception ex)

@@ -188,14 +188,14 @@
 
                 <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\_submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
 
                 <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="2">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\_leftleft.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock Text=" ZATVORI " FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
