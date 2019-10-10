@@ -410,7 +410,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			else
 			{
 				NotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
 			NoteDataLoading = false;
@@ -430,7 +430,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 			else
 			{
 				InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>();
-                MainWindow.ErrorMessage = "Greška prilikom učitavanja podataka!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
             }
 
 			InputInvoiceDocumentDataLoading = false;
@@ -459,7 +459,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
             CurrentInputInvoice = null;
             NotesFromDB = new ObservableCollection<InputInvoiceNoteViewModel>();
             InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>();
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -474,7 +474,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             DisplayInputInvoiceNoteData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -489,7 +489,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             DisplayInputInvoiceDocumentData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void DgInputInvoices_LoadingRow(object sender, DataGridRowEventArgs e)
@@ -588,7 +588,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             InputInvoice_Note_AddEdit inputInvoiceNoteAddEditForm = new InputInvoice_Note_AddEdit(CurrentInputInvoice);
             inputInvoiceNoteAddEditForm.InputInvoiceCreatedUpdated += new InputInvoiceHandler(SyncItemData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, inputInvoiceNoteAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Napomene")), 95, inputInvoiceNoteAddEditForm);
         }
 
         private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
@@ -605,7 +605,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             InputInvoice_Document_AddEdit inputInvoiceDocumentAddEditForm = new InputInvoice_Document_AddEdit(CurrentInputInvoice);
             inputInvoiceDocumentAddEditForm.InputInvoiceCreatedUpdated += new InputInvoiceHandler(SyncDocumentData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, inputInvoiceDocumentAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Dokumenti")), 95, inputInvoiceDocumentAddEditForm);
         }
 
         #endregion

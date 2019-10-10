@@ -309,7 +309,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
             var response = new InputInvoiceDocumentSQLiteRepository().SetStatusDeleted(CurrentInputInvoiceDocumentDG.Identifier);
             if (response.Success)
             {
-                MainWindow.SuccessMessage = "Stavka je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
                 CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
                 CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
@@ -371,22 +371,22 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             Thread td = new Thread(() => {
 
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentInputInvoice.InputInvoiceDocuments = InputInvoiceDocumentsFromDB;
                 InputInvoiceResponse response = inputInvoiceService.Create(CurrentInputInvoice);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod čuvanja podataka!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     InputInvoiceCreatedUpdated();
