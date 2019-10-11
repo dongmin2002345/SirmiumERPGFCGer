@@ -7,6 +7,7 @@
              xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <UserControl.Resources>
@@ -43,12 +44,12 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNote"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentPhysicalPersonLicenceForm.Country, Mode=TwoWay}"/>
+                    <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
+                                        CurrentCountry="{Binding Path=CurrentPhysicalPersonLicenceForm.Country, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ZanimanjeDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentPhysicalPersonLicenceForm.Licence, Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DozvolaDvotacka}" />
+                    <popups:LicenceTypePopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popLicenceType" 
+                                      CurrentLicenceType="{Binding Path=CurrentPhysicalPersonLicenceForm.Licence, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Važi_odDvotacka}" />
                     <DatePicker Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
@@ -96,7 +97,7 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Country" Header="{DynamicResource DržavaDvotacka}" Binding="{Binding Country.Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Licence" Header="{DynamicResource ZanimanjeDvotacka}" Binding="{Binding Path=Licence}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Licence" Header="{DynamicResource DozvolaDvotacka}" Binding="{Binding Path=Licence.Description}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ValidFrom" Header="{DynamicResource Važi_odDvotacka}" Binding="{Binding Path=ValidFrom, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Važi_doDvotacka}" Binding="{Binding Path=ValidTo, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />

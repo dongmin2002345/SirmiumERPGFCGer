@@ -87,8 +87,8 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonCardDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Description" Header="{DynamicResource Opis}" Binding="{Binding Note}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="CardDate" Header="{DynamicResource Datum_izmene}" Binding="{Binding Path=NoteDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Description" Header="{DynamicResource Opis}" Binding="{Binding Description}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="CardDate" Header="{DynamicResource Datum_izmene}" Binding="{Binding Path=CardDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

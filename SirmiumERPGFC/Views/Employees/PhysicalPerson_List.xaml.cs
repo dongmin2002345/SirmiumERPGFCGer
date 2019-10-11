@@ -966,7 +966,7 @@ namespace SirmiumERPGFC.Views.Employees
             #endregion
 
             PhysicalPerson_Card_AddEdit physicalPersonCardAddEditForm = new PhysicalPerson_Card_AddEdit(CurrentPhysicalPerson);
-            physicalPersonCardAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncItemData);
+            physicalPersonCardAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncCardData);
             FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonCardAddEditForm);
         }
 
@@ -1000,7 +1000,7 @@ namespace SirmiumERPGFC.Views.Employees
             #endregion
 
             PhysicalPerson_Note_AddEdit physicalPersonNoteAddEditForm = new PhysicalPerson_Note_AddEdit(CurrentPhysicalPerson);
-            physicalPersonNoteAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncDocumentData);
+            physicalPersonNoteAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncNoteData);
             FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonNoteAddEditForm);
         }
         private void BtnAddProfessions_Click(object sender, RoutedEventArgs e)
@@ -1016,7 +1016,7 @@ namespace SirmiumERPGFC.Views.Employees
             #endregion
 
             PhysicalPerson_Profession_AddEdit physicalPersonProfessionAddEditForm = new PhysicalPerson_Profession_AddEdit(CurrentPhysicalPerson);
-            physicalPersonProfessionAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncDocumentData);
+            physicalPersonProfessionAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncProfessionData);
             FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonProfessionAddEditForm);
         }
         private void BtnAddLicences_Click(object sender, RoutedEventArgs e)
@@ -1032,7 +1032,7 @@ namespace SirmiumERPGFC.Views.Employees
             #endregion
 
             PhysicalPerson_Licence_AddEdit physicalPersonLicenceAddEditForm = new PhysicalPerson_Licence_AddEdit(CurrentPhysicalPerson);
-            physicalPersonLicenceAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncDocumentData);
+            physicalPersonLicenceAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncLicenceData);
             FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonLicenceAddEditForm);
         }
         private void BtnAddItems_Click(object sender, RoutedEventArgs e)
@@ -1048,7 +1048,7 @@ namespace SirmiumERPGFC.Views.Employees
             #endregion
 
             PhysicalPerson_Item_AddEdit physicalPersonItemAddEditForm = new PhysicalPerson_Item_AddEdit(CurrentPhysicalPerson);
-            physicalPersonItemAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncDocumentData);
+            physicalPersonItemAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncItemData);
             FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonItemAddEditForm);
         }
 

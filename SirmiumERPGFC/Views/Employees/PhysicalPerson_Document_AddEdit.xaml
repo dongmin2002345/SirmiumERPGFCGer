@@ -91,9 +91,9 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonDocumentDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_dokumentaDvotacka}" Binding="{Binding Note}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource PutanjaDvotacka}" Binding="{Binding Path=NoteDate}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_unosaDvotacka}" Binding="{Binding Path=ValidTo, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_dokumentaDvotacka}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource PutanjaDvotacka}" Binding="{Binding Path}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_unosaDvotacka}" Binding="{Binding Path=CreateDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

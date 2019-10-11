@@ -242,7 +242,7 @@ namespace SirmiumERPGFC.Repository.Employees
         //    return response;
         //}
 
-        public void Sync(IPhysicalPersonItemService PhysicalPersonItemService, Action<int, int> callback = null)
+        public void Sync(IPhysicalPersonItemService physicalPersonItemService, Action<int, int> callback = null)
         {
             try
             {
@@ -253,21 +253,45 @@ namespace SirmiumERPGFC.Repository.Employees
                 int toSync = 0;
                 int syncedItems = 0;
 
-                PhysicalPersonItemListResponse response = PhysicalPersonItemService.Sync(request);
+                PhysicalPersonItemListResponse response = physicalPersonItemService.Sync(request);
                 if (response.Success)
                 {
                     toSync = response?.PhysicalPersonItems?.Count ?? 0;
-                    List<PhysicalPersonItemViewModel> PhysicalPersonItemsFromDB = response.PhysicalPersonItems;
-                    foreach (var PhysicalPersonItem in PhysicalPersonItemsFromDB.OrderBy(x => x.Id))
+                    List<PhysicalPersonItemViewModel> items = response.PhysicalPersonItems;
+
+                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
-                            Delete(PhysicalPersonItem.Identifier);
-                            if (PhysicalPersonItem.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM PhysicalPersonItems WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var item in items)
                             {
-                                PhysicalPersonItem.IsSynced = true;
-                                Create(PhysicalPersonItem);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", item.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (item.IsActive)
+                                {
+                                    item.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, item);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -300,7 +324,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }

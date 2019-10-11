@@ -7,6 +7,7 @@
              xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <UserControl.Resources>
@@ -43,8 +44,8 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Član_porodiceDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNote" TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentPhysicalPersonItemForm.FamilyMember, Mode=TwoWay}"/>
+                    <popups:FamilyMemberPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popFamilyMember" 
+                                      CurrentFamilyMember="{Binding Path=CurrentPhysicalPersonItemForm.FamilyMember, Mode=TwoWay}"/>
                     <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ImeDvotacka}" />
                     <TextBox Grid.Row="0"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentPhysicalPersonItemForm.Name, Mode=TwoWay}"/>
@@ -96,11 +97,11 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonItemDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="FamilyMember" Header="{DynamicResource Član_porodiceDvotacka}" Binding="{Binding FamilyMember}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="FamilyMember" Header="{DynamicResource Član_porodiceDvotacka}" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource ImeDvotacka}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenjaDvotacka}" Binding="{Binding Path=DateOfBirth, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="{DynamicResource Broj_pasošaDvotacka}" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasadeDvotacka}" Binding="{Binding Path=NoteDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasadeDvotacka}" Binding="{Binding Path=EmbassyDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

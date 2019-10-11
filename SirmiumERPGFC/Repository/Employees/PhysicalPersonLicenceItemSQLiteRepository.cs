@@ -47,7 +47,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "SELECT ServerId, Identifier, PhysicalPersonId, PhysicalPersonIdentifier, " +
             "PhysicalPersonCode, PhysicalPersonName, LicenceId, LicenceIdentifier, " +
             "LicenceCode, LicenceCategory, LicenceDescription, ValidFrom, ValidTo, ItemStatus, CountryId, CountryIdentifier, " +
-            "CountryCode, CountryName, ItemStatus" +
+            "CountryCode, CountryName, "+
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO PhysicalPersonLicences " +
@@ -197,7 +197,7 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        public void Sync(IPhysicalPersonLicenceService PhysicalPersonItemService, Action<int, int> callback = null)
+        public void Sync(IPhysicalPersonLicenceService physicalPersonItemService, Action<int, int> callback = null)
         {
             try
             {
@@ -208,21 +208,45 @@ namespace SirmiumERPGFC.Repository.Employees
                 int toSync = 0;
                 int syncedItems = 0;
 
-                PhysicalPersonLicenceListResponse response = PhysicalPersonItemService.Sync(request);
+                PhysicalPersonLicenceListResponse response = physicalPersonItemService.Sync(request);
                 if (response.Success)
                 {
                     toSync = response?.PhysicalPersonLicences?.Count ?? 0;
-                    List<PhysicalPersonLicenceViewModel> PhysicalPersonItemsFromDB = response.PhysicalPersonLicences;
-                    foreach (var PhysicalPersonItem in PhysicalPersonItemsFromDB.OrderBy(x => x.Id))
+                    List<PhysicalPersonLicenceViewModel> items = response.PhysicalPersonLicences;
+
+                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
-                            Delete(PhysicalPersonItem.Identifier);
-                            if (PhysicalPersonItem.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM PhysicalPersonLicences WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var item in items)
                             {
-                                PhysicalPersonItem.IsSynced = true;
-                                Create(PhysicalPersonItem);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", item.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (item.IsActive)
+                                {
+                                    item.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, item);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -255,7 +279,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }

@@ -742,13 +742,13 @@
 
             <Button Grid.Column="2" x:Name="btnSubmit" Click="btnSubmit_Click" Margin="2" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                    <TextBlock Text="{DynamicResource SNIMI}" FontSize="25" Foreground="White" FontWeight="Bold"/>
+                    <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text="{Binding Path=SubmitButtonContent}" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
             </Button>
             <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Text="{DynamicResource ZATVORI}" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
             </Button>

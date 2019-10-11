@@ -7,6 +7,7 @@
              xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <UserControl.Resources>
@@ -43,12 +44,12 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNote"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentPhysicalPersonProfessionForm.Country, Mode=TwoWay}"/>
+                    <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
+                                        CurrentCountry="{Binding Path=CurrentPhysicalPersonProfessionForm.Country, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ZanimanjeDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentPhysicalPersonProfessionForm.Profession, Mode=TwoWay}"/>
+                    <popups:ProfessionPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popProfession" 
+                                        CurrentProfession="{Binding Path=CurrentPhysicalPersonProfessionForm.Profession, Mode=TwoWay}"/>
 
                     <Button x:Name="btnAddNote" Grid.Row="1" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
@@ -87,8 +88,8 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonProfessionDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Country" Header="{DynamicResource DržavaDvotacka}" Binding="{Binding Country}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Profession" Header="{DynamicResource ZanimanjeDvotacka}" Binding="{Binding Path=Profession}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Country" Header="{DynamicResource DržavaDvotacka}" Binding="{Binding Country.Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Profession" Header="{DynamicResource ZanimanjeDvotacka}" Binding="{Binding Path=Profession.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
