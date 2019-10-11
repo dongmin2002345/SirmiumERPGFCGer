@@ -1,10 +1,13 @@
 ﻿using DataMapper.Mappers.Common.InputInvoices;
+using DomainCore.Common.InputInvoices;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ServiceCore.Implementations.Common.InputInvoices
@@ -70,10 +73,66 @@ namespace ServiceCore.Implementations.Common.InputInvoices
 		{
 			InputInvoiceResponse response = new InputInvoiceResponse();
 			try
-			{
-				DomainCore.Common.InputInvoices.InputInvoice addedInputInvoice = unitOfWork.GetInputInvoiceRepository().Create(re.ConvertToInputInvoice());
-				unitOfWork.Save();
-				response.InputInvoice = addedInputInvoice.ConvertToInputInvoiceViewModel();
+            {
+                // Backup notes
+                List<InputInvoiceNoteViewModel> inputInvoiceNotes = re.InputInvoiceNotes?.ToList();
+                re.InputInvoiceNotes = null;
+
+                // Backup documents
+                List<InputInvoiceDocumentViewModel> inputInvoiceDocuments = re.InputInvoiceDocuments?.ToList();
+                re.InputInvoiceDocuments = null;
+
+                InputInvoice createdInputInvoice = unitOfWork.GetInputInvoiceRepository().Create(re.ConvertToInputInvoice());
+
+                // Update notes
+                if (inputInvoiceNotes != null && inputInvoiceNotes.Count > 0)
+                {
+                    // Items for create or update
+                    foreach (var inputInvoiceNote in inputInvoiceNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<InputInvoiceNoteViewModel>())
+                    {
+                        inputInvoiceNote.InputInvoice = new InputInvoiceViewModel() { Id = createdInputInvoice.Id };
+                        inputInvoiceNote.ItemStatus = ItemStatus.Submited;
+                        InputInvoiceNote createdInputInvoiceNote = unitOfWork.GetInputInvoiceNoteRepository()
+                            .Create(inputInvoiceNote.ConvertToInputInvoiceNote());
+                    }
+
+                    foreach (var item in inputInvoiceNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<InputInvoiceNoteViewModel>())
+                    {
+                        item.InputInvoice = new InputInvoiceViewModel() { Id = createdInputInvoice.Id };
+                        unitOfWork.GetInputInvoiceNoteRepository().Create(item.ConvertToInputInvoiceNote());
+
+                        unitOfWork.GetInputInvoiceNoteRepository().Delete(item.Identifier);
+                    }
+                }
+
+                // Update documents
+                if (inputInvoiceDocuments != null && inputInvoiceDocuments.Count > 0)
+                {
+                    // Items for create or update
+                    foreach (var inputInvoiceDocument in inputInvoiceDocuments
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<InputInvoiceDocumentViewModel>())
+                    {
+                        inputInvoiceDocument.InputInvoice = new InputInvoiceViewModel() { Id = createdInputInvoice.Id };
+                        inputInvoiceDocument.ItemStatus = ItemStatus.Submited;
+                        InputInvoiceDocument createdInputInvoiceDocument = unitOfWork.GetInputInvoiceDocumentRepository()
+                            .Create(inputInvoiceDocument.ConvertToInputInvoiceDocument());
+                    }
+
+                    foreach (var item in inputInvoiceDocuments
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<InputInvoiceDocumentViewModel>())
+                    {
+                        item.InputInvoice = new InputInvoiceViewModel() { Id = createdInputInvoice.Id };
+                        unitOfWork.GetInputInvoiceDocumentRepository().Create(item.ConvertToInputInvoiceDocument());
+
+                        unitOfWork.GetInputInvoiceDocumentRepository().Delete(item.Identifier);
+                    }
+                }
+
+                unitOfWork.Save();
+
+				response.InputInvoice = createdInputInvoice.ConvertToInputInvoiceViewModel();
 				response.Success = true;
 			}
 			catch (Exception ex)

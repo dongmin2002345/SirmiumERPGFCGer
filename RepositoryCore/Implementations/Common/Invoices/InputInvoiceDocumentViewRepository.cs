@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.InputInvoices;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Context;
 using System;
@@ -289,7 +290,10 @@ namespace RepositoryCore.Implementations.Common.Invoices
 		public InputInvoiceDocument Delete(Guid identifier)
 		{
 			InputInvoiceDocument dbEntry = context.InputInvoiceDocuments
-				.FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(InputInvoiceDocument))
+                    .Select(x => x.Entity as InputInvoiceDocument))
+                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
 			if (dbEntry != null)
 			{
