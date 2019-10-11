@@ -117,7 +117,7 @@
                         <DataGridTextColumn SortMemberPath="ContactPerson" Header="{DynamicResource Kontakt_osoba}" Binding="{Binding Path=ContactPerson}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Phone" Header="{DynamicResource Telefon}" Binding="{Binding Path=Phone}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Fax" Header="{DynamicResource Fax}" Binding="{Binding Path=Fax}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrticamail}" Binding="{Binding Path=Email}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrtamail}" Binding="{Binding Path=Email}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

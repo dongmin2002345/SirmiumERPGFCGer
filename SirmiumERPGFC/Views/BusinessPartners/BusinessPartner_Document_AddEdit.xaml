@@ -42,14 +42,14 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Naziv_dokumentaDvotacka}" Margin="2,8,1.5,7" VerticalAlignment="Center" x:Name="txtBusinessPartnerDocumentName" Grid.ColumnSpan="2" />
-                    <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding Path=CurrentBusinessPartnerDocumentForm.Name, Mode=TwoWay}" Margin="2.5,2,1.5,2" x:Name="txtDocumentName"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Naziv_dokumentaDvotacka}" Margin="2,8,1.5,7" VerticalAlignment="Center" x:Name="txtBusinessPartnerDocumentName" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Path=CurrentBusinessPartnerDocumentForm.Name, Mode=TwoWay}" Margin="2.5,2,1.5,2" x:Name="txtDocumentName"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="4" Text="{DynamicResource Datum_unosaDvotacka}" Margin="1.5,8,2,7" VerticalAlignment="Center" />
-                    <DatePicker Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" SelectedDate="{Binding Path=CurrentBusinessPartnerDocumentForm.CreateDate, Mode=TwoWay}" Margin="2" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource Datum_unosaDvotacka}" Margin="1.5,8,2,7" VerticalAlignment="Center" />
+                    <DatePicker Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" SelectedDate="{Binding Path=CurrentBusinessPartnerDocumentForm.CreateDate, Mode=TwoWay}" Margin="2" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2,7,1.5,7" VerticalAlignment="Center" Grid.ColumnSpan="2" />
-                    <Grid Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="0.5,0,135,0">
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2,7,1.5,7" VerticalAlignment="Center" />
+                    <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
