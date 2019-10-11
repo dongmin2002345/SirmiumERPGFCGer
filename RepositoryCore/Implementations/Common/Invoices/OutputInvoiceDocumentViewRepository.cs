@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.OutputInvoices;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Context;
 using System;
@@ -291,10 +292,13 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
 		public OutputInvoiceDocument Delete(Guid identifier)
 		{
-			OutputInvoiceDocument dbEntry = context.OutputInvoiceDocuments
-				.FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+            OutputInvoiceDocument dbEntry = context.OutputInvoiceDocuments
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(OutputInvoiceDocument))
+                    .Select(x => x.Entity as OutputInvoiceDocument))
+                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
-			if (dbEntry != null)
+            if (dbEntry != null)
 			{
 				dbEntry.Active = false;
 				dbEntry.UpdatedAt = DateTime.Now;
