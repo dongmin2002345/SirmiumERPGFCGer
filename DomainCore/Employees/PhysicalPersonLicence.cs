@@ -19,5 +19,7 @@ namespace DomainCore.Employees
 
         public DateTime? ValidFrom { get; set; }
         public DateTime? ValidTo { get; set; }
+
+        public int ItemStatus { get; set; }
     }
 }

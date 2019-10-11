@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Employees;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
 using System;
@@ -30,7 +31,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonDocumentId, PhysicalPersonDocumentIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonDocuments " +
@@ -68,6 +69,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             physicalPersonDocument.Path = reader["Path"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonDocument.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -113,7 +116,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonDocumentId, PhysicalPersonDocumentIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonDocuments " +
@@ -151,6 +154,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             physicalPersonDocument.Path = reader["Path"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonDocument.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -197,7 +202,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonDocumentId, PhysicalPersonDocumentIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonDocuments " +
@@ -236,6 +241,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             physicalPersonDocument.Path = reader["Path"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonDocument.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -281,6 +288,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 PhysicalPersonDocument.Id = 0;
 
                 PhysicalPersonDocument.Active = true;
+                PhysicalPersonDocument.UpdatedAt = DateTime.Now;
+                PhysicalPersonDocument.CreatedAt = DateTime.Now;
 
                 context.PhysicalPersonDocuments.Add(PhysicalPersonDocument);
                 return PhysicalPersonDocument;
@@ -300,6 +309,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                     dbEntry.Name = PhysicalPersonDocument.Name;
                     dbEntry.CreateDate = PhysicalPersonDocument.CreateDate;
                     dbEntry.Path = PhysicalPersonDocument.Path;
+                    dbEntry.ItemStatus = PhysicalPersonDocument.ItemStatus;
+
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -312,6 +323,9 @@ namespace RepositoryCore.Implementations.PhysicalPersons
         public PhysicalPersonDocument Delete(Guid identifier)
         {
             PhysicalPersonDocument dbEntry = context.PhysicalPersonDocuments
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonDocument))
+                    .Select(x => x.Entity as PhysicalPersonDocument))
                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)

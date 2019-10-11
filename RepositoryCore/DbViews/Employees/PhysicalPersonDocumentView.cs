@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.PhysicalPersons
                 "CREATE VIEW vPhysicalPersonDocuments AS " +
                 "SELECT physicalPersonDocument.Id AS PhysicalPersonDocumentId, physicalPersonDocument.Identifier AS PhysicalPersonDocumentIdentifier, " +
                 "physicalPerson.Id AS PhysicalPersonId, physicalPerson.Identifier AS PhysicalPersonIdentifier, physicalPerson.Code AS PhysicalPersonCode, physicalPerson.Name AS PhysicalPersonName, " +
-                "physicalPersonDocument.Name, physicalPersonDocument.CreateDate, physicalPersonDocument.Path, " +
+                "physicalPersonDocument.Name, physicalPersonDocument.CreateDate, physicalPersonDocument.Path, physicalPersonDocument.ItemStatus," +
                 "physicalPersonDocument.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (physicalPersonDocument.UpdatedAt), (physicalPerson.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

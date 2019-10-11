@@ -371,8 +371,26 @@
     <Compile Include="Views\Employees\PhysicalPerson-AddEdit.xaml.cs">
       <DependentUpon>PhysicalPerson-AddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_Card_AddEdit.xaml.cs">
+      <DependentUpon>PhysicalPerson_Card_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_Document_AddEdit.xaml.cs">
+      <DependentUpon>PhysicalPerson_Document_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_Item_AddEdit.xaml.cs">
+      <DependentUpon>PhysicalPerson_Item_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_Licence_AddEdit.xaml.cs">
+      <DependentUpon>PhysicalPerson_Licence_AddEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Employees\PhysicalPerson_List.xaml.cs">
       <DependentUpon>PhysicalPerson_List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_Note_AddEdit.xaml.cs">
+      <DependentUpon>PhysicalPerson_Note_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_Profession_AddEdit.xaml.cs">
+      <DependentUpon>PhysicalPerson_Profession_AddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home\ToDoAddEdit.xaml.cs">
       <DependentUpon>ToDoAddEdit.xaml</DependentUpon>
@@ -696,7 +714,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Employees\PhysicalPerson_Card_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson_Document_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson_Item_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson_Licence_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Employees\PhysicalPerson_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson_Note_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson_Profession_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

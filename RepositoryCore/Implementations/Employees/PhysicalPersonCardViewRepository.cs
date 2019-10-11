@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Employees;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
 using System;
@@ -30,7 +31,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonCardId, PhysicalPersonCardIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "CardDate, Description, PlusMinus, " +
+                "CardDate, Description, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonCards " +
@@ -68,6 +69,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonCard.Description = reader["Description"].ToString();
                         if (reader["PlusMinus"] != DBNull.Value)
                             physicalPersonCard.PlusMinus = reader["PlusMinus"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonCard.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonCard.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -112,7 +115,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonCardId, PhysicalPersonCardIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "CardDate, Description, PlusMinus, " +
+                "CardDate, Description, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonCards " +
@@ -150,6 +153,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonCard.Description = reader["Description"].ToString();
                         if (reader["PlusMinus"] != DBNull.Value)
                             physicalPersonCard.PlusMinus = reader["PlusMinus"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonCard.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonCard.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -196,7 +201,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonCardId, PhysicalPersonCardIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "CardDate, Description, PlusMinus, " +
+                "CardDate, Description, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonCards " +
@@ -235,6 +240,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonCard.Description = reader["Description"].ToString();
                         if (reader["PlusMinus"] != DBNull.Value)
                             physicalPersonCard.PlusMinus = reader["PlusMinus"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonCard.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonCard.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -281,6 +288,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 PhysicalPersonCard.Id = 0;
 
                 PhysicalPersonCard.Active = true;
+                PhysicalPersonCard.UpdatedAt = DateTime.Now;
+                PhysicalPersonCard.CreatedAt = DateTime.Now;
 
                 context.PhysicalPersonCards.Add(PhysicalPersonCard);
                 return PhysicalPersonCard;
@@ -300,6 +309,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                     dbEntry.CardDate = PhysicalPersonCard.CardDate;
                     dbEntry.Description = PhysicalPersonCard.Description;
                     dbEntry.PlusMinus = PhysicalPersonCard.PlusMinus;
+                    dbEntry.ItemStatus = PhysicalPersonCard.ItemStatus;
+
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -312,7 +323,10 @@ namespace RepositoryCore.Implementations.PhysicalPersons
         public PhysicalPersonCard Delete(Guid identifier)
         {
             PhysicalPersonCard dbEntry = context.PhysicalPersonCards
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+               .Union(context.ChangeTracker.Entries()
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonCard))
+                   .Select(x => x.Entity as PhysicalPersonCard))
+               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {

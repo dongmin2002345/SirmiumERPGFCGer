@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.PhysicalPersons
                 "SELECT physicalPersonProfession.Id AS PhysicalPersonProfessionId, physicalPersonProfession.Identifier AS PhysicalPersonProfessionIdentifier, " +
                 "physicalPerson.Id AS PhysicalPersonId, physicalPerson.Identifier AS PhysicalPersonIdentifier, physicalPerson.Code AS PhysicalPersonCode, physicalPerson.Name AS PhysicalPersonName, " +
                 "profession.Id AS ProfessionId, profession.Identifier AS ProfessionIdentifier, profession.Code AS ProfessionCode, profession.Name AS ProfessionName, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, physicalPersonProfession.ItemStatus, " +
                 "physicalPersonProfession.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (physicalPersonProfession.UpdatedAt), (physicalPerson.UpdatedAt), (profession.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

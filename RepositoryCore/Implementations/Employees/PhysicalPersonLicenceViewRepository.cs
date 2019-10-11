@@ -3,6 +3,7 @@ using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.Locations;
 using DomainCore.Employees;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
 using System;
@@ -24,7 +25,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             connectionString = new Config().GetConfiguration()["ConnectionString"] as string;
         }
 
-        public List<PhysicalPersonLicence> GetPhysicalPersonItems(int companyId)  // izmene u IPhysicalPersonLicenceRepository -> GetPhysicalPersonLicences?
+        public List<PhysicalPersonLicence> GetPhysicalPersonItems(int companyId)
         {
             List<PhysicalPersonLicence> PhysicalPersonLicences = new List<PhysicalPersonLicence>();
 
@@ -33,7 +34,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "LicenceId, LicenceIdentifier, LicenceCode, LicenceCategory, LicenceDescription, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "ValidFrom, ValidTo, " +
+                "ValidFrom, ValidTo, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonLicences " +
@@ -90,6 +91,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
                         if (reader["ValidTo"] != DBNull.Value)
                             physicalPersonLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonLicence.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonLicence.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -139,7 +142,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "LicenceId, LicenceIdentifier, LicenceCode, LicenceCategory, LicenceDescription, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "ValidFrom, ValidTo, " +
+                "ValidFrom, ValidTo, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonLicences " +
@@ -196,6 +199,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
                         if (reader["ValidTo"] != DBNull.Value)
                             physicalPersonLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonLicence.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonLicence.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -245,7 +250,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "LicenceId, LicenceIdentifier, LicenceCode, LicenceCategory, LicenceDescription, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "ValidFrom, ValidTo, " +
+                "ValidFrom, ValidTo, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonLicences " +
@@ -303,6 +308,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
                         if (reader["ValidTo"] != DBNull.Value)
                             physicalPersonLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonLicence.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonLicence.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -351,6 +358,9 @@ namespace RepositoryCore.Implementations.PhysicalPersons
 
                 PhysicalPersonLicence.Active = true;
 
+                PhysicalPersonLicence.UpdatedAt = DateTime.Now;
+                PhysicalPersonLicence.CreatedAt = DateTime.Now;
+
                 context.PhysicalPersonLicences.Add(PhysicalPersonLicence);
                 return PhysicalPersonLicence;
             }
@@ -369,6 +379,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
 
                     dbEntry.ValidFrom = PhysicalPersonLicence.ValidFrom;
                     dbEntry.ValidTo = PhysicalPersonLicence.ValidTo;
+                    dbEntry.ItemStatus = PhysicalPersonLicence.ItemStatus;
+
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -381,7 +393,10 @@ namespace RepositoryCore.Implementations.PhysicalPersons
         public PhysicalPersonLicence Delete(Guid identifier)
         {
             PhysicalPersonLicence dbEntry = context.PhysicalPersonLicences
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+              .Union(context.ChangeTracker.Entries()
+                  .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonLicence))
+                  .Select(x => x.Entity as PhysicalPersonLicence))
+              .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {

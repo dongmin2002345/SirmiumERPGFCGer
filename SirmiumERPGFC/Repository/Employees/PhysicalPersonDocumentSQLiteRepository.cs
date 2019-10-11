@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
@@ -26,6 +27,7 @@ namespace SirmiumERPGFC.Repository.Employees
                        "Name NVARCHAR(2048), " +
                        "CreateDate DATETIME NULL, " +
                        "Path NVARCHAR(2048) NULL, " +
+                       "ItemStatus INTEGER NOT NULL, " +
                        "IsSynced BOOL NULL, " +
                        "UpdatedAt DATETIME NULL, " +
                        "CreatedById INTEGER NULL, " +
@@ -35,18 +37,60 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, PhysicalPersonId, PhysicalPersonIdentifier, " +
-            "PhysicalPersonCode, PhysicalPersonName, Name, CreateDate, Path, " +
+            "PhysicalPersonCode, PhysicalPersonName, Name, CreateDate, Path, ItemStatus," +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO PhysicalPersonDocuments " +
             "(Id, ServerId, Identifier, PhysicalPersonId, PhysicalPersonIdentifier, " +
-            "PhysicalPersonCode, PhysicalPersonName, Name, CreateDate, Path, " +
+            "PhysicalPersonCode, PhysicalPersonName, Name, CreateDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @PhysicalPersonId, @PhysicalPersonIdentifier, " +
-            "@PhysicalPersonCode, @PhysicalPersonName, @Name, @CreateDate, @Path, " +
+            "@PhysicalPersonCode, @PhysicalPersonName, @Name, @CreateDate, @Path, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+       
+        #region Helper methods
+        private static PhysicalPersonDocumentViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            PhysicalPersonDocumentViewModel dbEntry = new PhysicalPersonDocumentViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.PhysicalPerson = SQLiteHelper.GetPhysicalPerson(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            return dbEntry;
+        }
 
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, PhysicalPersonDocumentViewModel PhysicalPersonDocument)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", PhysicalPersonDocument.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", PhysicalPersonDocument.Identifier);
+            insertCommand.Parameters.AddWithValue("@PhysicalPersonId", ((object)PhysicalPersonDocument.PhysicalPerson.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PhysicalPersonIdentifier", ((object)PhysicalPersonDocument.PhysicalPerson.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PhysicalPersonCode", ((object)PhysicalPersonDocument.PhysicalPerson.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PhysicalPersonName", ((object)PhysicalPersonDocument.PhysicalPerson.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", PhysicalPersonDocument.Name);
+            insertCommand.Parameters.AddWithValue("@CreateDate", ((object)PhysicalPersonDocument.CreateDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)PhysicalPersonDocument.Path) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)PhysicalPersonDocument.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", PhysicalPersonDocument.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)PhysicalPersonDocument.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
         public PhysicalPersonDocumentListResponse GetPhysicalPersonDocumentsByPhysicalPerson(int companyId, Guid PhysicalPersonIdentifier)
         {
             PhysicalPersonDocumentListResponse response = new PhysicalPersonDocumentListResponse();
@@ -70,18 +114,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
                     while (query.Read())
                     {
-                        int counter = 0;
-                        PhysicalPersonDocumentViewModel dbEntry = new PhysicalPersonDocumentViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.PhysicalPerson = SQLiteHelper.GetPhysicalPerson(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        PhysicalPersonDocumentViewModel dbEntry = Read(query);
                         PhysicalPersonDocuments.Add(dbEntry);
                     }
 
@@ -121,18 +154,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
                     if (query.Read())
                     {
-                        int counter = 0;
-                        PhysicalPersonDocumentViewModel dbEntry = new PhysicalPersonDocumentViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.PhysicalPerson = SQLiteHelper.GetPhysicalPerson(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        PhysicalPersonDocumentViewModel dbEntry = Read(query);
                         PhysicalPersonDocument = dbEntry;
                     }
                 }
@@ -229,32 +251,13 @@ namespace SirmiumERPGFC.Repository.Employees
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", PhysicalPersonDocument.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", PhysicalPersonDocument.Identifier);
-                insertCommand.Parameters.AddWithValue("@PhysicalPersonId", ((object)PhysicalPersonDocument.PhysicalPerson.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@PhysicalPersonIdentifier", ((object)PhysicalPersonDocument.PhysicalPerson.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@PhysicalPersonCode", ((object)PhysicalPersonDocument.PhysicalPerson.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@PhysicalPersonName", ((object)PhysicalPersonDocument.PhysicalPerson.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Name", PhysicalPersonDocument.Name);
-                insertCommand.Parameters.AddWithValue("@CreateDate", ((object)PhysicalPersonDocument.CreateDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Path", ((object)PhysicalPersonDocument.Path) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", PhysicalPersonDocument.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)PhysicalPersonDocument.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, PhysicalPersonDocument);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -267,50 +270,51 @@ namespace SirmiumERPGFC.Repository.Employees
 
                 response.Success = true;
                 return response;
+            
             }
         }
 
-        public PhysicalPersonDocumentResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            PhysicalPersonDocumentResponse response = new PhysicalPersonDocumentResponse();
+        //public PhysicalPersonDocumentResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
+        //{
+        //    PhysicalPersonDocumentResponse response = new PhysicalPersonDocumentResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
+        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //    {
+        //        db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
+        //        SqliteCommand insertCommand = new SqliteCommand();
+        //        insertCommand.Connection = db;
 
-                insertCommand.CommandText = "UPDATE PhysicalPersonDocuments SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
+        //        insertCommand.CommandText = "UPDATE PhysicalPersonDocuments SET " +
+        //            "IsSynced = @IsSynced, " +
+        //            "Code = @Code, " +
+        //            "UpdatedAt = @UpdatedAt, " +
+        //            "ServerId = @ServerId " +
+        //            "WHERE Identifier = @Identifier ";
 
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+        //        insertCommand.Parameters.AddWithValue("@Code", code);
+        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
+        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
+        //        try
+        //        {
+        //            insertCommand.ExecuteReader();
+        //        }
+        //        catch (SqliteException error)
+        //        {
+        //            MainWindow.ErrorMessage = error.Message;
+        //            response.Success = false;
+        //            response.Message = error.Message;
+        //            return response;
+        //        }
+        //        db.Close();
 
-                response.Success = true;
-                return response;
-            }
-        }
+        //        response.Success = true;
+        //        return response;
+        //    }
+        //}
 
         public PhysicalPersonDocumentResponse Delete(Guid identifier)
         {
@@ -345,46 +349,79 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public PhysicalPersonDocumentResponse DeleteAll()
+        //public PhysicalPersonDocumentResponse DeleteAll()
+        //{
+        //    PhysicalPersonDocumentResponse response = new PhysicalPersonDocumentResponse();
+
+        //    try
+        //    {
+        //        using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //        {
+        //            db.Open();
+        //            db.EnableExtensions(true);
+
+        //            SqliteCommand insertCommand = new SqliteCommand();
+        //            insertCommand.Connection = db;
+
+        //            //Use parameterized query to prevent SQL injection attacks
+        //            insertCommand.CommandText = "DELETE FROM PhysicalPersonDocuments";
+        //            try
+        //            {
+        //                insertCommand.ExecuteReader();
+        //            }
+        //            catch (SqliteException error)
+        //            {
+        //                response.Success = false;
+        //                response.Message = error.Message;
+
+        //                MainWindow.ErrorMessage = error.Message;
+        //                return response;
+        //            }
+        //            db.Close();
+        //        }
+        //    }
+        //    catch (SqliteException error)
+        //    {
+        //        response.Success = false;
+        //        response.Message = error.Message;
+        //        return response;
+        //    }
+
+        //    response.Success = true;
+        //    return response;
+        //}
+        public PhysicalPersonDocumentResponse SetStatusDeleted(Guid identifier)
         {
             PhysicalPersonDocumentResponse response = new PhysicalPersonDocumentResponse();
 
-            try
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE PhysicalPersonDocuments SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
                 {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM PhysicalPersonDocuments";
-                    try
-                    {
-                        insertCommand.ExecuteReader();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
+                    insertCommand.ExecuteReader();
                 }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
                 return response;
             }
-
-            response.Success = true;
-            return response;
         }
     }
 }

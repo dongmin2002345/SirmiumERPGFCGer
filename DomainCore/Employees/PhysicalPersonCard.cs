@@ -14,5 +14,7 @@ namespace DomainCore.Employees
         public string Description { get; set; }
 
         public string PlusMinus { get; set; }
+
+        public int ItemStatus { get; set; }
     }
 }

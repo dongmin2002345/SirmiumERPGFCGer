@@ -560,11 +560,27 @@ namespace ServiceInterfaces.ViewModels.Employees
 				}
 			}
 		}
-		#endregion
+        #endregion
 
+        #region PhysicalPersonCards
+        private ObservableCollection<PhysicalPersonCardViewModel> _PhysicalPersonCards;
 
-		#region IsSynced
-		private bool _IsSynced;
+        public ObservableCollection<PhysicalPersonCardViewModel> PhysicalPersonCards
+        {
+            get { return _PhysicalPersonCards; }
+            set
+            {
+                if (_PhysicalPersonCards != value)
+                {
+                    _PhysicalPersonCards = value;
+                    NotifyPropertyChanged("PhysicalPersonCards");
+                }
+            }
+        }
+        #endregion
+
+        #region IsSynced
+        private bool _IsSynced;
 
 		public bool IsSynced
 		{

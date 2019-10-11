@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.PhysicalPersons
                 "SELECT physicalPersonItem.Id AS PhysicalPersonItemId, physicalPersonItem.Identifier AS PhysicalPersonItemIdentifier, " +
                 "physicalPerson.Id AS PhysicalPersonId, physicalPerson.Identifier AS PhysicalPersonIdentifier, physicalPerson.Code AS PhysicalPersonCode, physicalPerson.Name AS PhysicalPersonName, " +
                 "familyMember.Id AS FamilyMemberId, familyMember.Identifier AS FamilyMemberIdentifier, familyMember.Code AS FamilyMemberCode, familyMember.Name AS FamilyMemberName, " +
-                "physicalPersonItem.Name, physicalPersonItem.DateOfBirth, physicalPersonItem.EmbassyDate, " +
+                "physicalPersonItem.Name, physicalPersonItem.DateOfBirth, physicalPersonItem.EmbassyDate, physicalPersonItem.ItemStatus, " +
                 "physicalPersonItem.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (physicalPersonItem.UpdatedAt), (physicalPerson.UpdatedAt), (familyMember.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

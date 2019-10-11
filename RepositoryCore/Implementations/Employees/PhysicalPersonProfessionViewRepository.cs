@@ -4,6 +4,7 @@ using DomainCore.Common.Identity;
 using DomainCore.Common.Locations;
 using DomainCore.Common.Professions;
 using DomainCore.Employees;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
 using System;
@@ -33,7 +34,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "SELECT PhysicalPersonProfessionId, PhysicalPersonProfessionIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
-                "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+                "CountryId, CountryIdentifier, CountryCode, CountryName, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vPhysicalPersonProfessions " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -83,6 +84,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonProfession.Country.Code = reader["CountryCode"].ToString();
                             physicalPersonProfession.Country.Name = reader["CountryName"].ToString();
                         }
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonProfession.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonProfession.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -132,7 +135,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "SELECT PhysicalPersonProfessionId, PhysicalPersonProfessionIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
-                "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+                "CountryId, CountryIdentifier, CountryCode, CountryName, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vPhysicalPersonProfessions " +
                 "WHERE PhysicalPersonId = @PhysicalPersonId AND Active = 1;";
@@ -182,6 +185,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonProfession.Country.Code = reader["CountryCode"].ToString();
                             physicalPersonProfession.Country.Name = reader["CountryName"].ToString();
                         }
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonProfession.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonProfession.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -230,7 +235,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "SELECT PhysicalPersonProfessionId, PhysicalPersonProfessionIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
-                "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+                "CountryId, CountryIdentifier, CountryCode, CountryName, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vPhysicalPersonProfessions " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
@@ -281,6 +286,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonProfession.Country.Code = reader["CountryCode"].ToString();
                             physicalPersonProfession.Country.Name = reader["CountryName"].ToString();
                         }
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonProfession.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonProfession.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -328,6 +335,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 PhysicalPersonProfession.Id = 0;
 
                 PhysicalPersonProfession.Active = true;
+                PhysicalPersonProfession.UpdatedAt = DateTime.Now;
+                PhysicalPersonProfession.CreatedAt = DateTime.Now;
 
                 context.PhysicalPersonProfessions.Add(PhysicalPersonProfession);
                 return PhysicalPersonProfession;
@@ -345,6 +354,9 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                     dbEntry.CompanyId = PhysicalPersonProfession.CompanyId ?? null;
                     dbEntry.CreatedById = PhysicalPersonProfession.CreatedById ?? null;
 
+                    dbEntry.ItemStatus = PhysicalPersonProfession.ItemStatus;
+
+
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
@@ -356,6 +368,9 @@ namespace RepositoryCore.Implementations.PhysicalPersons
         public PhysicalPersonProfession Delete(Guid identifier)
         {
             PhysicalPersonProfession dbEntry = context.PhysicalPersonProfessions
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonProfession))
+                    .Select(x => x.Entity as PhysicalPersonProfession))
                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)

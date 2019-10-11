@@ -3,6 +3,7 @@ using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.Locations;
 using DomainCore.Employees;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
 using System;
@@ -31,7 +32,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonNoteId, PhysicalPersonNoteIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vPhysicalPersonNotes " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -66,6 +67,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             physicalPersonNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonNote.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -112,7 +115,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonNoteId, PhysicalPersonNoteIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vPhysicalPersonNotes " +
                 "WHERE PhysicalPersonId = @PhysicalPersonId AND Active = 1;";
@@ -148,6 +151,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             physicalPersonNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonNote.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -193,7 +198,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
             string queryString =
                 "SELECT PhysicalPersonNoteId, PhysicalPersonNoteIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vPhysicalPersonNotes " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
@@ -230,6 +235,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             physicalPersonNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonNote.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -276,6 +283,9 @@ namespace RepositoryCore.Implementations.PhysicalPersons
 
                 PhysicalPersonNote.Active = true;
 
+                PhysicalPersonNote.UpdatedAt = DateTime.Now;
+                PhysicalPersonNote.CreatedAt = DateTime.Now;
+
                 context.PhysicalPersonNotes.Add(PhysicalPersonNote);
                 return PhysicalPersonNote;
             }
@@ -293,6 +303,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                     // Set properties
                     dbEntry.Note = PhysicalPersonNote.Note;
                     dbEntry.NoteDate = PhysicalPersonNote.NoteDate;
+                    dbEntry.ItemStatus = PhysicalPersonNote.ItemStatus;
+
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -305,7 +317,10 @@ namespace RepositoryCore.Implementations.PhysicalPersons
         public PhysicalPersonNote Delete(Guid identifier)
         {
             PhysicalPersonNote dbEntry = context.PhysicalPersonNotes
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                 .Union(context.ChangeTracker.Entries()
+                     .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonNote))
+                     .Select(x => x.Entity as PhysicalPersonNote))
+                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {

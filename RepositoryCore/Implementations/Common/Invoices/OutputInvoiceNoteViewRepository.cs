@@ -67,6 +67,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             outputInvoiceNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
                         if (reader["ItemStatus"] != DBNull.Value)
                             outputInvoiceNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+
                         outputInvoiceNote.Active = bool.Parse(reader["Active"].ToString());
                         outputInvoiceNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -222,6 +223,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                             outputInvoiceNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
                         if (reader["ItemStatus"] != DBNull.Value)
                             outputInvoiceNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+
                         outputInvoiceNote.Active = bool.Parse(reader["Active"].ToString());
                         outputInvoiceNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 

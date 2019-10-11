@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Employees;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Context;
 using System;
@@ -31,7 +32,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "SELECT PhysicalPersonItemId, PhysicalPersonItemIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "FamilyMemberId, FamilyMemberIdentifier, FamilyMemberCode, FamilyMemberName, " +
-                "Name, DateOfBirth, EmbassyDate, " + //Passport??? ima u PhysicalPersonItemSQLite tabeli (vPhysicalPersonItems)
+                "Name, DateOfBirth, EmbassyDate, ItemStatus, " + 
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonItems " +
@@ -79,6 +80,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
                         if (reader["EmbassyDate"] != DBNull.Value)
                             physicalPersonItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonItem.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonItem.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -126,7 +129,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "SELECT PhysicalPersonItemId, PhysicalPersonItemIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "FamilyMemberId, FamilyMemberIdentifier, FamilyMemberCode, FamilyMemberName, " +
-                "Name, DateOfBirth, EmbassyDate, " + //Passport??? ima u PhysicalPersonItemSQLite tabeli (vPhysicalPersonItems)
+                "Name, DateOfBirth, EmbassyDate, ItemStatus, " + //Passport??? ima u PhysicalPersonItemSQLite tabeli (vPhysicalPersonItems)
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonItems " +
@@ -174,6 +177,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
                         if (reader["EmbassyDate"] != DBNull.Value)
                             physicalPersonItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonItem.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonItem.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -221,7 +226,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "SELECT PhysicalPersonItemId, PhysicalPersonItemIdentifier, " +
                 "PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName, " +
                 "FamilyMemberId, FamilyMemberIdentifier, FamilyMemberCode, FamilyMemberName, " +
-                "Name, DateOfBirth, EmbassyDate, " + //Passport??? ima u PhysicalPersonItemSQLite tabeli (vPhysicalPersonItems)
+                "Name, DateOfBirth, EmbassyDate, ItemStatus, " + //Passport??? ima u PhysicalPersonItemSQLite tabeli (vPhysicalPersonItems)
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonItems " +
@@ -270,6 +275,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
                         if (reader["EmbassyDate"] != DBNull.Value)
                             physicalPersonItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            physicalPersonItem.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         physicalPersonItem.Active = bool.Parse(reader["Active"].ToString());
                         physicalPersonItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -316,6 +323,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 PhysicalPersonItem.Id = 0;
 
                 PhysicalPersonItem.Active = true;
+                PhysicalPersonItem.UpdatedAt = DateTime.Now;
+                PhysicalPersonItem.CreatedAt = DateTime.Now;
 
                 context.PhysicalPersonItems.Add(PhysicalPersonItem);
                 return PhysicalPersonItem;
@@ -336,6 +345,8 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                     dbEntry.Name = PhysicalPersonItem.Name;
                     dbEntry.DateOfBirth = PhysicalPersonItem.DateOfBirth;
                     dbEntry.EmbassyDate = PhysicalPersonItem.EmbassyDate;
+                    dbEntry.ItemStatus = PhysicalPersonItem.ItemStatus;
+
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -348,6 +359,9 @@ namespace RepositoryCore.Implementations.PhysicalPersons
         public PhysicalPersonItem Delete(Guid identifier)
         {
             PhysicalPersonItem dbEntry = context.PhysicalPersonItems
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonItem))
+                    .Select(x => x.Entity as PhysicalPersonItem))
                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)

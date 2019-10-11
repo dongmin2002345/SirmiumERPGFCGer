@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Employees"
+             xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
-             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
 
 
     <Control.Background>
@@ -31,14 +32,17 @@
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
         <syncedConverter:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <cbxConverters:PlusMinusConverter x:Key="PlusMinusConverter" />
+        <cbxConverters:MultiConverter x:Key="MultiConverter" />
+        <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
+        <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
+        <cbxConverters:ItemStatusConverter x:Key="ItemStatusConverter" />
+        <cbxConverters:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+           <RowDefinition Height="Auto" />
             <RowDefinition Height="2*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -47,6 +51,8 @@
         <Expander x:Name="searchExpander" Margin="2,2,2,1" Header="{DynamicResource PRETRAGA}" IsExpanded="False">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -211,7 +217,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnPhysicalPersonExcel" Click="btnPhysicalPersonExcel_Click" Margin="2 0 2 0" CommandParameter="{Binding}" ToolTip="Izvezi u EXCEL">
+                                        <Button x:Name="btnPhysicalPersonExcel" Click="btnExcel_Click" Margin="2 0 2 0" CommandParameter="{Binding}" ToolTip="Izvezi u EXCEL">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\ExcelBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
@@ -239,11 +245,526 @@
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="{DynamicResource Istorija_fizickog_lica}" Margin=" 2 1 1 1 ">
+            <GridSplitter Grid.Row="2" Height="2" Margin="0 1 0 1" HorizontalAlignment="Stretch" Background="#007ACC"/>
+
+            <TabControl TabStripPlacement="Top" Grid.Row="3" Grid.Column="0" Margin="0 1 0 0" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
+                <TabItem Header="{DynamicResource Istorija_fizickog_lica}">
+                    <GroupBox Header="{DynamicResource Istorija_fizickog_lica}" Grid.Column="0" Margin="2 1 1 2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="btnAddItem" Click="BtnAddCards_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+
+                            <Separator Grid.Row="1" Margin="2" />
+
+                            <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding PhysicalPersonCardDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                            <DataGrid x:Name="dgPhysicalPersonCards"
+                              Grid.Row="2" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgPhysicalPersonCards_LoadingRow"
+                              ItemsSource="{Binding Path=PhysicalPersonCardsFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonCardDG, Mode=TwoWay}">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="{DynamicResource Opis}" Binding="{Binding Path=Description}" Width="*" IsReadOnly="True" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding Description}"/>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn SortMemberPath="CardDate" Header="{DynamicResource Datum_izmene}" Binding="{Binding Path=CardDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                    </GroupBox>
+                </TabItem>
+
+                <TabItem Header="{DynamicResource Fajlovi_za_radnika}">
+                    <GroupBox Header="{DynamicResource Fajlovi_za_radnika}" Grid.Column="1" Margin="2 1 2 2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="btnAddDocuments" Click="BtnAddDocuments_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Button>
+                                <!--<TextBlock Grid.Column="2" Text="Pretraga:" Margin="5 2 10 2" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="3" x:Name="txtSearchMedicalConditions" Margin="2" 
+                                     Text="{Binding Path=MedicalConditionSearchObject.Search_AnimalId, UpdateSourceTrigger=PropertyChanged}" 
+                                     TextChanged="TxtSearchMedicalConditions_TextChanged"
+                                     Controls:TextBoxHelper.ClearTextButton="True"/>-->
+                            </Grid>
+
+                            <Separator Grid.Row="1" Margin="2" />
+                            <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding PhysicalPersonDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                            <DataGrid x:Name="dgPhysicalPersonDocuments"
+                              Grid.Row="2" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgPhysicalPersonDocuments_LoadingRow"
+                              ItemsSource="{Binding Path=PhysicalPersonDocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonDocument, Mode=TwoWay}">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                    <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                    <DataGridTemplateColumn Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                        <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                                <Setter Property="FontStyle" Value="Italic" />
+                                                <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+
+                </TabItem>
+
+                <TabItem Header="{DynamicResource Članovi_porodice}">
+                    <GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="1" Margin="2 1 2 2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="btnAddFamilyMembers" Click="BtnAddItems_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Button>
+                                <!--<TextBlock Grid.Column="2" Text="Pretraga:" Margin="5 2 10 2" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="3" x:Name="txtSearchMedicalConditions" Margin="2" 
+                                     Text="{Binding Path=MedicalConditionSearchObject.Search_AnimalId, UpdateSourceTrigger=PropertyChanged}" 
+                                     TextChanged="TxtSearchMedicalConditions_TextChanged"
+                                     Controls:TextBoxHelper.ClearTextButton="True"/>-->
+                            </Grid>
+
+                            <Separator Grid.Row="1" Margin="2" />
+                            <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding PhysicalPersonItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                            <DataGrid x:Name="dgPhysicalPersonItems"
+                              Grid.Row="2" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgPhysicalPersonItems_LoadingRow"
+                              ItemsSource="{Binding Path=PhysicalPersonItemsFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonItem, Mode=TwoWay}">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="{DynamicResource Član_porodice}" Binding="{Binding FamilyMember.Name}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenja}" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                    <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Ambasada}" Binding="{Binding EmbassyDate}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                    <DataGridTemplateColumn Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                        <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                                <Setter Property="FontStyle" Value="Italic" />
+                                                <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+
+                </TabItem>
+
+                <TabItem Header="{DynamicResource Napomena}">
+                    <GroupBox Header="{DynamicResource Napomena}" Grid.Column="1" Margin="2 1 2 2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="btnAddNotes" Click="BtnAddNotes_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Button>
+                                <!--<TextBlock Grid.Column="2" Text="Pretraga:" Margin="5 2 10 2" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="3" x:Name="txtSearchMedicalConditions" Margin="2" 
+                                     Text="{Binding Path=MedicalConditionSearchObject.Search_AnimalId, UpdateSourceTrigger=PropertyChanged}" 
+                                     TextChanged="TxtSearchMedicalConditions_TextChanged"
+                                     Controls:TextBoxHelper.ClearTextButton="True"/>-->
+                            </Grid>
+
+                            <Separator Grid.Row="1" Margin="2" />
+                            <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding PhysicalPersonNoteDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                            <DataGrid x:Name="dgPhysicalPersonNotes"
+                              Grid.Row="2" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgPhysicalPersonNotes_LoadingRow"
+                              ItemsSource="{Binding Path=PhysicalPersonNotesFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonNote, Mode=TwoWay}">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Note}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                    <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                    <DataGridTemplateColumn Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                        <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                                <Setter Property="FontStyle" Value="Italic" />
+                                                <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+
+                </TabItem>
+
+                <TabItem Header="{DynamicResource Zanimanja}">
+                    <GroupBox Header="{DynamicResource Zanimanja}" Grid.Column="1" Margin="2 1 2 2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="btnAddProfessionss" Click="BtnAddProfessions_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Button>
+                                <!--<TextBlock Grid.Column="2" Text="Pretraga:" Margin="5 2 10 2" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="3" x:Name="txtSearchMedicalConditions" Margin="2" 
+                                     Text="{Binding Path=MedicalConditionSearchObject.Search_AnimalId, UpdateSourceTrigger=PropertyChanged}" 
+                                     TextChanged="TxtSearchMedicalConditions_TextChanged"
+                                     Controls:TextBoxHelper.ClearTextButton="True"/>-->
+                            </Grid>
+
+                            <Separator Grid.Row="1" Margin="2" />
+                            <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding PhysicalPersonDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                            <DataGrid x:Name="dgPhysicalPersonProfessions"
+                              Grid.Row="2" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgPhysicalPersonProfessions_LoadingRow"
+                              ItemsSource="{Binding Path=PhysicalPersonProfessionsFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonProfession, Mode=TwoWay}">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn SortMemberPath="Profession.SecondCode" Header="{DynamicResource Šifra_zanimanja}" Binding="{Binding Profession.SecondCode}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="Profession.Name" Header="{DynamicResource Zanimanje}" Binding="{Binding Profession.Name}" IsReadOnly="True" />
+                                    <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" Width="*" />
+
+                                    <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                    <DataGridTemplateColumn Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                        <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                                <Setter Property="FontStyle" Value="Italic" />
+                                                <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+
+                </TabItem>
+
+                <TabItem Header="{DynamicResource Dozvole}">
+                    <GroupBox Header="{DynamicResource Dozvole}" Grid.Column="1" Margin="2 1 2 2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="btnAddLicences" Click="BtnAddLicences_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Button>
+                                <!--<TextBlock Grid.Column="2" Text="Pretraga:" Margin="5 2 10 2" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="3" x:Name="txtSearchMedicalConditions" Margin="2" 
+                                     Text="{Binding Path=MedicalConditionSearchObject.Search_AnimalId, UpdateSourceTrigger=PropertyChanged}" 
+                                     TextChanged="TxtSearchMedicalConditions_TextChanged"
+                                     Controls:TextBoxHelper.ClearTextButton="True"/>-->
+                            </Grid>
+
+                            <Separator Grid.Row="1" Margin="2" />
+                            <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding PhysicalPersonDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                            <DataGrid x:Name="dgPhysicalPersonLicences"
+                              Grid.Row="2" 
+                              Margin="2"
+                              MinHeight="200"
+                              AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="True"  
+                                  GridLinesVisibility="All"
+                                  HorizontalGridLinesBrush="Gray"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  RowHeaderWidth="25"
+                                  HeadersVisibility="All"
+                                  LoadingRow="DgPhysicalPersonLicences_LoadingRow"
+                              ItemsSource="{Binding Path=PhysicalPersonLicencesFromDB}"
+                              SelectedItem="{Binding Path=CurrentPhysicalPersonLicence, Mode=TwoWay}">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn SortMemberPath="Licence.Category" Header="{DynamicResource Kategorija}" Binding="{Binding Licence.Category}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="Licence.Description" Header="{DynamicResource Dozvola}" Binding="{Binding Licence.Description}" IsReadOnly="True" />
+                                    <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Ističe}" Binding="{Binding ValidTo}" IsReadOnly="True" Width="*" />
+
+                                    <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                    <DataGridTemplateColumn Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <Button x:Name="btnShowDocument" Click="btnShowDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                        <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                                <Setter Property="FontStyle" Value="Italic" />
+                                                <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                            </DataGrid>
+                        </Grid>
+                    </GroupBox>
+
+                </TabItem>
+            </TabControl>
+
+            <!--<GroupBox Grid.Column="0" Header="{DynamicResource Istorija_fizickog_lica}" Margin=" 2 1 1 1 ">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding PhysicalPersonCardDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                     <DataGrid x:Name="dgPhysicalPersonCardDataLoading"
@@ -320,7 +841,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!--Listing-->
+            --><!--Listing-->
             <!--<GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="0" Margin="2 1 1 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding PhysicalPersonItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
@@ -345,7 +866,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-            </GroupBox>-->
+            </GroupBox>--><!--
 
             <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="2 1 1 2">
                 <Grid>
@@ -383,7 +904,7 @@
                 </Grid>
             </GroupBox>
             
-            <!--Listing-->
+            --><!--Listing--><!--
             <GroupBox Header="{DynamicResource Zanimanja}" Grid.Column="1" Margin="1 1 1 2 ">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding PhysicalPersonItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
@@ -408,7 +929,7 @@
                 </Grid>
             </GroupBox>
 
-            <!--Listing-->
+            --><!--Listing--><!--
             <GroupBox Header="{DynamicResource Dozvole}" Grid.Column="2" Margin="1 1 2 2">
                 <Grid>
                     <Controls:ProgressRing Grid.Row="0" IsActive="{Binding PhysicalPersonItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
@@ -432,7 +953,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-            </GroupBox>
+            </GroupBox>-->
         </Grid>
     </Grid>
 </UserControl>
