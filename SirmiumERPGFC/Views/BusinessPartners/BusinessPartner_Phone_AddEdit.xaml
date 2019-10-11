@@ -61,7 +61,7 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource FaxDvotacka}" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtFax" Text="{Binding Path=CurrentBusinessPartnerPhoneForm.Fax, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource EmailDvotacka}" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource ECrtamailDvotacka}" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtEmail" Text="{Binding Path=CurrentBusinessPartnerPhoneForm.Email, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource RodjendanDvotacka}" Margin="5 0 5 0" />
@@ -114,7 +114,7 @@
                         <DataGridTextColumn SortMemberPath="Mobile" Header="{DynamicResource Mobilni}" Binding="{Binding Path=Mobile}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Phone" Header="{DynamicResource Telefon}" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Fax" Header="{DynamicResource Fax}" Binding="{Binding Path=Fax}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrticamail}" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrtamail}" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Birthday" Header="{DynamicResource Rodjendan}" Binding="{Binding Path=Birthday, Converter={StaticResource StringDateTimeShortConverter}}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
