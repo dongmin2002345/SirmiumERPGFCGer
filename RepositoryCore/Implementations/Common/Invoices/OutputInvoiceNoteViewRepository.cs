@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.OutputInvoices;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Context;
 using System;
@@ -289,7 +290,10 @@ namespace RepositoryCore.Implementations.Common.Invoices
         public OutputInvoiceNote Delete(Guid identifier)
         {
             OutputInvoiceNote dbEntry = context.OutputInvoiceNotes
-                .FirstOrDefault(x => x.Identifier == identifier);
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(OutputInvoiceNote))
+                    .Select(x => x.Entity as OutputInvoiceNote))
+                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {
