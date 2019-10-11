@@ -533,9 +533,12 @@ namespace SirmiumERPGFC.Views.Employees
         {
             // Get required services
             this.physicalPersonService = DependencyResolver.Kernel.Get<IPhysicalPersonService>();
-            this.physicalPersonNoteService = DependencyResolver.Kernel.Get<IPhysicalPersonNoteService>();
+            this.physicalPersonCardService = DependencyResolver.Kernel.Get<IPhysicalPersonCardService>();
             this.physicalPersonDocumentService = DependencyResolver.Kernel.Get<IPhysicalPersonDocumentService>();
-
+            this.physicalPersonNoteService = DependencyResolver.Kernel.Get<IPhysicalPersonNoteService>();
+            this.physicalPersonProfessionService = DependencyResolver.Kernel.Get<IPhysicalPersonProfessionService>();
+            this.physicalPersonLicenceService = DependencyResolver.Kernel.Get<IPhysicalPersonLicenceService>();
+            this.physicalPersonItemService = DependencyResolver.Kernel.Get<IPhysicalPersonItemService>();
             InitializeComponent();
 
             this.DataContext = this;
