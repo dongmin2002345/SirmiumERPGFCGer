@@ -32,7 +32,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 IsBuyer = businessPartnerType.IsBuyer,
                 IsSupplier = businessPartnerType.IsSupplier,
-
+                ItemStatus = businessPartnerType.ItemStatus,
                 IsActive = businessPartnerType.Active,
 
                 CreatedBy = businessPartnerType.CreatedBy?.ConvertToUserViewModelLite(),
@@ -56,7 +56,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 IsBuyer = businessPartnerType.IsBuyer,
                 IsSupplier = businessPartnerType.IsSupplier,
-
+                ItemStatus = businessPartnerType.ItemStatus,
                 IsActive = businessPartnerType.Active,
 
                 UpdatedAt = businessPartnerType.UpdatedAt,
@@ -77,6 +77,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 IsBuyer = businessPartnerTypeViewModel.IsBuyer,
                 IsSupplier = businessPartnerTypeViewModel.IsSupplier,
+                ItemStatus = businessPartnerTypeViewModel.ItemStatus,
 
                 CreatedById = businessPartnerTypeViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerTypeViewModel.Company?.Id ?? null,

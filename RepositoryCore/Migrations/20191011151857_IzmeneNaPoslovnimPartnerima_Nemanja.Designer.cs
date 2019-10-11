@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191011151857_IzmeneNaPoslovnimPartnerima_Nemanja")]
+    partial class IzmeneNaPoslovnimPartnerima_Nemanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2123,8 +2125,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<Guid>("Identifier");
 
-                    b.Property<int>("ItemStatus");
-
                     b.Property<int?>("PhysicalPersonId");
 
                     b.Property<string>("PlusMinus");
@@ -2159,8 +2159,6 @@ namespace RepositoryCore.Migrations
                     b.Property<int?>("CreatedById");
 
                     b.Property<Guid>("Identifier");
-
-                    b.Property<int>("ItemStatus");
 
                     b.Property<string>("Name");
 
@@ -2203,8 +2201,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<Guid>("Identifier");
 
-                    b.Property<int>("ItemStatus");
-
                     b.Property<string>("Name");
 
                     b.Property<int?>("PhysicalPersonId");
@@ -2241,8 +2237,6 @@ namespace RepositoryCore.Migrations
                     b.Property<int?>("CreatedById");
 
                     b.Property<Guid>("Identifier");
-
-                    b.Property<int>("ItemStatus");
 
                     b.Property<int?>("LicenceId");
 
@@ -2285,8 +2279,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<Guid>("Identifier");
 
-                    b.Property<int>("ItemStatus");
-
                     b.Property<string>("Note");
 
                     b.Property<DateTime>("NoteDate");
@@ -2323,8 +2315,6 @@ namespace RepositoryCore.Migrations
                     b.Property<int?>("CreatedById");
 
                     b.Property<Guid>("Identifier");
-
-                    b.Property<int>("ItemStatus");
 
                     b.Property<int?>("PhysicalPersonId");
 

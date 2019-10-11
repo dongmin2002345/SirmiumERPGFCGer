@@ -25,7 +25,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, " +
                 "bank.Id AS BankId, bank.Identifier AS BankIdentifier, bank.Code AS BankCode, bank.Name AS BankName,  " +
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName,  " +
-                "businessPartnerBank.AccountNumber, businessPartnerBank.Active AS Active," +
+                "businessPartnerBank.AccountNumber, businessPartnerBank.ItemStatus, businessPartnerBank.Active AS Active," +
                 "(SELECT MAX(v) FROM (VALUES (businessPartnerBank.UpdatedAt), (businessPartner.UpdatedAt), (bank.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

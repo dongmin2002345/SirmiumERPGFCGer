@@ -11,5 +11,6 @@ namespace ServiceInterfaces.Messages.Common.BusinessPartners
     public class BusinessPartnerPhoneListResponse : BaseResponse
     {
         public List<BusinessPartnerPhoneViewModel> BusinessPartnerPhones { get; set; }
+        public int TotalItems { get; set; }
     }
 }

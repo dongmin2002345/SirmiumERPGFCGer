@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
@@ -21,6 +22,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "Name NVARCHAR(2048), " +
             "IsBuyer BOOL NULL, " +
             "IsSupplier BOOL NULL, " +
+            "ItemStatus INTEGER NOT NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -29,14 +31,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, IsBuyer, IsSupplier, " +
+            "SELECT ServerId, Identifier, Code, Name, IsBuyer, IsSupplier, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, " +
             "CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerTypes " +
-            "(Id, ServerId, Identifier, Code, Name, IsBuyer, IsSupplier, IsSynced, UpdatedAt, " +
+            "(Id, ServerId, Identifier, Code, Name, IsBuyer, IsSupplier, ItemStatus, IsSynced, UpdatedAt, " +
             "CreatedById, CreatedByName, CompanyId, CompanyName) " +
-            "VALUES (NULL, @ServerId, @Identifier,  @Code, @Name, @IsBuyer, @IsSupplier, @IsSynced, @UpdatedAt, " +
+            "VALUES (NULL, @ServerId, @Identifier,  @Code, @Name, @IsBuyer, @IsSupplier, @ItemStatus, @IsSynced, @UpdatedAt, " +
             "@CreatedById, @CreatedByName, @CompanyId, @CompanyName);";
 
         #endregion
@@ -53,6 +55,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.IsBuyer = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.IsSupplier = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -70,6 +73,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@IsBuyer", ((object)businessPartnerType.IsBuyer) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSupplier", ((object)businessPartnerType.IsSupplier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerType.IsSynced);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)businessPartnerType.ItemStatus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerType.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
             insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
@@ -344,7 +348,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }
@@ -427,49 +432,40 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 return response;
             }
         }
-
-        public BusinessPartnerTypeResponse DeleteAll()
+        public BusinessPartnerTypeResponse SetStatusDeleted(Guid identifier)
         {
             BusinessPartnerTypeResponse response = new BusinessPartnerTypeResponse();
 
-            try
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE BusinessPartnerTypes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
                 {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM BusinessPartnerTypes";
-                    try
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
+                    insertCommand.ExecuteReader();
                 }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
                 return response;
             }
-
-            response.Success = true;
-            return response;
         }
-
+       
         #endregion
     }
 }

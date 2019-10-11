@@ -19,5 +19,6 @@ namespace DomainCore.Common.BusinessPartners
         public Country Country { get; set; }
 
         public string AccountNumber { get; set; }
+        public int ItemStatus { get; set; }
     }
 }

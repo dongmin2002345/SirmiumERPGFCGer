@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Repository.Common;
@@ -26,6 +27,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                      "Name NVARCHAR(2048), " +
                      "CreateDate DATETIME NULL, " +
                      "Path NVARCHAR(2048) NULL, " +
+                     "ItemStatus INTEGER NOT NULL, " +
                      "IsSynced BOOL NULL, " +
                      "UpdatedAt DATETIME NULL, " +
                      "CreatedById INTEGER NULL, " +
@@ -35,16 +37,16 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, " +
-            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Name, CreateDate, Path, " +
+            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Name, CreateDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerDocuments " +
             "(Id, ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, " +
-            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Name, CreateDate, Path, " +
+            "BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, Name, CreateDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @BusinessPartnerId, @BusinessPartnerIdentifier, " +
-            "@BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, @Name, @CreateDate, @Path, " +
+            "@BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, @Name, @CreateDate, @Path, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -61,6 +63,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -82,6 +85,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@Name", BusinessPartnerDocument.Name);
             insertCommand.Parameters.AddWithValue("@CreateDate", ((object)BusinessPartnerDocument.CreateDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Path", ((object)BusinessPartnerDocument.Path) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)BusinessPartnerDocument.ItemStatus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", BusinessPartnerDocument.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)BusinessPartnerDocument.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -261,7 +265,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }
@@ -345,46 +350,38 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             }
         }
 
-        public BusinessPartnerDocumentResponse DeleteAll()
+        public BusinessPartnerDocumentResponse SetStatusDeleted(Guid identifier)
         {
             BusinessPartnerDocumentResponse response = new BusinessPartnerDocumentResponse();
 
-            try
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE BusinessPartnerDocuments SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
                 {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM BusinessPartnerDocuments";
-                    try
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
+                    insertCommand.ExecuteReader();
                 }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
                 return response;
             }
-
-            response.Success = true;
-            return response;
         }
 
         #endregion

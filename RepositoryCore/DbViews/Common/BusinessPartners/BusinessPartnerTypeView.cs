@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
             strSQLCommand =
                 "CREATE VIEW vBusinessPartnerTypes AS " +
                 "SELECT businessPartnerType.Id AS BusinessPartnerTypeId, businessPartnerType.Identifier AS BusinessPartnerTypeIdentifier, businessPartnerType.Code AS BusinessPartnerTypeCode, businessPartnerType.Name AS BusinessPartnerTypeName, " +
-                "businessPartnerType.IsBuyer, businessPartnerType.IsSupplier, businessPartnerType.Active AS Active, businessPartnerType.UpdatedAt, " +
+                "businessPartnerType.IsBuyer, businessPartnerType.IsSupplier, businessPartnerType.ItemStatus, businessPartnerType.Active AS Active, businessPartnerType.UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +
                 "FROM BusinessPartnerTypes businessPartnerType " +

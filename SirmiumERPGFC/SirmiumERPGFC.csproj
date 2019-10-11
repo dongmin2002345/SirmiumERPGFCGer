@@ -329,6 +329,27 @@
     <Compile Include="Views\BusinessPartners\BusinessPartners-List.xaml.cs">
       <DependentUpon>BusinessPartners-List.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner_Bank_AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner_Bank_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner_Document_AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner_Document_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner_Institution_AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner_Institution_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner_Location_AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner_Location_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner_Note_AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner_Note_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner_Phone_AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner_Phone_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessPartners\BusinessPartner_Types_AddEdit.xaml.cs">
+      <DependentUpon>BusinessPartner_Types_AddEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Common\SubmitConfirmation.xaml.cs">
       <DependentUpon>SubmitConfirmation.xaml</DependentUpon>
     </Compile>
@@ -655,6 +676,34 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusinessPartners\BusinessPartners-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner_Bank_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner_Document_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner_Institution_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner_Location_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner_Note_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner_Phone_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessPartners\BusinessPartner_Types_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

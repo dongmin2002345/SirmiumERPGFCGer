@@ -32,7 +32,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Name = businessPartnerDocument.Name,
                 CreateDate = businessPartnerDocument.CreateDate,
                 Path = businessPartnerDocument.Path,
-
+                ItemStatus = businessPartnerDocument.ItemStatus,
                 IsActive = businessPartnerDocument.Active,
 
                 CreatedBy = businessPartnerDocument.CreatedBy?.ConvertToUserViewModelLite(),
@@ -55,7 +55,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Name = businessPartnerDocument.Name,
                 CreateDate = businessPartnerDocument.CreateDate,
                 Path = businessPartnerDocument.Path,
-
+                ItemStatus = businessPartnerDocument.ItemStatus,
                 IsActive = businessPartnerDocument.Active,
 
                 UpdatedAt = businessPartnerDocument.UpdatedAt,
@@ -77,7 +77,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Name = businessPartnerDocumentViewModel.Name,
                 CreateDate = businessPartnerDocumentViewModel.CreateDate,
                 Path = businessPartnerDocumentViewModel.Path,
-
+                ItemStatus = businessPartnerDocumentViewModel.ItemStatus,
                 Active = businessPartnerDocumentViewModel.IsActive,
 
                 CreatedById = businessPartnerDocumentViewModel.CreatedBy?.Id ?? null,

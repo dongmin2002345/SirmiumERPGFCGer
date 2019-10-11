@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "CREATE VIEW vBusinessPartnerDocuments AS " +
                 "SELECT employeeDocument.Id AS BusinessPartnerDocumentId, employeeDocument.Identifier AS BusinessPartnerDocumentIdentifier, " +
                 "employee.Id AS BusinessPartnerId, employee.Identifier AS BusinessPartnerIdentifier, employee.Code AS BusinessPartnerCode, employee.Name AS BusinessPartnerName, " +
-                "employeeDocument.Name, employeeDocument.CreateDate, employeeDocument.Path, " +
+                "employeeDocument.Name, employeeDocument.CreateDate, employeeDocument.Path, employeeDocument.ItemStatus, " +
                 "employeeDocument.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (employeeDocument.UpdatedAt), (employee.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

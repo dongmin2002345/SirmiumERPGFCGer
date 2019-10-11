@@ -2,6 +2,7 @@
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Context;
 using System;
@@ -30,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerDocumentId, BusinessPartnerDocumentIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vBusinessPartnerDocuments " +
@@ -68,7 +69,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             businessPartnerDocument.Path = reader["Path"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerDocument.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -113,7 +115,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerDocumentId, BusinessPartnerDocumentIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vBusinessPartnerDocuments " +
@@ -151,7 +153,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             businessPartnerDocument.Path = reader["Path"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerDocument.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -197,7 +200,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerDocumentId, BusinessPartnerDocumentIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vBusinessPartnerDocuments " +
@@ -237,7 +240,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             businessPartnerDocument.Path = reader["Path"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerDocument.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -297,6 +301,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                 if (dbEntry != null)
                 {
+                    dbEntry.BusinessPartnerId = BusinessPartnerDocument.BusinessPartnerId ?? null;
                     dbEntry.CompanyId = BusinessPartnerDocument.CompanyId ?? null;
                     dbEntry.CreatedById = BusinessPartnerDocument.CreatedById ?? null;
 
@@ -316,7 +321,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public BusinessPartnerDocument Delete(Guid identifier)
         {
             BusinessPartnerDocument dbEntry = context.BusinessPartnerDocuments
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+               .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartnerDocument))
+                    .Select(x => x.Entity as BusinessPartnerDocument))
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

@@ -35,7 +35,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "BankId, BankIdentifier, BankCode, BankName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "AccountNumber, " +
+                "AccountNumber, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerBanks " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -88,7 +88,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                         if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerBank.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -136,7 +137,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "BankId, BankIdentifier, BankCode, BankName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "AccountNumber, " +
+                "AccountNumber, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerBanks " +
                 "WHERE BusinessPartnerId = @BusinessPartnerId;"; // AND Active = 1
@@ -189,7 +190,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                         if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerBank.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -237,7 +239,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "BankId, BankIdentifier, BankCode, BankName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "AccountNumber, " +
+                "AccountNumber, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerBanks " +
                 "WHERE CompanyId = @CompanyId " +
@@ -292,7 +294,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                         if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerBank.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -340,7 +343,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "BankId, BankIdentifier, BankCode, BankName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "AccountNumber, " +
+                "AccountNumber, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerBanks " +
                 "WHERE BusinessPartnerBankId = @BusinessPartnerBankId AND Active = 1;"; 
@@ -392,7 +395,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                         if (reader["AccountNumber"] != DBNull.Value)
                             businessPartnerBank.AccountNumber = reader["AccountNumber"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerBank.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerBank.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerBank.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -434,7 +438,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 businessPartnerBank.Id = 0;
 
                 businessPartnerBank.Active = true;
-
+                businessPartnerBank.UpdatedAt = DateTime.Now;
+                businessPartnerBank.CreatedAt = DateTime.Now;
                 context.BusinessPartnerBanks.Add(businessPartnerBank);
                 return businessPartnerBank;
             }
@@ -466,8 +471,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public BusinessPartnerBank Delete(Guid identifier)
         {
             BusinessPartnerBank dbEntry = context.BusinessPartnerBanks
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartnerBank))
+                    .Select(x => x.Entity as BusinessPartnerBank))
+                .FirstOrDefault(x => x.Identifier == identifier);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;
