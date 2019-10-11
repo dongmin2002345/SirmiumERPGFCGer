@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerInstitutionId, BusinessPartnerInstitutionIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, " +
+                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerInstitutions " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -76,7 +76,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.Fax = reader["Fax"].ToString();
                         if (reader["Email"] != DBNull.Value)
                             businessPartnerInstitution.Email = reader["Email"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerInstitution.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerInstitution.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerInstitution.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -121,7 +122,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerInstitutionId, BusinessPartnerInstitutionIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, " +
+                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerInstitutions " +
                 "WHERE BusinessPartnerId = @BusinessPartnerId AND Active = 1;";
@@ -166,7 +167,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.Fax = reader["Fax"].ToString();
                         if (reader["Email"] != DBNull.Value)
                             businessPartnerInstitution.Email = reader["Email"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerInstitution.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerInstitution.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerInstitution.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -211,7 +213,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerInstitutionId, BusinessPartnerInstitutionIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, " +
+                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerInstitutions " +
                 "WHERE CompanyId = @CompanyId " +
@@ -258,7 +260,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.Fax = reader["Fax"].ToString();
                         if (reader["Email"] != DBNull.Value)
                             businessPartnerInstitution.Email = reader["Email"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerInstitution.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerInstitution.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerInstitution.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -303,7 +306,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerInstitutionId, BusinessPartnerInstitutionIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, " +
+                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerInstitutions " +
                 "WHERE BusinessPartnerInstitutionId = @BusinessPartnerInstitutionId AND Active = 1;";
@@ -347,7 +350,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.Fax = reader["Fax"].ToString();
                         if (reader["Email"] != DBNull.Value)
                             businessPartnerInstitution.Email = reader["Email"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerInstitution.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerInstitution.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerInstitution.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -427,7 +431,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public BusinessPartnerInstitution Delete(Guid identifier)
         {
             BusinessPartnerInstitution dbEntry = context.BusinessPartnerInstitutions
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+               .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartnerInstitution))
+                    .Select(x => x.Entity as BusinessPartnerInstitution))
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {

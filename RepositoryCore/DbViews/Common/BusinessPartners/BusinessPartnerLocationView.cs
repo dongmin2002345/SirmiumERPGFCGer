@@ -28,7 +28,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.Code AS CityCode, city.Name AS CityName, " +
                 "municipality.Id AS MunicipalityId, municipality.Identifier AS MunicipalityIdentifier, municipality.Code AS MunicipalityCode, municipality.Name AS MunicipalityName, " +
                 "region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.Code AS RegionCode, region.Name AS RegionName, " +
-                "businessPartnerLocation.Active AS Active, " +
+                "businessPartnerLocation.ItemStatus, businessPartnerLocation.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (businessPartnerLocation.UpdatedAt), (businessPartner.UpdatedAt), (country.UpdatedAt), (city.UpdatedAt), (municipality.UpdatedAt), (region.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

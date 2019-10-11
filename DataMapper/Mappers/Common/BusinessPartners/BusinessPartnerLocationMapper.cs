@@ -36,7 +36,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 City = businessPartnerLocation.City?.ConvertToCityViewModelLite(),
                 Municipality = businessPartnerLocation.Municipality?.ConvertToMunicipalityViewModelLite(),
                 Region = businessPartnerLocation.Region?.ConvertToRegionViewModelLite(),
-
+                ItemStatus = businessPartnerLocation.ItemStatus,
                 IsActive = businessPartnerLocation.Active,
 
                 CreatedBy = businessPartnerLocation.CreatedBy?.ConvertToUserViewModelLite(),
@@ -56,7 +56,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Identifier = businessPartnerLocation.Identifier,
 
                 Address = businessPartnerLocation.Address,
-
+                ItemStatus = businessPartnerLocation.ItemStatus,
                 IsActive = businessPartnerLocation.Active,
 
                 UpdatedAt = businessPartnerLocation.UpdatedAt,
@@ -80,7 +80,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 CityId = businessPartnerLocationViewModel.City?.Id ?? null,
                 MunicipalityId = businessPartnerLocationViewModel.Municipality?.Id ?? null,
                 RegionId = businessPartnerLocationViewModel.Region?.Id ?? null,
-              
+                ItemStatus = businessPartnerLocationViewModel.ItemStatus,
                 CreatedById = businessPartnerLocationViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerLocationViewModel.Company?.Id ?? null,
 

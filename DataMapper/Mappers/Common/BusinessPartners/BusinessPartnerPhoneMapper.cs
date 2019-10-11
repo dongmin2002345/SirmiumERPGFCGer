@@ -39,7 +39,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Birthday = businessPartnerPhone.Birthday,
 
                 Description = businessPartnerPhone.Description,
-
+                ItemStatus = businessPartnerPhone.ItemStatus,
                 IsActive = businessPartnerPhone.Active,
 
                 CreatedBy = businessPartnerPhone.CreatedBy?.ConvertToUserViewModelLite(),
@@ -68,7 +68,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Birthday = businessPartnerPhone.Birthday, 
 
                 Description = businessPartnerPhone.Description,
-
+                ItemStatus = businessPartnerPhone.ItemStatus,
                 IsActive = businessPartnerPhone.Active,
 
                 UpdatedAt = businessPartnerPhone.UpdatedAt,
@@ -96,7 +96,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Birthday = businessPartnerPhoneViewModel.Birthday, 
 
                 Description = businessPartnerPhoneViewModel.Description,
-
+                ItemStatus = businessPartnerPhoneViewModel.ItemStatus,
                 CreatedById = businessPartnerPhoneViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerPhoneViewModel.Company?.Id ?? null,
 

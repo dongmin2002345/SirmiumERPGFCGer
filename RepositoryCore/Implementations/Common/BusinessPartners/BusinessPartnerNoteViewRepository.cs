@@ -2,6 +2,7 @@
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Context;
 using System;
@@ -30,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerNoteId, BusinessPartnerNoteIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerNotes " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -65,7 +66,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             businessPartnerNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerNote.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -111,7 +113,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerNoteId, BusinessPartnerNoteIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerNotes " +
                 "WHERE BusinessPartnerId = @BusinessPartnerId AND Active = 1;";
@@ -147,7 +149,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             businessPartnerNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerNote.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -192,7 +195,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerNoteId, BusinessPartnerNoteIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerNotes " +
                 "WHERE CompanyId = @CompanyId " +
@@ -230,7 +233,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             businessPartnerNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerNote.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -275,7 +279,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 BusinessPartnerNote.Id = 0;
 
                 BusinessPartnerNote.Active = true;
-
+                BusinessPartnerNote.CreatedAt = DateTime.Now;
+                BusinessPartnerNote.UpdatedAt = DateTime.Now;
                 context.BusinessPartnerNotes.Add(BusinessPartnerNote);
                 return BusinessPartnerNote;
             }
@@ -287,6 +292,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                 if (dbEntry != null)
                 {
+                    dbEntry.BusinessPartnerId = BusinessPartnerNote.BusinessPartnerId ?? null;
                     dbEntry.CompanyId = BusinessPartnerNote.CompanyId ?? null;
                     dbEntry.CreatedById = BusinessPartnerNote.CreatedById ?? null;
 
@@ -305,8 +311,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public BusinessPartnerNote Delete(Guid identifier)
         {
             BusinessPartnerNote dbEntry = context.BusinessPartnerNotes
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+               .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartnerNote))
+                    .Select(x => x.Entity as BusinessPartnerNote))
+                .FirstOrDefault(x => x.Identifier == identifier);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

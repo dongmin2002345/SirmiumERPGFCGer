@@ -11,5 +11,6 @@ namespace ServiceInterfaces.Messages.Common.BusinessPartners
     public class BusinessPartnerInstitutionListResponse : BaseResponse
     {
         public List<BusinessPartnerInstitutionViewModel> BusinessPartnerInstitutions { get; set; }
+        public int TotalItems { get; set; }
     }
 }

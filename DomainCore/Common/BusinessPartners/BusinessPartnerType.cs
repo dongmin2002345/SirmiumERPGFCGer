@@ -12,7 +12,7 @@ namespace DomainCore.Common.BusinessPartners
 
         public bool IsBuyer { get; set; }
         public bool IsSupplier { get; set; }
-
+        public int ItemStatus { get; set; }
         public List<BusinessPartnerBusinessPartnerType> BusinessPartnerTypes { get; set; }
     }
 }

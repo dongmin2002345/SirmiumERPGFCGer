@@ -37,7 +37,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerLocations " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
 
@@ -109,7 +109,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
                             businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerLocation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerLocation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -149,7 +150,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerLocations " +
                 "WHERE BusinessPartnerId = @BusinessPartnerId AND Active = 1;";
 
@@ -221,7 +222,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
                             businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerLocation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerLocation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -275,7 +277,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerLocations " +
                 "WHERE CompanyId = @CompanyId " +
                 "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
@@ -349,7 +351,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
                             businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerLocation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerLocation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -403,7 +406,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerLocations " +
                 "WHERE BusinessPartnerLocationId = @BusinessPartnerLocationId AND Active = 1;";
 
@@ -474,7 +477,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.Region.Code = reader["RegionCode"].ToString();
                             businessPartnerLocation.Region.Name = reader["RegionName"].ToString();
                         }
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerLocation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerLocation.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerLocation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -518,7 +522,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 businessPartnerLocation.Id = 0;
 
                 businessPartnerLocation.Active = true;
-
+                businessPartnerLocation.CreatedAt = DateTime.Now;
+                businessPartnerLocation.UpdatedAt = DateTime.Now;
                 context.BusinessPartnerLocations.Add(businessPartnerLocation);
                 return businessPartnerLocation;
             }
@@ -552,8 +557,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         public BusinessPartnerLocation Delete(Guid identifier)
         {
             BusinessPartnerLocation dbEntry = context.BusinessPartnerLocations
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+               .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartnerLocation))
+                    .Select(x => x.Entity as BusinessPartnerLocation))
+                .FirstOrDefault(x => x.Identifier == identifier);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

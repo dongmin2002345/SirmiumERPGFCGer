@@ -21,5 +21,6 @@ namespace DomainCore.Common.BusinessPartners
         public Municipality Municipality { get; set; }
         public int? RegionId { get; set; }
         public Region Region { get; set; }
+        public int ItemStatus { get; set; }
     }
 }

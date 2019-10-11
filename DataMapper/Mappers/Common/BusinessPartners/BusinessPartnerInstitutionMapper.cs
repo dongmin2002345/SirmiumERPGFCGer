@@ -36,7 +36,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Phone = businessPartnerInstitution.Phone,
                 Fax = businessPartnerInstitution.Fax,
                 Email = businessPartnerInstitution.Email,
-
+                ItemStatus = businessPartnerInstitution.ItemStatus,
                 IsActive = businessPartnerInstitution.Active,
 
                 CreatedBy = businessPartnerInstitution.CreatedBy?.ConvertToUserViewModelLite(),
@@ -62,7 +62,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Phone = businessPartnerInstitution.Phone,
                 Fax = businessPartnerInstitution.Fax,
                 Email = businessPartnerInstitution.Email,
-
+                ItemStatus = businessPartnerInstitution.ItemStatus,
                 IsActive = businessPartnerInstitution.Active,
 
                 UpdatedAt = businessPartnerInstitution.UpdatedAt,
@@ -87,7 +87,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Phone = businessPartnerInstitutionViewModel.Phone,
                 Fax = businessPartnerInstitutionViewModel.Fax,
                 Email = businessPartnerInstitutionViewModel.Email,
-
+                ItemStatus = businessPartnerInstitutionViewModel.ItemStatus,
                 CreatedById = businessPartnerInstitutionViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerInstitutionViewModel.Company?.Id ?? null,
 

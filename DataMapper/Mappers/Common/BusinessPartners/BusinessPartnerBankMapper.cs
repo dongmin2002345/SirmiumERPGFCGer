@@ -33,8 +33,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 Bank = businessPartnerBank.Bank?.ConvertToBankViewModelLite(),
                 Country = businessPartnerBank.Country?.ConvertToCountryViewModelLite(),
-                AccountNumber = businessPartnerBank.AccountNumber, 
-
+                AccountNumber = businessPartnerBank.AccountNumber,
+                ItemStatus = businessPartnerBank.ItemStatus,
                 IsActive = businessPartnerBank.Active,
 
                 CreatedBy = businessPartnerBank.CreatedBy?.ConvertToUserViewModelLite(),
@@ -54,7 +54,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Identifier = businessPartnerBank.Identifier,
 
                 AccountNumber = businessPartnerBank.AccountNumber,
-
+                ItemStatus = businessPartnerBank.ItemStatus,
                 IsActive = businessPartnerBank.Active,
 
                 UpdatedAt = businessPartnerBank.UpdatedAt,
@@ -75,7 +75,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 BankId = businessPartnerBankViewModel.Bank?.Id ?? 0,
                 CountryId = businessPartnerBankViewModel.Country?.Id ?? 0,
                 AccountNumber = businessPartnerBankViewModel.AccountNumber,
-
+                ItemStatus = businessPartnerBankViewModel.ItemStatus,
                 CreatedById = businessPartnerBankViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerBankViewModel.Company?.Id ?? null,
 

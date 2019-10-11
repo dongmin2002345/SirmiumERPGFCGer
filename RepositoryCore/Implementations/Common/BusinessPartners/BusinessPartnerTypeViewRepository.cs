@@ -30,7 +30,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
             string queryString =
                 "SELECT BusinessPartnerTypeId, BusinessPartnerTypeIdentifier, BusinessPartnerTypeCode, BusinessPartnerTypeName, " +
-                "IsBuyer, IsSupplier, " +
+                "IsBuyer, IsSupplier, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerTypes " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -54,7 +54,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerType.Name = reader["BusinessPartnerTypeName"].ToString();
                         businessPartnerType.IsBuyer = bool.Parse(reader["IsBuyer"]?.ToString());
                         businessPartnerType.IsBuyer = bool.Parse(reader["IsSupplier"]?.ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerType.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerType.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerType.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -98,7 +99,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
             string queryString =
                 "SELECT BusinessPartnerTypeId, BusinessPartnerTypeIdentifier, BusinessPartnerTypeCode, BusinessPartnerTypeName, " +
-                "IsBuyer, IsSupplier, " +
+                "IsBuyer, IsSupplier, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerTypes " +
                 "WHERE CompanyId = @CompanyId " +
@@ -124,7 +125,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                         businessPartnerType.Name = reader["BusinessPartnerTypeName"].ToString();
                         businessPartnerType.IsBuyer = bool.Parse(reader["IsBuyer"]?.ToString());
                         businessPartnerType.IsSupplier = bool.Parse(reader["IsSupplier"]?.ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            businessPartnerType.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerType.Active = bool.Parse(reader["Active"].ToString());
                         businessPartnerType.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -234,8 +236,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
         {
             // Load BusinessPartnerType that will be deleted
             BusinessPartnerType dbEntry = context.BusinessPartnerTypes
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+               .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(BusinessPartnerType))
+                    .Select(x => x.Entity as BusinessPartnerType))
+                .FirstOrDefault(x => x.Identifier == identifier);
             if (dbEntry != null)
             {
                 // Set activity

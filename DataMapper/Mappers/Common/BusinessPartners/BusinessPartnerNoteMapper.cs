@@ -31,7 +31,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 Note = BusinessPartnerNote.Note,
                 NoteDate = BusinessPartnerNote.NoteDate,
-
+                ItemStatus = BusinessPartnerNote.ItemStatus,
                 IsActive = BusinessPartnerNote.Active,
 
                 CreatedBy = BusinessPartnerNote.CreatedBy?.ConvertToUserViewModelLite(),
@@ -53,7 +53,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 Note = BusinessPartnerNote.Note,
                 NoteDate = BusinessPartnerNote.NoteDate,
-
+                ItemStatus = BusinessPartnerNote.ItemStatus,
                 IsActive = BusinessPartnerNote.Active,
 
                 UpdatedAt = BusinessPartnerNote.UpdatedAt,
@@ -74,7 +74,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 Note = BusinessPartnerNoteViewModel.Note,
                 NoteDate = BusinessPartnerNoteViewModel.NoteDate,
-
+                ItemStatus = BusinessPartnerNoteViewModel.ItemStatus,
                 CreatedById = BusinessPartnerNoteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = BusinessPartnerNoteViewModel.Company?.Id ?? null,
 

@@ -17,5 +17,6 @@ namespace DomainCore.Common.BusinessPartners
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
+        public int ItemStatus { get; set; }
     }
 }

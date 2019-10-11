@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "CREATE VIEW vBusinessPartnerPhones AS " +
                 "SELECT businessPartnerPhone.Id AS BusinessPartnerPhoneId, businessPartnerPhone.Identifier AS BusinessPartnerPhoneIdentifier, " +
                 "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, " +
-                "businessPartnerPhone.Phone, businessPartnerPhone.Mobile, businessPartnerPhone.Fax, businessPartnerPhone.Email, businessPartnerPhone.ContactPersonFirstName, businessPartnerPhone.ContactPersonLastName, businessPartnerPhone.Birthday, businessPartnerPhone.Description, businessPartnerPhone.Active AS Active, " +
+                "businessPartnerPhone.Phone, businessPartnerPhone.Mobile, businessPartnerPhone.Fax, businessPartnerPhone.Email, businessPartnerPhone.ContactPersonFirstName, businessPartnerPhone.ContactPersonLastName, businessPartnerPhone.Birthday, businessPartnerPhone.Description, businessPartnerPhone.ItemStatus, businessPartnerPhone.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (businessPartnerPhone.UpdatedAt), (businessPartner.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

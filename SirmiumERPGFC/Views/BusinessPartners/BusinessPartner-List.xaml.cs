@@ -159,24 +159,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
         }
 		#endregion
-
-		#region CurrentNoteForm
-		private BusinessPartnerNoteViewModel _CurrentNoteForm = new BusinessPartnerNoteViewModel();
-
-        public BusinessPartnerNoteViewModel CurrentNoteForm
-		{
-            get { return _CurrentNoteForm; }
-            set
-            {
-                if (_CurrentNoteForm != value)
-                {
-					_CurrentNoteForm = value;
-                    NotifyPropertyChanged("CurrentNoteForm");
-                }
-            }
-        }
-		#endregion
-
+        
 		#region CurrentNoteDG
 		private BusinessPartnerNoteViewModel _CurrentNoteDG;
 
@@ -228,24 +211,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
         }
         #endregion
-
-        #region CurrentPhoneForm
-        private BusinessPartnerPhoneViewModel _CurrentPhoneForm = new BusinessPartnerPhoneViewModel();
-
-        public BusinessPartnerPhoneViewModel CurrentPhoneForm
-        {
-            get { return _CurrentPhoneForm; }
-            set
-            {
-                if (_CurrentPhoneForm != value)
-                {
-                    _CurrentPhoneForm = value;
-                    NotifyPropertyChanged("CurrentPhoneForm");
-                }
-            }
-        }
-        #endregion
-
+                
         #region CurrentPhoneDG
         private BusinessPartnerPhoneViewModel _CurrentPhoneDG;
 
@@ -333,6 +299,215 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
 
+        #region InstitutionsFromDB
+        private ObservableCollection<BusinessPartnerInstitutionViewModel> _InstitutionsFromDB;
+
+        public ObservableCollection<BusinessPartnerInstitutionViewModel> InstitutionsFromDB
+        {
+            get { return _InstitutionsFromDB; }
+            set
+            {
+                if (_InstitutionsFromDB != value)
+                {
+                    _InstitutionsFromDB = value;
+                    NotifyPropertyChanged("InstitutionsFromDB");
+                }
+            }
+        }
+        #endregion
+                
+        #region CurrentInstitutionDG
+        private BusinessPartnerInstitutionViewModel _CurrentInstitutionDG;
+
+        public BusinessPartnerInstitutionViewModel CurrentInstitutionDG
+        {
+            get { return _CurrentInstitutionDG; }
+            set
+            {
+                if (_CurrentInstitutionDG != value)
+                {
+                    _CurrentInstitutionDG = value;
+                    NotifyPropertyChanged("CurrentInstitutionDG");
+                }
+            }
+        }
+        #endregion
+
+        #region InstitutionDataLoading
+        private bool _InstitutionDataLoading;
+
+        public bool InstitutionDataLoading
+        {
+            get { return _InstitutionDataLoading; }
+            set
+            {
+                if (_InstitutionDataLoading != value)
+                {
+                    _InstitutionDataLoading = value;
+                    NotifyPropertyChanged("InstitutionDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region BanksFromDB
+        private ObservableCollection<BusinessPartnerBankViewModel> _BanksFromDB;
+
+        public ObservableCollection<BusinessPartnerBankViewModel> BanksFromDB
+        {
+            get { return _BanksFromDB; }
+            set
+            {
+                if (_BanksFromDB != value)
+                {
+                    _BanksFromDB = value;
+                    NotifyPropertyChanged("BanksFromDB");
+                }
+            }
+        }
+        #endregion
+                
+        #region CurrentBankDG
+        private BusinessPartnerBankViewModel _CurrentBankDG;
+
+        public BusinessPartnerBankViewModel CurrentBankDG
+        {
+            get { return _CurrentBankDG; }
+            set
+            {
+                if (_CurrentBankDG != value)
+                {
+                    _CurrentBankDG = value;
+                    NotifyPropertyChanged("CurrentBankDG");
+                }
+            }
+        }
+        #endregion
+
+        #region BankDataLoading
+        private bool _BankDataLoading;
+
+        public bool BankDataLoading
+        {
+            get { return _BankDataLoading; }
+            set
+            {
+                if (_BankDataLoading != value)
+                {
+                    _BankDataLoading = value;
+                    NotifyPropertyChanged("BankDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region LocationsFromDB
+        private ObservableCollection<BusinessPartnerLocationViewModel> _LocationsFromDB;
+
+        public ObservableCollection<BusinessPartnerLocationViewModel> LocationsFromDB
+        {
+            get { return _LocationsFromDB; }
+            set
+            {
+                if (_LocationsFromDB != value)
+                {
+                    _LocationsFromDB = value;
+                    NotifyPropertyChanged("LocationsFromDB");
+                }
+            }
+        }
+        #endregion
+                
+        #region CurrentLocationDG
+        private BusinessPartnerLocationViewModel _CurrentLocationDG;
+
+        public BusinessPartnerLocationViewModel CurrentLocationDG
+        {
+            get { return _CurrentLocationDG; }
+            set
+            {
+                if (_CurrentLocationDG != value)
+                {
+                    _CurrentLocationDG = value;
+                    NotifyPropertyChanged("CurrentLocationDG");
+                }
+            }
+        }
+        #endregion
+
+        #region LocationDataLoading
+        private bool _LocationDataLoading;
+
+        public bool LocationDataLoading
+        {
+            get { return _LocationDataLoading; }
+            set
+            {
+                if (_LocationDataLoading != value)
+                {
+                    _LocationDataLoading = value;
+                    NotifyPropertyChanged("LocationDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region BusinessPartnerTypesFromDB
+        private ObservableCollection<BusinessPartnerTypeViewModel> _BusinessPartnerTypesFromDB;
+
+        public ObservableCollection<BusinessPartnerTypeViewModel> BusinessPartnerTypesFromDB
+        {
+            get { return _BusinessPartnerTypesFromDB; }
+            set
+            {
+                if (_BusinessPartnerTypesFromDB != value)
+                {
+                    _BusinessPartnerTypesFromDB = value;
+                    NotifyPropertyChanged("BusinessPartnerTypesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentBusinessPartnerType
+        private BusinessPartnerTypeViewModel _CurrentBusinessPartnerType;
+
+        public BusinessPartnerTypeViewModel CurrentBusinessPartnerType
+        {
+            get { return _CurrentBusinessPartnerType; }
+            set
+            {
+                if (_CurrentBusinessPartnerType != value)
+                {
+                    _CurrentBusinessPartnerType = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerType");
+                }
+            }
+        }
+        #endregion
+
+        #region BusinessPartnerTypeDataLoading
+        private bool _BusinessPartnerTypeDataLoading;
+
+        public bool BusinessPartnerTypeDataLoading
+        {
+            get { return _BusinessPartnerTypeDataLoading; }
+            set
+            {
+                if (_BusinessPartnerTypeDataLoading != value)
+                {
+                    _BusinessPartnerTypeDataLoading = value;
+                    NotifyPropertyChanged("BusinessPartnerTypeDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+
         #region Pagination data
         int currentPage = 1;
         int itemsPerPage = 50;
@@ -391,35 +566,35 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
 
-        #region RefreshButtonContent
-        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+        #region SyncButtonContent
+        private string _SyncButtonContent = " OSVEŽI ";
 
-        public string RefreshButtonContent
+        public string SyncButtonContent
         {
-            get { return _RefreshButtonContent; }
+            get { return _SyncButtonContent; }
             set
             {
-                if (_RefreshButtonContent != value)
+                if (_SyncButtonContent != value)
                 {
-                    _RefreshButtonContent = value;
-                    NotifyPropertyChanged("RefreshButtonContent");
+                    _SyncButtonContent = value;
+                    NotifyPropertyChanged("SyncButtonContent");
                 }
             }
         }
         #endregion
 
-        #region RefreshButtonEnabled
-        private bool _RefreshButtonEnabled = true;
+        #region SyncButtonEnabled
+        private bool _SyncButtonEnabled = true;
 
-        public bool RefreshButtonEnabled
+        public bool SyncButtonEnabled
         {
-            get { return _RefreshButtonEnabled; }
+            get { return _SyncButtonEnabled; }
             set
             {
-                if (_RefreshButtonEnabled != value)
+                if (_SyncButtonEnabled != value)
                 {
-                    _RefreshButtonEnabled = value;
-                    NotifyPropertyChanged("RefreshButtonEnabled");
+                    _SyncButtonEnabled = value;
+                    NotifyPropertyChanged("SyncButtonEnabled");
                 }
             }
         }
@@ -446,6 +621,12 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             InitializeComponent();
 
             this.DataContext = this;
+        }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Thread displayThread = new Thread(() => SyncData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
         }
 
         #endregion
@@ -570,38 +751,284 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             BusinessPartnerDocumentDataLoading = false;
         }
 
+        private void DisplayLocationData()
+        {
+            LocationDataLoading = true;
+
+            BusinessPartnerLocationListResponse response = new BusinessPartnerLocationSQLiteRepository()
+                .GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>(
+                    response.BusinessPartnerLocations ?? new List<BusinessPartnerLocationViewModel>());
+            }
+            else
+            {
+                LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
+            }
+
+            LocationDataLoading = false;
+        }
+
+        private void DisplayInstitutionData()
+        {
+            InstitutionDataLoading = true;
+
+            BusinessPartnerInstitutionListResponse response = new BusinessPartnerInstitutionSQLiteRepository()
+                .GetBusinessPartnerInstitutionsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                InstitutionsFromDB = new ObservableCollection<BusinessPartnerInstitutionViewModel>(
+                    response.BusinessPartnerInstitutions ?? new List<BusinessPartnerInstitutionViewModel>());
+            }
+            else
+            {
+                InstitutionsFromDB = new ObservableCollection<BusinessPartnerInstitutionViewModel>();
+            }
+
+            InstitutionDataLoading = false;
+        }
+
+        private void DisplayBankData()
+        {
+            BankDataLoading = true;
+
+            BusinessPartnerBankListResponse response = new BusinessPartnerBankSQLiteRepository()
+                .GetBusinessPartnerBanksByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                BanksFromDB = new ObservableCollection<BusinessPartnerBankViewModel>(
+                    response.BusinessPartnerBanks ?? new List<BusinessPartnerBankViewModel>());
+            }
+            else
+            {
+                BanksFromDB = new ObservableCollection<BusinessPartnerBankViewModel>();
+            }
+
+           BankDataLoading = false;
+        }
+
+        private void DisplayTypeData()
+        {
+            BusinessPartnerTypeDataLoading = true;
+
+            BusinessPartnerTypeListResponse response = new BusinessPartnerTypeSQLiteRepository()
+                .GetBusinessPartnerTypesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier);
+
+            if (response.Success)
+            {
+                BusinessPartnerTypesFromDB = new ObservableCollection<BusinessPartnerTypeViewModel>(
+                    response.BusinessPartnerTypes ?? new List<BusinessPartnerTypeViewModel>());
+            }
+            else
+            {
+                BusinessPartnerTypesFromDB = new ObservableCollection<BusinessPartnerTypeViewModel>();
+            }
+
+            BusinessPartnerTypeDataLoading = false;
+        }
+
         private void SyncData()
         {
-            RefreshButtonEnabled = false;
+            SyncButtonEnabled = false;
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Firme_TriTacke"));
-            new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
+            SyncButtonContent = " Poslovni partner ... ";
+            new BusinessPartnerSQLiteRepository().Sync(businessPartnerService, (synced, toSync) => {
+                SyncButtonContent = " Poslovni partner (" + synced + " / " + toSync + ")... ";
+            });
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Telefoni_TriTacke"));
-            new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService);
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Lokacije_TriTacke"));
-            new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService);
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Banke_TriTacke"));
-            new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService);
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Institucije_TriTacke"));
-            new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService);
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Dokumenti_TriTacke"));
-            new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService);
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Tipovi_TriTacke"));
-            new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Napomene_TriTacke"));
-            new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService);
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
 
             DisplayData();
+            CurrentBusinessPartner = null;
+            NotesFromDB = new ObservableCollection<BusinessPartnerNoteViewModel>();
+            BusinessPartnerDocumentsFromDB = new ObservableCollection<BusinessPartnerDocumentViewModel>();
+            PhonesFromDB = new ObservableCollection<BusinessPartnerPhoneViewModel>();
+            LocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
+            BanksFromDB = new ObservableCollection<BusinessPartnerBankViewModel>();
+            InstitutionsFromDB = new ObservableCollection<BusinessPartnerInstitutionViewModel>();
+            BusinessPartnerTypesFromDB = new ObservableCollection<BusinessPartnerTypeViewModel>();
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            RefreshButtonEnabled = true;
+        private void SyncNoteData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayNoteData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncDocumentData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayDocumentData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncPhoneData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayPhoneData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncLocationData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayLocationData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncInstitutionData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayInstitutionData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncBankData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayBankData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncTypeData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService, (synced, toSync) => {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayTypeData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+
+        }
+
+        private void DgBusinessPartners_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgNotes_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgBusinessPartnerDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgPhones_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgBanks_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgLocations_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgBusinessPartnerTypes_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgInstitutions_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #endregion
@@ -612,14 +1039,20 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             BusinessPartnerViewModel businessPartnerViewModel = new BusinessPartnerViewModel();
             businessPartnerViewModel.Identifier = Guid.NewGuid();
+           
 
-            BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(businessPartnerViewModel, false);
+            BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(businessPartnerViewModel, true, false);
             addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_izmenuUzvičnik"));
+                return;
+            }
             BusinessPartner_List_AddEdit addEditForm = new BusinessPartner_List_AddEdit(CurrentBusinessPartner, true);
             addEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncData);
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, addEditForm);
@@ -633,79 +1066,143 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 return;
             }
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("poslovnog_partnera")), CurrentBusinessPartner.Name);
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
+            // Delete data
+            var result = businessPartnerService.Delete(CurrentBusinessPartner.Identifier);
+            if (result.Success)
             {
-                BusinessPartnerResponse response = businessPartnerService.Delete(CurrentBusinessPartner.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                }
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
-                response = new BusinessPartnerSQLiteRepository().Delete(CurrentBusinessPartner.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
-
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Poslovni_partner_je_uspešno_obrisanUzvičnik"));
-
-                Thread displayThread = new Thread(() => DisplayData());
+                Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
-
-            // Remove blur effects
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+            else
+            {
+                MainWindow.ErrorMessage = result.Message;
+            }
         }
 
         #endregion
 
-        #region Sync data
-
-        private void btnSync_Click(object sender, RoutedEventArgs e)
+        #region Item
+        private void BtnAddNote_Click(object sender, RoutedEventArgs e)
         {
-            RefreshButtonEnabled = false;
+            #region Validation
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Firme_TriTacke"));
-            new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati poslosvnog partnera!";
+                return;
+            }
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Telefoni_TriTacke"));
-            new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService);
+            #endregion
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Lokacije_TriTacke"));
-            new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService);
-
-            RefreshButtonContent = ((string)Application.Current.FindResource("Banke_TriTacke"));
-            new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService);
-
-            RefreshButtonContent = ((string)Application.Current.FindResource("Institucije_TriTacke"));
-            new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService);
-
-            RefreshButtonContent = ((string)Application.Current.FindResource("Tipovi_TriTacke"));
-            new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService);
-
-            RefreshButtonContent = ((string)Application.Current.FindResource("Dokumenti_TriTacke"));
-            new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService);
-
-            RefreshButtonContent = ((string)Application.Current.FindResource("Napomene_TriTacke"));
-            new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService);
-
-
-
-            DisplayData();
-
-            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            RefreshButtonEnabled = true;
+            BusinessPartner_Note_AddEdit businessPartnerNoteAddEditForm = new BusinessPartner_Note_AddEdit(CurrentBusinessPartner);
+            businessPartnerNoteAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncNoteData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Napomene")), 95, businessPartnerNoteAddEditForm);
         }
 
+        private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                return;
+            }
+
+            #endregion
+
+            BusinessPartner_Document_AddEdit businessPartnerDocumentAddEditForm = new BusinessPartner_Document_AddEdit(CurrentBusinessPartner);
+            businessPartnerDocumentAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncDocumentData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Dokumenti")), 95, businessPartnerDocumentAddEditForm);
+        }
+
+        private void BtnAddPhone_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati poslosvnog partnera!";
+                return;
+            }
+
+            #endregion
+
+            BusinessPartner_Phone_AddEdit businessPartnerPhoneAddEditForm = new BusinessPartner_Phone_AddEdit(CurrentBusinessPartner);
+            businessPartnerPhoneAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncPhoneData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Telefoni")), 95, businessPartnerPhoneAddEditForm);
+        }
+
+        private void BtnAddLocation_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                return;
+            }
+
+            #endregion
+
+            BusinessPartner_Location_AddEdit businessPartnerLocationAddEditForm = new BusinessPartner_Location_AddEdit(CurrentBusinessPartner);
+            businessPartnerLocationAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncLocationData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Lokacije")), 95, businessPartnerLocationAddEditForm);
+        }
+
+        private void BtnAddInstitution_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati poslosvnog partnera!";
+                return;
+            }
+
+            #endregion
+
+            BusinessPartner_Institution_AddEdit businessPartnerInstitutionAddEditForm = new BusinessPartner_Institution_AddEdit(CurrentBusinessPartner);
+            businessPartnerInstitutionAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncInstitutionData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Institucije")), 95, businessPartnerInstitutionAddEditForm);
+        }
+
+        private void BtnAddBank_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                return;
+            }
+
+            #endregion
+
+            BusinessPartner_Bank_AddEdit businessPartnerBankAddEditForm = new BusinessPartner_Bank_AddEdit(CurrentBusinessPartner);
+            businessPartnerBankAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncBankData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Lokacije")), 95, businessPartnerBankAddEditForm);
+        }
+
+        private void BtnAddTypes_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                return;
+            }
+
+            #endregion
+
+            BusinessPartner_Types_AddEdit businessPartnerTypeAddEditForm = new BusinessPartner_Types_AddEdit(CurrentBusinessPartner);
+            businessPartnerTypeAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncTypeData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Lokacije")), 95, businessPartnerTypeAddEditForm);
+        }
         #endregion
 
         #region Display documents
@@ -789,10 +1286,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            PopulateInitialData();
-        }
+       
 		private void btnPrint_Click(object sender, RoutedEventArgs e)
 		{
             try
