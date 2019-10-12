@@ -32,6 +32,7 @@ namespace DataMapper.Mappers.Employees
                 CardDate = employeeCard.CardDate,
                 Description = employeeCard.Description,
                 PlusMinus = employeeCard.PlusMinus,
+                ItemStatus = employeeCard.ItemStatus,
 
                 IsActive = employeeCard.Active,
 
@@ -55,6 +56,7 @@ namespace DataMapper.Mappers.Employees
                 CardDate = employeeCard.CardDate,
                 Description = employeeCard.Description,
                 PlusMinus = employeeCard.PlusMinus,
+                ItemStatus = employeeCard.ItemStatus,
 
                 IsActive = employeeCard.Active,
 
@@ -77,6 +79,8 @@ namespace DataMapper.Mappers.Employees
                 CardDate = (DateTime)employeeCardViewModel.CardDate,
                 Description = employeeCardViewModel.Description,
                 PlusMinus = employeeCardViewModel.PlusMinus,
+                ItemStatus = employeeCardViewModel.ItemStatus,
+
 
                 Active = employeeCardViewModel.IsActive,
 

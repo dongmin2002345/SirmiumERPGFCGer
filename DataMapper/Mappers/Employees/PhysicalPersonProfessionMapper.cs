@@ -33,6 +33,8 @@ namespace DataMapper.Mappers.Employees
                 Profession = PhysicalPersonItem.Profession?.ConvertToProfessionViewModelLite(),
                 Country = PhysicalPersonItem.Country?.ConvertToCountryViewModelLite(),
 
+                ItemStatus = PhysicalPersonItem.ItemStatus,
+
                 IsActive = PhysicalPersonItem.Active,
 
                 CreatedBy = PhysicalPersonItem.CreatedBy?.ConvertToUserViewModelLite(),
@@ -51,6 +53,7 @@ namespace DataMapper.Mappers.Employees
             {
                 Id = PhysicalPersonItem.Id,
                 Identifier = PhysicalPersonItem.Identifier,
+                ItemStatus = PhysicalPersonItem.ItemStatus,
 
                 IsActive = PhysicalPersonItem.Active,
 
@@ -71,6 +74,8 @@ namespace DataMapper.Mappers.Employees
                 PhysicalPersonId = PhysicalPersonItemViewModel.PhysicalPerson?.Id ?? null,
                 ProfessionId = PhysicalPersonItemViewModel.Profession?.Id ?? null,
                 CountryId = PhysicalPersonItemViewModel.Country?.Id ?? null,
+
+                ItemStatus = PhysicalPersonItemViewModel.ItemStatus,
 
                 CreatedById = PhysicalPersonItemViewModel.CreatedBy?.Id ?? null,
                 CompanyId = PhysicalPersonItemViewModel.Company?.Id ?? null,

@@ -88,8 +88,8 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonProfessionDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Country" Header="{DynamicResource DržavaDvotacka}" Binding="{Binding Country.Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Profession" Header="{DynamicResource ZanimanjeDvotacka}" Binding="{Binding Path=Profession.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource DržavaDvotacka}" Binding="{Binding Country.Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Profession.Name" Header="{DynamicResource ZanimanjeDvotacka}" Binding="{Binding Path=Profession.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

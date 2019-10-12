@@ -97,11 +97,11 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonItemDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="FamilyMember" Header="{DynamicResource Član_porodiceDvotacka}" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource ImeDvotacka}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenjaDvotacka}" Binding="{Binding Path=DateOfBirth, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Passport" Header="{DynamicResource Broj_pasošaDvotacka}" Binding="{Binding Passport}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasadeDvotacka}" Binding="{Binding Path=EmbassyDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="FamilyMember" Header="{DynamicResource Član_porodice}" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenja}" Binding="{Binding Path=DateOfBirth, Converter={StaticResource StringDateTimeShortConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Passport" Header="{DynamicResource Broj_pasoša}" Binding="{Binding Passport}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasade}" Binding="{Binding Path=EmbassyDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

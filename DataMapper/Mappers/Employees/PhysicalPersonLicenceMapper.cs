@@ -35,6 +35,7 @@ namespace DataMapper.Mappers.PhysicalPersons
 
                 ValidFrom = PhysicalPersonItem.ValidFrom,
                 ValidTo = PhysicalPersonItem.ValidTo,
+                ItemStatus = PhysicalPersonItem.ItemStatus,
 
                 IsActive = PhysicalPersonItem.Active,
 
@@ -57,6 +58,7 @@ namespace DataMapper.Mappers.PhysicalPersons
 
                 ValidFrom = PhysicalPersonItem.ValidFrom,
                 ValidTo = PhysicalPersonItem.ValidTo,
+                ItemStatus = PhysicalPersonItem.ItemStatus,
 
                 IsActive = PhysicalPersonItem.Active,
 
@@ -80,6 +82,7 @@ namespace DataMapper.Mappers.PhysicalPersons
 
                 ValidFrom = PhysicalPersonItemViewModel.ValidFrom,
                 ValidTo = PhysicalPersonItemViewModel.ValidTo,
+                ItemStatus = PhysicalPersonItemViewModel.ItemStatus,
 
                 CreatedById = PhysicalPersonItemViewModel.CreatedBy?.Id ?? null,
                 CompanyId = PhysicalPersonItemViewModel.Company?.Id ?? null,

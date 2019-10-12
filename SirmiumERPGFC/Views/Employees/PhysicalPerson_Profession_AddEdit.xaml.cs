@@ -244,7 +244,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             #region Validation
 
-            if (CurrentPhysicalPersonProfessionForm.Country.Name == null)
+            if (CurrentPhysicalPersonProfessionForm.Country == null)
             {
                 MainWindow.ErrorMessage = "Obavezno polje: Drzava!";
                 return;

@@ -41,8 +41,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-           <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -190,16 +190,32 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="PhysicalPersonCode" Header="{DynamicResource Šifra}" Binding="{Binding PhysicalPersonCode}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="SurName" Header="{DynamicResource Prezime}" Binding="{Binding SurName}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="SurName" Header="{DynamicResource Prezime}" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenja}" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Passport" Header="{DynamicResource Broj_pasoša}" Binding="{Binding Passport}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Datum_ambasade}" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="VisaValidFrom" Header="{DynamicResource Datum_vize_od}" Binding="{Binding VisaValidFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="VisaValidTo" Header="{DynamicResource Datum_vize_do}" Binding="{Binding VisaValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="WorkPermitFrom" Header="{DynamicResource Datum_radne_dozvole_od}" Binding="{Binding WorkPermitFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="WorkPermitTo" Header="{DynamicResource Datum_radne_dozvole_do}" Binding="{Binding WorkPermitTo, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="VisaValidFrom" Binding="{Binding VisaValidFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_vize_od}" TextWrapping="Wrap" MaxWidth="50" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="VisaValidTo" Binding="{Binding VisaValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_vize_do}" TextWrapping="Wrap" MaxWidth="50" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="WorkPermitFrom" Binding="{Binding WorkPermitFrom, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_radne_dozvole_od}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="WorkPermitTo" Binding="{Binding WorkPermitTo, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_radne_dozvole_do}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" Width="Auto" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
@@ -308,8 +324,13 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
                                     <DataGridTextColumn SortMemberPath="CardDate" Header="{DynamicResource Datum_izmene}" Binding="{Binding Path=CardDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-
+                                    <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 </DataGrid.Columns>
+                                <DataGrid.RowStyle>
+                                    <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                        <Setter Property="Background" Value="{Binding PlusMinus, Converter={StaticResource PlusMinusConverter}}"  />
+                                    </Style>
+                                </DataGrid.RowStyle>
                             </DataGrid>
                         </Grid>
 
@@ -456,8 +477,8 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonItem, Mode=TwoWay}">
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" IsReadOnly="True" Width="2*" />
-                                    <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="{DynamicResource Član_porodice}" Binding="{Binding FamilyMember.Name}" Width="*" IsReadOnly="True" />
+                                    <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                    <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="{DynamicResource Član_porodice}" Binding="{Binding FamilyMember.Name}" IsReadOnly="True" />
                                     <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenja}" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
                                     <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Ambasada}" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
                                     <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
@@ -607,10 +628,9 @@
                               SelectedItem="{Binding Path=CurrentPhysicalPersonProfession, Mode=TwoWay}">
 
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn SortMemberPath="Country.Code" Header="{DynamicResource Šifra_države}" Binding="{Binding Country.Code}" IsReadOnly="True" />
-                                    <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" />
                                     <DataGridTextColumn SortMemberPath="Profession.SecondCode" Header="{DynamicResource Šifra_zanimanja}" Binding="{Binding Profession.SecondCode}" IsReadOnly="True" />
                                     <DataGridTextColumn SortMemberPath="Profession.Name" Header="{DynamicResource Zanimanje}" Binding="{Binding Profession.Name}" Width="*" IsReadOnly="True"/>
+                                    <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" />
                                     <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 </DataGrid.Columns>
                                 <DataGrid.RowStyle>
@@ -684,9 +704,9 @@
 
                                 <DataGrid.Columns>
                                     <DataGridTextColumn SortMemberPath="Licence.Category" Header="{DynamicResource Kategorija}" Binding="{Binding Licence.Category}" Width="*" IsReadOnly="True" />
-                                    <DataGridTextColumn SortMemberPath="Licence.Description" Header="{DynamicResource Dozvola}" Binding="{Binding Licence.Description}" Width="*" IsReadOnly="True" />
-                                    <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Dozvola}" Binding="{Binding Country.Name}" Width="*" IsReadOnly="True"  />
-                                    <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Ističe}" Binding="{Binding ValidTo}" Width="*" IsReadOnly="True"  />
+                                    <DataGridTextColumn SortMemberPath="Licence.Description" Header="{DynamicResource Dozvola}" Binding="{Binding Licence.Description}" IsReadOnly="True" />
+                                    <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True"  />
+                                    <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Ističe}" Binding="{Binding ValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
                                     <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 </DataGrid.Columns>
                                 <DataGrid.RowStyle>

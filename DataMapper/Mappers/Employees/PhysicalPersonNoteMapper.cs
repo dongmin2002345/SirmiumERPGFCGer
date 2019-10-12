@@ -32,6 +32,7 @@ namespace DataMapper.Mappers.Employees
 
                 Note = PhysicalPersonNote.Note,
                 NoteDate = PhysicalPersonNote.NoteDate,
+                ItemStatus = PhysicalPersonNote.ItemStatus,
 
                 IsActive = PhysicalPersonNote.Active,
 
@@ -54,7 +55,8 @@ namespace DataMapper.Mappers.Employees
 
                 Note = PhysicalPersonNote.Note,
                 NoteDate = PhysicalPersonNote.NoteDate,
-
+                ItemStatus = PhysicalPersonNote.ItemStatus,
+                
                 IsActive = PhysicalPersonNote.Active,
 
                 UpdatedAt = PhysicalPersonNote.UpdatedAt,
@@ -75,6 +77,7 @@ namespace DataMapper.Mappers.Employees
 
                 Note = PhysicalPersonNoteViewModel.Note,
                 NoteDate = PhysicalPersonNoteViewModel.NoteDate,
+                ItemStatus = PhysicalPersonNoteViewModel.ItemStatus,
 
                 CreatedById = PhysicalPersonNoteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = PhysicalPersonNoteViewModel.Company?.Id ?? null,

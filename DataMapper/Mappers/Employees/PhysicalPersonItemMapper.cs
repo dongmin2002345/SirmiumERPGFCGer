@@ -10,87 +10,91 @@ namespace DataMapper.Mappers.Employees
 {
     public static class PhysicalPersonItemMapper
     {
-        public static List<PhysicalPersonItemViewModel> ConvertToPhysicalPersonItemViewModelList(this IEnumerable<PhysicalPersonItem> PhysicalPersonItems)
+        public static List<PhysicalPersonItemViewModel> ConvertToPhysicalPersonItemViewModelList(this IEnumerable<PhysicalPersonItem> physicalPersonItems)
         {
-            List<PhysicalPersonItemViewModel> PhysicalPersonItemViewModels = new List<PhysicalPersonItemViewModel>();
-            foreach (PhysicalPersonItem PhysicalPersonItem in PhysicalPersonItems)
+            List<PhysicalPersonItemViewModel> physicalPersonItemViewModels = new List<PhysicalPersonItemViewModel>();
+            foreach (PhysicalPersonItem physicalPersonItem in physicalPersonItems)
             {
-                PhysicalPersonItemViewModels.Add(PhysicalPersonItem.ConvertToPhysicalPersonItemViewModel());
+                physicalPersonItemViewModels.Add(physicalPersonItem.ConvertToPhysicalPersonItemViewModel());
             }
-            return PhysicalPersonItemViewModels;
+            return physicalPersonItemViewModels;
         }
 
-        public static PhysicalPersonItemViewModel ConvertToPhysicalPersonItemViewModel(this PhysicalPersonItem PhysicalPersonItem)
+        public static PhysicalPersonItemViewModel ConvertToPhysicalPersonItemViewModel(this PhysicalPersonItem physicalPersonItem)
         {
-            PhysicalPersonItemViewModel PhysicalPersonItemViewModel = new PhysicalPersonItemViewModel()
+            PhysicalPersonItemViewModel physicalPersonItemViewModel = new PhysicalPersonItemViewModel()
             {
-                Id = PhysicalPersonItem.Id,
-                Identifier = PhysicalPersonItem.Identifier,
+                Id = physicalPersonItem.Id,
+                Identifier = physicalPersonItem.Identifier,
 
-                PhysicalPerson = PhysicalPersonItem.PhysicalPerson?.ConvertToPhysicalPersonViewModelLite(),
-                FamilyMember = PhysicalPersonItem.FamilyMember?.ConvertToFamilyMemberViewModelLite(),
+                PhysicalPerson = physicalPersonItem.PhysicalPerson?.ConvertToPhysicalPersonViewModelLite(),
+                FamilyMember = physicalPersonItem.FamilyMember?.ConvertToFamilyMemberViewModelLite(),
 
-                Name = PhysicalPersonItem.Name,
+                Name = physicalPersonItem.Name,
 
-                DateOfBirth = PhysicalPersonItem.DateOfBirth,
-                EmbassyDate = PhysicalPersonItem.EmbassyDate,
+                DateOfBirth = physicalPersonItem.DateOfBirth,
+                EmbassyDate = physicalPersonItem.EmbassyDate,
+                ItemStatus = physicalPersonItem.ItemStatus,
 
-                IsActive = PhysicalPersonItem.Active,
+                IsActive = physicalPersonItem.Active,
 
-                CreatedBy = PhysicalPersonItem.CreatedBy?.ConvertToUserViewModelLite(),
-                Company = PhysicalPersonItem.Company?.ConvertToCompanyViewModelLite(),
+                CreatedBy = physicalPersonItem.CreatedBy?.ConvertToUserViewModelLite(),
+                Company = physicalPersonItem.Company?.ConvertToCompanyViewModelLite(),
 
-                UpdatedAt = PhysicalPersonItem.UpdatedAt,
-                CreatedAt = PhysicalPersonItem.CreatedAt
+                UpdatedAt = physicalPersonItem.UpdatedAt,
+                CreatedAt = physicalPersonItem.CreatedAt
             };
 
-            return PhysicalPersonItemViewModel;
+            return physicalPersonItemViewModel;
         }
 
-        public static PhysicalPersonItemViewModel ConvertToPhysicalPersonItemViewModelLite(this PhysicalPersonItem PhysicalPersonItem)
+        public static PhysicalPersonItemViewModel ConvertToPhysicalPersonItemViewModelLite(this PhysicalPersonItem physicalPersonItem)
         {
-            PhysicalPersonItemViewModel PhysicalPersonItemViewModel = new PhysicalPersonItemViewModel()
+            PhysicalPersonItemViewModel physicalPersonItemViewModel = new PhysicalPersonItemViewModel()
             {
-                Id = PhysicalPersonItem.Id,
-                Identifier = PhysicalPersonItem.Identifier,
+                Id = physicalPersonItem.Id,
+                Identifier = physicalPersonItem.Identifier,
 
-                Name = PhysicalPersonItem.Name,
+                Name = physicalPersonItem.Name,
 
-                DateOfBirth = PhysicalPersonItem.DateOfBirth,
-                EmbassyDate = PhysicalPersonItem.EmbassyDate,
+                DateOfBirth = physicalPersonItem.DateOfBirth,
+                EmbassyDate = physicalPersonItem.EmbassyDate,
+                ItemStatus = physicalPersonItem.ItemStatus,
 
-                IsActive = PhysicalPersonItem.Active,
+                IsActive = physicalPersonItem.Active,
 
-                UpdatedAt = PhysicalPersonItem.UpdatedAt,
-                CreatedAt = PhysicalPersonItem.CreatedAt
+                UpdatedAt = physicalPersonItem.UpdatedAt,
+                CreatedAt = physicalPersonItem.CreatedAt
             };
 
-            return PhysicalPersonItemViewModel;
+            return physicalPersonItemViewModel;
         }
 
-        public static PhysicalPersonItem ConvertToPhysicalPersonItem(this PhysicalPersonItemViewModel PhysicalPersonItemViewModel)
+        public static PhysicalPersonItem ConvertToPhysicalPersonItem(this PhysicalPersonItemViewModel physicalPersonItemViewModel)
         {
-            PhysicalPersonItem PhysicalPersonItem = new PhysicalPersonItem()
+            PhysicalPersonItem physicalPersonItem = new PhysicalPersonItem()
             {
-                Id = PhysicalPersonItemViewModel.Id,
-                Identifier = PhysicalPersonItemViewModel.Identifier,
+                Id = physicalPersonItemViewModel.Id,
+                Identifier = physicalPersonItemViewModel.Identifier,
 
-                PhysicalPersonId = PhysicalPersonItemViewModel.PhysicalPerson?.Id ?? null,
-                FamilyMemberId = PhysicalPersonItemViewModel.FamilyMember?.Id ?? null,
+                PhysicalPersonId = physicalPersonItemViewModel.PhysicalPerson?.Id ?? null,
+                FamilyMemberId = physicalPersonItemViewModel.FamilyMember?.Id ?? null,
 
-                Name = PhysicalPersonItemViewModel.Name,
+                Name = physicalPersonItemViewModel.Name,
 
-                DateOfBirth = (DateTime)PhysicalPersonItemViewModel.DateOfBirth,
-                EmbassyDate = PhysicalPersonItemViewModel.EmbassyDate,
+                DateOfBirth = (DateTime)physicalPersonItemViewModel.DateOfBirth,
+                EmbassyDate = physicalPersonItemViewModel.EmbassyDate,
+                ItemStatus = physicalPersonItemViewModel.ItemStatus,
 
-                CreatedById = PhysicalPersonItemViewModel.CreatedBy?.Id ?? null,
-                CompanyId = PhysicalPersonItemViewModel.Company?.Id ?? null,
 
-                CreatedAt = PhysicalPersonItemViewModel.CreatedAt,
-                UpdatedAt = PhysicalPersonItemViewModel.UpdatedAt
+                CreatedById = physicalPersonItemViewModel.CreatedBy?.Id ?? null,
+                CompanyId = physicalPersonItemViewModel.Company?.Id ?? null,
+
+                CreatedAt = physicalPersonItemViewModel.CreatedAt,
+                UpdatedAt = physicalPersonItemViewModel.UpdatedAt
             };
 
-            return PhysicalPersonItem;
+            return physicalPersonItem;
         }
     }
 }
