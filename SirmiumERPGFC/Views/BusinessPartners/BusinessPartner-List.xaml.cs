@@ -82,6 +82,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                             DisplayDocumentData();
                             DisplayPhoneData();
 							DisplayNoteData();
+                            DisplayLocationData();
+                            DisplayInstitutionData();
+                            DisplayBankData();
+                            DisplayTypeData();
                         });
                         th.IsBackground = true;
                         th.Start();
