@@ -786,10 +786,6 @@
                               SelectedItem="{Binding Path=CurrentBusinessPartnerType, Mode=TwoWay}">
 
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay}"
-                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                    Header="" />
                                 <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Tip_poslovnog_partnera}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
