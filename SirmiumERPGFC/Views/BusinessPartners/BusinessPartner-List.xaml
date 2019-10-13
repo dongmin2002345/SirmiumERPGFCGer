@@ -167,12 +167,12 @@
                         <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Binding="{Binding Name}" IsReadOnly="True" >
                         <DataGridTextColumn.Header>
-                            <TextBlock Text="{DynamicResource Poslovni_partneri_Srbija}" TextWrapping="Wrap" MaxWidth="70" />
+                            <TextBlock Text="{DynamicResource Poslovni_partneri_Srbija}" TextWrapping="Wrap" MaxWidth="120" />
                         </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="NameGer" Binding="{Binding NameGer}" IsReadOnly="True">
                         <DataGridTextColumn.Header>
-                            <TextBlock Text="{DynamicResource Poslovni_partneri_Nemačka}" TextWrapping="Wrap" MaxWidth="70" />
+                            <TextBlock Text="{DynamicResource Poslovni_partneri_Nemačka}" TextWrapping="Wrap" MaxWidth="120" />
                         </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="TaxNr" Binding="{Binding TaxNr}" IsReadOnly="True" >

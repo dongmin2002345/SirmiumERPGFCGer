@@ -142,11 +142,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
-
                     while (query.Read())
-                        businessPartnerBanks.Add(Read(query));
-                    
+                    {
 
+                        BusinessPartnerBankViewModel dbEntry = Read(query);
+                        businessPartnerBanks.Add(dbEntry);
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -182,8 +183,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
+                    {
+                        BusinessPartnerBankViewModel dbEntry = Read(query);
                         businessPartnerBank = Read(query);
-                    
+                    }
                 }
                 catch (SqliteException error)
                 {

@@ -61,24 +61,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
         }
 		#endregion
-
-		#region BusinessPartnerLocationsFromDB
-		private ObservableCollection<BusinessPartnerLocationViewModel> _BusinessPartnerLocationsFromDB = new ObservableCollection<BusinessPartnerLocationViewModel>();
-
-		public ObservableCollection<BusinessPartnerLocationViewModel> BusinessPartnerLocationsFromDB
-		{
-			get { return _BusinessPartnerLocationsFromDB; }
-			set
-			{
-				if (_BusinessPartnerLocationsFromDB != value)
-				{
-					_BusinessPartnerLocationsFromDB = value;
-					NotifyPropertyChanged("BusinessPartnerLocationsFromDB");
-				}
-			}
-		}
-		#endregion
-
+        		
 		#region CurrentBusinessPartner
 		private BusinessPartnerViewModel _CurrentBusinessPartner;
 
@@ -632,17 +615,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         #endregion
 
         #region Display data
-
-        private void PopulateInitialData()
-        {
-            if (BusinessPartners_List.ShowBusinessPartnerSerbia)
-            {
-                Thread displayThread = new Thread(() => SyncData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-        }
-
+                
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             currentPage = 1;
@@ -670,7 +643,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             BusinessPartnerDataLoading = true;
 
-            var response = new BusinessPartnerSQLiteRepository().GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
+            BusinessPartnerListResponse response = new BusinessPartnerSQLiteRepository()
+                .GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, currentPage, itemsPerPage);
+
             if (response.Success)
             {
                 BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(response.BusinessPartners ?? new List<BusinessPartnerViewModel>());
@@ -678,9 +653,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             }
             else
             {
-                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>(new List<BusinessPartnerViewModel>());
-                MainWindow.ErrorMessage = response.Message;
+                BusinessPartnersFromDB = new ObservableCollection<BusinessPartnerViewModel>();
                 totalItems = 0;
+                MainWindow.ErrorMessage = response.Message;
             }
 
             int itemFrom = totalItems != 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
@@ -1184,7 +1159,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             BusinessPartner_Bank_AddEdit businessPartnerBankAddEditForm = new BusinessPartner_Bank_AddEdit(CurrentBusinessPartner);
             businessPartnerBankAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncBankData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Lokacije")), 95, businessPartnerBankAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Banke")), 95, businessPartnerBankAddEditForm);
         }
 
         private void BtnAddTypes_Click(object sender, RoutedEventArgs e)
@@ -1201,7 +1176,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             BusinessPartner_Types_AddEdit businessPartnerTypeAddEditForm = new BusinessPartner_Types_AddEdit(CurrentBusinessPartner);
             businessPartnerTypeAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncTypeData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Lokacije")), 95, businessPartnerTypeAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Tip_Poslovnog_Partnera")), 95, businessPartnerTypeAddEditForm);
         }
         #endregion
 
@@ -1291,7 +1266,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 		{
             try
             {
-                BusinessPartnerExcelReport.Show(BusinessPartnersFromDB.ToList(), BusinessPartnerLocationsFromDB.ToList());
+                BusinessPartnerExcelReport.Show(BusinessPartnersFromDB.ToList(), LocationsFromDB.ToList());
             }
             catch(Exception ex)
             {

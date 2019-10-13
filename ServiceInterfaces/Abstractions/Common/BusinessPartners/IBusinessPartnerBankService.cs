@@ -10,12 +10,6 @@ namespace ServiceInterfaces.Abstractions.Common.BusinessPartners
 {
     public interface IBusinessPartnerBankService
     {
-        BusinessPartnerBankListResponse GetBusinessPartnerBanks(int companyId);
-        BusinessPartnerBankListResponse GetBusinessPartnerBanksNewerThen(int companyId, DateTime? lastUpdateTime);
-
-        BusinessPartnerBankResponse Create(BusinessPartnerBankViewModel businessPartnerBank);
-        BusinessPartnerBankResponse Delete(Guid identifier);
-
         BusinessPartnerBankListResponse Sync(SyncBusinessPartnerBankRequest request);
     }
 }

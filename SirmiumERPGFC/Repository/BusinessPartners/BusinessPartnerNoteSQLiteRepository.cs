@@ -120,8 +120,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        BusinessPartnerNotes.Add(Read(query));
-                    
+                    {
+
+                        BusinessPartnerNoteViewModel dbEntry = Read(query);
+                        BusinessPartnerNotes.Add(dbEntry);
+                    }
 
                 }
                 catch (SqliteException error)
@@ -158,8 +161,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                        BusinessPartnerNote = Read(query);
-                    
+                    {
+                        BusinessPartnerNoteViewModel dbEntry = Read(query);
+
+                        BusinessPartnerNote = dbEntry;
+                    }
+
                 }
                 catch (SqliteException error)
                 {
@@ -196,8 +203,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        BusinessPartnerNoteViewModel dbEntry = Read(query);
+
                         viewModels.Add(Read(query));
-                    
+                    }
 
                 }
                 catch (SqliteException error)

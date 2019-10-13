@@ -230,8 +230,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        businessPartners.Add(Read(query));
-                    
+                    {
+
+                        BusinessPartnerViewModel dbEntry = Read(query);
+                        businessPartners.Add(dbEntry);
+                    }
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
@@ -293,8 +296,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        BusinessPartnerViewModel dbEntry = Read(query);
+
                         businessPartners.Add(Read(query));
-                    
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -341,8 +347,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        BusinessPartnerViewModel dbEntry = Read(query);
+
                         BusinessPartners.Add(Read(query));
-                    
+                    }
 
                     response.BusinessPartners = BusinessPartners;
 
@@ -399,8 +408,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
+                    {
+                        BusinessPartnerViewModel dbEntry = Read(query);
+
                         businessPartner = Read(query);
-                    
+                    }
                 }
                 catch (SqliteException error)
                 {

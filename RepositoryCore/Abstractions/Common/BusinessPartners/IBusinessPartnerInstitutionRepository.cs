@@ -11,8 +11,6 @@ namespace RepositoryCore.Abstractions.Common.BusinessPartners
         List<BusinessPartnerInstitution> GetBusinessPartnerInstitutionsByBusinessPartner(int businessPartnerId);
         List<BusinessPartnerInstitution> GetBusinessPartnerInstitutionsNewerThen(int companyId, DateTime lastUpdateTime);
 
-        BusinessPartnerInstitution GetBusinessPartnerInstitution(int id);
-
         BusinessPartnerInstitution Create(BusinessPartnerInstitution businessPartnerInstitution);
         BusinessPartnerInstitution Delete(Guid identifier);
     }

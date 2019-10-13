@@ -165,8 +165,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        BusinessPartnerLocationViewModel dbEntry = Read(query);
                         businessPartnerLocations.Add(Read(query));
-                    
+                    }
 
                 }
                 catch (SqliteException error)
@@ -203,8 +205,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
+                    {
+                        BusinessPartnerLocationViewModel dbEntry = Read(query);
                         businessPartnerLocation = Read(query);
-                    
+                    }
                 }
                 catch (SqliteException error)
                 {

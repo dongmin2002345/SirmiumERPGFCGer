@@ -11,8 +11,6 @@ namespace RepositoryCore.Abstractions.Common.BusinessPartners
         List<BusinessPartnerBank> GetBusinessPartnerBanksByBusinessPartner(int businessPartnerId);
         List<BusinessPartnerBank> GetBusinessPartnerBanksNewerThen(int companyId, DateTime lastUpdateTime);
 
-        BusinessPartnerBank GetBusinessPartnerBank(int id);
-
         BusinessPartnerBank Create(BusinessPartnerBank businessPartnerBank);
         BusinessPartnerBank Delete(Guid identifier);
     }
