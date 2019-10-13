@@ -1166,7 +1166,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Banke")), 95, businessPartnerBankAddEditForm);
         }
 
-        private void BtnAddTypes_Click(object sender, RoutedEventArgs e)
+        private void BtnSaveBusinessPartnerType_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
@@ -1180,7 +1180,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             BusinessPartner_Types_AddEdit businessPartnerTypeAddEditForm = new BusinessPartner_Types_AddEdit(CurrentBusinessPartner);
             businessPartnerTypeAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(SyncTypeData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Tip_Poslovnog_Partnera")), 95, businessPartnerTypeAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Tip_poslovnog_partnera")), 95, businessPartnerTypeAddEditForm);
         }
         #endregion
 
