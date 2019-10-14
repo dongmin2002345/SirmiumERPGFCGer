@@ -125,6 +125,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
         #endregion
 
+
         #region OutputInvoiceDocumentsFromDB
         private ObservableCollection<OutputInvoiceDocumentViewModel> _OutputInvoiceDocumentsFromDB;
 
@@ -176,6 +177,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
         #endregion
 
+
         #region NotesFromDB
         private ObservableCollection<OutputInvoiceNoteViewModel> _NotesFromDB;
 
@@ -188,23 +190,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 {
                     _NotesFromDB = value;
                     NotifyPropertyChanged("NotesFromDB");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentNoteForm
-        private OutputInvoiceNoteViewModel _CurrentNoteForm = new OutputInvoiceNoteViewModel();
-
-        public OutputInvoiceNoteViewModel CurrentNoteForm
-        {
-            get { return _CurrentNoteForm; }
-            set
-            {
-                if (_CurrentNoteForm != value)
-                {
-                    _CurrentNoteForm = value;
-                    NotifyPropertyChanged("CurrentNoteForm");
                 }
             }
         }
@@ -243,6 +228,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             }
         }
         #endregion
+
 
 
         #region Pagination data
@@ -470,7 +456,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             SyncButtonContent = " OSVEŽI ";
             SyncButtonEnabled = true;
         }
-
         private void SyncDocumentData()
         {
             SyncButtonEnabled = false;
@@ -485,6 +470,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             SyncButtonContent = " OSVEŽI ";
             SyncButtonEnabled = true;
         }
+
         private void DgOutputInvoices_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();

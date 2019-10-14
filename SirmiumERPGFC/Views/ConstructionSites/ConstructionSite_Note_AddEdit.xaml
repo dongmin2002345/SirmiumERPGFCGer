@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.Employees.PhysicalPerson_Document_AddEdit"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.ConstructionSites.ConstructionSite_Note_AddEdit"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Employees"
              xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.ConstructionSites"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <GroupBox Header="{DynamicResource Dokumenti}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+            <GroupBox Header="{DynamicResource Napomene}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -42,22 +42,13 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_dokumentaDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNote"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentPhysicalPersonDocumentForm.Name, Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource NapomenaDvotacka}" />
+                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtNote" Height="50" TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentConstructionSiteNoteForm.Note, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PutanjaDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="4"  Margin="2"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentPhysicalPersonDocumentForm.Path, Mode=TwoWay}"/>
-                    <Button x:Name="btnChooseDocument" Grid.Column="5" Click="btnChooseDocument_Click" Margin="2" >
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{DynamicResource ODABERI}" />
-                        </StackPanel>
-                    </Button>
-
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Datum_unosaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Datum_napomeneDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <DatePicker Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
-                                SelectedDate="{Binding Path=CurrentPhysicalPersonDocumentForm.CreateDate, Mode=TwoWay}"/>
+                                SelectedDate="{Binding Path=CurrentConstructionSiteNoteForm.NoteDate, Mode=TwoWay}"/>
 
                     <Button x:Name="btnAddNote" Grid.Row="1" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
@@ -76,7 +67,7 @@
             </GroupBox>
 
             <GroupBox Header="Dodate stavke" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
-                <DataGrid x:Name="dgPhysicalPersonDocuments"
+                <DataGrid x:Name="dgConstructionSiteNotes"
                               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="5" MinHeight="200"
                                  AutoGenerateColumns="False"
@@ -90,15 +81,14 @@
                           HorizontalScrollBarVisibility="Auto"
                           RowHeaderWidth="25"
 		                  HeadersVisibility="All"
-                          LoadingRow="DgPhysicalPersonDocuments_LoadingRow"
+                          LoadingRow="DgConstructionSiteNotes_LoadingRow"
                           PreviewMouseWheel="dg_PreviewMouseWheel"
-                              ItemsSource="{Binding Path=PhysicalPersonDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentPhysicalPersonDocumentDG, Mode=TwoWay}">
+                              ItemsSource="{Binding Path=ConstructionSiteNotesFromDB}"
+                              SelectedItem="{Binding Path=CurrentConstructionSiteNoteDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_dokumentaDvotacka}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource PutanjaDvotacka}" Binding="{Binding Path}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_unosaDvotacka}" Binding="{Binding Path=CreateDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Note}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum_napomeneDvotacka}" Binding="{Binding Path=NoteDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
@@ -109,9 +99,9 @@
                                                 <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
                                         </Button>
-                                        <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" IsEnabled="{Binding CanBeModified}" Width="30" ToolTip="Obriši">
+                                        <Button x:Name="btnDeletePopup" Margin="2 0 0 0" CommandParameter="{Binding}" IsEnabled="{Binding CanBeModified}" ToolTip="Obriši">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
                                         </Button>
                                         <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">

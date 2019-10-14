@@ -93,7 +93,7 @@
                 </Grid>
             </GroupBox>
 
-            <!--    Save button    -->
+            <!--    Save button    --><!--
             <Grid Grid.Row="1" Margin="2 2 2 2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -108,9 +108,9 @@
                         <TextBlock FontSize="25" Text="{DynamicResource SAČUVAJ_ZAGLAVLJE}" Foreground="White" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
-            </Grid>
+            </Grid>-->
 
-            <GroupBox Header="{DynamicResource Dokumenti}" Margin="2 1 2 1" Grid.Row="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}" >
+            <!--<GroupBox Header="{DynamicResource Dokumenti}" Margin="2 1 2 1" Grid.Row="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -287,7 +287,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-            </GroupBox>
+            </GroupBox>-->
 
             <!--    Cancel and Save buttons    -->
             <Grid Grid.Row="4" Grid.ColumnSpan="2" Margin="5 2 5 5">
@@ -298,17 +298,17 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnSave" Click="btnSave_Click" Margin="5 0 0 0" Grid.Column="2" IsEnabled="{Binding Path=SaveButtonEnabled, Mode=TwoWay}" Background="#007ACC">
+                <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2 0 1 2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock FontSize="20" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Regular"/>
+                        <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3" Background="#007ACC">
+                <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="1 0 2 2">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text="{DynamicResource ODUSTANI}" FontSize="20" Foreground="White" FontWeight="Regular" />
+                        <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
             </Grid>

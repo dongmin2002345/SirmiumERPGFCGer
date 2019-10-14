@@ -10,100 +10,103 @@ namespace DataMapper.Mappers.ConstructionSites
 {
     public static class ConstructionSiteCalculationMapper
     {
-        public static List<ConstructionSiteCalculationViewModel> ConvertToConstructionSiteCalculationViewModelList(this IEnumerable<ConstructionSiteCalculation> ConstructionSiteCalculations)
+        public static List<ConstructionSiteCalculationViewModel> ConvertToConstructionSiteCalculationViewModelList(this IEnumerable<ConstructionSiteCalculation> constructionSiteCalculations)
         {
-            List<ConstructionSiteCalculationViewModel> ConstructionSiteCalculationViewModels = new List<ConstructionSiteCalculationViewModel>();
-            foreach (ConstructionSiteCalculation ConstructionSiteCalculation in ConstructionSiteCalculations)
+            List<ConstructionSiteCalculationViewModel> constructionSiteCalculationViewModels = new List<ConstructionSiteCalculationViewModel>();
+            foreach (ConstructionSiteCalculation constructionSiteCalculation in constructionSiteCalculations)
             {
-                ConstructionSiteCalculationViewModels.Add(ConstructionSiteCalculation.ConvertToConstructionSiteCalculationViewModel());
+                constructionSiteCalculationViewModels.Add(constructionSiteCalculation.ConvertToConstructionSiteCalculationViewModel());
             }
-            return ConstructionSiteCalculationViewModels;
+            return constructionSiteCalculationViewModels;
         }
 
-        public static ConstructionSiteCalculationViewModel ConvertToConstructionSiteCalculationViewModel(this ConstructionSiteCalculation ConstructionSiteCalculation)
+        public static ConstructionSiteCalculationViewModel ConvertToConstructionSiteCalculationViewModel(this ConstructionSiteCalculation constructionSiteCalculation)
         {
-            ConstructionSiteCalculationViewModel ConstructionSiteCalculationViewModel = new ConstructionSiteCalculationViewModel()
+            ConstructionSiteCalculationViewModel constructionSiteCalculationViewModel = new ConstructionSiteCalculationViewModel()
             {
-                Id = ConstructionSiteCalculation.Id,
-                Identifier = ConstructionSiteCalculation.Identifier,
+                Id = constructionSiteCalculation.Id,
+                Identifier = constructionSiteCalculation.Identifier,
 
-                ConstructionSite = ConstructionSiteCalculation.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
+                ConstructionSite = constructionSiteCalculation.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
 
-                NumOfEmployees = ConstructionSiteCalculation.NumOfEmployees,
-                EmployeePrice = ConstructionSiteCalculation.EmployeePrice,
-                NumOfMonths = ConstructionSiteCalculation.NumOfMonths,
+                NumOfEmployees = constructionSiteCalculation.NumOfEmployees,
+                EmployeePrice = constructionSiteCalculation.EmployeePrice,
+                NumOfMonths = constructionSiteCalculation.NumOfMonths,
 
-                OldValue = ConstructionSiteCalculation.OldValue, 
-                NewValue = ConstructionSiteCalculation.NewValue, 
-                ValueDifference = ConstructionSiteCalculation.ValueDifference,
+                OldValue = constructionSiteCalculation.OldValue, 
+                NewValue = constructionSiteCalculation.NewValue, 
+                ValueDifference = constructionSiteCalculation.ValueDifference,
 
-                PlusMinus = ConstructionSiteCalculation.PlusMinus,
+                PlusMinus = constructionSiteCalculation.PlusMinus,
+                ItemStatus = constructionSiteCalculation.ItemStatus,
 
-                IsActive = ConstructionSiteCalculation.Active,
+                IsActive = constructionSiteCalculation.Active,
 
-                CreatedBy = ConstructionSiteCalculation.CreatedBy?.ConvertToUserViewModelLite(),
-                Company = ConstructionSiteCalculation.Company?.ConvertToCompanyViewModelLite(),
+                CreatedBy = constructionSiteCalculation.CreatedBy?.ConvertToUserViewModelLite(),
+                Company = constructionSiteCalculation.Company?.ConvertToCompanyViewModelLite(),
 
-                UpdatedAt = ConstructionSiteCalculation.UpdatedAt,
-                CreatedAt = ConstructionSiteCalculation.CreatedAt
+                UpdatedAt = constructionSiteCalculation.UpdatedAt,
+                CreatedAt = constructionSiteCalculation.CreatedAt
             };
 
-            return ConstructionSiteCalculationViewModel;
+            return constructionSiteCalculationViewModel;
         }
 
-        public static ConstructionSiteCalculationViewModel ConvertToConstructionSiteCalculationViewModelLite(this ConstructionSiteCalculation ConstructionSiteCalculation)
+        public static ConstructionSiteCalculationViewModel ConvertToConstructionSiteCalculationViewModelLite(this ConstructionSiteCalculation constructionSiteCalculation)
         {
-            ConstructionSiteCalculationViewModel ConstructionSiteCalculationViewModel = new ConstructionSiteCalculationViewModel()
+            ConstructionSiteCalculationViewModel constructionSiteCalculationViewModel = new ConstructionSiteCalculationViewModel()
             {
-                Id = ConstructionSiteCalculation.Id,
-                Identifier = ConstructionSiteCalculation.Identifier,
+                Id = constructionSiteCalculation.Id,
+                Identifier = constructionSiteCalculation.Identifier,
 
-                NumOfEmployees = ConstructionSiteCalculation.NumOfEmployees,
-                EmployeePrice = ConstructionSiteCalculation.EmployeePrice,
-                NumOfMonths = ConstructionSiteCalculation.NumOfMonths,
+                NumOfEmployees = constructionSiteCalculation.NumOfEmployees,
+                EmployeePrice = constructionSiteCalculation.EmployeePrice,
+                NumOfMonths = constructionSiteCalculation.NumOfMonths,
 
-                OldValue = ConstructionSiteCalculation.OldValue,
-                NewValue = ConstructionSiteCalculation.NewValue,
-                ValueDifference = ConstructionSiteCalculation.ValueDifference,
+                OldValue = constructionSiteCalculation.OldValue,
+                NewValue = constructionSiteCalculation.NewValue,
+                ValueDifference = constructionSiteCalculation.ValueDifference,
 
-                PlusMinus = ConstructionSiteCalculation.PlusMinus,
+                PlusMinus = constructionSiteCalculation.PlusMinus,
+                ItemStatus = constructionSiteCalculation.ItemStatus,
 
-                IsActive = ConstructionSiteCalculation.Active,
+                IsActive = constructionSiteCalculation.Active,
 
-                UpdatedAt = ConstructionSiteCalculation.UpdatedAt,
-                CreatedAt = ConstructionSiteCalculation.CreatedAt
+                UpdatedAt = constructionSiteCalculation.UpdatedAt,
+                CreatedAt = constructionSiteCalculation.CreatedAt
             };
 
-            return ConstructionSiteCalculationViewModel;
+            return constructionSiteCalculationViewModel;
         }
 
-        public static ConstructionSiteCalculation ConvertToConstructionSiteCalculation(this ConstructionSiteCalculationViewModel ConstructionSiteCalculationViewModel)
+        public static ConstructionSiteCalculation ConvertToConstructionSiteCalculation(this ConstructionSiteCalculationViewModel constructionSiteCalculationViewModel)
         {
-            ConstructionSiteCalculation ConstructionSiteCalculation = new ConstructionSiteCalculation()
+            ConstructionSiteCalculation constructionSiteCalculation = new ConstructionSiteCalculation()
             {
-                Id = ConstructionSiteCalculationViewModel.Id,
-                Identifier = ConstructionSiteCalculationViewModel.Identifier,
+                Id = constructionSiteCalculationViewModel.Id,
+                Identifier = constructionSiteCalculationViewModel.Identifier,
 
-                ConstructionSiteId = ConstructionSiteCalculationViewModel.ConstructionSite?.Id ?? null,
+                ConstructionSiteId = constructionSiteCalculationViewModel.ConstructionSite?.Id ?? null,
 
-                NumOfEmployees = ConstructionSiteCalculationViewModel.NumOfEmployees,
-                EmployeePrice = ConstructionSiteCalculationViewModel.EmployeePrice,
-                NumOfMonths = ConstructionSiteCalculationViewModel.NumOfMonths,
+                NumOfEmployees = constructionSiteCalculationViewModel.NumOfEmployees,
+                EmployeePrice = constructionSiteCalculationViewModel.EmployeePrice,
+                NumOfMonths = constructionSiteCalculationViewModel.NumOfMonths,
 
-                OldValue = ConstructionSiteCalculationViewModel.OldValue,
-                NewValue = ConstructionSiteCalculationViewModel.NewValue,
-                ValueDifference = ConstructionSiteCalculationViewModel.ValueDifference,
+                OldValue = constructionSiteCalculationViewModel.OldValue,
+                NewValue = constructionSiteCalculationViewModel.NewValue,
+                ValueDifference = constructionSiteCalculationViewModel.ValueDifference,
 
-                PlusMinus = ConstructionSiteCalculationViewModel.PlusMinus,
+                PlusMinus = constructionSiteCalculationViewModel.PlusMinus,
+                ItemStatus = constructionSiteCalculationViewModel.ItemStatus,
 
-                CreatedById = ConstructionSiteCalculationViewModel.CreatedBy?.Id ?? null,
-                CompanyId = ConstructionSiteCalculationViewModel.Company?.Id ?? null,
+                CreatedById = constructionSiteCalculationViewModel.CreatedBy?.Id ?? null,
+                CompanyId = constructionSiteCalculationViewModel.Company?.Id ?? null,
 
-                CreatedAt = ConstructionSiteCalculationViewModel.CreatedAt,
-                UpdatedAt = ConstructionSiteCalculationViewModel.UpdatedAt
+                CreatedAt = constructionSiteCalculationViewModel.CreatedAt,
+                UpdatedAt = constructionSiteCalculationViewModel.UpdatedAt
             };
 
-            return ConstructionSiteCalculation;
+            return constructionSiteCalculation;
         }
     }
 }

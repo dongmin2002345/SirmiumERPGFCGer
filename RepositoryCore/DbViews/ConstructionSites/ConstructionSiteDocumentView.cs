@@ -22,23 +22,23 @@ namespace RepositoryCore.DbViews.ConstructionSites
             strSQLCommand =
                 "CREATE VIEW vConstructionSiteDocuments AS " +
                 "SELECT " +
-                "employeeDocument.Id AS ConstructionSiteDocumentId, " +
-                "employeeDocument.Identifier AS ConstructionSiteDocumentIdentifier, " +
+                "constructionSiteDocument.Id AS ConstructionSiteDocumentId, " +
+                "constructionSiteDocument.Identifier AS ConstructionSiteDocumentIdentifier, " +
 
-                "employee.Id AS ConstructionSiteId, " +
-                "employee.Identifier AS ConstructionSiteIdentifier, " +
-                "employee.Code AS ConstructionSiteCode, " +
-                "employee.Name AS ConstructionSiteName, " +
+                "constructionSite.Id AS ConstructionSiteId, " +
+                "constructionSite.Identifier AS ConstructionSiteIdentifier, " +
+                "constructionSite.Code AS ConstructionSiteCode, " +
+                "constructionSite.Name AS ConstructionSiteName, " +
 
-                "employeeDocument.Name, " +
-                "employeeDocument.CreateDate, " +
-                "employeeDocument.Path, " +
-
-                "employeeDocument.Active AS Active, " +
+                "constructionSiteDocument.Name, " +
+                "constructionSiteDocument.CreateDate, " +
+                "constructionSiteDocument.Path, " +
+                "constructionSiteDocument.ItemStatus," +
+                "constructionSiteDocument.Active AS Active, " +
 
                 "(SELECT MAX(v) FROM (VALUES " +
-                "(employeeDocument.UpdatedAt), " +
-                "(employee.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
+                "(constructionSiteDocument.UpdatedAt), " +
+                "(constructionSite.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
 
                 "createdBy.Id AS CreatedById, " +
                 "createdBy.FirstName AS CreatedByFirstName, " +
@@ -47,10 +47,10 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "company.Id AS CompanyId, " +
                 "company.Name AS CompanyName " +
 
-                "FROM ConstructionSiteDocuments employeeDocument " +
-                "LEFT JOIN ConstructionSites employee ON employeeDocument.ConstructionSiteId = employee.Id " +
-                "LEFT JOIN Users createdBy ON employeeDocument.CreatedById = createdBy.Id " +
-                "LEFT JOIN Companies company ON employeeDocument.CompanyId = company.Id;";
+                "FROM ConstructionSiteDocuments constructionSiteDocument " +
+                "LEFT JOIN ConstructionSites constructionSite ON constructionSiteDocument.ConstructionSiteId = constructionSite.Id " +
+                "LEFT JOIN Users createdBy ON constructionSiteDocument.CreatedById = createdBy.Id " +
+                "LEFT JOIN Companies company ON constructionSiteDocument.CompanyId = company.Id;";
 
 
             command = new SqlCommand(strSQLCommand, conn);

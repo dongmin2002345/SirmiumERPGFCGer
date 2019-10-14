@@ -5,16 +5,14 @@ using ServiceInterfaces.ViewModels.Banks;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Banks
 {
 	public class BankSQLiteRepository
 	{
-		public static string BankTableCreatePart =
+        #region SQL
+
+        public static string BankTableCreatePart =
 		 "CREATE TABLE IF NOT EXISTS Banks " +
 		  "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		  "ServerId INTEGER NULL, " +
@@ -35,7 +33,6 @@ namespace SirmiumERPGFC.Repository.Banks
 		public string SqlCommandSelectPart =
 			"SELECT ServerId, Identifier, Code, Name, Swift, " +
 			"CountryId, CountryIdentifier, CountryCode, CountryName, " +
-
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
 		public string SqlCommandInsertPart = "INSERT INTO Banks " +
@@ -44,10 +41,57 @@ namespace SirmiumERPGFC.Repository.Banks
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @Swift, " +
-				"@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
+			"@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-		public BankListResponse GetBanksByPage(int companyId, BankViewModel bankSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        #endregion
+
+        #region Helper methods
+
+        private BankViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            BankViewModel dbEntry = new BankViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Swift = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, BankViewModel bank)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", bank.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", bank.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)bank.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)bank.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Swift", ((object)bank.Swift) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)bank.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)bank.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)bank.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)bank.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", bank.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)bank.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
+        public BankListResponse GetBanksByPage(int companyId, BankViewModel bankSearchObject, int currentPage = 1, int itemsPerPage = 50)
 		{
 			BankListResponse response = new BankListResponse();
 			List<BankViewModel> Banks = new List<BankViewModel>();
@@ -66,7 +110,8 @@ namespace SirmiumERPGFC.Repository.Banks
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
-					selectCommand.Parameters.AddWithValue("@Name", ((object)bankSearchObject.Search_Name) != null ? "%" + bankSearchObject.Search_Name + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)bankSearchObject.Search_Name) != null ? "%" + bankSearchObject.Search_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Country", ((object)bankSearchObject.Search_Country) != null ? "%" + bankSearchObject.Search_Country + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Swift", ((object)bankSearchObject.Search_Swift) != null ? "%" + bankSearchObject.Search_Swift + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
@@ -76,21 +121,8 @@ namespace SirmiumERPGFC.Repository.Banks
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
 					while (query.Read())
-					{
-						int counter = 0;
-						BankViewModel dbEntry = new BankViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Swift = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						Banks.Add(dbEntry);
-					}
+						Banks.Add(Read(query));
+					
 
 
 					selectCommand = new SqliteCommand(
@@ -100,7 +132,8 @@ namespace SirmiumERPGFC.Repository.Banks
                         "AND (@Swift IS NULL OR @Swift = '' OR Swift LIKE @Swift) " +
                         "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
 						"AND CompanyId = @CompanyId;", db);
-					selectCommand.Parameters.AddWithValue("@Name", ((object)bankSearchObject.Search_Name) != null ? "%" + bankSearchObject.Search_Name + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)bankSearchObject.Search_Name) != null ? "%" + bankSearchObject.Search_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Country", ((object)bankSearchObject.Search_Country) != null ? "%" + bankSearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Swift", ((object)bankSearchObject.Search_Swift) != null ? "%" + bankSearchObject.Search_Swift + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
@@ -143,7 +176,8 @@ namespace SirmiumERPGFC.Repository.Banks
 						"AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage;", db);
-					selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -151,21 +185,8 @@ namespace SirmiumERPGFC.Repository.Banks
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
 					while (query.Read())
-					{
-						int counter = 0;
-						BankViewModel dbEntry = new BankViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Swift = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						Banks.Add(dbEntry);
-					}
+						Banks.Add(Read(query));
+					
 				}
 				catch (SqliteException error)
 				{
@@ -201,21 +222,8 @@ namespace SirmiumERPGFC.Repository.Banks
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
 					if (query.Read())
-					{
-						int counter = 0;
-						BankViewModel dbEntry = new BankViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Swift = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						bank = dbEntry;
-					}
+						bank = Read(query);
+					
 				}
 				catch (SqliteException error)
 				{
@@ -231,6 +239,10 @@ namespace SirmiumERPGFC.Repository.Banks
 			response.Bank = bank;
 			return response;
 		}
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IBankService bankService, Action<int, int> callback = null)
         {
@@ -248,16 +260,40 @@ namespace SirmiumERPGFC.Repository.Banks
                 {
                     toSync = response?.Banks?.Count ?? 0;
                     List<BankViewModel> banksFromDB = response.Banks;
-                    foreach (var bank in banksFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(bank.Identifier);
-                            if (bank.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM Banks WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var bank in banksFromDB)
                             {
-                                bank.IsSynced = true;
-                                Create(bank);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", bank.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (bank.IsActive)
+                                {
+                                    bank.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, bank);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -271,7 +307,7 @@ namespace SirmiumERPGFC.Repository.Banks
 
 		public DateTime? GetLastUpdatedAt(int companyId)
 		{
-			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+			using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
 			{
 				db.Open();
 				try
@@ -303,7 +339,11 @@ namespace SirmiumERPGFC.Repository.Banks
 			return null;
 		}
 
-		public BankResponse Create(BankViewModel bank)
+        #endregion
+
+        #region Create
+
+        public BankResponse Create(BankViewModel bank)
 		{
 			BankResponse response = new BankResponse();
 
@@ -311,31 +351,13 @@ namespace SirmiumERPGFC.Repository.Banks
 			{
 				db.Open();
 
-				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
-
-				//Use parameterized query to prevent SQL injection attacks
+				SqliteCommand insertCommand = db.CreateCommand();
 				insertCommand.CommandText = SqlCommandInsertPart;
 
-				insertCommand.Parameters.AddWithValue("@ServerId", bank.Id);
-				insertCommand.Parameters.AddWithValue("@Identifier", bank.Identifier);
-				insertCommand.Parameters.AddWithValue("@Code", ((object)bank.Code) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Name", ((object)bank.Name) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Swift", ((object)bank.Swift) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryId", ((object)bank.Country?.Id) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)bank.Country?.Identifier) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryCode", ((object)bank.Country?.Code) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryName", ((object)bank.Country?.Name) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@IsSynced", bank.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)bank.UpdatedAt) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-				insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
 				try
 				{
-					insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, bank);
+					insertCommand.ExecuteNonQuery();
 				}
 				catch (SqliteException error)
 				{
@@ -351,49 +373,11 @@ namespace SirmiumERPGFC.Repository.Banks
 			}
 		}
 
-		public BankResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-		{
-			BankResponse response = new BankResponse();
+        #endregion
 
-			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-			{
-				db.Open();
+        #region Delete
 
-				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
-
-				insertCommand.CommandText = "UPDATE Banks SET " +
-					"IsSynced = @IsSynced, " +
-                    "Code = @Code, " + 
-                    "UpdatedAt = @UpdatedAt, " +
-					"ServerId = @ServerId " +
-					"WHERE Identifier = @Identifier ";
-
-				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-				{
-					insertCommand.ExecuteReader();
-				}
-				catch (SqliteException error)
-				{
-					MainWindow.ErrorMessage = error.Message;
-					response.Success = false;
-					response.Message = error.Message;
-					return response;
-				}
-				db.Close();
-
-				response.Success = true;
-				return response;
-			}
-		}
-
-		public BankResponse Delete(Guid identifier)
+        public BankResponse Delete(Guid identifier)
 		{
 			BankResponse response = new BankResponse();
 
@@ -405,10 +389,10 @@ namespace SirmiumERPGFC.Repository.Banks
 				insertCommand.Connection = db;
 
 				//Use parameterized query to prevent SQL injection attacks
-				insertCommand.CommandText =
-					"DELETE FROM Banks WHERE Identifier = @Identifier";
+				insertCommand.CommandText = "DELETE FROM Banks WHERE Identifier = @Identifier";
 				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-				try
+				
+                try
 				{
 					insertCommand.ExecuteReader();
 				}
@@ -444,7 +428,7 @@ namespace SirmiumERPGFC.Repository.Banks
 					insertCommand.CommandText = "DELETE FROM Banks";
 					try
 					{
-						insertCommand.ExecuteReader();
+						insertCommand.ExecuteNonQuery();
 					}
 					catch (SqliteException error)
 					{
@@ -467,5 +451,7 @@ namespace SirmiumERPGFC.Repository.Banks
 			response.Success = true;
 			return response;
 		}
-	}
+
+        #endregion
+    }
 }

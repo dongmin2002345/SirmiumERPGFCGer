@@ -19,5 +19,7 @@ namespace DomainCore.ConstructionSites
         public decimal ValueDifference { get; set; }
 
         public string PlusMinus { get; set; }
+        public int ItemStatus { get; set; }
+
     }
 }

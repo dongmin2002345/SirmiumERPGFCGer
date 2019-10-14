@@ -21,16 +21,16 @@ namespace RepositoryCore.DbViews.ConstructionSites
 
             strSQLCommand =
                 "CREATE VIEW vConstructionSiteNotes AS " +
-                "SELECT employeeNote.Id AS ConstructionSiteNoteId, employeeNote.Identifier AS ConstructionSiteNoteIdentifier, " +
-                "employee.Id AS ConstructionSiteId, employee.Identifier AS ConstructionSiteIdentifier, employee.Code AS ConstructionSiteCode, employee.Name AS ConstructionSiteName, " +
-                "employeeNote.Note, employeeNote.NoteDate, employeeNote.Active AS Active, " +
-                "(SELECT MAX(v) FROM (VALUES (employeeNote.UpdatedAt), (employee.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
+                "SELECT constructionSiteNote.Id AS ConstructionSiteNoteId, constructionSiteNote.Identifier AS ConstructionSiteNoteIdentifier, " +
+                "constructionSite.Id AS ConstructionSiteId, constructionSite.Identifier AS ConstructionSiteIdentifier, constructionSite.Code AS ConstructionSiteCode, constructionSite.Name AS ConstructionSiteName, " +
+                "constructionSiteNote.Note, constructionSiteNote.NoteDate, constructionSiteNote.ItemStatus, constructionSiteNote.Active AS Active, " +
+                "(SELECT MAX(v) FROM (VALUES (constructionSiteNote.UpdatedAt), (constructionSite.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +
-                "FROM ConstructionSiteNotes employeeNote " +
-                "LEFT JOIN ConstructionSites employee ON employeeNote.ConstructionSiteId = employee.Id " +
-                "LEFT JOIN Users createdBy ON employeeNote.CreatedById = createdBy.Id " +
-                "LEFT JOIN Companies company ON employeeNote.CompanyId = company.Id;";
+                "FROM ConstructionSiteNotes constructionSiteNote " +
+                "LEFT JOIN ConstructionSites constructionSite ON constructionSiteNote.ConstructionSiteId = constructionSite.Id " +
+                "LEFT JOIN Users createdBy ON constructionSiteNote.CreatedById = createdBy.Id " +
+                "LEFT JOIN Companies company ON constructionSiteNote.CompanyId = company.Id;";
 
             command = new SqlCommand(strSQLCommand, conn);
             returnvalue = (string)command.ExecuteScalar();

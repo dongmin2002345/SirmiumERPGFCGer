@@ -195,7 +195,6 @@ namespace SirmiumERPGFC.Views.Banks
 
 				if (response.Success)
 				{
-					new BankSQLiteRepository().UpdateSyncStatus(response.Bank.Identifier, response.Bank.Code, response.Bank.UpdatedAt, response.Bank.Id, true);
 					MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;

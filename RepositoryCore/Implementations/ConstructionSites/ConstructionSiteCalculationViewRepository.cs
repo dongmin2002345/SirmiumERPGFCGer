@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, " +
+                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -76,6 +76,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
                         if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteCalculation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -121,7 +123,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, " +
+                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -166,6 +168,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
                         if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteCalculation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -211,7 +215,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, " +
+                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                  "WHERE CompanyId = @CompanyId " +
@@ -258,6 +262,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
                         if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteCalculation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -303,7 +309,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT TOP 1 ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, " +
+                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                 "WHERE CompanyId = @CompanyId AND ConstructionSiteId = @ConstructionSiteId " +
@@ -349,6 +355,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ValueDifference = decimal.Parse(reader["ValueDifference"].ToString());
                         if (reader["PlusMinus"] != DBNull.Value)
                             constructionSiteCalculation.PlusMinus = reader["PlusMinus"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteCalculation.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -395,6 +403,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 constructionSiteCalculation.Id = 0;
 
                 constructionSiteCalculation.Active = true;
+                constructionSiteCalculation.UpdatedAt = DateTime.Now;
+                constructionSiteCalculation.CreatedAt = DateTime.Now;
 
                 context.ConstructionSiteCalculations.Add(constructionSiteCalculation);
                 return constructionSiteCalculation;
@@ -418,6 +428,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.NewValue = constructionSiteCalculation.NewValue;
                     dbEntry.ValueDifference = constructionSiteCalculation.ValueDifference;
                     dbEntry.PlusMinus = constructionSiteCalculation.PlusMinus;
+                    dbEntry.ItemStatus = constructionSiteCalculation.ItemStatus;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -430,7 +441,10 @@ namespace RepositoryCore.Implementations.ConstructionSites
         public ConstructionSiteCalculation Delete(Guid identifier)
         {
             ConstructionSiteCalculation dbEntry = context.ConstructionSiteCalculations
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                 .Union(context.ChangeTracker.Entries()
+                     .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(ConstructionSiteCalculation))
+                     .Select(x => x.Entity as ConstructionSiteCalculation))
+                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {

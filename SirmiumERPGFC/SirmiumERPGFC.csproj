@@ -377,6 +377,15 @@
     <Compile Include="Views\ConstructionSites\ConstructionSite-List.xaml.cs">
       <DependentUpon>ConstructionSite-List.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite_Calculation_AddEdit.xaml.cs">
+      <DependentUpon>ConstructionSite_Calculation_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite_Document_AddEdit.xaml.cs">
+      <DependentUpon>ConstructionSite_Document_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite_Note_AddEdit.xaml.cs">
+      <DependentUpon>ConstructionSite_Note_AddEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Employees\FamilyMember-List-AddEdit.xaml.cs">
       <DependentUpon>FamilyMember-List-AddEdit.xaml</DependentUpon>
     </Compile>
@@ -740,6 +749,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConstructionSites\ConstructionSite-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite_Calculation_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite_Document_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite_Note_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
