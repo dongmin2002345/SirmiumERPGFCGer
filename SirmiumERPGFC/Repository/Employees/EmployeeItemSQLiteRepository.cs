@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
@@ -30,6 +31,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "DateOfBirth DATETIME NULL, " +
                "EmbassyDate DATETIME NULL, " +
                "Passport NVARCHAR(2048) NULL, " +
+                "ItemStatus INTEGER NOT NULL, " +
                "IsSynced BOOL NULL, " +
                "UpdatedAt DATETIME NULL, " +
                "CreatedById INTEGER NULL, " +
@@ -40,25 +42,22 @@ namespace SirmiumERPGFC.Repository.Employees
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, EmployeeInternalCode, FamilyMemberId, FamilyMemberIdentifier, " +
-            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, " +
+            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeItems " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
             "EmployeeCode, EmployeeName, EmployeeInternalCode, FamilyMemberId, FamilyMemberIdentifier, " +
-            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, " +
+            "FamilyMemberCode, FamilyMemberName, Name, DateOfBirth, EmbassyDate, Passport, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
             "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @FamilyMemberId, @FamilyMemberIdentifier, " +
-            "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @EmbassyDate, @Passport, " +
+            "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @EmbassyDate, @Passport, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-        #endregion
-
         #region Helper methods
-
-        private EmployeeItemViewModel Read(SqliteDataReader query)
+        private static EmployeeItemViewModel Read(SqliteDataReader query)
         {
             int counter = 0;
             EmployeeItemViewModel dbEntry = new EmployeeItemViewModel();
@@ -70,11 +69,11 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
             dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-
             return dbEntry;
         }
 
@@ -95,6 +94,7 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@DateOfBirth", ((object)EmployeeItem.DateOfBirth) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@EmbassyDate", ((object)EmployeeItem.EmbassyDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Passport", ((object)EmployeeItem.Passport) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)EmployeeItem.ItemStatus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)EmployeeItem.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -106,8 +106,6 @@ namespace SirmiumERPGFC.Repository.Employees
         }
 
         #endregion
-
-        #region Read
 
         public EmployeeItemListResponse GetEmployeeItemsByEmployee(int companyId, Guid EmployeeIdentifier)
         {
@@ -313,7 +311,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }
@@ -397,48 +396,38 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeItemResponse DeleteAll()
+        public EmployeeItemResponse SetStatusDeleted(Guid identifier)
         {
             EmployeeItemResponse response = new EmployeeItemResponse();
 
-            try
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE EmployeeItems SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
                 {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM EmployeeItems";
-                    try
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
+                    insertCommand.ExecuteReader();
                 }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
                 return response;
             }
-
-            response.Success = true;
-            return response;
         }
-
-        #endregion
     }
 }

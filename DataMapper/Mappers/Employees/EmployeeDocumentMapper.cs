@@ -32,7 +32,7 @@ namespace DataMapper.Mappers.Employees
                 Name = employeeDocument.Name,
                 CreateDate = employeeDocument.CreateDate,
                 Path = employeeDocument.Path,
-
+                ItemStatus = employeeDocument.ItemStatus,
                 IsActive = employeeDocument.Active,
 
                 CreatedBy = employeeDocument.CreatedBy?.ConvertToUserViewModelLite(),
@@ -55,7 +55,7 @@ namespace DataMapper.Mappers.Employees
                 Name = employeeDocument.Name,
                 CreateDate = employeeDocument.CreateDate,
                 Path = employeeDocument.Path,
-
+                ItemStatus = employeeDocument.ItemStatus,
                 IsActive = employeeDocument.Active,
 
                 UpdatedAt = employeeDocument.UpdatedAt,
@@ -77,7 +77,7 @@ namespace DataMapper.Mappers.Employees
                 Name = employeeDocumentViewModel.Name,
                 CreateDate = employeeDocumentViewModel.CreateDate,
                 Path = employeeDocumentViewModel.Path,
-
+                ItemStatus = employeeDocumentViewModel.ItemStatus,
                 Active = employeeDocumentViewModel.IsActive,
 
                 CreatedById = employeeDocumentViewModel.CreatedBy?.Id ?? null,

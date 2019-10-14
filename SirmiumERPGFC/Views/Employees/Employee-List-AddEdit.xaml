@@ -7,26 +7,24 @@
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Employees"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
-             xmlns:popups1="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
-             mc:Ignorable="d" d:DesignHeight="2300" d:DesignWidth="843">
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
+             mc:Ignorable="d" 
+             d:DesignHeight="2962" d:DesignWidth="829">
 
-    <Control.Background>
+    <UserControl.Background>
         <SolidColorBrush Color="White" />
-    </Control.Background>
+    </UserControl.Background>
+
     <UserControl.Resources>
-        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
+        <!--<cbxConverters:PdvPercentRateConverter x:Key="cbxPdvPercentRateConverter" />-->
         <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
-        <cbxConverters:GenderConverter x:Key="cbxGenderToStringConverter" />
+        <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
+        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -85,23 +83,23 @@
                         </ComboBox>
 
                         <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
-                        <popups1:CountryPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
+                        <popups:CountryPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
                                         CurrentCountry="{Binding Path=CurrentEmployee.Country, Mode=TwoWay}"/>
 
 
                         <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource RegionDvotacka}" />
-                        <popups1:RegionPopup Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2"
+                        <popups:RegionPopup Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2"
                                              CurrentCountry="{Binding Path=CurrentEmployee.Country, Mode=TwoWay}" 
                                              CurrentRegion="{Binding Path=CurrentEmployee.Region, Mode=TwoWay}" 
                                              />
 
                         <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpštinaDvotacka}" />
-                        <popups1:MunicipalityPopup Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popMunicipality" 
+                        <popups:MunicipalityPopup Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popMunicipality" 
                                         CurrentRegion="{Binding Path=CurrentEmployee.Region, Mode=TwoWay}"
                                         CurrentMunicipality="{Binding Path=CurrentEmployee.Municipality, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
-                        <popups1:CityPopup Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2"
+                        <popups:CityPopup Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2"
                                              CurrentCountry="{Binding Path=CurrentEmployee.Country, Mode=TwoWay}" 
                                              CurrentCity="{Binding Path=CurrentEmployee.City, Mode=TwoWay}" />
 
@@ -133,11 +131,11 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
-                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry1" 
+                        <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry1" 
                                         CurrentCountry="{Binding Path=CurrentEmployee.PassportCountry, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
-                        <popups1:CityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2"
+                        <popups:CityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2"
                                              CurrentCountry="{Binding Path=CurrentEmployee.PassportCountry, Mode=TwoWay}" 
                                              CurrentCity="{Binding Path=CurrentEmployee.PassportCity, Mode=TwoWay}" />
 
@@ -175,11 +173,11 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
-                        <popups1:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountryForGermanCity" 
+                        <popups:CountryPopup Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountryForGermanCity" 
                                         CurrentCountry="{Binding Path=CurrentEmployee.ResidenceCountry, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
-                        <popups1:CityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity2" 
+                        <popups:CityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity2" 
                                            CurrentCity="{Binding Path=CurrentEmployee.ResidenceCity, Mode=TwoWay}"
                                            CurrentCountry="{Binding Path=CurrentEmployee.ResidenceCountry}"/>
 
@@ -234,6 +232,35 @@
                 </GroupBox>
 
                 <!--    Save button    -->
+                <Grid Grid.Row="4" Margin="2 2 2 2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2 0 1 2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="1 0 2 2">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+
+            </Grid>
+        </ScrollViewer>
+</UserControl>
+<!--    Save button    --><!--
                 <Grid Grid.Row="4" Margin="2 2 2 2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -714,7 +741,7 @@
         
         <Separator Grid.Row="1" />
 
-        <!-- Cancel and Save buttons    -->
+        --><!-- Cancel and Save buttons    --><!--
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -734,8 +761,8 @@
                     <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Text="{DynamicResource ZATVORI}" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
-            </Button>
-        </Grid>
+            </Button>-->
+        <!--</Grid>
     </Grid>
-</UserControl>
+</UserControl>-->
 

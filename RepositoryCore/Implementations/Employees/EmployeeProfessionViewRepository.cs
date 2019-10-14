@@ -35,7 +35,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeProfessions " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
 
@@ -84,7 +84,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Country.Code = reader["CountryCode"].ToString();
                             employeeProfession.Country.Name = reader["CountryName"].ToString();
                         }
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeProfession.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeProfession.Active = bool.Parse(reader["Active"].ToString());
                         employeeProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -134,7 +135,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeProfessions " +
                 "WHERE EmployeeId = @EmployeeId AND Active = 1;";
 
@@ -183,7 +184,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Country.Code = reader["CountryCode"].ToString();
                             employeeProfession.Country.Name = reader["CountryName"].ToString();
                         }
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeProfession.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeProfession.Active = bool.Parse(reader["Active"].ToString());
                         employeeProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -232,7 +234,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
+                "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeProfessions " +
                 "WHERE CompanyId = @CompanyId " +
                 "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));";
@@ -283,7 +285,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Country.Code = reader["CountryCode"].ToString();
                             employeeProfession.Country.Name = reader["CountryName"].ToString();
                         }
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeProfession.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeProfession.Active = bool.Parse(reader["Active"].ToString());
                         employeeProfession.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -330,7 +333,8 @@ namespace RepositoryCore.Implementations.Employees
                 EmployeeProfession.Id = 0;
 
                 EmployeeProfession.Active = true;
-
+                EmployeeProfession.UpdatedAt = DateTime.Now;
+                EmployeeProfession.CreatedAt = DateTime.Now;
                 context.EmployeeProfessions.Add(EmployeeProfession);
                 return EmployeeProfession;
             }
@@ -346,7 +350,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.CountryId = EmployeeProfession.CountryId ?? null;
                     dbEntry.CompanyId = EmployeeProfession.CompanyId ?? null;
                     dbEntry.CreatedById = EmployeeProfession.CreatedById ?? null;
-
+                    dbEntry.ItemStatus = EmployeeProfession.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
@@ -358,8 +362,10 @@ namespace RepositoryCore.Implementations.Employees
         public EmployeeProfession Delete(Guid identifier)
         {
             EmployeeProfession dbEntry = context.EmployeeProfessions
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+               .Union(context.ChangeTracker.Entries()
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeProfession))
+                   .Select(x => x.Entity as EmployeeProfession))
+               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

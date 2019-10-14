@@ -32,7 +32,7 @@ namespace RepositoryCore.Implementations.Employees
                 "SELECT EmployeeItemId, EmployeeItemIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "FamilyMemberId, FamilyMemberIdentifier, FamilyMemberCode, FamilyMemberName, " +
-                "Name, DateOfBirth, EmbassyDate, " + //Passport??? ima u EmployeeItemSQLite tabeli (vEmployeeItems)
+                "Name, DateOfBirth, EmbassyDate, ItemStatus, " + //Passport??? ima u EmployeeItemSQLite tabeli (vEmployeeItems)
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeItems " +
@@ -80,7 +80,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
                         if (reader["EmbassyDate"] != DBNull.Value)
                             employeeItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeItem.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeItem.Active = bool.Parse(reader["Active"].ToString());
                         employeeItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -127,7 +128,7 @@ namespace RepositoryCore.Implementations.Employees
                 "SELECT EmployeeItemId, EmployeeItemIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "FamilyMemberId, FamilyMemberIdentifier, FamilyMemberCode, FamilyMemberName, " +
-                "Name, DateOfBirth, EmbassyDate, " + //Passport??? ima u EmployeeItemSQLite tabeli (vEmployeeItems)
+                "Name, DateOfBirth, EmbassyDate, ItemStatus, " + //Passport??? ima u EmployeeItemSQLite tabeli (vEmployeeItems)
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeItems " +
@@ -175,7 +176,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
                         if (reader["EmbassyDate"] != DBNull.Value)
                             employeeItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeItem.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeItem.Active = bool.Parse(reader["Active"].ToString());
                         employeeItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -222,7 +224,7 @@ namespace RepositoryCore.Implementations.Employees
                 "SELECT EmployeeItemId, EmployeeItemIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "FamilyMemberId, FamilyMemberIdentifier, FamilyMemberCode, FamilyMemberName, " +
-                "Name, DateOfBirth, EmbassyDate, " + //Passport??? ima u EmployeeItemSQLite tabeli (vEmployeeItems)
+                "Name, DateOfBirth, EmbassyDate, ItemStatus, " + //Passport??? ima u EmployeeItemSQLite tabeli (vEmployeeItems)
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeItems " +
@@ -272,7 +274,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeItem.DateOfBirth = DateTime.Parse(reader["DateOfBirth"].ToString());
                         if (reader["EmbassyDate"] != DBNull.Value)
                             employeeItem.EmbassyDate = DateTime.Parse(reader["EmbassyDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeItem.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeItem.Active = bool.Parse(reader["Active"].ToString());
                         employeeItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -318,7 +321,8 @@ namespace RepositoryCore.Implementations.Employees
                 EmployeeItem.Id = 0;
 
                 EmployeeItem.Active = true;
-
+                EmployeeItem.UpdatedAt = DateTime.Now;
+                EmployeeItem.CreatedAt = DateTime.Now;
                 context.EmployeeItems.Add(EmployeeItem);
                 return EmployeeItem;
             }
@@ -338,7 +342,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.Name = EmployeeItem.Name;
                     dbEntry.DateOfBirth = EmployeeItem.DateOfBirth;
                     dbEntry.EmbassyDate = EmployeeItem.EmbassyDate;
-
+                    dbEntry.ItemStatus = EmployeeItem.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
@@ -350,8 +354,10 @@ namespace RepositoryCore.Implementations.Employees
         public EmployeeItem Delete(Guid identifier)
         {
             EmployeeItem dbEntry = context.EmployeeItems
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+                .Union(context.ChangeTracker.Entries()
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeItem))
+                   .Select(x => x.Entity as EmployeeItem))
+               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

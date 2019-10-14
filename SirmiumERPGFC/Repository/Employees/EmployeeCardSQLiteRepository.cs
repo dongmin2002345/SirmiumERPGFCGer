@@ -1,17 +1,20 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
     public class EmployeeCardSQLiteRepository
     {
-        #region SQL
-
         public static string EmployeeCardTableCreatePart =
             "CREATE TABLE IF NOT EXISTS EmployeeCards " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -25,6 +28,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "CardDate DATETIME NULL, " +
             "Description NVARCHAR(2048) NULL, " +
             "PlusMinus NVARCHAR(48) NULL, " +
+            "ItemStatus INTEGER NOT NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -34,23 +38,20 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, EmployeeInternalCode, CardDate, Description, PlusMinus, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, CardDate, Description, PlusMinus, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeCards " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, EmployeeInternalCode, CardDate, Description, PlusMinus, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, CardDate, Description, PlusMinus, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @CardDate, @Description, @PlusMinus, " +
+            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @CardDate, @Description, @PlusMinus, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-        #endregion
-
         #region Helper methods
-
-        private EmployeeCardViewModel Read(SqliteDataReader query)
+        private static EmployeeCardViewModel Read(SqliteDataReader query)
         {
             int counter = 0;
             EmployeeCardViewModel dbEntry = new EmployeeCardViewModel();
@@ -60,11 +61,11 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.CardDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
             dbEntry.PlusMinus = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
             dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-
             return dbEntry;
         }
 
@@ -80,6 +81,7 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@CardDate", ((object)EmployeeCard.CardDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Description", ((object)EmployeeCard.Description) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PlusMinus", ((object)EmployeeCard.PlusMinus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)EmployeeCard.ItemStatus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeCard.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)EmployeeCard.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -91,8 +93,6 @@ namespace SirmiumERPGFC.Repository.Employees
         }
 
         #endregion
-
-        #region Read
 
         public EmployeeCardListResponse GetEmployeeCardsByEmployee(int companyId, Guid EmployeeIdentifier)
         {
@@ -110,15 +110,16 @@ namespace SirmiumERPGFC.Repository.Employees
                         "WHERE EmployeeIdentifier = @EmployeeIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
-                    
                     selectCommand.Parameters.AddWithValue("@EmployeeIdentifier", EmployeeIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        EmployeeCards.Add(Read(query));
-                    
+                    {
+                        EmployeeCardViewModel dbEntry = Read(query);
+                        EmployeeCards.Add(dbEntry);
+                    }
 
                 }
                 catch (SqliteException error)
@@ -155,8 +156,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                        EmployeeCard = Read(query);
-                    
+                    {
+                        EmployeeCardViewModel dbEntry = Read(query);
+                        EmployeeCard = dbEntry;
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -173,10 +176,6 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
-        #endregion
-
-        #region Sync
-
         public void Sync(IEmployeeCardService EmployeeCardService, Action<int, int> callback = null)
         {
             try
@@ -192,9 +191,9 @@ namespace SirmiumERPGFC.Repository.Employees
                 if (response.Success)
                 {
                     toSync = response?.EmployeeCards?.Count ?? 0;
-                    List<EmployeeCardViewModel> employeeCardsFromDB = response.EmployeeCards;
+                    List<EmployeeCardViewModel> items = response.EmployeeCards;
 
-                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
+                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
                         db.Open();
                         using (var transaction = db.BeginTransaction())
@@ -205,17 +204,17 @@ namespace SirmiumERPGFC.Repository.Employees
                             SqliteCommand insertCommand = db.CreateCommand();
                             insertCommand.CommandText = SqlCommandInsertPart;
 
-                            foreach (var employeeCard in employeeCardsFromDB)
+                            foreach (var item in items)
                             {
-                                deleteCommand.Parameters.AddWithValue("@Identifier", employeeCard.Identifier);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", item.Identifier);
                                 deleteCommand.ExecuteNonQuery();
                                 deleteCommand.Parameters.Clear();
 
-                                if (employeeCard.IsActive)
+                                if (item.IsActive)
                                 {
-                                    employeeCard.IsSynced = true;
+                                    item.IsSynced = true;
 
-                                    insertCommand = AddCreateParameters(insertCommand, employeeCard);
+                                    insertCommand = AddCreateParameters(insertCommand, item);
                                     insertCommand.ExecuteNonQuery();
                                     insertCommand.Parameters.Clear();
 
@@ -259,7 +258,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }
@@ -272,10 +272,6 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
-        #endregion
-
-        #region Create
-
         public EmployeeCardResponse Create(EmployeeCardViewModel EmployeeCard)
         {
             EmployeeCardResponse response = new EmployeeCardResponse();
@@ -283,7 +279,6 @@ namespace SirmiumERPGFC.Repository.Employees
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
-
                 SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
@@ -306,10 +301,7 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        #endregion
-
-        #region Delete
-
+        
         public EmployeeCardResponse Delete(Guid identifier)
         {
             EmployeeCardResponse response = new EmployeeCardResponse();
@@ -322,11 +314,12 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText = "DELETE FROM EmployeeCards WHERE Identifier = @Identifier";
+                insertCommand.CommandText =
+                    "DELETE FROM EmployeeCards WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 try
                 {
-                    insertCommand.ExecuteNonQuery();
+                    insertCommand.ExecuteReader();
                 }
                 catch (SqliteException error)
                 {
@@ -342,48 +335,38 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeCardResponse DeleteAll()
+        public EmployeeCardResponse SetStatusDeleted(Guid identifier)
         {
             EmployeeCardResponse response = new EmployeeCardResponse();
 
-            try
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE EmployeeCards SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
                 {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM EmployeeCards";
-                    try
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
+                    insertCommand.ExecuteReader();
                 }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
                 return response;
             }
-
-            response.Success = true;
-            return response;
         }
-
-        #endregion
     }
 }

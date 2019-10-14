@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.Employees
                 "SELECT employeeItem.Id AS EmployeeItemId, employeeItem.Identifier AS EmployeeItemIdentifier, " +
                 "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
                 "familyMember.Id AS FamilyMemberId, familyMember.Identifier AS FamilyMemberIdentifier, familyMember.Code AS FamilyMemberCode, familyMember.Name AS FamilyMemberName, " +
-                "employeeItem.Name, employeeItem.DateOfBirth, employeeItem.EmbassyDate, " +
+                "employeeItem.Name, employeeItem.DateOfBirth, employeeItem.EmbassyDate, employeeItem.ItemStatus, " +
                 "employeeItem.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (employeeItem.UpdatedAt), (employee.UpdatedAt), (familyMember.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

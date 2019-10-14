@@ -25,6 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -44,6 +45,22 @@ namespace SirmiumERPGFC.Views.Employees
         IEmployeeNoteService employeeNoteService;
         #endregion
 
+        #region EmployeeSearchObject
+        private EmployeeViewModel _EmployeeSearchObject = new EmployeeViewModel();
+
+        public EmployeeViewModel EmployeeSearchObject
+        {
+            get { return _EmployeeSearchObject; }
+            set
+            {
+                if (_EmployeeSearchObject != value)
+                {
+                    _EmployeeSearchObject = value;
+                    NotifyPropertyChanged("EmployeeSearchObject");
+                }
+            }
+        }
+        #endregion
 
         #region EmployeesFromDB
         private ObservableCollection<EmployeeViewModel> _EmployeesFromDB;
@@ -81,35 +98,18 @@ namespace SirmiumERPGFC.Views.Employees
                         Thread displayItemThread = new Thread(() =>
                         {
                             DisplayEmployeeItemData();
-                            DisplayProfessionItemData();
-                            DisplayLicenceItemData();
-                            DisplayDocumentData();
-                            DisplayCardData();
-							DisplayEmployeeNoteData();
+                            DisplayEmployeeProfessionData();
+                            DisplayEmployeeLicenceData();
+                            DisplayEmployeeDocumentData();
+                            DisplayEmployeeCardData();
+                            DisplayEmployeeNoteData();
 
-						});
+                        });
                         displayItemThread.IsBackground = true;
                         displayItemThread.Start();
                     }
                     else
                         EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
-                }
-            }
-        }
-        #endregion
-
-        #region EmployeeSearchObject
-        private EmployeeViewModel _EmployeeSearchObject = new EmployeeViewModel();
-
-        public EmployeeViewModel EmployeeSearchObject
-        {
-            get { return _EmployeeSearchObject; }
-            set
-            {
-                if (_EmployeeSearchObject != value)
-                {
-                    _EmployeeSearchObject = value;
-                    NotifyPropertyChanged("EmployeeSearchObject");
                 }
             }
         }
@@ -132,110 +132,6 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
-
-        #region EmployeeItemsFromDB
-        private ObservableCollection<EmployeeItemViewModel> _EmployeeItemsFromDB;
-
-        public ObservableCollection<EmployeeItemViewModel> EmployeeItemsFromDB
-        {
-            get { return _EmployeeItemsFromDB; }
-            set
-            {
-                if (_EmployeeItemsFromDB != value)
-                {
-                    _EmployeeItemsFromDB = value;
-                    NotifyPropertyChanged("EmployeeItemsFromDB");
-                }
-            }
-        }
-        #endregion
-
-        #region EmployeeItemDataLoading
-        private bool _EmployeeItemDataLoading;
-
-        public bool EmployeeItemDataLoading
-        {
-            get { return _EmployeeItemDataLoading; }
-            set
-            {
-                if (_EmployeeItemDataLoading != value)
-                {
-                    _EmployeeItemDataLoading = value;
-                    NotifyPropertyChanged("EmployeeItemDataLoading");
-                }
-            }
-        }
-        #endregion
-
-
-        #region EmployeeProfessionItemsFromDB
-        private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessionItemsFromDB;
-
-        public ObservableCollection<EmployeeProfessionItemViewModel> EmployeeProfessionItemsFromDB
-        {
-            get { return _EmployeeProfessionItemsFromDB; }
-            set
-            {
-                if (_EmployeeProfessionItemsFromDB != value)
-                {
-                    _EmployeeProfessionItemsFromDB = value;
-                    NotifyPropertyChanged("EmployeeProfessionItemsFromDB");
-                }
-            }
-        }
-        #endregion
-
-        #region LoadingProfessionItems
-        private bool _LoadingProfessionItems;
-
-        public bool LoadingProfessionItems
-        {
-            get { return _LoadingProfessionItems; }
-            set
-            {
-                if (_LoadingProfessionItems != value)
-                {
-                    _LoadingProfessionItems = value;
-                    NotifyPropertyChanged("LoadingProfessionItems");
-                }
-            }
-        }
-        #endregion
-
-
-        #region EmployeeLicenceItemsFromDB
-        private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicenceItemsFromDB;
-
-        public ObservableCollection<EmployeeLicenceItemViewModel> EmployeeLicenceItemsFromDB
-        {
-            get { return _EmployeeLicenceItemsFromDB; }
-            set
-            {
-                if (_EmployeeLicenceItemsFromDB != value)
-                {
-                    _EmployeeLicenceItemsFromDB = value;
-                    NotifyPropertyChanged("EmployeeLicenceItemsFromDB");
-                }
-            }
-        }
-        #endregion
-        
-        #region LoadingLicenceItems
-        private bool _LoadingLicenceItems;
-
-        public bool LoadingLicenceItems
-        {
-            get { return _LoadingLicenceItems; }
-            set
-            {
-                if (_LoadingLicenceItems != value)
-                {
-                    _LoadingLicenceItems = value;
-                    NotifyPropertyChanged("LoadingLicenceItems");
-                }
-            }
-        }
-        #endregion
 
 
         #region EmployeeDocumentsFromDB
@@ -271,7 +167,7 @@ namespace SirmiumERPGFC.Views.Employees
             }
         }
         #endregion
-        
+
         #region EmployeeDocumentDataLoading
         private bool _EmployeeDocumentDataLoading;
 
@@ -287,79 +183,78 @@ namespace SirmiumERPGFC.Views.Employees
                 }
             }
         }
-		#endregion
+        #endregion
 
-		#region NotesFromDB
-		private ObservableCollection<EmployeeNoteViewModel> _NotesFromDB;
+        #region EmployeeNotesFromDB
+        private ObservableCollection<EmployeeNoteViewModel> _EmployeeNotesFromDB;
 
-		public ObservableCollection<EmployeeNoteViewModel> NotesFromDB
-		{
-			get { return _NotesFromDB; }
-			set
-			{
-				if (_NotesFromDB != value)
-				{
-					_NotesFromDB = value;
-					NotifyPropertyChanged("NotesFromDB");
-				}
-			}
-		}
-		#endregion
+        public ObservableCollection<EmployeeNoteViewModel> EmployeeNotesFromDB
+        {
+            get { return _EmployeeNotesFromDB; }
+            set
+            {
+                if (_EmployeeNotesFromDB != value)
+                {
+                    _EmployeeNotesFromDB = value;
+                    NotifyPropertyChanged("EmployeeNotesFromDB");
+                }
+            }
+        }
+        #endregion
 
-		#region CurrentNoteForm
-		private EmployeeNoteViewModel _CurrentNoteForm = new EmployeeNoteViewModel();
+        #region CurrentEmployeeNoteForm
+        private EmployeeNoteViewModel _CurrentEmployeeNoteForm = new EmployeeNoteViewModel();
 
-		public EmployeeNoteViewModel CurrentNoteForm
-		{
-			get { return _CurrentNoteForm; }
-			set
-			{
-				if (_CurrentNoteForm != value)
-				{
-					_CurrentNoteForm = value;
-					NotifyPropertyChanged("CurrentNoteForm");
-				}
-			}
-		}
-		#endregion
+        public EmployeeNoteViewModel CurrentEmployeeNoteForm
+        {
+            get { return _CurrentEmployeeNoteForm; }
+            set
+            {
+                if (_CurrentEmployeeNoteForm != value)
+                {
+                    _CurrentEmployeeNoteForm = value;
+                    NotifyPropertyChanged("CurrentEmployeeNoteForm");
+                }
+            }
+        }
+        #endregion
 
-		#region CurrentNoteDG
-		private EmployeeNoteViewModel _CurrentNoteDG;
+        #region CurrentEmployeeNoteDG
+        private EmployeeNoteViewModel _CurrentEmployeeNoteDG;
 
-		public EmployeeNoteViewModel CurrentNoteDG
-		{
-			get { return _CurrentNoteDG; }
-			set
-			{
-				if (_CurrentNoteDG != value)
-				{
-					_CurrentNoteDG = value;
-					NotifyPropertyChanged("CurrentNoteDG");
-				}
-			}
-		}
-		#endregion
+        public EmployeeNoteViewModel CurrentEmployeeNoteDG
+        {
+            get { return _CurrentEmployeeNoteDG; }
+            set
+            {
+                if (_CurrentEmployeeNoteDG != value)
+                {
+                    _CurrentEmployeeNoteDG = value;
+                    NotifyPropertyChanged("CurrentEmployeeNoteDG");
+                }
+            }
+        }
+        #endregion
 
-		#region NoteDataLoading
-		private bool _NoteDataLoading;
+        #region EmployeeNoteDataLoading
+        private bool _EmployeeNoteDataLoading;
 
-		public bool NoteDataLoading
-		{
-			get { return _NoteDataLoading; }
-			set
-			{
-				if (_NoteDataLoading != value)
-				{
-					_NoteDataLoading = value;
-					NotifyPropertyChanged("NoteDataLoading");
-				}
-			}
-		}
-		#endregion
+        public bool EmployeeNoteDataLoading
+        {
+            get { return _EmployeeNoteDataLoading; }
+            set
+            {
+                if (_EmployeeNoteDataLoading != value)
+                {
+                    _EmployeeNoteDataLoading = value;
+                    NotifyPropertyChanged("EmployeeNoteDataLoading");
+                }
+            }
+        }
+        #endregion
 
-
-		#region EmployeeCardsFromDB
-		private ObservableCollection<EmployeeCardViewModel> _EmployeeCardsFromDB;
+        #region EmployeeCardsFromDB
+        private ObservableCollection<EmployeeCardViewModel> _EmployeeCardsFromDB;
 
         public ObservableCollection<EmployeeCardViewModel> EmployeeCardsFromDB
         {
@@ -370,6 +265,23 @@ namespace SirmiumERPGFC.Views.Employees
                 {
                     _EmployeeCardsFromDB = value;
                     NotifyPropertyChanged("EmployeeCardsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeCard
+        private EmployeeCardViewModel _CurrentEmployeeCard;
+
+        public EmployeeCardViewModel CurrentEmployeeCard
+        {
+            get { return _CurrentEmployeeCard; }
+            set
+            {
+                if (_CurrentEmployeeCard != value)
+                {
+                    _CurrentEmployeeCard = value;
+                    NotifyPropertyChanged("CurrentEmployeeCard");
                 }
             }
         }
@@ -392,6 +304,158 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
+        #region EmployeeProfessionsFromDB
+        private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessionsFromDB;
+
+        public ObservableCollection<EmployeeProfessionItemViewModel> EmployeeProfessionsFromDB
+        {
+            get { return _EmployeeProfessionsFromDB; }
+            set
+            {
+                if (_EmployeeProfessionsFromDB != value)
+                {
+                    _EmployeeProfessionsFromDB = value;
+                    NotifyPropertyChanged("EmployeeProfessionsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeProfession
+        private EmployeeProfessionItemViewModel _CurrentEmployeeProfession;
+
+        public EmployeeProfessionItemViewModel CurrentEmployeeProfession
+        {
+            get { return _CurrentEmployeeProfession; }
+            set
+            {
+                if (_CurrentEmployeeProfession != value)
+                {
+                    _CurrentEmployeeProfession = value;
+                    NotifyPropertyChanged("CurrentEmployeeProfession");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeProfessionDataLoading
+        private bool _EmployeeProfessionDataLoading;
+
+        public bool EmployeeProfessionDataLoading
+        {
+            get { return _EmployeeProfessionDataLoading; }
+            set
+            {
+                if (_EmployeeProfessionDataLoading != value)
+                {
+                    _EmployeeProfessionDataLoading = value;
+                    NotifyPropertyChanged("EmployeeProfessionDataLoading");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeLicencesFromDB
+        private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicencesFromDB;
+
+        public ObservableCollection<EmployeeLicenceItemViewModel> EmployeeLicencesFromDB
+        {
+            get { return _EmployeeLicencesFromDB; }
+            set
+            {
+                if (_EmployeeLicencesFromDB != value)
+                {
+                    _EmployeeLicencesFromDB = value;
+                    NotifyPropertyChanged("EmployeeLicencesFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeLicence
+        private EmployeeLicenceItemViewModel _CurrentEmployeeLicence;
+
+        public EmployeeLicenceItemViewModel CurrentEmployeeLicence
+        {
+            get { return _CurrentEmployeeLicence; }
+            set
+            {
+                if (_CurrentEmployeeLicence != value)
+                {
+                    _CurrentEmployeeLicence = value;
+                    NotifyPropertyChanged("CurrentEmployeeLicence");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeLicenceDataLoading
+        private bool _EmployeeLicenceDataLoading;
+
+        public bool EmployeeLicenceDataLoading
+        {
+            get { return _EmployeeLicenceDataLoading; }
+            set
+            {
+                if (_EmployeeLicenceDataLoading != value)
+                {
+                    _EmployeeLicenceDataLoading = value;
+                    NotifyPropertyChanged("EmployeeLicenceDataLoading");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeItemsFromDB
+        private ObservableCollection<EmployeeItemViewModel> _EmployeeItemsFromDB;
+
+        public ObservableCollection<EmployeeItemViewModel> EmployeeItemsFromDB
+        {
+            get { return _EmployeeItemsFromDB; }
+            set
+            {
+                if (_EmployeeItemsFromDB != value)
+                {
+                    _EmployeeItemsFromDB = value;
+                    NotifyPropertyChanged("EmployeeItemsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeItem
+        private EmployeeItemViewModel _CurrentEmployeeItem;
+
+        public EmployeeItemViewModel CurrentEmployeeItem
+        {
+            get { return _CurrentEmployeeItem; }
+            set
+            {
+                if (_CurrentEmployeeItem != value)
+                {
+                    _CurrentEmployeeItem = value;
+                    NotifyPropertyChanged("CurrentEmployeeItem");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeItemDataLoading
+        private bool _EmployeeItemDataLoading;
+
+        public bool EmployeeItemDataLoading
+        {
+            get { return _EmployeeItemDataLoading; }
+            set
+            {
+                if (_EmployeeItemDataLoading != value)
+                {
+                    _EmployeeItemDataLoading = value;
+                    NotifyPropertyChanged("EmployeeProfessionDataLoading");
+                }
+            }
+        }
+        #endregion
 
         #region Pagination data
         int currentPage = 1;
@@ -416,36 +480,49 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
         #endregion
 
-
-        #region RefreshButtonContent
-        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-
-        public string RefreshButtonContent
+        #region StatusOptions
+        public ObservableCollection<String> StatusOptions
         {
-            get { return _RefreshButtonContent; }
+            get
+            {
+                return new ObservableCollection<String>(new List<string>() {
+                           ChooseStatusConverter.ChooseO,
+                           ChooseStatusConverter.ChooseB,
+
+                });
+            }
+        }
+        #endregion
+
+        #region SyncButtonContent
+        private string _SyncButtonContent = " OSVEŽI ";
+
+        public string SyncButtonContent
+        {
+            get { return _SyncButtonContent; }
             set
             {
-                if (_RefreshButtonContent != value)
+                if (_SyncButtonContent != value)
                 {
-                    _RefreshButtonContent = value;
-                    NotifyPropertyChanged("RefreshButtonContent");
+                    _SyncButtonContent = value;
+                    NotifyPropertyChanged("SyncButtonContent");
                 }
             }
         }
         #endregion
 
-        #region RefreshButtonEnabled
-        private bool _RefreshButtonEnabled = true;
+        #region SyncButtonEnabled
+        private bool _SyncButtonEnabled = true;
 
-        public bool RefreshButtonEnabled
+        public bool SyncButtonEnabled
         {
-            get { return _RefreshButtonEnabled; }
+            get { return _SyncButtonEnabled; }
             set
             {
-                if (_RefreshButtonEnabled != value)
+                if (_SyncButtonEnabled != value)
                 {
-                    _RefreshButtonEnabled = value;
-                    NotifyPropertyChanged("RefreshButtonEnabled");
+                    _SyncButtonEnabled = value;
+                    NotifyPropertyChanged("SyncButtonEnabled");
                 }
             }
         }
@@ -457,24 +534,24 @@ namespace SirmiumERPGFC.Views.Employees
 
         public Employee_List()
         {
-            // Get required service
-            this.employeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
-            this.employeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
-            this.employeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
-            this.employeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
-            this.employeeDocumentService = DependencyResolver.Kernel.Get<IEmployeeDocumentService>();
-            this.employeeCardService = DependencyResolver.Kernel.Get<IEmployeeCardService>();
-            this.employeeNoteService = DependencyResolver.Kernel.Get<IEmployeeNoteService>();
-
+            // Get required services
+            employeeService = DependencyResolver.Kernel.Get<IEmployeeService>();
+            employeeCardService = DependencyResolver.Kernel.Get<IEmployeeCardService>();
+            employeeDocumentService = DependencyResolver.Kernel.Get<IEmployeeDocumentService>();
+            employeeNoteService = DependencyResolver.Kernel.Get<IEmployeeNoteService>();
+            employeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
+            employeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
+            employeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
             InitializeComponent();
 
             this.DataContext = this;
-
+        }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
             Thread displayThread = new Thread(() => SyncData());
             displayThread.IsBackground = true;
             displayThread.Start();
         }
-
         #endregion
 
         #region Display data
@@ -497,12 +574,19 @@ namespace SirmiumERPGFC.Views.Employees
         {
             currentPage = 1;
 
-            Thread displayThread = new Thread(() => PopulateData());
+            Thread displayThread = new Thread(() => DisplayData());
             displayThread.IsBackground = true;
             displayThread.Start();
         }
 
-        private void PopulateData()
+        private void txtSearchByEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
+        }
+
+        public void DisplayData()
         {
             EmployeeDataLoading = true;
 
@@ -529,68 +613,26 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeDataLoading = false;
         }
 
-        private void DisplayEmployeeItemData()
+        private void DisplayEmployeeNoteData()
         {
-            EmployeeItemDataLoading = true;
+            EmployeeNoteDataLoading = true;
 
-            EmployeeItemListResponse response = new EmployeeItemSQLiteRepository()
-                .GetEmployeeItemsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+            EmployeeNoteListResponse response = new EmployeeNoteSQLiteRepository()
+                .GetEmployeeNotesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
 
             if (response.Success)
             {
-                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>(
-                    response.EmployeeItems ?? new List<EmployeeItemViewModel>());
+                EmployeeNotesFromDB = new ObservableCollection<EmployeeNoteViewModel>(
+                    response.EmployeeNotes ?? new List<EmployeeNoteViewModel>());
             }
             else
             {
-                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
-                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_prilikom_učitavanja_podatakaUzvičnik"));
+                EmployeeNotesFromDB = new ObservableCollection<EmployeeNoteViewModel>();
             }
 
-            EmployeeItemDataLoading = false;
+            EmployeeNoteDataLoading = false;
         }
-
-        private void DisplayProfessionItemData()
-        {
-            LoadingProfessionItems = true;
-
-            EmployeeProfessionItemListResponse response = new EmployeeProfessionItemSQLiteRepository()
-                .GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
-
-            if (response.Success)
-            {
-                EmployeeProfessionItemsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>(
-                    response.EmployeeProfessionItems ?? new List<EmployeeProfessionItemViewModel>());
-            }
-            else
-            {
-                EmployeeProfessionItemsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
-            }
-
-            LoadingProfessionItems = false;
-        }
-
-        private void DisplayLicenceItemData()
-        {
-            LoadingLicenceItems = true;
-
-            if (CurrentEmployee != null)
-            {
-                EmployeeLicenceItemsFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>(
-                    new List<EmployeeLicenceItemViewModel>()
-                    {
-                        new EmployeeLicenceItemViewModel() { ValidFrom = CurrentEmployee.WorkPermitFrom, ValidTo = CurrentEmployee.WorkPermitTo }
-                    });
-            }
-            else
-            {
-                EmployeeLicenceItemsFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>();
-            }
-
-            LoadingLicenceItems = false;
-        }
-
-        private void DisplayDocumentData()
+        private void DisplayEmployeeDocumentData()
         {
             EmployeeDocumentDataLoading = true;
 
@@ -610,27 +652,7 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeDocumentDataLoading = false;
         }
 
-		private void DisplayEmployeeNoteData()
-		{
-			NoteDataLoading = true;
-
-			EmployeeNoteListResponse response = new EmployeeNoteSQLiteRepository()
-				.GetEmployeeNotesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
-
-			if (response.Success)
-			{
-				NotesFromDB = new ObservableCollection<EmployeeNoteViewModel>(
-					response.EmployeeNotes ?? new List<EmployeeNoteViewModel>());
-			}
-			else
-			{
-				NotesFromDB = new ObservableCollection<EmployeeNoteViewModel>();
-			}
-
-			NoteDataLoading = false;
-		}
-
-		private void DisplayCardData()
+        private void DisplayEmployeeCardData()
         {
             EmployeeCardDataLoading = true;
 
@@ -650,113 +672,466 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeCardDataLoading = false;
         }
 
-        private void SyncData()
+        private void DisplayEmployeeProfessionData()
         {
-            RefreshButtonEnabled = false;
+            EmployeeProfessionDataLoading = true;
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
-            new EmployeeSQLiteRepository().Sync(employeeService, (synced, toSync) => {
-                if (toSync > 0)
-                    RefreshButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke")) + " (" + synced + "/" + toSync + ")";
-            });
+            EmployeeProfessionItemListResponse response = new EmployeeProfessionItemSQLiteRepository()
+                .GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
 
-            RefreshButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
-            new EmployeeItemSQLiteRepository().Sync(employeeItemService);
-            new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService);
-            new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService);
-            new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService);
-            new EmployeeCardSQLiteRepository().Sync(employeeCardService);
-            new EmployeeNoteSQLiteRepository().Sync(employeeNoteService);
+            if (response.Success)
+            {
+                EmployeeProfessionsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>(
+                    response.EmployeeProfessionItems ?? new List<EmployeeProfessionItemViewModel>());
+            }
+            else
+            {
+                EmployeeProfessionsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
+            }
 
-            PopulateData();
-
-            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            RefreshButtonEnabled = true;
+            EmployeeDocumentDataLoading = false;
         }
 
+        private void DisplayEmployeeLicenceData()
+        {
+            EmployeeLicenceDataLoading = true;
+
+            EmployeeLicenceItemListResponse response = new EmployeeLicenceItemSQLiteRepository()
+                .GetEmployeeLicencesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeLicencesFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>(
+                    response.EmployeeLicenceItems ?? new List<EmployeeLicenceItemViewModel>());
+            }
+            else
+            {
+                EmployeeLicencesFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>();
+            }
+
+            EmployeeLicenceDataLoading = false;
+        }
+
+        private void DisplayEmployeeItemData()
+        {
+            EmployeeItemDataLoading = true;
+
+            EmployeeItemListResponse response = new EmployeeItemSQLiteRepository()
+                .GetEmployeeItemsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>(
+                    response.EmployeeItems ?? new List<EmployeeItemViewModel>());
+            }
+            else
+            {
+                EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
+            }
+
+            EmployeeItemDataLoading = false;
+        }
+
+        private void SyncData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Računi ... ";
+            new EmployeeSQLiteRepository().Sync(employeeService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeNoteSQLiteRepository().Sync(employeeNoteService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeCardSQLiteRepository().Sync(employeeCardService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeItemSQLiteRepository().Sync(employeeItemService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+            DisplayData();
+            CurrentEmployee = null;
+            EmployeeNotesFromDB = new ObservableCollection<EmployeeNoteViewModel>();
+            EmployeeDocumentsFromDB = new ObservableCollection<EmployeeDocumentViewModel>();
+            EmployeeCardsFromDB = new ObservableCollection<EmployeeCardViewModel>();
+            EmployeeProfessionsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
+            EmployeeLicencesFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>();
+            EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+        private void SyncNoteData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeNoteSQLiteRepository().Sync(employeeNoteService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayEmployeeNoteData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncDocumentData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayEmployeeDocumentData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncCardData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeCardSQLiteRepository().Sync(employeeCardService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayEmployeeCardData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncProfessionData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayEmployeeProfessionData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncLicenceData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayEmployeeLicenceData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
+
+        private void SyncItemData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = " Stavke ... ";
+            new EmployeeItemSQLiteRepository().Sync(employeeItemService, (synced, toSync) =>
+            {
+                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayEmployeeItemData();
+
+            SyncButtonContent = " OSVEŽI ";
+            SyncButtonEnabled = true;
+        }
         private void dgEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void txtSearchByEmployeeCode_TextChanged(object sender, TextChangedEventArgs e)
+        private void DgEmployeeCards_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            Thread th = new Thread(() => PopulateData());
-            th.IsBackground = true;
-            th.Start();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgEmployeeNotes_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgEmpolyeeDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgEmpolyeeProfessions_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgEmployeeLicences_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void DgEmpolyeeItems_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #endregion
 
-        #region Add, edit and delete methods
+        #region Add, edit, delete, lock and cancel
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             EmployeeViewModel Employee = new EmployeeViewModel();
             Employee.Identifier = Guid.NewGuid();
-            Employee.Gender = 1;
-
-            Employee_List_AddEdit EmployeeAddEditForm = new Employee_List_AddEdit(Employee, true, false);
-            EmployeeAddEditForm.EmployeeCreated += new EmployeeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_radnicima")), 95, EmployeeAddEditForm);
+            
+            Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(Employee, true, false);
+            addEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_fizičkim_licima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_izmenuUzvičnik"));
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fizičko_lice_za_izmenuUzvičnik"));
                 return;
             }
 
-            Employee_List_AddEdit EmployeeAddEditForm = new Employee_List_AddEdit(CurrentEmployee, false, false);
-            EmployeeAddEditForm.EmployeeCreated += new EmployeeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_radnicima")), 90, EmployeeAddEditForm);
+            Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(CurrentEmployee, false);
+            addEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_fizičkom_licu")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fizičko_lice_za_brisanjeUzvičnik"));
                 return;
             }
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("stavku", CurrentEmployee.Code.ToString());
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
+            // Delete data
+            var result = employeeService.Delete(CurrentEmployee.Identifier);
+            if (result.Success)
             {
-                EmployeeResponse response = employeeService.Delete(CurrentEmployee.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                }
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
-                var result = new EmployeeSQLiteRepository().Delete(CurrentEmployee.Identifier);
-                if (result.Success)
-                {
-                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
-
-                    Thread displayThread = new Thread(() => PopulateData());
-                    displayThread.IsBackground = true;
-                    displayThread.Start();
-                }
-                else
-                {
-                    MainWindow.ErrorMessage = result.Message;
-                }
+                Thread displayThread = new Thread(() => SyncData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
             }
+            else
+            {
+                MainWindow.ErrorMessage = result.Message;
+            }
+        }
 
-            // Remove blur effects
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        private void BtnAddCards_Click(object sender, RoutedEventArgs e)
+        {
+            //#region Validation
+
+            //if (CurrentEmployee == null)
+            //{
+            //    MainWindow.WarningMessage = "Morate odabrati račun!";
+            //    return;
+            //}
+
+            //#endregion
+
+            //Employee_Card_AddEdit EmployeeCardAddEditForm = new Employee_Card_AddEdit(CurrentEmployee);
+            //EmployeeCardAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncCardData);
+            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeCardAddEditForm);
+        }
+
+        private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            //#region Validation
+
+            //if (CurrentEmployee == null)
+            //{
+            //    MainWindow.WarningMessage = "Morate odabrati račun!";
+            //    return;
+            //}
+
+            //#endregion
+
+            //Employee_Document_AddEdit EmployeeDocumentAddEditForm = new Employee_Document_AddEdit(CurrentEmployee);
+            //EmployeeDocumentAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncDocumentData);
+            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeDocumentAddEditForm);
+        }
+
+        private void BtnAddNotes_Click(object sender, RoutedEventArgs e)
+        {
+            //#region Validation
+
+            //if (CurrentEmployee == null)
+            //{
+            //    MainWindow.WarningMessage = "Morate odabrati račun!";
+            //    return;
+            //}
+
+            //#endregion
+
+            //Employee_Note_AddEdit EmployeeNoteAddEditForm = new Employee_Note_AddEdit(CurrentEmployee);
+            //EmployeeNoteAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncNoteData);
+            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeNoteAddEditForm);
+        }
+        private void BtnAddProfessions_Click(object sender, RoutedEventArgs e)
+        {
+            //#region Validation
+
+            //if (CurrentEmployee == null)
+            //{
+            //    MainWindow.WarningMessage = "Morate odabrati račun!";
+            //    return;
+            //}
+
+            //#endregion
+
+            //Employee_Profession_AddEdit EmployeeProfessionAddEditForm = new Employee_Profession_AddEdit(CurrentEmployee);
+            //EmployeeProfessionAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncProfessionData);
+            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeProfessionAddEditForm);
+        }
+        private void BtnAddLicences_Click(object sender, RoutedEventArgs e)
+        {
+            //#region Validation
+
+            //if (CurrentEmployee == null)
+            //{
+            //    MainWindow.WarningMessage = "Morate odabrati račun!";
+            //    return;
+            //}
+
+            //#endregion
+
+            //Employee_Licence_AddEdit EmployeeLicenceAddEditForm = new Employee_Licence_AddEdit(CurrentEmployee);
+            //EmployeeLicenceAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncLicenceData);
+            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeLicenceAddEditForm);
+        }
+        private void BtnAddItems_Click(object sender, RoutedEventArgs e)
+        {
+            //#region Validation
+
+            //if (CurrentEmployee == null)
+            //{
+            //    MainWindow.WarningMessage = "Morate odabrati račun!";
+            //    return;
+            //}
+
+            //#endregion
+
+            //Employee_Item_AddEdit EmployeeItemAddEditForm = new Employee_Item_AddEdit(CurrentEmployee);
+            //EmployeeItemAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncItemData);
+            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeItemAddEditForm);
         }
 
         #endregion
 
+        #region Pagination
+
+        private void btnFirstPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage = 1;
+
+                Thread displayThread = new Thread(() => DisplayData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+
+                Thread displayThread = new Thread(() => DisplayData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage < Math.Ceiling((double)this.totalItems / this.itemsPerPage))
+            {
+                currentPage++;
+
+                Thread displayThread = new Thread(() => DisplayData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        private void btnLastPage_Click(object sender, RoutedEventArgs e)
+        {
+            int lastPage = (int)Math.Ceiling((double)this.totalItems / this.itemsPerPage);
+            if (currentPage < lastPage)
+            {
+                currentPage = lastPage;
+
+                Thread displayThread = new Thread(() => DisplayData());
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+        }
+
+        #endregion
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                EmployeesExcelReport.Show(EmployeesFromDB.ToList());
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+        
+        
         #region Display documents
 
         private void btnShowDocument_Click(object sender, RoutedEventArgs e)
@@ -776,60 +1151,7 @@ namespace SirmiumERPGFC.Views.Employees
         }
 
         #endregion
-
-        #region Pagination
-
-        private void btnFirstPage_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage = 1;
-
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-        }
-
-        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage--;
-
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-        }
-
-        private void btnNextPage_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPage < Math.Ceiling((double)this.totalItems / this.itemsPerPage))
-            {
-                currentPage++;
-
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-        }
-
-        private void btnLastPage_Click(object sender, RoutedEventArgs e)
-        {
-            int lastPage = (int)Math.Ceiling((double)this.totalItems / this.itemsPerPage);
-            if (currentPage < lastPage)
-            {
-                currentPage = lastPage;
-
-                Thread displayThread = new Thread(() => PopulateData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-        }
-
-        #endregion
-
+                
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 

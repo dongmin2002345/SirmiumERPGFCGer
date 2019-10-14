@@ -117,11 +117,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "@EmbassyDate, @VisaDate, @VisaValidFrom, @VisaValidTo, @WorkPermitFrom, @WorkPermitTo, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-        #endregion
-
         #region Helper methods
-
-        private EmployeeViewModel Read(SqliteDataReader query)
+        private static EmployeeViewModel Read(SqliteDataReader query)
         {
             int counter = 0;
             EmployeeViewModel dbEntry = new EmployeeViewModel();
@@ -165,7 +162,6 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
             dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-
             return dbEntry;
         }
 
@@ -240,6 +236,23 @@ namespace SirmiumERPGFC.Repository.Employees
 
             return insertCommand;
         }
+
+        #endregion
+
+        public EmployeeListResponse GetEmployeesByPage(int companyId, EmployeeViewModel EmployeeSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        {
+            EmployeeListResponse response = new EmployeeListResponse();
+            List<EmployeeViewModel> Employees = new List<EmployeeViewModel>();
+
+        #region Helper methods
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        EmployeeViewModel dbEntry = Read(query);
+                        Employees.Add(dbEntry);
+                    }
 
         #endregion
 
@@ -773,7 +786,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }

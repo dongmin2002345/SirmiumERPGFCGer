@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Employees
                 "CREATE VIEW vEmployeeCards AS " +
                 "SELECT employeeCard.Id AS EmployeeCardId, employeeCard.Identifier AS EmployeeCardIdentifier, " +
                 "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
-                "employeeCard.CardDate, employeeCard.Description, employeeCard.PlusMinus, " +
+                "employeeCard.CardDate, employeeCard.Description, employeeCard.PlusMinus, employeeCard.ItemStatus, " +
                 "employeeCard.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (employeeCard.UpdatedAt), (employee.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

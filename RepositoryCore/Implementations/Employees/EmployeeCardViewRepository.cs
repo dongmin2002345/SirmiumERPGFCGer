@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeCardId, EmployeeCardIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "CardDate, Description, PlusMinus, " +
+                "CardDate, Description, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeCards " +
@@ -69,7 +69,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Description = reader["Description"].ToString();
                         if (reader["PlusMinus"] != DBNull.Value)
                             employeeCard.PlusMinus = reader["PlusMinus"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeCard.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeCard.Active = bool.Parse(reader["Active"].ToString());
                         employeeCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -113,7 +114,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeCardId, EmployeeCardIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "CardDate, Description, PlusMinus, " +
+                "CardDate, Description, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeCards " +
@@ -151,7 +152,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Description = reader["Description"].ToString();
                         if (reader["PlusMinus"] != DBNull.Value)
                             employeeCard.PlusMinus = reader["PlusMinus"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeCard.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeCard.Active = bool.Parse(reader["Active"].ToString());
                         employeeCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -197,7 +199,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeCardId, EmployeeCardIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "CardDate, Description, PlusMinus, " +
+                "CardDate, Description, PlusMinus, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeCards " +
@@ -237,7 +239,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeCard.Description = reader["Description"].ToString();
                         if (reader["PlusMinus"] != DBNull.Value)
                             employeeCard.PlusMinus = reader["PlusMinus"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeCard.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeCard.Active = bool.Parse(reader["Active"].ToString());
                         employeeCard.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -283,7 +286,8 @@ namespace RepositoryCore.Implementations.Employees
                 EmployeeCard.Id = 0;
 
                 EmployeeCard.Active = true;
-
+                EmployeeCard.UpdatedAt = DateTime.Now;
+                EmployeeCard.CreatedAt = DateTime.Now;
                 context.EmployeeCards.Add(EmployeeCard);
                 return EmployeeCard;
             }
@@ -302,7 +306,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.CardDate = EmployeeCard.CardDate;
                     dbEntry.Description = EmployeeCard.Description;
                     dbEntry.PlusMinus = EmployeeCard.PlusMinus;
-
+                    dbEntry.ItemStatus = EmployeeCard.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
@@ -314,8 +318,10 @@ namespace RepositoryCore.Implementations.Employees
         public EmployeeCard Delete(Guid identifier)
         {
             EmployeeCard dbEntry = context.EmployeeCards
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+                .Union(context.ChangeTracker.Entries()
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeCard))
+                   .Select(x => x.Entity as EmployeeCard))
+               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

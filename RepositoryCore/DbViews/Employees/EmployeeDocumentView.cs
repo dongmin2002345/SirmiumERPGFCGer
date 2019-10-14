@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Employees
                 "CREATE VIEW vEmployeeDocuments AS " +
                 "SELECT employeeDocument.Id AS EmployeeDocumentId, employeeDocument.Identifier AS EmployeeDocumentIdentifier, " +
                 "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
-                "employeeDocument.Name, employeeDocument.CreateDate, employeeDocument.Path, " +
+                "employeeDocument.Name, employeeDocument.CreateDate, employeeDocument.Path, employeeDocument.ItemStatus, " +
                 "employeeDocument.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (employeeDocument.UpdatedAt), (employee.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

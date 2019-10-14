@@ -25,7 +25,7 @@ namespace RepositoryCore.DbViews.Employees
                 "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
                 "licence.Id AS LicenceId, licence.Identifier AS LicenceIdentifier, licence.Code AS LicenceCode, licence.Category AS LicenceCategory, licence.Description AS LicenceDescription, " +
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
-                "employeeLicence.ValidFrom, employeeLicence.ValidTo, " +
+                "employeeLicence.ValidFrom, employeeLicence.ValidTo, employeeLicence.ItemStatus, " +
                 "employeeLicence.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (employeeLicence.UpdatedAt), (employee.UpdatedAt), (licence.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

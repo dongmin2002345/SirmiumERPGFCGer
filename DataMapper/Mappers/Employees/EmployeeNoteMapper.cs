@@ -31,7 +31,7 @@ namespace DataMapper.Mappers.Employees
 
                 Note = EmployeeNote.Note,
                 NoteDate = EmployeeNote.NoteDate,
-
+                ItemStatus = EmployeeNote.ItemStatus,
                 IsActive = EmployeeNote.Active,
 
                 CreatedBy = EmployeeNote.CreatedBy?.ConvertToUserViewModelLite(),
@@ -53,7 +53,7 @@ namespace DataMapper.Mappers.Employees
 
                 Note = EmployeeNote.Note,
                 NoteDate = EmployeeNote.NoteDate,
-
+                ItemStatus = EmployeeNote.ItemStatus,
                 IsActive = EmployeeNote.Active,
 
                 UpdatedAt = EmployeeNote.UpdatedAt,
@@ -74,7 +74,8 @@ namespace DataMapper.Mappers.Employees
 
                 Note = EmployeeNoteViewModel.Note,
                 NoteDate = EmployeeNoteViewModel.NoteDate,
-
+                ItemStatus = EmployeeNoteViewModel.ItemStatus,
+                Active = EmployeeNoteViewModel.IsActive,
                 CreatedById = EmployeeNoteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = EmployeeNoteViewModel.Company?.Id ?? null,
 
