@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (CurrentConstructionSiteDocumentForm.Name == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Napomena";
+                MainWindow.ErrorMessage = "Obavezno polje: Naziv";
                 return;
             }
 

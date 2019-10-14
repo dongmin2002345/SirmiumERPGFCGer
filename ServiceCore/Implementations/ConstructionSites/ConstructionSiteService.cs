@@ -80,6 +80,8 @@ namespace ServiceCore.Implementations.ConstructionSites
                 constructionSite.ConstructionSiteDocuments = null;
                 List<ConstructionSiteNoteViewModel> constructionSiteNotes = constructionSite.ConstructionSiteNotes?.ToList() ?? new List<ConstructionSiteNoteViewModel>();
                 constructionSite.ConstructionSiteNotes = null;
+                List<ConstructionSiteCalculationViewModel> constructionSiteCalculations = constructionSite.ConstructionSiteCalculations?.ToList() ?? new List<ConstructionSiteCalculationViewModel>();
+                constructionSite.ConstructionSiteCalculations = null;
 
                 ConstructionSite createdConstructionSite = unitOfWork.GetConstructionSiteRepository()
                     .Create(constructionSite.ConvertToConstructionSite());
@@ -125,6 +127,28 @@ namespace ServiceCore.Implementations.ConstructionSites
 
                         unitOfWork.GetConstructionSiteDocumentRepository().Delete(item.Identifier);
                     }
+                }
+
+                // Update calculations
+                if (constructionSiteCalculations != null && constructionSiteCalculations.Count > 0)
+                {
+                    foreach (ConstructionSiteCalculationViewModel item in constructionSiteCalculations
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<ConstructionSiteCalculationViewModel>())
+                    {
+                        item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetConstructionSiteCalculationRepository().Create(item.ConvertToConstructionSiteCalculation());
+                    }
+
+                    foreach (ConstructionSiteCalculationViewModel item in constructionSiteCalculations
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<ConstructionSiteCalculationViewModel>())
+                    {
+                        item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                        unitOfWork.GetConstructionSiteCalculationRepository().Create(item.ConvertToConstructionSiteCalculation());
+
+                        unitOfWork.GetConstructionSiteCalculationRepository().Delete(item.Identifier);
+                    }
+
                 }
                 //// Update items
                 //var ConstructionSiteDocumentsFromDB = unitOfWork.GetConstructionSiteDocumentRepository().GetConstructionSiteDocumentsByConstructionSite(createdConstructionSite.Id);

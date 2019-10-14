@@ -259,7 +259,10 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             CurrentConstructionSiteCalculationForm.IsSynced = false;
             CurrentConstructionSiteCalculationForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
             CurrentConstructionSiteCalculationForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
+            CurrentConstructionSiteCalculationForm.NewValue =
+                CurrentConstructionSiteCalculationForm.NumOfEmployees *
+                CurrentConstructionSiteCalculationForm.EmployeePrice *
+                CurrentConstructionSiteCalculationForm.NumOfMonths;
             var response = new ConstructionSiteCalculationSQLiteRepository().Create(CurrentConstructionSiteCalculationForm);
             if (!response.Success)
             {

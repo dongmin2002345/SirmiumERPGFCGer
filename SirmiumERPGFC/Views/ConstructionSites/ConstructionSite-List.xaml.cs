@@ -40,6 +40,22 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         IConstructionSiteNoteService constructionSiteNoteService;
         #endregion
 
+        #region ConstructionSiteSearchObject
+        private ConstructionSiteViewModel _ConstructionSiteSearchObject = new ConstructionSiteViewModel();
+
+        public ConstructionSiteViewModel ConstructionSiteSearchObject
+        {
+            get { return _ConstructionSiteSearchObject; }
+            set
+            {
+                if (_ConstructionSiteSearchObject != value)
+                {
+                    _ConstructionSiteSearchObject = value;
+                    NotifyPropertyChanged("ConstructionSiteSearchObject");
+                }
+            }
+        }
+        #endregion
 
         #region ConstructionSitesFromDB
         private ObservableCollection<ConstructionSiteViewModel> _ConstructionSitesFromDB;
@@ -81,23 +97,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                         th.IsBackground = true;
                         th.Start();
                     }
-                }
-            }
-        }
-        #endregion
-
-        #region ConstructionSiteSearchObject
-        private ConstructionSiteViewModel _ConstructionSiteSearchObject = new ConstructionSiteViewModel();
-
-        public ConstructionSiteViewModel ConstructionSiteSearchObject
-        {
-            get { return _ConstructionSiteSearchObject; }
-            set
-            {
-                if (_ConstructionSiteSearchObject != value)
-                {
-                    _ConstructionSiteSearchObject = value;
-                    NotifyPropertyChanged("ConstructionSiteSearchObject");
                 }
             }
         }
@@ -173,31 +172,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
 
-        #region Pagination data
-        int currentPage = 1;
-        int itemsPerPage = 50;
-        int totalItems = 0;
-
-        #region PaginationDisplay
-        private string _PaginationDisplay;
-
-        public string PaginationDisplay
-        {
-            get { return _PaginationDisplay; }
-            set
-            {
-                if (_PaginationDisplay != value)
-                {
-                    _PaginationDisplay = value;
-                    NotifyPropertyChanged("PaginationDisplay");
-                }
-            }
-        }
-        #endregion
-
-        #endregion
-
-
         #region ConstructionSiteCalculationsFromDB
         private ObservableCollection<ConstructionSiteCalculationViewModel> _ConstructionSiteCalculationsFromDB;
 
@@ -247,75 +221,83 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 }
             }
         }
-		#endregion
+        #endregion
 
 
-		#region ConstructionSiteNotesFromDB
-		private ObservableCollection<ConstructionSiteNoteViewModel> _ConstructionSiteNotesFromDB;
+        #region ConstructionSiteNotesFromDB
+        private ObservableCollection<ConstructionSiteNoteViewModel> _ConstructionSiteNotesFromDB;
 
-		public ObservableCollection<ConstructionSiteNoteViewModel> ConstructionSiteNotesFromDB
+        public ObservableCollection<ConstructionSiteNoteViewModel> ConstructionSiteNotesFromDB
         {
-			get { return _ConstructionSiteNotesFromDB; }
-			set
-			{
-				if (_ConstructionSiteNotesFromDB != value)
-				{
+            get { return _ConstructionSiteNotesFromDB; }
+            set
+            {
+                if (_ConstructionSiteNotesFromDB != value)
+                {
                     _ConstructionSiteNotesFromDB = value;
-					NotifyPropertyChanged("ConstructionSiteNotesFromDB");
-				}
-			}
-		}
+                    NotifyPropertyChanged("ConstructionSiteNotesFromDB");
+                }
+            }
+        }
         #endregion
 
         #region CurrentConstructionSiteNoteForm
         private ConstructionSiteNoteViewModel _CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
 
-		public ConstructionSiteNoteViewModel CurrentConstructionSiteNoteForm
+        public ConstructionSiteNoteViewModel CurrentConstructionSiteNoteForm
         {
-			get { return _CurrentConstructionSiteNoteForm; }
-			set
-			{
-				if (_CurrentConstructionSiteNoteForm != value)
-				{
+            get { return _CurrentConstructionSiteNoteForm; }
+            set
+            {
+                if (_CurrentConstructionSiteNoteForm != value)
+                {
                     _CurrentConstructionSiteNoteForm = value;
-					NotifyPropertyChanged("CurrentConstructionSiteNoteForm");
-				}
-			}
-		}
-        #endregion
-
-        #region CurrentConstructionSiteNoteDG
-        private ConstructionSiteNoteViewModel _CurrentConstructionSiteNoteDG;
-
-		public ConstructionSiteNoteViewModel CurrentConstructionSiteNoteDG
-        {
-			get { return _CurrentConstructionSiteNoteDG; }
-			set
-			{
-				if (_CurrentConstructionSiteNoteDG != value)
-				{
-                    _CurrentConstructionSiteNoteDG = value;
-					NotifyPropertyChanged("CurrentConstructionSiteNoteDG");
-				}
-			}
-		}
+                    NotifyPropertyChanged("CurrentConstructionSiteNoteForm");
+                }
+            }
+        }
         #endregion
 
         #region ConstructionSiteNoteDataLoading
         private bool _ConstructionSiteNoteDataLoading;
 
-		public bool ConstructionSiteNoteDataLoading
+        public bool ConstructionSiteNoteDataLoading
         {
-			get { return _ConstructionSiteNoteDataLoading; }
-			set
-			{
-				if (_ConstructionSiteNoteDataLoading != value)
-				{
+            get { return _ConstructionSiteNoteDataLoading; }
+            set
+            {
+                if (_ConstructionSiteNoteDataLoading != value)
+                {
                     _ConstructionSiteNoteDataLoading = value;
-					NotifyPropertyChanged("ConstructionSiteNoteDataLoading");
-				}
-			}
-		}
+                    NotifyPropertyChanged("ConstructionSiteNoteDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Pagination data
+        int currentPage = 1;
+        int itemsPerPage = 50;
+        int totalItems = 0;
+
+        #region PaginationDisplay
+        private string _PaginationDisplay;
+
+        public string PaginationDisplay
+        {
+            get { return _PaginationDisplay; }
+            set
+            {
+                if (_PaginationDisplay != value)
+                {
+                    _PaginationDisplay = value;
+                    NotifyPropertyChanged("PaginationDisplay");
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
 
@@ -367,7 +349,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             // Initialize form components
             InitializeComponent();
-
             this.DataContext = this;
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -399,12 +380,12 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             currentPage = 1;
 
-            Thread displayThread = new Thread(() => DisplayConstructionSiteData());
+            Thread displayThread = new Thread(() => DisplayData());
             displayThread.IsBackground = true;
             displayThread.Start();
         }
 
-        public void DisplayConstructionSiteData()
+        public void DisplayData()
         {
             ConstructionSiteDataLoading = true;
 
@@ -430,8 +411,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSiteDataLoading = false;
         }
-
-
 
         private void DisplayConstructionSiteCalculationData()
         {
@@ -517,7 +496,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
             });
 
-            DisplayConstructionSiteData();
+            DisplayData();
             CurrentConstructionSite = null;
             ConstructionSiteNotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>();
             ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>();
@@ -578,7 +557,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
-
         private void DgConstructionSiteNotes_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
@@ -641,37 +619,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 MainWindow.ErrorMessage = result.Message;
             }
-            //SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            //// Create confirmation window
-            //DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("grad", CurrentConstructionSite.Code + " " + CurrentConstructionSite.Name);
-            //var showDialog = deleteConfirmationForm.ShowDialog();
-            //if (showDialog != null && showDialog.Value)
-            //{
-            //    ConstructionSiteResponse response = constructionSiteService.Delete(CurrentConstructionSite.Identifier);
-            //    if (!response.Success)
-            //    {
-            //        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-            //        SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-            //        return;
-            //    }
-
-            //    response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
-            //    if (!response.Success)
-            //    {
-            //        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
-            //        SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-            //        return;
-            //    }
-
-            //    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Grad_je_uspešno_obrisanUzvičnik"));
-
-            //    Thread displayThread = new Thread(() => SyncData());
-            //    displayThread.IsBackground = true;
-            //    displayThread.Start();
-            //}
-
-            //SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
         #endregion
 
@@ -703,7 +650,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage = 1;
 
-                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
+                Thread displayThread = new Thread(() => DisplayData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -715,7 +662,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage--;
 
-                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
+                Thread displayThread = new Thread(() => DisplayData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -727,7 +674,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage++;
 
-                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
+                Thread displayThread = new Thread(() => DisplayData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -740,7 +687,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 currentPage = lastPage;
 
-                Thread displayThread = new Thread(() => DisplayConstructionSiteData());
+                Thread displayThread = new Thread(() => DisplayData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -762,6 +709,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #endregion
 
+        #region Add Items
         private void BtnAddConstructionSiteNote_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
@@ -813,6 +761,32 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             FlyoutHelper.OpenFlyout(this, "Podaci", 95, outputInvoiceCalculationAddEditForm);
         }
 
+        #endregion
+        #region Excel
+        private void btnExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList());
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+        private void btnConstructionSiteExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ConstructionSiteExcelReport.Show(CurrentConstructionSite);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+        #endregion
+
         //private void btnAddEmployees_Click(object sender, RoutedEventArgs e)
         //{
         //    if (CurrentConstructionSite == null)
@@ -851,27 +825,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         //    FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, removeForm);
         //}
 
-        private void btnExcel_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ConstructionSitesExcelReport.Show(ConstructionSitesFromDB.ToList());
-            }
-            catch(Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
-        }
-		private void btnConstructionSiteExcel_Click(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				ConstructionSiteExcelReport.Show(CurrentConstructionSite);
-			}
-			catch (Exception ex)
-			{
-				MainWindow.ErrorMessage = ex.Message;
-			}
-		}
-	}
+
+    }
 }
