@@ -213,6 +213,74 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
+        #region ConstructionSiteCalculationsFromDB
+        private ObservableCollection<ConstructionSiteCalculationViewModel> _ConstructionSiteCalculationsFromDB;
+
+        public ObservableCollection<ConstructionSiteCalculationViewModel> ConstructionSiteCalculationsFromDB
+        {
+            get { return _ConstructionSiteCalculationsFromDB; }
+            set
+            {
+                if (_ConstructionSiteCalculationsFromDB != value)
+                {
+                    _ConstructionSiteCalculationsFromDB = value;
+                    NotifyPropertyChanged("ConstructionSiteCalculationsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteCalculationForm
+        private ConstructionSiteCalculationViewModel _CurrentConstructionSiteCalculationForm = new ConstructionSiteCalculationViewModel();
+
+        public ConstructionSiteCalculationViewModel CurrentConstructionSiteCalculationForm
+        {
+            get { return _CurrentConstructionSiteCalculationForm; }
+            set
+            {
+                if (_CurrentConstructionSiteCalculationForm != value)
+                {
+                    _CurrentConstructionSiteCalculationForm = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteCalculationForm");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentConstructionSiteCalculationDG
+        private ConstructionSiteCalculationViewModel _CurrentConstructionSiteCalculationDG;
+
+        public ConstructionSiteCalculationViewModel CurrentConstructionSiteCalculationDG
+        {
+            get { return _CurrentConstructionSiteCalculationDG; }
+            set
+            {
+                if (_CurrentConstructionSiteCalculationDG != value)
+                {
+                    _CurrentConstructionSiteCalculationDG = value;
+                    NotifyPropertyChanged("CurrentConstructionSiteCalculationDG");
+                }
+            }
+        }
+        #endregion
+
+        #region ConstructionSiteCalculationDataLoading
+        private bool _ConstructionSiteCalculationDataLoading;
+
+        public bool ConstructionSiteCalculationDataLoading
+        {
+            get { return _ConstructionSiteCalculationDataLoading; }
+            set
+            {
+                if (_ConstructionSiteCalculationDataLoading != value)
+                {
+                    _ConstructionSiteCalculationDataLoading = value;
+                    NotifyPropertyChanged("ConstructionSiteCalculationDataLoading");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsHeaderCreated
         private bool _IsHeaderCreated;
@@ -266,35 +334,35 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
 
-        #region SaveButtonContent
-        private string _SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+        #region SubmitButtonContent
+        private string _SubmitButtonContent = " PROKNJIŽI ";
 
-        public string SaveButtonContent
+        public string SubmitButtonContent
         {
-            get { return _SaveButtonContent; }
+            get { return _SubmitButtonContent; }
             set
             {
-                if (_SaveButtonContent != value)
+                if (_SubmitButtonContent != value)
                 {
-                    _SaveButtonContent = value;
-                    NotifyPropertyChanged("SaveButtonContent");
+                    _SubmitButtonContent = value;
+                    NotifyPropertyChanged("SubmitButtonContent");
                 }
             }
         }
         #endregion
 
-        #region SaveButtonEnabled
-        private bool _SaveButtonEnabled = true;
+        #region SubmitButtonEnabled
+        private bool _SubmitButtonEnabled = true;
 
-        public bool SaveButtonEnabled
+        public bool SubmitButtonEnabled
         {
-            get { return _SaveButtonEnabled; }
+            get { return _SubmitButtonEnabled; }
             set
             {
-                if (_SaveButtonEnabled != value)
+                if (_SubmitButtonEnabled != value)
                 {
-                    _SaveButtonEnabled = value;
-                    NotifyPropertyChanged("SaveButtonEnabled");
+                    _SubmitButtonEnabled = value;
+                    NotifyPropertyChanged("SubmitButtonEnabled");
                 }
             }
         }
@@ -319,378 +387,446 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
 
-            Thread displayThread = new Thread(() =>
-            {
-                DisplayDocumentData();
-                DisplayConstructionSiteNoteData();
-            });
-            displayThread.IsBackground = true;
-            displayThread.Start();
+            //Thread displayThread = new Thread(() =>
+            //{
+            //    DisplayDocumentData();
+            //    DisplayConstructionSiteNoteData();
+            //});
+            //displayThread.IsBackground = true;
+            //displayThread.Start();
         }
 
         #endregion
 
-        private void DisplayDocumentData()
-        {
-            ConstructionSiteDocumentDataLoading = true;
+        #region Submit and Cancel 
 
-            ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentSQLiteRepository()
-                .GetConstructionSiteDocumentsByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
-
-            if (response.Success)
-            {
-                ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>(
-                    response.ConstructionSiteDocuments ?? new List<ConstructionSiteDocumentViewModel>());
-            }
-            else
-            {
-                ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>();
-            }
-
-            ConstructionSiteDocumentDataLoading = false;
-        }
-
-        private void DisplayConstructionSiteNoteData()
-        {
-            ConstructionSiteNoteDataLoading = true;
-
-            ConstructionSiteNoteListResponse response = new ConstructionSiteNoteSQLiteRepository()
-                .GetConstructionSiteNotesByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
-
-            if (response.Success)
-            {
-                ConstructionSiteNotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>(
-                    response.ConstructionSiteNotes ?? new List<ConstructionSiteNoteViewModel>());
-            }
-            else
-            {
-                ConstructionSiteNotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>();
-            }
-
-            ConstructionSiteNoteDataLoading = false;
-        }
-
-        #region Cancel and Save buttons
-
-        private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
-            //if (CurrentConstructionSite.Code == null)
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Sifra";
-            //    return;
-            //}
-
-            if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
+            if (CurrentConstructionSite?.Name == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_gradilista"));
+                MainWindow.WarningMessage = "Obavezno polje: Naziv!";
                 return;
             }
 
             #endregion
 
-            CurrentConstructionSite.IsSynced = false;
-            CurrentConstructionSite.UpdatedAt = DateTime.Now;
-            CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+            Thread td = new Thread(() => {
 
-            ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
-            response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
-            if (response.Success)
-            {
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvanoUzvičnik"));
-                IsHeaderCreated = true;
-
-                txtDocumentName.Focus();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
-        }
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            #region Validation
-
-            //if (CurrentConstructionSite.Code == null)
-            //{
-            //    MainWindow.WarningMessage = "Obavezno polje: Sifra";
-            //    return;
-            //}
-
-            if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_gradilista"));
-                return;
-            }
-
-            #endregion
-
-            Thread th = new Thread(() =>
-            {
-                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
-                SaveButtonEnabled = false;
+                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonEnabled = false;
 
                 CurrentConstructionSite.IsSynced = false;
-                CurrentConstructionSite.UpdatedAt = DateTime.Now;
                 CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-                                
-                ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
-                response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
+
+                ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
-                    return;
+                    MainWindow.ErrorMessage = "Greška kod čuvanja podataka!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
                 }
-
-                CurrentConstructionSite.ConstructionSiteDocuments = ConstructionSiteDocumentsFromDB;
-                CurrentConstructionSite.ConstructionSiteNotes = ConstructionSiteNotesFromDB;
 
                 response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik")) + response.Message;
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
+                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu. Greška kod čuvanja na serveru!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    new ConstructionSiteSQLiteRepository().UpdateSyncStatus(response.ConstructionSite.Identifier, response.ConstructionSite.Code, response.ConstructionSite.UpdatedAt, response.ConstructionSite.Id, true);
-                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
+                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+
+                    new ConstructionSiteSQLiteRepository().Sync(constructionSiteService);
 
                     ConstructionSiteCreatedUpdated();
 
-                    //if (IsCreateProcess)
-                    //{
-                    //    CurrentConstructionSite = new ConstructionSiteViewModel();
-                    //    CurrentConstructionSite.Identifier = Guid.NewGuid();
-
-                    //    Application.Current.Dispatcher.BeginInvoke(
-                    //        System.Windows.Threading.DispatcherPriority.Normal,
-                    //        new Action(() =>
-                    //        {
-                    //            txtCode.Focus();
-                    //        })
-                    //    );
-                    //}
-                    //else
-                    //{
-                        Application.Current.Dispatcher.BeginInvoke(
-                            System.Windows.Threading.DispatcherPriority.Normal,
-                            new Action(() =>
-                            {
-                                if (IsPopup)
-                                    FlyoutHelper.CloseFlyoutPopup(this);
-                                else
-                                    FlyoutHelper.CloseFlyout(this);
-                            })
-                        );
-                    //}
+                    Application.Current.Dispatcher.BeginInvoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(() =>
+                        {
+                            FlyoutHelper.CloseFlyout(this);
+                        })
+                    );
                 }
-
             });
-            th.IsBackground = true;
-            th.Start();
+            td.IsBackground = true;
+            td.Start();
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (IsPopup)
-                FlyoutHelper.CloseFlyoutPopup(this);
-            else
-                FlyoutHelper.CloseFlyout(this);
+            FlyoutHelper.CloseFlyout(this);
         }
 
         #endregion
+        //private void DisplayDocumentData()
+        //{
+        //    ConstructionSiteDocumentDataLoading = true;
 
-        #region Add, edit, delete and cancel document
+        //    ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentSQLiteRepository()
+        //        .GetConstructionSiteDocumentsByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
 
-        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
-            string[] fileNames = dialog.FileNames;
+        //    if (response.Success)
+        //    {
+        //        ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>(
+        //            response.ConstructionSiteDocuments ?? new List<ConstructionSiteDocumentViewModel>());
+        //    }
+        //    else
+        //    {
+        //        ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>();
+        //    }
 
-            if (fileNames.Length > 0)
-                CurrentConstructionSiteDocumentForm.Path = fileNames[0];
-        }
+        //    ConstructionSiteDocumentDataLoading = false;
+        //}
 
-        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+        //private void DisplayConstructionSiteNoteData()
+        //{
+        //    ConstructionSiteNoteDataLoading = true;
 
-            fileDIalog.Multiselect = true;
-            fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "Image Files | *.pdf";
-            fileDIalog.ShowDialog();
-        }
+        //    ConstructionSiteNoteListResponse response = new ConstructionSiteNoteSQLiteRepository()
+        //        .GetConstructionSiteNotesByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier);
 
-        private void btnAddDocument_Click(object sender, RoutedEventArgs e)
-        {
-            #region Validation
+        //    if (response.Success)
+        //    {
+        //        ConstructionSiteNotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>(
+        //            response.ConstructionSiteNotes ?? new List<ConstructionSiteNoteViewModel>());
+        //    }
+        //    else
+        //    {
+        //        ConstructionSiteNotesFromDB = new ObservableCollection<ConstructionSiteNoteViewModel>();
+        //    }
 
-            if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Name))
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
-                return;
-            }
+        //    ConstructionSiteNoteDataLoading = false;
+        //}
 
-            if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Path))
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Putanja"));
-                return;
-            }
+        //#region Cancel and Save buttons
 
-            if (CurrentConstructionSiteDocumentForm.CreateDate == null)
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_kreiranja"));
-                return;
-            }
+        //private void btnSaveHeader_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Validation
 
-            #endregion
+        //    //if (CurrentConstructionSite.Code == null)
+        //    //{
+        //    //    MainWindow.WarningMessage = "Obavezno polje: Sifra";
+        //    //    return;
+        //    //}
 
-            // IF update process, first delete item
-            new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentForm.Identifier);
+        //    if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
+        //    {
+        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_gradilista"));
+        //        return;
+        //    }
 
-            CurrentConstructionSiteDocumentForm.ConstructionSite = CurrentConstructionSite;
-            CurrentConstructionSiteDocumentForm.Identifier = Guid.NewGuid();
-            CurrentConstructionSiteDocumentForm.IsSynced = false;
-            CurrentConstructionSiteDocumentForm.UpdatedAt = DateTime.Now;
-            CurrentConstructionSiteDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentConstructionSiteDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+        //    #endregion
 
-            var response = new ConstructionSiteDocumentSQLiteRepository().Create(CurrentConstructionSiteDocumentForm);
-            if (response.Success)
-            {
-                CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
-                CurrentConstructionSiteDocumentForm.CreateDate = DateTime.Now;
+        //    CurrentConstructionSite.IsSynced = false;
+        //    CurrentConstructionSite.UpdatedAt = DateTime.Now;
+        //    CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+        //    CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                Thread displayThread = new Thread(() => DisplayDocumentData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
+        //    ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
+        //    response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
+        //    if (response.Success)
+        //    {
+        //        MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Zaglavlje_je_uspešno_sačuvanoUzvičnik"));
+        //        IsHeaderCreated = true;
 
-                txtDocumentName.Focus();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
-        }
+        //        txtDocumentName.Focus();
+        //    }
+        //    else
+        //        MainWindow.ErrorMessage = response.Message;
+        //}
 
-        private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
-            CurrentConstructionSiteDocumentForm.CreateDate = DateTime.Now;
-        }
+        //private void btnSave_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Validation
 
-        private void btnEditDocument_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentConstructionSiteDocumentForm = CurrentConstructionSiteDocumentDG;
-        }
+        //    //if (CurrentConstructionSite.Code == null)
+        //    //{
+        //    //    MainWindow.WarningMessage = "Obavezno polje: Sifra";
+        //    //    return;
+        //    //}
 
-        private void btnDeleteDocument_Click(object sender, RoutedEventArgs e)
-        {
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+        //    if (String.IsNullOrEmpty(CurrentConstructionSite.Name))
+        //    {
+        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_gradilista"));
+        //        return;
+        //    }
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dokument", "");
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
-                new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentDG.Identifier);
+        //    #endregion
 
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dokument_je_uspešno_obrisanUzvičnik"));
+        //    Thread th = new Thread(() =>
+        //    {
+        //        SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
+        //        SaveButtonEnabled = false;
 
-                Thread displayThread = new Thread(() => DisplayDocumentData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
+        //        CurrentConstructionSite.IsSynced = false;
+        //        CurrentConstructionSite.UpdatedAt = DateTime.Now;
+        //        CurrentConstructionSite.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+        //        CurrentConstructionSite.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        }
+        //        ConstructionSiteResponse response = new ConstructionSiteSQLiteRepository().Delete(CurrentConstructionSite.Identifier);
+        //        response = new ConstructionSiteSQLiteRepository().Create(CurrentConstructionSite);
+        //        if (!response.Success)
+        //        {
+        //            MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+        //            SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+        //            SaveButtonEnabled = true;
+        //            return;
+        //        }
 
-        #endregion
+        //        CurrentConstructionSite.ConstructionSiteDocuments = ConstructionSiteDocumentsFromDB;
+        //        CurrentConstructionSite.ConstructionSiteNotes = ConstructionSiteNotesFromDB;
 
-        #region Add, edit, delete and cancel note
+        //        response = constructionSiteService.Create(CurrentConstructionSite);
+        //        if (!response.Success)
+        //        {
+        //            MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik")) + response.Message;
+        //            SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+        //            SaveButtonEnabled = true;
+        //        }
 
-        private void btnAddNote_Click(object sender, RoutedEventArgs e)
-        {
-            #region Validation
+        //        if (response.Success)
+        //        {
+        //            new ConstructionSiteSQLiteRepository().UpdateSyncStatus(response.ConstructionSite.Identifier, response.ConstructionSite.Code, response.ConstructionSite.UpdatedAt, response.ConstructionSite.Id, true);
+        //            MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+        //            SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
+        //            SaveButtonEnabled = true;
 
-            if (String.IsNullOrEmpty(CurrentConstructionSiteNoteForm.Note))
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
-                return;
-            }
+        //            ConstructionSiteCreatedUpdated();
 
-            if (CurrentConstructionSiteNoteForm.NoteDate == null)
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_napomene"));
-                return;
-            }
+        //            //if (IsCreateProcess)
+        //            //{
+        //            //    CurrentConstructionSite = new ConstructionSiteViewModel();
+        //            //    CurrentConstructionSite.Identifier = Guid.NewGuid();
 
-            #endregion
+        //            //    Application.Current.Dispatcher.BeginInvoke(
+        //            //        System.Windows.Threading.DispatcherPriority.Normal,
+        //            //        new Action(() =>
+        //            //        {
+        //            //            txtCode.Focus();
+        //            //        })
+        //            //    );
+        //            //}
+        //            //else
+        //            //{
+        //                Application.Current.Dispatcher.BeginInvoke(
+        //                    System.Windows.Threading.DispatcherPriority.Normal,
+        //                    new Action(() =>
+        //                    {
+        //                        if (IsPopup)
+        //                            FlyoutHelper.CloseFlyoutPopup(this);
+        //                        else
+        //                            FlyoutHelper.CloseFlyout(this);
+        //                    })
+        //                );
+        //            //}
+        //        }
 
-            // IF update process, first delete item
-            new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteForm.Identifier);
+        //    });
+        //    th.IsBackground = true;
+        //    th.Start();
+        //}
 
-            CurrentConstructionSiteNoteForm.ConstructionSite = CurrentConstructionSite;
-            CurrentConstructionSiteNoteForm.Identifier = Guid.NewGuid();
-            CurrentConstructionSiteNoteForm.IsSynced = false;
-            CurrentConstructionSiteNoteForm.UpdatedAt = DateTime.Now;
-            CurrentConstructionSiteNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentConstructionSiteNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+        //private void btnCancel_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (IsPopup)
+        //        FlyoutHelper.CloseFlyoutPopup(this);
+        //    else
+        //        FlyoutHelper.CloseFlyout(this);
+        //}
 
-            var response = new ConstructionSiteNoteSQLiteRepository().Create(CurrentConstructionSiteNoteForm);
-            if (response.Success)
-            {
-                CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
-                CurrentConstructionSiteNoteForm.NoteDate = DateTime.Now;
+        //#endregion
 
-                Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
+        //#region Add, edit, delete and cancel document
 
-                txtNote.Focus();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
-        }
+        //private void FileDIalog_FileOk(object sender, CancelEventArgs e)
+        //{
+        //    System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+        //    string[] fileNames = dialog.FileNames;
 
-        private void btnEditNote_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentConstructionSiteNoteForm = CurrentConstructionSiteNoteDG;
-        }
+        //    if (fileNames.Length > 0)
+        //        CurrentConstructionSiteDocumentForm.Path = fileNames[0];
+        //}
 
-        private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
-        {
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+        //private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
+        //{
+        //    System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
 
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("stavku_radnika")), "");
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
-                new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteDG.Identifier);
+        //    fileDIalog.Multiselect = true;
+        //    fileDIalog.FileOk += FileDIalog_FileOk;
+        //    fileDIalog.Filter = "Image Files | *.pdf";
+        //    fileDIalog.ShowDialog();
+        //}
 
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
+        //private void btnAddDocument_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Validation
 
-                Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
+        //    if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Name))
+        //    {
+        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
+        //        return;
+        //    }
 
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-        }
+        //    if (String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Path))
+        //    {
+        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Putanja"));
+        //        return;
+        //    }
 
-        private void btnCancelNote_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
-            CurrentConstructionSiteNoteForm.NoteDate = DateTime.Now;
-        }
+        //    if (CurrentConstructionSiteDocumentForm.CreateDate == null)
+        //    {
+        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_kreiranja"));
+        //        return;
+        //    }
 
-        #endregion
+        //    #endregion
+
+        //    // IF update process, first delete item
+        //    new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentForm.Identifier);
+
+        //    CurrentConstructionSiteDocumentForm.ConstructionSite = CurrentConstructionSite;
+        //    CurrentConstructionSiteDocumentForm.Identifier = Guid.NewGuid();
+        //    CurrentConstructionSiteDocumentForm.IsSynced = false;
+        //    CurrentConstructionSiteDocumentForm.UpdatedAt = DateTime.Now;
+        //    CurrentConstructionSiteDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+        //    CurrentConstructionSiteDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+        //    var response = new ConstructionSiteDocumentSQLiteRepository().Create(CurrentConstructionSiteDocumentForm);
+        //    if (response.Success)
+        //    {
+        //        CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+        //        CurrentConstructionSiteDocumentForm.CreateDate = DateTime.Now;
+
+        //        Thread displayThread = new Thread(() => DisplayDocumentData());
+        //        displayThread.IsBackground = true;
+        //        displayThread.Start();
+
+        //        txtDocumentName.Focus();
+        //    }
+        //    else
+        //        MainWindow.ErrorMessage = response.Message;
+        //}
+
+        //private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+        //    CurrentConstructionSiteDocumentForm.CreateDate = DateTime.Now;
+        //}
+
+        //private void btnEditDocument_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentConstructionSiteDocumentForm = CurrentConstructionSiteDocumentDG;
+        //}
+
+        //private void btnDeleteDocument_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+        //    DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dokument", "");
+        //    var showDialog = deleteConfirmationForm.ShowDialog();
+        //    if (showDialog != null && showDialog.Value)
+        //    {
+        //        new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentDG.Identifier);
+
+        //        MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dokument_je_uspešno_obrisanUzvičnik"));
+
+        //        Thread displayThread = new Thread(() => DisplayDocumentData());
+        //        displayThread.IsBackground = true;
+        //        displayThread.Start();
+        //    }
+
+        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        //}
+
+        //#endregion
+
+        //#region Add, edit, delete and cancel note
+
+        //private void btnAddNote_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Validation
+
+        //    if (String.IsNullOrEmpty(CurrentConstructionSiteNoteForm.Note))
+        //    {
+        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
+        //        return;
+        //    }
+
+        //    if (CurrentConstructionSiteNoteForm.NoteDate == null)
+        //    {
+        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Datum_napomene"));
+        //        return;
+        //    }
+
+        //    #endregion
+
+        //    // IF update process, first delete item
+        //    new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteForm.Identifier);
+
+        //    CurrentConstructionSiteNoteForm.ConstructionSite = CurrentConstructionSite;
+        //    CurrentConstructionSiteNoteForm.Identifier = Guid.NewGuid();
+        //    CurrentConstructionSiteNoteForm.IsSynced = false;
+        //    CurrentConstructionSiteNoteForm.UpdatedAt = DateTime.Now;
+        //    CurrentConstructionSiteNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+        //    CurrentConstructionSiteNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+        //    var response = new ConstructionSiteNoteSQLiteRepository().Create(CurrentConstructionSiteNoteForm);
+        //    if (response.Success)
+        //    {
+        //        CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
+        //        CurrentConstructionSiteNoteForm.NoteDate = DateTime.Now;
+
+        //        Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
+        //        displayThread.IsBackground = true;
+        //        displayThread.Start();
+
+        //        txtNote.Focus();
+        //    }
+        //    else
+        //        MainWindow.ErrorMessage = response.Message;
+        //}
+
+        //private void btnEditNote_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentConstructionSiteNoteForm = CurrentConstructionSiteNoteDG;
+        //}
+
+        //private void btnDeleteNote_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
+
+        //    DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("stavku_radnika")), "");
+        //    var showDialog = deleteConfirmationForm.ShowDialog();
+        //    if (showDialog != null && showDialog.Value)
+        //    {
+        //        new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteDG.Identifier);
+
+        //        MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_radnika_je_uspešno_obrisanaUzvičnik"));
+
+        //        Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
+        //        displayThread.IsBackground = true;
+        //        displayThread.Start();
+        //    }
+
+        //    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+        //}
+
+        //private void btnCancelNote_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
+        //    CurrentConstructionSiteNoteForm.NoteDate = DateTime.Now;
+        //}
+
+        //#endregion
 
         #region Mouse wheel event 
 

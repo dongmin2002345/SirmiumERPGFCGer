@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.ConstructionSites;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Context;
 using System;
@@ -30,7 +31,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteDocumentId, ConstructionSiteDocumentIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vConstructionSiteDocuments " +
@@ -68,6 +69,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             constructionSiteDocument.Path = reader["Path"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteDocument.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -113,7 +116,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteDocumentId, ConstructionSiteDocumentIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vConstructionSiteDocuments " +
@@ -151,6 +154,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             constructionSiteDocument.Path = reader["Path"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteDocument.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -197,7 +202,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteDocumentId, ConstructionSiteDocumentIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vConstructionSiteDocuments " +
@@ -237,6 +242,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             constructionSiteDocument.Path = reader["Path"].ToString();
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteDocument.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -275,32 +282,35 @@ namespace RepositoryCore.Implementations.ConstructionSites
             //return ConstructionSites;
         }
 
-        public ConstructionSiteDocument Create(ConstructionSiteDocument ConstructionSiteDocument)
+        public ConstructionSiteDocument Create(ConstructionSiteDocument constructionSiteDocument)
         {
-            if (context.ConstructionSiteDocuments.Where(x => x.Identifier != null && x.Identifier == ConstructionSiteDocument.Identifier).Count() == 0)
+            if (context.ConstructionSiteDocuments.Where(x => x.Identifier != null && x.Identifier == constructionSiteDocument.Identifier).Count() == 0)
             {
-                ConstructionSiteDocument.Id = 0;
+                constructionSiteDocument.Id = 0;
 
-                ConstructionSiteDocument.Active = true;
+                constructionSiteDocument.Active = true;
+                constructionSiteDocument.UpdatedAt = DateTime.Now;
+                constructionSiteDocument.CreatedAt = DateTime.Now;
 
-                context.ConstructionSiteDocuments.Add(ConstructionSiteDocument);
-                return ConstructionSiteDocument;
+                context.ConstructionSiteDocuments.Add(constructionSiteDocument);
+                return constructionSiteDocument;
             }
             else
             {
                 // Load item that will be updated
                 ConstructionSiteDocument dbEntry = context.ConstructionSiteDocuments
-                    .FirstOrDefault(x => x.Identifier == ConstructionSiteDocument.Identifier && x.Active == true);
+                    .FirstOrDefault(x => x.Identifier == constructionSiteDocument.Identifier && x.Active == true);
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CompanyId = ConstructionSiteDocument.CompanyId ?? null;
-                    dbEntry.CreatedById = ConstructionSiteDocument.CreatedById ?? null;
+                    dbEntry.CompanyId = constructionSiteDocument.CompanyId ?? null;
+                    dbEntry.CreatedById = constructionSiteDocument.CreatedById ?? null;
 
                     // Set properties
-                    dbEntry.Name = ConstructionSiteDocument.Name;
-                    dbEntry.CreateDate = ConstructionSiteDocument.CreateDate;
-                    dbEntry.Path = ConstructionSiteDocument.Path;
+                    dbEntry.Name = constructionSiteDocument.Name;
+                    dbEntry.CreateDate = constructionSiteDocument.CreateDate;
+                    dbEntry.Path = constructionSiteDocument.Path;
+                    dbEntry.ItemStatus = constructionSiteDocument.ItemStatus;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -313,7 +323,10 @@ namespace RepositoryCore.Implementations.ConstructionSites
         public ConstructionSiteDocument Delete(Guid identifier)
         {
             ConstructionSiteDocument dbEntry = context.ConstructionSiteDocuments
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                 .Union(context.ChangeTracker.Entries()
+                     .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(ConstructionSiteDocument))
+                     .Select(x => x.Entity as ConstructionSiteDocument))
+                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {

@@ -2,6 +2,7 @@
 using DomainCore.ConstructionSites;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.ConstructionSites;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using System;
@@ -83,26 +84,68 @@ namespace ServiceCore.Implementations.ConstructionSites
                 ConstructionSite createdConstructionSite = unitOfWork.GetConstructionSiteRepository()
                     .Create(constructionSite.ConvertToConstructionSite());
 
-                // Update items
-                var ConstructionSiteDocumentsFromDB = unitOfWork.GetConstructionSiteDocumentRepository().GetConstructionSiteDocumentsByConstructionSite(createdConstructionSite.Id);
-                foreach (var item in ConstructionSiteDocumentsFromDB)
-                    if (!constructionSiteDocuments.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetConstructionSiteDocumentRepository().Delete(item.Identifier);
-                foreach (var item in constructionSiteDocuments)
+                // Update notes
+                if (constructionSiteNotes != null && constructionSiteNotes.Count > 0)
                 {
-                    item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
-                    unitOfWork.GetConstructionSiteDocumentRepository().Create(item.ConvertToConstructionSiteDocument());
+                    foreach (ConstructionSiteNoteViewModel item in constructionSiteNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<ConstructionSiteNoteViewModel>())
+                    {
+                        item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetConstructionSiteNoteRepository().Create(item.ConvertToConstructionSiteNote());
+                    }
+
+                    foreach (ConstructionSiteNoteViewModel item in constructionSiteNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<ConstructionSiteNoteViewModel>())
+                    {
+                        item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                        unitOfWork.GetConstructionSiteNoteRepository().Create(item.ConvertToConstructionSiteNote());
+
+                        unitOfWork.GetConstructionSiteNoteRepository().Delete(item.Identifier);
+                    }
+
                 }
 
-                var ConstructionSiteNotesFromDB = unitOfWork.GetConstructionSiteNoteRepository().GetConstructionSiteNotesByConstructionSite(createdConstructionSite.Id);
-                foreach (var item in ConstructionSiteNotesFromDB)
-                    if (!constructionSiteNotes.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetConstructionSiteNoteRepository().Delete(item.Identifier);
-                foreach (var item in constructionSiteNotes)
+                // Update documents
+                if (constructionSiteDocuments != null && constructionSiteDocuments.Count > 0)
                 {
-                    item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
-                    unitOfWork.GetConstructionSiteNoteRepository().Create(item.ConvertToConstructionSiteNote());
+                    foreach (ConstructionSiteDocumentViewModel item in constructionSiteDocuments
+                       .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<ConstructionSiteDocumentViewModel>())
+                    {
+                        item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetConstructionSiteDocumentRepository().Create(item.ConvertToConstructionSiteDocument());
+                    }
+
+                    foreach (ConstructionSiteDocumentViewModel item in constructionSiteDocuments
+                       .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<ConstructionSiteDocumentViewModel>())
+                    {
+                        item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                        unitOfWork.GetConstructionSiteDocumentRepository().Create(item.ConvertToConstructionSiteDocument());
+
+                        unitOfWork.GetConstructionSiteDocumentRepository().Delete(item.Identifier);
+                    }
                 }
+                //// Update items
+                //var ConstructionSiteDocumentsFromDB = unitOfWork.GetConstructionSiteDocumentRepository().GetConstructionSiteDocumentsByConstructionSite(createdConstructionSite.Id);
+                //foreach (var item in ConstructionSiteDocumentsFromDB)
+                //    if (!constructionSiteDocuments.Select(x => x.Identifier).Contains(item.Identifier))
+                //        unitOfWork.GetConstructionSiteDocumentRepository().Delete(item.Identifier);
+                //foreach (var item in constructionSiteDocuments)
+                //{
+                //    item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                //    unitOfWork.GetConstructionSiteDocumentRepository().Create(item.ConvertToConstructionSiteDocument());
+                //}
+
+                //var ConstructionSiteNotesFromDB = unitOfWork.GetConstructionSiteNoteRepository().GetConstructionSiteNotesByConstructionSite(createdConstructionSite.Id);
+                //foreach (var item in ConstructionSiteNotesFromDB)
+                //    if (!constructionSiteNotes.Select(x => x.Identifier).Contains(item.Identifier))
+                //        unitOfWork.GetConstructionSiteNoteRepository().Delete(item.Identifier);
+                //foreach (var item in constructionSiteNotes)
+                //{
+                //    item.ConstructionSite = new ConstructionSiteViewModel() { Id = createdConstructionSite.Id };
+                //    unitOfWork.GetConstructionSiteNoteRepository().Create(item.ConvertToConstructionSiteNote());
+                //}
 
                 unitOfWork.Save();
 

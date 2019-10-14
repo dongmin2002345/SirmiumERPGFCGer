@@ -232,6 +232,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region ConstructionSiteCalculations
+        private ObservableCollection<ConstructionSiteCalculationViewModel> _ConstructionSiteCalculations;
+
+        public ObservableCollection<ConstructionSiteCalculationViewModel> ConstructionSiteCalculations
+        {
+            get { return _ConstructionSiteCalculations; }
+            set
+            {
+                if (_ConstructionSiteCalculations != value)
+                {
+                    _ConstructionSiteCalculations = value;
+                    NotifyPropertyChanged("ConstructionSiteCalculations");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

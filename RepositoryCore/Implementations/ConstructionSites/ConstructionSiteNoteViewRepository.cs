@@ -2,6 +2,7 @@
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.ConstructionSites;
+using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Context;
 using System;
@@ -30,7 +31,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteNoteId, ConstructionSiteNoteIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteNotes " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -65,6 +66,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -111,7 +114,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteNoteId, ConstructionSiteNoteIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteNotes " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -147,6 +150,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -192,7 +197,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteNoteId, ConstructionSiteNoteIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteNotes " +
                 "WHERE CompanyId = @CompanyId " +
@@ -230,6 +235,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            constructionSiteNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -268,31 +275,35 @@ namespace RepositoryCore.Implementations.ConstructionSites
             //return ConstructionSites;
         }
 
-        public ConstructionSiteNote Create(ConstructionSiteNote ConstructionSiteNote)
+        public ConstructionSiteNote Create(ConstructionSiteNote constructionSiteNote)
         {
-            if (context.ConstructionSiteNotes.Where(x => x.Identifier != null && x.Identifier == ConstructionSiteNote.Identifier).Count() == 0)
+            if (context.ConstructionSiteNotes.Where(x => x.Identifier != null && x.Identifier == constructionSiteNote.Identifier).Count() == 0)
             {
-                ConstructionSiteNote.Id = 0;
+                constructionSiteNote.Id = 0;
 
-                ConstructionSiteNote.Active = true;
+                constructionSiteNote.Active = true;
 
-                context.ConstructionSiteNotes.Add(ConstructionSiteNote);
-                return ConstructionSiteNote;
+                constructionSiteNote.UpdatedAt = DateTime.Now;
+                constructionSiteNote.CreatedAt = DateTime.Now;
+
+                context.ConstructionSiteNotes.Add(constructionSiteNote);
+                return constructionSiteNote;
             }
             else
             {
                 // Load item that will be updated
                 ConstructionSiteNote dbEntry = context.ConstructionSiteNotes
-                    .FirstOrDefault(x => x.Identifier == ConstructionSiteNote.Identifier && x.Active == true);
+                    .FirstOrDefault(x => x.Identifier == constructionSiteNote.Identifier && x.Active == true);
 
                 if (dbEntry != null)
                 {
-                    dbEntry.CompanyId = ConstructionSiteNote.CompanyId ?? null;
-                    dbEntry.CreatedById = ConstructionSiteNote.CreatedById ?? null;
+                    dbEntry.CompanyId = constructionSiteNote.CompanyId ?? null;
+                    dbEntry.CreatedById = constructionSiteNote.CreatedById ?? null;
 
                     // Set properties
-                    dbEntry.Note = ConstructionSiteNote.Note;
-                    dbEntry.NoteDate = ConstructionSiteNote.NoteDate;
+                    dbEntry.Note = constructionSiteNote.Note;
+                    dbEntry.NoteDate = constructionSiteNote.NoteDate;
+                    dbEntry.ItemStatus = constructionSiteNote.ItemStatus;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
@@ -305,7 +316,10 @@ namespace RepositoryCore.Implementations.ConstructionSites
         public ConstructionSiteNote Delete(Guid identifier)
         {
             ConstructionSiteNote dbEntry = context.ConstructionSiteNotes
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                 .Union(context.ChangeTracker.Entries()
+                     .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(ConstructionSiteNote))
+                     .Select(x => x.Entity as ConstructionSiteNote))
+                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 
             if (dbEntry != null)
             {

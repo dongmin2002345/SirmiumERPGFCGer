@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.ConstructionSites;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Repository.Common;
@@ -26,6 +27,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                      "Name NVARCHAR(2048), " +
                      "CreateDate DATETIME NULL, " +
                      "Path NVARCHAR(2048) NULL, " +
+                     "ItemStatus INTEGER NOT NULL, " +
                      "IsSynced BOOL NULL, " +
                      "UpdatedAt DATETIME NULL, " +
                      "CreatedById INTEGER NULL, " +
@@ -35,18 +37,60 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, ConstructionSiteId, ConstructionSiteIdentifier, " +
-            "ConstructionSiteCode, ConstructionSiteName, Name, CreateDate, Path, " +
+            "ConstructionSiteCode, ConstructionSiteName, Name, CreateDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSiteDocuments " +
             "(Id, ServerId, Identifier, ConstructionSiteId, ConstructionSiteIdentifier, " +
-            "ConstructionSiteCode, ConstructionSiteName, Name, CreateDate, Path, " +
+            "ConstructionSiteCode, ConstructionSiteName, Name, CreateDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @ConstructionSiteId, @ConstructionSiteIdentifier, " +
-            "@ConstructionSiteCode, @ConstructionSiteName, @Name, @CreateDate, @Path, " +
+            "@ConstructionSiteCode, @ConstructionSiteName, @Name, @CreateDate, @Path, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #region Helper methods
+        private static ConstructionSiteDocumentViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            ConstructionSiteDocumentViewModel dbEntry = new ConstructionSiteDocumentViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, ConstructionSiteDocumentViewModel constructionSiteDocument)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", constructionSiteDocument.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", constructionSiteDocument.Identifier);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)constructionSiteDocument.ConstructionSite.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)constructionSiteDocument.ConstructionSite.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)constructionSiteDocument.ConstructionSite.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)constructionSiteDocument.ConstructionSite.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", constructionSiteDocument.Name);
+            insertCommand.Parameters.AddWithValue("@CreateDate", ((object)constructionSiteDocument.CreateDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)constructionSiteDocument.Path) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)constructionSiteDocument.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", constructionSiteDocument.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSiteDocument.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
         public ConstructionSiteDocumentListResponse GetConstructionSiteDocumentsByConstructionSite(int companyId, Guid ConstructionSiteIdentifier)
         {
             ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentListResponse();
@@ -70,18 +114,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
                     while (query.Read())
                     {
-                        int counter = 0;
-                        ConstructionSiteDocumentViewModel dbEntry = new ConstructionSiteDocumentViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        ConstructionSiteDocumentViewModel dbEntry = Read(query);
                         ConstructionSiteDocuments.Add(dbEntry);
                     }
 
@@ -121,18 +154,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
                     if (query.Read())
                     {
-                        int counter = 0;
-                        ConstructionSiteDocumentViewModel dbEntry = new ConstructionSiteDocumentViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        ConstructionSiteDocumentViewModel dbEntry = Read(query);
                         ConstructionSiteDocument = dbEntry;
                     }
                 }
@@ -151,57 +173,57 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return response;
         }
 
-        public ConstructionSiteDocumentListResponse GetUnSyncedDocuments(int companyId)
-        {
-            ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentListResponse();
-            List<ConstructionSiteDocumentViewModel> viewModels = new List<ConstructionSiteDocumentViewModel>();
+        //public ConstructionSiteDocumentListResponse GetUnSyncedDocuments(int companyId)
+        //{
+        //    ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentListResponse();
+        //    List<ConstructionSiteDocumentViewModel> viewModels = new List<ConstructionSiteDocumentViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM  ConstructionSiteDocuments " +
-                        "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-                        "ORDER BY Id DESC;", db);
-                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            SqliteCommand selectCommand = new SqliteCommand(
+        //                SqlCommandSelectPart +
+        //                "FROM  ConstructionSiteDocuments " +
+        //                "WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
+        //                "ORDER BY Id DESC;", db);
+        //            selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
-                    SqliteDataReader query = selectCommand.ExecuteReader();
+        //            SqliteDataReader query = selectCommand.ExecuteReader();
 
-                    while (query.Read())
-                    {
-                        int counter = 0;
-                        ConstructionSiteDocumentViewModel dbEntry = new ConstructionSiteDocumentViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        viewModels.Add(dbEntry);
-                    }
+        //            while (query.Read())
+        //            {
+        //                int counter = 0;
+        //                ConstructionSiteDocumentViewModel dbEntry = new ConstructionSiteDocumentViewModel();
+        //                dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+        //                dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+        //                dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
+        //                dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+        //                dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
+        //                dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+        //                dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+        //                dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+        //                dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+        //                dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+        //                viewModels.Add(dbEntry);
+        //            }
 
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.ConstructionSiteDocuments = new List<ConstructionSiteDocumentViewModel>();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.ConstructionSiteDocuments = viewModels;
-            return response;
-        }
+        //        }
+        //        catch (SqliteException error)
+        //        {
+        //            MainWindow.ErrorMessage = error.Message;
+        //            response.Success = false;
+        //            response.Message = error.Message;
+        //            response.ConstructionSiteDocuments = new List<ConstructionSiteDocumentViewModel>();
+        //            return response;
+        //        }
+        //        db.Close();
+        //    }
+        //    response.Success = true;
+        //    response.ConstructionSiteDocuments = viewModels;
+        //    return response;
+        //}
 
         public void Sync(IConstructionSiteDocumentService ConstructionSiteDocumentService, Action<int, int> callback = null)
         {
@@ -218,17 +240,41 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 if (response.Success)
                 {
                     toSync = response?.ConstructionSiteDocuments?.Count ?? 0;
-                    List<ConstructionSiteDocumentViewModel> ConstructionSiteDocumentsFromDB = response.ConstructionSiteDocuments;
-                    foreach (var ConstructionSiteDocument in ConstructionSiteDocumentsFromDB.OrderBy(x => x.Id))
+                    List<ConstructionSiteDocumentViewModel> items = response.ConstructionSiteDocuments;
+
+                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
-                            Delete(ConstructionSiteDocument.Identifier);
-                            if (ConstructionSiteDocument.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM ConstructionSiteDocuments WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var item in items)
                             {
-                                ConstructionSiteDocument.IsSynced = true;
-                                Create(ConstructionSiteDocument);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", item.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (item.IsActive)
+                                {
+                                    item.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, item);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -261,7 +307,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }
@@ -274,39 +321,20 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return null;
         }
 
-        public ConstructionSiteDocumentResponse Create(ConstructionSiteDocumentViewModel ConstructionSiteDocument)
+        public ConstructionSiteDocumentResponse Create(ConstructionSiteDocumentViewModel constructionSiteDocument)
         {
             ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", ConstructionSiteDocument.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", ConstructionSiteDocument.Identifier);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)ConstructionSiteDocument.ConstructionSite.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)ConstructionSiteDocument.ConstructionSite.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)ConstructionSiteDocument.ConstructionSite.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)ConstructionSiteDocument.ConstructionSite.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Name", ConstructionSiteDocument.Name);
-                insertCommand.Parameters.AddWithValue("@CreateDate", ((object)ConstructionSiteDocument.CreateDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Path", ((object)ConstructionSiteDocument.Path) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", ConstructionSiteDocument.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)ConstructionSiteDocument.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, constructionSiteDocument);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -322,47 +350,47 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             }
         }
 
-        public ConstructionSiteDocumentResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();
+        //public ConstructionSiteDocumentResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
+        //{
+        //    ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
+        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //    {
+        //        db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
+        //        SqliteCommand insertCommand = new SqliteCommand();
+        //        insertCommand.Connection = db;
 
-                insertCommand.CommandText = "UPDATE ConstructionSiteDocuments SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
+        //        insertCommand.CommandText = "UPDATE ConstructionSiteDocuments SET " +
+        //            "IsSynced = @IsSynced, " +
+        //            "Code = @Code, " +
+        //            "UpdatedAt = @UpdatedAt, " +
+        //            "ServerId = @ServerId " +
+        //            "WHERE Identifier = @Identifier ";
 
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+        //        insertCommand.Parameters.AddWithValue("@Code", code);
+        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
+        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
 
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
+        //        try
+        //        {
+        //            insertCommand.ExecuteReader();
+        //        }
+        //        catch (SqliteException error)
+        //        {
+        //            MainWindow.ErrorMessage = error.Message;
+        //            response.Success = false;
+        //            response.Message = error.Message;
+        //            return response;
+        //        }
+        //        db.Close();
 
-                response.Success = true;
-                return response;
-            }
-        }
+        //        response.Success = true;
+        //        return response;
+        //    }
+        //}
 
         public ConstructionSiteDocumentResponse Delete(Guid identifier)
         {
@@ -397,46 +425,80 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             }
         }
 
-        public ConstructionSiteDocumentResponse DeleteAll()
+        //public ConstructionSiteDocumentResponse DeleteAll()
+        //{
+        //    ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();
+
+        //    try
+        //    {
+        //        using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //        {
+        //            db.Open();
+        //            db.EnableExtensions(true);
+
+        //            SqliteCommand insertCommand = new SqliteCommand();
+        //            insertCommand.Connection = db;
+
+        //            //Use parameterized query to prevent SQL injection attacks
+        //            insertCommand.CommandText = "DELETE FROM ConstructionSiteDocuments";
+        //            try
+        //            {
+        //                insertCommand.ExecuteReader();
+        //            }
+        //            catch (SqliteException error)
+        //            {
+        //                response.Success = false;
+        //                response.Message = error.Message;
+
+        //                MainWindow.ErrorMessage = error.Message;
+        //                return response;
+        //            }
+        //            db.Close();
+        //        }
+        //    }
+        //    catch (SqliteException error)
+        //    {
+        //        response.Success = false;
+        //        response.Message = error.Message;
+        //        return response;
+        //    }
+
+        //    response.Success = true;
+        //    return response;
+        //}
+
+        public ConstructionSiteDocumentResponse SetStatusDeleted(Guid identifier)
         {
             ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();
 
-            try
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE ConstructionSiteDocuments SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
                 {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM ConstructionSiteDocuments";
-                    try
-                    {
-                        insertCommand.ExecuteReader();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
+                    insertCommand.ExecuteReader();
                 }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
                 return response;
             }
-
-            response.Success = true;
-            return response;
         }
     }
 }

@@ -12,17 +12,17 @@ namespace DataMapper.Mappers.ConstructionSites
     {
         public static List<ConstructionSiteDocumentViewModel> ConvertToConstructionSiteDocumentViewModelList(this IEnumerable<ConstructionSiteDocument> constructionSiteDocuments)
         {
-            List<ConstructionSiteDocumentViewModel> ConstructionSiteDocumentViewModels = new List<ConstructionSiteDocumentViewModel>();
-            foreach (ConstructionSiteDocument ConstructionSiteDocument in constructionSiteDocuments)
+            List<ConstructionSiteDocumentViewModel> constructionSiteDocumentViewModels = new List<ConstructionSiteDocumentViewModel>();
+            foreach (ConstructionSiteDocument constructionSiteDocument in constructionSiteDocuments)
             {
-                ConstructionSiteDocumentViewModels.Add(ConstructionSiteDocument.ConvertToConstructionSiteDocumentViewModel());
+                constructionSiteDocumentViewModels.Add(constructionSiteDocument.ConvertToConstructionSiteDocumentViewModel());
             }
-            return ConstructionSiteDocumentViewModels;
+            return constructionSiteDocumentViewModels;
         }
 
         public static ConstructionSiteDocumentViewModel ConvertToConstructionSiteDocumentViewModel(this ConstructionSiteDocument constructionSiteDocument)
         {
-            ConstructionSiteDocumentViewModel ConstructionSiteDocumentViewModel = new ConstructionSiteDocumentViewModel()
+            ConstructionSiteDocumentViewModel constructionSiteDocumentViewModel = new ConstructionSiteDocumentViewModel()
             {
                 Id = constructionSiteDocument.Id,
                 Identifier = constructionSiteDocument.Identifier,
@@ -32,6 +32,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Name = constructionSiteDocument.Name,
                 CreateDate = constructionSiteDocument.CreateDate,
                 Path = constructionSiteDocument.Path,
+                ItemStatus = constructionSiteDocument.ItemStatus,
 
                 IsActive = constructionSiteDocument.Active,
 
@@ -42,12 +43,12 @@ namespace DataMapper.Mappers.ConstructionSites
                 CreatedAt = constructionSiteDocument.CreatedAt
             };
 
-            return ConstructionSiteDocumentViewModel;
+            return constructionSiteDocumentViewModel;
         }
 
         public static ConstructionSiteDocumentViewModel ConvertToConstructionSiteDocumentViewModelLite(this ConstructionSiteDocument constructionSiteDocument)
         {
-            ConstructionSiteDocumentViewModel ConstructionSiteDocumentViewModel = new ConstructionSiteDocumentViewModel()
+            ConstructionSiteDocumentViewModel constructionSiteDocumentViewModel = new ConstructionSiteDocumentViewModel()
             {
                 Id = constructionSiteDocument.Id,
                 Identifier = constructionSiteDocument.Identifier,
@@ -55,6 +56,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Name = constructionSiteDocument.Name,
                 CreateDate = constructionSiteDocument.CreateDate,
                 Path = constructionSiteDocument.Path,
+                ItemStatus = constructionSiteDocument.ItemStatus,
 
                 IsActive = constructionSiteDocument.Active,
 
@@ -62,12 +64,12 @@ namespace DataMapper.Mappers.ConstructionSites
                 CreatedAt = constructionSiteDocument.CreatedAt
             };
 
-            return ConstructionSiteDocumentViewModel;
+            return constructionSiteDocumentViewModel;
         }
 
         public static ConstructionSiteDocument ConvertToConstructionSiteDocument(this ConstructionSiteDocumentViewModel constructionSiteDocumentViewModel)
         {
-            ConstructionSiteDocument ConstructionSiteDocument = new ConstructionSiteDocument()
+            ConstructionSiteDocument constructionSiteDocument = new ConstructionSiteDocument()
             {
                 Id = constructionSiteDocumentViewModel.Id,
                 Identifier = constructionSiteDocumentViewModel.Identifier,
@@ -77,6 +79,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Name = constructionSiteDocumentViewModel.Name,
                 CreateDate = constructionSiteDocumentViewModel.CreateDate,
                 Path = constructionSiteDocumentViewModel.Path,
+                ItemStatus = constructionSiteDocumentViewModel.ItemStatus,
 
                 Active = constructionSiteDocumentViewModel.IsActive,
 
@@ -87,7 +90,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 UpdatedAt = constructionSiteDocumentViewModel.UpdatedAt
             };
 
-            return ConstructionSiteDocument;
+            return constructionSiteDocument;
         }
     }
 }

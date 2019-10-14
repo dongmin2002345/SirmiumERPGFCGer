@@ -36,7 +36,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
         #region Events
-        public event ConstructionSiteCalculationHandler ConstructionSiteCalculationCreatedUpdated;
+        //public event ConstructionSiteCalculationHandler ConstructionSiteCalculationCreatedUpdated;
         #endregion
 
         #region CurrentConstructionSiteCalculation
@@ -137,18 +137,18 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                 if (response.Success)
                 {
-                    new ConstructionSiteCalculationSQLiteRepository().UpdateSyncStatus(
-                        response.ConstructionSiteCalculation.Identifier, 
-                        response.ConstructionSiteCalculation.UpdatedAt,
-                        response.ConstructionSiteCalculation.Id,
-                        response.ConstructionSiteCalculation.ValueDifference,
-                        response.ConstructionSiteCalculation.NewValue,
-                        true);
+                    ////new ConstructionSiteCalculationSQLiteRepository().UpdateSyncStatus(
+                    //    response.ConstructionSiteCalculation.Identifier, 
+                    //    response.ConstructionSiteCalculation.UpdatedAt,
+                    //    response.ConstructionSiteCalculation.Id,
+                    //    response.ConstructionSiteCalculation.ValueDifference,
+                    //    response.ConstructionSiteCalculation.NewValue,
+                    //    true);
                     MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
-                    ConstructionSiteCalculationCreatedUpdated();
+                    //ConstructionSiteCalculationCreatedUpdated();
 
                     ConstructionSiteViewModel constructionSite = CurrentConstructionSiteCalculation.ConstructionSite;
                     CurrentConstructionSiteCalculation = new ConstructionSiteCalculationViewModel();

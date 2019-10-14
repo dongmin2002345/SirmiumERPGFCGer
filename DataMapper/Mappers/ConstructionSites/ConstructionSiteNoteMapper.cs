@@ -10,76 +10,79 @@ namespace DataMapper.Mappers.ConstructionSites
 {
     public static class ConstructionSiteNoteMapper
     {
-        public static List<ConstructionSiteNoteViewModel> ConvertToConstructionSiteNoteViewModelList(this IEnumerable<ConstructionSiteNote> ConstructionSiteNotes)
+        public static List<ConstructionSiteNoteViewModel> ConvertToConstructionSiteNoteViewModelList(this IEnumerable<ConstructionSiteNote> constructionSiteNotes)
         {
-            List<ConstructionSiteNoteViewModel> ConstructionSiteNoteViewModels = new List<ConstructionSiteNoteViewModel>();
-            foreach (ConstructionSiteNote ConstructionSiteNote in ConstructionSiteNotes)
+            List<ConstructionSiteNoteViewModel> constructionSiteNoteViewModels = new List<ConstructionSiteNoteViewModel>();
+            foreach (ConstructionSiteNote constructionSiteNote in constructionSiteNotes)
             {
-                ConstructionSiteNoteViewModels.Add(ConstructionSiteNote.ConvertToConstructionSiteNoteViewModel());
+                constructionSiteNoteViewModels.Add(constructionSiteNote.ConvertToConstructionSiteNoteViewModel());
             }
-            return ConstructionSiteNoteViewModels;
+            return constructionSiteNoteViewModels;
         }
 
-        public static ConstructionSiteNoteViewModel ConvertToConstructionSiteNoteViewModel(this ConstructionSiteNote ConstructionSiteNote)
+        public static ConstructionSiteNoteViewModel ConvertToConstructionSiteNoteViewModel(this ConstructionSiteNote constructionSiteNote)
         {
-            ConstructionSiteNoteViewModel ConstructionSiteNoteViewModel = new ConstructionSiteNoteViewModel()
+            ConstructionSiteNoteViewModel constructionSiteNoteViewModel = new ConstructionSiteNoteViewModel()
             {
-                Id = ConstructionSiteNote.Id,
-                Identifier = ConstructionSiteNote.Identifier,
+                Id = constructionSiteNote.Id,
+                Identifier = constructionSiteNote.Identifier,
 
-                ConstructionSite = ConstructionSiteNote.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
+                ConstructionSite = constructionSiteNote.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
 
-                Note = ConstructionSiteNote.Note,
-                NoteDate = ConstructionSiteNote.NoteDate,
+                Note = constructionSiteNote.Note,
+                NoteDate = constructionSiteNote.NoteDate,
+                ItemStatus = constructionSiteNote.ItemStatus,
 
-                IsActive = ConstructionSiteNote.Active,
+                IsActive = constructionSiteNote.Active,
 
-                CreatedBy = ConstructionSiteNote.CreatedBy?.ConvertToUserViewModelLite(),
-                Company = ConstructionSiteNote.Company?.ConvertToCompanyViewModelLite(),
+                CreatedBy = constructionSiteNote.CreatedBy?.ConvertToUserViewModelLite(),
+                Company = constructionSiteNote.Company?.ConvertToCompanyViewModelLite(),
 
-                UpdatedAt = ConstructionSiteNote.UpdatedAt,
-                CreatedAt = ConstructionSiteNote.CreatedAt
+                UpdatedAt = constructionSiteNote.UpdatedAt,
+                CreatedAt = constructionSiteNote.CreatedAt
             };
 
-            return ConstructionSiteNoteViewModel;
+            return constructionSiteNoteViewModel;
         }
 
-        public static ConstructionSiteNoteViewModel ConvertToConstructionSiteNoteViewModelLite(this ConstructionSiteNote ConstructionSiteNote)
+        public static ConstructionSiteNoteViewModel ConvertToConstructionSiteNoteViewModelLite(this ConstructionSiteNote constructionSiteNote)
         {
-            ConstructionSiteNoteViewModel ConstructionSiteNoteViewModel = new ConstructionSiteNoteViewModel()
+            ConstructionSiteNoteViewModel constructionSiteNoteViewModel = new ConstructionSiteNoteViewModel()
             {
-                Id = ConstructionSiteNote.Id,
-                Identifier = ConstructionSiteNote.Identifier,
+                Id = constructionSiteNote.Id,
+                Identifier = constructionSiteNote.Identifier,
 
-                Note = ConstructionSiteNote.Note,
-                NoteDate = ConstructionSiteNote.NoteDate,
+                Note = constructionSiteNote.Note,
+                NoteDate = constructionSiteNote.NoteDate,
+                ItemStatus = constructionSiteNote.ItemStatus,
 
-                IsActive = ConstructionSiteNote.Active,
+                IsActive = constructionSiteNote.Active,
 
-                UpdatedAt = ConstructionSiteNote.UpdatedAt,
-                CreatedAt = ConstructionSiteNote.CreatedAt
+                UpdatedAt = constructionSiteNote.UpdatedAt,
+                CreatedAt = constructionSiteNote.CreatedAt
             };
 
-            return ConstructionSiteNoteViewModel;
+            return constructionSiteNoteViewModel;
         }
 
-        public static ConstructionSiteNote ConvertToConstructionSiteNote(this ConstructionSiteNoteViewModel ConstructionSiteNoteViewModel)
+        public static ConstructionSiteNote ConvertToConstructionSiteNote(this ConstructionSiteNoteViewModel constructionSiteNoteViewModel)
         {
             ConstructionSiteNote ConstructionSiteNote = new ConstructionSiteNote()
             {
-                Id = ConstructionSiteNoteViewModel.Id,
-                Identifier = ConstructionSiteNoteViewModel.Identifier,
+                Id = constructionSiteNoteViewModel.Id,
+                Identifier = constructionSiteNoteViewModel.Identifier,
 
-                ConstructionSiteId = ConstructionSiteNoteViewModel.ConstructionSite?.Id ?? null,
+                ConstructionSiteId = constructionSiteNoteViewModel.ConstructionSite?.Id ?? null,
 
-                Note = ConstructionSiteNoteViewModel.Note,
-                NoteDate = ConstructionSiteNoteViewModel.NoteDate,
+                Note = constructionSiteNoteViewModel.Note,
+                NoteDate = constructionSiteNoteViewModel.NoteDate,
+                ItemStatus = constructionSiteNoteViewModel.ItemStatus,
 
-                CreatedById = ConstructionSiteNoteViewModel.CreatedBy?.Id ?? null,
-                CompanyId = ConstructionSiteNoteViewModel.Company?.Id ?? null,
+                CreatedById = constructionSiteNoteViewModel.CreatedBy?.Id ?? null,
+                CompanyId = constructionSiteNoteViewModel.Company?.Id ?? null,
 
-                CreatedAt = ConstructionSiteNoteViewModel.CreatedAt,
-                UpdatedAt = ConstructionSiteNoteViewModel.UpdatedAt
+                CreatedAt = constructionSiteNoteViewModel.CreatedAt,
+                UpdatedAt = constructionSiteNoteViewModel.UpdatedAt
             };
 
             return ConstructionSiteNote;
