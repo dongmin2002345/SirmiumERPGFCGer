@@ -26,6 +26,22 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region Code
+        private string _Code;
+
+        public string Code
+        {
+            get { return _Code; }
+            set
+            {
+                if (_Code != value)
+                {
+                    _Code = value;
+                    NotifyPropertyChanged("Code");
+                }
+            }
+        }
+        #endregion
 
         #region Institution
         private string _Institution;
@@ -141,6 +157,23 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
                 {
                     _Email = value;
                     NotifyPropertyChanged("Email");
+                }
+            }
+        }
+        #endregion
+
+        #region Note
+        private string _Note;
+
+        public string Note
+        {
+            get { return _Note; }
+            set
+            {
+                if (_Note != value)
+                {
+                    _Note = value;
+                    NotifyPropertyChanged("Note");
                 }
             }
         }

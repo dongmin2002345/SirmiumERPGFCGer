@@ -9,7 +9,7 @@ namespace DomainCore.Common.BusinessPartners
     {
         public int? BusinessPartnerId { get; set; }
         public BusinessPartner BusinessPartner { get; set; }
-
+        public string Code { get; set; }
         public string Institution { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -17,6 +17,7 @@ namespace DomainCore.Common.BusinessPartners
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
+        public string Note { get; set; }
         public int ItemStatus { get; set; }
     }
 }

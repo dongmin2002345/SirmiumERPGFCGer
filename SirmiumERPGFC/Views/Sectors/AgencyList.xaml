@@ -134,6 +134,7 @@
                           SelectedItem="{Binding Path=CurrentAgency, Mode=TwoWay}">
 
                     <DataGrid.Columns>
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_delatnosti}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Sector.Name" Header="{DynamicResource Sektor}" Binding="{Binding Sector.Name}" IsReadOnly="True" />

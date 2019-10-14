@@ -771,13 +771,23 @@
                               SelectedItem="{Binding Path=CurrentInstitutionDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="Auto" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Institution" Header="{DynamicResource Institucija}" Binding="{Binding Path=Institution}" Width="*" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Username" Header="{DynamicResource Korisničko_ime}" Binding="{Binding Path=Username}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Username"  Binding="{Binding Path=Username}" IsReadOnly="True">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{DynamicResource Korisničko_ime}" TextWrapping="Wrap" MaxWidth="70" />
+                                </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn SortMemberPath="Password" Header="{DynamicResource Lozinka}" Binding="{Binding Path=Password}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ContactPerson" Header="{DynamicResource Kontakt_osoba}" Binding="{Binding Path=ContactPerson}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ContactPerson" Binding="{Binding Path=ContactPerson}" IsReadOnly="True">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{DynamicResource Kontakt_osoba}" TextWrapping="Wrap" MaxWidth="70" />
+                                </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn SortMemberPath="Phone" Header="{DynamicResource Telefon}" Binding="{Binding Path=Phone}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Fax" Header="{DynamicResource Fax}" Binding="{Binding Path=Fax}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrtamail}" Binding="{Binding Path=Email}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                     <DataGridTextColumn.CellStyle>

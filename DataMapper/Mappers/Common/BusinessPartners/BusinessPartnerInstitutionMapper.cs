@@ -28,7 +28,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Identifier = businessPartnerInstitution.Identifier,
 
                 BusinessPartner = businessPartnerInstitution.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
-
+                Code = businessPartnerInstitution.Code,
                 Institution = businessPartnerInstitution.Institution,
                 Username = businessPartnerInstitution.Username,
                 Password = businessPartnerInstitution.Password,
@@ -36,6 +36,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Phone = businessPartnerInstitution.Phone,
                 Fax = businessPartnerInstitution.Fax,
                 Email = businessPartnerInstitution.Email,
+                Note = businessPartnerInstitution.Note,
                 ItemStatus = businessPartnerInstitution.ItemStatus,
                 IsActive = businessPartnerInstitution.Active,
 
@@ -54,7 +55,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
             {
                 Id = businessPartnerInstitution.Id,
                 Identifier = businessPartnerInstitution.Identifier,
-
+                Code = businessPartnerInstitution.Code,
                 Institution = businessPartnerInstitution.Institution,
                 Username = businessPartnerInstitution.Username,
                 Password = businessPartnerInstitution.Password,
@@ -62,6 +63,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Phone = businessPartnerInstitution.Phone,
                 Fax = businessPartnerInstitution.Fax,
                 Email = businessPartnerInstitution.Email,
+                Note = businessPartnerInstitution.Note,
                 ItemStatus = businessPartnerInstitution.ItemStatus,
                 IsActive = businessPartnerInstitution.Active,
 
@@ -79,7 +81,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Identifier = businessPartnerInstitutionViewModel.Identifier,
 
                 BusinessPartnerId = businessPartnerInstitutionViewModel.BusinessPartner?.Id ?? null,
-
+                Code = businessPartnerInstitutionViewModel.Code,
                 Institution = businessPartnerInstitutionViewModel.Institution,
                 Username = businessPartnerInstitutionViewModel.Username,
                 Password = businessPartnerInstitutionViewModel.Password,
@@ -87,6 +89,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Phone = businessPartnerInstitutionViewModel.Phone,
                 Fax = businessPartnerInstitutionViewModel.Fax,
                 Email = businessPartnerInstitutionViewModel.Email,
+                Note = businessPartnerInstitutionViewModel.Note,
                 ItemStatus = businessPartnerInstitutionViewModel.ItemStatus,
                 CreatedById = businessPartnerInstitutionViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerInstitutionViewModel.Company?.Id ?? null,

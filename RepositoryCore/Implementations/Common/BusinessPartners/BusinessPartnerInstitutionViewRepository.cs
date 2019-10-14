@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerInstitutionId, BusinessPartnerInstitutionIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, ItemStatus, " +
+                "Code, Institution, Username, Password, ContactPerson, Phone, Fax, Email, Note, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerInstitutions " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -61,7 +61,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             businessPartnerInstitution.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
-
+                        if (reader["Code"] != DBNull.Value)
+                            businessPartnerInstitution.Code = reader["Code"].ToString();
                         if (reader["Institution"] != DBNull.Value)
                             businessPartnerInstitution.Institution = reader["Institution"].ToString();
                         if (reader["Username"] != DBNull.Value)
@@ -76,6 +77,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.Fax = reader["Fax"].ToString();
                         if (reader["Email"] != DBNull.Value)
                             businessPartnerInstitution.Email = reader["Email"].ToString();
+                        if (reader["Note"] != DBNull.Value)
+                            businessPartnerInstitution.Note = reader["Note"].ToString();
                         if (reader["ItemStatus"] != DBNull.Value)
                             businessPartnerInstitution.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerInstitution.Active = bool.Parse(reader["Active"].ToString());
@@ -122,7 +125,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerInstitutionId, BusinessPartnerInstitutionIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, ItemStatus, " +
+                "Code, Institution, Username, Password, ContactPerson, Phone, Fax, Email, Note, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerInstitutions " +
                 "WHERE BusinessPartnerId = @BusinessPartnerId AND Active = 1;";
@@ -152,7 +155,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             businessPartnerInstitution.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
-
+                        if (reader["Code"] != DBNull.Value)
+                            businessPartnerInstitution.Code = reader["Code"].ToString();
                         if (reader["Institution"] != DBNull.Value)
                             businessPartnerInstitution.Institution = reader["Institution"].ToString();
                         if (reader["Username"] != DBNull.Value)
@@ -167,6 +171,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.Fax = reader["Fax"].ToString();
                         if (reader["Email"] != DBNull.Value)
                             businessPartnerInstitution.Email = reader["Email"].ToString();
+                        if (reader["Note"] != DBNull.Value)
+                            businessPartnerInstitution.Note = reader["Note"].ToString();
                         if (reader["ItemStatus"] != DBNull.Value)
                             businessPartnerInstitution.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerInstitution.Active = bool.Parse(reader["Active"].ToString());
@@ -213,7 +219,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerInstitutionId, BusinessPartnerInstitutionIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Institution, Username, Password, ContactPerson, Phone, Fax, Email, ItemStatus, " +
+                "Code, Institution, Username, Password, ContactPerson, Phone, Fax, Email, Note, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerInstitutions " +
                 "WHERE CompanyId = @CompanyId " +
@@ -245,7 +251,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             businessPartnerInstitution.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
                         }
-
+                        if (reader["Code"] != DBNull.Value)
+                            businessPartnerInstitution.Code = reader["Code"].ToString();
                         if (reader["Institution"] != DBNull.Value)
                             businessPartnerInstitution.Institution = reader["Institution"].ToString();
                         if (reader["Username"] != DBNull.Value)
@@ -260,6 +267,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerInstitution.Fax = reader["Fax"].ToString();
                         if (reader["Email"] != DBNull.Value)
                             businessPartnerInstitution.Email = reader["Email"].ToString();
+                        if (reader["Note"] != DBNull.Value)
+                            businessPartnerInstitution.Note = reader["Note"].ToString();
                         if (reader["ItemStatus"] != DBNull.Value)
                             businessPartnerInstitution.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerInstitution.Active = bool.Parse(reader["Active"].ToString());
@@ -327,6 +336,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.CreatedById = businessPartnerInstitution.CreatedById ?? null;
 
                     // Set properties
+                    dbEntry.Code = businessPartnerInstitution.Code;
                     dbEntry.Institution = businessPartnerInstitution.Institution;
                     dbEntry.Username = businessPartnerInstitution.Username;
                     dbEntry.Password = businessPartnerInstitution.Password;
@@ -334,7 +344,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Phone = businessPartnerInstitution.Phone;
                     dbEntry.Fax = businessPartnerInstitution.Fax;
                     dbEntry.Email = businessPartnerInstitution.Email;
-
+                    dbEntry.Note = businessPartnerInstitution.Note;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

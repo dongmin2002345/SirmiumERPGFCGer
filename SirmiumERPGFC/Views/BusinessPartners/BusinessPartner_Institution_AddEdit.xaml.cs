@@ -299,6 +299,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerInstitutionForm.Identifier = CurrentBusinessPartnerInstitutionDG.Identifier;
             CurrentBusinessPartnerInstitutionForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentBusinessPartnerInstitutionForm.Code = CurrentBusinessPartnerInstitutionDG.Code;
             CurrentBusinessPartnerInstitutionForm.Institution = CurrentBusinessPartnerInstitutionDG.Institution;
             CurrentBusinessPartnerInstitutionForm.Username = CurrentBusinessPartnerInstitutionDG.Username;
             CurrentBusinessPartnerInstitutionForm.Password = CurrentBusinessPartnerInstitutionDG.Password;
@@ -306,6 +307,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerInstitutionForm.Phone = CurrentBusinessPartnerInstitutionDG.Phone;
             CurrentBusinessPartnerInstitutionForm.Fax = CurrentBusinessPartnerInstitutionDG.Fax;
             CurrentBusinessPartnerInstitutionForm.Email = CurrentBusinessPartnerInstitutionDG.Email;
+            CurrentBusinessPartnerInstitutionForm.Note = CurrentBusinessPartnerInstitutionDG.Note;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
