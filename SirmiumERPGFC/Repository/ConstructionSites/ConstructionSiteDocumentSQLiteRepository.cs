@@ -6,15 +6,13 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ConstructionSites
 {
     public class ConstructionSiteDocumentSQLiteRepository
     {
+        #region SQL
+
         public static string ConstructionSiteDocumentTableCreatePart =
                      "CREATE TABLE IF NOT EXISTS ConstructionSiteDocuments " +
                      "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -48,6 +46,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "VALUES (NULL, @ServerId, @Identifier, @ConstructionSiteId, @ConstructionSiteIdentifier, " +
             "@ConstructionSiteCode, @ConstructionSiteName, @Name, @CreateDate, @Path, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
         private static ConstructionSiteDocumentViewModel Read(SqliteDataReader query)
@@ -91,6 +91,9 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
         }
 
         #endregion
+
+        #region Read
+
         public ConstructionSiteDocumentListResponse GetConstructionSiteDocumentsByConstructionSite(int companyId, Guid ConstructionSiteIdentifier)
         {
             ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentListResponse();
@@ -107,6 +110,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ConstructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -225,6 +229,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
         //    return response;
         //}
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IConstructionSiteDocumentService ConstructionSiteDocumentService, Action<int, int> callback = null)
         {
             try
@@ -321,6 +329,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public ConstructionSiteDocumentResponse Create(ConstructionSiteDocumentViewModel constructionSiteDocument)
         {
             ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();
@@ -350,47 +362,9 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             }
         }
 
-        //public ConstructionSiteDocumentResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();
+        #endregion
 
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE ConstructionSiteDocuments SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public ConstructionSiteDocumentResponse Delete(Guid identifier)
         {
@@ -404,9 +378,9 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM ConstructionSiteDocuments WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM ConstructionSiteDocuments WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
                     insertCommand.ExecuteReader();
@@ -479,10 +453,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "UPDATE ConstructionSiteDocuments SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "UPDATE ConstructionSiteDocuments SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
                     insertCommand.ExecuteReader();
@@ -500,5 +474,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 return response;
             }
         }
+
+        #endregion
     }
 }

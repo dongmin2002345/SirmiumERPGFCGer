@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ConstructionSites
 {
     public class ConstructionSiteSQLiteRepository
     {
+        #region SQL
+
         public static string ConstructionSiteTableCreatePart =
           "CREATE TABLE IF NOT EXISTS ConstructionSites " +
            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -61,6 +59,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
         #region Helper methods
 
         private static ConstructionSiteViewModel Read(SqliteDataReader query)
@@ -84,6 +84,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
             dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+           
             return dbEntry;
         }
         private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, ConstructionSiteViewModel constructionSite)
@@ -119,6 +120,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
         #endregion
 
+        #region Read
+
         public ConstructionSiteListResponse GetConstructionSitesByPage(int companyId, ConstructionSiteViewModel constructionSiteSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             ConstructionSiteListResponse response = new ConstructionSiteListResponse();
@@ -140,6 +143,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
@@ -167,6 +171,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
                         "AND (@BusinessPartnerCode IS NULL OR @BusinessPartnerCode = '' OR IDENTIFIER IN (SELECT ConstructionSiteIdentifier FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerInternalCode LIKE @BusinessPartnerCode)) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
@@ -214,6 +219,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)filterString) != null ? "%" + filterString + "%" : "");
@@ -282,6 +288,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             response.ConstructionSite = constructionSite;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IConstructionSiteService constructionSiteService, Action<int, int> callback = null)
         {
@@ -379,6 +389,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public ConstructionSiteResponse Create(ConstructionSiteViewModel constructionSite)
         {
             ConstructionSiteResponse response = new ConstructionSiteResponse();
@@ -387,10 +401,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
                 try
@@ -412,48 +423,9 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             }
         
         }
+        #endregion
 
-        //public ConstructionSiteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    ConstructionSiteResponse response = new ConstructionSiteResponse();
-
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE ConstructionSites SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public ConstructionSiteResponse Delete(Guid identifier)
         {
@@ -467,8 +439,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM ConstructionSites WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM ConstructionSites WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 try
                 {
@@ -506,7 +477,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     insertCommand.CommandText = "DELETE FROM ConstructionSites";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -529,5 +500,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

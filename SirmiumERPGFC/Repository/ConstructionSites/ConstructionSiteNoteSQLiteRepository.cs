@@ -6,15 +6,13 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ConstructionSites
 {
     public class ConstructionSiteNoteSQLiteRepository
     {
+        #region SQL
+
         public static string ConstructionSiteNoteTableCreatePart =
                      "CREATE TABLE IF NOT EXISTS ConstructionSiteNotes " +
                      "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -47,6 +45,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "VALUES (NULL, @ServerId, @Identifier, @ConstructionSiteId, @ConstructionSiteIdentifier, " +
             "@ConstructionSiteCode, @ConstructionSiteName, @Note, @NoteDate, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
         private static ConstructionSiteNoteViewModel Read(SqliteDataReader query)
@@ -88,6 +88,9 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
         }
 
         #endregion
+
+        #region Read
+
         public ConstructionSiteNoteListResponse GetConstructionSiteNotesByConstructionSite(int companyId, Guid ConstructionSiteIdentifier)
         {
             ConstructionSiteNoteListResponse response = new ConstructionSiteNoteListResponse();
@@ -104,6 +107,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "WHERE ConstructionSiteIdentifier = @ConstructionSiteIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ConstructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -221,6 +225,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
         //    return response;
         //}
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IConstructionSiteNoteService ConstructionSiteNoteService, Action<int, int> callback = null)
         {
             try
@@ -317,6 +325,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public ConstructionSiteNoteResponse Create(ConstructionSiteNoteViewModel constructionSiteNote)
         {
             ConstructionSiteNoteResponse response = new ConstructionSiteNoteResponse();
@@ -346,47 +358,9 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             }
         }
 
-        //public ConstructionSiteNoteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    ConstructionSiteNoteResponse response = new ConstructionSiteNoteResponse();
+        #endregion
 
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE ConstructionSiteNotes SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public ConstructionSiteNoteResponse Delete(Guid identifier)
         {
@@ -400,9 +374,9 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM ConstructionSiteNotes WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM ConstructionSiteNotes WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
                     insertCommand.ExecuteReader();
@@ -475,8 +449,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "UPDATE ConstructionSiteNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "UPDATE ConstructionSiteNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
                 try
@@ -496,5 +469,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                 return response;
             }
         }
+
+        #endregion
     }
 }
