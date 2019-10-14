@@ -307,7 +307,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerPhoneForm.Fax = CurrentBusinessPartnerPhoneDG.Fax;
             CurrentBusinessPartnerPhoneForm.Email = CurrentBusinessPartnerPhoneDG.Email;
             CurrentBusinessPartnerPhoneForm.Birthday = CurrentBusinessPartnerPhoneDG.Birthday;
-
+            CurrentBusinessPartnerPhoneForm.Path = CurrentBusinessPartnerPhoneDG.Path;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -399,6 +399,25 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
 
         #endregion
+
+        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+            string[] fileNames = dialog.FileNames;
+
+            if (fileNames.Length > 0)
+                CurrentBusinessPartnerPhoneForm.Path = fileNames[0];
+        }
+
+        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            fileDIalog.Multiselect = true;
+            fileDIalog.FileOk += FileDIalog_FileOk;
+            fileDIalog.Filter = "Image Files | *.pdf";
+            fileDIalog.ShowDialog();
+        }
 
         #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;

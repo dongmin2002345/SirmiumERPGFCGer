@@ -505,6 +505,19 @@
                                 <DataGridTextColumn SortMemberPath="Phone" Header="{DynamicResource Telefoni}" Binding="{Binding Path=Phone}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrtamail}" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Birthday" Header="{DynamicResource Rodjendan}" Binding="{Binding Path=Birthday, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnShowDocumentPhone" Click="btnShowDocumentPhone_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                     <DataGridTextColumn.CellStyle>

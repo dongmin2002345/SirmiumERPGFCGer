@@ -32,6 +32,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "ContactPersonLastName NVARCHAR(2048) NULL, " +
             "Birthday DATETIME NULL, " + 
             "Description NVARCHAR(2048) NULL, " +
+            "Path NVARCHAR(2048) NULL, " +
             "ItemStatus INTEGER NOT NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
@@ -42,16 +43,16 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
-            "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, ItemStatus, " +
+            "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartnerPhones " +
             "(Id, ServerId, Identifier, BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
-            "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, ItemStatus, " +
+            "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
-            "@Phone, @Mobile, @Fax, @Email, @ContactPersonFirstName, @ContactPersonLastName, @Birthday, @Description, @ItemStatus, " +
+            "@Phone, @Mobile, @Fax, @Email, @ContactPersonFirstName, @ContactPersonLastName, @Birthday, @Description, @Path, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -73,6 +74,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.ContactPersonLastName = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Birthday = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -100,6 +102,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@ContactPersonLastName", ((object)businessPartnerPhone.ContactPersonLastName) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Birthday", ((object)businessPartnerPhone.Birthday) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Description", ((object)businessPartnerPhone.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)businessPartnerPhone.Path) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)businessPartnerPhone.ItemStatus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", businessPartnerPhone.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartnerPhone.UpdatedAt) ?? DBNull.Value);

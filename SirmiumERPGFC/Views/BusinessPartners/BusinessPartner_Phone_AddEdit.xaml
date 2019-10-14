@@ -70,7 +70,20 @@
                     <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource NapomenaDvotacka}" Margin="5 0 5 0" />
                     <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentBusinessPartnerPhoneForm.Description, Mode=TwoWay}"/>
 
-
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2,7,1.5,7" VerticalAlignment="Center" />
+                    <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Text="{Binding Path=CurrentBusinessPartnerPhoneForm.Path, Mode=TwoWay}" Margin="2" />
+                        <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ODABERI}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    
                     <Button x:Name="btnAddPhone" Grid.Row="4" Grid.Column="4" Click="btnAddPhone_Click" Margin="2" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
@@ -116,6 +129,7 @@
                         <DataGridTextColumn SortMemberPath="Fax" Header="{DynamicResource Fax}" Binding="{Binding Path=Fax}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Email" Header="{DynamicResource ECrtamail}" Binding="{Binding Path=Email}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Birthday" Header="{DynamicResource Rodjendan}" Binding="{Binding Path=Birthday, Converter={StaticResource StringDateTimeShortConverter}}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource Putanja}" Binding="{Binding Path=Path}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerPhoneId, BusinessPartnerPhoneIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, ItemStatus, " +
+                "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerPhones " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -81,6 +81,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                         if (reader["Description"] != DBNull.Value)
                             businessPartnerPhone.Description = reader["Description"].ToString();
+                        if (reader["Path"] != DBNull.Value)
+                            businessPartnerPhone.Path = reader["Path"].ToString();
                         if (reader["ItemStatus"] != DBNull.Value)
                             businessPartnerPhone.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerPhone.Active = bool.Parse(reader["Active"].ToString());
@@ -127,7 +129,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerPhoneId, BusinessPartnerPhoneIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, ItemStatus, " +
+                "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerPhones " +
                 "WHERE BusinessPartnerId = @BusinessPartnerId;";
@@ -177,6 +179,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                         if (reader["Description"] != DBNull.Value)
                             businessPartnerPhone.Description = reader["Description"].ToString();
+                        if (reader["Path"] != DBNull.Value)
+                            businessPartnerPhone.Path = reader["Path"].ToString();
                         if (reader["ItemStatus"] != DBNull.Value)
                             businessPartnerPhone.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerPhone.Active = bool.Parse(reader["Active"].ToString());
@@ -223,7 +227,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerPhoneId, BusinessPartnerPhoneIdentifier, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-                "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, ItemStatus, " +
+                "Phone, Mobile, Fax, Email, ContactPersonFirstName, ContactPersonLastName, Birthday, Description, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartnerPhones " +
                 "WHERE CompanyId = @CompanyId AND UpdatedAt > @LastUpdateTime;";
@@ -274,6 +278,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                         if (reader["Description"] != DBNull.Value)
                             businessPartnerPhone.Description = reader["Description"].ToString();
+                        if (reader["Path"] != DBNull.Value)
+                            businessPartnerPhone.Path = reader["Path"].ToString();
                         if (reader["ItemStatus"] != DBNull.Value)
                             businessPartnerPhone.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         businessPartnerPhone.Active = bool.Parse(reader["Active"].ToString());
@@ -350,7 +356,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Birthday = businessPartnerPhone.Birthday;
 
                     dbEntry.Description = businessPartnerPhone.Description;
-
+                    dbEntry.Path = businessPartnerPhone.Path;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

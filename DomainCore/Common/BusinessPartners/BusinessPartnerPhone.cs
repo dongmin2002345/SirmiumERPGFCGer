@@ -21,6 +21,7 @@ namespace DomainCore.Common.BusinessPartners
         public DateTime? Birthday { get; set; }
 
         public string Description { get; set; }
+        public string Path { get; set; }
         public int ItemStatus { get; set; }
     }
 }
