@@ -8,15 +8,13 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Companies
 {
     public class CompanyUserSQLiteRepository
     {
+        #region SQL
+
         public static string CompanyUserTableCreatePart =
                   "CREATE TABLE IF NOT EXISTS CompanyUsers " +
                   "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -45,6 +43,51 @@ namespace SirmiumERPGFC.Repository.Companies
             "@UserRoles, " +
             "@IsSynced, @UpdatedAt, @CompanyId, @CompanyName) ";
 
+        #endregion
+
+        #region Helper methods
+
+        private CompanyUserViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            CompanyUserViewModel dbEntry = new CompanyUserViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.User = SQLiteHelper.GetCompanyUser(query, ref counter);
+
+            var userRoles = SQLiteHelper.GetString(query, ref counter)?.RolesFromCSV() ?? new List<UserRoleViewModel>();
+            dbEntry.UserRoles = userRoles;
+
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, CompanyUserViewModel companyUser)
+        {
+            var userRoleStr = companyUser?.UserRoles?.RolesToCSV();
+
+            insertCommand.Parameters.AddWithValue("@ServerId", companyUser.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", companyUser.Identifier);
+            insertCommand.Parameters.AddWithValue("@UserId", ((object)companyUser.User?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@UserIdentifier", ((object)companyUser.User?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@UserName", ((object)(companyUser.User?.FirstName + " " + companyUser.User?.LastName)) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@UserRoles", ((object)userRoleStr) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@IsSynced", companyUser.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)companyUser.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CompanyId", ((object)companyUser.Company?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CompanyName", ((object)companyUser.Company?.CompanyName) ?? DBNull.Value);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
 
         public CompanyUserResponse GetCompanyUser(int companyId, int userId)
         {
@@ -67,23 +110,8 @@ namespace SirmiumERPGFC.Repository.Companies
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        CompanyUserViewModel dbEntry = new CompanyUserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.User = SQLiteHelper.GetCompanyUser(query, ref counter);
-
-                        var userRoles = SQLiteHelper.GetString(query, ref counter)?.RolesFromCSV() ?? new List<UserRoleViewModel>();
-                        dbEntry.UserRoles = userRoles;
-
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-
-                        user = dbEntry;
-                    }
+                        user = Read(query);
+                    
 
                     db.Close();
                 }
@@ -122,23 +150,8 @@ namespace SirmiumERPGFC.Repository.Companies
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        CompanyUserViewModel dbEntry = new CompanyUserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.User = SQLiteHelper.GetCompanyUser(query, ref counter);
-
-                        var userRoles = SQLiteHelper.GetString(query, ref counter)?.RolesFromCSV() ?? new List<UserRoleViewModel>();
-                        dbEntry.UserRoles = userRoles;
-
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-
-                        user = dbEntry;
-                    }
+                        user = Read(query);
+                    
 
                     db.Close();
                 }
@@ -159,7 +172,7 @@ namespace SirmiumERPGFC.Repository.Companies
         public CompanyUserListResponse GetCompanyUsers(Guid identifier)
         {
             CompanyUserListResponse response = new CompanyUserListResponse();
-            List<CompanyUserViewModel> user = new List<CompanyUserViewModel>();
+            List<CompanyUserViewModel> Users = new List<CompanyUserViewModel>();
             try
             {
                 using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
@@ -176,23 +189,8 @@ namespace SirmiumERPGFC.Repository.Companies
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        CompanyUserViewModel dbEntry = new CompanyUserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.User = SQLiteHelper.GetCompanyUser(query, ref counter);
-
-                        var userRoles = SQLiteHelper.GetString(query, ref counter)?.RolesFromCSV() ?? new List<UserRoleViewModel>();
-                        dbEntry.UserRoles = userRoles;
-
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-
-                        user.Add(dbEntry);
-                    }
+                        Users.Add(Read(query));
+                    
 
                     db.Close();
                 }
@@ -206,40 +204,125 @@ namespace SirmiumERPGFC.Repository.Companies
                 return response;
             }
             response.Success = true;
-            response.CompanyUsers = user;
+            response.CompanyUsers = Users;
             return response;
         }
 
-        public CompanyUserResponse Create(CompanyUserViewModel viewModel)
+        #endregion
+
+        #region Sync
+
+        public void Sync(ICompanyUserService userService, Action<int, int> callback = null)
+        {
+            try
+            {
+                SyncCompanyUserRequest request = new SyncCompanyUserRequest();
+                request.LastUpdatedAt = GetLastUpdatedAt();
+
+                int toSync = 0;
+                int syncedItems = 0;
+
+                CompanyUserListResponse response = userService.Sync(request);
+                if (response.Success)
+                {
+                    toSync = response?.CompanyUsers?.Count ?? 0;
+                    List<CompanyUserViewModel> companyUsersFromDB = response.CompanyUsers;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
+                    {
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM CompanyUsers WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var companyUser in companyUsersFromDB)
+                            {
+                                deleteCommand.Parameters.AddWithValue("@Identifier", companyUser.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (companyUser.IsActive)
+                                {
+                                    companyUser.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, companyUser);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
+                            }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
+                    }
+                }
+                else
+                    throw new Exception(response.Message);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+
+        public DateTime? GetLastUpdatedAt()
+        {
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from CompanyUsers", db);
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+                    int count = query.Read() ? query.GetInt32(0) : 0;
+
+                    if (count == 0)
+                        return null;
+                    else
+                    {
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from CompanyUsers", db);
+                        query = selectCommand.ExecuteReader();
+                        if (query.Read())
+                        {
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //MainWindow.ErrorMessage = ex.Message;
+                }
+                db.Close();
+            }
+            return null;
+        }
+
+        #endregion
+
+        #region Create
+
+        public CompanyUserResponse Create(CompanyUserViewModel companyUser)
         {
             CompanyUserResponse response = new CompanyUserResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                var userRoleStr = viewModel?.UserRoles?.RolesToCSV();
-
-                insertCommand.Parameters.AddWithValue("@ServerId", viewModel.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", viewModel.Identifier);
-                insertCommand.Parameters.AddWithValue("@UserId", ((object)viewModel.User?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@UserIdentifier", ((object)viewModel.User?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@UserName", ((object)(viewModel.User?.FirstName + " " + viewModel.User?.LastName)) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@UserRoles", ((object)userRoleStr) ?? DBNull.Value);
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", viewModel.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)viewModel.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CompanyId", ((object)viewModel.Company?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CompanyName", ((object)viewModel.Company?.CompanyName) ?? DBNull.Value);
-
                 try
                 {
+                    insertCommand = AddCreateParameters(insertCommand, companyUser);
                     insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
@@ -255,45 +338,10 @@ namespace SirmiumERPGFC.Repository.Companies
                 return response;
             }
         }
-        public UserResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced, DateTime? lastUpdate)
-        {
-            UserResponse response = new UserResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
+        #endregion
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE CompanyUsers SET " +
-                    "IsSynced = @IsSynced, " +
-                    "ServerId = @ServerId, " +
-                    "UpdatedAt = @UpdatedAt " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)lastUpdate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteNonQuery();
-                }
-                catch (SqliteException error)
-                {
-                    //MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public UserResponse Delete(Guid identifier)
         {
@@ -307,9 +355,9 @@ namespace SirmiumERPGFC.Repository.Companies
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM CompanyUsers WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM CompanyUsers WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
                     insertCommand.ExecuteNonQuery();
@@ -370,74 +418,6 @@ namespace SirmiumERPGFC.Repository.Companies
             return response;
         }
 
-        public DateTime? GetLastUpdatedAt()
-        {
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from CompanyUsers", db);
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-                    int count = query.Read() ? query.GetInt32(0) : 0;
-
-                    if (count == 0)
-                        return null;
-                    else
-                    {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from CompanyUsers", db);
-                        query = selectCommand.ExecuteReader();
-                        if (query.Read())
-                        {
-                            int counter = 0;
-                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //MainWindow.ErrorMessage = ex.Message;
-                }
-                db.Close();
-            }
-            return null;
-        }
-
-        public void Sync(ICompanyUserService userService, Action<int, int> callback = null)
-        {
-            try
-            {
-                SyncCompanyUserRequest request = new SyncCompanyUserRequest();
-                request.LastUpdatedAt = GetLastUpdatedAt();
-
-                int toSync = 0;
-                int syncedItems = 0;
-
-                CompanyUserListResponse response = userService.Sync(request);
-                if (response.Success)
-                {
-                    toSync = response?.CompanyUsers?.Count ?? 0;
-                    List<CompanyUserViewModel> usersFromDB = response.CompanyUsers;
-                    foreach (var user in usersFromDB.OrderBy(x => x.Id))
-                    {
-                            Delete(user.Identifier);
-                            user.IsSynced = true;
-                            if (user.IsActive)
-                            {
-                                user.IsSynced = true;
-                                Create(user);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
-                            }
-                    }
-                }
-                else
-                    throw new Exception(response.Message);
-            }
-            catch (Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
-        }
+        #endregion
     }
 }
