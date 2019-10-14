@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
     public class EmployeeLicenceItemSQLiteRepository
     {
+        #region SQL
+
         public static string EmployeeItemTableCreatePart =
                "CREATE TABLE IF NOT EXISTS EmployeeLicenceItems " +
                "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -62,6 +60,62 @@ namespace SirmiumERPGFC.Repository.Employees
             "@CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private EmployeeLicenceItemViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            EmployeeLicenceItemViewModel dbEntry = new EmployeeLicenceItemViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+            dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
+            dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+            dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, EmployeeLicenceItemViewModel EmployeeLicenceItem)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", EmployeeLicenceItem.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", EmployeeLicenceItem.Identifier);
+            insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)EmployeeLicenceItem.Employee.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeLicenceItem.Employee.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeLicenceItem.Employee.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeLicenceItem.Employee.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeLicenceItem.Employee.EmployeeCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@LicenceId", ((object)EmployeeLicenceItem.Licence.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@LicenceIdentifier", ((object)EmployeeLicenceItem.Licence.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@LicenceCode", ((object)EmployeeLicenceItem.Licence.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@LicenceCategory", ((object)EmployeeLicenceItem.Licence.Category) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@LicenceDescription", ((object)EmployeeLicenceItem.Licence.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeLicenceItem.Country.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeLicenceItem.Country.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeLicenceItem.Country.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeLicenceItem.Country.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ValidFrom", ((object)EmployeeLicenceItem.ValidFrom) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ValidTo", ((object)EmployeeLicenceItem.ValidTo) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeLicenceItem.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)EmployeeLicenceItem.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
 
         public EmployeeLicenceItemListResponse GetEmployeeLicencesByEmployee(int companyId, Guid EmployeeIdentifier)
         {
@@ -79,28 +133,15 @@ namespace SirmiumERPGFC.Repository.Employees
                         "WHERE EmployeeIdentifier = @EmployeeIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@EmployeeIdentifier", EmployeeIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeLicenceItemViewModel dbEntry = new EmployeeLicenceItemViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
-                        dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        EmployeeLicenceItems.Add(dbEntry);
-                    }
+                        EmployeeLicenceItems.Add(Read(query));
+                    
 
                 }
                 catch (SqliteException error)
@@ -137,22 +178,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeLicenceItemViewModel dbEntry = new EmployeeLicenceItemViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Licence = SQLiteHelper.GetLicence(query, ref counter);
-                        dbEntry.ValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.ValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        EmployeeItem = dbEntry;
-                    }
+                        EmployeeItem = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -169,6 +196,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IEmployeeLicenceService EmployeeItemService, Action<int, int> callback = null)
         {
             try
@@ -184,17 +215,41 @@ namespace SirmiumERPGFC.Repository.Employees
                 if (response.Success)
                 {
                     toSync = response?.EmployeeLicenceItems?.Count ?? 0;
-                    List<EmployeeLicenceItemViewModel> EmployeeItemsFromDB = response.EmployeeLicenceItems;
-                    foreach (var EmployeeItem in EmployeeItemsFromDB.OrderBy(x => x.Id))
+                    List<EmployeeLicenceItemViewModel> employeeLicenceItemsFromDB = response.EmployeeLicenceItems;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(EmployeeItem.Identifier);
-                            if (EmployeeItem.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM EmployeeLicenceItems WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var employeeLicenceItem in employeeLicenceItemsFromDB)
                             {
-                                EmployeeItem.IsSynced = true;
-                                Create(EmployeeItem);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", employeeLicenceItem.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (employeeLicenceItem.IsActive)
+                                {
+                                    employeeLicenceItem.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, employeeLicenceItem);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -240,6 +295,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public EmployeeLicenceItemResponse Create(EmployeeLicenceItemViewModel EmployeeItem)
         {
             EmployeeLicenceItemResponse response = new EmployeeLicenceItemResponse();
@@ -248,40 +307,13 @@ namespace SirmiumERPGFC.Repository.Employees
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", EmployeeItem.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", EmployeeItem.Identifier);
-                insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)EmployeeItem.Employee.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeItem.Employee.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeItem.Employee.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeItem.Employee.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeItem.Employee.EmployeeCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@LicenceId", ((object)EmployeeItem.Licence.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@LicenceIdentifier", ((object)EmployeeItem.Licence.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@LicenceCode", ((object)EmployeeItem.Licence.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@LicenceCategory", ((object)EmployeeItem.Licence.Category) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@LicenceDescription", ((object)EmployeeItem.Licence.Description) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeItem.Country.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ValidFrom", ((object)EmployeeItem.ValidFrom) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ValidTo", ((object)EmployeeItem.ValidTo) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)EmployeeItem.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, EmployeeItem);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -297,47 +329,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeLicenceItemResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            EmployeeLicenceItemResponse response = new EmployeeLicenceItemResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE EmployeeLicenceItems SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public EmployeeLicenceItemResponse Delete(Guid identifier)
         {
@@ -351,12 +345,12 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM  EmployeeLicenceItems WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM  EmployeeLicenceItems WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -390,7 +384,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     insertCommand.CommandText = "DELETE FROM EmployeeLicenceItems";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -413,5 +407,7 @@ namespace SirmiumERPGFC.Repository.Employees
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

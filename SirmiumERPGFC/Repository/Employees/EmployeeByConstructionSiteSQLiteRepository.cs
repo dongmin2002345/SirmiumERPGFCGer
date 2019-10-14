@@ -1,20 +1,17 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
-using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
     public class EmployeeByConstructionSiteSQLiteRepository
     {
+        #region SQL
+
         public static string EmployeeByConstructionSiteTableCreatePart =
                "CREATE TABLE IF NOT EXISTS EmployeeByConstructionSites " +
                "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -66,6 +63,69 @@ namespace SirmiumERPGFC.Repository.Employees
            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName,  " +
            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private EmployeeByConstructionSiteViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            EmployeeByConstructionSiteViewModel dbEntry = new EmployeeByConstructionSiteViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+            dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Employee.Passport = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, EmployeeByConstructionSiteViewModel employeeByConstructionSite)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", employeeByConstructionSite.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", employeeByConstructionSite.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)employeeByConstructionSite.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StartDate", ((object)employeeByConstructionSite.StartDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EndDate", ((object)employeeByConstructionSite.EndDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)employeeByConstructionSite.RealEndDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)employeeByConstructionSite.Employee?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByConstructionSite.Employee?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByConstructionSite.Employee?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)employeeByConstructionSite.Employee?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)employeeByConstructionSite.Employee?.EmployeeCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)employeeByConstructionSite.BusinessPartner?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)employeeByConstructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)employeeByConstructionSite.BusinessPartner?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)employeeByConstructionSite.BusinessPartner?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)employeeByConstructionSite.BusinessPartner?.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)employeeByConstructionSite.BusinessPartner?.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)employeeByConstructionSite.ConstructionSite?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)employeeByConstructionSite.ConstructionSite?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)employeeByConstructionSite.ConstructionSite?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)employeeByConstructionSite.ConstructionSite?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", employeeByConstructionSite.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)employeeByConstructionSite.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
 
         public EmployeeByConstructionSiteListResponse GetByConstructionSiteAndBusinessPartner(Guid constructionSiteIdentifier, Guid? businessPartnerIdentifier, int currentPage = 1, int itemsPerPage = 50)
         {
@@ -89,6 +149,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND (@BusinessPartnerIdentifier IS NULL OR ecs.BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
                         "ORDER BY ecs.ServerId " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerIdentifier) != null ? (Guid)businessPartnerIdentifier : (object)DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -97,26 +158,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        EmployeeByConstructionSiteViewModel dbEntry = new EmployeeByConstructionSiteViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter); 
-                        dbEntry.Employee.Passport = SQLiteHelper.GetString(query, ref counter); 
-                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter); 
-                        dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        employeeByConstructionSites.Add(dbEntry);
-                    }
+                        employeeByConstructionSites.Add(Read(query));
+                    
 
                     selectCommand = new SqliteCommand(
                         "SELECT COUNT(*) " +
@@ -125,6 +168,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND ecs.EmployeeIdentifier = e.Identifier " +
                         "AND (@BusinessPartnerIdentifier IS NULL OR ecs.BusinessPartnerIdentifier = @BusinessPartnerIdentifier) " +
                         "ORDER BY ecs.ServerId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)businessPartnerIdentifier) != null ? (Guid)businessPartnerIdentifier : (object)DBNull.Value);
 
@@ -148,6 +192,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IEmployeeByConstructionSiteService employeeByConstructionSiteService, Action<int, int> callback = null)
         {
             try
@@ -163,17 +211,41 @@ namespace SirmiumERPGFC.Repository.Employees
                 if (response.Success)
                 {
                     toSync = response?.EmployeeByConstructionSites?.Count ?? 0;
-                    List<EmployeeByConstructionSiteViewModel> employeeByConstructionSiteFromDB = response.EmployeeByConstructionSites;
-                    foreach (var employeeByConstructionSite in employeeByConstructionSiteFromDB.OrderBy(x => x.Id))
+                    List<EmployeeByConstructionSiteViewModel> employeeByConstructionSitesFromDB = response.EmployeeByConstructionSites;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(employeeByConstructionSite.Identifier);
-                            if (employeeByConstructionSite.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM EmployeeByConstructionSites WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var employeeByConstructionSite in employeeByConstructionSitesFromDB)
                             {
-                                employeeByConstructionSite.IsSynced = true;
-                                Create(employeeByConstructionSite);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", employeeByConstructionSite.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (employeeByConstructionSite.IsActive)
+                                {
+                                    employeeByConstructionSite.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, employeeByConstructionSite);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -219,6 +291,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public EmployeeByConstructionSiteResponse Create(EmployeeByConstructionSiteViewModel employeeByConstructionSite)
         {
             EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteResponse();
@@ -227,43 +303,13 @@ namespace SirmiumERPGFC.Repository.Employees
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", employeeByConstructionSite.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", employeeByConstructionSite.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)employeeByConstructionSite.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@StartDate", ((object)employeeByConstructionSite.StartDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EndDate", ((object)employeeByConstructionSite.EndDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@RealEndDate", ((object)employeeByConstructionSite.RealEndDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)employeeByConstructionSite.Employee?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)employeeByConstructionSite.Employee?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)employeeByConstructionSite.Employee?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)employeeByConstructionSite.Employee?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)employeeByConstructionSite.Employee?.EmployeeCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)employeeByConstructionSite.BusinessPartner?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)employeeByConstructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)employeeByConstructionSite.BusinessPartner?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)employeeByConstructionSite.BusinessPartner?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)employeeByConstructionSite.BusinessPartner?.InternalCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)employeeByConstructionSite.BusinessPartner?.NameGer) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteId", ((object)employeeByConstructionSite.ConstructionSite?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)employeeByConstructionSite.ConstructionSite?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)employeeByConstructionSite.ConstructionSite?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)employeeByConstructionSite.ConstructionSite?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", employeeByConstructionSite.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)employeeByConstructionSite.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, employeeByConstructionSite);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -279,47 +325,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeByConstructionSiteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            EmployeeByConstructionSiteResponse response = new EmployeeByConstructionSiteResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE EmployeeByConstructionSites SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public EmployeeByConstructionSiteResponse Delete(Guid identifier)
         {
@@ -333,12 +341,12 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM EmployeeByConstructionSites WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM EmployeeByConstructionSites WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -372,7 +380,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     insertCommand.CommandText = "DELETE FROM EmployeeByConstructionSites";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -395,5 +403,7 @@ namespace SirmiumERPGFC.Repository.Employees
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

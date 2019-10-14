@@ -516,7 +516,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     return;
                 }
 
-                new EmployeeByBusinessPartnerSQLiteRepository().UpdateSyncStatus(employeeByBusinessPartner.Identifier, response.EmployeeByBusinessPartner.Code, response.EmployeeByBusinessPartner.UpdatedAt, response.EmployeeByBusinessPartner.Id, true);
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
 
                 ContractStartDate = DateTime.Now;

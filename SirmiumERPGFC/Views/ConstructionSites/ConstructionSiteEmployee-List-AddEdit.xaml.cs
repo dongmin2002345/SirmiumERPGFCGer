@@ -511,7 +511,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     return;
                 }
 
-                new EmployeeByConstructionSiteSQLiteRepository().UpdateSyncStatus(employeeByConstructionSite.Identifier, response.EmployeeByConstructionSite.Code, response.EmployeeByConstructionSite.UpdatedAt, response.EmployeeByConstructionSite.Id, true);
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
 
                 ContractStartDate = DateTime.Now;

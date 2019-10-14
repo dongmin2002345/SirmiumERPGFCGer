@@ -1037,7 +1037,6 @@ namespace SirmiumERPGFC.Views.Employees
 
                     if (response.Success)
                     {
-                        new EmployeeSQLiteRepository().UpdateSyncStatus(CurrentEmployee.Identifier, response.Employee.Code, response.Employee.UpdatedAt, response.Employee.Id, true);
                         MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
                         SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                         SubmitButtonEnabled = true;
