@@ -34,7 +34,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "LicenceId, LicenceIdentifier, LicenceCode, LicenceCategory, LicenceDescription, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "ValidFrom, ValidTo, " +
+                "ValidFrom, ValidTo, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeLicences " +
@@ -91,7 +91,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
                         if (reader["ValidTo"] != DBNull.Value)
                             employeeLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeLicence.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeLicence.Active = bool.Parse(reader["Active"].ToString());
                         employeeLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -140,7 +141,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "LicenceId, LicenceIdentifier, LicenceCode, LicenceCategory, LicenceDescription, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "ValidFrom, ValidTo, " +
+                "ValidFrom, ValidTo, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeLicences " +
@@ -197,7 +198,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
                         if (reader["ValidTo"] != DBNull.Value)
                             employeeLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeLicence.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeLicence.Active = bool.Parse(reader["Active"].ToString());
                         employeeLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -246,7 +248,7 @@ namespace RepositoryCore.Implementations.Employees
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
                 "LicenceId, LicenceIdentifier, LicenceCode, LicenceCategory, LicenceDescription, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "ValidFrom, ValidTo, " +
+                "ValidFrom, ValidTo, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeLicences " +
@@ -305,7 +307,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.ValidFrom = DateTime.Parse(reader["ValidFrom"].ToString());
                         if (reader["ValidTo"] != DBNull.Value)
                             employeeLicence.ValidTo = DateTime.Parse(reader["ValidTo"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeLicence.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeLicence.Active = bool.Parse(reader["Active"].ToString());
                         employeeLicence.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -352,7 +355,8 @@ namespace RepositoryCore.Implementations.Employees
                 EmployeeLicence.Id = 0;
 
                 EmployeeLicence.Active = true;
-
+                EmployeeLicence.UpdatedAt = DateTime.Now;
+                EmployeeLicence.CreatedAt = DateTime.Now;
                 context.EmployeeLicences.Add(EmployeeLicence);
                 return EmployeeLicence;
             }
@@ -371,7 +375,7 @@ namespace RepositoryCore.Implementations.Employees
 
                     dbEntry.ValidFrom = EmployeeLicence.ValidFrom;
                     dbEntry.ValidTo = EmployeeLicence.ValidTo;
-
+                    dbEntry.ItemStatus = EmployeeLicence.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
@@ -383,8 +387,10 @@ namespace RepositoryCore.Implementations.Employees
         public EmployeeLicence Delete(Guid identifier)
         {
             EmployeeLicence dbEntry = context.EmployeeLicences
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+               .Union(context.ChangeTracker.Entries()
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeLicence))
+                   .Select(x => x.Entity as EmployeeLicence))
+               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

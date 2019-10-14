@@ -34,7 +34,7 @@ namespace DataMapper.Mappers.Employees
 
                 ValidFrom = EmployeeItem.ValidFrom,
                 ValidTo = EmployeeItem.ValidTo,
-
+                ItemStatus = EmployeeItem.ItemStatus,
                 IsActive = EmployeeItem.Active,
 
                 CreatedBy = EmployeeItem.CreatedBy?.ConvertToUserViewModelLite(),
@@ -56,7 +56,7 @@ namespace DataMapper.Mappers.Employees
 
                 ValidFrom = EmployeeItem.ValidFrom,
                 ValidTo = EmployeeItem.ValidTo,
-
+                ItemStatus = EmployeeItem.ItemStatus,
                 IsActive = EmployeeItem.Active,
 
                 UpdatedAt = EmployeeItem.UpdatedAt,
@@ -79,7 +79,8 @@ namespace DataMapper.Mappers.Employees
 
                 ValidFrom = EmployeeItemViewModel.ValidFrom,
                 ValidTo = EmployeeItemViewModel.ValidTo,
-
+                ItemStatus = EmployeeItemViewModel.ItemStatus,
+                Active = EmployeeItemViewModel.IsActive,
                 CreatedById = EmployeeItemViewModel.CreatedBy?.Id ?? null,
                 CompanyId = EmployeeItemViewModel.Company?.Id ?? null,
 

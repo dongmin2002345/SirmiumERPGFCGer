@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeNoteId, EmployeeNoteIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeNotes " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -66,7 +66,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             employeeNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeNote.Active = bool.Parse(reader["Active"].ToString());
                         employeeNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -112,7 +113,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeNoteId, EmployeeNoteIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeNotes " +
                 "WHERE EmployeeId = @EmployeeId AND Active = 1;";
@@ -148,7 +149,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             employeeNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeNote.Active = bool.Parse(reader["Active"].ToString());
                         employeeNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -193,7 +195,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeNoteId, EmployeeNoteIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "Note, NoteDate, " +
+                "Note, NoteDate, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeNotes " +
                 "WHERE CompanyId = @CompanyId " +
@@ -231,7 +233,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeNote.Note = reader["Note"].ToString();
                         if (reader["NoteDate"] != DBNull.Value)
                             employeeNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeNote.Active = bool.Parse(reader["Active"].ToString());
                         employeeNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -276,7 +279,8 @@ namespace RepositoryCore.Implementations.Employees
                 EmployeeNote.Id = 0;
 
                 EmployeeNote.Active = true;
-
+                EmployeeNote.UpdatedAt = DateTime.Now;
+                EmployeeNote.CreatedAt = DateTime.Now;
                 context.EmployeeNotes.Add(EmployeeNote);
                 return EmployeeNote;
             }
@@ -294,7 +298,7 @@ namespace RepositoryCore.Implementations.Employees
                     // Set properties
                     dbEntry.Note = EmployeeNote.Note;
                     dbEntry.NoteDate = EmployeeNote.NoteDate;
-
+                    dbEntry.ItemStatus = EmployeeNote.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
@@ -306,8 +310,10 @@ namespace RepositoryCore.Implementations.Employees
         public EmployeeNote Delete(Guid identifier)
         {
             EmployeeNote dbEntry = context.EmployeeNotes
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+                .Union(context.ChangeTracker.Entries()
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeNote))
+                   .Select(x => x.Entity as EmployeeNote))
+               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

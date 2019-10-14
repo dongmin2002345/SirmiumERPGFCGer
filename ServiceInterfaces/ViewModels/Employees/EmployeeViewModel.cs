@@ -580,6 +580,22 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region EmployeeCards
+        private ObservableCollection<EmployeeCardViewModel> _EmployeeCards;
+
+        public ObservableCollection<EmployeeCardViewModel> EmployeeCards
+        {
+            get { return _EmployeeCards; }
+            set
+            {
+                if (_EmployeeCards != value)
+                {
+                    _EmployeeCards = value;
+                    NotifyPropertyChanged("EmployeeCards");
+                }
+            }
+        }
+        #endregion
 
         #region BusinessPartner
         private BusinessPartnerViewModel _BusinessPartner;

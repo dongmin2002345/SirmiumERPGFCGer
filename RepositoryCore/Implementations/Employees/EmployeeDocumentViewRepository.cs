@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeDocumentId, EmployeeDocumentIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeDocuments " +
@@ -69,7 +69,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             employeeDocument.Path = reader["Path"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeDocument.Active = bool.Parse(reader["Active"].ToString());
                         employeeDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -114,7 +115,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeDocumentId, EmployeeDocumentIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeDocuments " +
@@ -152,7 +153,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             employeeDocument.Path = reader["Path"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeDocument.Active = bool.Parse(reader["Active"].ToString());
                         employeeDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -198,7 +200,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeDocumentId, EmployeeDocumentIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "Name, CreateDate, Path, " +
+                "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeDocuments " +
@@ -238,7 +240,8 @@ namespace RepositoryCore.Implementations.Employees
                             employeeDocument.CreateDate = DateTime.Parse(reader["CreateDate"].ToString());
                         if (reader["Path"] != DBNull.Value)
                             employeeDocument.Path = reader["Path"].ToString();
-
+                        if (reader["ItemStatus"] != DBNull.Value)
+                            employeeDocument.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
                         employeeDocument.Active = bool.Parse(reader["Active"].ToString());
                         employeeDocument.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -283,7 +286,8 @@ namespace RepositoryCore.Implementations.Employees
                 EmployeeDocument.Id = 0;
 
                 EmployeeDocument.Active = true;
-
+                EmployeeDocument.UpdatedAt = DateTime.Now;
+                EmployeeDocument.CreatedAt = DateTime.Now;
                 context.EmployeeDocuments.Add(EmployeeDocument);
                 return EmployeeDocument;
             }
@@ -302,7 +306,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.Name = EmployeeDocument.Name;
                     dbEntry.CreateDate = EmployeeDocument.CreateDate;
                     dbEntry.Path = EmployeeDocument.Path;
-
+                    dbEntry.ItemStatus = EmployeeDocument.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
@@ -314,8 +318,10 @@ namespace RepositoryCore.Implementations.Employees
         public EmployeeDocument Delete(Guid identifier)
         {
             EmployeeDocument dbEntry = context.EmployeeDocuments
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
-
+               .Union(context.ChangeTracker.Entries()
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeDocument))
+                   .Select(x => x.Entity as EmployeeDocument))
+               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

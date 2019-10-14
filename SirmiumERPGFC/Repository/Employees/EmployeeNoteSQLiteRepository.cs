@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
@@ -26,6 +27,7 @@ namespace SirmiumERPGFC.Repository.Employees
                   "EmployeeInternalCode NVARCHAR(48) NULL, " +
                   "Note NVARCHAR(2048), " +
                   "NoteDate DATETIME NULL, " +
+                  "ItemStatus INTEGER NOT NULL, " +
                   "IsSynced BOOL NULL, " +
                   "UpdatedAt DATETIME NULL, " +
                   "CreatedById INTEGER NULL, " +
@@ -35,17 +37,59 @@ namespace SirmiumERPGFC.Repository.Employees
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, EmployeeInternalCode, Note, NoteDate, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, Note, NoteDate, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO EmployeeNotes " +
             "(Id, ServerId, Identifier, EmployeeId, EmployeeIdentifier, " +
-            "EmployeeCode, EmployeeName, EmployeeInternalCode, Note, NoteDate, " +
+            "EmployeeCode, EmployeeName, EmployeeInternalCode, Note, NoteDate, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
-            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @Note, @NoteDate, " +
+            "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @Note, @NoteDate, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #region Helper methods
+        private static EmployeeNoteViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            EmployeeNoteViewModel dbEntry = new EmployeeNoteViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
+            dbEntry.Note = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.NoteDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, EmployeeNoteViewModel EmployeeNote)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", EmployeeNote.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", EmployeeNote.Identifier);
+            insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)EmployeeNote.Employee.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeNote.Employee.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeNote.Employee.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeNote.Employee.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeNote.Employee.EmployeeCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Note", EmployeeNote.Note);
+            insertCommand.Parameters.AddWithValue("@NoteDate", ((object)EmployeeNote.NoteDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)EmployeeNote.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeNote.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)EmployeeNote.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
 
         public EmployeeNoteListResponse GetEmployeeNotesByEmployee(int companyId, Guid EmployeeIdentifier)
         {
@@ -70,17 +114,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
                     while (query.Read())
                     {
-                        int counter = 0;
-                        EmployeeNoteViewModel dbEntry = new EmployeeNoteViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Note = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NoteDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        EmployeeNoteViewModel dbEntry = Read(query);
                         EmployeeNotes.Add(dbEntry);
                     }
 
@@ -120,17 +154,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
                     if (query.Read())
                     {
-                        int counter = 0;
-                        EmployeeNoteViewModel dbEntry = new EmployeeNoteViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Note = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NoteDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        EmployeeNoteViewModel dbEntry = Read(query);
                         EmployeeNote = dbEntry;
                     }
                 }
@@ -170,17 +194,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
                     while (query.Read())
                     {
-                        int counter = 0;
-                        EmployeeNoteViewModel dbEntry = new EmployeeNoteViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-                        dbEntry.Note = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.NoteDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+                        EmployeeNoteViewModel dbEntry = Read(query);
                         viewModels.Add(dbEntry);
                     }
 
@@ -215,17 +229,41 @@ namespace SirmiumERPGFC.Repository.Employees
                 if (response.Success)
                 {
                     toSync = response?.EmployeeNotes?.Count ?? 0;
-                    List<EmployeeNoteViewModel> EmployeeNotesFromDB = response.EmployeeNotes;
-                    foreach (var EmployeeNote in EmployeeNotesFromDB.OrderBy(x => x.Id))
+                    List<EmployeeNoteViewModel> items = response.EmployeeNotes;
+
+                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
-                            Delete(EmployeeNote.Identifier);
-                            if (EmployeeNote.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM EmployeeNotes WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var item in items)
                             {
-                                EmployeeNote.IsSynced = true;
-                                Create(EmployeeNote);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", item.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (item.IsActive)
+                                {
+                                    item.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, item);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -235,7 +273,7 @@ namespace SirmiumERPGFC.Repository.Employees
             {
                 MainWindow.ErrorMessage = ex.Message;
             }
-        }
+        } 
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {
@@ -258,7 +296,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }
@@ -278,32 +317,13 @@ namespace SirmiumERPGFC.Repository.Employees
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", EmployeeNote.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", EmployeeNote.Identifier);
-                insertCommand.Parameters.AddWithValue("@EmployeeId", ((object)EmployeeNote.Employee.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeIdentifier", ((object)EmployeeNote.Employee.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeCode", ((object)EmployeeNote.Employee.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeName", ((object)EmployeeNote.Employee.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@EmployeeInternalCode", ((object)EmployeeNote.Employee.EmployeeCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Note", EmployeeNote.Note);
-                insertCommand.Parameters.AddWithValue("@NoteDate", ((object)EmployeeNote.NoteDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeNote.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)EmployeeNote.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, EmployeeNote);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -319,47 +339,7 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeNoteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            EmployeeNoteResponse response = new EmployeeNoteResponse();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE EmployeeNotes SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        
 
         public EmployeeNoteResponse Delete(Guid identifier)
         {
@@ -394,46 +374,38 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        public EmployeeNoteResponse DeleteAll()
+        public EmployeeNoteResponse SetStatusDeleted(Guid identifier)
         {
             EmployeeNoteResponse response = new EmployeeNoteResponse();
 
-            try
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                //Use parameterized query to prevent SQL injection attacks
+                insertCommand.CommandText =
+                    "UPDATE EmployeeNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                try
                 {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM EmployeeNotes";
-                    try
-                    {
-                        insertCommand.ExecuteReader();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
+                    insertCommand.ExecuteReader();
                 }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
                 return response;
             }
-
-            response.Success = true;
-            return response;
         }
     }
 }

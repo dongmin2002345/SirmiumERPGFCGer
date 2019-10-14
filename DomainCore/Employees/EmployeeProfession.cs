@@ -17,5 +17,7 @@ namespace DomainCore.Employees
 
         public int? CountryId { get; set; }
         public Country Country { get; set; }
+
+        public int ItemStatus { get; set; }
     }
 }

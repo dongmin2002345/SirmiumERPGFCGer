@@ -2,6 +2,7 @@
 using DomainCore.Employees;
 using RepositoryCore.UnitOfWork.Abstractions;
 using ServiceInterfaces.Abstractions.Employees;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using System;
@@ -74,80 +75,164 @@ namespace ServiceCore.Implementations.Employees
             EmployeeResponse response = new EmployeeResponse();
             try
             {
-                // Backup items
-                List<EmployeeItemViewModel> EmployeeItems = Employee.EmployeeItems?.ToList() ?? new List<EmployeeItemViewModel>();
-                Employee.EmployeeItems = null;
+                //Backup items
+                List<EmployeeCardViewModel> employeeCards = Employee
+                    .EmployeeCards?.ToList() ?? new List<EmployeeCardViewModel>();
+                Employee.EmployeeCards = null;
 
-                List<EmployeeProfessionItemViewModel> EmployeeProfessions = Employee.EmployeeProfessions?.ToList() ?? new List<EmployeeProfessionItemViewModel>();
-                Employee.EmployeeProfessions = null;
-
-                List<EmployeeLicenceItemViewModel> EmployeeLicences = Employee.EmployeeLicences?.ToList() ?? new List<EmployeeLicenceItemViewModel>();
-                Employee.EmployeeLicences = null;
-
-                List<EmployeeNoteViewModel> EmployeeNotes = Employee.EmployeeNotes?.ToList() ?? new List<EmployeeNoteViewModel>();
-                Employee.EmployeeNotes = null;
-
-                List<EmployeeDocumentViewModel> EmployeeDocuments = Employee.EmployeeDocuments?.ToList() ?? new List<EmployeeDocumentViewModel>();
+                List<EmployeeDocumentViewModel> employeeDocuments = Employee
+                    .EmployeeDocuments?.ToList() ?? new List<EmployeeDocumentViewModel>();
                 Employee.EmployeeDocuments = null;
 
-                // Create animal input note
+                List<EmployeeItemViewModel> employeeItems = Employee
+                    .EmployeeItems?.ToList() ?? new List<EmployeeItemViewModel>();
+                Employee.EmployeeItems = null;
+
+                List<EmployeeLicenceItemViewModel> employeeLicences = Employee
+                    .EmployeeLicences?.ToList() ?? new List<EmployeeLicenceItemViewModel>();
+                Employee.EmployeeLicences = null;
+
+                List<EmployeeNoteViewModel> employeeNotes = Employee
+                    .EmployeeNotes?.ToList() ?? new List<EmployeeNoteViewModel>();
+                Employee.EmployeeNotes = null;
+
+                List<EmployeeProfessionItemViewModel> employeeProfessions = Employee
+                    .EmployeeProfessions?.ToList() ?? new List<EmployeeProfessionItemViewModel>();
+                Employee.EmployeeProfessions = null;
+
                 Employee createdEmployee = unitOfWork.GetEmployeeRepository()
                     .Create(Employee.ConvertToEmployee());
 
                 // Update items
-                var EmployeeItemsFromDB = unitOfWork.GetEmployeeItemRepository().GetEmployeeItemsByEmployee(createdEmployee.Id);
-                foreach (var item in EmployeeItemsFromDB)
-                    if (!EmployeeItems.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetEmployeeItemRepository().Delete(item.Identifier);
-                foreach (var item in EmployeeItems)
+                if (employeeCards != null && employeeCards.Count > 0)
                 {
-                    item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
-                    unitOfWork.GetEmployeeItemRepository().Create(item.ConvertToEmployeeItem());
-                }
+                    foreach (EmployeeCardViewModel item in employeeCards
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<EmployeeCardViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetEmployeeCardRepository().Create(item.ConvertToEmployeeCard());
+                    }
 
+                    foreach (EmployeeCardViewModel item in employeeCards
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<EmployeeCardViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        unitOfWork.GetEmployeeCardRepository().Create(item.ConvertToEmployeeCard());
 
+                        unitOfWork.GetEmployeeCardRepository().Delete(item.Identifier);
+                    }
 
-                // Update items
-                var EmployeeLicencesFromDB = unitOfWork.GetEmployeeLicenceRepository().GetEmployeeItemsByEmployee(createdEmployee.Id);
-                foreach (var item in EmployeeLicencesFromDB)
-                    if (!EmployeeLicences.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetEmployeeLicenceRepository().Delete(item.Identifier);
-                foreach (var item in EmployeeLicences)
-                {
-                    item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
-                    unitOfWork.GetEmployeeLicenceRepository().Create(item.ConvertToEmployeeLicence());
-                }
-
-                // Update items
-                var EmployeeProfessionsFromDB = unitOfWork.GetEmployeeProfessionRepository().GetEmployeeItemsByEmployee(createdEmployee.Id);
-                foreach (var item in EmployeeProfessionsFromDB)
-                    if (!EmployeeProfessions.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetEmployeeProfessionRepository().Delete(item.Identifier);
-                foreach (var item in EmployeeProfessions)
-                {
-                    item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
-                    unitOfWork.GetEmployeeProfessionRepository().Create(item.ConvertToEmployeeProfession());
                 }
 
                 // Update items
-                var EmployeeNotesFromDB = unitOfWork.GetEmployeeNoteRepository().GetEmployeeNotesByEmployee(createdEmployee.Id);
-                foreach (var item in EmployeeNotesFromDB)
-                    if (!EmployeeNotes.Select(x => x.Identifier).Contains(item.Identifier))
-                        unitOfWork.GetEmployeeNoteRepository().Delete(item.Identifier);
-                foreach (var item in EmployeeNotes)
+                if (employeeDocuments != null && employeeDocuments.Count > 0)
                 {
-                    item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
-                    unitOfWork.GetEmployeeNoteRepository().Create(item.ConvertToEmployeeNote());
-                }
+                    foreach (EmployeeDocumentViewModel item in employeeDocuments
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<EmployeeDocumentViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetEmployeeDocumentRepository().Create(item.ConvertToEmployeeDocument());
+                    }
 
-                var EmployeeDocumentsFromDB = unitOfWork.GetEmployeeDocumentRepository().GetEmployeeDocumentsByEmployee(createdEmployee.Id);
-                foreach (var item in EmployeeDocumentsFromDB)
-                    if (!EmployeeDocuments.Select(x => x.Identifier).Contains(item.Identifier))
+                    foreach (EmployeeDocumentViewModel item in employeeDocuments
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<EmployeeDocumentViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        unitOfWork.GetEmployeeDocumentRepository().Create(item.ConvertToEmployeeDocument());
+
                         unitOfWork.GetEmployeeDocumentRepository().Delete(item.Identifier);
-                foreach (var item in EmployeeDocuments)
+                    }
+
+                }
+
+                // Update items
+                if (employeeItems != null && employeeItems.Count > 0)
                 {
-                    item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
-                    unitOfWork.GetEmployeeDocumentRepository().Create(item.ConvertToEmployeeDocument());
+                    foreach (EmployeeItemViewModel item in employeeItems
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<EmployeeItemViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetEmployeeItemRepository().Create(item.ConvertToEmployeeItem());
+                    }
+
+                    foreach (EmployeeItemViewModel item in employeeItems
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<EmployeeItemViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        unitOfWork.GetEmployeeItemRepository().Create(item.ConvertToEmployeeItem());
+
+                        unitOfWork.GetEmployeeItemRepository().Delete(item.Identifier);
+                    }
+
+                }
+
+                // Update items
+                if (employeeLicences != null && employeeLicences.Count > 0)
+                {
+                    foreach (EmployeeLicenceItemViewModel item in employeeLicences
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<EmployeeLicenceItemViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetEmployeeLicenceRepository().Create(item.ConvertToEmployeeLicence());
+                    }
+
+                    foreach (EmployeeLicenceItemViewModel item in employeeLicences
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<EmployeeLicenceItemViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        unitOfWork.GetEmployeeLicenceRepository().Create(item.ConvertToEmployeeLicence());
+
+                        unitOfWork.GetEmployeeLicenceRepository().Delete(item.Identifier);
+                    }
+
+                }
+
+                // Update items
+                if (employeeNotes != null && employeeNotes.Count > 0)
+                {
+                    foreach (EmployeeNoteViewModel item in employeeNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<EmployeeNoteViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetEmployeeNoteRepository().Create(item.ConvertToEmployeeNote());
+                    }
+
+                    foreach (EmployeeNoteViewModel item in employeeNotes
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<EmployeeNoteViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        unitOfWork.GetEmployeeNoteRepository().Create(item.ConvertToEmployeeNote());
+
+                        unitOfWork.GetEmployeeNoteRepository().Delete(item.Identifier);
+                    }
+
+                }
+
+                // Update items
+                if (employeeProfessions != null && employeeProfessions.Count > 0)
+                {
+                    foreach (EmployeeProfessionItemViewModel item in employeeProfessions
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<EmployeeProfessionItemViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        item.ItemStatus = ItemStatus.Submited;
+                        var createdItem = unitOfWork.GetEmployeeProfessionRepository().Create(item.ConvertToEmployeeProfession());
+                    }
+
+                    foreach (EmployeeProfessionItemViewModel item in employeeProfessions
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<EmployeeProfessionItemViewModel>())
+                    {
+                        item.Employee = new EmployeeViewModel() { Id = createdEmployee.Id };
+                        unitOfWork.GetEmployeeProfessionRepository().Create(item.ConvertToEmployeeProfession());
+
+                        unitOfWork.GetEmployeeProfessionRepository().Delete(item.Identifier);
+                    }
+
                 }
 
                 unitOfWork.Save();
