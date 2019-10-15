@@ -8,21 +8,10 @@ using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Prices;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Prices
 {
@@ -187,7 +176,6 @@ namespace SirmiumERPGFC.Views.Prices
 
                 if (response.Success)
                 {
-                    new DiscountSQLiteRepository().UpdateSyncStatus(response.Discount.Identifier, response.Discount.Id, true, response.Discount.UpdatedAt, response.Discount.Code);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SubmitButtonContent = " PROKNJIŽI ";
                     SubmitButtonEnabled = true;

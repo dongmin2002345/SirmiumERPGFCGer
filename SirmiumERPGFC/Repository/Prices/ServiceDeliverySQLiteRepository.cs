@@ -5,9 +5,6 @@ using ServiceInterfaces.ViewModels.Common.Prices;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Prices
 {
@@ -100,6 +97,7 @@ namespace SirmiumERPGFC.Repository.Prices
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, ServerId " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Name", ((object)serviceDeliverySearchObject.Search_Name) != null ? "%" + serviceDeliverySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -118,13 +116,13 @@ namespace SirmiumERPGFC.Repository.Prices
                         "FROM ServiceDeliverys " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)serviceDeliverySearchObject.Search_Name) != null ? "%" + serviceDeliverySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-
                         response.TotalItems = query.GetInt32(0);
                 }
                 catch (SqliteException error)
@@ -159,6 +157,7 @@ namespace SirmiumERPGFC.Repository.Prices
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -244,7 +243,7 @@ namespace SirmiumERPGFC.Repository.Prices
                 if (response.Success)
                 {
                     toSync = response?.ServiceDeliverys?.Count ?? 0;
-                    List<ServiceDeliveryViewModel> workOrderFinalProductsFromDB = response.ServiceDeliverys;
+                    List<ServiceDeliveryViewModel> serviceDeliverysFromDB = response.ServiceDeliverys;
 
                     using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
@@ -257,17 +256,17 @@ namespace SirmiumERPGFC.Repository.Prices
                             SqliteCommand insertCommand = db.CreateCommand();
                             insertCommand.CommandText = SqlCommandInsertPart;
 
-                            foreach (var workOrderFinalProduct in workOrderFinalProductsFromDB)
+                            foreach (var serviceDelivery in serviceDeliverysFromDB)
                             {
-                                deleteCommand.Parameters.AddWithValue("@Identifier", workOrderFinalProduct.Identifier);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", serviceDelivery.Identifier);
                                 deleteCommand.ExecuteNonQuery();
                                 deleteCommand.Parameters.Clear();
 
-                                if (workOrderFinalProduct.IsActive)
+                                if (serviceDelivery.IsActive)
                                 {
-                                    workOrderFinalProduct.IsSynced = true;
+                                    serviceDelivery.IsSynced = true;
 
-                                    insertCommand = AddCreateParameters(insertCommand, workOrderFinalProduct);
+                                    insertCommand = AddCreateParameters(insertCommand, serviceDelivery);
                                     insertCommand.ExecuteNonQuery();
                                     insertCommand.Parameters.Clear();
 
@@ -325,48 +324,6 @@ namespace SirmiumERPGFC.Repository.Prices
             return null;
         }
 
-        public ServiceDeliveryResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced, DateTime? lastUpdate, string code)
-        {
-            ServiceDeliveryResponse response = new ServiceDeliveryResponse();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE ServiceDeliverys SET " +
-                    "IsSynced = @IsSynced, " +
-                    "ServerId = @ServerId, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "Code = @Code " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)lastUpdate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
-
         #endregion
 
         #region Create
@@ -417,12 +374,12 @@ namespace SirmiumERPGFC.Repository.Prices
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM ServiceDeliverys WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM ServiceDeliverys WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
