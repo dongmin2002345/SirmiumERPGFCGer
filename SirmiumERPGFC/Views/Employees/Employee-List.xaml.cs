@@ -740,10 +740,10 @@ namespace SirmiumERPGFC.Views.Employees
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Računi ... ";
+            SyncButtonContent = " Radnici ... ";
             new EmployeeSQLiteRepository().Sync(employeeService, (synced, toSync) =>
             {
-                SyncButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = " Radnici (" + synced + " / " + toSync + ")... ";
             });
 
             SyncButtonContent = " Stavke ... ";
@@ -929,7 +929,7 @@ namespace SirmiumERPGFC.Views.Employees
             
             Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(Employee, true, false);
             addEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_fizičkim_licima")), 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_radnicima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -942,7 +942,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_List_AddEdit addEditForm = new Employee_List_AddEdit(CurrentEmployee, false);
             addEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_fizičkom_licu")), 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_radnicima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -975,7 +975,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = "Morate odabrati radnika!";
                 return;
             }
 
@@ -983,7 +983,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_Card_AddEdit EmployeeCardAddEditForm = new Employee_Card_AddEdit(CurrentEmployee);
             EmployeeCardAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncCardData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeCardAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Istorija_radnika")), 95, EmployeeCardAddEditForm);
         }
 
         private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
@@ -992,7 +992,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = "Morate odabrati radnika!";
                 return;
             }
 
@@ -1000,7 +1000,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_Document_AddEdit EmployeeDocumentAddEditForm = new Employee_Document_AddEdit(CurrentEmployee);
             EmployeeDocumentAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncDocumentData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeDocumentAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Fajlovi_za_radnika")), 95, EmployeeDocumentAddEditForm);
         }
 
         private void BtnAddNotes_Click(object sender, RoutedEventArgs e)
@@ -1009,7 +1009,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = "Morate odabrati radnika!";
                 return;
             }
 
@@ -1017,7 +1017,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_Note_AddEdit EmployeeNoteAddEditForm = new Employee_Note_AddEdit(CurrentEmployee);
             EmployeeNoteAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncNoteData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeNoteAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Napomena")), 95, EmployeeNoteAddEditForm);
         }
         private void BtnAddProfessions_Click(object sender, RoutedEventArgs e)
         {
@@ -1025,7 +1025,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = "Morate odabrati radnika!";
                 return;
             }
 
@@ -1033,7 +1033,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_Profession_AddEdit EmployeeProfessionAddEditForm = new Employee_Profession_AddEdit(CurrentEmployee);
             EmployeeProfessionAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncProfessionData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeProfessionAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Zanimanja")), 95, EmployeeProfessionAddEditForm);
         }
         private void BtnAddLicences_Click(object sender, RoutedEventArgs e)
         {
@@ -1041,7 +1041,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = "Morate odabrati radnika!";
                 return;
             }
 
@@ -1049,7 +1049,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_Licence_AddEdit EmployeeLicenceAddEditForm = new Employee_Licence_AddEdit(CurrentEmployee);
             EmployeeLicenceAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncLicenceData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeLicenceAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Dozvole")), 95, EmployeeLicenceAddEditForm);
         }
         private void BtnAddItems_Click(object sender, RoutedEventArgs e)
         {
@@ -1057,7 +1057,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = "Morate odabrati radnika!";
                 return;
             }
 
@@ -1065,9 +1065,9 @@ namespace SirmiumERPGFC.Views.Employees
 
             Employee_Item_AddEdit EmployeeItemAddEditForm = new Employee_Item_AddEdit(CurrentEmployee);
             EmployeeItemAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncItemData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeItemAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Članovi_porodice")), 95, EmployeeItemAddEditForm);
         }
-
+        
         #endregion
 
         #region Pagination
