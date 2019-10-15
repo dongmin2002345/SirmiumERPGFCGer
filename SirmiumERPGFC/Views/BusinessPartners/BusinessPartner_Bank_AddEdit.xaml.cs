@@ -191,7 +191,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             displayThread.IsBackground = true;
             displayThread.Start();
 
-            btnAddBank.Focus();
+            txtAccountNumber.Focus();
         }
 
         #endregion
@@ -286,7 +286,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    popBankCountry.Focus();
+                    txtAccountNumber.Focus();
                 })
             );
 
