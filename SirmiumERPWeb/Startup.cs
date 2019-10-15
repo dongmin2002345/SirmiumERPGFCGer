@@ -19,6 +19,7 @@ using RepositoryCore.DbViews.Common.ToDos;
 using RepositoryCore.DbViews.ConstructionSites;
 using RepositoryCore.DbViews.Employees;
 using RepositoryCore.DbViews.PhysicalPersons;
+using RepositoryCore.DbViews.Vats;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
 using ServiceCore.Implementations.Banks;
@@ -36,6 +37,7 @@ using ServiceCore.Implementations.Common.ToDos;
 using ServiceCore.Implementations.ConstructionSites;
 using ServiceCore.Implementations.Employees;
 using ServiceCore.Implementations.Limitations;
+using ServiceCore.Implementations.Vats;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.Companies;
@@ -50,6 +52,7 @@ using ServiceInterfaces.Abstractions.Common.ToDos;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Abstractions.Limitations;
+using ServiceInterfaces.Abstractions.Vats;
 using SirmiumERPWeb.Tasks;
 using System;
 using System.Threading;
@@ -211,6 +214,8 @@ namespace SirmiumERPWeb
 
             services.AddScoped<ITaxAdministrationService, TaxAdministrationService>();
 
+            services.AddScoped<IVatService, VatService>();
+
 
         }
 
@@ -308,6 +313,9 @@ namespace SirmiumERPWeb
             ConstructionSiteDocumentView.CreateView();
             ConstructionSiteNoteView.CreateView();
             ConstructionSiteView.CreateView();
+
+            VatView.CreateView();
+
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));

@@ -155,7 +155,14 @@
                             <Image Source="Resources\Icons\tax.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
-                </Fluent:RibbonGroupBox>  
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="PDV">
+                    <Fluent:Button x:Name="mniVat" Click="MniVat_Click" Header="PDV procenti" KeyTip="PP" >
+                        <Fluent:Button.Icon>
+                            <Image Source="Resources\Icons\Procenat poreza.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.Icon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="{DynamicResource RAČUNI}" KeyTip="RAC">

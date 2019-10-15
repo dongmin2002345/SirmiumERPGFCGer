@@ -36,6 +36,7 @@ using SirmiumERPGFC.Views.Administrations;
 using SirmiumERPGFC.Views.InputInvoices;
 using SirmiumERPGFC.Views.TaxAdministrations;
 using SirmiumERPGFC.Views.Users;
+using SirmiumERPGFC.Views.Vats;
 
 namespace SirmiumERPGFC
 {
@@ -475,6 +476,11 @@ namespace SirmiumERPGFC
         private void mniUsers_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new UserList();
+        }
+
+        private void MniVat_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new Vat_List();
         }
     }
 }
