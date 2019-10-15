@@ -289,7 +289,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeViewModel dbEntry = Read(query);
-                        Employees.Add(Read(query));
+                        Employees.Add(dbEntry);
 
                     }
                     response.Employees = Employees;
@@ -372,7 +372,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeViewModel dbEntry = Read(query);
-                        Employees.Add(Read(query));
+                        Employees.Add(dbEntry);
                     }
 
                     response.Employees = Employees;
@@ -453,8 +453,8 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     { 
                     EmployeeViewModel dbEntry = Read(query);
-                    Employees.Add(Read(query));
-                }
+                    Employees.Add(dbEntry);
+                    }
 
                     response.Employees = Employees;
 
@@ -534,7 +534,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeViewModel dbEntry = Read(query);
-                        Employees.Add(Read(query));
+                        Employees.Add(dbEntry);
                     }
 
                     response.Employees = Employees;
@@ -612,7 +612,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeViewModel dbEntry = Read(query);
-                        Employees.Add(Read(query));
+                        Employees.Add(dbEntry);
                     }
 
                     response.Employees = Employees;
@@ -678,7 +678,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     if (query.Read())
                     {
                         EmployeeViewModel dbEntry = Read(query);
-                        Employee = Read(query);
+                        Employee = dbEntry;
                     }
                 }
                 catch (SqliteException error)

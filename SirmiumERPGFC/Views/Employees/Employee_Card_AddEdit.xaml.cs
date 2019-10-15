@@ -191,7 +191,7 @@ namespace SirmiumERPGFC.Views.Employees
             displayThread.IsBackground = true;
             displayThread.Start();
 
-            btnAddCard.Focus();
+            txtNote.Focus();
         }
 
         #endregion

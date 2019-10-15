@@ -6,15 +6,13 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
     public class EmployeeCardSQLiteRepository
     {
+        #region SQL
+
         public static string EmployeeCardTableCreatePart =
             "CREATE TABLE IF NOT EXISTS EmployeeCards " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -49,6 +47,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "VALUES (NULL, @ServerId, @Identifier, @EmployeeId, @EmployeeIdentifier, " +
             "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @CardDate, @Description, @PlusMinus, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
         private static EmployeeCardViewModel Read(SqliteDataReader query)
@@ -93,6 +93,8 @@ namespace SirmiumERPGFC.Repository.Employees
         }
 
         #endregion
+
+        #region Read
 
         public EmployeeCardListResponse GetEmployeeCardsByEmployee(int companyId, Guid EmployeeIdentifier)
         {
@@ -175,6 +177,10 @@ namespace SirmiumERPGFC.Repository.Employees
             response.EmployeeCard = EmployeeCard;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IEmployeeCardService EmployeeCardService, Action<int, int> callback = null)
         {
@@ -272,6 +278,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public EmployeeCardResponse Create(EmployeeCardViewModel EmployeeCard)
         {
             EmployeeCardResponse response = new EmployeeCardResponse();
@@ -301,7 +311,10 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        
+        #endregion
+
+        #region Delete
+
         public EmployeeCardResponse Delete(Guid identifier)
         {
             EmployeeCardResponse response = new EmployeeCardResponse();
@@ -368,5 +381,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 return response;
             }
         }
+
+        #endregion
     }
 }

@@ -191,7 +191,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             displayThread.IsBackground = true;
             displayThread.Start();
 
-            btnAddPhone.Focus();
+            txtPhoneContactPersonFirstName.Focus();
         }
 
         #endregion
@@ -415,7 +415,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             fileDIalog.Multiselect = true;
             fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "Image Files | *.pdf";
+            fileDIalog.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
             fileDIalog.ShowDialog();
         }
 

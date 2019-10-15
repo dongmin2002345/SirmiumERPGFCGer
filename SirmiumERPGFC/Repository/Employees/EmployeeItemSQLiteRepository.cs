@@ -56,6 +56,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @EmbassyDate, @Passport, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
         #region Helper methods
         private static EmployeeItemViewModel Read(SqliteDataReader query)
         {
@@ -107,6 +109,8 @@ namespace SirmiumERPGFC.Repository.Employees
 
         #endregion
 
+        #region Read
+
         public EmployeeItemListResponse GetEmployeeItemsByEmployee(int companyId, Guid EmployeeIdentifier)
         {
             EmployeeItemListResponse response = new EmployeeItemListResponse();
@@ -132,7 +136,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeItemViewModel dbEntry = Read(query);
-                        EmployeeItems.Add(Read(query));
+                        EmployeeItems.Add(dbEntry);
                     }
 
                 }
@@ -172,7 +176,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     if (query.Read())
                     {
                         EmployeeItemViewModel dbEntry = Read(query);
-                        EmployeeItem = Read(query);
+                        EmployeeItem = dbEntry;
                     }
                 }
                 catch (SqliteException error)
@@ -212,7 +216,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeItemViewModel dbEntry = Read(query);
-                        EmployeeItems.Add(Read(query));
+                        EmployeeItems.Add(dbEntry);
                     }
 
                 }
