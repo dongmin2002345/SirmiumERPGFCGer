@@ -1,51 +1,64 @@
 ﻿using Ninject;
-using ServiceInterfaces.Abstractions.Common.Prices;
-using ServiceInterfaces.Messages.Common.Prices;
+using ServiceInterfaces.Abstractions;
+using ServiceInterfaces.Messages.Statuses;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
-using ServiceInterfaces.ViewModels.Common.Prices;
+using ServiceInterfaces.ViewModels.Statuses;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
-using SirmiumERPGFC.Repository.Prices;
+using SirmiumERPGFC.Repository.Statuses;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.Prices
+namespace SirmiumERPGFC.Views.Statuses
 {
     /// <summary>
-    /// Interaction logic for Discount_AddEdit.xaml
+    /// Interaction logic for Status_AddEdit.xaml
     /// </summary>
-    public partial class Discount_AddEdit : UserControl, INotifyPropertyChanged
+    public partial class Status_AddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes
 
         #region Services
-        IDiscountService DiscountService;
+        IStatusService StatusService;
         #endregion
 
         #region Events
-        public event DiscountHandler DiscountCreatedUpdated;
+        public event StatusHandler StatusCreatedUpdated;
         #endregion
 
-        #region CurrentDiscount
-        private DiscountViewModel _CurrentDiscount = new DiscountViewModel();
 
-        public DiscountViewModel CurrentDiscount
+        #region CurrentStatus
+        private StatusViewModel _CurrentStatus = new StatusViewModel();
+
+        public StatusViewModel CurrentStatus
         {
-            get { return _CurrentDiscount; }
+            get { return _CurrentStatus; }
             set
             {
-                if (_CurrentDiscount != value)
+                if (_CurrentStatus != value)
                 {
-                    _CurrentDiscount = value;
-                    NotifyPropertyChanged("CurrentDiscount");
+                    _CurrentStatus = value;
+                    NotifyPropertyChanged("CurrentStatus");
                 }
             }
         }
         #endregion
+
 
         #region IsCreateProcess
         private bool _IsCreateProcess;
@@ -80,6 +93,7 @@ namespace SirmiumERPGFC.Views.Prices
             }
         }
         #endregion
+
 
         #region SubmitButtonContent
         private string _SubmitButtonContent = " PROKNJIŽI ";
@@ -119,29 +133,36 @@ namespace SirmiumERPGFC.Views.Prices
 
         #region Constructor
 
-        public Discount_AddEdit(DiscountViewModel DiscountViewModel, bool isCreateProcess, bool isPopup = false)
+        public Status_AddEdit(StatusViewModel StatusViewModel, bool isCreateProcess, bool isPopup = false)
         {
-            DiscountService = DependencyResolver.Kernel.Get<IDiscountService>();
+            StatusService = DependencyResolver.Kernel.Get<IStatusService>();
 
             InitializeComponent();
 
             this.DataContext = this;
 
-            CurrentDiscount = DiscountViewModel;
+            CurrentStatus = StatusViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
         }
 
         #endregion
 
-        #region Submit ans cancel
-        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        #region  Submit and Cancel button
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
 
-            if (String.IsNullOrEmpty(CurrentDiscount.Name))
+            if (String.IsNullOrEmpty(CurrentStatus.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv popusta";
+                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                return;
+            }
+
+            if (String.IsNullOrEmpty(CurrentStatus.ShortName))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Skraćeni naziv";
                 return;
             }
 
@@ -152,12 +173,12 @@ namespace SirmiumERPGFC.Views.Prices
                 SubmitButtonContent = " Čuvanje u toku... ";
                 SubmitButtonEnabled = false;
 
-                CurrentDiscount.IsSynced = false;
-                CurrentDiscount.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-                CurrentDiscount.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                CurrentStatus.IsSynced = false;
+                CurrentStatus.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentStatus.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                DiscountResponse response = new DiscountSQLiteRepository().Delete(CurrentDiscount.Identifier);
-                response = new DiscountSQLiteRepository().Create(CurrentDiscount);
+                StatusResponse response = new StatusSQLiteRepository().Delete(CurrentStatus.Identifier);
+                response = new StatusSQLiteRepository().Create(CurrentStatus);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
@@ -166,7 +187,7 @@ namespace SirmiumERPGFC.Views.Prices
                     return;
                 }
 
-                response = DiscountService.Create(CurrentDiscount);
+                response = StatusService.Create(CurrentStatus);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
@@ -176,22 +197,23 @@ namespace SirmiumERPGFC.Views.Prices
 
                 if (response.Success)
                 {
+                    new StatusSQLiteRepository().UpdateSyncStatus(response.Status.Identifier, response.Status.Id, true, response.Status.UpdatedAt, response.Status.Code);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SubmitButtonContent = " PROKNJIŽI ";
                     SubmitButtonEnabled = true;
 
-                    DiscountCreatedUpdated();
+                    StatusCreatedUpdated();
 
                     if (IsCreateProcess)
                     {
-                        CurrentDiscount = new DiscountViewModel();
-                        CurrentDiscount.Identifier = Guid.NewGuid();
+                        CurrentStatus = new StatusViewModel();
+                        CurrentStatus.Identifier = Guid.NewGuid();
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
                             new Action(() =>
                             {
-                                txtAmount.Focus();
+                                txtName.Focus();
                             })
                         );
                     }
@@ -214,10 +236,14 @@ namespace SirmiumERPGFC.Views.Prices
             th.Start();
         }
 
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutHelper.CloseFlyout(this);
+            if (IsPopup)
+                FlyoutHelper.CloseFlyoutPopup(this);
+            else
+                FlyoutHelper.CloseFlyout(this);
         }
+
         #endregion
 
         #region INotifyPropertyChanged implementation

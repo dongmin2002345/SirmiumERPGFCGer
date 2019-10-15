@@ -1,4 +1,5 @@
 ﻿using Ninject;
+using ServiceInterfaces.Abstractions;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.Companies;
@@ -30,6 +31,7 @@ using ServiceWebApi.Implementations.Common.ToDos;
 using ServiceWebApi.Implementations.ConstructionSites;
 using ServiceWebApi.Implementations.Employees;
 using ServiceWebApi.Implementations.Limitations;
+using ServiceWebApi.Implementations.Statuses;
 using ServiceWebApi.Implementations.Vats;
 
 namespace SirmiumERPGFC.Infrastructure
@@ -119,6 +121,8 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<IServiceDeliveryService>().To<ServiceDeliveryService>();
                 Kernel.Bind<IDiscountService>().To<DiscountService>();
+                Kernel.Bind<IStatusService>().To<StatusService>();
+
             }
         }
     }

@@ -14,6 +14,7 @@ using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Abstractions.Limitations;
+using RepositoryCore.Abstractions.Statuses;
 using RepositoryCore.Abstractions.Vats;
 using RepositoryCore.Context;
 using RepositoryCore.Implementations.Banks;
@@ -31,6 +32,7 @@ using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Implementations.Employees;
 using RepositoryCore.Implementations.Limitations;
 using RepositoryCore.Implementations.PhysicalPersons;
+using RepositoryCore.Implementations.Statuses;
 using RepositoryCore.Implementations.Vats;
 using RepositoryCore.UnitOfWork.Abstractions;
 using System;
@@ -114,6 +116,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IDiscountRepository discountRepository;
         private IServiceDeliveryRepository serviceDeliveryRepository;
         private IVatRepository vatRepository;
+        private IStatusRepository statusRepository;
 
 
         #endregion
@@ -555,6 +558,12 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return serviceDeliveryRepository;
         }
 
+        public IStatusRepository GetStatusRepository()
+        {
+            if (statusRepository == null)
+                statusRepository = new StatusViewRepository(context);
+            return statusRepository;
+        }
         #endregion
 
         #region Save method

@@ -1,25 +1,27 @@
 ﻿using Microsoft.Data.Sqlite;
-using ServiceInterfaces.Abstractions.Common.Prices;
-using ServiceInterfaces.Messages.Common.Prices;
-using ServiceInterfaces.ViewModels.Common.Prices;
+using ServiceInterfaces.Abstractions;
+using ServiceInterfaces.Messages.Statuses;
+using ServiceInterfaces.ViewModels.Statuses;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SirmiumERPGFC.Repository.Prices
+namespace SirmiumERPGFC.Repository.Statuses
 {
-    public class DiscountSQLiteRepository
+    public class StatusSQLiteRepository
     {
         #region SQL
-
-        public static string DiscountTableCreatePart =
-           "CREATE TABLE IF NOT EXISTS Discounts " +
+        public static string StatusTableCreatePart =
+           "CREATE TABLE IF NOT EXISTS Statuses " +
            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
            "ServerId INTEGER NULL, " +
            "Identifier GUID, " +
            "Code NVARCHAR(2048) NULL, " +
            "Name NVARCHAR(2048) NULL, " +
-           "Amount DECIMAL NULL, " +
+           "ShortName NVARCHAR(2048) NULL, " +
            "IsSynced BOOL NULL, " +
            "UpdatedAt DATETIME NULL, " +
            "CreatedById INTEGER NULL, " +
@@ -28,29 +30,29 @@ namespace SirmiumERPGFC.Repository.Prices
            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, Amount, " +
+            "SELECT ServerId, Identifier, Code, Name, ShortName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
-        public string SqlCommandInsertPart = "INSERT INTO Discounts " +
-            "(Id, ServerId, Identifier, Code, Name, Amount, " +
+        public string SqlCommandInsertPart = "INSERT INTO Statuses " +
+            "(Id, ServerId, Identifier, Code, Name, ShortName," +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @Amount, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @ShortName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
 
         #region Helper methods
 
-        private DiscountViewModel Read(SqliteDataReader query)
+        private StatusViewModel Read(SqliteDataReader query)
         {
             int counter = 0;
-            DiscountViewModel dbEntry = new DiscountViewModel();
+            StatusViewModel dbEntry = new StatusViewModel();
             dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
             dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.Amount = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.ShortName = SQLiteHelper.GetString(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -59,15 +61,15 @@ namespace SirmiumERPGFC.Repository.Prices
             return dbEntry;
         }
 
-        public SqliteCommand AddCreateParameters(SqliteCommand insertCommand, DiscountViewModel discount)
+        public SqliteCommand AddCreateParameters(SqliteCommand insertCommand, StatusViewModel status)
         {
-            insertCommand.Parameters.AddWithValue("@ServerId", discount.Id);
-            insertCommand.Parameters.AddWithValue("@Identifier", discount.Identifier);
-            insertCommand.Parameters.AddWithValue("@Code", ((object)discount.Code) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Name", ((object)discount.Name) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Amount", ((object)discount.Amount) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@IsSynced", discount.IsSynced);
-            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)discount.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ServerId", status.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", status.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)status.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)status.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ShortName", ((object)status.ShortName) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", status.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)status.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
             insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
             insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -80,10 +82,10 @@ namespace SirmiumERPGFC.Repository.Prices
 
         #region Read 
 
-        public DiscountListResponse GetDiscountsByPage(int companyId, DiscountViewModel discountSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        public StatusListResponse GetStatusesByPage(int companyId, StatusViewModel statusSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
-            DiscountListResponse response = new DiscountListResponse();
-            List<DiscountViewModel> discounts = new List<DiscountViewModel>();
+            StatusListResponse response = new StatusListResponse();
+            List<StatusViewModel> statuses = new List<StatusViewModel>();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -92,13 +94,12 @@ namespace SirmiumERPGFC.Repository.Prices
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        "FROM Discounts " +
+                        "FROM Statuses " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, ServerId " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                    
-                    selectCommand.Parameters.AddWithValue("@Name", ((object)discountSearchObject.Search_Name) != null ? "%" + discountSearchObject.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)statusSearchObject.Search_Name) != null ? "%" + statusSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -106,17 +107,14 @@ namespace SirmiumERPGFC.Repository.Prices
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        DiscountViewModel dbEntry = Read(query);
-                        discounts.Add(dbEntry);
-                    }
+                        statuses.Add(Read(query));
+
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
-                        "FROM Discounts " +
+                        "FROM Statuses " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND CompanyId = @CompanyId;", db);
-                    
-                    selectCommand.Parameters.AddWithValue("@Name", ((object)discountSearchObject.Search_Name) != null ? "%" + discountSearchObject.Search_Name + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)statusSearchObject.Search_Name) != null ? "%" + statusSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -129,20 +127,20 @@ namespace SirmiumERPGFC.Repository.Prices
                     MainWindow.ErrorMessage = error.Message;
                     response.Success = false;
                     response.Message = error.Message;
-                    response.Discounts = new List<DiscountViewModel>();
+                    response.Statuses = new List<StatusViewModel>();
                     return response;
                 }
                 db.Close();
             }
             response.Success = true;
-            response.Discounts = discounts;
+            response.Statuses = statuses;
             return response;
         }
 
-        public DiscountListResponse GetDiscountsForPopup(int companyId, string filterString)
+        public StatusListResponse GetStatusesForPopup(int companyId, string filterString)
         {
-            DiscountListResponse response = new DiscountListResponse();
-            List<DiscountViewModel> discounts = new List<DiscountViewModel>();
+            StatusListResponse response = new StatusListResponse();
+            List<StatusViewModel> statuses = new List<StatusViewModel>();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -151,12 +149,11 @@ namespace SirmiumERPGFC.Repository.Prices
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        "FROM Discounts " +
-                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name OR Code LIKE @Name) " +
+                        "FROM Statuses " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
-                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -164,30 +161,27 @@ namespace SirmiumERPGFC.Repository.Prices
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        DiscountViewModel dbEntry = Read(query);
-                        discounts.Add(dbEntry);
-                    }
+                        statuses.Add(Read(query));
                 }
                 catch (SqliteException error)
                 {
                     MainWindow.ErrorMessage = error.Message;
                     response.Success = false;
                     response.Message = error.Message;
-                    response.Discounts = new List<DiscountViewModel>();
+                    response.Statuses = new List<StatusViewModel>();
                     return response;
                 }
                 db.Close();
             }
             response.Success = true;
-            response.Discounts = discounts;
+            response.Statuses = statuses;
             return response;
         }
 
-        public DiscountResponse GetDiscount(Guid identifier)
+        public StatusResponse GetStatus(Guid identifier)
         {
-            DiscountResponse response = new DiscountResponse();
-            DiscountViewModel discount = null;
+            StatusResponse response = new StatusResponse();
+            StatusViewModel status = null;
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -196,30 +190,27 @@ namespace SirmiumERPGFC.Repository.Prices
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        "FROM Discounts " +
+                        "FROM Statuses " +
                         "WHERE Identifier = @Identifier;", db);
                     selectCommand.Parameters.AddWithValue("@Identifier", identifier);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        DiscountViewModel dbEntry = Read(query);
-                        discount = dbEntry;
-                    }
+                        status = Read(query);
                 }
                 catch (SqliteException error)
                 {
                     MainWindow.ErrorMessage = error.Message;
                     response.Success = false;
                     response.Message = error.Message;
-                    response.Discount = new DiscountViewModel();
+                    response.Status = new StatusViewModel();
                     return response;
                 }
                 db.Close();
             }
             response.Success = true;
-            response.Discount = discount;
+            response.Status = status;
             return response;
         }
 
@@ -227,22 +218,22 @@ namespace SirmiumERPGFC.Repository.Prices
 
         #region Sync
 
-        public void Sync(IDiscountService discountService, Action<int, int> callback = null)
+        public void Sync(IStatusService statusService, Action<int, int> callback = null)
         {
             try
             {
-                SyncDiscountRequest request = new SyncDiscountRequest();
+                SyncStatusRequest request = new SyncStatusRequest();
                 request.CompanyId = MainWindow.CurrentCompanyId;
                 request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
                 int toSync = 0;
                 int syncedItems = 0;
 
-                DiscountListResponse response = discountService.Sync(request);
+                StatusListResponse response = statusService.Sync(request);
                 if (response.Success)
                 {
-                    toSync = response?.Discounts?.Count ?? 0;
-                    List<DiscountViewModel> discountsFromDB = response.Discounts;
+                    toSync = response?.Statuses?.Count ?? 0;
+                    List<StatusViewModel> workOrderFinalProductsFromDB = response.Statuses;
 
                     using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
@@ -250,22 +241,22 @@ namespace SirmiumERPGFC.Repository.Prices
                         using (var transaction = db.BeginTransaction())
                         {
                             SqliteCommand deleteCommand = db.CreateCommand();
-                            deleteCommand.CommandText = "DELETE FROM Discounts WHERE Identifier = @Identifier";
+                            deleteCommand.CommandText = "DELETE FROM Statuses WHERE Identifier = @Identifier";
 
                             SqliteCommand insertCommand = db.CreateCommand();
                             insertCommand.CommandText = SqlCommandInsertPart;
 
-                            foreach (var discount in discountsFromDB)
+                            foreach (var workOrderFinalProduct in workOrderFinalProductsFromDB)
                             {
-                                deleteCommand.Parameters.AddWithValue("@Identifier", discount.Identifier);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", workOrderFinalProduct.Identifier);
                                 deleteCommand.ExecuteNonQuery();
                                 deleteCommand.Parameters.Clear();
 
-                                if (discount.IsActive)
+                                if (workOrderFinalProduct.IsActive)
                                 {
-                                    discount.IsSynced = true;
+                                    workOrderFinalProduct.IsSynced = true;
 
-                                    insertCommand = AddCreateParameters(insertCommand, discount);
+                                    insertCommand = AddCreateParameters(insertCommand, workOrderFinalProduct);
                                     insertCommand.ExecuteNonQuery();
                                     insertCommand.Parameters.Clear();
 
@@ -295,7 +286,7 @@ namespace SirmiumERPGFC.Repository.Prices
                 db.Open();
                 try
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from Discounts WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from Statuses WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     SqliteDataReader query = selectCommand.ExecuteReader();
                     int count = query.Read() ? query.GetInt32(0) : 0;
@@ -304,7 +295,7 @@ namespace SirmiumERPGFC.Repository.Prices
                         return null;
                     else
                     {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from Discounts WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from Statuses WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
@@ -323,13 +314,55 @@ namespace SirmiumERPGFC.Repository.Prices
             return null;
         }
 
+        public StatusResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced, DateTime? lastUpdate, string code)
+        {
+            StatusResponse response = new StatusResponse();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+
+                insertCommand.CommandText = "UPDATE Statuses SET " +
+                    "IsSynced = @IsSynced, " +
+                    "ServerId = @ServerId, " +
+                    "UpdatedAt = @UpdatedAt, " +
+                    "Code = @Code " +
+                    "WHERE Identifier = @Identifier ";
+
+                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
+                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
+                insertCommand.Parameters.AddWithValue("@Code", code);
+                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)lastUpdate) ?? DBNull.Value);
+                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+
+                try
+                {
+                    insertCommand.ExecuteReader();
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    return response;
+                }
+                db.Close();
+
+                response.Success = true;
+                return response;
+            }
+        }
+
         #endregion
 
         #region Create
 
-        public DiscountResponse Create(DiscountViewModel discount)
+        public StatusResponse Create(StatusViewModel status)
         {
-            DiscountResponse response = new DiscountResponse();
+            StatusResponse response = new StatusResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -340,7 +373,7 @@ namespace SirmiumERPGFC.Repository.Prices
 
                 try
                 {
-                    insertCommand = AddCreateParameters(insertCommand, discount);
+                    insertCommand = AddCreateParameters(insertCommand, status);
                     insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
@@ -361,9 +394,9 @@ namespace SirmiumERPGFC.Repository.Prices
 
         #region Delete
 
-        public DiscountResponse Delete(Guid identifier)
+        public StatusResponse Delete(Guid identifier)
         {
-            DiscountResponse response = new DiscountResponse();
+            StatusResponse response = new StatusResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -373,12 +406,12 @@ namespace SirmiumERPGFC.Repository.Prices
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText = "DELETE FROM Discounts WHERE Identifier = @Identifier";
+                insertCommand.CommandText =
+                    "DELETE FROM Statuses WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-                
                 try
                 {
-                    insertCommand.ExecuteNonQuery();
+                    insertCommand.ExecuteReader();
                 }
                 catch (SqliteException error)
                 {
@@ -395,5 +428,6 @@ namespace SirmiumERPGFC.Repository.Prices
         }
 
         #endregion
+
     }
 }

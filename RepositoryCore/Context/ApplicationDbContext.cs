@@ -13,6 +13,7 @@ using DomainCore.Common.ToDos;
 using DomainCore.ConstructionSites;
 using DomainCore.Employees;
 using DomainCore.Limitations;
+using DomainCore.Statuses;
 using DomainCore.Vats;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -139,6 +140,8 @@ namespace RepositoryCore.Context
 
         public DbSet<Vat> Vats { get; set; }
         public DbSet<ServiceDelivery> ServiceDeliverys { get; set; }
+        public DbSet<Status> Statuses { get; set; }
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 
