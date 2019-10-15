@@ -21,6 +21,7 @@
         <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
         <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
         <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters:GenderConverter x:Key="cbxGenderToStringConverter"/>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">

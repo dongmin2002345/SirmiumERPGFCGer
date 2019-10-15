@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Employees
                 "CREATE VIEW vEmployeeProfessions AS " +
                 "SELECT employeeProfession.Id AS EmployeeProfessionId, employeeProfession.Identifier AS EmployeeProfessionIdentifier, " +
                 "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
-                "profession.Id AS ProfessionId, profession.Identifier AS ProfessionIdentifier, profession.Code AS ProfessionCode, profession.Name AS ProfessionName, " +
+                "profession.Id AS ProfessionId, profession.Identifier AS ProfessionIdentifier, profession.Code AS ProfessionCode, profession.Name AS ProfessionName, profession.SecondCode AS ProfessionSecondCode, " +
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
                 "employeeProfession.ItemStatus, employeeProfession.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (employeeProfession.UpdatedAt), (employee.UpdatedAt), (profession.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +

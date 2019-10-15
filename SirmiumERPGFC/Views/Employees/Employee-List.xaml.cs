@@ -304,6 +304,7 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
+
         #region EmployeeProfessionsFromDB
         private ObservableCollection<EmployeeProfessionItemViewModel> _EmployeeProfessionsFromDB;
 
@@ -354,6 +355,7 @@ namespace SirmiumERPGFC.Views.Employees
             }
         }
         #endregion
+
 
         #region EmployeeLicencesFromDB
         private ObservableCollection<EmployeeLicenceItemViewModel> _EmployeeLicencesFromDB;
@@ -406,6 +408,7 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
+
         #region EmployeeItemsFromDB
         private ObservableCollection<EmployeeItemViewModel> _EmployeeItemsFromDB;
 
@@ -456,6 +459,7 @@ namespace SirmiumERPGFC.Views.Employees
             }
         }
         #endregion
+
 
         #region Pagination data
         int currentPage = 1;
@@ -689,7 +693,7 @@ namespace SirmiumERPGFC.Views.Employees
                 EmployeeProfessionsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
             }
 
-            EmployeeDocumentDataLoading = false;
+            EmployeeProfessionDataLoading = false;
         }
 
         private void DisplayEmployeeLicenceData()
@@ -896,11 +900,11 @@ namespace SirmiumERPGFC.Views.Employees
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
-        private void DgEmpolyeeDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void DgEmployeeDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
-        private void DgEmpolyeeProfessions_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void DgEmployeeProfessions_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
@@ -909,7 +913,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
-        private void DgEmpolyeeItems_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void DgEmployeeItems_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
@@ -967,101 +971,101 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void BtnAddCards_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (CurrentEmployee == null)
-            //{
-            //    MainWindow.WarningMessage = "Morate odabrati račun!";
-            //    return;
-            //}
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
 
-            //#endregion
+            #endregion
 
-            //Employee_Card_AddEdit EmployeeCardAddEditForm = new Employee_Card_AddEdit(CurrentEmployee);
-            //EmployeeCardAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncCardData);
-            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeCardAddEditForm);
+            Employee_Card_AddEdit EmployeeCardAddEditForm = new Employee_Card_AddEdit(CurrentEmployee);
+            EmployeeCardAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncCardData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeCardAddEditForm);
         }
 
         private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (CurrentEmployee == null)
-            //{
-            //    MainWindow.WarningMessage = "Morate odabrati račun!";
-            //    return;
-            //}
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
 
-            //#endregion
+            #endregion
 
-            //Employee_Document_AddEdit EmployeeDocumentAddEditForm = new Employee_Document_AddEdit(CurrentEmployee);
-            //EmployeeDocumentAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncDocumentData);
-            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeDocumentAddEditForm);
+            Employee_Document_AddEdit EmployeeDocumentAddEditForm = new Employee_Document_AddEdit(CurrentEmployee);
+            EmployeeDocumentAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncDocumentData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeDocumentAddEditForm);
         }
 
         private void BtnAddNotes_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (CurrentEmployee == null)
-            //{
-            //    MainWindow.WarningMessage = "Morate odabrati račun!";
-            //    return;
-            //}
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
 
-            //#endregion
+            #endregion
 
-            //Employee_Note_AddEdit EmployeeNoteAddEditForm = new Employee_Note_AddEdit(CurrentEmployee);
-            //EmployeeNoteAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncNoteData);
-            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeNoteAddEditForm);
+            Employee_Note_AddEdit EmployeeNoteAddEditForm = new Employee_Note_AddEdit(CurrentEmployee);
+            EmployeeNoteAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncNoteData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeNoteAddEditForm);
         }
         private void BtnAddProfessions_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (CurrentEmployee == null)
-            //{
-            //    MainWindow.WarningMessage = "Morate odabrati račun!";
-            //    return;
-            //}
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
 
-            //#endregion
+            #endregion
 
-            //Employee_Profession_AddEdit EmployeeProfessionAddEditForm = new Employee_Profession_AddEdit(CurrentEmployee);
-            //EmployeeProfessionAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncProfessionData);
-            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeProfessionAddEditForm);
+            Employee_Profession_AddEdit EmployeeProfessionAddEditForm = new Employee_Profession_AddEdit(CurrentEmployee);
+            EmployeeProfessionAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncProfessionData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeProfessionAddEditForm);
         }
         private void BtnAddLicences_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (CurrentEmployee == null)
-            //{
-            //    MainWindow.WarningMessage = "Morate odabrati račun!";
-            //    return;
-            //}
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
 
-            //#endregion
+            #endregion
 
-            //Employee_Licence_AddEdit EmployeeLicenceAddEditForm = new Employee_Licence_AddEdit(CurrentEmployee);
-            //EmployeeLicenceAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncLicenceData);
-            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeLicenceAddEditForm);
+            Employee_Licence_AddEdit EmployeeLicenceAddEditForm = new Employee_Licence_AddEdit(CurrentEmployee);
+            EmployeeLicenceAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncLicenceData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeLicenceAddEditForm);
         }
         private void BtnAddItems_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (CurrentEmployee == null)
-            //{
-            //    MainWindow.WarningMessage = "Morate odabrati račun!";
-            //    return;
-            //}
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati račun!";
+                return;
+            }
 
-            //#endregion
+            #endregion
 
-            //Employee_Item_AddEdit EmployeeItemAddEditForm = new Employee_Item_AddEdit(CurrentEmployee);
-            //EmployeeItemAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncItemData);
-            //FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeItemAddEditForm);
+            Employee_Item_AddEdit EmployeeItemAddEditForm = new Employee_Item_AddEdit(CurrentEmployee);
+            EmployeeItemAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncItemData);
+            FlyoutHelper.OpenFlyout(this, "Podaci", 95, EmployeeItemAddEditForm);
         }
 
         #endregion

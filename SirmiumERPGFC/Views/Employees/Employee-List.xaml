@@ -419,8 +419,8 @@
                         </Grid>
 
                         <Separator Grid.Row="1" Margin="2" />
-                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding EmpolyeeDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                        <DataGrid x:Name="dgEmpolyeeDocuments"
+                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding EmployeeDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgEmployeeDocuments"
                               Grid.Row="2" 
                               Margin="2"
                               MinHeight="200"
@@ -436,9 +436,9 @@
                                   VerticalScrollBarVisibility="Auto"
                                   RowHeaderWidth="25"
                                   HeadersVisibility="All"
-                                  LoadingRow="DgEmpolyeeDocuments_LoadingRow"
-                              ItemsSource="{Binding Path=EmpolyeeDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentEmpolyeeDocument, Mode=TwoWay}">
+                                  LoadingRow="DgEmployeeDocuments_LoadingRow"
+                              ItemsSource="{Binding Path=EmployeeDocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentEmployeeDocument, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
@@ -520,8 +520,8 @@
                         </Grid>
 
                         <Separator Grid.Row="1" Margin="2" />
-                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding EmpolyeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                        <DataGrid x:Name="dgEmpolyeeItems"
+                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding EmployeeItemDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgEmployeeItems"
                               Grid.Row="2" 
                               Margin="2"
                               MinHeight="200"
@@ -537,9 +537,9 @@
                                   VerticalScrollBarVisibility="Auto"
                                   RowHeaderWidth="25"
                                   HeadersVisibility="All"
-                                  LoadingRow="DgEmpolyeeItems_LoadingRow"
-                              ItemsSource="{Binding Path=EmpolyeeItemsFromDB}"
-                              SelectedItem="{Binding Path=CurrentEmpolyeeItem, Mode=TwoWay}">
+                                  LoadingRow="DgEmployeeItems_LoadingRow"
+                              ItemsSource="{Binding Path=EmployeeItemsFromDB}"
+                              SelectedItem="{Binding Path=CurrentEmployeeItem, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
@@ -696,8 +696,8 @@
                         </Grid>
 
                         <Separator Grid.Row="1" Margin="2" />
-                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding EmpolyeeDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
-                        <DataGrid x:Name="dgEmpolyeeProfessions"
+                        <Controls:ProgressRing Grid.Row="2"  IsActive="{Binding EmployeeProfessionDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                        <DataGrid x:Name="dgEmployeeProfessions"
                               Grid.Row="2" 
                               Margin="2"
                               MinHeight="200"
@@ -713,9 +713,9 @@
                                   VerticalScrollBarVisibility="Auto"
                                   RowHeaderWidth="25"
                                   HeadersVisibility="All"
-                                  LoadingRow="DgEmpolyeeProfessions_LoadingRow"
-                              ItemsSource="{Binding Path=EmpolyeeProfessionsFromDB}"
-                              SelectedItem="{Binding Path=CurrentEmpolyeeProfession, Mode=TwoWay}">
+                                  LoadingRow="DgEmployeeProfessions_LoadingRow"
+                              ItemsSource="{Binding Path=EmployeeProfessionsFromDB}"
+                              SelectedItem="{Binding Path=CurrentEmployeeProfession, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Profession.SecondCode" Header="{DynamicResource Šifra_zanimanja}" Binding="{Binding Profession.SecondCode}" IsReadOnly="True" />

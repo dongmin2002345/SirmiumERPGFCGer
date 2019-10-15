@@ -27,7 +27,7 @@ namespace SirmiumERPGFC.Repository.Employees
                "ProfessionIdentifier GUID NULL, " +
                "ProfessionCode NVARCHAR(48) NULL, " +
                "ProfessionName NVARCHAR(2048) NULL, " +
-               "ProfessionSecond NVARCHAR(48) NULL, " +
+               "ProfessionSecondCode NVARCHAR(48) NULL, " +
                "CountryId INTEGER NULL, " +
                "CountryIdentifier GUID NULL, " +
                "CountryCode NVARCHAR(48) NULL, " +
@@ -133,8 +133,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        EmployeeProfessionItemViewModel dbEntry = Read(query);
                         EmployeeProfessionItems.Add(Read(query));
-                    
+                    }
 
                 }
                 catch (SqliteException error)
@@ -171,8 +173,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
+                    {
+                        EmployeeProfessionItemViewModel dbEntry = Read(query);
                         EmployeeItem = Read(query);
-                    
+                    }
                 }
                 catch (SqliteException error)
                 {

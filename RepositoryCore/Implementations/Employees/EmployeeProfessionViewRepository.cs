@@ -33,7 +33,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeProfessionId, EmployeeProfessionIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
+                "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, ProfessionSecondCode, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeProfessions " +
@@ -73,6 +73,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Profession.Identifier = Guid.Parse(reader["ProfessionIdentifier"].ToString());
                             employeeProfession.Profession.Code = reader["ProfessionCode"].ToString();
                             employeeProfession.Profession.Name = reader["ProfessionName"].ToString();
+                            employeeProfession.Profession.SecondCode = reader["ProfessionSecondCode"].ToString();
                         }
 
                         if (reader["CountryId"] != DBNull.Value)
@@ -133,7 +134,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeProfessionId, EmployeeProfessionIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
+                "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, ProfessionSecondCode, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeProfessions " +
@@ -173,6 +174,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Profession.Identifier = Guid.Parse(reader["ProfessionIdentifier"].ToString());
                             employeeProfession.Profession.Code = reader["ProfessionCode"].ToString();
                             employeeProfession.Profession.Name = reader["ProfessionName"].ToString();
+                            employeeProfession.Profession.SecondCode = reader["ProfessionSecondCode"].ToString();
                         }
 
                         if (reader["CountryId"] != DBNull.Value)
@@ -232,7 +234,7 @@ namespace RepositoryCore.Implementations.Employees
             string queryString =
                 "SELECT EmployeeProfessionId, EmployeeProfessionIdentifier, " +
                 "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
-                "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, " +
+                "ProfessionId, ProfessionIdentifier, ProfessionCode, ProfessionName, ProfessionSecondCode, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployeeProfessions " +
@@ -274,6 +276,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.Profession.Identifier = Guid.Parse(reader["ProfessionIdentifier"].ToString());
                             employeeProfession.Profession.Code = reader["ProfessionCode"].ToString();
                             employeeProfession.Profession.Name = reader["ProfessionName"].ToString();
+                            employeeProfession.Profession.SecondCode = reader["ProfessionSecondCode"].ToString();
                         }
 
                         if (reader["CountryId"] != DBNull.Value)

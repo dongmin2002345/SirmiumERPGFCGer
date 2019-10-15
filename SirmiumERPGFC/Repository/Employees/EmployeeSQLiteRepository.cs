@@ -287,9 +287,11 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        EmployeeViewModel dbEntry = Read(query);
                         Employees.Add(Read(query));
-                    
 
+                    }
                     response.Employees = Employees;
 
                     selectCommand = new SqliteCommand(
@@ -368,8 +370,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        EmployeeViewModel dbEntry = Read(query);
                         Employees.Add(Read(query));
-                    
+                    }
 
                     response.Employees = Employees;
 
@@ -434,7 +438,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
-                   
+
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", constructionSiteIdentifier);
                     selectCommand.Parameters.AddWithValue("@Name", ((object)EmployeeSearchObject.SearchBy_Name) != null ? "%" + EmployeeSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SurName", ((object)EmployeeSearchObject.SearchBy_SurName) != null ? "%" + EmployeeSearchObject.SearchBy_SurName + "%" : "");
@@ -447,8 +451,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        Employees.Add(Read(query));
-                    
+                    { 
+                    EmployeeViewModel dbEntry = Read(query);
+                    Employees.Add(Read(query));
+                }
 
                     response.Employees = Employees;
 
@@ -526,8 +532,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        EmployeeViewModel dbEntry = Read(query);
                         Employees.Add(Read(query));
-                    
+                    }
 
                     response.Employees = Employees;
 
@@ -602,8 +610,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        EmployeeViewModel dbEntry = Read(query);
                         Employees.Add(Read(query));
-                    
+                    }
 
                     response.Employees = Employees;
 
@@ -666,8 +676,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
+                    {
+                        EmployeeViewModel dbEntry = Read(query);
                         Employee = Read(query);
-                    
+                    }
                 }
                 catch (SqliteException error)
                 {

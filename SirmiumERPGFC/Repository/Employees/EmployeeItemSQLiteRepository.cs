@@ -130,8 +130,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        EmployeeItemViewModel dbEntry = Read(query);
                         EmployeeItems.Add(Read(query));
-                    
+                    }
 
                 }
                 catch (SqliteException error)
@@ -168,8 +170,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
+                    {
+                        EmployeeItemViewModel dbEntry = Read(query);
                         EmployeeItem = Read(query);
-                    
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -206,8 +210,10 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
+                    {
+                        EmployeeItemViewModel dbEntry = Read(query);
                         EmployeeItems.Add(Read(query));
-                    
+                    }
 
                 }
                 catch (SqliteException error)
