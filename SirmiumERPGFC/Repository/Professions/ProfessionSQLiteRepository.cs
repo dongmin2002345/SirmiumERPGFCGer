@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.Professions;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Professions
 {
     public class ProfessionSQLiteRepository
     {
+        #region SQL
+
         public static string ProfessionTableCreatePart =
           "CREATE TABLE IF NOT EXISTS Professions " +
            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -47,6 +45,53 @@ namespace SirmiumERPGFC.Repository.Professions
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private ProfessionViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            ProfessionViewModel dbEntry = new ProfessionViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, ProfessionViewModel profession)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", profession.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", profession.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)profession.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SecondCode", ((object)profession.SecondCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)profession.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)profession.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)profession.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)profession.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)profession.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", profession.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)profession.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public ProfessionListResponse GetProfessionsByPage(int companyId, ProfessionViewModel professionSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             ProfessionListResponse response = new ProfessionListResponse();
@@ -67,6 +112,7 @@ namespace SirmiumERPGFC.Repository.Professions
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@SecondCode", ((object)professionSearchObject.Search_SecondCode) != null ? "%" + professionSearchObject.Search_SecondCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)professionSearchObject.Search_Name) != null ? "%" + professionSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Country", ((object)professionSearchObject.Search_Country) != null ? "%" + professionSearchObject.Search_Country + "%" : "");
@@ -77,21 +123,8 @@ namespace SirmiumERPGFC.Repository.Professions
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        ProfessionViewModel dbEntry = new ProfessionViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        Professions.Add(dbEntry);
-                    }
+                        Professions.Add(Read(query));
+                    
 
 
                     selectCommand = new SqliteCommand(
@@ -102,6 +135,7 @@ namespace SirmiumERPGFC.Repository.Professions
                         //"AND (@Country IS NULL OR @Country = '' OR CountryCode LIKE @Country) " +
                         "AND (@Country IS NULL OR @Country = '' OR CountryName LIKE @Country) " +
                         "AND CompanyId = @CompanyId;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@SecondCode", ((object)professionSearchObject.Search_SecondCode) != null ? "%" + professionSearchObject.Search_SecondCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)professionSearchObject.Search_Name) != null ? "%" + professionSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Country", ((object)professionSearchObject.Search_Country) != null ? "%" + professionSearchObject.Search_Country + "%" : "");
@@ -147,6 +181,7 @@ namespace SirmiumERPGFC.Repository.Professions
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@SecondCode", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Country", ((object)filterString) != null ? "%" + filterString + "%" : "");
@@ -156,21 +191,8 @@ namespace SirmiumERPGFC.Repository.Professions
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        ProfessionViewModel dbEntry = new ProfessionViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        Professions.Add(dbEntry);
-                    }
+                        Professions.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -206,21 +228,8 @@ namespace SirmiumERPGFC.Repository.Professions
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        ProfessionViewModel dbEntry = new ProfessionViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        profession = dbEntry;
-                    }
+                        profession = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -236,6 +245,10 @@ namespace SirmiumERPGFC.Repository.Professions
             response.Profession = profession;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IProfessionService professionService, Action<int, int> callback = null)
         {
@@ -253,16 +266,40 @@ namespace SirmiumERPGFC.Repository.Professions
                 {
                     toSync = response?.Professions?.Count ?? 0;
                     List<ProfessionViewModel> professionsFromDB = response.Professions;
-                    foreach (var profession in professionsFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(profession.Identifier);
-                            if (profession.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM Professions WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var profession in professionsFromDB)
                             {
-                                profession.IsSynced = true;
-                                Create(profession);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", profession.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (profession.IsActive)
+                                {
+                                    profession.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, profession);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -308,6 +345,10 @@ namespace SirmiumERPGFC.Repository.Professions
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public ProfessionResponse Create(ProfessionViewModel profession)
         {
             ProfessionResponse response = new ProfessionResponse();
@@ -316,31 +357,13 @@ namespace SirmiumERPGFC.Repository.Professions
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", profession.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", profession.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)profession.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SecondCode", ((object)profession.SecondCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)profession.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryId", ((object)profession.Country?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)profession.Country?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)profession.Country?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryName", ((object)profession.Country?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", profession.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)profession.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, profession);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -356,47 +379,9 @@ namespace SirmiumERPGFC.Repository.Professions
             }
         }
 
-        public ProfessionResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            ProfessionResponse response = new ProfessionResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE Professions SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public ProfessionResponse Delete(Guid identifier)
         {
@@ -410,12 +395,12 @@ namespace SirmiumERPGFC.Repository.Professions
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM Professions WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM Professions WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -449,7 +434,7 @@ namespace SirmiumERPGFC.Repository.Professions
                     insertCommand.CommandText = "DELETE FROM Professions";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -472,5 +457,7 @@ namespace SirmiumERPGFC.Repository.Professions
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }
