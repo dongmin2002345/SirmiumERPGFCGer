@@ -1322,11 +1322,11 @@ namespace SirmiumERPGFC.Views.Employees
 
         //            EmployeeResponse response = EmployeeService.Create(CurrentEmployee);
 
-                    if (response.Success)
-                    {
-                        MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
-                        SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
-                        SubmitButtonEnabled = true;
+                    //if (response.Success)
+                    //{
+                    //    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    //    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
+                    //    SubmitButtonEnabled = true;
 
         //                EmployeeCreated();
 

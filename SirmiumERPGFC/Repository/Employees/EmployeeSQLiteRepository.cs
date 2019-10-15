@@ -116,6 +116,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "@ResidenceCityId, @ResidenceCityIdentifier, @ResidenceCityCode, @ResidenceCityName, @ResidenceAddress, " +
             "@EmbassyDate, @VisaDate, @VisaValidFrom, @VisaValidTo, @WorkPermitFrom, @WorkPermitTo, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+        #endregion
 
         #region Helper methods
         private static EmployeeViewModel Read(SqliteDataReader query)
@@ -236,23 +237,6 @@ namespace SirmiumERPGFC.Repository.Employees
 
             return insertCommand;
         }
-
-        #endregion
-
-        public EmployeeListResponse GetEmployeesByPage(int companyId, EmployeeViewModel EmployeeSearchObject, int currentPage = 1, int itemsPerPage = 50)
-        {
-            EmployeeListResponse response = new EmployeeListResponse();
-            List<EmployeeViewModel> Employees = new List<EmployeeViewModel>();
-
-        #region Helper methods
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    while (query.Read())
-                    {
-                        EmployeeViewModel dbEntry = Read(query);
-                        Employees.Add(dbEntry);
-                    }
 
         #endregion
 
