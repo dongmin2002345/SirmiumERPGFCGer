@@ -191,7 +191,7 @@ namespace SirmiumERPGFC.Views.Employees
             displayThread.IsBackground = true;
             displayThread.Start();
 
-            btnAddDocument.Focus();
+            txtDocumentName.Focus();
         }
 
         #endregion
@@ -286,7 +286,7 @@ namespace SirmiumERPGFC.Views.Employees
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    txtName.Focus();
+                    txtDocumentName.Focus();
                 })
             );
 

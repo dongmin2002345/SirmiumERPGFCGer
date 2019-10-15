@@ -191,7 +191,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             displayThread.IsBackground = true;
             displayThread.Start();
 
-            btnAddDocument.Focus();
+            txtBusinessPartnerDocumentName.Focus();
         }
 
         #endregion
