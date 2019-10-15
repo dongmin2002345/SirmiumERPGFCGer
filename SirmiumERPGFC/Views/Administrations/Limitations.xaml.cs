@@ -11,19 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Administrations
 {
@@ -221,7 +211,6 @@ namespace SirmiumERPGFC.Views.Administrations
 
                 if (response.Success)
                 {
-                    new LimitationSQLiteRepository().UpdateSyncStatus(response.Limitation.Identifier, response.Limitation.UpdatedAt, response.Limitation.Id, true);
                     MainWindow.SuccessMessage = "Daten wurden erfolgreich gespeichert!";
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;
@@ -265,7 +254,6 @@ namespace SirmiumERPGFC.Views.Administrations
 
                 if (response.Success)
                 {
-                    new LimitationEmailSQLiteRepository().UpdateSyncStatus(CurrentLimitationEmail.Identifier, response.LimitationEmail.UpdatedAt, response.LimitationEmail.Id, true);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SaveButtonContent = " SAČUVAJ ";
                     SaveButtonEnabled = true;

@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Limitations;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Limitations
 {
     public class LimitationEmailSQLiteRepository
     {
+        #region SQL
+
         public static string LimitationEmailTableCreatePart =
                    "CREATE TABLE IF NOT EXISTS LimitationEmails " +
                    "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -40,6 +38,47 @@ namespace SirmiumERPGFC.Repository.Limitations
             "VALUES (NULL, @ServerId, @Identifier, @Name, @LastName, @Email, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private LimitationEmailViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            LimitationEmailViewModel dbEntry = new LimitationEmailViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, LimitationEmailViewModel LimitationEmail)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", LimitationEmail.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", LimitationEmail.Identifier);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)LimitationEmail.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@LastName", ((object)LimitationEmail.LastName) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Email", ((object)LimitationEmail.Email) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", LimitationEmail.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)LimitationEmail.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+        #endregion
+
+        #region Read
+
         public LimitationEmailListResponse GetLimitationEmailsByPage(int companyId, LimitationEmailViewModel LimitationEmailSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             LimitationEmailListResponse response = new LimitationEmailListResponse();
@@ -57,6 +96,7 @@ namespace SirmiumERPGFC.Repository.Limitations
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)LimitationEmailSearchObject.Search_Name) != null ? "%" + LimitationEmailSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -65,20 +105,8 @@ namespace SirmiumERPGFC.Repository.Limitations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        LimitationEmailViewModel dbEntry = new LimitationEmailViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        LimitationEmails.Add(dbEntry);
-                    }
+                        LimitationEmails.Add(Read(query));
+                    
 
 
                     selectCommand = new SqliteCommand(
@@ -86,6 +114,7 @@ namespace SirmiumERPGFC.Repository.Limitations
                         "FROM LimitationEmails " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name OR LastName LIKE @Name) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)LimitationEmailSearchObject.Search_Name) != null ? "%" + LimitationEmailSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -128,20 +157,8 @@ namespace SirmiumERPGFC.Repository.Limitations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        LimitationEmailViewModel dbEntry = new LimitationEmailViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        LimitationEmail = dbEntry;
-                    }
+                        LimitationEmail = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -158,6 +175,10 @@ namespace SirmiumERPGFC.Repository.Limitations
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(ILimitationEmailService LimitationEmailService, Action<int, int> callback = null)
         {
             try
@@ -173,17 +194,41 @@ namespace SirmiumERPGFC.Repository.Limitations
                 if (response.Success)
                 {
                     toSync = response?.LimitationEmails?.Count ?? 0;
-                    List<LimitationEmailViewModel> LimitationEmailsFromDB = response.LimitationEmails;
-                    foreach (var LimitationEmail in LimitationEmailsFromDB.OrderBy(x => x.Id))
+                    List<LimitationEmailViewModel> limitationEmailsFromDB = response.LimitationEmails;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(LimitationEmail.Identifier);
-                            if (LimitationEmail.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM LimitationEmails WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var limitationEmail in limitationEmailsFromDB)
                             {
-                                LimitationEmail.IsSynced = true;
-                                Create(LimitationEmail);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", limitationEmail.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (limitationEmail.IsActive)
+                                {
+                                    limitationEmail.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, limitationEmail);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -229,6 +274,10 @@ namespace SirmiumERPGFC.Repository.Limitations
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public LimitationEmailResponse Create(LimitationEmailViewModel LimitationEmail)
         {
             LimitationEmailResponse response = new LimitationEmailResponse();
@@ -237,27 +286,13 @@ namespace SirmiumERPGFC.Repository.Limitations
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", LimitationEmail.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", LimitationEmail.Identifier);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)LimitationEmail.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@LastName", ((object)LimitationEmail.LastName) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Email", ((object)LimitationEmail.Email) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", LimitationEmail.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)LimitationEmail.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, LimitationEmail);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -273,45 +308,9 @@ namespace SirmiumERPGFC.Repository.Limitations
             }
         }
 
-        public LimitationEmailResponse UpdateSyncStatus(Guid identifier, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            LimitationEmailResponse response = new LimitationEmailResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE LimitationEmails SET " +
-                    "IsSynced = @IsSynced, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public LimitationEmailResponse Delete(Guid identifier)
         {
@@ -325,12 +324,12 @@ namespace SirmiumERPGFC.Repository.Limitations
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM LimitationEmails WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM LimitationEmails WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -364,7 +363,7 @@ namespace SirmiumERPGFC.Repository.Limitations
                     insertCommand.CommandText = "DELETE FROM LimitationEmails";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -387,5 +386,7 @@ namespace SirmiumERPGFC.Repository.Limitations
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }
