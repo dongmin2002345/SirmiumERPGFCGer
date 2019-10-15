@@ -6,15 +6,13 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
     public class PhysicalPersonItemSQLiteRepository
     {
+        #region SQL
+
         public static string PhysicalPersonItemTableCreatePart =
                "CREATE TABLE IF NOT EXISTS PhysicalPersonItems " +
                "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -56,7 +54,9 @@ namespace SirmiumERPGFC.Repository.Employees
             "@PhysicalPersonCode, @PhysicalPersonName, @FamilyMemberId, @FamilyMemberIdentifier, " +
             "@FamilyMemberCode, @FamilyMemberName, @Name, @DateOfBirth, @EmbassyDate, @Passport, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
-        
+
+        #endregion
+
         #region Helper methods
         private static PhysicalPersonItemViewModel Read(SqliteDataReader query)
         {
@@ -106,6 +106,9 @@ namespace SirmiumERPGFC.Repository.Employees
         }
 
         #endregion
+
+        #region Read
+
         public PhysicalPersonItemListResponse GetPhysicalPersonItemsByPhysicalPerson(int companyId, Guid PhysicalPersonIdentifier)
         {
             PhysicalPersonItemListResponse response = new PhysicalPersonItemListResponse();
@@ -122,6 +125,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "WHERE PhysicalPersonIdentifier = @PhysicalPersonIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@PhysicalPersonIdentifier", PhysicalPersonIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -242,6 +246,10 @@ namespace SirmiumERPGFC.Repository.Employees
         //    return response;
         //}
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IPhysicalPersonItemService physicalPersonItemService, Action<int, int> callback = null)
         {
             try
@@ -338,6 +346,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public PhysicalPersonItemResponse Create(PhysicalPersonItemViewModel PhysicalPersonItem)
         {
             PhysicalPersonItemResponse response = new PhysicalPersonItemResponse();
@@ -367,47 +379,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        //public PhysicalPersonItemResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    PhysicalPersonItemResponse response = new PhysicalPersonItemResponse();
+        #endregion
 
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE PhysicalPersonItems SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public PhysicalPersonItemResponse Delete(Guid identifier)
         {
@@ -421,12 +395,12 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM PhysicalPersonItems WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM PhysicalPersonItems WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -460,7 +434,7 @@ namespace SirmiumERPGFC.Repository.Employees
         //            insertCommand.CommandText = "DELETE FROM PhysicalPersonItems";
         //            try
         //            {
-        //                insertCommand.ExecuteReader();
+        //                insertCommand.ExecuteNonQuery();
         //            }
         //            catch (SqliteException error)
         //            {
@@ -495,10 +469,10 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "UPDATE PhysicalPersonItems SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "UPDATE PhysicalPersonItems SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
                     insertCommand.ExecuteReader();
@@ -516,5 +490,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 return response;
             }
         }
+
+        #endregion
     }
 }
