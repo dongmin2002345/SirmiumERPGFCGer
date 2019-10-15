@@ -88,7 +88,7 @@ namespace SirmiumERPGFC.Repository.Prices
             DiscountListResponse response = new DiscountListResponse();
             List<DiscountViewModel> discounts = new List<DiscountViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -143,7 +143,7 @@ namespace SirmiumERPGFC.Repository.Prices
             DiscountListResponse response = new DiscountListResponse();
             List<DiscountViewModel> discounts = new List<DiscountViewModel>();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -184,7 +184,7 @@ namespace SirmiumERPGFC.Repository.Prices
             DiscountResponse response = new DiscountResponse();
             DiscountViewModel discount = null;
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -236,7 +236,7 @@ namespace SirmiumERPGFC.Repository.Prices
                     toSync = response?.Discounts?.Count ?? 0;
                     List<DiscountViewModel> workOrderFinalProductsFromDB = response.Discounts;
 
-                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+                    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
                         db.Open();
                         using (var transaction = db.BeginTransaction())
@@ -282,7 +282,7 @@ namespace SirmiumERPGFC.Repository.Prices
 
         public DateTime? GetLastUpdatedAt(int companyId)
         {
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
                 try
@@ -319,7 +319,7 @@ namespace SirmiumERPGFC.Repository.Prices
         {
             DiscountResponse response = new DiscountResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -365,7 +365,7 @@ namespace SirmiumERPGFC.Repository.Prices
         {
             DiscountResponse response = new DiscountResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 
@@ -399,7 +399,7 @@ namespace SirmiumERPGFC.Repository.Prices
         {
             DiscountResponse response = new DiscountResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPWarehousesDB.db"))
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
                 db.Open();
 

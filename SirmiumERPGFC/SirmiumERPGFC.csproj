@@ -1333,6 +1333,7 @@
     </Content>
     <Resource Include="Resources\Icons\Porodica01.png" />
     <Resource Include="Resources\Icons\Plus02.png" />
+    <Resource Include="Resources\Icons\Popust.png" />
     <Content Include="Resources\Icons\price-tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
