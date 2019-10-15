@@ -6,15 +6,13 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
     public class PhysicalPersonNoteSQLiteRepository
     {
+        #region SQL
+
         public static string PhysicalPersonNoteTableCreatePart =
                        "CREATE TABLE IF NOT EXISTS PhysicalPersonNotes " +
                        "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -47,6 +45,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "VALUES (NULL, @ServerId, @Identifier, @PhysicalPersonId, @PhysicalPersonIdentifier, " +
             "@PhysicalPersonCode, @PhysicalPersonName, @Note, @NoteDate, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
         private static PhysicalPersonNoteViewModel Read(SqliteDataReader query)
@@ -89,6 +89,8 @@ namespace SirmiumERPGFC.Repository.Employees
 
         #endregion
 
+        #region Read
+
         public PhysicalPersonNoteListResponse GetPhysicalPersonNotesByPhysicalPerson(int companyId, Guid PhysicalPersonIdentifier)
         {
             PhysicalPersonNoteListResponse response = new PhysicalPersonNoteListResponse();
@@ -105,6 +107,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "WHERE PhysicalPersonIdentifier = @PhysicalPersonIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@PhysicalPersonIdentifier", PhysicalPersonIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -222,6 +225,10 @@ namespace SirmiumERPGFC.Repository.Employees
         //    return response;
         //}
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IPhysicalPersonNoteService physicalPersonNoteService, Action<int, int> callback = null)
         {
             try
@@ -318,6 +325,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public PhysicalPersonNoteResponse Create(PhysicalPersonNoteViewModel PhysicalPersonNote)
         {
             PhysicalPersonNoteResponse response = new PhysicalPersonNoteResponse();
@@ -347,47 +358,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        //public PhysicalPersonNoteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    PhysicalPersonNoteResponse response = new PhysicalPersonNoteResponse();
+        #endregion
 
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE PhysicalPersonNotes SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public PhysicalPersonNoteResponse Delete(Guid identifier)
         {
@@ -401,12 +374,12 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM PhysicalPersonNotes WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM PhysicalPersonNotes WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -476,10 +449,10 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "UPDATE PhysicalPersonNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.CommandText ="UPDATE PhysicalPersonNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
                     insertCommand.ExecuteReader();
@@ -497,5 +470,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 return response;
             }
         }
+
+        #endregion
     }
 }

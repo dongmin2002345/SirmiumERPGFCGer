@@ -5,16 +5,14 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
 	public class PhysicalPersonSQLiteRepository
 	{
-		public static string PhysicalPersonTableCreatePart =
+        #region SQL
+
+        public static string PhysicalPersonTableCreatePart =
 		   "CREATE TABLE IF NOT EXISTS PhysicalPersons " +
 		   "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		   "ServerId INTEGER NULL, " +
@@ -117,7 +115,9 @@ namespace SirmiumERPGFC.Repository.Employees
 			"@ResidenceCityId, @ResidenceCityIdentifier, @ResidenceCityCode, @ResidenceCityName, @ResidenceAddress, " +
 			"@EmbassyDate, @VisaDate, @VisaValidFrom, @VisaValidTo, @WorkPermitFrom, @WorkPermitTo, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
-       
+
+        #endregion
+
         #region Helper methods
 
         private static PhysicalPersonViewModel Read(SqliteDataReader query)
@@ -236,6 +236,9 @@ namespace SirmiumERPGFC.Repository.Employees
         }
 
         #endregion
+
+        #region Read
+
         public PhysicalPersonListResponse GetPhysicalPersonsByPage(int companyId, PhysicalPersonViewModel PhysicalPersonSearchObject, int currentPage = 1, int itemsPerPage = 50)
 		{
 			PhysicalPersonListResponse response = new PhysicalPersonListResponse();
@@ -257,7 +260,8 @@ namespace SirmiumERPGFC.Repository.Employees
                         "AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
-					selectCommand.Parameters.AddWithValue("@Name", ((object)PhysicalPersonSearchObject.SearchBy_Name) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Name + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)PhysicalPersonSearchObject.SearchBy_Name) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@SurName", ((object)PhysicalPersonSearchObject.SearchBy_SurName) != null ? "%" + PhysicalPersonSearchObject.SearchBy_SurName + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Passport", ((object)PhysicalPersonSearchObject.SearchBy_Passport) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Passport + "%" : "");
 					selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(PhysicalPersonSearchObject.Search_ConstructionSite) ? "%" + PhysicalPersonSearchObject.Search_ConstructionSite + "%" : "");
@@ -285,7 +289,8 @@ namespace SirmiumERPGFC.Repository.Employees
 						"AND (@ConstructionSite IS NULL OR @ConstructionSite = '' OR ConstructionSiteCode LIKE @ConstructionSite OR ConstructionSiteName LIKE @ConstructionSite) " +
                         "AND (@PhysicalPersonCode IS NULL OR @PhysicalPersonCode = '' OR PhysicalPersonCode LIKE @PhysicalPersonCode) " +
                         "AND CompanyId = @CompanyId;", db);
-					selectCommand.Parameters.AddWithValue("@Name", ((object)PhysicalPersonSearchObject.SearchBy_Name) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Name + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Name", ((object)PhysicalPersonSearchObject.SearchBy_Name) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Name + "%" : "");
 					selectCommand.Parameters.AddWithValue("@SurName", ((object)PhysicalPersonSearchObject.SearchBy_SurName) != null ? "%" + PhysicalPersonSearchObject.SearchBy_SurName + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Passport", ((object)PhysicalPersonSearchObject.SearchBy_Passport) != null ? "%" + PhysicalPersonSearchObject.SearchBy_Passport + "%" : "");
 					selectCommand.Parameters.AddWithValue("@ConstructionSite", !String.IsNullOrEmpty(PhysicalPersonSearchObject.Search_ConstructionSite) ? "%" + PhysicalPersonSearchObject.Search_ConstructionSite + "%" : "");
@@ -351,84 +356,88 @@ namespace SirmiumERPGFC.Repository.Employees
 			return response;
 		}
 
-		//public PhysicalPersonListResponse GetUnSyncedItems(int companyId)
-		//{
-		//	PhysicalPersonListResponse response = new PhysicalPersonListResponse();
-		//	List<PhysicalPersonViewModel> viewModels = new List<PhysicalPersonViewModel>();
+        //public PhysicalPersonListResponse GetUnSyncedItems(int companyId)
+        //{
+        //	PhysicalPersonListResponse response = new PhysicalPersonListResponse();
+        //	List<PhysicalPersonViewModel> viewModels = new List<PhysicalPersonViewModel>();
 
-		//	using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-		//	{
-		//		db.Open();
-		//		try
-		//		{
-		//			SqliteCommand selectCommand = new SqliteCommand(
-		//				SqlCommandSelectPart +
-		//				"FROM PhysicalPersons " +
-		//				"WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
-		//				"ORDER BY Id DESC;", db);
-		//			selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+        //	using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //	{
+        //		db.Open();
+        //		try
+        //		{
+        //			SqliteCommand selectCommand = new SqliteCommand(
+        //				SqlCommandSelectPart +
+        //				"FROM PhysicalPersons " +
+        //				"WHERE CompanyId = @CompanyId AND IsSynced = 0 " +
+        //				"ORDER BY Id DESC;", db);
+        //			selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
-		//			SqliteDataReader query = selectCommand.ExecuteReader();
+        //			SqliteDataReader query = selectCommand.ExecuteReader();
 
-		//			while (query.Read())
-		//			{
-		//				int counter = 0;
-		//				PhysicalPersonViewModel dbEntry = new PhysicalPersonViewModel();
-		//				dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-		//				dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-		//				dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-		//				dbEntry.PhysicalPersonCode = SQLiteHelper.GetString(query, ref counter);
-		//				dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-		//				dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
-		//				dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
-		//				dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
+        //			while (query.Read())
+        //			{
+        //				int counter = 0;
+        //				PhysicalPersonViewModel dbEntry = new PhysicalPersonViewModel();
+        //				dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+        //				dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+        //				dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.PhysicalPersonCode = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
 
-		//				dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
-		//				dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
-		//				dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-		//				dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
-		//				dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
-		//				dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-		//				dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+        //				dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
+        //				dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+        //				dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+        //				dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+        //				dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+        //				dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
 
-		//				dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
-		//				dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
-		//				dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
-		//				dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
-		//				dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
-		//				dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
-		//				dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
-		//				dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
+        //				dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
+        //				dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+        //				dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
+        //				dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
+        //				dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
+        //				dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
+        //				dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
 
-		//				dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
-		//				dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-		//				dbEntry.VisaValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-		//				dbEntry.VisaValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
-		//				dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
-		//				dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
+        //				dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
+        //				dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+        //				dbEntry.VisaValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+        //				dbEntry.VisaValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+        //				dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
+        //				dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
 
-		//				dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-		//				dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-		//				dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-		//				dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-		//				viewModels.Add(dbEntry);
-		//			}
+        //				dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+        //				dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+        //				dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+        //				dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+        //				viewModels.Add(dbEntry);
+        //			}
 
-		//		}
-		//		catch (SqliteException error)
-		//		{
-		//			MainWindow.ErrorMessage = error.Message;
-		//			response.Success = false;
-		//			response.Message = error.Message;
-		//			response.PhysicalPersons = new List<PhysicalPersonViewModel>();
-		//			return response;
-		//		}
-		//		db.Close();
-		//	}
-		//	response.Success = true;
-		//	response.PhysicalPersons = viewModels;
-		//	return response;
-		//}
+        //		}
+        //		catch (SqliteException error)
+        //		{
+        //			MainWindow.ErrorMessage = error.Message;
+        //			response.Success = false;
+        //			response.Message = error.Message;
+        //			response.PhysicalPersons = new List<PhysicalPersonViewModel>();
+        //			return response;
+        //		}
+        //		db.Close();
+        //	}
+        //	response.Success = true;
+        //	response.PhysicalPersons = viewModels;
+        //	return response;
+        //}
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IPhysicalPersonService physicalPersonService, Action<int, int> callback = null)
         {
@@ -526,7 +535,11 @@ namespace SirmiumERPGFC.Repository.Employees
 			return null;
 		}
 
-		public PhysicalPersonResponse Create(PhysicalPersonViewModel physicalPerson)
+        #endregion
+
+        #region Create
+
+        public PhysicalPersonResponse Create(PhysicalPersonViewModel physicalPerson)
 		{
 			PhysicalPersonResponse response = new PhysicalPersonResponse();
 
@@ -556,49 +569,11 @@ namespace SirmiumERPGFC.Repository.Employees
             }
 		}
 
-		//public PhysicalPersonResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-		//{
-		//	PhysicalPersonResponse response = new PhysicalPersonResponse();
+        #endregion
 
-		//	using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-		//	{
-		//		db.Open();
+        #region Delete
 
-		//		SqliteCommand insertCommand = new SqliteCommand();
-		//		insertCommand.Connection = db;
-
-		//		insertCommand.CommandText = "UPDATE PhysicalPersons SET " +
-		//			"IsSynced = @IsSynced, " +
-  //                  "Code = @Code, " +
-  //                  "UpdatedAt = @UpdatedAt, " +
-  //                  "ServerId = @ServerId " +
-		//			"WHERE Identifier = @Identifier ";
-
-		//		insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-		//		insertCommand.Parameters.AddWithValue("@Code", code);
-		//		insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-  //              insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-		//		insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-		//		try
-		//		{
-		//			insertCommand.ExecuteReader();
-		//		}
-		//		catch (SqliteException error)
-		//		{
-		//			MainWindow.ErrorMessage = error.Message;
-		//			response.Success = false;
-		//			response.Message = error.Message;
-		//			return response;
-		//		}
-		//		db.Close();
-
-		//		response.Success = true;
-		//		return response;
-		//	}
-		//}
-
-		public PhysicalPersonResponse Delete(Guid identifier)
+        public PhysicalPersonResponse Delete(Guid identifier)
 		{
 			PhysicalPersonResponse response = new PhysicalPersonResponse();
 
@@ -610,12 +585,12 @@ namespace SirmiumERPGFC.Repository.Employees
 				insertCommand.Connection = db;
 
 				//Use parameterized query to prevent SQL injection attacks
-				insertCommand.CommandText =
-					"DELETE FROM PhysicalPersons WHERE Identifier = @Identifier";
+				insertCommand.CommandText = "DELETE FROM PhysicalPersons WHERE Identifier = @Identifier";
 				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-				try
+				
+                try
 				{
-					insertCommand.ExecuteReader();
+					insertCommand.ExecuteNonQuery();
 				}
 				catch (SqliteException error)
 				{
@@ -649,7 +624,7 @@ namespace SirmiumERPGFC.Repository.Employees
 					insertCommand.CommandText = "DELETE FROM PhysicalPersons";
 					try
 					{
-						insertCommand.ExecuteReader();
+						insertCommand.ExecuteNonQuery();
 					}
 					catch (SqliteException error)
 					{
@@ -672,5 +647,7 @@ namespace SirmiumERPGFC.Repository.Employees
 			response.Success = true;
 			return response;
 		}
-	}
+
+        #endregion
+    }
 }
