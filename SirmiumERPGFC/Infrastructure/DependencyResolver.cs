@@ -14,6 +14,7 @@ using ServiceInterfaces.Abstractions.Common.ToDos;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Abstractions.Limitations;
+using ServiceInterfaces.Abstractions.Vats;
 using ServiceWebApi.Implementations.Banks;
 using ServiceWebApi.Implementations.Common.BusinessPartners;
 using ServiceWebApi.Implementations.Common.Companies;
@@ -29,6 +30,7 @@ using ServiceWebApi.Implementations.Common.ToDos;
 using ServiceWebApi.Implementations.ConstructionSites;
 using ServiceWebApi.Implementations.Employees;
 using ServiceWebApi.Implementations.Limitations;
+using ServiceWebApi.Implementations.Vats;
 
 namespace SirmiumERPGFC.Infrastructure
 {
@@ -112,6 +114,10 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IConstructionSiteNoteService>().To<ConstructionSiteNoteService>();
 
                 Kernel.Bind<ITaxAdministrationService>().To<TaxAdministrationService>();
+
+                Kernel.Bind<IVatService>().To<VatService>();
+
+
                 Kernel.Bind<IDiscountService>().To<DiscountService>();
             }
         }

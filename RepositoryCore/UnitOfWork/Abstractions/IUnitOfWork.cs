@@ -12,6 +12,7 @@ using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Abstractions.Limitations;
+using RepositoryCore.Abstractions.Vats;
 
 namespace RepositoryCore.UnitOfWork.Abstractions
 {
@@ -87,6 +88,10 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository();
 
         ITaxAdministrationRepository GetTaxAdministrationRepository();
+
+        IVatRepository GetVatRepository();
+
+
         IDiscountRepository GetDiscountRepository();
 
         void Save();

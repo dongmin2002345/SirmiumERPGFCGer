@@ -14,6 +14,7 @@ using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Abstractions.Employees;
 using RepositoryCore.Abstractions.Limitations;
+using RepositoryCore.Abstractions.Vats;
 using RepositoryCore.Context;
 using RepositoryCore.Implementations.Banks;
 using RepositoryCore.Implementations.Common.BusinessPartners;
@@ -30,6 +31,7 @@ using RepositoryCore.Implementations.ConstructionSites;
 using RepositoryCore.Implementations.Employees;
 using RepositoryCore.Implementations.Limitations;
 using RepositoryCore.Implementations.PhysicalPersons;
+using RepositoryCore.Implementations.Vats;
 using RepositoryCore.UnitOfWork.Abstractions;
 using System;
 
@@ -110,6 +112,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private ITaxAdministrationRepository taxAdministrationRepository;
         private IDiscountRepository discountRepository;
+
+        private IVatRepository vatRepository;
+
 
         #endregion
 
@@ -527,6 +532,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (taxAdministrationRepository == null)
                 taxAdministrationRepository = new TaxAdministrationViewRepository(context);
             return taxAdministrationRepository;
+        }
+
+        public IVatRepository GetVatRepository()
+        {
+            if (vatRepository == null)
+                vatRepository = new VatViewRepository(context);
+            return vatRepository;
         }
 
         public IDiscountRepository GetDiscountRepository()

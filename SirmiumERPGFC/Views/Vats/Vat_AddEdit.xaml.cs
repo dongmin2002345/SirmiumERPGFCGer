@@ -1,0 +1,257 @@
+﻿using Ninject;
+using ServiceInterfaces.Abstractions.Vats;
+using ServiceInterfaces.Messages.Vats;
+using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Vats;
+using SirmiumERPGFC.Common;
+using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.Vats;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SirmiumERPGFC.Views.Vats
+{
+    /// <summary>
+    /// Interaction logic for Vat_AddEdit.xaml
+    /// </summary>
+    public partial class Vat_AddEdit : UserControl, INotifyPropertyChanged
+    {
+        #region Attributes
+
+        #region Services
+        IVatService VatService;
+        #endregion
+
+        #region Events
+        public event VatHandler VatCreatedUpdated;
+        #endregion
+
+
+        #region CurrentVat
+        private VatViewModel _CurrentVat = new VatViewModel();
+
+        public VatViewModel CurrentVat
+        {
+            get { return _CurrentVat; }
+            set
+            {
+                if (_CurrentVat != value)
+                {
+                    _CurrentVat = value;
+                    NotifyPropertyChanged("CurrentVat");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsCreateProcess
+        private bool _IsCreateProcess;
+
+        public bool IsCreateProcess
+        {
+            get { return _IsCreateProcess; }
+            set
+            {
+                if (_IsCreateProcess != value)
+                {
+                    _IsCreateProcess = value;
+                    NotifyPropertyChanged("IsCreateProcess");
+                }
+            }
+        }
+        #endregion
+
+        #region IsPopup
+        private bool _IsPopup;
+
+        public bool IsPopup
+        {
+            get { return _IsPopup; }
+            set
+            {
+                if (_IsPopup != value)
+                {
+                    _IsPopup = value;
+                    NotifyPropertyChanged("IsPopup");
+                }
+            }
+        }
+        #endregion
+
+
+        #region SubmitButtonContent
+        private string _SubmitButtonContent = " PROKNJIŽI ";
+
+        public string SubmitButtonContent
+        {
+            get { return _SubmitButtonContent; }
+            set
+            {
+                if (_SubmitButtonContent != value)
+                {
+                    _SubmitButtonContent = value;
+                    NotifyPropertyChanged("SubmitButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SubmitButtonEnabled
+        private bool _SubmitButtonEnabled = true;
+
+        public bool SubmitButtonEnabled
+        {
+            get { return _SubmitButtonEnabled; }
+            set
+            {
+                if (_SubmitButtonEnabled != value)
+                {
+                    _SubmitButtonEnabled = value;
+                    NotifyPropertyChanged("SubmitButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region Constructor
+
+        public Vat_AddEdit(VatViewModel VatViewModel, bool isCreateProcess, bool isPopup = false)
+        {
+            VatService = DependencyResolver.Kernel.Get<IVatService>();
+
+            InitializeComponent();
+
+            this.DataContext = this;
+
+            CurrentVat = VatViewModel;
+            IsCreateProcess = isCreateProcess;
+            IsPopup = isPopup;
+        }
+
+        #endregion
+
+        #region  Submit and Cancel button
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentVat.Description))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv PDV procenta";
+                return;
+            }
+
+            #endregion
+
+            Thread th = new Thread(() =>
+            {
+                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonEnabled = false;
+
+                CurrentVat.IsSynced = false;
+                CurrentVat.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentVat.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                VatResponse response = new VatSQLiteRepository().Delete(CurrentVat.Identifier);
+                response = new VatSQLiteRepository().Create(CurrentVat);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+                    return;
+                }
+
+                response = VatService.Create(CurrentVat);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+                }
+
+                if (response.Success)
+                {
+                    new VatSQLiteRepository().UpdateSyncStatus(response.Vat.Identifier, response.Vat.Id, true, response.Vat.UpdatedAt, response.Vat.Code);
+                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+
+                    VatCreatedUpdated();
+
+                    if (IsCreateProcess)
+                    {
+                        CurrentVat = new VatViewModel();
+                        CurrentVat.Identifier = Guid.NewGuid();
+
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                txtAmount.Focus();
+                            })
+                        );
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                if (IsPopup)
+                                    FlyoutHelper.CloseFlyoutPopup(this);
+                                else
+                                    FlyoutHelper.CloseFlyout(this);
+                            })
+                        );
+                    }
+                }
+            });
+            th.IsBackground = true;
+            th.Start();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsPopup)
+                FlyoutHelper.CloseFlyoutPopup(this);
+            else
+                FlyoutHelper.CloseFlyout(this);
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+    }
+}
+

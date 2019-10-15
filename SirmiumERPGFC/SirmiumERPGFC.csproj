@@ -255,6 +255,7 @@
     <Compile Include="Repository\TaxAdministrations\TaxAdministrationSQLiteRepository.cs" />
     <Compile Include="Repository\ToDos\ToDoSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
+    <Compile Include="Repository\Vats\VatSQLiteRepository.cs" />
     <Compile Include="ViewComponents\Popups\AgencyPopup.xaml.cs">
       <DependentUpon>AgencyPopup.xaml</DependentUpon>
     </Compile>
@@ -549,6 +550,12 @@
     </Compile>
     <Compile Include="Views\Users\UserList.xaml.cs">
       <DependentUpon>UserList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vats\Vat_AddEdit.xaml.cs">
+      <DependentUpon>Vat_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vats\Vat_List.xaml.cs">
+      <DependentUpon>Vat_List.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1005,6 +1012,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Vats\Vat_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Vats\Vat_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GlobalValidations\GlobalValidations.csproj">
@@ -1327,6 +1342,7 @@
     <Content Include="Resources\Icons\printer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Procenat poreza.png" />
     <Content Include="Resources\Icons\process.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

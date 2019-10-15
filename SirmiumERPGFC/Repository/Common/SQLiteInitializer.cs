@@ -14,6 +14,7 @@ using SirmiumERPGFC.Repository.OutputInvoices;
 using SirmiumERPGFC.Repository.InputInvoices;
 using SirmiumERPGFC.Repository.TaxAdministrations;
 using SirmiumERPGFC.Repository.Limitations;
+using SirmiumERPGFC.Repository.Vats;
 using SirmiumERPGFC.Repository.Prices;
 
 namespace SirmiumERPGFC.Repository.Common
@@ -891,6 +892,23 @@ namespace SirmiumERPGFC.Repository.Common
 					createTable.ExecuteReader();
                     #endregion
 
+                    #endregion
+
+                    #region Vats
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Vats", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(VatSQLiteRepository.VatTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+                }
+            }
                     #endregion
 
                     #region Discount

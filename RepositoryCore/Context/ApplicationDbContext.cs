@@ -13,6 +13,7 @@ using DomainCore.Common.ToDos;
 using DomainCore.ConstructionSites;
 using DomainCore.Employees;
 using DomainCore.Limitations;
+using DomainCore.Vats;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -135,6 +136,9 @@ namespace RepositoryCore.Context
 
         public DbSet<Limitation> Limitations { get; set; }
         public DbSet<LimitationEmail> LimitationEmails { get; set; }
+
+        public DbSet<Vat> Vats { get; set; }
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 

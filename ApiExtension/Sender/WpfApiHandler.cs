@@ -13,6 +13,7 @@ using ServiceInterfaces.ViewModels.Common.ToDos;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using ServiceInterfaces.ViewModels.Limitations;
+using ServiceInterfaces.ViewModels.Vats;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -273,7 +274,12 @@ namespace ApiExtension.Sender
 			#region LicenceTypes
 				 { typeof(LicenceTypeViewModel), "LicenceType" },
                 { typeof(List<LicenceTypeViewModel>), "LicenceType" },
-#endregion
+            #endregion
+
+            #region Vats
+				 { typeof(VatViewModel), "Vat" },
+                { typeof(List<VatViewModel>), "Vat" },
+            #endregion
 		};
 
         static WpfApiHandler()

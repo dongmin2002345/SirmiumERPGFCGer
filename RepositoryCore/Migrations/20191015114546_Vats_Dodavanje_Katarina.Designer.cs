@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191015114546_Vats_Dodavanje_Katarina")]
+    partial class Vats_Dodavanje_Katarina
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1136,39 +1138,6 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("OutputInvoiceId");
 
                     b.ToTable("OutputInvoiceNotes");
-                });
-
-            modelBuilder.Entity("DomainCore.Common.Prices.Discount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<decimal>("Amount");
-
-                    b.Property<string>("Code");
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<DateTime?>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<Guid>("Identifier");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("DomainCore.Common.Professions.Profession", b =>
@@ -2955,17 +2924,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.OutputInvoices.OutputInvoice", "OutputInvoice")
                         .WithMany()
                         .HasForeignKey("OutputInvoiceId");
-                });
-
-            modelBuilder.Entity("DomainCore.Common.Prices.Discount", b =>
-                {
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
                 });
 
             modelBuilder.Entity("DomainCore.Common.Professions.Profession", b =>
