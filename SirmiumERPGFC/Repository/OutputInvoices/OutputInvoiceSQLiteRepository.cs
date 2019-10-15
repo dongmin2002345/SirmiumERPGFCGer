@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.OutputInvoices
 {
     public class OutputInvoiceSQLiteRepository
     {
+        #region SQL
+
         public static string OutputInvoiceTableCreatePart =
           "CREATE TABLE IF NOT EXISTS OutputInvoices " +
           "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -24,8 +22,8 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
           "BusinessPartnerIdentifier GUID NULL, " +
           "BusinessPartnerCode NVARCHAR(48) NULL, " +
           "BusinessPartnerName NVARCHAR(48) NULL, " +
-               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
-               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
+          "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+          "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
           "Supplier NVARCHAR(48) NULL, " +
           "Address NVARCHAR(48) NULL, " +
           "InvoiceNumber NVARCHAR(48) NULL, " +
@@ -63,6 +61,8 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
             "@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PdvPercent, @Pdv, @AmountGross, @Currency, @DateOfPayment, @Status, @StatusDate, @Description, @Path, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
 
@@ -133,6 +133,9 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
         }
 
         #endregion
+
+        #region Read
+
         public OutputInvoiceListResponse GetOutputInvoicesByPage(int companyId, OutputInvoiceViewModel OutputInvoiceSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             OutputInvoiceListResponse response = new OutputInvoiceListResponse();
@@ -157,6 +160,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Supplier", ((object)OutputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + OutputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)OutputInvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + OutputInvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)OutputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + OutputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
@@ -188,6 +192,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         "AND (@DateOfPaymentFrom IS NULL OR @DateOfPaymentFrom = '' OR DATE(DateOfPayment) >= DATE(@DateOfPaymentFrom)) " +
                         "AND (@DateOfPaymentTo IS NULL OR @DateOfPaymentTo = '' OR DATE(DateOfPayment) <= DATE(@DateOfPaymentTo)) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Supplier", ((object)OutputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + OutputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)OutputInvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + OutputInvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)OutputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + OutputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
@@ -234,6 +239,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -299,6 +305,10 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             response.OutputInvoice = OutputInvoice;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IOutputInvoiceService outputInvoiceService, Action<int, int> callback = null)
         {
@@ -396,6 +406,10 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public OutputInvoiceResponse Create(OutputInvoiceViewModel outputInvoice)
         {
             OutputInvoiceResponse response = new OutputInvoiceResponse();
@@ -425,47 +439,9 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             }
         }
 
-        //public OutputInvoiceResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    OutputInvoiceResponse response = new OutputInvoiceResponse();
+        #endregion
 
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE OutputInvoices SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public OutputInvoiceResponse Delete(Guid identifier)
         {
@@ -479,12 +455,12 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM OutputInvoices WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM OutputInvoices WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -518,7 +494,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                     insertCommand.CommandText = "DELETE FROM OutputInvoices";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -541,5 +517,7 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }
