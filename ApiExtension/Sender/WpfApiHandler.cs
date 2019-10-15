@@ -165,7 +165,8 @@ namespace ApiExtension.Sender
             
             { typeof(DiscountViewModel), "Discount" },
             { typeof(List<DiscountViewModel>), "Discount" },
-            
+            { typeof(ServiceDeliveryViewModel), "ServiceDelivery" },
+            { typeof(List<ServiceDeliveryViewModel>), "ServiceDelivery" },
             #endregion
 
             #region Professions

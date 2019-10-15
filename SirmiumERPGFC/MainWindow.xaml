@@ -170,6 +170,13 @@
                         </Fluent:Button.Icon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Kurirska Služba">
+                    <Fluent:Button x:Name="mniServiceDelivery" Click="MniServiceDelivery_Click" Header="Kurirska Služba" KeyTip="PP" >
+                        <Fluent:Button.Icon>
+                            <Image Source="Resources\Icons\Popust.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.Icon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="{DynamicResource RAČUNI}" KeyTip="RAC">

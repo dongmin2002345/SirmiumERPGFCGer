@@ -117,7 +117,7 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<IVatService>().To<VatService>();
 
-
+                Kernel.Bind<IServiceDeliveryService>().To<ServiceDeliveryService>();
                 Kernel.Bind<IDiscountService>().To<DiscountService>();
             }
         }

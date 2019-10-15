@@ -487,6 +487,10 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new Discount_List();
         }
+        private void MniServiceDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ServiceDelivery_List();
+        }
     }
 }
 

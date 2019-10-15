@@ -60,6 +60,11 @@ namespace ServiceInterfaces.ViewModels.Common.Identity
                 }
             }
         }
+
+        public UserViewModel ConvertToUserViewModelLite()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region LastName

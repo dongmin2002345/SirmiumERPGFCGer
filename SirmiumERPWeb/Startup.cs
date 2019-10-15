@@ -218,7 +218,7 @@ namespace SirmiumERPWeb
             services.AddScoped<ITaxAdministrationService, TaxAdministrationService>();
 
             services.AddScoped<IVatService, VatService>();
-
+            services.AddScoped<IServiceDeliveryService, ServiceDeliveryService>();
             services.AddScoped<IDiscountService, DiscountService>();
 
         }
@@ -320,7 +320,7 @@ namespace SirmiumERPWeb
 
             VatView.CreateView();
 
-
+            ServiceDeliveryView.CreateView();
             DiscountView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];

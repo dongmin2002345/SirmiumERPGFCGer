@@ -249,6 +249,7 @@
     <Compile Include="Repository\OutputInvoices\OutputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Prices\DiscountSQLiteRepository.cs" />
+    <Compile Include="Repository\Prices\ServiceDeliverySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
@@ -273,6 +274,9 @@
     </Compile>
     <Compile Include="ViewComponents\Popups\CountryPopup.xaml.cs">
       <DependentUpon>CountryPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\DiscountPopup.xaml.cs">
+      <DependentUpon>DiscountPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\FamilyMemberPopup.xaml.cs">
       <DependentUpon>FamilyMemberPopup.xaml</DependentUpon>
@@ -521,6 +525,12 @@
     <Compile Include="Views\Prices\Discount_List.xaml.cs">
       <DependentUpon>Discount_List.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Prices\ServiceDelivery_AddEdit.xaml.cs">
+      <DependentUpon>ServiceDelivery_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Prices\ServiceDelivery_List.xaml.cs">
+      <DependentUpon>ServiceDelivery_List.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sectors\AgencyAddEdit.xaml.cs">
       <DependentUpon>AgencyAddEdit.xaml</DependentUpon>
     </Compile>
@@ -641,6 +651,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\CountryPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\DiscountPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -969,6 +983,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Prices\Discount_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Prices\ServiceDelivery_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Prices\ServiceDelivery_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

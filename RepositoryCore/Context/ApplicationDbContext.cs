@@ -138,7 +138,7 @@ namespace RepositoryCore.Context
         public DbSet<LimitationEmail> LimitationEmails { get; set; }
 
         public DbSet<Vat> Vats { get; set; }
-
+        public DbSet<ServiceDelivery> ServiceDeliverys { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 
