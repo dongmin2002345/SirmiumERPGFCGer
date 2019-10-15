@@ -907,9 +907,7 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(VatSQLiteRepository.VatTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
-                }
-            }
-                    #endregion
+               
 
                     #region Discount
                     if (withTableDrop)

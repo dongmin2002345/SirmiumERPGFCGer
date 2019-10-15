@@ -10,6 +10,7 @@ using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Common.ToDos;
+using ServiceInterfaces.ViewModels.Common.Prices;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using ServiceInterfaces.ViewModels.Limitations;
