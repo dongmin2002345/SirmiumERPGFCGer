@@ -12,6 +12,7 @@ using RepositoryCore.DbViews.Common.Companies;
 using RepositoryCore.DbViews.Common.Identity;
 using RepositoryCore.DbViews.Common.Invoices;
 using RepositoryCore.DbViews.Common.Locations;
+using RepositoryCore.DbViews.Common.Prices;
 using RepositoryCore.DbViews.Common.Professions;
 using RepositoryCore.DbViews.Common.Sectors;
 using RepositoryCore.DbViews.Common.TaxAdministrations;
@@ -29,6 +30,7 @@ using ServiceCore.Implementations.Common.Identity;
 using ServiceCore.Implementations.Common.InputInvoices;
 using ServiceCore.Implementations.Common.Locations;
 using ServiceCore.Implementations.Common.OutputInvoices;
+using ServiceCore.Implementations.Common.Prices;
 using ServiceCore.Implementations.Common.Professions;
 using ServiceCore.Implementations.Common.Sectors;
 using ServiceCore.Implementations.Common.TaxAdministrations;
@@ -43,6 +45,7 @@ using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Prices;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
@@ -210,7 +213,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IConstructionSiteNoteService, ConstructionSiteNoteService>();
 
             services.AddScoped<ITaxAdministrationService, TaxAdministrationService>();
-
+            services.AddScoped<IDiscountService, DiscountService>();
 
         }
 
@@ -308,6 +311,8 @@ namespace SirmiumERPWeb
             ConstructionSiteDocumentView.CreateView();
             ConstructionSiteNoteView.CreateView();
             ConstructionSiteView.CreateView();
+
+            DiscountView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));

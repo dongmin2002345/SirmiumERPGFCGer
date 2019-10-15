@@ -299,7 +299,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     {
                         BusinessPartnerViewModel dbEntry = Read(query);
 
-                        businessPartners.Add(Read(query));
+                        businessPartners.Add(dbEntry);
                     }
                 }
                 catch (SqliteException error)
@@ -350,7 +350,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     {
                         BusinessPartnerViewModel dbEntry = Read(query);
 
-                        BusinessPartners.Add(Read(query));
+                        BusinessPartners.Add(dbEntry);
                     }
 
                     response.BusinessPartners = BusinessPartners;
@@ -411,7 +411,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     {
                         BusinessPartnerViewModel dbEntry = Read(query);
 
-                        businessPartner = Read(query);
+                        businessPartner = dbEntry;
                     }
                 }
                 catch (SqliteException error)

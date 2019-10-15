@@ -248,6 +248,7 @@
     <Compile Include="Repository\OutputInvoices\OutputInvoiceDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceSQLiteRepository.cs" />
+    <Compile Include="Repository\Prices\DiscountSQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
@@ -512,6 +513,12 @@
     </Compile>
     <Compile Include="Views\OutputInvoices\OutputInvoice_Note_AddEdit.xaml.cs">
       <DependentUpon>OutputInvoice_Note_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Prices\Discount_AddEdit.xaml.cs">
+      <DependentUpon>Discount_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Prices\Discount_List.xaml.cs">
+      <DependentUpon>Discount_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Sectors\AgencyAddEdit.xaml.cs">
       <DependentUpon>AgencyAddEdit.xaml</DependentUpon>
@@ -947,6 +954,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OutputInvoices\OutputInvoice_Note_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Prices\Discount_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Prices\Discount_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -185,7 +185,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     if (query.Read())
                     {
                         BusinessPartnerBankViewModel dbEntry = Read(query);
-                        businessPartnerBank = Read(query);
+                        businessPartnerBank = dbEntry;
                     }
                 }
                 catch (SqliteException error)

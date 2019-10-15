@@ -6,6 +6,7 @@ using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
+using RepositoryCore.Abstractions.Common.Prices;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Abstractions.Common.TaxAdministrations;
@@ -20,6 +21,7 @@ using RepositoryCore.Implementations.Common.Companies;
 using RepositoryCore.Implementations.Common.Identity;
 using RepositoryCore.Implementations.Common.Invoices;
 using RepositoryCore.Implementations.Common.Locations;
+using RepositoryCore.Implementations.Common.Prices;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Implementations.Common.Sectors;
 using RepositoryCore.Implementations.Common.TaxAdministrations;
@@ -107,7 +109,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IBusinessPartnerByConstructionSiteRepository businessPartnerByConstructionSiteRepository;
 
         private ITaxAdministrationRepository taxAdministrationRepository;
-
+        private IDiscountRepository discountRepository;
 
         #endregion
 
@@ -525,6 +527,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (taxAdministrationRepository == null)
                 taxAdministrationRepository = new TaxAdministrationViewRepository(context);
             return taxAdministrationRepository;
+        }
+
+        public IDiscountRepository GetDiscountRepository()
+        {
+            if (discountRepository == null)
+                discountRepository = new DiscountViewRepository(context);
+            return discountRepository;
         }
         #endregion
 

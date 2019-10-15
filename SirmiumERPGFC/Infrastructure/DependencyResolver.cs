@@ -6,6 +6,7 @@ using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Prices;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
 using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
@@ -20,6 +21,7 @@ using ServiceWebApi.Implementations.Common.Identity;
 using ServiceWebApi.Implementations.Common.InputInvoices;
 using ServiceWebApi.Implementations.Common.Locations;
 using ServiceWebApi.Implementations.Common.OutputInvoices;
+using ServiceWebApi.Implementations.Common.Prices;
 using ServiceWebApi.Implementations.Common.Professions;
 using ServiceWebApi.Implementations.Common.Sectors;
 using ServiceWebApi.Implementations.Common.TaxAdministrations;
@@ -110,7 +112,7 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IConstructionSiteNoteService>().To<ConstructionSiteNoteService>();
 
                 Kernel.Bind<ITaxAdministrationService>().To<TaxAdministrationService>();
-
+                Kernel.Bind<IDiscountService>().To<DiscountService>();
             }
         }
     }

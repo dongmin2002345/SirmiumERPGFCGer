@@ -4,6 +4,7 @@ using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
+using RepositoryCore.Abstractions.Common.Prices;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
 using RepositoryCore.Abstractions.Common.TaxAdministrations;
@@ -86,7 +87,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IBusinessPartnerByConstructionSiteRepository GetBusinessPartnerByConstructionSiteRepository();
 
         ITaxAdministrationRepository GetTaxAdministrationRepository();
-
+        IDiscountRepository GetDiscountRepository();
 
         void Save();
     }

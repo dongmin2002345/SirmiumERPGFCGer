@@ -14,6 +14,7 @@ using SirmiumERPGFC.Repository.OutputInvoices;
 using SirmiumERPGFC.Repository.InputInvoices;
 using SirmiumERPGFC.Repository.TaxAdministrations;
 using SirmiumERPGFC.Repository.Limitations;
+using SirmiumERPGFC.Repository.Prices;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -888,11 +889,25 @@ namespace SirmiumERPGFC.Repository.Common
 					}
 					createTable = new SqliteCommand(InputInvoiceDocumentSQLiteRepository.InputInvoiceDocumentTableCreatePart, db);
 					createTable.ExecuteReader();
-					#endregion
+                    #endregion
 
-					#endregion
-				}
-			}
+                    #endregion
+
+                    #region Discount
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Discounts", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(DiscountSQLiteRepository.DiscountTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+                }
+            }
 
             catch (SqliteException e)
             {

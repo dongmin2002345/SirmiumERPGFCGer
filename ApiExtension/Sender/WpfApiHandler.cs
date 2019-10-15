@@ -157,11 +157,18 @@ namespace ApiExtension.Sender
                 { typeof(AgencyViewModel), "Agency" },
                 { typeof(List<AgencyViewModel>), "Agency" },
 
-                #endregion
+            #endregion
 
-                #region Professions
+             #region Prices
+            
+            { typeof(DiscountViewModel), "Discount" },
+            { typeof(List<DiscountViewModel>), "Discount" },
+            
+            #endregion
 
-                { typeof(ProfessionViewModel), "Profession" },
+            #region Professions
+
+            { typeof(ProfessionViewModel), "Profession" },
                 { typeof(List<ProfessionViewModel>), "Profession" },
 
 			#endregion

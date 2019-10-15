@@ -5,6 +5,7 @@ using DomainCore.Common.Identity;
 using DomainCore.Common.InputInvoices;
 using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
+using DomainCore.Common.Prices;
 using DomainCore.Common.Professions;
 using DomainCore.Common.Sectors;
 using DomainCore.Common.TaxAdministrations;
@@ -129,7 +130,7 @@ namespace RepositoryCore.Context
 
         public DbSet<Bank> Banks { get; set; }
 		public DbSet<LicenceType> LicenceTypes { get; set; }
-
+        public DbSet<Discount> Discounts { get; set; }
         public DbSet<TaxAdministration> TaxAdministrations { get; set; }
 
         public DbSet<Limitation> Limitations { get; set; }

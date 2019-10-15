@@ -65,6 +65,7 @@
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceDocumentService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceNoteService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceService.cs" />
+    <Compile Include="Implementations\Common\Prices\DiscountService.cs" />
     <Compile Include="Implementations\Common\Sectors\AgencyService.cs" />
     <Compile Include="Implementations\Common\Sectors\SectorService.cs" />
     <Compile Include="Implementations\Common\Professions\ProfessionService.cs" />
