@@ -253,6 +253,7 @@
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
+    <Compile Include="Repository\Statuses\StatusSQLiteRepository.cs" />
     <Compile Include="Repository\TaxAdministrations\TaxAdministrationSQLiteRepository.cs" />
     <Compile Include="Repository\ToDos\ToDoSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
@@ -548,6 +549,12 @@
     </Compile>
     <Compile Include="Views\Profession\ProfessionList.xaml.cs">
       <DependentUpon>ProfessionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Statuses\Status_AddEdit.xaml.cs">
+      <DependentUpon>Status_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Statuses\Status_List.xaml.cs">
+      <DependentUpon>Status_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TaxAdministrations\TaxAdministrationAddEdit.xaml.cs">
       <DependentUpon>TaxAdministrationAddEdit.xaml</DependentUpon>
@@ -1015,6 +1022,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Profession\ProfessionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Statuses\Status_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Statuses\Status_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

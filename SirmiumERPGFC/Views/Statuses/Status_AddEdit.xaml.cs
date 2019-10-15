@@ -1,0 +1,262 @@
+﻿using Ninject;
+using ServiceInterfaces.Abstractions;
+using ServiceInterfaces.Messages.Statuses;
+using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Statuses;
+using SirmiumERPGFC.Common;
+using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.Statuses;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SirmiumERPGFC.Views.Statuses
+{
+    /// <summary>
+    /// Interaction logic for Status_AddEdit.xaml
+    /// </summary>
+    public partial class Status_AddEdit : UserControl, INotifyPropertyChanged
+    {
+        #region Attributes
+
+        #region Services
+        IStatusService StatusService;
+        #endregion
+
+        #region Events
+        public event StatusHandler StatusCreatedUpdated;
+        #endregion
+
+
+        #region CurrentStatus
+        private StatusViewModel _CurrentStatus = new StatusViewModel();
+
+        public StatusViewModel CurrentStatus
+        {
+            get { return _CurrentStatus; }
+            set
+            {
+                if (_CurrentStatus != value)
+                {
+                    _CurrentStatus = value;
+                    NotifyPropertyChanged("CurrentStatus");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsCreateProcess
+        private bool _IsCreateProcess;
+
+        public bool IsCreateProcess
+        {
+            get { return _IsCreateProcess; }
+            set
+            {
+                if (_IsCreateProcess != value)
+                {
+                    _IsCreateProcess = value;
+                    NotifyPropertyChanged("IsCreateProcess");
+                }
+            }
+        }
+        #endregion
+
+        #region IsPopup
+        private bool _IsPopup;
+
+        public bool IsPopup
+        {
+            get { return _IsPopup; }
+            set
+            {
+                if (_IsPopup != value)
+                {
+                    _IsPopup = value;
+                    NotifyPropertyChanged("IsPopup");
+                }
+            }
+        }
+        #endregion
+
+
+        #region SubmitButtonContent
+        private string _SubmitButtonContent = " PROKNJIŽI ";
+
+        public string SubmitButtonContent
+        {
+            get { return _SubmitButtonContent; }
+            set
+            {
+                if (_SubmitButtonContent != value)
+                {
+                    _SubmitButtonContent = value;
+                    NotifyPropertyChanged("SubmitButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SubmitButtonEnabled
+        private bool _SubmitButtonEnabled = true;
+
+        public bool SubmitButtonEnabled
+        {
+            get { return _SubmitButtonEnabled; }
+            set
+            {
+                if (_SubmitButtonEnabled != value)
+                {
+                    _SubmitButtonEnabled = value;
+                    NotifyPropertyChanged("SubmitButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region Constructor
+
+        public Status_AddEdit(StatusViewModel StatusViewModel, bool isCreateProcess, bool isPopup = false)
+        {
+            StatusService = DependencyResolver.Kernel.Get<IStatusService>();
+
+            InitializeComponent();
+
+            this.DataContext = this;
+
+            CurrentStatus = StatusViewModel;
+            IsCreateProcess = isCreateProcess;
+            IsPopup = isPopup;
+        }
+
+        #endregion
+
+        #region  Submit and Cancel button
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (String.IsNullOrEmpty(CurrentStatus.Name))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                return;
+            }
+
+            if (String.IsNullOrEmpty(CurrentStatus.ShortName))
+            {
+                MainWindow.WarningMessage = "Obavezno polje: Skraćeni naziv";
+                return;
+            }
+
+            #endregion
+
+            Thread th = new Thread(() =>
+            {
+                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonEnabled = false;
+
+                CurrentStatus.IsSynced = false;
+                CurrentStatus.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentStatus.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                StatusResponse response = new StatusSQLiteRepository().Delete(CurrentStatus.Identifier);
+                response = new StatusSQLiteRepository().Create(CurrentStatus);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+                    return;
+                }
+
+                response = StatusService.Create(CurrentStatus);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+                }
+
+                if (response.Success)
+                {
+                    new StatusSQLiteRepository().UpdateSyncStatus(response.Status.Identifier, response.Status.Id, true, response.Status.UpdatedAt, response.Status.Code);
+                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
+                    SubmitButtonContent = " PROKNJIŽI ";
+                    SubmitButtonEnabled = true;
+
+                    StatusCreatedUpdated();
+
+                    if (IsCreateProcess)
+                    {
+                        CurrentStatus = new StatusViewModel();
+                        CurrentStatus.Identifier = Guid.NewGuid();
+
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                txtName.Focus();
+                            })
+                        );
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(
+                            System.Windows.Threading.DispatcherPriority.Normal,
+                            new Action(() =>
+                            {
+                                if (IsPopup)
+                                    FlyoutHelper.CloseFlyoutPopup(this);
+                                else
+                                    FlyoutHelper.CloseFlyout(this);
+                            })
+                        );
+                    }
+                }
+            });
+            th.IsBackground = true;
+            th.Start();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsPopup)
+                FlyoutHelper.CloseFlyoutPopup(this);
+            else
+                FlyoutHelper.CloseFlyout(this);
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+    }
+}
