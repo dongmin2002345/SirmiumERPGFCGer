@@ -16,6 +16,7 @@ using SirmiumERPGFC.Repository.TaxAdministrations;
 using SirmiumERPGFC.Repository.Limitations;
 using SirmiumERPGFC.Repository.Vats;
 using SirmiumERPGFC.Repository.Prices;
+using SirmiumERPGFC.Repository.Statuses;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -933,6 +934,20 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(DiscountSQLiteRepository.DiscountTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region Status
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Statuses", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(StatusSQLiteRepository.StatusTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
                 }

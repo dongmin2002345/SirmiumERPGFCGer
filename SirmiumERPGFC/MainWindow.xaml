@@ -177,6 +177,13 @@
                         </Fluent:Button.Icon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Status">
+                    <Fluent:Button x:Name="mniStatus" Click="MniStatus_Click" Header="Statusi" KeyTip="PP" >
+                        <Fluent:Button.Icon>
+                            <Image Source="Resources\Icons\Procenat poreza.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.Icon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="{DynamicResource RAČUNI}" KeyTip="RAC">

@@ -20,6 +20,7 @@ using RepositoryCore.DbViews.Common.ToDos;
 using RepositoryCore.DbViews.ConstructionSites;
 using RepositoryCore.DbViews.Employees;
 using RepositoryCore.DbViews.PhysicalPersons;
+using RepositoryCore.DbViews.Statuses;
 using RepositoryCore.DbViews.Vats;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
@@ -39,7 +40,9 @@ using ServiceCore.Implementations.Common.ToDos;
 using ServiceCore.Implementations.ConstructionSites;
 using ServiceCore.Implementations.Employees;
 using ServiceCore.Implementations.Limitations;
+using ServiceCore.Implementations.Statuses;
 using ServiceCore.Implementations.Vats;
+using ServiceInterfaces.Abstractions;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.Companies;
@@ -220,6 +223,7 @@ namespace SirmiumERPWeb
             services.AddScoped<IVatService, VatService>();
             services.AddScoped<IServiceDeliveryService, ServiceDeliveryService>();
             services.AddScoped<IDiscountService, DiscountService>();
+            services.AddScoped<IStatusService, StatusService>();
 
         }
 
@@ -322,6 +326,7 @@ namespace SirmiumERPWeb
 
             ServiceDeliveryView.CreateView();
             DiscountView.CreateView();
+            StatusView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));

@@ -22,6 +22,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Xml;
+using ServiceInterfaces.ViewModels.Statuses;
 
 namespace ApiExtension.Sender
 {
@@ -279,8 +280,13 @@ namespace ApiExtension.Sender
             #endregion
 
             #region Vats
-				 { typeof(VatViewModel), "Vat" },
+				{ typeof(VatViewModel), "Vat" },
                 { typeof(List<VatViewModel>), "Vat" },
+            #endregion
+
+            #region Statuses
+				{ typeof(StatusViewModel), "Status" },
+                { typeof(List<StatusViewModel>), "Status" },
             #endregion
 		};
 

@@ -38,6 +38,7 @@ using SirmiumERPGFC.Views.TaxAdministrations;
 using SirmiumERPGFC.Views.Users;
 using SirmiumERPGFC.Views.Vats;
 using SirmiumERPGFC.Views.Prices;
+using SirmiumERPGFC.Views.Statuses;
 
 namespace SirmiumERPGFC
 {
@@ -490,6 +491,11 @@ namespace SirmiumERPGFC
         private void MniServiceDelivery_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new ServiceDelivery_List();
+        }
+
+        private void MniStatus_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new Status_List();
         }
     }
 }
