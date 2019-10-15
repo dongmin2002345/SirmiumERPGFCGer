@@ -47,6 +47,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "@EmployeeCode, @EmployeeName, @EmployeeInternalCode, @Note, @NoteDate, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
         #region Helper methods
         private static EmployeeNoteViewModel Read(SqliteDataReader query)
         {
@@ -89,6 +91,8 @@ namespace SirmiumERPGFC.Repository.Employees
 
         #endregion
 
+        #region Read
+
         public EmployeeNoteListResponse GetEmployeeNotesByEmployee(int companyId, Guid EmployeeIdentifier)
         {
             EmployeeNoteListResponse response = new EmployeeNoteListResponse();
@@ -114,7 +118,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeNoteViewModel dbEntry = Read(query);
-                        EmployeeNotes.Add(Read(query));
+                        EmployeeNotes.Add(dbEntry);
                     }
 
                 }
@@ -154,7 +158,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     if (query.Read())
                     {
                         EmployeeNoteViewModel dbEntry = Read(query);
-                        EmployeeNote = Read(query);
+                        EmployeeNote = dbEntry;
                     }
                 }
                 catch (SqliteException error)
@@ -194,7 +198,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeNoteViewModel dbEntry = Read(query);
-                        EmployeeNotes.Add(Read(query));
+                        EmployeeNotes.Add(dbEntry);
                     }
 
                 }

@@ -62,6 +62,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "@CountryCode, @CountryName, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
         #region Helper methods
         private static EmployeeLicenceItemViewModel Read(SqliteDataReader query)
         {
@@ -116,6 +118,8 @@ namespace SirmiumERPGFC.Repository.Employees
 
         #endregion
 
+        #region Read
+
         public EmployeeLicenceItemListResponse GetEmployeeLicencesByEmployee(int companyId, Guid EmployeeIdentifier)
         {
             EmployeeLicenceItemListResponse response = new EmployeeLicenceItemListResponse();
@@ -141,7 +145,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
                         EmployeeLicenceItemViewModel dbEntry = Read(query);
-                        EmployeeLicenceItems.Add(Read(query));
+                        EmployeeLicenceItems.Add(dbEntry);
                     }
 
                 }
@@ -181,7 +185,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     if (query.Read())
                     {
                         EmployeeLicenceItemViewModel dbEntry = Read(query);
-                        EmployeeItem = Read(query);
+                        EmployeeItem = dbEntry;
                     }
                 }
                 catch (SqliteException error)
