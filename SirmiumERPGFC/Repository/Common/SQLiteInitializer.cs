@@ -907,7 +907,20 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(VatSQLiteRepository.VatTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
-               
+
+                    #region ServiceDelivery
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ServiceDeliverys", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ServiceDeliverySQLiteRepository.ServiceDeliveryTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
 
                     #region Discount
                     if (withTableDrop)

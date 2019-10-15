@@ -91,7 +91,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         IVatRepository GetVatRepository();
 
-
+        IServiceDeliveryRepository GetServiceDeliveryRepository();
         IDiscountRepository GetDiscountRepository();
 
         void Save();

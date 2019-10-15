@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Prices.ServiceDelivery_List"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Prices"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
+             xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="White" Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters1:BoolStringConverter x:Key="BoolStringConverter" />
+        <cbxConverters1:MultiConverter x:Key="MultiConverter" />
+        <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <!--    List of all data    -->
+        <GroupBox Header="Kurirska Služba" Margin="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" x:Name="btnAdd" Click="BtnAdd_Click" Margin="2" Width="150">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Column="1" x:Name="btnSync" Click="BtnSync_Click" Margin="2" IsEnabled="{Binding Path=SyncButtonEnabled, Mode=TwoWay}"  Width="150">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{Binding Path=SyncButtonContent, Mode=TwoWay}" FontWeight="Bold" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="Pretraga: " />
+                    <TextBox Grid.Column="4" Margin="2" x:Name="txtName" 
+                             Text="{Binding ServiceDeliverySearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}" 
+                             TextChanged="TxtName_TextChanged" Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="5">
+                        <Button x:Name="btnFirstPage" Click="BtnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnPrevPage" Click="BtnPrevPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\StrelicaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            </StackPanel>
+                        </Button>
+                        <TextBox IsEnabled="False" Margin="2" Text="{Binding Path=PaginationDisplay}"/>
+                        <Button x:Name="btnNextPage" Click="BtnNextPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\StrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnLastPage" Click="BtnLastPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <!--Listing-->
+                <Controls:ProgressRing Grid.Row="1" IsActive="{Binding ServiceDeliveryDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
+                <DataGrid x:Name="dgServiceDeliverys"
+                          Grid.Row="1"
+                          Margin="2"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          CanUserResizeColumns="True"  
+                          IsManipulationEnabled="False"
+                          GridLinesVisibility="All"
+                          HorizontalGridLinesBrush="Gray"
+                          VerticalAlignment="Stretch"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+		                  RowHeaderWidth="25"
+		                  HeadersVisibility="All"
+		                  LoadingRow="DgServiceDeliverys_LoadingRow"
+                          ItemsSource="{Binding Path=ServiceDeliverysFromDB}"
+                          SelectedItem="{Binding Path=CurrentServiceDelivery}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="URL" Header="URL" Binding="{Binding URL}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}" >
+                                    <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="Margin" Value="2 0 2 0" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                        <Button x:Name="btnEdit" Click="BtnEdit_Click" Margin="2 1 1 1" Width="30" ToolTip="Promeni">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btnDeletePopup" Margin="1 1 2 1" Width="30" ToolTip="Obriši" >
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+                                            <Popup.IsOpen>
+                                                <MultiBinding Converter="{StaticResource MultiConverter}">
+                                                    <Binding ElementName="btnDeletePopup" Path="IsFocused" Mode="OneWay"/>
+                                                    <Binding ElementName="btnDelete" Path="IsMouseCaptured" Mode="OneWay"/>
+                                                </MultiBinding>
+                                            </Popup.IsOpen>
+                                            <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="Teal" BorderThickness="5" CornerRadius="15">
+                                                <Grid Width="300" Margin="10">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <TextBlock Text="Da li ste sigurni da želite da obrišete odabrni podatak?" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap"/>
+                                                    <Separator Grid.Row="1" Margin="2" />
+
+                                                    <Grid Grid.Row="2">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Button Grid.Column="0" x:Name="btnDelete" Click="BtnDelete_Click" Margin="2" >
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                <TextBlock Text=" DA "  FontWeight="Bold" />
+                                                            </StackPanel>
+                                                        </Button>
+                                                        <Button Grid.Column="1" x:Name="btnCancel" Margin="2" >
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                <TextBlock Text=" NE "  FontWeight="Bold" />
+                                                            </StackPanel>
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                        </Popup>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>
+

@@ -112,7 +112,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private ITaxAdministrationRepository taxAdministrationRepository;
         private IDiscountRepository discountRepository;
-
+        private IServiceDeliveryRepository serviceDeliveryRepository;
         private IVatRepository vatRepository;
 
 
@@ -547,6 +547,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
                 discountRepository = new DiscountViewRepository(context);
             return discountRepository;
         }
+
+        public IServiceDeliveryRepository GetServiceDeliveryRepository()
+        {
+            if (serviceDeliveryRepository == null)
+                serviceDeliveryRepository = new ServiceDeliveryViewRepository(context);
+            return serviceDeliveryRepository;
+        }
+
         #endregion
 
         #region Save method
