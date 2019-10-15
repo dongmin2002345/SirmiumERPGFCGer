@@ -8,7 +8,6 @@ using System.Collections.Generic;
 
 namespace SirmiumERPGFC.Repository.Locations
 {
-    
     public class CountrySQLiteRepository
     {
         #region SQL

@@ -6,15 +6,12 @@ using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.InputInvoices
 {
     public class InputInvoiceNoteSQLiteRepository
     {
+        #region SQL
         public static string InputInvoiceNoteTableCreatePart =
                         "CREATE TABLE IF NOT EXISTS InputInvoiceNotes " +
                         "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -46,6 +43,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
             "VALUES (NULL, @ServerId, @Identifier, @InputInvoiceId, @InputInvoiceIdentifier, " +
             "@InputInvoiceCode, @Note, @NoteDate, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
         private static InputInvoiceNoteViewModel Read(SqliteDataReader query)
@@ -87,6 +86,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
         #endregion
 
+        #region Read
+
         public InputInvoiceNoteListResponse GetInputInvoiceNotesByInputInvoice(int companyId, Guid InputInvoiceIdentifier)
         {
             InputInvoiceNoteListResponse response = new InputInvoiceNoteListResponse();
@@ -103,6 +104,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                         "WHERE InputInvoiceIdentifier = @InputInvoiceIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@InputInvoiceIdentifier", InputInvoiceIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -152,7 +154,6 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                     if (query.Read())
                     {
                         InputInvoiceNoteViewModel dbEntry = Read(query);
-                       
                         InputInvoiceNote = dbEntry;
                     }
                 }
@@ -170,6 +171,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
             response.InputInvoiceNote = InputInvoiceNote;
             return response;
         }
+
+        #endregion
 
         #region Sync
         public void Sync(IInputInvoiceNoteService InputInvoiceNoteservice, Action<int, int> callback = null)
@@ -270,7 +273,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
         #endregion
 
-       
+        #region Create
+
         public InputInvoiceNoteResponse Create(InputInvoiceNoteViewModel InputInvoiceNote)
         {
             InputInvoiceNoteResponse response = new InputInvoiceNoteResponse();
@@ -300,47 +304,9 @@ namespace SirmiumERPGFC.Repository.InputInvoices
             }
         }
 
-        //public InputInvoiceNoteResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    InputInvoiceNoteResponse response = new InputInvoiceNoteResponse();
+        #endregion
 
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE InputInvoiceNotes SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public InputInvoiceNoteResponse Delete(Guid identifier)
         {
@@ -354,12 +320,12 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM InputInvoiceNotes WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM InputInvoiceNotes WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -428,13 +394,13 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "UPDATE InputInvoiceNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "UPDATE InputInvoiceNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -449,5 +415,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 return response;
             }
         }
+
+        #endregion
     }
 }
