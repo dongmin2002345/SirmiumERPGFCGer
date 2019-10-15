@@ -294,6 +294,9 @@
     <Compile Include="ViewComponents\Popups\RegionPopup.xaml.cs">
       <DependentUpon>RegionPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewComponents\Popups\ServiceDeliveryPopup.xaml.cs">
+      <DependentUpon>ServiceDeliveryPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Popups\TaxAdministrationPopup.xaml.cs">
       <DependentUpon>TaxAdministrationPopup.xaml</DependentUpon>
     </Compile>
@@ -682,6 +685,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\RegionPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\ServiceDeliveryPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
