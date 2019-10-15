@@ -6,15 +6,13 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
     public class PhysicalPersonCardSQLiteRepository
     {
+        #region SQL
+
         public static string PhysicalPersonCardTableCreatePart =
                "CREATE TABLE IF NOT EXISTS PhysicalPersonCards " +
                "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -48,6 +46,8 @@ namespace SirmiumERPGFC.Repository.Employees
             "VALUES (NULL, @ServerId, @Identifier, @PhysicalPersonId, @PhysicalPersonIdentifier, " +
             "@PhysicalPersonCode, @PhysicalPersonName, @CardDate, @Description, @PlusMinus, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
         private static PhysicalPersonCardViewModel Read(SqliteDataReader query)
@@ -91,6 +91,9 @@ namespace SirmiumERPGFC.Repository.Employees
         }
 
         #endregion
+
+        #region Read
+
         public PhysicalPersonCardListResponse GetPhysicalPersonCardsByPhysicalPerson(int companyId, Guid PhysicalPersonIdentifier)
         {
             PhysicalPersonCardListResponse response = new PhysicalPersonCardListResponse();
@@ -107,6 +110,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "WHERE PhysicalPersonIdentifier = @PhysicalPersonIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@PhysicalPersonIdentifier", PhysicalPersonIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -172,6 +176,10 @@ namespace SirmiumERPGFC.Repository.Employees
             response.PhysicalPersonCard = PhysicalPersonCard;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IPhysicalPersonCardService PhysicalPersonCardService, Action<int, int> callback = null)
         {
@@ -269,6 +277,10 @@ namespace SirmiumERPGFC.Repository.Employees
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public PhysicalPersonCardResponse Create(PhysicalPersonCardViewModel PhysicalPersonCard)
         {
             PhysicalPersonCardResponse response = new PhysicalPersonCardResponse();
@@ -298,47 +310,9 @@ namespace SirmiumERPGFC.Repository.Employees
             }
         }
 
-        //public PhysicalPersonCardResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        //{
-        //    PhysicalPersonCardResponse response = new PhysicalPersonCardResponse();
+        #endregion
 
-        //    using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //    {
-        //        db.Open();
-
-        //        SqliteCommand insertCommand = new SqliteCommand();
-        //        insertCommand.Connection = db;
-
-        //        insertCommand.CommandText = "UPDATE PhysicalPersonCards SET " +
-        //            "IsSynced = @IsSynced, " +
-        //            "Code = @Code, " +
-        //            "UpdatedAt = @UpdatedAt, " +
-        //            "ServerId = @ServerId " +
-        //            "WHERE Identifier = @Identifier ";
-
-        //        insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-        //        insertCommand.Parameters.AddWithValue("@Code", code);
-        //        insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-        //        insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-        //        insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-        //        try
-        //        {
-        //            insertCommand.ExecuteReader();
-        //        }
-        //        catch (SqliteException error)
-        //        {
-        //            MainWindow.ErrorMessage = error.Message;
-        //            response.Success = false;
-        //            response.Message = error.Message;
-        //            return response;
-        //        }
-        //        db.Close();
-
-        //        response.Success = true;
-        //        return response;
-        //    }
-        //}
+        #region Delete
 
         public PhysicalPersonCardResponse Delete(Guid identifier)
         {
@@ -352,12 +326,12 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM PhysicalPersonCards WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM PhysicalPersonCards WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -427,10 +401,10 @@ namespace SirmiumERPGFC.Repository.Employees
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "UPDATE PhysicalPersonCards SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "UPDATE PhysicalPersonCards SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
                     insertCommand.ExecuteReader();
@@ -448,5 +422,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 return response;
             }
         }
+
+        #endregion
     }
 }

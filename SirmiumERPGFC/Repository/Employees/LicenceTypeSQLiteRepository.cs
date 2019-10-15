@@ -5,49 +5,94 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Employees
 {
 	public class LicenceTypeSQLiteRepository
 	{
-		public static string LicenceTypeTableCreatePart =
-	 "CREATE TABLE IF NOT EXISTS LicenceTypes " +
-	  "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-	  "ServerId INTEGER NULL, " +
-	  "Identifier GUID, " +
-	  "Code NAVCHAR(48) NULL, " +
-	  "Category NVARCHAR(48) NULL, " +
-	  "Description NVARCHAR(48) NULL, " +
-	  "CountryId INTEGER NULL, " +
-	  "CountryIdentifier GUID NULL, " +
-	  "CountryCode NVARCHAR(2048) NULL, " +
-	  "CountryName NVARCHAR(2048) NULL, " +
-	  "IsSynced BOOL NULL, " +
-	  "UpdatedAt DATETIME NULL, " +
-	  "CreatedById INTEGER NULL, " +
-	  "CreatedByName NVARCHAR(2048) NULL, " +
-	  "CompanyId INTEGER NULL, " +
-	  "CompanyName NVARCHAR(2048) NULL)";
+        #region SQL
+
+        public static string LicenceTypeTableCreatePart =
+	         "CREATE TABLE IF NOT EXISTS LicenceTypes " +
+	          "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+	          "ServerId INTEGER NULL, " +
+	          "Identifier GUID, " +
+	          "Code NAVCHAR(48) NULL, " +
+	          "Category NVARCHAR(48) NULL, " +
+	          "Description NVARCHAR(48) NULL, " +
+	          "CountryId INTEGER NULL, " +
+	          "CountryIdentifier GUID NULL, " +
+	          "CountryCode NVARCHAR(2048) NULL, " +
+	          "CountryName NVARCHAR(2048) NULL, " +
+	          "IsSynced BOOL NULL, " +
+	          "UpdatedAt DATETIME NULL, " +
+	          "CreatedById INTEGER NULL, " +
+	          "CreatedByName NVARCHAR(2048) NULL, " +
+	          "CompanyId INTEGER NULL, " +
+	          "CompanyName NVARCHAR(2048) NULL)";
 
 		public string SqlCommandSelectPart =
 			"SELECT ServerId, Identifier, Code, Category, Description, " +
-			  "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+			"CountryId, CountryIdentifier, CountryCode, CountryName, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
 		public string SqlCommandInsertPart = "INSERT INTO LicenceTypes " +
 			"(Id, ServerId, Identifier, Code, Category, Description,  " +
-			  "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+			"CountryId, CountryIdentifier, CountryCode, CountryName, " +
 			"IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
 			"VALUES (NULL, @ServerId, @Identifier, @Code, @Category, @Description,  " +
-			 "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
+			"@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
-		public LicenceTypeListResponse GetLicenceTypesByPage(int companyId, LicenceTypeViewModel licenceTypeSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        #endregion
+
+        #region Helper methods
+
+        private LicenceTypeViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            LicenceTypeViewModel dbEntry = new LicenceTypeViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Category = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, LicenceTypeViewModel licenceType)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", licenceType.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", licenceType.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)licenceType.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Category", ((object)licenceType.Category) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Description", ((object)licenceType.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)licenceType.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)licenceType.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)licenceType.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)licenceType.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", licenceType.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)licenceType.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
+        public LicenceTypeListResponse GetLicenceTypesByPage(int companyId, LicenceTypeViewModel licenceTypeSearchObject, int currentPage = 1, int itemsPerPage = 50)
 		{
 			LicenceTypeListResponse response = new LicenceTypeListResponse();
 			List<LicenceTypeViewModel> LicenceTypes = new List<LicenceTypeViewModel>();
@@ -65,9 +110,9 @@ namespace SirmiumERPGFC.Repository.Employees
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
-					selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Description", ((object)licenceTypeSearchObject.Search_Description) != null ? "%" + licenceTypeSearchObject.Search_Description + "%" : "");
-
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
 					selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -75,22 +120,7 @@ namespace SirmiumERPGFC.Repository.Employees
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
 					while (query.Read())
-					{
-						int counter = 0;
-						LicenceTypeViewModel dbEntry = new LicenceTypeViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Category = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						LicenceTypes.Add(dbEntry);
-					}
+						LicenceTypes.Add(Read(query));
 
 
 					selectCommand = new SqliteCommand(
@@ -99,9 +129,9 @@ namespace SirmiumERPGFC.Repository.Employees
 						"WHERE (@Category IS NULL OR @Category = '' OR Category LIKE @Category) " +
 						  "AND (@Description IS NULL OR @Description = '' OR Description LIKE @Description) " +
 						"AND CompanyId = @CompanyId ;", db);
-					selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Category", ((object)licenceTypeSearchObject.Search_Category) != null ? "%" + licenceTypeSearchObject.Search_Category + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Description", ((object)licenceTypeSearchObject.Search_Description) != null ? "%" + licenceTypeSearchObject.Search_Description + "%" : "");
-
 					selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 			
 
@@ -143,7 +173,8 @@ namespace SirmiumERPGFC.Repository.Employees
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage;", db);
-					selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Category", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -151,23 +182,8 @@ namespace SirmiumERPGFC.Repository.Employees
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
 					while (query.Read())
-					{
-						int counter = 0;
-						LicenceTypeViewModel dbEntry = new LicenceTypeViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Category = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-
-
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						LicenceTypes.Add(dbEntry);
-					}
+						LicenceTypes.Add(Read(query));
+					
 				}
 				catch (SqliteException error)
 				{
@@ -203,22 +219,8 @@ namespace SirmiumERPGFC.Repository.Employees
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
 					if (query.Read())
-					{
-						int counter = 0;
-						LicenceTypeViewModel dbEntry = new LicenceTypeViewModel();
-						dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-						dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-						dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Category = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-						dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-
-						dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-						dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-						dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-						dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-						licenceType = dbEntry;
-					}
+						licenceType = Read(query);
+					
 				}
 				catch (SqliteException error)
 				{
@@ -234,6 +236,10 @@ namespace SirmiumERPGFC.Repository.Employees
 			response.LicenceType = licenceType;
 			return response;
 		}
+
+        #endregion
+
+        #region Sync
 
         public void Sync(ILicenceTypeService licenceTypeService, Action<int, int> callback = null)
         {
@@ -251,16 +257,40 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     toSync = response?.LicenceTypes?.Count ?? 0;
                     List<LicenceTypeViewModel> licenceTypesFromDB = response.LicenceTypes;
-                    foreach (var licenceType in licenceTypesFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(licenceType.Identifier);
-                            if (licenceType.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM LicenceTypes WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var licenceType in licenceTypesFromDB)
                             {
-                                licenceType.IsSynced = true;
-                                Create(licenceType);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", licenceType.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (licenceType.IsActive)
+                                {
+                                    licenceType.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, licenceType);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -306,7 +336,11 @@ namespace SirmiumERPGFC.Repository.Employees
 			return null;
 		}
 
-		public LicenceTypeResponse Create(LicenceTypeViewModel licenceType)
+        #endregion
+
+        #region Create
+
+        public LicenceTypeResponse Create(LicenceTypeViewModel licenceType)
 		{
 			LicenceTypeResponse response = new LicenceTypeResponse();
 
@@ -315,30 +349,13 @@ namespace SirmiumERPGFC.Repository.Employees
 				db.Open();
 
 				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
-
-				//Use parameterized query to prevent SQL injection attacks
 				insertCommand.CommandText = SqlCommandInsertPart;
-
-				insertCommand.Parameters.AddWithValue("@ServerId", licenceType.Id);
-				insertCommand.Parameters.AddWithValue("@Identifier", licenceType.Identifier);
-				insertCommand.Parameters.AddWithValue("@Code", ((object)licenceType.Code) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Category", ((object)licenceType.Category) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@Description", ((object)licenceType.Description) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryId", ((object)licenceType.Country?.Id) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)licenceType.Country?.Identifier) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryCode", ((object)licenceType.Country?.Code) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CountryName", ((object)licenceType.Country?.Name) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@IsSynced", licenceType.IsSynced);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)licenceType.UpdatedAt) ?? DBNull.Value);
-				insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-				insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-				insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-				insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+				
 
 				try
 				{
-					insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, licenceType);
+					insertCommand.ExecuteNonQuery();
 				}
 				catch (SqliteException error)
 				{
@@ -354,49 +371,11 @@ namespace SirmiumERPGFC.Repository.Employees
 			}
 		}
 
-		public LicenceTypeResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-		{
-			LicenceTypeResponse response = new LicenceTypeResponse();
+        #endregion
 
-			using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-			{
-				db.Open();
+        #region Delete
 
-				SqliteCommand insertCommand = new SqliteCommand();
-				insertCommand.Connection = db;
-
-				insertCommand.CommandText = "UPDATE LicenceTypes SET " +
-					"IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-					"WHERE Identifier = @Identifier ";
-
-				insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-				insertCommand.Parameters.AddWithValue("@Code", code);
-				insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-				try
-				{
-					insertCommand.ExecuteReader();
-				}
-				catch (SqliteException error)
-				{
-					MainWindow.ErrorMessage = error.Message;
-					response.Success = false;
-					response.Message = error.Message;
-					return response;
-				}
-				db.Close();
-
-				response.Success = true;
-				return response;
-			}
-		}
-
-		public LicenceTypeResponse Delete(Guid identifier)
+        public LicenceTypeResponse Delete(Guid identifier)
 		{
 			LicenceTypeResponse response = new LicenceTypeResponse();
 
@@ -408,12 +387,12 @@ namespace SirmiumERPGFC.Repository.Employees
 				insertCommand.Connection = db;
 
 				//Use parameterized query to prevent SQL injection attacks
-				insertCommand.CommandText =
-					"DELETE FROM LicenceTypes WHERE Identifier = @Identifier";
+				insertCommand.CommandText = "DELETE FROM LicenceTypes WHERE Identifier = @Identifier";
 				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-				try
+				
+                try
 				{
-					insertCommand.ExecuteReader();
+					insertCommand.ExecuteNonQuery();
 				}
 				catch (SqliteException error)
 				{
@@ -447,7 +426,7 @@ namespace SirmiumERPGFC.Repository.Employees
 					insertCommand.CommandText = "DELETE FROM LicenceTypes";
 					try
 					{
-						insertCommand.ExecuteReader();
+						insertCommand.ExecuteNonQuery();
 					}
 					catch (SqliteException error)
 					{
@@ -470,5 +449,7 @@ namespace SirmiumERPGFC.Repository.Employees
 			response.Success = true;
 			return response;
 		}
-	}
+
+        #endregion
+    }
 }
