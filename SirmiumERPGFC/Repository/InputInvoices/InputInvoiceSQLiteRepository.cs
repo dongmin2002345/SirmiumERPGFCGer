@@ -2,20 +2,17 @@
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Messages.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
-using ServiceWebApi.Implementations.Common.InputInvoices;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.InputInvoices
 {
 	public class InputInvoiceSQLiteRepository
 	{
-		public static string InputInvoiceTableCreatePart =
+        #region SQL
+
+        public static string InputInvoiceTableCreatePart =
 		  "CREATE TABLE IF NOT EXISTS InputInvoices " +
 		  "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		  "ServerId INTEGER NULL, " +
@@ -25,8 +22,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 		  "BusinessPartnerIdentifier GUID NULL, " +
 		  "BusinessPartnerCode NVARCHAR(48) NULL, " +
 		  "BusinessPartnerName NVARCHAR(2048) NULL, " +
-               "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
-               "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
+          "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+          "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
           "Supplier NVARCHAR(48) NULL, " +
 		  "Address NVARCHAR(48) NULL, " +
 		  "InvoiceNumber NVARCHAR(48) NULL, " +
@@ -64,6 +61,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			"@Supplier, @Address, @InvoiceNumber, @InvoiceDate, @AmountNet, @PDVPercent, @PDV, " +
 			"@AmountGross, @Currency, @DateOfPaymet, @Status, @StatusDate, @Description, @Path, " +
 			"@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+        #endregion
 
         #region Helper methods
 
@@ -135,6 +134,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
         #endregion
 
+        #region Read
+
         public InputInvoiceListResponse GetInputInvoicesByPage(int companyId, InputInvoiceViewModel InputInvoiceSearchObject, int currentPage = 1, int itemsPerPage = 50)
 		{
 			InputInvoiceListResponse response = new InputInvoiceListResponse();
@@ -158,7 +159,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage OFFSET @Offset;", db);
-					selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoiceSearchObject.SearchBy_BusinessPartnerName) != null ? "%" + InputInvoiceSearchObject.SearchBy_BusinessPartnerName + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoiceSearchObject.SearchBy_BusinessPartnerName) != null ? "%" + InputInvoiceSearchObject.SearchBy_BusinessPartnerName + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + InputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
@@ -192,7 +194,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						"AND (@DateOfPaymetTo IS NULL OR @DateOfPaymetTo = '' OR DATE(DateOfPaymet) <= DATE(@DateOfPaymetTo)) " +
 						"AND (@DateOfPaymetFrom IS NULL OR @DateOfPaymetFrom = '' OR DATE(DateOfPaymet) >= DATE(@DateOfPaymetFrom)) " +
 						"AND CompanyId = @CompanyId;", db);
-					selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoiceSearchObject.SearchBy_BusinessPartnerName) != null ? "%" + InputInvoiceSearchObject.SearchBy_BusinessPartnerName + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InputInvoiceSearchObject.SearchBy_BusinessPartnerName) != null ? "%" + InputInvoiceSearchObject.SearchBy_BusinessPartnerName + "%" : "");
 					selectCommand.Parameters.AddWithValue("@Supplier", ((object)InputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + InputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
 
 					selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
@@ -240,7 +243,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 						"AND CompanyId = @CompanyId " +
 						"ORDER BY IsSynced, Id DESC " +
 						"LIMIT @ItemsPerPage;", db);
-					selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
+					
+                    selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
 					selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
 					selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
 
@@ -305,6 +309,10 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			response.InputInvoice = InputInvoice;
 			return response;
 		}
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IInputInvoiceService inputInvoiceService, Action<int, int> callback = null)
         {
@@ -401,7 +409,11 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			return null;
 		}
 
-		public InputInvoiceResponse Create(InputInvoiceViewModel InputInvoice)
+        #endregion
+
+        #region Create
+
+        public InputInvoiceResponse Create(InputInvoiceViewModel InputInvoice)
 		{
 			InputInvoiceResponse response = new InputInvoiceResponse();
 
@@ -432,49 +444,11 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			}
 		}
 
-		//public InputInvoiceResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-		//{
-		//	InputInvoiceResponse response = new InputInvoiceResponse();
+        #endregion
 
-		//	using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-		//	{
-		//		db.Open();
+        #region Delete
 
-		//		SqliteCommand insertCommand = new SqliteCommand();
-		//		insertCommand.Connection = db;
-
-		//		insertCommand.CommandText = "UPDATE InputInvoices SET " +
-		//			"IsSynced = @IsSynced, " +
-		//			"Code = @Code, " +
-  //                  "UpdatedAt = @UpdatedAt, " +
-  //                  "ServerId = @ServerId " +
-  //                  "WHERE Identifier = @Identifier ";
-
-		//		insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-  //              insertCommand.Parameters.AddWithValue("@Code", code);
-  //              insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-  //              insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-		//		insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-
-  //              try
-		//		{
-		//			insertCommand.ExecuteReader();
-		//		}
-		//		catch (SqliteException error)
-		//		{
-		//			MainWindow.ErrorMessage = error.Message;
-		//			response.Success = false;
-		//			response.Message = error.Message;
-		//			return response;
-		//		}
-		//		db.Close();
-
-		//		response.Success = true;
-		//		return response;
-		//	}
-		//}
-
-		public InputInvoiceResponse Delete(Guid identifier)
+        public InputInvoiceResponse Delete(Guid identifier)
 		{
 			InputInvoiceResponse response = new InputInvoiceResponse();
 
@@ -486,12 +460,12 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 				insertCommand.Connection = db;
 
 				//Use parameterized query to prevent SQL injection attacks
-				insertCommand.CommandText =
-					"DELETE FROM InputInvoices WHERE Identifier = @Identifier";
+				insertCommand.CommandText = "DELETE FROM InputInvoices WHERE Identifier = @Identifier";
 				insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-				try
+				
+                try
 				{
-					insertCommand.ExecuteReader();
+					insertCommand.ExecuteNonQuery();
 				}
 				catch (SqliteException error)
 				{
@@ -507,46 +481,48 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 			}
 		}
 
-		//public InputInvoiceResponse DeleteAll()
-		//{
-		//	InputInvoiceResponse response = new InputInvoiceResponse();
+        //public InputInvoiceResponse DeleteAll()
+        //{
+        //	InputInvoiceResponse response = new InputInvoiceResponse();
 
-		//	try
-		//	{
-		//		using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-		//		{
-		//			db.Open();
-		//			db.EnableExtensions(true);
+        //	try
+        //	{
+        //		using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+        //		{
+        //			db.Open();
+        //			db.EnableExtensions(true);
 
-		//			SqliteCommand insertCommand = new SqliteCommand();
-		//			insertCommand.Connection = db;
+        //			SqliteCommand insertCommand = new SqliteCommand();
+        //			insertCommand.Connection = db;
 
-		//			//Use parameterized query to prevent SQL injection attacks
-		//			insertCommand.CommandText = "DELETE FROM InputInvoices";
-		//			try
-		//			{
-		//				insertCommand.ExecuteReader();
-		//			}
-		//			catch (SqliteException error)
-		//			{
-		//				response.Success = false;
-		//				response.Message = error.Message;
+        //			//Use parameterized query to prevent SQL injection attacks
+        //			insertCommand.CommandText = "DELETE FROM InputInvoices";
+        //			try
+        //			{
+        //				insertCommand.ExecuteReader();
+        //			}
+        //			catch (SqliteException error)
+        //			{
+        //				response.Success = false;
+        //				response.Message = error.Message;
 
-		//				MainWindow.ErrorMessage = error.Message;
-		//				return response;
-		//			}
-		//			db.Close();
-		//		}
-		//	}
-		//	catch (SqliteException error)
-		//	{
-		//		response.Success = false;
-		//		response.Message = error.Message;
-		//		return response;
-		//	}
+        //				MainWindow.ErrorMessage = error.Message;
+        //				return response;
+        //			}
+        //			db.Close();
+        //		}
+        //	}
+        //	catch (SqliteException error)
+        //	{
+        //		response.Success = false;
+        //		response.Message = error.Message;
+        //		return response;
+        //	}
 
-		//	response.Success = true;
-		//	return response;
-		//}
-	}
+        //	response.Success = true;
+        //	return response;
+        //}
+
+        #endregion
+    }
 }
