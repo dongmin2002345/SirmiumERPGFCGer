@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Shipments.Shipment_AddEdit"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Shipments"
+             xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Background="White">
+
+    <UserControl.Resources>
+        <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
+        <!--<cbxConverters:PdvPercentRateConverter x:Key="cbxPdvPercentRateConverter" />-->
+        <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
+        <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
+        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <!--    Invoice data    -->
+            <GroupBox Header="{DynamicResource Podaci_o_fakturi}" Margin="2 2 2 1" Grid.Row="0" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
+                             x:Name="txtShipmentCode" Text="{Binding Path=currentShipment.Code}" IsReadOnly="True"/>
+
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Datum pošiljke" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <DatePicker Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="ShipmentDate"
+                                SelectedDate="{Binding Path=currentShipment.ShipmentDate, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource AdresaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddress"
+                                Text="{Binding Path=currentShipment.Address, Mode=TwoWay}"/>
+                    
+                    <!--    ServiceDelivery with popup    -->
+                    <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Kuriraska služba" Margin="5 0 5 0"/>
+                    <popups:ServiceDeliveryPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="serviceDeliveryPopup"
+                         CurrentServiceDelivery="{Binding Path=currentShipment.ServiceDelivery, Mode=TwoWay}"/>
+
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Broj pošiljke" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" IsEnabled="True"
+                             x:Name="txtShipmentNumber" Text="{Binding Path=currentShipment.ShipmentNumber}" />
+
+
+                    <TextBlock Grid.Row="2" Grid.Column="3" Text="Primalac" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAcceptor"
+                                Text="{Binding Path=currentShipment.Acceptor, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Datum dostave" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtDeliveryDate"
+                                SelectedDate="{Binding Path=currentShipment.DeliveryDate, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="3" Text="Povratnica" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtReturnReceipt"
+                                Text="{Binding Path=currentShipment.ReturnReceipt, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Naziv dokumenta" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtDocumentName"
+                                Text="{Binding Path=currentShipment.DocumentName, Mode=TwoWay}"/>
+
+                    
+                    <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Napomena}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtNote" 
+                                Text="{Binding Path=currentShipment.Note, Mode=TwoWay}"/>
+
+                   
+                </Grid>
+            </GroupBox>
+
+            
+
+            <!--    Save button    -->
+            <Grid Grid.Row="2" Margin="2 2 2 2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2 0 1 2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="1 0 2 2">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+        </Grid>
+    </ScrollViewer>
+</UserControl>

@@ -15,6 +15,7 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using ServiceInterfaces.ViewModels.Limitations;
 using ServiceInterfaces.ViewModels.Vats;
+using ServiceInterfaces.ViewModels.Common.Shipments;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -287,6 +288,14 @@ namespace ApiExtension.Sender
             #region Statuses
 				{ typeof(StatusViewModel), "Status" },
                 { typeof(List<StatusViewModel>), "Status" },
+            #endregion
+
+            #region Shipments
+				{ typeof(ShipmentViewModel), "Shipment" },
+                { typeof(List<ShipmentViewModel>), "Shipment" },
+
+                { typeof(ShipmentDocumentViewModel), "ShipmentDocument" },
+                { typeof(List<ShipmentDocumentViewModel>), "ShipmentDocument" },
             #endregion
 		};
 

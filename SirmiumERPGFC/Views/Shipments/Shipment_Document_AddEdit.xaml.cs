@@ -1,13 +1,13 @@
 ﻿using Ninject;
-using ServiceInterfaces.Abstractions.Common.InputInvoices;
+using ServiceInterfaces.Abstractions.Common.Shipments;
 using ServiceInterfaces.Gloabals;
-using ServiceInterfaces.Messages.Common.InputInvoices;
+using ServiceInterfaces.Messages.Common.Shipments;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
-using ServiceInterfaces.ViewModels.Common.InputInvoices;
+using ServiceInterfaces.ViewModels.Common.Shipments;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
-using SirmiumERPGFC.Repository.InputInvoices;
+using SirmiumERPGFC.Repository.Shipments;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,107 +26,107 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.InputInvoices
+namespace SirmiumERPGFC.Views.Shipments
 {
     /// <summary>
-    /// Interaction logic for InputInvoice_Document_AddEdit.xaml
+    /// Interaction logic for Shipment_Document_AddEdit.xaml
     /// </summary>
-    public partial class InputInvoice_Document_AddEdit : UserControl, INotifyPropertyChanged
+    public partial class Shipment_Document_AddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes
 
         #region Services
-        IInputInvoiceService inputInvoiceService;
-        IInputInvoiceDocumentService inputInvoiceDocumentService;
+        IShipmentService ShipmentService;
+        IShipmentDocumentService ShipmentDocumentService;
         #endregion
 
 
         #region Event
-        public event InputInvoiceHandler InputInvoiceCreatedUpdated;
+        public event ShipmentHandler ShipmentCreatedUpdated;
         #endregion
 
 
-        #region CurrentInputInvoice
-        private InputInvoiceViewModel _CurrentInputInvoice = new InputInvoiceViewModel();
+        #region CurrentShipment
+        private ShipmentViewModel _CurrentShipment = new ShipmentViewModel();
 
-        public InputInvoiceViewModel CurrentInputInvoice
+        public ShipmentViewModel CurrentShipment
         {
-            get { return _CurrentInputInvoice; }
+            get { return _CurrentShipment; }
             set
             {
-                if (_CurrentInputInvoice != value)
+                if (_CurrentShipment != value)
                 {
-                    _CurrentInputInvoice = value;
-                    NotifyPropertyChanged("CurrentInputInvoice");
+                    _CurrentShipment = value;
+                    NotifyPropertyChanged("CurrentShipment");
                 }
             }
         }
         #endregion
 
 
-        #region InputInvoiceDocumentsFromDB
-        private ObservableCollection<InputInvoiceDocumentViewModel> _InputInvoiceDocumentsFromDB;
+        #region ShipmentDocumentsFromDB
+        private ObservableCollection<ShipmentDocumentViewModel> _ShipmentDocumentsFromDB;
 
-        public ObservableCollection<InputInvoiceDocumentViewModel> InputInvoiceDocumentsFromDB
+        public ObservableCollection<ShipmentDocumentViewModel> ShipmentDocumentsFromDB
         {
-            get { return _InputInvoiceDocumentsFromDB; }
+            get { return _ShipmentDocumentsFromDB; }
             set
             {
-                if (_InputInvoiceDocumentsFromDB != value)
+                if (_ShipmentDocumentsFromDB != value)
                 {
-                    _InputInvoiceDocumentsFromDB = value;
-                    NotifyPropertyChanged("InputInvoiceDocumentsFromDB");
+                    _ShipmentDocumentsFromDB = value;
+                    NotifyPropertyChanged("ShipmentDocumentsFromDB");
                 }
             }
         }
         #endregion
 
-        #region CurrentInputInvoiceDocumentForm
-        private InputInvoiceDocumentViewModel _CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel() { CreateDate = DateTime.Now };
+        #region CurrentShipmentDocumentForm
+        private ShipmentDocumentViewModel _CurrentShipmentDocumentForm = new ShipmentDocumentViewModel() { CreateDate = DateTime.Now };
 
-        public InputInvoiceDocumentViewModel CurrentInputInvoiceDocumentForm
+        public ShipmentDocumentViewModel CurrentShipmentDocumentForm
         {
-            get { return _CurrentInputInvoiceDocumentForm; }
+            get { return _CurrentShipmentDocumentForm; }
             set
             {
-                if (_CurrentInputInvoiceDocumentForm != value)
+                if (_CurrentShipmentDocumentForm != value)
                 {
-                    _CurrentInputInvoiceDocumentForm = value;
-                    NotifyPropertyChanged("CurrentInputInvoiceDocumentForm");
+                    _CurrentShipmentDocumentForm = value;
+                    NotifyPropertyChanged("CurrentShipmentDocumentForm");
                 }
             }
         }
         #endregion
 
-        #region CurrentInputInvoiceDocumentDG
-        private InputInvoiceDocumentViewModel _CurrentInputInvoiceDocumentDG;
+        #region CurrentShipmentDocumentDG
+        private ShipmentDocumentViewModel _CurrentShipmentDocumentDG;
 
-        public InputInvoiceDocumentViewModel CurrentInputInvoiceDocumentDG
+        public ShipmentDocumentViewModel CurrentShipmentDocumentDG
         {
-            get { return _CurrentInputInvoiceDocumentDG; }
+            get { return _CurrentShipmentDocumentDG; }
             set
             {
-                if (_CurrentInputInvoiceDocumentDG != value)
+                if (_CurrentShipmentDocumentDG != value)
                 {
-                    _CurrentInputInvoiceDocumentDG = value;
-                    NotifyPropertyChanged("CurrentInputInvoiceDocumentDG");
+                    _CurrentShipmentDocumentDG = value;
+                    NotifyPropertyChanged("CurrentShipmentDocumentDG");
                 }
             }
         }
         #endregion
 
-        #region InputInvoiceDocumentDataLoading
-        private bool _InputInvoiceDocumentDataLoading;
+        #region ShipmentDocumentDataLoading
+        private bool _ShipmentDocumentDataLoading;
 
-        public bool InputInvoiceDocumentDataLoading
+        public bool ShipmentDocumentDataLoading
         {
-            get { return _InputInvoiceDocumentDataLoading; }
+            get { return _ShipmentDocumentDataLoading; }
             set
             {
-                if (_InputInvoiceDocumentDataLoading != value)
+                if (_ShipmentDocumentDataLoading != value)
                 {
-                    _InputInvoiceDocumentDataLoading = value;
-                    NotifyPropertyChanged("InputInvoiceDocumentDataLoading");
+                    _ShipmentDocumentDataLoading = value;
+                    NotifyPropertyChanged("ShipmentDocumentDataLoading");
                 }
             }
         }
@@ -173,21 +173,21 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
         #region Constructor
 
-        public InputInvoice_Document_AddEdit(InputInvoiceViewModel inputInvoice)
+        public Shipment_Document_AddEdit(ShipmentViewModel Shipment)
         {
-            inputInvoiceService = DependencyResolver.Kernel.Get<IInputInvoiceService>();
-            inputInvoiceDocumentService = DependencyResolver.Kernel.Get<IInputInvoiceDocumentService>();
+            ShipmentService = DependencyResolver.Kernel.Get<IShipmentService>();
+            ShipmentDocumentService = DependencyResolver.Kernel.Get<IShipmentDocumentService>();
 
             InitializeComponent();
 
             this.DataContext = this;
 
-            CurrentInputInvoice = inputInvoice;
-            CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
-            CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
-            CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+            CurrentShipment = Shipment;
+            CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
+            CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
+            CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
 
-            Thread displayThread = new Thread(() => DisplayInputInvoiceDocumentData());
+            Thread displayThread = new Thread(() => DisplayShipmentDocumentData());
             displayThread.IsBackground = true;
             displayThread.Start();
 
@@ -198,27 +198,27 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
         #region Display data
 
-        public void DisplayInputInvoiceDocumentData()
+        public void DisplayShipmentDocumentData()
         {
-            InputInvoiceDocumentDataLoading = true;
+            ShipmentDocumentDataLoading = true;
 
-            InputInvoiceDocumentListResponse response = new InputInvoiceDocumentSQLiteRepository()
-                .GetInputInvoiceDocumentsByInputInvoice(MainWindow.CurrentCompanyId, CurrentInputInvoice.Identifier);
+            ShipmentDocumentListResponse response = new ShipmentDocumentSQLiteRepository()
+                .GetShipmentDocumentsByShipment(MainWindow.CurrentCompanyId, CurrentShipment.Identifier);
 
             if (response.Success)
             {
-                InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>(
-                    response.InputInvoiceDocuments ?? new List<InputInvoiceDocumentViewModel>());
+                ShipmentDocumentsFromDB = new ObservableCollection<ShipmentDocumentViewModel>(
+                    response.ShipmentDocuments ?? new List<ShipmentDocumentViewModel>());
             }
             else
             {
-                InputInvoiceDocumentsFromDB = new ObservableCollection<InputInvoiceDocumentViewModel>();
+                ShipmentDocumentsFromDB = new ObservableCollection<ShipmentDocumentViewModel>();
             }
 
-            InputInvoiceDocumentDataLoading = false;
+            ShipmentDocumentDataLoading = false;
         }
 
-        private void DgInputInvoiceDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void DgShipmentDocuments_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
@@ -244,7 +244,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
         {
             #region Validation
 
-            if (CurrentInputInvoiceDocumentForm.Name == null)
+            if (CurrentShipmentDocumentForm.Name == null)
             {
                 MainWindow.ErrorMessage = "Obavezno polje: Napomena";
                 return;
@@ -252,33 +252,33 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             #endregion
 
-            new InputInvoiceDocumentSQLiteRepository().Delete(CurrentInputInvoiceDocumentForm.Identifier);
+            new ShipmentDocumentSQLiteRepository().Delete(CurrentShipmentDocumentForm.Identifier);
 
-            CurrentInputInvoiceDocumentForm.InputInvoice = CurrentInputInvoice;
+            CurrentShipmentDocumentForm.Shipment = CurrentShipment;
 
-            CurrentInputInvoiceDocumentForm.IsSynced = false;
-            CurrentInputInvoiceDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentInputInvoiceDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+            CurrentShipmentDocumentForm.IsSynced = false;
+            CurrentShipmentDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+            CurrentShipmentDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-            var response = new InputInvoiceDocumentSQLiteRepository().Create(CurrentInputInvoiceDocumentForm);
+            var response = new ShipmentDocumentSQLiteRepository().Create(CurrentShipmentDocumentForm);
             if (!response.Success)
             {
                 MainWindow.ErrorMessage = response.Message;
 
-                CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
-                CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
-                CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
+                CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
+                CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
 
                 return;
             }
 
-            CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
-            CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
-            CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+            CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
+            CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
+            CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
 
-            InputInvoiceCreatedUpdated();
+            ShipmentCreatedUpdated();
 
-            Thread displayThread = new Thread(() => DisplayInputInvoiceDocumentData());
+            Thread displayThread = new Thread(() => DisplayShipmentDocumentData());
             displayThread.IsBackground = true;
             displayThread.Start();
 
@@ -295,31 +295,31 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)
         {
-            CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
-            CurrentInputInvoiceDocumentForm.Identifier = CurrentInputInvoiceDocumentDG.Identifier;
-            CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Edited;
+            CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
+            CurrentShipmentDocumentForm.Identifier = CurrentShipmentDocumentDG.Identifier;
+            CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Edited;
 
-            CurrentInputInvoiceDocumentForm.Name = CurrentInputInvoiceDocumentDG.Name;
-            CurrentInputInvoiceDocumentForm.CreateDate = CurrentInputInvoiceDocumentDG.CreateDate;
-            CurrentInputInvoiceDocumentForm.Path = CurrentInputInvoiceDocumentDG.Path;
+            CurrentShipmentDocumentForm.Name = CurrentShipmentDocumentDG.Name;
+            CurrentShipmentDocumentForm.CreateDate = CurrentShipmentDocumentDG.CreateDate;
+            CurrentShipmentDocumentForm.Path = CurrentShipmentDocumentDG.Path;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var response = new InputInvoiceDocumentSQLiteRepository().SetStatusDeleted(CurrentInputInvoiceDocumentDG.Identifier);
+            var response = new ShipmentDocumentSQLiteRepository().SetStatusDeleted(CurrentShipmentDocumentDG.Identifier);
             if (response.Success)
             {
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
-                CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
-                CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
-                CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
+                CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
+                CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
 
-                CurrentInputInvoiceDocumentDG = null;
+                CurrentShipmentDocumentDG = null;
 
-                InputInvoiceCreatedUpdated();
+                ShipmentCreatedUpdated();
 
-                Thread displayThread = new Thread(() => DisplayInputInvoiceDocumentData());
+                Thread displayThread = new Thread(() => DisplayShipmentDocumentData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
@@ -329,9 +329,9 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
         private void btnCancelDocument_Click(object sender, RoutedEventArgs e)
         {
-            CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
-            CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
-            CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+            CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
+            CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
+            CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
         }
 
         private void FileDIalog_FileOk(object sender, CancelEventArgs e)
@@ -340,7 +340,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
-                CurrentInputInvoiceDocumentForm.Path = fileNames[0];
+                CurrentShipmentDocumentForm.Path = fileNames[0];
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
@@ -361,7 +361,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
         {
             #region Validation
 
-            if (InputInvoiceDocumentsFromDB == null || InputInvoiceDocumentsFromDB.Count == 0)
+            if (ShipmentDocumentsFromDB == null || ShipmentDocumentsFromDB.Count == 0)
             {
                 MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
                 return;
@@ -369,13 +369,14 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             #endregion
 
-            Thread td = new Thread(() => {
+            Thread td = new Thread(() =>
+            {
 
                 SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
-                CurrentInputInvoice.InputInvoiceDocuments = InputInvoiceDocumentsFromDB;
-                InputInvoiceResponse response = inputInvoiceService.Create(CurrentInputInvoice);
+                CurrentShipment.ShipmentDocuments = ShipmentDocumentsFromDB;
+                ShipmentResponse response = ShipmentService.Create(CurrentShipment);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
@@ -389,7 +390,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
                     SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
-                    InputInvoiceCreatedUpdated();
+                    ShipmentCreatedUpdated();
 
                     Application.Current.Dispatcher.BeginInvoke(
                         System.Windows.Threading.DispatcherPriority.Normal,
@@ -406,7 +407,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            InputInvoiceCreatedUpdated();
+            ShipmentCreatedUpdated();
 
             FlyoutHelper.CloseFlyout(this);
         }

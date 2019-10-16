@@ -8,6 +8,7 @@ using DomainCore.Common.OutputInvoices;
 using DomainCore.Common.Prices;
 using DomainCore.Common.Professions;
 using DomainCore.Common.Sectors;
+using DomainCore.Common.Shipments;
 using DomainCore.Common.TaxAdministrations;
 using DomainCore.Common.ToDos;
 using DomainCore.ConstructionSites;
@@ -141,6 +142,9 @@ namespace RepositoryCore.Context
         public DbSet<Vat> Vats { get; set; }
         public DbSet<ServiceDelivery> ServiceDeliverys { get; set; }
         public DbSet<Status> Statuses { get; set; }
+
+        public DbSet<Shipment> Shipments { get; set; }
+        public DbSet<ShipmentDocument> ShipmentDocuments { get; set; }
 
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

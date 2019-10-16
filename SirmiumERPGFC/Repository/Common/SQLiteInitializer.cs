@@ -17,6 +17,7 @@ using SirmiumERPGFC.Repository.Limitations;
 using SirmiumERPGFC.Repository.Vats;
 using SirmiumERPGFC.Repository.Prices;
 using SirmiumERPGFC.Repository.Statuses;
+using SirmiumERPGFC.Repository.Shipments;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -949,6 +950,34 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(StatusSQLiteRepository.StatusTableCreatePart, db);
                     createTable.ExecuteReader();
+                    #endregion
+
+                    #region Shipments
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Shipments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ShipmentSQLiteRepository.ShipmentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ShipmentDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ShipmentDocumentSQLiteRepository.ShipmentDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
                 }
             }
