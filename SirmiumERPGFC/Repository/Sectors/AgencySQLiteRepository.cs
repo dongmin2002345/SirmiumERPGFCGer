@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.Sectors;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Sectors
 {
     public class AgencySQLiteRepository
     {
+        #region SQL
+
         public static string AgencyTableCreatePart =
            "CREATE TABLE IF NOT EXISTS Agencies " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -53,10 +51,60 @@ namespace SirmiumERPGFC.Repository.Sectors
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private AgencyViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            AgencyViewModel dbEntry = new AgencyViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, AgencyViewModel Agency)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", Agency.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", Agency.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)Agency.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)Agency.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)Agency.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)Agency.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)Agency.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)Agency.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorId", ((object)Agency.Sector?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)Agency.Sector?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)Agency.Sector?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorName", ((object)Agency.Sector?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", Agency.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)Agency.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public AgencyListResponse GetAgenciesByPage(int companyId, AgencyViewModel AgencySearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             AgencyListResponse response = new AgencyListResponse();
-            List<AgencyViewModel> Remedies = new List<AgencyViewModel>();
+            List<AgencyViewModel> Agencies = new List<AgencyViewModel>();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -72,6 +120,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Code", ((object)AgencySearchObject.Search_Code) != null ? "%" + AgencySearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)AgencySearchObject.Search_Name) != null ? "%" + AgencySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)AgencySearchObject.Search_Country) != null ? "%" + AgencySearchObject.Search_Country + "%" : "");
@@ -82,22 +131,8 @@ namespace SirmiumERPGFC.Repository.Sectors
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        AgencyViewModel dbEntry = new AgencyViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        Remedies.Add(dbEntry);
-                    }
-
+                        Agencies.Add(Read(query));
+                    
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
@@ -106,6 +141,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Code", ((object)AgencySearchObject.Search_Code) != null ? "%" + AgencySearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)AgencySearchObject.Search_Name) != null ? "%" + AgencySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)AgencySearchObject.Search_Country) != null ? "%" + AgencySearchObject.Search_Country + "%" : "");
@@ -127,7 +163,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                 db.Close();
             }
             response.Success = true;
-            response.Agencies = Remedies;
+            response.Agencies = Agencies;
             return response;
         }
 
@@ -149,6 +185,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Filter", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@SectorIdentifier", sectorIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)companyId) != null ? companyId : 0);
@@ -157,21 +194,8 @@ namespace SirmiumERPGFC.Repository.Sectors
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        AgencyViewModel dbEntry = new AgencyViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        Agencies.Add(dbEntry);
-                    }
+                        Agencies.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -207,21 +231,8 @@ namespace SirmiumERPGFC.Repository.Sectors
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        AgencyViewModel dbEntry = new AgencyViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
-                        dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        Agency = dbEntry;
-                    }
+                        Agency = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -238,6 +249,10 @@ namespace SirmiumERPGFC.Repository.Sectors
             return response;
         }
 
+        #endregion
+
+        #region Sync
+
         public void Sync(IAgencyService AgencyService, Action<int, int> callback = null)
         {
             try
@@ -253,17 +268,41 @@ namespace SirmiumERPGFC.Repository.Sectors
                 if (response.Success)
                 {
                     toSync = response?.Agencies?.Count ?? 0;
-                    List<AgencyViewModel> AgenciesFromDB = response.Agencies;
-                    foreach (var Agency in AgenciesFromDB.OrderBy(x => x.Id))
+                    List<AgencyViewModel> agenciesFromDB = response.Agencies;
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(Agency.Identifier);
-                            if (Agency.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM Agencies WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var agency in agenciesFromDB)
                             {
-                                Agency.IsSynced = true;
-                                Create(Agency);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", agency.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (agency.IsActive)
+                                {
+                                    agency.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, agency);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -309,6 +348,10 @@ namespace SirmiumERPGFC.Repository.Sectors
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public AgencyResponse Create(AgencyViewModel Agency)
         {
             AgencyResponse response = new AgencyResponse();
@@ -317,34 +360,13 @@ namespace SirmiumERPGFC.Repository.Sectors
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", Agency.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", Agency.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)Agency.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)Agency.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryId", ((object)Agency.Country?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)Agency.Country?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryCode", ((object)Agency.Country?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CountryName", ((object)Agency.Country?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorId", ((object)Agency.Sector?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)Agency.Sector?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorCode", ((object)Agency.Sector?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SectorName", ((object)Agency.Sector?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", Agency.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)Agency.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, Agency);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -360,47 +382,9 @@ namespace SirmiumERPGFC.Repository.Sectors
             }
         }
 
-        public AgencyResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            AgencyResponse response = new AgencyResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE Agencies SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public AgencyResponse Delete(Guid identifier)
         {
@@ -414,12 +398,12 @@ namespace SirmiumERPGFC.Repository.Sectors
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM Agencies WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM Agencies WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -453,7 +437,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                     insertCommand.CommandText = "DELETE FROM Agencies";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -476,5 +460,7 @@ namespace SirmiumERPGFC.Repository.Sectors
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }

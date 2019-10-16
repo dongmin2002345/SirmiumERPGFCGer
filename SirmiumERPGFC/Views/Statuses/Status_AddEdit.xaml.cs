@@ -8,21 +8,10 @@ using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Statuses;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Statuses
 {
@@ -197,7 +186,6 @@ namespace SirmiumERPGFC.Views.Statuses
 
                 if (response.Success)
                 {
-                    new StatusSQLiteRepository().UpdateSyncStatus(response.Status.Identifier, response.Status.Id, true, response.Status.UpdatedAt, response.Status.Code);
                     MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
                     SubmitButtonContent = " PROKNJIŽI ";
                     SubmitButtonEnabled = true;
