@@ -5,9 +5,6 @@ using ServiceInterfaces.ViewModels.Statuses;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Statuses
 {
@@ -99,6 +96,7 @@ namespace SirmiumERPGFC.Repository.Statuses
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, ServerId " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)statusSearchObject.Search_Name) != null ? "%" + statusSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -114,6 +112,7 @@ namespace SirmiumERPGFC.Repository.Statuses
                         "FROM Statuses " +
                         "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)statusSearchObject.Search_Name) != null ? "%" + statusSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -154,6 +153,7 @@ namespace SirmiumERPGFC.Repository.Statuses
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -233,7 +233,7 @@ namespace SirmiumERPGFC.Repository.Statuses
                 if (response.Success)
                 {
                     toSync = response?.Statuses?.Count ?? 0;
-                    List<StatusViewModel> workOrderFinalProductsFromDB = response.Statuses;
+                    List<StatusViewModel> statusesFromDB = response.Statuses;
 
                     using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
@@ -246,17 +246,17 @@ namespace SirmiumERPGFC.Repository.Statuses
                             SqliteCommand insertCommand = db.CreateCommand();
                             insertCommand.CommandText = SqlCommandInsertPart;
 
-                            foreach (var workOrderFinalProduct in workOrderFinalProductsFromDB)
+                            foreach (var status in statusesFromDB)
                             {
-                                deleteCommand.Parameters.AddWithValue("@Identifier", workOrderFinalProduct.Identifier);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", status.Identifier);
                                 deleteCommand.ExecuteNonQuery();
                                 deleteCommand.Parameters.Clear();
 
-                                if (workOrderFinalProduct.IsActive)
+                                if (status.IsActive)
                                 {
-                                    workOrderFinalProduct.IsSynced = true;
+                                    status.IsSynced = true;
 
-                                    insertCommand = AddCreateParameters(insertCommand, workOrderFinalProduct);
+                                    insertCommand = AddCreateParameters(insertCommand, status);
                                     insertCommand.ExecuteNonQuery();
                                     insertCommand.Parameters.Clear();
 
@@ -314,48 +314,6 @@ namespace SirmiumERPGFC.Repository.Statuses
             return null;
         }
 
-        public StatusResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced, DateTime? lastUpdate, string code)
-        {
-            StatusResponse response = new StatusResponse();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE Statuses SET " +
-                    "IsSynced = @IsSynced, " +
-                    "ServerId = @ServerId, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "Code = @Code " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)lastUpdate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
-
         #endregion
 
         #region Create
@@ -406,12 +364,12 @@ namespace SirmiumERPGFC.Repository.Statuses
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM Statuses WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM Statuses WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
