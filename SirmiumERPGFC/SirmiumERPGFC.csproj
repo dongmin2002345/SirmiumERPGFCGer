@@ -253,6 +253,8 @@
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\SectorSQLiteRepository.cs" />
     <Compile Include="Repository\Professions\ProfessionSQLiteRepository.cs" />
+    <Compile Include="Repository\Shipments\ShipmentDocumentSQLiteRepository.cs" />
+    <Compile Include="Repository\Shipments\ShipmentSQLiteRepository.cs" />
     <Compile Include="Repository\Statuses\StatusSQLiteRepository.cs" />
     <Compile Include="Repository\TaxAdministrations\TaxAdministrationSQLiteRepository.cs" />
     <Compile Include="Repository\ToDos\ToDoSQLiteRepository.cs" />
@@ -558,6 +560,15 @@
     </Compile>
     <Compile Include="Views\Profession\ProfessionList.xaml.cs">
       <DependentUpon>ProfessionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shipments\Shipment_AddEdit.xaml.cs">
+      <DependentUpon>Shipment_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shipments\Shipment_Document_AddEdit.xaml.cs">
+      <DependentUpon>Shipment_Document_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shipments\Shipment_List.xaml.cs">
+      <DependentUpon>Shipment_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Statuses\Status_AddEdit.xaml.cs">
       <DependentUpon>Status_AddEdit.xaml</DependentUpon>
@@ -1043,6 +1054,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Profession\ProfessionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shipments\Shipment_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shipments\Shipment_Document_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shipments\Shipment_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

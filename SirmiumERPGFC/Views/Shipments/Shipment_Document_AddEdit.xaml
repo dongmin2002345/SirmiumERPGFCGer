@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="SirmiumERPGFC.Views.InputInvoices.InputInvoice_Document_AddEdit"
+﻿<UserControl x:Class="SirmiumERPGFC.Views.Shipments.Shipment_Document_AddEdit"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.InputInvoices"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Shipments"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -15,7 +15,7 @@
         <cbxConverters:ItemStatusConverter x:Key="ItemStatusConverter" />
         <cbxConverters:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
         <cbxConverters:StringDateTimeShortConverter x:Key="StringDateTimeShortConverter" />
-        
+
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
     </UserControl.Resources>
@@ -45,10 +45,10 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Naziv_dokumentaDvotacka}" Margin="2" VerticalAlignment="Center" x:Name="txtDocumentName" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Path=CurrentInputInvoiceDocumentForm.Name, Mode=TwoWay}" Margin="2"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Path=CurrentShipmentDocumentForm.Name, Mode=TwoWay}" Margin="2"/>
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource Datum_unosaDvotacka}" Margin="2" VerticalAlignment="Center" />
-                    <DatePicker Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" SelectedDate="{Binding Path=CurrentInputInvoiceDocumentForm.CreateDate, Mode=TwoWay}" Margin="2" />
+                    <DatePicker Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" SelectedDate="{Binding Path=CurrentShipmentDocumentForm.CreateDate, Mode=TwoWay}" Margin="2" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
                     <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
@@ -56,7 +56,7 @@
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Path=CurrentInputInvoiceDocumentForm.Path, Mode=TwoWay}" Margin="2" />
+                        <TextBox Grid.Column="0" Text="{Binding Path=CurrentShipmentDocumentForm.Path, Mode=TwoWay}" Margin="2" />
                         <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{DynamicResource ODABERI}" />
@@ -80,7 +80,7 @@
                 </Grid>
             </GroupBox>
             <GroupBox Header="Dodate stavke" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
-                        <DataGrid x:Name="dgInputInvoiceDocuments"
+                <DataGrid x:Name="dgShipmentDocuments"
                               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="5" MinHeight="200"
                               AutoGenerateColumns="False"
@@ -94,16 +94,16 @@
                           HorizontalScrollBarVisibility="Auto"
                           RowHeaderWidth="25"
 		                  HeadersVisibility="All"
-                          LoadingRow="DgInputInvoiceDocuments_LoadingRow"
+                          LoadingRow="DgShipmentDocuments_LoadingRow"
                           PreviewMouseWheel="dg_PreviewMouseWheel"
-                              ItemsSource="{Binding Path=InputInvoiceDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentInputInvoiceDocumentDG, Mode=TwoWay}">
+                              ItemsSource="{Binding Path=ShipmentDocumentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentShipmentDocumentDG, Mode=TwoWay}">
 
-                            <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" Width="*" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_kreiranja}" Binding="{Binding Path=CreateDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource Putanja}" Binding="{Binding Path=Path}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource Putanja}" Binding="{Binding Path=Path}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

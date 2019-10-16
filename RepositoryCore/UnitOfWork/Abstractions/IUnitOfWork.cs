@@ -7,6 +7,7 @@ using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Prices;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.Shipments;
 using RepositoryCore.Abstractions.Common.TaxAdministrations;
 using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
@@ -96,7 +97,8 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IDiscountRepository GetDiscountRepository();
 
         IStatusRepository GetStatusRepository();
-
+        IShipmentRepository GetShipmentRepository();
+        IShipmentDocumentRepository GetShipmentDocumentRepository();
 
         void Save();
     }

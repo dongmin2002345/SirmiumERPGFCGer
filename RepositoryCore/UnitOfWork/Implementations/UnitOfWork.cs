@@ -9,6 +9,7 @@ using RepositoryCore.Abstractions.Common.Locations;
 using RepositoryCore.Abstractions.Common.Prices;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
+using RepositoryCore.Abstractions.Common.Shipments;
 using RepositoryCore.Abstractions.Common.TaxAdministrations;
 using RepositoryCore.Abstractions.Common.ToDos;
 using RepositoryCore.Abstractions.ConstructionSites;
@@ -26,6 +27,7 @@ using RepositoryCore.Implementations.Common.Locations;
 using RepositoryCore.Implementations.Common.Prices;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Implementations.Common.Sectors;
+using RepositoryCore.Implementations.Common.Shipments;
 using RepositoryCore.Implementations.Common.TaxAdministrations;
 using RepositoryCore.Implementations.Common.ToDos;
 using RepositoryCore.Implementations.ConstructionSites;
@@ -117,7 +119,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IServiceDeliveryRepository serviceDeliveryRepository;
         private IVatRepository vatRepository;
         private IStatusRepository statusRepository;
-
+        private IShipmentRepository shipmentRepository;
+        private IShipmentDocumentRepository shipmentDocumentRepository;
 
         #endregion
 
@@ -564,6 +567,21 @@ namespace RepositoryCore.UnitOfWork.Implementations
                 statusRepository = new StatusViewRepository(context);
             return statusRepository;
         }
+
+        public IShipmentRepository GetShipmentRepository()
+        {
+            if (shipmentRepository == null)
+                shipmentRepository = new ShipmentViewRepository(context);
+            return shipmentRepository;
+        }
+
+        public IShipmentDocumentRepository GetShipmentDocumentRepository()
+        {
+            if (shipmentDocumentRepository == null)
+                shipmentDocumentRepository = new ShipmentDocumentViewRepository(context);
+            return shipmentDocumentRepository;
+        }
+
         #endregion
 
         #region Save method

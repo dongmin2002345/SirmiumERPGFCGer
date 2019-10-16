@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191016112412_DodatePošiljke_Nemanja")]
+    partial class DodatePošiljke_Nemanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1511,8 +1513,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<int?>("BusinessPartnerId");
-
                     b.Property<int?>("CityId");
 
                     b.Property<string>("Code");
@@ -1539,13 +1539,11 @@ namespace RepositoryCore.Migrations
 
                     b.Property<DateTime>("ProContractDate");
 
-                    b.Property<int?>("StatusId");
+                    b.Property<int>("Status");
 
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BusinessPartnerId");
 
                     b.HasIndex("CityId");
 
@@ -1554,8 +1552,6 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("StatusId");
 
                     b.ToTable("ConstructionSites");
                 });
@@ -3254,10 +3250,6 @@ namespace RepositoryCore.Migrations
 
             modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSite", b =>
                 {
-                    b.HasOne("DomainCore.Common.BusinessPartners.BusinessPartner", "BusinessPartner")
-                        .WithMany()
-                        .HasForeignKey("BusinessPartnerId");
-
                     b.HasOne("DomainCore.Common.Locations.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");
@@ -3273,10 +3265,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
-
-                    b.HasOne("DomainCore.Statuses.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId");
                 });
 
             modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSiteCalculation", b =>
