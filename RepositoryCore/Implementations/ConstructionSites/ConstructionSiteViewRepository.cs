@@ -1,8 +1,10 @@
 ﻿using Configurator;
+using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.Locations;
 using DomainCore.ConstructionSites;
+using DomainCore.Statuses;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.ConstructionSites;
 using RepositoryCore.Context;
@@ -33,7 +35,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Address, MaxWorkers, Status, ProContractDate, ContractStart, ContractExpiration, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "StatusId, StatusIdentifier, StatusCode, StatusName, " +
+                "Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -77,12 +81,30 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
+                        {
+                            constructionSite.BusinessPartner = new BusinessPartner();
+                            constructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            constructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            constructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            constructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                            constructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                        }
+
+                        if (reader["StatusId"] != DBNull.Value)
+                        {
+                            constructionSite.Status = new Status();
+                            constructionSite.StatusId = Int32.Parse(reader["StatusId"].ToString());
+                            constructionSite.Status.Id = Int32.Parse(reader["StatusId"].ToString());
+                            constructionSite.Status.Identifier = Guid.Parse(reader["StatusIdentifier"].ToString());
+                            constructionSite.Status.Code = reader["StatusCode"].ToString();
+                            constructionSite.Status.Name = reader["StatusName"].ToString();
+                        }
+
                         if (reader["Address"] != DBNull.Value)
                             constructionSite.Address = reader["Address"].ToString();
                         if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
-                        if (reader["Status"] != DBNull.Value)
-                            constructionSite.Status = Int32.Parse(reader["Status"].ToString());
                         if (reader["ProContractDate"] != DBNull.Value)
                             constructionSite.ProContractDate = DateTime.Parse(reader["ProContractDate"].ToString());
                         if (reader["ContractStart"] != DBNull.Value)
@@ -136,7 +158,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Address, MaxWorkers, Status, ProContractDate, ContractStart, ContractExpiration, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "StatusId, StatusIdentifier, StatusCode, StatusName, " +
+                "Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -179,12 +203,30 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
+                        {
+                            constructionSite.BusinessPartner = new BusinessPartner();
+                            constructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            constructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            constructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            constructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                            constructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                        }
+
+                        if (reader["StatusId"] != DBNull.Value)
+                        {
+                            constructionSite.Status = new Status();
+                            constructionSite.StatusId = Int32.Parse(reader["StatusId"].ToString());
+                            constructionSite.Status.Id = Int32.Parse(reader["StatusId"].ToString());
+                            constructionSite.Status.Identifier = Guid.Parse(reader["StatusIdentifier"].ToString());
+                            constructionSite.Status.Code = reader["StatusCode"].ToString();
+                            constructionSite.Status.Name = reader["StatusName"].ToString();
+                        }
+
                         if (reader["Address"] != DBNull.Value)
                             constructionSite.Address = reader["Address"].ToString();
                         if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
-                        if (reader["Status"] != DBNull.Value)
-                            constructionSite.Status = Int32.Parse(reader["Status"].ToString());
                         if (reader["ProContractDate"] != DBNull.Value)
                             constructionSite.ProContractDate = DateTime.Parse(reader["ProContractDate"].ToString());
                         if (reader["ContractStart"] != DBNull.Value)
@@ -234,7 +276,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
                 "CityId, CityIdentifier, CityCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "Address, MaxWorkers, Status, ProContractDate, ContractStart, ContractExpiration, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "StatusId, StatusIdentifier, StatusCode, StatusName, " +
+                "Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId " +
@@ -280,12 +324,30 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
+                        if (reader["BusinessPartnerId"] != DBNull.Value)
+                        {
+                            constructionSite.BusinessPartner = new BusinessPartner();
+                            constructionSite.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            constructionSite.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
+                            constructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
+                            constructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
+                            constructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                        }
+
+                        if (reader["StatusId"] != DBNull.Value)
+                        {
+                            constructionSite.Status = new Status();
+                            constructionSite.StatusId = Int32.Parse(reader["StatusId"].ToString());
+                            constructionSite.Status.Id = Int32.Parse(reader["StatusId"].ToString());
+                            constructionSite.Status.Identifier = Guid.Parse(reader["StatusIdentifier"].ToString());
+                            constructionSite.Status.Code = reader["StatusCode"].ToString();
+                            constructionSite.Status.Name = reader["StatusName"].ToString();
+                        }
+
                         if (reader["Address"] != DBNull.Value)
                             constructionSite.Address = reader["Address"].ToString();
                         if (reader["MaxWorkers"] != DBNull.Value)
                             constructionSite.MaxWorkers = Int32.Parse(reader["MaxWorkers"].ToString());
-                        if (reader["Status"] != DBNull.Value)
-                            constructionSite.Status = Int32.Parse(reader["Status"].ToString());
                         if (reader["ProContractDate"] != DBNull.Value)
                             constructionSite.ProContractDate = DateTime.Parse(reader["ProContractDate"].ToString());
                         if (reader["ContractStart"] != DBNull.Value)
@@ -387,6 +449,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 {
                     dbEntry.CityId = constructionSite.CityId ?? null;
                     dbEntry.CountryId = constructionSite.CountryId ?? null;
+                    dbEntry.BusinessPartnerId = constructionSite.BusinessPartnerId ?? null;
+                    dbEntry.StatusId = constructionSite.StatusId ?? null;
                     dbEntry.CompanyId = constructionSite.CompanyId ?? null;
                     dbEntry.CreatedById = constructionSite.CreatedById ?? null;
 
@@ -396,7 +460,6 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.Name = constructionSite.Name;
                     dbEntry.Address = constructionSite.Address;
                     dbEntry.MaxWorkers = constructionSite.MaxWorkers;
-                    dbEntry.Status = constructionSite.Status;
                     dbEntry.ProContractDate = constructionSite.ProContractDate;
                     dbEntry.ContractStart = constructionSite.ContractStart;
                     dbEntry.ContractExpiration = constructionSite.ContractExpiration;

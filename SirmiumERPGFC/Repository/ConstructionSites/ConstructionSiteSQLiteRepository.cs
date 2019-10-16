@@ -22,7 +22,6 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "Name NVARCHAR(48) NULL, " +
            "Address NVARCHAR(48) NULL, " +
            "MaxWorkers NVARCHAR(48) NULL, " +
-           "Status INTEGER NULL, " +
            "ProContractDate DATETIME NULL, " +
            "ContractStart DATETIME NULL, " +
            "ContractExpiration DATETIME NULL, " +
@@ -34,6 +33,14 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "CountryIdentifier GUID NULL, " +
            "CountryCode NVARCHAR(2048) NULL, " +
            "CountryName NVARCHAR(2048) NULL, " +
+           "BusinessPartnerId INTEGER NULL, " +
+           "BusinessPartnerIdentifier GUID NULL, " +
+           "BusinessPartnerCode NVARCHAR(2048) NULL, " +
+           "BusinessPartnerName NVARCHAR(2048) NULL, " +
+           "StatusId INTEGER NULL, " +
+           "StatusIdentifier GUID NULL, " +
+           "StatusCode NVARCHAR(2048) NULL, " +
+           "StatusName NVARCHAR(2048) NULL, " +
            "IsSynced BOOL NULL, " +
            "UpdatedAt DATETIME NULL, " +
            "CreatedById INTEGER NULL, " +
@@ -42,21 +49,27 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, Status, ProContractDate, ContractStart, ContractExpiration, " +
+            "SELECT ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "StatusId, StatusIdentifier, StatusCode, StatusName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSites " +
-            "(Id, ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, Status, ProContractDate, ContractStart, ContractExpiration, " +
+            "(Id, ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "StatusId, StatusIdentifier, StatusCode, StatusName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (" +
-            "NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @Address, @MaxWorkers, @Status, @ProContractDate, @ContractStart, @ContractExpiration, " +
+            "NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @Address, @MaxWorkers, @ProContractDate, @ContractStart, @ContractExpiration, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
+            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
+            "@StatusId, @StatusIdentifier, @StatusCode, @StatusName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -74,12 +87,13 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
             dbEntry.MaxWorkers = SQLiteHelper.GetInt(query, ref counter);
-            dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.ProContractDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.ContractStart = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.ContractExpiration = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
             dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.Status = SQLiteHelper.GetStatus(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -96,7 +110,6 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@Name", ((object)constructionSite.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Address", ((object)constructionSite.Address) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MaxWorkers", ((object)constructionSite.MaxWorkers) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Status", ((object)constructionSite.Status) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ProContractDate", ((object)constructionSite.ProContractDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ContractStart", ((object)constructionSite.ContractStart) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ContractExpiration", ((object)constructionSite.ContractExpiration) ?? DBNull.Value);
@@ -108,6 +121,14 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)constructionSite.Country?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryCode", ((object)constructionSite.Country?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)constructionSite.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)constructionSite.BusinessPartner?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)constructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)constructionSite.BusinessPartner?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)constructionSite.BusinessPartner?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusId", ((object)constructionSite.Status?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusIdentifier", ((object)constructionSite.Status?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusCode", ((object)constructionSite.Status?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusName", ((object)constructionSite.Status?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", constructionSite.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSite.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -135,11 +156,11 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM ConstructionSites " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR InternalCode LIKE @Code) " +
+                        "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
                         "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
-                        "AND (@BusinessPartnerCode IS NULL OR @BusinessPartnerCode = '' OR IDENTIFIER IN (SELECT ConstructionSiteIdentifier FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerInternalCode LIKE @BusinessPartnerCode)) " +
+                        "AND (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR IDENTIFIER IN (SELECT ConstructionSiteIdentifier FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerName LIKE @BusinessPartnerName)) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -148,7 +169,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InternalCode", ((object)constructionSiteSearchObject.Search_InternalCode) != null ? "%" + constructionSiteSearchObject.Search_InternalCode + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)constructionSiteSearchObject.Search_BusinessPartnerCode) != null ? "%" + constructionSiteSearchObject.Search_BusinessPartnerCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)constructionSiteSearchObject.Search_BusinessPartnerName) != null ? "%" + constructionSiteSearchObject.Search_BusinessPartnerName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -165,18 +186,18 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM ConstructionSites " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR InternalCode LIKE @Code) " +
+                        "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
                         "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
-                        "AND (@BusinessPartnerCode IS NULL OR @BusinessPartnerCode = '' OR IDENTIFIER IN (SELECT ConstructionSiteIdentifier FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerInternalCode LIKE @BusinessPartnerCode)) " +
+                        "AND (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR IDENTIFIER IN (SELECT ConstructionSiteIdentifier FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerInternalCode LIKE @BusinessPartnerName)) " +
                         "AND CompanyId = @CompanyId;", db);
                     
                     selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InternalCode", ((object)constructionSiteSearchObject.Search_InternalCode) != null ? "%" + constructionSiteSearchObject.Search_InternalCode + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)constructionSiteSearchObject.Search_BusinessPartnerCode) != null ? "%" + constructionSiteSearchObject.Search_BusinessPartnerCode + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)constructionSiteSearchObject.Search_BusinessPartnerName) != null ? "%" + constructionSiteSearchObject.Search_BusinessPartnerName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();
@@ -214,15 +235,14 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "FROM ConstructionSites " +
                         "WHERE (@Code IS NULL OR @Code = '' OR InternalCode LIKE @Code) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
-                        //"AND (@City IS NULL OR @City = '' OR CityCode LIKE @City) " +
-                        "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
+                        "AND (@ShortName IS NULL OR @ShortName = '' OR ShortName LIKE @ShortName) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
                     
                     selectCommand.Parameters.AddWithValue("@Code", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@City", ((object)filterString) != null ? "%" + filterString + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@ShortName", ((object)filterString) != null ? "%" + filterString + "%" : "");
 
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);

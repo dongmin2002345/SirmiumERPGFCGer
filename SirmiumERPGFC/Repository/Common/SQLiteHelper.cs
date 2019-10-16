@@ -11,6 +11,7 @@ using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
+using ServiceInterfaces.ViewModels.Statuses;
 using System;
 
 namespace SirmiumERPGFC.Repository.Common
@@ -535,6 +536,23 @@ namespace SirmiumERPGFC.Repository.Common
                     Code = query.GetString(counter++),
                     Category = query.GetString(counter++),
                     Description = query.GetString(counter++)
+                };
+        }
+
+        public static StatusViewModel GetStatus(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new StatusViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
     }

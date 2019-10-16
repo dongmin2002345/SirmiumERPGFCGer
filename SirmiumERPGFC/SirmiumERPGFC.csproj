@@ -297,8 +297,14 @@
     <Compile Include="ViewComponents\Popups\ServiceDeliveryPopup.xaml.cs">
       <DependentUpon>ServiceDeliveryPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewComponents\Popups\StatusPopup.xaml.cs">
+      <DependentUpon>StatusPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Popups\TaxAdministrationPopup.xaml.cs">
       <DependentUpon>TaxAdministrationPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\VatPopup.xaml.cs">
+      <DependentUpon>VatPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Administrations\DataSync-List-Excel.xaml.cs">
       <DependentUpon>DataSync-List-Excel.xaml</DependentUpon>
@@ -692,7 +698,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ViewComponents\Popups\StatusPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewComponents\Popups\TaxAdministrationPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\VatPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

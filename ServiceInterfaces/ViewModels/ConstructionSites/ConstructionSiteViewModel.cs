@@ -1,5 +1,7 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Statuses;
 using System;
 using System.Collections.ObjectModel;
 
@@ -110,6 +112,39 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region BusinessPartner
+        private BusinessPartnerViewModel _BusinessPartner;
+
+        public BusinessPartnerViewModel BusinessPartner
+        {
+            get { return _BusinessPartner; }
+            set
+            {
+                if (_BusinessPartner != value)
+                {
+                    _BusinessPartner = value;
+                    NotifyPropertyChanged("BusinessPartner");
+                }
+            }
+        }
+        #endregion
+
+        #region Status
+        private StatusViewModel _Status;
+
+        public StatusViewModel Status
+        {
+            get { return _Status; }
+            set
+            {
+                if (_Status != value)
+                {
+                    _Status = value;
+                    NotifyPropertyChanged("Status");
+                }
+            }
+        }
+        #endregion
 
         #region MaxWorkers
         private int _MaxWorkers;
@@ -123,23 +158,6 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
                 {
                     _MaxWorkers = value;
                     NotifyPropertyChanged("MaxWorkers");
-                }
-            }
-        }
-        #endregion
-
-        #region Status
-        private int _Status;
-
-        public int Status
-        {
-            get { return _Status; }
-            set
-            {
-                if (_Status != value)
-                {
-                    _Status = value;
-                    NotifyPropertyChanged("Status");
                 }
             }
         }
@@ -336,18 +354,18 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
-        #region Search_BusinessPartnerCode
-        private string _Search_BusinessPartnerCode;
+        #region Search_BusinessPartnerName
+        private string _Search_BusinessPartnerName;
 
-        public string Search_BusinessPartnerCode
+        public string Search_BusinessPartnerName
         {
-            get { return _Search_BusinessPartnerCode; }
+            get { return _Search_BusinessPartnerName; }
             set
             {
-                if (_Search_BusinessPartnerCode != value)
+                if (_Search_BusinessPartnerName != value)
                 {
-                    _Search_BusinessPartnerCode = value;
-                    NotifyPropertyChanged("Search_BusinessPartnerCode");
+                    _Search_BusinessPartnerName = value;
+                    NotifyPropertyChanged("Search_BusinessPartnerName");
                 }
             }
         }
