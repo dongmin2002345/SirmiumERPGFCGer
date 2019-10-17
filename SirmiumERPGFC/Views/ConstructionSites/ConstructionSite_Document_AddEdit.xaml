@@ -196,7 +196,7 @@
                 <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="2">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text=" ZATVORI " FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
             </Grid>

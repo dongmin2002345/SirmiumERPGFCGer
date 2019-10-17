@@ -5,9 +5,6 @@ using ServiceInterfaces.ViewModels.Common.Shipments;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Shipments
 {
@@ -105,7 +102,6 @@ namespace SirmiumERPGFC.Repository.Shipments
             insertCommand.Parameters.AddWithValue("@DocumentName", ((object)Shipment.DocumentName) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Note", ((object)Shipment.Note) ?? DBNull.Value);
             
-
             insertCommand.Parameters.AddWithValue("@IsSynced", Shipment.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)Shipment.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -392,8 +388,6 @@ namespace SirmiumERPGFC.Repository.Shipments
                 SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-
-
                 try
                 {
                     insertCommand = AddCreateParameters(insertCommand, Shipment);
@@ -449,8 +443,6 @@ namespace SirmiumERPGFC.Repository.Shipments
                 return response;
             }
         }
-
-       
 
         #endregion
     }

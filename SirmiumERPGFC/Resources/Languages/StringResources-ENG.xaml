@@ -611,6 +611,14 @@
     <system:String x:Key="Naziv_dokumenta">Document name</system:String>
     <system:String x:Key="Morate_odabrati_posiljku_za_izmenuUzvičnik">You need to select a shipment to edit!</system:String>
     <system:String x:Key="Morate_odabrati_dokumentUzvičnik">You need to select document!</system:String>
+
+    <system:String x:Key="Kupac">Customer</system:String>
+    <system:String x:Key="Kupac_dvotacka">Customer:</system:String>
+    <system:String x:Key="Ne_postoje_stavke_za_proknjižavanje">There are no entries to save</system:String>
+    <system:String x:Key="Obavezno_polje_napomena">Required Field: Note</system:String>
+    <system:String x:Key="Obavezno_polje_naziv">Required Field: Name</system:String>
+
+
     <system:String x:Key="Morate_odabrati_racunUzvičnik">You need to select invoice!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Poslovni_partner">Required field: Business partner</system:String>
     <system:String x:Key="Kupac_Dvotacka">Customer:</system:String>

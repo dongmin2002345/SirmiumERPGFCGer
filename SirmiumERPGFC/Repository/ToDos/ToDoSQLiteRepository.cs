@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.ToDos;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.ToDos
 {
     public class ToDoSQLiteRepository
     {
+        #region SQL
+
         public static string ToDoTableCreatePart =
             "CREATE TABLE IF NOT EXISTS ToDos " +
             "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -42,6 +40,52 @@ namespace SirmiumERPGFC.Repository.ToDos
             "VALUES (NULL, @ServerId, @Identifier, @Name, @Description, @Path, @ToDoDate, @IsPrivate, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methods
+
+        private ToDoViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            ToDoViewModel dbEntry = new ToDoViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ToDoDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.IsPrivate = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, ToDoViewModel toDo)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", toDo.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", toDo.Identifier);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)toDo.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Description", ((object)toDo.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)toDo.Path) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ToDoDate", ((object)toDo.ToDoDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsPrivate", ((object)toDo.IsPrivate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", toDo.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)toDo.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public ToDoListResponse GetToDos(int companyId, string filterString)
         {
             ToDoListResponse response = new ToDoListResponse();
@@ -63,22 +107,8 @@ namespace SirmiumERPGFC.Repository.ToDos
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        ToDoViewModel dbEntry = new ToDoViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ToDoDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsPrivate = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        ToDos.Add(dbEntry);
-                    }
+                        ToDos.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -112,28 +142,15 @@ namespace SirmiumERPGFC.Repository.ToDos
                         "AND IsPrivate = 1 " +
                         "AND CreatedById = @CreatedById " + 
                         "ORDER BY IsSynced, Id DESC;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUserId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        ToDoViewModel dbEntry = new ToDoViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ToDoDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsPrivate = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        ToDos.Add(dbEntry);
-                    }
+                        ToDos.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -169,22 +186,8 @@ namespace SirmiumERPGFC.Repository.ToDos
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        ToDoViewModel dbEntry = new ToDoViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.ToDoDate = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.IsPrivate = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        toDo = dbEntry;
-                    }
+                        toDo = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -200,6 +203,10 @@ namespace SirmiumERPGFC.Repository.ToDos
             response.ToDo = toDo;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IToDoService toDoService, Action<int, int> callback = null)
         {
@@ -217,16 +224,40 @@ namespace SirmiumERPGFC.Repository.ToDos
                 {
                     toSync = response?.ToDos?.Count ?? 0;
                     List<ToDoViewModel> toDosFromDB = response.ToDos;
-                    foreach (var toDo in toDosFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(toDo.Identifier);
-                            if (toDo.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM ToDos WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var toDo in toDosFromDB)
                             {
-                                toDo.IsSynced = true;
-                                Create(toDo);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", toDo.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (toDo.IsActive)
+                                {
+                                    toDo.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, toDo);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -272,37 +303,25 @@ namespace SirmiumERPGFC.Repository.ToDos
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public ToDoResponse Create(ToDoViewModel toDo)
         {
             ToDoResponse response = new ToDoResponse();
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", toDo.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", toDo.Identifier);
-                insertCommand.Parameters.AddWithValue("@Name", ((object)toDo.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Description", ((object)toDo.Description) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Path", ((object)toDo.Path) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@ToDoDate", ((object)toDo.ToDoDate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsPrivate", ((object)toDo.IsPrivate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", toDo.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)toDo.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, toDo);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -318,45 +337,9 @@ namespace SirmiumERPGFC.Repository.ToDos
             }
         }
 
-        public ToDoResponse UpdateSyncStatus(Guid identifier, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            ToDoResponse response = new ToDoResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE ToDos SET " +
-                    "IsSynced = @IsSynced, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public ToDoResponse Delete(Guid identifier)
         {
@@ -370,12 +353,12 @@ namespace SirmiumERPGFC.Repository.ToDos
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM ToDos WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM ToDos WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -409,7 +392,7 @@ namespace SirmiumERPGFC.Repository.ToDos
                     insertCommand.CommandText = "DELETE FROM ToDos";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -432,5 +415,7 @@ namespace SirmiumERPGFC.Repository.ToDos
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }
