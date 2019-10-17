@@ -113,7 +113,7 @@
                             <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
                              Text="{Binding Path=CurrentBusinessPartner.WebSite}" />
 
-                            <TextBlock Grid.Row="5" Grid.Column="3" Text="Kupac" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Kupac_Dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                             <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtCustomer"  
                              Text="{Binding Path=CurrentBusinessPartner.Customer}"/>
 

@@ -115,7 +115,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -265,7 +265,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (BusinessPartnerTypesFromDB == null || BusinessPartnerTypesFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_uneti_osnovne_podatkeUzvičnik"));
                 return;
             }
 

@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Views.Shipments
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.Shipments
 
             if (CurrentShipmentDocumentForm.Name == null)
             {
-                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
                 return;
             }
 

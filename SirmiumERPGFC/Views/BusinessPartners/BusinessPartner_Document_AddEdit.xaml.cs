@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartnerDocumentForm.Name == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Naziv";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
                 return;
             }
 
@@ -344,7 +344,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (BusinessPartnerDocumentsFromDB == null || BusinessPartnerDocumentsFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_uneti_osnovne_podatkeUzvičnik"));
                 return;
             }
 

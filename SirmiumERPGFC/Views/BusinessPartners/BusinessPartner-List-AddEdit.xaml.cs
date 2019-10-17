@@ -212,7 +212,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner?.InternalCode == null)
             {
-                MainWindow.WarningMessage = "Obavezno polje: Sifra";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Šifra"));
                 return;
             }
 
@@ -220,7 +220,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             Thread td = new Thread(() => {
 
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentBusinessPartner.IsSynced = false;
@@ -230,23 +230,23 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 BusinessPartnerResponse response = new BusinessPartnerSQLiteRepository().Create(CurrentBusinessPartner);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod čuvanja podataka!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 response = businessPartnerService.Create(CurrentBusinessPartner);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu. Greška kod čuvanja na serveru!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     new BusinessPartnerSQLiteRepository().Sync(businessPartnerService);

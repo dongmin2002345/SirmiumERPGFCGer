@@ -345,38 +345,20 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 return;
             }
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation(((string)Application.Current.FindResource("poslovnog_partnera")), CurrentBusinessPartner.Name);
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
+            // Delete data
+            var result = businessPartnerService.Delete(CurrentBusinessPartner.Identifier);
+            if (result.Success)
             {
-                BusinessPartnerResponse response = businessPartnerService.Delete(CurrentBusinessPartner.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
-                response = new BusinessPartnerSQLiteRepository().Delete(CurrentBusinessPartner.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
-
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Poslovni_partner_je_uspešno_obrisanUzvičnik"));
-
-                Thread displayThread = new Thread(() => DisplayData());
+                Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
-
-            // Remove blur effects
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+            else
+            {
+                MainWindow.ErrorMessage = result.Message;
+            }
         }
 
         #endregion

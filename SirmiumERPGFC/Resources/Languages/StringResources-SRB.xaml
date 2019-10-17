@@ -342,6 +342,7 @@
     <system:String x:Key="Regioni">Regioni</system:String>
     <system:String x:Key="Poreska_Uprava">Poreska Uprava</system:String>
     <system:String x:Key="Ulazni_računi">Ulazni računi</system:String>
+    <system:String x:Key="Ulazni_računi_tritacke">Ulazni računi...</system:String>
     <system:String x:Key="Izlazni_računi">Izlazni računi</system:String>
     <system:String x:Key="IZVEZI_U_EXCEL">IZVEZI U EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SAČUVAJ ZAGLAVLJE</system:String>
@@ -616,9 +617,10 @@
     <system:String x:Key="Naziv_dokumenta">Naziv dokumenta</system:String>
     <system:String x:Key="Morate_odabrati_posiljku_za_izmenuUzvičnik">Morate odabrati pošiljku za izmenu!</system:String>
     <system:String x:Key="Morate_odabrati_dokumentUzvičnik">Morate odabrati dokument!</system:String>
-    
-    
-    
-    
-    
+    <system:String x:Key="Morate_odabrati_racunUzvičnik">Morate odabrati račun!</system:String>
+    <system:String x:Key="Morate_odabrati_poslovnogpartneraUzvičnik">Morate odabrati poslovnog partnera!</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Poslovni_partner">Obavezno polje: Poslovni partner</system:String>
+    <system:String x:Key="Kupac">Kupac</system:String>
+    <system:String x:Key="Kupac_Dvotacka">Kupac:</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Institucija">Obavezno polje: Institucije</system:String>
 </ResourceDictionary>

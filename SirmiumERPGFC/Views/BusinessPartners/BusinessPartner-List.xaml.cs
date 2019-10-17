@@ -814,44 +814,44 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Poslovni partner ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Poslovni_partneri_TriTacke"));
             new BusinessPartnerSQLiteRepository().Sync(businessPartnerService, (synced, toSync) => {
-                SyncButtonContent = " Poslovni partner (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Poslovni_partner")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayData();
@@ -871,9 +871,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerNoteSQLiteRepository().Sync(businessPartnerNoteService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayNoteData();
@@ -886,9 +886,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerDocumentSQLiteRepository().Sync(businessPartnerDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayDocumentData();
@@ -901,9 +901,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerPhoneSQLiteRepository().Sync(businessPartnerPhoneService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayPhoneData();
@@ -916,9 +916,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerLocationSQLiteRepository().Sync(businessPartnerLocationService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayLocationData();
@@ -931,9 +931,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerInstitutionSQLiteRepository().Sync(businessPartnerInstitutionService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayInstitutionData();
@@ -946,9 +946,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerBankSQLiteRepository().Sync(businessPartnerBankService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayBankData();
@@ -961,9 +961,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new BusinessPartnerTypeSQLiteRepository().Sync(businessPartnerTypeService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayTypeData();
@@ -1070,7 +1070,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati poslosvnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
                 return;
             }
 
@@ -1087,7 +1087,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
                 return;
             }
 
@@ -1104,7 +1104,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati poslosvnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
                 return;
             }
 
@@ -1121,7 +1121,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
                 return;
             }
 
@@ -1138,7 +1138,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati poslosvnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
                 return;
             }
 
@@ -1155,7 +1155,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
                 return;
             }
 
@@ -1172,7 +1172,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             if (CurrentBusinessPartner == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati poslovnog partnera!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
                 return;
             }
 
