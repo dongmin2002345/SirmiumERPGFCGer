@@ -12,27 +12,28 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Margin="2" Header="Osnovni podaci o statusu">
+        <GroupBox Grid.Row="0" Margin="2" Header="{DynamicResource Podaci_o_statusu}">
             <Grid x:Name="mainGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="131*" />
+                    <ColumnDefinition Width="36*" />
+                    <ColumnDefinition Width="225*"/>
+                    <ColumnDefinition Width="131*" />
+                    <ColumnDefinition Width="261*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra (automatski) " VerticalAlignment="Center" Margin="5 0 5 0" />
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" IsEnabled="False" Text="{Binding Path=CurrentStatus.Code, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Šifra_automatski}" VerticalAlignment="Center" Margin="5,8,5,7" />
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" IsEnabled="False" Text="{Binding Path=CurrentStatus.Code, Mode=TwoWay}" Grid.ColumnSpan="2"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="2"  Text="Naziv *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentStatus.Name, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="0" Grid.Column="3"  Text="{DynamicResource Naziv}" VerticalAlignment="Center" Margin="5,8,5,7" />
+                <TextBox Grid.Row="0" Grid.Column="4" Margin="2" x:Name="txtName" Text="{Binding Path=CurrentStatus.Name, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="2" Grid.Column="0"  Text="Skraćeni naziv *" VerticalAlignment="Center" Margin="5 0 5 0" />
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtShortName" Text="{Binding Path=CurrentStatus.ShortName, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0"  Text="{DynamicResource Skraćenica}" VerticalAlignment="Center" Margin="5,7" />
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtShortName" Text="{Binding Path=CurrentStatus.ShortName, Mode=TwoWay}" Grid.ColumnSpan="2"/>
 
             </Grid>
         </GroupBox>
@@ -55,8 +56,8 @@
 
             <Button Grid.Column="3" x:Name="btnCancel" Click="btnCancel_Click" Margin="2">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                    <TextBlock Text=" ZATVORI " FontSize="20" FontWeight="Bold"/>
+                    <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
                 </StackPanel>
             </Button>
         </Grid>

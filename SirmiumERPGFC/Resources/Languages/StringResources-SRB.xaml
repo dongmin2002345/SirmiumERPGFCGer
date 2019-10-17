@@ -623,5 +623,15 @@
     <system:String x:Key="Obavezno_polje_napomena">Obavezno polje: Napomena</system:String>
     <system:String x:Key="Obavezno_polje_naziv">Obavezno polje: Naziv</system:String>
 
-
+    <system:String x:Key="Podaci_o_statusu">Podaci o statusu</system:String>
+    <system:String x:Key="Šifra_automatski">Šifra automatski</system:String>
+    <system:String x:Key="Skraćenica">Skraćenica</system:String>
+    <system:String x:Key="Obavezno_polje_skraćeni_naziv">Obavezno polje skraćeni: Naziv</system:String>
+    <system:String x:Key="Obavezno_polje_naziv_PDV">Obavezno polje: Naziv PDV-a</system:String>
+    <system:String x:Key="Podaci_o_PDV_u">Podaci o PDV-u</system:String>
+    <system:String x:Key="Morate_izabrati_stavku">Morate izabrati stavku</system:String>
+    <system:String x:Key="PDV_procenat">PDV procenat</system:String>
+    <system:String x:Key="Naziv_PDV_procenta">Naziv PDV procenta</system:String>
+    <system:String x:Key="Statusi">Statusi</system:String>
+    <system:String x:Key="PDV_procenti">PDV procenti</system:String>
 </ResourceDictionary>

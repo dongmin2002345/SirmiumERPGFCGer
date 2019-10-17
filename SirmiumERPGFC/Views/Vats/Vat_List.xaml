@@ -18,7 +18,7 @@
 
     <Grid>
         <!--    List of all data    -->
-        <GroupBox Header="PDV procenti" Margin="2">
+        <GroupBox Header="{DynamicResource Podaci_o_PDV_u}" Margin="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -48,7 +48,7 @@
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="Pretraga: " />
+                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="{DynamicResource PRETRAGA}" />
                     <TextBox Grid.Column="4" Margin="2" x:Name="txtDescription"
                     Text="{Binding VatSearchObject.Search_Description, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtName_TextChanged" Controls:TextBoxHelper.ClearTextButton="True"/>
 
@@ -100,9 +100,9 @@
                           SelectedItem="{Binding Path=CurrentVat}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Amount" Header="Iznos (%)" Binding="{Binding Amount}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Description" Header="Napomena" Binding="{Binding Description}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Code}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Amount}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Description" Header="{DynamicResource Napomena}" Binding="{Binding Description}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

@@ -616,6 +616,16 @@
     <system:String x:Key="Ne_postoje_stavke_za_proknjižavanje">There are no entries to save</system:String>
     <system:String x:Key="Obavezno_polje_napomena">Required Field: Note</system:String>
     <system:String x:Key="Obavezno_polje_naziv">Required Field: Name</system:String>
-
-
+    
+    <system:String x:Key="Podaci_o_statusu">Status data</system:String>
+    <system:String x:Key="Šifra_automatski">Code (automatic)</system:String>
+    <system:String x:Key="Skraćenica">Abbreviation</system:String>
+    <system:String x:Key="Obavezno_polje_skraćeni_naziv">Required field: Abbreviation</system:String>
+    <system:String x:Key="Obavezno_polje_naziv_PDV">Required field: VAT Name</system:String>
+    <system:String x:Key="Podaci_o_PDV_u">VAT Data</system:String>
+    <system:String x:Key="Morate_izabrati_stavku">You need to choose an entry</system:String>
+    <system:String x:Key="PDV_procenat">VAT Percent</system:String>
+    <system:String x:Key="Naziv_PDV_procenta">VAT Percent Name</system:String>
+    <system:String x:Key="Statusi">Statuses</system:String>
+    <system:String x:Key="PDV_procenti">VAT Percents</system:String>
 </ResourceDictionary>

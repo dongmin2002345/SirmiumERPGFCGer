@@ -403,7 +403,7 @@
     <system:String x:Key="Sačuvaj_i_proknjiži">Speichern und gebucht</system:String>
     <system:String x:Key="Odaberite_firmuTriTacke">Wähle eine Firma ...</system:String>
     <system:String x:Key="Greška_pri_učitavanju_podatakaUzvičnik">Fehler beim Laden von Daten!</system:String>
-    <system:String x:Key="Stavka_je_uspešno_obrisanaUzvičnik">Artikel erfolgreich gelöscht!</system:String>
+    <system:String x:Key="Stavka_je_uspešno_obrisanaUzvičnik">Eintrag erfolgreich gelöscht!</system:String>
     <system:String x:Key="Zaglavlje_nije_sačuvano">Kopfzeile nicht gespeichert</system:String>
     <system:String x:Key="Podaci_su_uspešno_sačuvaniUzvičnik">Daten wurden erfolgreich gespeichert!</system:String>
     <system:String x:Key="Proknjiži">Speichern</system:String>
@@ -624,4 +624,15 @@
     <system:String x:Key="Obavezno_polje_napomena">Obligatorisches Feld: Anmerkung</system:String>
     <system:String x:Key="Obavezno_polje_naziv">Obligatorisches Feld: Name</system:String>
 
+    <system:String x:Key="Podaci_o_statusu">Statusdaten</system:String>
+    <system:String x:Key="Šifra_automatski">Code (automatisch)</system:String>
+    <system:String x:Key="Skraćenica">Abkürzung</system:String>
+    <system:String x:Key="Obavezno_polje_skraćeni_naziv">Obligatorisches Feld: Abkürzung</system:String>
+    <system:String x:Key="Obavezno_polje_naziv_PDV">Obligatorisches Feld: Mwst.</system:String>
+    <system:String x:Key="Podaci_o_PDV_u">Mwst. Daten</system:String>
+    <system:String x:Key="Morate_izabrati_stavku">Sie müssen zuerst einen Eintrag wehlen</system:String>
+    <system:String x:Key="PDV_procenat">Mwst. Prozent</system:String>
+    <system:String x:Key="Naziv_PDV_procenta">Mwst. Prozentname</system:String>
+    <system:String x:Key="Statusi">Statuse</system:String>
+    <system:String x:Key="PDV_procenti">Mwst. Prozente</system:String>
 </ResourceDictionary>

@@ -96,7 +96,7 @@ namespace SirmiumERPGFC.Views.Vats
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string) Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -156,7 +156,7 @@ namespace SirmiumERPGFC.Views.Vats
 
             if (String.IsNullOrEmpty(CurrentVat.Description))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv PDV procenta";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_polje_naziv"));
                 return;
             }
 
@@ -164,7 +164,7 @@ namespace SirmiumERPGFC.Views.Vats
 
             Thread th = new Thread(() =>
             {
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentVat.IsSynced = false;
@@ -175,8 +175,8 @@ namespace SirmiumERPGFC.Views.Vats
                 response = new VatSQLiteRepository().Create(CurrentVat);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                     return;
                 }
@@ -184,16 +184,16 @@ namespace SirmiumERPGFC.Views.Vats
                 response = VatService.Create(CurrentVat);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik")) + response.Message;
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
                     new VatSQLiteRepository().UpdateSyncStatus(response.Vat.Identifier, response.Vat.Id, true, response.Vat.UpdatedAt, response.Vat.Code);
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     VatCreatedUpdated();

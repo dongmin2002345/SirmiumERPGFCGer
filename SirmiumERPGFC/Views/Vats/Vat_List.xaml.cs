@@ -132,7 +132,7 @@ namespace SirmiumERPGFC.Views.Vats
 
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -229,7 +229,7 @@ namespace SirmiumERPGFC.Views.Vats
 
             DisplayVatData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Views.Vats
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -272,20 +272,20 @@ namespace SirmiumERPGFC.Views.Vats
 
             Vat_AddEdit addEditForm = new Vat_AddEdit(Vat, true);
             addEditForm.VatCreatedUpdated += new VatHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o PDV procentima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci_o_PDV_u"), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentVat == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati PDV procenat za izmenu!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Morate_izabrati_stavku");
                 return;
             }
 
             Vat_AddEdit addEditForm = new Vat_AddEdit(CurrentVat, false);
             addEditForm.VatCreatedUpdated += new VatHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o PDV procentima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci_o_PDV_u"), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -296,7 +296,7 @@ namespace SirmiumERPGFC.Views.Vats
 
                 if (CurrentVat == null)
                 {
-                    MainWindow.WarningMessage = "Morate odabrati PDV procenat za brisanje!";
+                    MainWindow.WarningMessage = (string)Application.Current.FindResource("Morate_izabrati_stavku");
                     VatDataLoading = false;
                     return;
                 }
@@ -304,20 +304,20 @@ namespace SirmiumERPGFC.Views.Vats
                 VatResponse response = VatService.Delete(CurrentVat.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = (string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik");
                     VatDataLoading = false;
-                    return;
+                    return; 
                 }
 
                 response = new VatSQLiteRepository().Delete(CurrentVat.Identifier);
-                if (!response.Success)
+                if (!response.Success) 
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = (string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik");
                     VatDataLoading = false;
                     return;
                 }
-
-                MainWindow.SuccessMessage = "PDV procenat je uspešno obrisan!";
+                
+                MainWindow.SuccessMessage = (string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik");
 
                 DisplayVatData();
 

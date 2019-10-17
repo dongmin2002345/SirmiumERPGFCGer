@@ -85,7 +85,7 @@ namespace SirmiumERPGFC.Views.Statuses
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -145,13 +145,13 @@ namespace SirmiumERPGFC.Views.Statuses
 
             if (String.IsNullOrEmpty(CurrentStatus.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_polje_naziv"));
                 return;
             }
 
             if (String.IsNullOrEmpty(CurrentStatus.ShortName))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Skraćeni naziv";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_polje_skraćeni_naziv"));
                 return;
             }
 
@@ -159,7 +159,7 @@ namespace SirmiumERPGFC.Views.Statuses
 
             Thread th = new Thread(() =>
             {
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentStatus.IsSynced = false;
@@ -170,8 +170,8 @@ namespace SirmiumERPGFC.Views.Statuses
                 response = new StatusSQLiteRepository().Create(CurrentStatus);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog čuvanja!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                     return;
                 }
@@ -179,15 +179,15 @@ namespace SirmiumERPGFC.Views.Statuses
                 response = StatusService.Create(CurrentStatus);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik")) + response.Message;
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     StatusCreatedUpdated();

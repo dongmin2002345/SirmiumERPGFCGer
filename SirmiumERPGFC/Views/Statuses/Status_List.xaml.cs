@@ -132,7 +132,7 @@ namespace SirmiumERPGFC.Views.Statuses
 
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -220,16 +220,16 @@ namespace SirmiumERPGFC.Views.Statuses
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " PDV ... ";
+            SyncButtonContent = " Status ... ";
             new StatusSQLiteRepository().Sync(StatusService, (synced, toSync) =>
             {
                 if (toSync > 0)
-                    SyncButtonContent = " PDV (" + synced + "/" + toSync + ")";
+                    SyncButtonContent = " Status (" + synced + "/" + toSync + ")";
             });
 
             DisplayStatusData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Views.Statuses
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -272,20 +272,20 @@ namespace SirmiumERPGFC.Views.Statuses
 
             Status_AddEdit addEditForm = new Status_AddEdit(Status, true);
             addEditForm.StatusCreatedUpdated += new StatusHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o PDV procentima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci_o_statusu"), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentStatus == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati PDV procenat za izmenu!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Morate_izabrati_stavku");
                 return;
             }
 
             Status_AddEdit addEditForm = new Status_AddEdit(CurrentStatus, false);
             addEditForm.StatusCreatedUpdated += new StatusHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o PDV procentima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci_o_statusu"), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -296,7 +296,7 @@ namespace SirmiumERPGFC.Views.Statuses
 
                 if (CurrentStatus == null)
                 {
-                    MainWindow.WarningMessage = "Morate odabrati PDV procenat za brisanje!";
+                    MainWindow.WarningMessage = (string)Application.Current.FindResource("Morate_izabrati_stavku");
                     StatusDataLoading = false;
                     return;
                 }
@@ -304,7 +304,7 @@ namespace SirmiumERPGFC.Views.Statuses
                 StatusResponse response = StatusService.Delete(CurrentStatus.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = (string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik");
                     StatusDataLoading = false;
                     return;
                 }
@@ -312,12 +312,12 @@ namespace SirmiumERPGFC.Views.Statuses
                 response = new StatusSQLiteRepository().Delete(CurrentStatus.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = (string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik");
                     StatusDataLoading = false;
                     return;
                 }
 
-                MainWindow.SuccessMessage = "PDV procenat je uspešno obrisan!";
+                MainWindow.SuccessMessage = (string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik");
 
                 DisplayStatusData();
 

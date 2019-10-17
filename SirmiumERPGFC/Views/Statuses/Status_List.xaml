@@ -18,7 +18,7 @@
 
     <Grid>
         <!--    List of all data    -->
-        <GroupBox Header="Statusi" Margin="2">
+        <GroupBox Header="{DynamicResource Podaci_o_statusu}" Margin="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -48,7 +48,7 @@
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="Pretraga: " />
+                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="{DynamicResource PRETRAGA}" />
                     <TextBox Grid.Column="4" Margin="2" x:Name="txtSearchName"
                     Text="{Binding StatusSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtSearchName_TextChanged" Controls:TextBoxHelper.ClearTextButton="True"/>
 
@@ -100,9 +100,9 @@
                           SelectedItem="{Binding Path=CurrentStatus}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ShortName" Header="Skraćeni naziv" Binding="{Binding ShortName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra_automatski}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ShortName" Header="{DynamicResource Skraćenica}" Binding="{Binding ShortName}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
