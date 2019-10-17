@@ -160,16 +160,14 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM ConstructionSites " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
                         "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
-                        "AND (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR IDENTIFIER IN (SELECT ConstructionSiteIdentifier FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerName LIKE @BusinessPartnerName)) " +
+                        "AND (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     
-                    selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InternalCode", ((object)constructionSiteSearchObject.Search_InternalCode) != null ? "%" + constructionSiteSearchObject.Search_InternalCode + "%" : "");
@@ -190,14 +188,12 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM ConstructionSites " +
-                        "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
-                        "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
+                        "WHERE (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@City IS NULL OR @City = '' OR CityName LIKE @City) " +
                         "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
-                        "AND (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR IDENTIFIER IN (SELECT ConstructionSiteIdentifier FROM BusinessPartnerByConstructionSites WHERE BusinessPartnerInternalCode LIKE @BusinessPartnerName)) " +
+                        "AND (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
                         "AND CompanyId = @CompanyId;", db);
                     
-                    selectCommand.Parameters.AddWithValue("@Code", ((object)constructionSiteSearchObject.Search_Code) != null ? "%" + constructionSiteSearchObject.Search_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteSearchObject.Search_Name) != null ? "%" + constructionSiteSearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@City", ((object)constructionSiteSearchObject.Search_City) != null ? "%" + constructionSiteSearchObject.Search_City + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InternalCode", ((object)constructionSiteSearchObject.Search_InternalCode) != null ? "%" + constructionSiteSearchObject.Search_InternalCode + "%" : "");
