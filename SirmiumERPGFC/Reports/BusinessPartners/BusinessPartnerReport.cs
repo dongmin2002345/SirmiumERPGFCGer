@@ -193,7 +193,7 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter + 1] = businessPartner.PDV;
+            //sheet1.Cells[rowCounter, columnCounter + 1] = businessPartner.PDV;
 
             columnCounter += 4;
 
@@ -207,7 +207,7 @@ namespace SirmiumERPGFC.Reports.BusinessPartners
             sheet1.Cells[rowCounter, columnCounter + 1].HorizontalAlignment = XlHAlign.xlHAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].VerticalAlignment = XlVAlign.xlVAlignCenter;
             sheet1.Cells[rowCounter, columnCounter + 1].Font.Size = 10;
-            sheet1.Cells[rowCounter, columnCounter + 1] = businessPartner.Rebate;
+            sheet1.Cells[rowCounter, columnCounter + 1] = businessPartner.Customer;
 
             sheet1.Range[sheet1.Cells[rowCounter, leftSideMin], sheet1.Cells[rowCounter, rightSideMax]].Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDash;
 

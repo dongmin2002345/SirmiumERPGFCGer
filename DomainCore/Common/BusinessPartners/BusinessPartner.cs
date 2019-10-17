@@ -1,7 +1,9 @@
 ﻿using DomainCore.Base;
 using DomainCore.Common.Locations;
+using DomainCore.Common.Prices;
 using DomainCore.Common.Sectors;
 using DomainCore.Common.TaxAdministrations;
+using DomainCore.Vats;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,10 +18,12 @@ namespace DomainCore.Common.BusinessPartners
 
         public string PIB { get; set; }
         public string PIO { get; set; }
-        public string PDV { get; set; }
+        public int? VatId { get; set; }
+        public Vat Vat { get; set; }
         public string IdentificationNumber { get; set; } // Business partner identification number (srb. Maticni broj)
-
-        public decimal Rebate { get; set; }
+        public int? DiscountId { get; set; }
+        public Discount Discount { get; set; }
+        public string Customer { get; set; }
         public int DueDate { get; set; }
 
         public string WebSite { get; set; }

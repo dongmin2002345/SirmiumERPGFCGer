@@ -80,16 +80,20 @@
                              Text="{Binding Path=CurrentBusinessPartner.PIO}" />
 
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource PDV_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPDVNumber"
-                             Text="{Binding Path=CurrentBusinessPartner.PDV}"/>
+                            <popups:VatPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popVatSrb" 
+                                   CurrentVat="{Binding Path=CurrentBusinessPartner.Vat, Mode=TwoWay}"/>
+                    <!--<TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtPDVNumber"
+                             Text="{Binding Path=CurrentBusinessPartner.PDV}"/>-->
 
                             <!--<TextBlock Grid.Row="3" Grid.Column="0" Text="Delatnost" VerticalAlignment="Center" Margin="5 0 5 0" />
                         <popups:AgencyPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgencySrb" 
                              CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency}"/>-->
 
                             <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource RabatDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
-                             Text="{Binding Path=CurrentBusinessPartner.Rebate}"/>
+                            <popups:DiscountPopup Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popDiscountGer"
+                               CurrentDiscount="{Binding Path=CurrentBusinessPartner.Discount, Mode=TwoWay}"/>
+                    <!--<TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtRebate"
+                             Text="{Binding Path=CurrentBusinessPartner.Rebate}"/>-->
 
                             <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource ValutaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                             <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtDueDate"
@@ -109,9 +113,9 @@
                             <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
                              Text="{Binding Path=CurrentBusinessPartner.WebSite}" />
 
-                            <!--<TextBlock Grid.Row="6" Grid.Column="0" Text="Kontakt osoba" VerticalAlignment="Center" Margin="5 0 5 0" />
-                        <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPerson"  
-                             Text="{Binding Path=CurrentBusinessPartner.ContactPerson}"/>-->
+                            <TextBlock Grid.Row="5" Grid.Column="3" Text="Kupac" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtCustomer"  
+                             Text="{Binding Path=CurrentBusinessPartner.Customer}"/>
 
                         </Grid>
                     </GroupBox>

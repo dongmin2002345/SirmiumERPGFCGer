@@ -319,9 +319,9 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
         #region CurrentPhysicalPersonProfession
-        private PhysicalPersonCardViewModel _CurrentPhysicalPersonProfession;
+        private PhysicalPersonProfessionViewModel _CurrentPhysicalPersonProfession;
 
-        public PhysicalPersonCardViewModel CurrentPhysicalPersonProfession
+        public PhysicalPersonProfessionViewModel CurrentPhysicalPersonProfession
         {
             get { return _CurrentPhysicalPersonProfession; }
             set
@@ -421,9 +421,9 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
         #region CurrentPhysicalPersonItem
-        private PhysicalPersonCardViewModel _CurrentPhysicalPersonItem;
+        private PhysicalPersonItemViewModel _CurrentPhysicalPersonItem;
 
-        public PhysicalPersonCardViewModel CurrentPhysicalPersonItem
+        public PhysicalPersonItemViewModel CurrentPhysicalPersonItem
         {
             get { return _CurrentPhysicalPersonItem; }
             set

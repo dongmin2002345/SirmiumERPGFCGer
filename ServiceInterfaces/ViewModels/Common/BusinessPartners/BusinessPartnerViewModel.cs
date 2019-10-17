@@ -1,7 +1,9 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Prices;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
+using ServiceInterfaces.ViewModels.Vats;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -100,22 +102,6 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
-        #region PDV
-        private string _PDV;
-
-        public string PDV
-        {
-            get { return _PDV; }
-            set
-            {
-                if (_PDV != value)
-                {
-                    _PDV = value;
-                    NotifyPropertyChanged("PDV");
-                }
-            }
-        }
-        #endregion
 
         #region IdentificationNumber
         private string _IdentificationNumber;
@@ -135,18 +121,18 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         #endregion
 
 
-        #region Rebate
-        private decimal _Rebate;
+        #region Customer
+        private string _Customer;
 
-        public decimal Rebate
+        public string Customer
         {
-            get { return _Rebate; }
+            get { return _Customer; }
             set
             {
-                if (_Rebate != value)
+                if (_Customer != value)
                 {
-                    _Rebate = value;
-                    NotifyPropertyChanged("Rebate");
+                    _Customer = value;
+                    NotifyPropertyChanged("Customer");
                 }
             }
         }
@@ -469,6 +455,39 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
 
         #endregion
 
+        #region Vat
+        private VatViewModel _Vat;
+
+        public VatViewModel Vat
+        {
+            get { return _Vat; }
+            set
+            {
+                if (_Vat != value)
+                {
+                    _Vat = value;
+                    NotifyPropertyChanged("Vat");
+                }
+            }
+        }
+        #endregion
+
+        #region Discount
+        private DiscountViewModel _Discount;
+
+        public DiscountViewModel Discount
+        {
+            get { return _Discount; }
+            set
+            {
+                if (_Discount != value)
+                {
+                    _Discount = value;
+                    NotifyPropertyChanged("Discount");
+                }
+            }
+        }
+        #endregion
 
         #region Locations
         private ObservableCollection<BusinessPartnerLocationViewModel> _Locations;

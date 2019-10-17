@@ -250,6 +250,12 @@ namespace SirmiumERPGFC.Views.Employees
                 return;
             }
 
+            if (CurrentPhysicalPersonItemForm.FamilyMember == null)
+            {
+                MainWindow.ErrorMessage = "Obavezno polje: Član porodice!";
+                return;
+            }
+
             #endregion
 
             new PhysicalPersonItemSQLiteRepository().Delete(CurrentPhysicalPersonItemForm.Identifier);

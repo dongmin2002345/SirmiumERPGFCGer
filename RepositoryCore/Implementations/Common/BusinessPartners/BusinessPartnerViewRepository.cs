@@ -3,8 +3,10 @@ using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.Locations;
+using DomainCore.Common.Prices;
 using DomainCore.Common.Sectors;
 using DomainCore.Common.TaxAdministrations;
+using DomainCore.Vats;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Context;
@@ -33,12 +35,14 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
             string queryString =
                 "SELECT BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerInternalCode, BusinessPartnerName, " +
-                "PIB, PIO, PDV, IdentificationNumber, Rebate, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
+                "PIB, PIO, IdentificationNumber, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
-                "IBAN, BetriebsNumber, " +
+                "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
+                "VatId, VatIdentifier, VatCode, VatDescription, " +
+                "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
                 "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
@@ -68,12 +72,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.PIB = reader["PIB"].ToString();
                         if (reader["PIO"] != DBNull.Value)
                             businessPartner.PIO = reader["PIO"].ToString();
-                        if (reader["PDV"] != DBNull.Value)
-                            businessPartner.PDV = reader["PDV"].ToString();
                         if (reader["IdentificationNumber"] != DBNull.Value)
                             businessPartner.IdentificationNumber = reader["IdentificationNumber"].ToString();
-                        if (reader["Rebate"] != DBNull.Value)
-                            businessPartner.Rebate = decimal.Parse(reader["Rebate"].ToString());
                         if (reader["DueDate"] != DBNull.Value)
                             businessPartner.DueDate = Int32.Parse(reader["DueDate"].ToString());
                         if (reader["WebSite"] != DBNull.Value)
@@ -103,6 +103,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.IBAN = reader["IBAN"].ToString();
                         if (reader["BetriebsNumber"] != DBNull.Value)
                             businessPartner.BetriebsNumber = reader["BetriebsNumber"].ToString();
+                        if (reader["Customer"] != DBNull.Value)
+                            businessPartner.Customer = reader["Customer"].ToString();
 
                         if (reader["CountryId"] != DBNull.Value)
                         {
@@ -132,6 +134,26 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Agency.Identifier = Guid.Parse(reader["AgencyIdentifier"].ToString());
                             businessPartner.Agency.Code = reader["AgencyCode"].ToString();
                             businessPartner.Agency.Name = reader["AgencyName"].ToString();
+                        }
+
+                        if (reader["VatId"] != DBNull.Value)
+                        {
+                            businessPartner.Vat = new Vat();
+                            businessPartner.VatId = Int32.Parse(reader["VatId"].ToString());
+                            businessPartner.Vat.Id = Int32.Parse(reader["VatId"].ToString());
+                            businessPartner.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
+                            businessPartner.Vat.Code = reader["VatCode"].ToString();
+                            businessPartner.Vat.Description = reader["VatDescription"].ToString();
+                        }
+
+                        if (reader["DiscountId"] != DBNull.Value)
+                        {
+                            businessPartner.Discount = new Discount();
+                            businessPartner.DiscountId = Int32.Parse(reader["DiscountId"].ToString());
+                            businessPartner.Discount.Id = Int32.Parse(reader["DiscountId"].ToString());
+                            businessPartner.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
+                            businessPartner.Discount.Code = reader["DiscountCode"].ToString();
+                            businessPartner.Discount.Name = reader["DiscountName"].ToString();
                         }
 
                         if (reader["TaxNr"] != DBNull.Value)
@@ -191,12 +213,14 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
             string queryString =
                 "SELECT BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerInternalCode, BusinessPartnerName, " +
-                "PIB, PIO, PDV, IdentificationNumber, Rebate, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
+                "PIB, PIO, IdentificationNumber, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
-                "IBAN, BetriebsNumber, " +
+                "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
+                "VatId, VatIdentifier, VatCode, VatDescription, " +
+                "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
                 "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
@@ -228,12 +252,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.PIB = reader["PIB"].ToString();
                         if (reader["PIO"] != DBNull.Value)
                             businessPartner.PIO = reader["PIO"].ToString();
-                        if (reader["PDV"] != DBNull.Value)
-                            businessPartner.PDV = reader["PDV"].ToString();
                         if (reader["IdentificationNumber"] != DBNull.Value)
                             businessPartner.IdentificationNumber = reader["IdentificationNumber"].ToString();
-                        if (reader["Rebate"] != DBNull.Value)
-                            businessPartner.Rebate = decimal.Parse(reader["Rebate"].ToString());
                         if (reader["DueDate"] != DBNull.Value)
                             businessPartner.DueDate = Int32.Parse(reader["DueDate"].ToString());
                         if (reader["WebSite"] != DBNull.Value)
@@ -263,6 +283,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.IBAN = reader["IBAN"].ToString();
                         if (reader["BetriebsNumber"] != DBNull.Value)
                             businessPartner.BetriebsNumber = reader["BetriebsNumber"].ToString();
+                        if (reader["Customer"] != DBNull.Value)
+                            businessPartner.Customer = reader["Customer"].ToString();
 
                         if (reader["CountryId"] != DBNull.Value)
                         {
@@ -292,6 +314,26 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Agency.Identifier = Guid.Parse(reader["AgencyIdentifier"].ToString());
                             businessPartner.Agency.Code = reader["AgencyCode"].ToString();
                             businessPartner.Agency.Name = reader["AgencyName"].ToString();
+                        }
+
+                        if (reader["VatId"] != DBNull.Value)
+                        {
+                            businessPartner.Vat = new Vat();
+                            businessPartner.VatId = Int32.Parse(reader["VatId"].ToString());
+                            businessPartner.Vat.Id = Int32.Parse(reader["VatId"].ToString());
+                            businessPartner.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
+                            businessPartner.Vat.Code = reader["VatCode"].ToString();
+                            businessPartner.Vat.Description = reader["VatDescription"].ToString();
+                        }
+
+                        if (reader["DiscountId"] != DBNull.Value)
+                        {
+                            businessPartner.Discount = new Discount();
+                            businessPartner.DiscountId = Int32.Parse(reader["DiscountId"].ToString());
+                            businessPartner.Discount.Id = Int32.Parse(reader["DiscountId"].ToString());
+                            businessPartner.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
+                            businessPartner.Discount.Code = reader["DiscountCode"].ToString();
+                            businessPartner.Discount.Name = reader["DiscountName"].ToString();
                         }
 
                         if (reader["TaxNr"] != DBNull.Value)
@@ -352,9 +394,9 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
             string queryString =
                 "SELECT BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerInternalCode, BusinessPartnerName, " +
-                "PIB, PIO, PDV, IdentificationNumber, Rebate, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
+                "PIB, PIO, IdentificationNumber, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
-                "IBAN, BetriebsNumber, " +
+                "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
@@ -386,12 +428,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.PIB = reader["PIB"].ToString();
                         if (reader["PIO"] != DBNull.Value)
                             businessPartner.PIO = reader["PIO"].ToString();
-                        if (reader["PDV"] != DBNull.Value)
-                            businessPartner.PDV = reader["PDV"].ToString();
                         if (reader["IdentificationNumber"] != DBNull.Value)
                             businessPartner.IdentificationNumber = reader["IdentificationNumber"].ToString();
-                        if (reader["Rebate"] != DBNull.Value)
-                            businessPartner.Rebate = decimal.Parse(reader["Rebate"].ToString());
                         if (reader["DueDate"] != DBNull.Value)
                             businessPartner.DueDate = Int32.Parse(reader["DueDate"].ToString());
                         if (reader["WebSite"] != DBNull.Value)
@@ -421,6 +459,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.IBAN = reader["IBAN"].ToString();
                         if (reader["BetriebsNumber"] != DBNull.Value)
                             businessPartner.BetriebsNumber = reader["BetriebsNumber"].ToString();
+                        if (reader["Customer"] != DBNull.Value)
+                            businessPartner.Customer = reader["Customer"].ToString();
 
                         if (reader["CountryId"] != DBNull.Value)
                         {
@@ -450,6 +490,26 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Agency.Identifier = Guid.Parse(reader["AgencyIdentifier"].ToString());
                             businessPartner.Agency.Code = reader["AgencyCode"].ToString();
                             businessPartner.Agency.Name = reader["AgencyName"].ToString();
+                        }
+
+                        if (reader["VatId"] != DBNull.Value)
+                        {
+                            businessPartner.Vat = new Vat();
+                            businessPartner.VatId = Int32.Parse(reader["VatId"].ToString());
+                            businessPartner.Vat.Id = Int32.Parse(reader["VatId"].ToString());
+                            businessPartner.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
+                            businessPartner.Vat.Code = reader["VatCode"].ToString();
+                            businessPartner.Vat.Description = reader["VatDescription"].ToString();
+                        }
+
+                        if (reader["DiscountId"] != DBNull.Value)
+                        {
+                            businessPartner.Discount = new Discount();
+                            businessPartner.DiscountId = Int32.Parse(reader["DiscountId"].ToString());
+                            businessPartner.Discount.Id = Int32.Parse(reader["DiscountId"].ToString());
+                            businessPartner.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
+                            businessPartner.Discount.Code = reader["DiscountCode"].ToString();
+                            businessPartner.Discount.Name = reader["DiscountName"].ToString();
                         }
 
                         if (reader["TaxNr"] != DBNull.Value)
@@ -560,6 +620,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.CompanyId = businessPartner.CompanyId ?? null;
                     dbEntry.CreatedById = businessPartner.CreatedById ?? null;
                     dbEntry.TaxAdministrationId = businessPartner.TaxAdministrationId ?? null;
+                    dbEntry.VatId = businessPartner.VatId ?? null;
+                    dbEntry.DiscountId = businessPartner.DiscountId ?? null;
 
                     // Set properties
                     dbEntry.Code = businessPartner.Code;
@@ -568,7 +630,6 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                     dbEntry.PIB = businessPartner.PIB;
                     dbEntry.PIO = businessPartner.PIO;
-                    dbEntry.PDV = businessPartner.PDV;
                     dbEntry.IdentificationNumber = businessPartner.IdentificationNumber;
 
                     // Set GER properties
@@ -577,12 +638,12 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.IsInPDVGer = businessPartner.IsInPDVGer;
                     dbEntry.IBAN = businessPartner.IBAN;
                     dbEntry.BetriebsNumber = businessPartner.BetriebsNumber;
+                    dbEntry.Customer = businessPartner.Customer;
 
                     dbEntry.TaxNr = businessPartner.TaxNr;
                     dbEntry.CommercialNr = businessPartner.CommercialNr;
                     dbEntry.ContactPersonGer = businessPartner.ContactPersonGer;
 
-                    dbEntry.Rebate = businessPartner.Rebate;
                     dbEntry.DueDate = businessPartner.DueDate;
 
                     dbEntry.WebSite = businessPartner.WebSite;

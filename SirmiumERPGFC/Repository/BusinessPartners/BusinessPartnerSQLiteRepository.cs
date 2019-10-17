@@ -22,9 +22,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "Name NVARCHAR(48) NULL, " +
             "PIB NVARCHAR(48) NULL, " +
             "PIO NVARCHAR(48) NULL, " +
-            "PDV NVARCHAR(48) NULL, " +
             "IdentificationNumber NVARCHAR(48) NULL, " +
-            "Rebate DOUBLE NULL, " +
             "DueDate INTEGER NULL, " +
             "WebSite NVARCHAR(2048) NULL, " +
             "ContactPerson NVARCHAR(2048) NULL, " +
@@ -38,6 +36,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "TaxAdministrationName NVARCHAR(2048) NULL, " +
             "IBAN NVARCHAR(48) NULL, " +
             "BetriebsNumber NVARCHAR(48) NULL, " +
+            "Customer NVARCHAR(48) NULL, " +
             "TaxNr NVARCHAR(2048) NULL, " +
             "CommercialNr NVARCHAR(2048) NULL, " +
             "ContactPersonGer NVARCHAR(2048) NULL, " +
@@ -49,6 +48,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "SectorIdentifier GUID NULL, " +
             "SectorCode NVARCHAR(48) NULL, " +
             "SectorName NVARCHAR(2048) NULL, " +
+            "VatId INTEGER NULL, " +
+            "VatIdentifier GUID NULL, " +
+            "VatCode NVARCHAR(48) NULL, " +
+            "VatDescription NVARCHAR(2048) NULL, " +
+            "DiscountId INTEGER NULL, " +
+            "DiscountIdentifier GUID NULL, " +
+            "DiscountCode NVARCHAR(48) NULL, " +
+            "DiscountName NVARCHAR(2048) NULL, " +
             "AgencyId INTEGER NULL, " +
             "AgencyIdentifier GUID NULL, " +
             "AgencyCode NVARCHAR(48) NULL, " +
@@ -63,31 +70,37 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, PDV, IdentificationNumber, " +
-            "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
+            "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, IdentificationNumber, " +
+            "DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
             "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
-            "IBAN, BetriebsNumber, TaxNr, CommercialNr, ContactPersonGer, " +
+            "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
+            "VatId, VatIdentifier, VatCode, VatDescription, " +
+            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
             "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
-            "(Id, ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, PDV, IdentificationNumber, " +
-            "Rebate, DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
+            "(Id, ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, IdentificationNumber, " +
+            "DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
             "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
-            "IBAN, BetriebsNumber, TaxNr, CommercialNr, ContactPersonGer, " +
+            "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
+            "VatId, VatIdentifier, VatCode, VatDescription, " +
+            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
             "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @PIB, @PIO, @PDV, @IdentificationNumber, " +
-            "@Rebate, @DueDate, @WebSite, @ContactPerson, @IsInPdv, @JBKJS, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @PIB, @PIO, @IdentificationNumber, " +
+            "@DueDate, @WebSite, @ContactPerson, @IsInPdv, @JBKJS, " +
             "@NameGer, @IsInPDVGer, @TaxAdministrationId, @TaxAdministrationIdentifier, @TaxAdministrationCode, @TaxAdministrationName, " +
-            "@IBAN, @BetriebsNumber, @TaxNr, @CommercialNr, @ContactPersonGer, " +
+            "@IBAN, @BetriebsNumber, @Customer, @TaxNr, @CommercialNr, @ContactPersonGer, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
+            "@VatId, @VatIdentifier, @VatCode, @VatDescription, " +
+            "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, " +
             "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, @VatDeductionFrom, @VatDeductionTo, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -106,9 +119,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
             dbEntry.PIO = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.PDV = SQLiteHelper.GetString(query, ref counter);
             dbEntry.IdentificationNumber = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.Rebate = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.DueDate = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.WebSite = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
@@ -119,11 +130,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
             dbEntry.IBAN = SQLiteHelper.GetString(query, ref counter);
             dbEntry.BetriebsNumber = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Customer = SQLiteHelper.GetString(query, ref counter);
             dbEntry.TaxNr = SQLiteHelper.GetString(query, ref counter);
             dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
             dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
+            dbEntry.Vat = SQLiteHelper.GetVat(query, ref counter);
+            dbEntry.Discount = SQLiteHelper.GetDiscount(query, ref counter);
             dbEntry.Agency = SQLiteHelper.GetAgency(query, ref counter);
             dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
@@ -144,9 +158,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@Name", ((object)businessPartner.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PIB", ((object)businessPartner.PIB) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PIO", ((object)businessPartner.PIO) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@PDV", ((object)businessPartner.PDV) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IdentificationNumber", ((object)businessPartner.IdentificationNumber) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Rebate", ((object)businessPartner.Rebate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DueDate", ((object)businessPartner.DueDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@WebSite", ((object)businessPartner.WebSite) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartner.ContactPerson) ?? DBNull.Value);
@@ -160,17 +172,26 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@TaxAdministrationName", ((object)businessPartner.TaxAdministration?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IBAN", ((object)businessPartner.IBAN) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BetriebsNumber", ((object)businessPartner.BetriebsNumber) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Customer", ((object)businessPartner.Customer) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@TaxNr", ((object)businessPartner.TaxNr) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CommercialNr", ((object)businessPartner.CommercialNr) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ContactPersonGer", ((object)businessPartner.ContactPersonGer) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@SectorId", ((object)businessPartner.Sector?.Id) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)businessPartner.Sector?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.Code) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@SectorName", ((object)businessPartner.Sector?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartner.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartner.Country?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartner.Country?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartner.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorId", ((object)businessPartner.Sector?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)businessPartner.Sector?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorName", ((object)businessPartner.Sector?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@VatId", ((object)businessPartner.Vat?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@VatIdentifier", ((object)businessPartner.Vat?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@VatCode", ((object)businessPartner.Vat?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@VatDescription", ((object)businessPartner.Vat?.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DiscountId", ((object)businessPartner.Discount?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DiscountIdentifier", ((object)businessPartner.Discount?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DiscountCode", ((object)businessPartner.Discount?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DiscountName", ((object)businessPartner.Discount?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@AgencyId", ((object)businessPartner.Agency?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@AgencyIdentifier", ((object)businessPartner.Agency?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@AgencyCode", ((object)businessPartner.Agency?.Code) ?? DBNull.Value);
@@ -202,12 +223,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                 try
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
-                        "SELECT bp.ServerId, bp.Identifier, bp.Code, bp.InternalCode, bp.Name, bp.PIB, bp.PIO, bp.PDV, bp.IdentificationNumber, " +
-                        "bp.Rebate, bp.DueDate, bp.WebSite, bp.ContactPerson, bp.IsInPdv, bp.JBKJS, " +
+                        "SELECT bp.ServerId, bp.Identifier, bp.Code, bp.InternalCode, bp.Name, bp.PIB, bp.PIO, bp.IdentificationNumber, " +
+                        "bp.DueDate, bp.WebSite, bp.ContactPerson, bp.IsInPdv, bp.JBKJS, " +
                         "bp.NameGer, bp.IsInPDVGer, bp.TaxAdministrationId, bp.TaxAdministrationIdentifier, bp.TaxAdministrationCode, bp.TaxAdministrationName, " +
-                        "bp.IBAN, bp.BetriebsNumber, bp.TaxNr, bp.CommercialNr, bp.ContactPersonGer, " +
+                        "bp.IBAN, bp.BetriebsNumber, bp.Customer, bp.TaxNr, bp.CommercialNr, bp.ContactPersonGer, " +
                         "bp.CountryId, bp.CountryIdentifier, bp.CountryCode, bp.CountryName, " +
                         "bp.SectorId, bp.SectorIdentifier, bp.SectorCode, bp.SectorName, " +
+                        "bp.VatId, bp.VatIdentifier, bp.VatCode, bp.VatDescription, " +
+                        "bp.DiscountId, bp.DiscountIdentifier, bp.DiscountCode, bp.DiscountName, " +
                         "bp.AgencyId, bp.AgencyIdentifier, bp.AgencyCode, bp.AgencyName, bp.VatDeductionFrom, bp.VatDeductionTo, " +
                         "bp.IsSynced, bp.UpdatedAt, bp.CreatedById, bp.CreatedByName, bp.CompanyId, bp.CompanyName " +
                         "FROM BusinessPartners bp " +

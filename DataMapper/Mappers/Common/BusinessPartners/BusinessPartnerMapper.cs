@@ -1,8 +1,10 @@
 ﻿using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
 using DataMapper.Mappers.Common.Locations;
+using DataMapper.Mappers.Common.Prices;
 using DataMapper.Mappers.Common.Sectors;
 using DataMapper.Mappers.Common.TaxAdministrations;
+using DataMapper.Mappers.Vats;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
@@ -37,10 +39,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 PIB = businessPartner.PIB,
                 PIO = businessPartner.PIO,
-                PDV = businessPartner.PDV,
                 IdentificationNumber = businessPartner.IdentificationNumber,
 
-                Rebate = businessPartner.Rebate,
                 DueDate = businessPartner.DueDate,
 
                 WebSite = businessPartner.WebSite,
@@ -55,9 +55,12 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 TaxAdministration = businessPartner.TaxAdministration?.ConvertToTaxAdministrationViewModelLite(), 
                 IBAN = businessPartner.IBAN, 
                 BetriebsNumber = businessPartner.BetriebsNumber,
+                Customer = businessPartner.Customer,
                 Country = businessPartner.Country?.ConvertToCountryViewModelLite(),
                 Sector = businessPartner.Sector?.ConvertToSectorViewModelLite(),
                 Agency = businessPartner.Agency?.ConvertToAgencyViewModelLite(),
+                Vat = businessPartner.Vat?.ConvertToVatViewModelLite(),
+                Discount = businessPartner.Discount?.ConvertToDiscountViewModelLite(),
                 TaxNr = businessPartner.TaxNr,
                 CommercialNr = businessPartner.CommercialNr,
                 ContactPersonGer = businessPartner.ContactPersonGer,
@@ -90,10 +93,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 PIB = businessPartner.PIB,
                 PIO = businessPartner.PIO,
-                PDV = businessPartner.PDV,
                 IdentificationNumber = businessPartner.IdentificationNumber,
 
-                Rebate = businessPartner.Rebate,
                 DueDate = businessPartner.DueDate,
 
                 WebSite = businessPartner.WebSite,
@@ -107,6 +108,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 IsInPDVGer = businessPartner.IsInPDVGer,
                 IBAN = businessPartner.IBAN,
                 BetriebsNumber = businessPartner.BetriebsNumber,
+                Customer = businessPartner.Customer,
                 TaxNr = businessPartner.TaxNr,
                 CommercialNr = businessPartner.CommercialNr,
                 ContactPersonGer = businessPartner.ContactPersonGer,
@@ -135,10 +137,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 PIB = businessPartnerViewModel.PIB,
                 PIO = businessPartnerViewModel.PIO,
-                PDV = businessPartnerViewModel.PDV,
                 IdentificationNumber = businessPartnerViewModel.IdentificationNumber,
 
-                Rebate = businessPartnerViewModel.Rebate,
                 DueDate = businessPartnerViewModel.DueDate,
 
                 WebSite = businessPartnerViewModel.WebSite,
@@ -153,9 +153,12 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 TaxAdministrationId = businessPartnerViewModel.TaxAdministration?.Id ?? null, 
                 IBAN = businessPartnerViewModel.IBAN, 
                 BetriebsNumber = businessPartnerViewModel.BetriebsNumber,
+                Customer = businessPartnerViewModel.Customer,
                 CountryId = businessPartnerViewModel.Country?.Id ?? null,
                 SectorId = businessPartnerViewModel.Sector?.Id ?? null,
                 AgencyId = businessPartnerViewModel.Agency?.Id ?? null,
+                VatId = businessPartnerViewModel.Vat?.Id ?? null,
+                DiscountId = businessPartnerViewModel.Discount?.Id ?? null,
                 TaxNr = businessPartnerViewModel.TaxNr,
                 CommercialNr = businessPartnerViewModel.CommercialNr,
                 ContactPersonGer = businessPartnerViewModel.ContactPersonGer,

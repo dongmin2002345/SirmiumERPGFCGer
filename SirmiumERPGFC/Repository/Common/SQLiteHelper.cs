@@ -14,6 +14,7 @@ using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using ServiceInterfaces.ViewModels.Statuses;
+using ServiceInterfaces.ViewModels.Vats;
 using System;
 
 namespace SirmiumERPGFC.Repository.Common
@@ -588,6 +589,40 @@ namespace SirmiumERPGFC.Repository.Common
                     Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
                     Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
                     Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
+                };
+        }
+
+        public static VatViewModel GetVat(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new VatViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Description = query.GetString(counter++)
+                };
+        }
+
+        public static DiscountViewModel GetDiscount(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new DiscountViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
+                    Name = query.GetString(counter++)
                 };
         }
     }
