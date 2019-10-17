@@ -37,6 +37,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "BusinessPartnerIdentifier GUID NULL, " +
            "BusinessPartnerCode NVARCHAR(2048) NULL, " +
            "BusinessPartnerName NVARCHAR(2048) NULL, " +
+            "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
+           "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
            "StatusId INTEGER NULL, " +
            "StatusIdentifier GUID NULL, " +
            "StatusCode NVARCHAR(2048) NULL, " +
@@ -52,7 +54,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "SELECT ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "StatusId, StatusIdentifier, StatusCode, StatusName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
@@ -60,7 +62,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "(Id, ServerId, Identifier, Code, InternalCode, Name, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "StatusId, StatusIdentifier, StatusCode, StatusName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
@@ -68,7 +70,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @Address, @MaxWorkers, @ProContractDate, @ContractStart, @ContractExpiration, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
-            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, " +
+            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
             "@StatusId, @StatusIdentifier, @StatusCode, @StatusName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -115,7 +117,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@ContractExpiration", ((object)constructionSite.ContractExpiration) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityId", ((object)constructionSite.City?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)constructionSite.City?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CityCode", ((object)constructionSite.City?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityCode", ((object)constructionSite.City?.ZipCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityName", ((object)constructionSite.City?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)constructionSite.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)constructionSite.Country?.Identifier) ?? DBNull.Value);
@@ -125,6 +127,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)constructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)constructionSite.BusinessPartner?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)constructionSite.BusinessPartner?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)constructionSite.BusinessPartner?.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)constructionSite.BusinessPartner?.NameGer) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@StatusId", ((object)constructionSite.Status?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@StatusIdentifier", ((object)constructionSite.Status?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@StatusCode", ((object)constructionSite.Status?.Code) ?? DBNull.Value);
