@@ -340,6 +340,7 @@
     <system:String x:Key="Regioni">Regions</system:String>
     <system:String x:Key="Poreska_Uprava">Tax Administration</system:String>
     <system:String x:Key="Ulazni_računi">Incoming accounts</system:String>
+    <system:String x:Key="Ulazni_računi_tritacke">Input invoices...</system:String>
     <system:String x:Key="Izlazni_računi">Outgoing accounts</system:String>
     <system:String x:Key="IZVEZI_U_EXCEL">EXCHANGES IN EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SAVE THOUGHT</system:String>
@@ -628,4 +629,11 @@
     <system:String x:Key="Naziv_PDV_procenta">VAT Percent Name</system:String>
     <system:String x:Key="Statusi">Statuses</system:String>
     <system:String x:Key="PDV_procenti">VAT Percents</system:String>
+
+
+    <system:String x:Key="Morate_odabrati_racunUzvičnik">You need to select invoice!</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Poslovni_partner">Required field: Business partner</system:String>
+    <system:String x:Key="Kupac_Dvotacka">Customer:</system:String>
+    <system:String x:Key="Morate_odabrati_poslovnogpartneraUzvičnik">You need to select business partner!</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Institucija">Required field: Institution</system:String>
 </ResourceDictionary>

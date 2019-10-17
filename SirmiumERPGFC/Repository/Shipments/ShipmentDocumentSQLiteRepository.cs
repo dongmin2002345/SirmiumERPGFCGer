@@ -6,9 +6,6 @@ using ServiceInterfaces.ViewModels.Common.Shipments;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Shipments
 {
@@ -67,6 +64,7 @@ namespace SirmiumERPGFC.Repository.Shipments
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
             dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            
             return dbEntry;
         }
 

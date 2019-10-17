@@ -280,7 +280,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
         #endregion
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -440,19 +440,19 @@ namespace SirmiumERPGFC.Views.InputInvoices
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Računi ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Ulazni_računi_tritacke"));
             new InputInvoiceSQLiteRepository().Sync(inputInvoiceService, (synced, toSync) => {
-                SyncButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Ulazni_računi")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new InputInvoiceNoteSQLiteRepository().Sync(inputInvoiceNoteService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new InputInvoiceDocumentSQLiteRepository().Sync(inputInvoiceDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayData();
@@ -467,9 +467,9 @@ namespace SirmiumERPGFC.Views.InputInvoices
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new InputInvoiceNoteSQLiteRepository().Sync(inputInvoiceNoteService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayInputInvoiceNoteData();
@@ -482,9 +482,9 @@ namespace SirmiumERPGFC.Views.InputInvoices
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new InputInvoiceDocumentSQLiteRepository().Sync(inputInvoiceDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayInputInvoiceDocumentData();
@@ -563,7 +563,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             if (CurrentInputInvoice == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
                 return;
             }
 
@@ -580,7 +580,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             if (CurrentInputInvoice == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
                 return;
             }
 

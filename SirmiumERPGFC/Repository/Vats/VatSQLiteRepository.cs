@@ -5,9 +5,6 @@ using ServiceInterfaces.ViewModels.Vats;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Vats
 {
@@ -99,6 +96,7 @@ namespace SirmiumERPGFC.Repository.Vats
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, ServerId " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Description", ((object)vatSearchObject.Search_Description) != null ? "%" + vatSearchObject.Search_Description + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
@@ -114,6 +112,7 @@ namespace SirmiumERPGFC.Repository.Vats
                         "FROM Vats " +
                         "WHERE (@Description IS NULL OR @Description = '' OR Description LIKE @Description) " +
                         "AND CompanyId = @CompanyId;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Description", ((object)vatSearchObject.Search_Description) != null ? "%" + vatSearchObject.Search_Description + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
@@ -154,6 +153,7 @@ namespace SirmiumERPGFC.Repository.Vats
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Description", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -233,7 +233,7 @@ namespace SirmiumERPGFC.Repository.Vats
                 if (response.Success)
                 {
                     toSync = response?.Vats?.Count ?? 0;
-                    List<VatViewModel> workOrderFinalProductsFromDB = response.Vats;
+                    List<VatViewModel> vatsFromDB = response.Vats;
 
                     using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
@@ -246,17 +246,17 @@ namespace SirmiumERPGFC.Repository.Vats
                             SqliteCommand insertCommand = db.CreateCommand();
                             insertCommand.CommandText = SqlCommandInsertPart;
 
-                            foreach (var workOrderFinalProduct in workOrderFinalProductsFromDB)
+                            foreach (var vat in vatsFromDB)
                             {
-                                deleteCommand.Parameters.AddWithValue("@Identifier", workOrderFinalProduct.Identifier);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", vat.Identifier);
                                 deleteCommand.ExecuteNonQuery();
                                 deleteCommand.Parameters.Clear();
 
-                                if (workOrderFinalProduct.IsActive)
+                                if (vat.IsActive)
                                 {
-                                    workOrderFinalProduct.IsSynced = true;
+                                    vat.IsSynced = true;
 
-                                    insertCommand = AddCreateParameters(insertCommand, workOrderFinalProduct);
+                                    insertCommand = AddCreateParameters(insertCommand, vat);
                                     insertCommand.ExecuteNonQuery();
                                     insertCommand.Parameters.Clear();
 
@@ -314,48 +314,6 @@ namespace SirmiumERPGFC.Repository.Vats
             return null;
         }
 
-        public VatResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced, DateTime? lastUpdate, string code)
-        {
-            VatResponse response = new VatResponse();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE Vats SET " +
-                    "IsSynced = @IsSynced, " +
-                    "ServerId = @ServerId, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "Code = @Code " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)lastUpdate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
-
         #endregion
 
         #region Create
@@ -406,12 +364,12 @@ namespace SirmiumERPGFC.Repository.Vats
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM Vats WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM Vats WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {

@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             if (CurrentInputInvoiceDocumentForm.Name == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Napomena";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
                 return;
             }
 
@@ -363,7 +363,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             if (InputInvoiceDocumentsFromDB == null || InputInvoiceDocumentsFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_uneti_osnovne_podatkeUzvičnik"));
                 return;
             }
 

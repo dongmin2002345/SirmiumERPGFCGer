@@ -28,7 +28,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <GroupBox Header="{DynamicResource Documenta}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+            <GroupBox Header="{DynamicResource OSNOVNI_PODACI}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

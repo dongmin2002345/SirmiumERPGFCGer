@@ -342,6 +342,7 @@
     <system:String x:Key="Regioni">Regioni</system:String>
     <system:String x:Key="Poreska_Uprava">Poreska Uprava</system:String>
     <system:String x:Key="Ulazni_računi">Ulazni računi</system:String>
+    <system:String x:Key="Ulazni_računi_tritacke">Ulazni računi...</system:String>
     <system:String x:Key="Izlazni_računi">Izlazni računi</system:String>
     <system:String x:Key="IZVEZI_U_EXCEL">IZVEZI U EXCEL</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SAČUVAJ ZAGLAVLJE</system:String>
@@ -623,6 +624,13 @@
     <system:String x:Key="Obavezno_polje_napomena">Obavezno polje: Napomena</system:String>
     <system:String x:Key="Obavezno_polje_naziv">Obavezno polje: Naziv</system:String>
 
+
+    <system:String x:Key="Morate_odabrati_racunUzvičnik">Morate odabrati račun!</system:String>
+    <system:String x:Key="Morate_odabrati_poslovnogpartneraUzvičnik">Morate odabrati poslovnog partnera!</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Poslovni_partner">Obavezno polje: Poslovni partner</system:String>
+    <system:String x:Key="Kupac">Kupac</system:String>
+    <system:String x:Key="Kupac_Dvotacka">Kupac:</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Institucija">Obavezno polje: Institucije</system:String>
     <system:String x:Key="Podaci_o_statusu">Podaci o statusu</system:String>
     <system:String x:Key="Šifra_automatski">Šifra automatski</system:String>
     <system:String x:Key="Skraćenica">Skraćenica</system:String>

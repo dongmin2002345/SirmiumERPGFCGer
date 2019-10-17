@@ -27,7 +27,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <GroupBox Header="{DynamicResource Napomene}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+            <GroupBox Header="{DynamicResource OSNOVNI_PODACI}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -67,7 +67,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header="Dodate stavke" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
+            <GroupBox Header="{DynamicResource Napomene}" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
                     <DataGrid x:Name="dgInputInvoiceNotes"
                               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="5" MinHeight="200"
@@ -120,7 +120,7 @@
                                                             <RowDefinition Height="Auto" />
                                                         </Grid.RowDefinitions>
 
-                                                        <TextBlock Text="DA LI STE SIGURNI DA ŽELITE DA OBRIŠETE ODABRNI PODATAK?" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                    <TextBlock Text="{DynamicResource Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik}" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
                                                         <Separator Grid.Row="1" Margin="2" />
 
                                                         <Grid Grid.Row="2">

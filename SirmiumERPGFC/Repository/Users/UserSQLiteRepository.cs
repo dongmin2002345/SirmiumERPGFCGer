@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.Users
 {
     public class UserSQLiteRepository
     {
+        #region SQL
+
         public static string UserTableCreatePart =
              "CREATE TABLE IF NOT EXISTS Users " +
              "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -42,6 +40,48 @@ namespace SirmiumERPGFC.Repository.Users
             "@PasswordHash, @Email, " +
             "@IsSynced, @UpdatedAt)";
 
+        #endregion
+
+        #region Helper methods
+
+        private UserViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            UserViewModel dbEntry = new UserViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.FirstName = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, UserViewModel user)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", user.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", user.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)user.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Username", ((object)user.Username) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@FirstName", ((object)user.FirstName) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@LastName", ((object)user.LastName) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PasswordHash", ((object)user.Password) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Email", ((object)user.Email) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", user.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", user.UpdatedAt);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public UserListResponse GetUsers()
         {
             UserListResponse response = new UserListResponse();
@@ -60,21 +100,8 @@ namespace SirmiumERPGFC.Repository.Users
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        UserViewModel dbEntry = new UserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.FirstName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        users.Add(dbEntry);
-                    }
+                        users.Add(Read(query));
+                    
 
                     db.Close();
                 }
@@ -107,27 +134,14 @@ namespace SirmiumERPGFC.Repository.Users
                         SqlCommandSelectPart +
                         "from Users " +
                         "where Username = @Username AND PasswordHash = @PasswordHash ", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Username", username);
                     selectCommand.Parameters.AddWithValue("@PasswordHash", password);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        UserViewModel dbEntry = new UserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.FirstName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        user = dbEntry;
-                    }
+                        user = Read(query);
 
                     db.Close();
                 }
@@ -161,6 +175,7 @@ namespace SirmiumERPGFC.Repository.Users
                         "AND (@Email IS NULL OR @Email = '' OR Email LIKE @Email) " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Username", ((object)userSearchObject.Search_UserName) != null ? "%" + userSearchObject.Search_UserName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Email", ((object)userSearchObject.Search_Email) != null ? "%" + userSearchObject.Search_Email + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
@@ -170,21 +185,7 @@ namespace SirmiumERPGFC.Repository.Users
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        UserViewModel dbEntry = new UserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.FirstName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        Users.Add(dbEntry);
-                    }
+                        Users.Add(Read(query));
 
 
                     selectCommand = new SqliteCommand(
@@ -192,6 +193,7 @@ namespace SirmiumERPGFC.Repository.Users
                         "FROM Users " +
                         "WHERE (@Username IS NULL OR @Username = '' OR Username LIKE @Username) " +
                         "AND (@Email IS NULL OR @Email = '' OR Email LIKE @Email);", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Username", ((object)userSearchObject.Search_UserName) != null ? "%" + userSearchObject.Search_UserName + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Email", ((object)userSearchObject.Search_Email) != null ? "%" + userSearchObject.Search_Email + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
@@ -232,6 +234,7 @@ namespace SirmiumERPGFC.Repository.Users
                         "WHERE (@Username IS NULL OR @Username = '' OR Username LIKE @Username) " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Username", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -239,21 +242,8 @@ namespace SirmiumERPGFC.Repository.Users
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        UserViewModel dbEntry = new UserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.FirstName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        Users.Add(dbEntry);
-                    }
+                        Users.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -289,21 +279,8 @@ namespace SirmiumERPGFC.Repository.Users
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        UserViewModel dbEntry = new UserViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Username = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.FirstName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.LastName = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Password = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Email = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        User = dbEntry;
-                    }
+                        User = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -319,6 +296,10 @@ namespace SirmiumERPGFC.Repository.Users
             response.User = User;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(IUserService userService, Action<int, int> callback = null)
         {
@@ -336,17 +317,40 @@ namespace SirmiumERPGFC.Repository.Users
                 {
                     toSync = response?.Users?.Count ?? 0;
                     List<UserViewModel> usersFromDB = response.Users;
-                    foreach (var user in usersFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(user.Identifier);
-                            user.IsSynced = true;
-                            if (user.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM Users WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var user in usersFromDB)
                             {
-                                user.IsSynced = true;
-                                Create(user);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", user.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (user.IsActive)
+                                {
+                                    user.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, user);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -393,6 +397,10 @@ namespace SirmiumERPGFC.Repository.Users
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public UserResponse Create(UserViewModel user)
         {
             UserResponse response = new UserResponse();
@@ -401,26 +409,13 @@ namespace SirmiumERPGFC.Repository.Users
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", user.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", user.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)user.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Username", ((object)user.Username) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@FirstName", ((object)user.FirstName) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@LastName", ((object)user.LastName) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@PasswordHash", ((object)user.Password) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Email", ((object)user.Email) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IsSynced", user.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", user.UpdatedAt);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, user);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -436,46 +431,9 @@ namespace SirmiumERPGFC.Repository.Users
             }
         }
 
+        #endregion
 
-        public UserResponse UpdateSyncStatus(Guid identifier, int serverId, bool isSynced, DateTime? lastUpdate)
-        {
-            UserResponse response = new UserResponse();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE Users SET " +
-                    "IsSynced = @IsSynced, " +
-                    "ServerId = @ServerId, " +
-                    "UpdatedAt = @UpdatedAt " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)lastUpdate) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    //MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public UserResponse Delete(Guid identifier)
         {
@@ -489,12 +447,12 @@ namespace SirmiumERPGFC.Repository.Users
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM Users WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM Users WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+               
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -528,7 +486,7 @@ namespace SirmiumERPGFC.Repository.Users
                     insertCommand.CommandText = "DELETE FROM Users";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -551,6 +509,8 @@ namespace SirmiumERPGFC.Repository.Users
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }
 

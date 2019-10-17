@@ -195,7 +195,7 @@ namespace SirmiumERPGFC.Views.Shipments
         #endregion
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
