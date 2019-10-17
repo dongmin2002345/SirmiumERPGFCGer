@@ -616,9 +616,12 @@
     <system:String x:Key="Naziv_dokumenta">Naziv dokumenta</system:String>
     <system:String x:Key="Morate_odabrati_posiljku_za_izmenuUzvičnik">Morate odabrati pošiljku za izmenu!</system:String>
     <system:String x:Key="Morate_odabrati_dokumentUzvičnik">Morate odabrati dokument!</system:String>
-    
-    
-    
-    
-    
+
+    <system:String x:Key="Kupac">Kupac</system:String>
+    <system:String x:Key="Kupac_dvotacka">Kupac:</system:String>
+    <system:String x:Key="Ne_postoje_stavke_za_proknjižavanje">Ne postoje stavke za proknjižavanje</system:String>
+    <system:String x:Key="Obavezno_polje_napomena">Obavezno polje: Napomena</system:String>
+    <system:String x:Key="Obavezno_polje_naziv">Obavezno polje: Naziv</system:String>
+
+
 </ResourceDictionary>

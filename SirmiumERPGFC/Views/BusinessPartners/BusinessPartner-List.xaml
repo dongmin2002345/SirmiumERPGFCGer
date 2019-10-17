@@ -183,9 +183,9 @@
                         <DataGridTextColumn SortMemberPath="DueDate" Header="{DynamicResource Valuta}" Binding="{Binding DueDate}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding PDV}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PIO" Header="{DynamicResource PIO}" Binding="{Binding PIO}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Customer" Header="Kupac" Binding="{Binding Customer}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Vat.Description" Header="PDV" Binding="{Binding Vat.Description}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Discount.Name" Header="Popust" Binding="{Binding Discount.Name}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="Customer" Header="{DynamicResource Kupac}" Binding="{Binding Customer}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="Vat.Description" Header="{DynamicResource PDV}" Binding="{Binding Vat.Description}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="Discount.Name" Header="{DynamicResource Popust}" Binding="{Binding Discount.Name}" Width="*" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="IsInPDV" Binding="{Binding IsInPDV, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True">
                         <DataGridTextColumn.Header>
                             <TextBlock Text="{DynamicResource Obveznik_PDVCrtaa}" TextWrapping="Wrap" MaxWidth="70" />

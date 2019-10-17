@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -312,7 +312,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             var response = new ConstructionSiteCalculationSQLiteRepository().SetStatusDeleted(CurrentConstructionSiteCalculationDG.Identifier);
             if (response.Success)
             {
-                MainWindow.SuccessMessage = "Stavka je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
                 CurrentConstructionSiteCalculationForm = new ConstructionSiteCalculationViewModel();
                 CurrentConstructionSiteCalculationForm.Identifier = Guid.NewGuid();
@@ -347,7 +347,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             if (ConstructionSiteCalculationsFromDB == null || ConstructionSiteCalculationsFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Ne_postoje_stavke_za_proknjižavanje"));
                 return;
             }
 
@@ -355,22 +355,22 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             Thread td = new Thread(() => {
 
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentConstructionSite.ConstructionSiteCalculations = ConstructionSiteCalculationsFromDB;
                 ConstructionSiteResponse response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod čuvanja podataka!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     ConstructionSiteCreatedUpdated();
