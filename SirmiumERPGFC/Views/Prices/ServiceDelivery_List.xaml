@@ -19,7 +19,7 @@
 
     <Grid>
         <!--    List of all data    -->
-        <GroupBox Header="Kurirska Služba" Margin="2">
+        <GroupBox Header="{DynamicResource Kurirska_Sluzba}" Margin="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -49,7 +49,7 @@
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="Pretraga: " />
+                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="{DynamicResource Pretraga_po_nazivuDvotacka}" />
                     <TextBox Grid.Column="4" Margin="2" x:Name="txtName" 
                              Text="{Binding ServiceDeliverySearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}" 
                              TextChanged="TxtName_TextChanged" Controls:TextBoxHelper.ClearTextButton="True"/>
@@ -102,8 +102,8 @@
                           SelectedItem="{Binding Path=CurrentServiceDelivery}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >

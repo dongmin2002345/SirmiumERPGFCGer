@@ -577,7 +577,16 @@
     <system:String x:Key="Istorija_fizickog_lica">History of a physical person</system:String>
     <system:String x:Key="Sifra_gradilista_dvotacka">Building code:</system:String>
     <system:String x:Key="Sifra_kompanije_dvotacka">Company code:</system:String>
-
-
-
+    <system:String x:Key="Popust">Discount</system:String>
+    <system:String x:Key="Iznos">Amount</system:String>
+    <system:String x:Key="URL">URL</system:String>
+    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik">Are you sure you want to delete the selected data?</system:String>
+    <system:String x:Key="IznosDvotacka">Amount:</system:String>
+    <system:String x:Key="Popust_TriTacke">Discount...</system:String>
+    <system:String x:Key="Podaci_o_popustu">Discount information</system:String>
+    <system:String x:Key="Morate_odabrati_popust_za_izmenuUzvičnik">You need to select a discount to edit!</system:String>
+    <system:String x:Key="Kurirska_Sluzba">Service delivery</system:String>
+    <system:String x:Key="Kurirska_Sluzba_TriTacke">Service delivery...</system:String>
+    <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Courier service information</system:String>
+    <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">You need to select a service delivery to edit!</system:String>
 </ResourceDictionary>

@@ -583,8 +583,17 @@
     <system:String x:Key="Istorija_fizickog_lica">Geschichte einer physischen Person</system:String>
     <system:String x:Key="Sifra_gradilista_dvotacka">Bauordnung:</system:String>
     <system:String x:Key="Sifra_kompanije_dvotacka">Buchungskreis:</system:String>
-
-
-
+    <system:String x:Key="Popust">Rabatt</system:String>
+    <system:String x:Key="Iznos">Menge</system:String>
+    <system:String x:Key="URL">URL</system:String>
+    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik">Möchten Sie die ausgewählten Daten wirklich löschen?</system:String>
+    <system:String x:Key="IznosDvotacka">Menge:</system:String>
+    <system:String x:Key="Popust_TriTacke">Rabatt...</system:String>
+    <system:String x:Key="Podaci_o_popustu">Rabattinformationen</system:String>
+    <system:String x:Key="Morate_odabrati_popust_za_izmenuUzvičnik">Sie müssen einen Rabatt zum Bearbeiten auswählen!</system:String>
+    <system:String x:Key="Kurirska_Sluzba">Servicebereitstellung</system:String>
+    <system:String x:Key="Kurirska_Sluzba_TriTacke">Servicebereitstellung...</system:String>
+    <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Informationen zum Kurierdienst</system:String>
+    <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">Sie müssen eine Servicebereitstellung zum Bearbeiten auswählen!</system:String>
 
 </ResourceDictionary>

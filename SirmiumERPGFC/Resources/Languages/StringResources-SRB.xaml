@@ -585,12 +585,17 @@
     <system:String x:Key="Istorija_fizickog_lica">Istorija fizickog lica</system:String>
     <system:String x:Key="Sifra_gradilista_dvotacka">Šifra gradilišta:</system:String>
     <system:String x:Key="Sifra_kompanije_dvotacka">Šifra kompanije:</system:String>
-
-
-
-
-
-
-
+    <system:String x:Key="Popust">Popust</system:String>
+    <system:String x:Key="Iznos">Iznos</system:String>
+    <system:String x:Key="URL">URL</system:String>
+    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik">Da li ste sigurni da želite da obrišete odabrni podatak?</system:String>
+    <system:String x:Key="IznosDvotacka">Iznos:</system:String>
+    <system:String x:Key="Popust_TriTacke">Popust...</system:String>
+    <system:String x:Key="Podaci_o_popustu">Podaci o popustu</system:String>
+    <system:String x:Key="Morate_odabrati_popust_za_izmenuUzvičnik">Morate odabrati popust za izmenu!</system:String>
+    <system:String x:Key="Kurirska_Sluzba">Kurirska služba</system:String>
+    <system:String x:Key="Kurirska_Sluzba_TriTacke">Kurirska služba...</system:String>
+    <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Podaci o kurirskoj službi</system:String>
+    <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">Morate odabrati kurirsku službu za izmenu!</system:String>
 
 </ResourceDictionary>
