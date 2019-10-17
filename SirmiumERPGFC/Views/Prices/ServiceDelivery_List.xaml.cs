@@ -372,7 +372,13 @@ namespace SirmiumERPGFC.Views.Prices
         }
         #endregion
 
+        private void btnShowURL_Click(object sender, EventArgs e)
+        {
+            string websiteName = CurrentServiceDelivery.URL; //or simply write the webiste name instead of textBox1.Text      
+            System.Diagnostics.Process.Start("iexplore.exe", websiteName);
+        }
 
+     
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
