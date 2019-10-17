@@ -628,7 +628,6 @@
     <system:String x:Key="Morate_odabrati_racunUzvičnik">Morate odabrati račun!</system:String>
     <system:String x:Key="Morate_odabrati_poslovnogpartneraUzvičnik">Morate odabrati poslovnog partnera!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Poslovni_partner">Obavezno polje: Poslovni partner</system:String>
-    <system:String x:Key="Kupac">Kupac</system:String>
     <system:String x:Key="Kupac_Dvotacka">Kupac:</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Institucija">Obavezno polje: Institucije</system:String>
     <system:String x:Key="Podaci_o_statusu">Podaci o statusu</system:String>
