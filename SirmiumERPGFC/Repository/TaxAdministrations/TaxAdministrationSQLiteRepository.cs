@@ -5,15 +5,13 @@ using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SirmiumERPGFC.Repository.TaxAdministrations
 {
     public class TaxAdministrationSQLiteRepository
     {
+        #region SQL
+
         public static string TaxAdministrationTableCreatePart =
           "CREATE TABLE IF NOT EXISTS TaxAdministrations " +
           "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -69,6 +67,73 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             "@IBAN1, @SWIFT, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
+        #endregion
+
+        #region Helper methdos
+
+        private TaxAdministrationViewModel Read(SqliteDataReader query)
+        {
+            int counter = 0;
+            TaxAdministrationViewModel dbEntry = new TaxAdministrationViewModel();
+            dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+            dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Address1 = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Address2 = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Address3 = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+            dbEntry.Bank1 = SQLiteHelper.GetBank(query, ref counter);
+            dbEntry.Bank2 = SQLiteHelper.GetBank(query, ref counter);
+            dbEntry.IBAN1 = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.SWIFT = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+            dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+            
+            return dbEntry;
+        }
+
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, TaxAdministrationViewModel taxAdministration)
+        {
+            insertCommand.Parameters.AddWithValue("@ServerId", taxAdministration.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", taxAdministration.Identifier);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)taxAdministration.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SecondCode", ((object)taxAdministration.SecondCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)taxAdministration.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Address1", ((object)taxAdministration.Address1) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Address2", ((object)taxAdministration.Address2) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Address3", ((object)taxAdministration.Address3) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityId", ((object)taxAdministration.City?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)taxAdministration.City?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityCode", ((object)taxAdministration.City?.ZipCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityName", ((object)taxAdministration.City?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankId1", ((object)taxAdministration.Bank1?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankIdentifier1", ((object)taxAdministration.Bank1?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankCode1", ((object)taxAdministration.Bank1?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankName1", ((object)taxAdministration.Bank1?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankId2", ((object)taxAdministration.Bank2?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankIdentifier2", ((object)taxAdministration.Bank2?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankCode2", ((object)taxAdministration.Bank2?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankName2", ((object)taxAdministration.Bank2?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IBAN1", ((object)taxAdministration.IBAN1) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SWIFT", ((object)taxAdministration.SWIFT) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", taxAdministration.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)taxAdministration.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
+            insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
+            insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
+            insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
+
+            return insertCommand;
+        }
+
+        #endregion
+
+        #region Read
+
         public TaxAdministrationListResponse GetTaxAdministrationsByPage(int companyId, TaxAdministrationViewModel TaxAdministrationSearchObject, int currentPage = 1, int itemsPerPage = 50)
         {
             TaxAdministrationListResponse response = new TaxAdministrationListResponse();
@@ -91,6 +156,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Code", ((object)TaxAdministrationSearchObject.SearchBy_Code) != null ? "%" + TaxAdministrationSearchObject.SearchBy_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)TaxAdministrationSearchObject.SearchBy_Name) != null ? "%" + TaxAdministrationSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CityName", ((object)TaxAdministrationSearchObject.SearchBy_City) != null ? "%" + TaxAdministrationSearchObject.SearchBy_City + "%" : "");
@@ -104,29 +170,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        TaxAdministrationViewModel dbEntry = new TaxAdministrationViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
-
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address1 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address2 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address3 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Bank1 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.Bank2 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.IBAN1 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SWIFT = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        TaxAdministrations.Add(dbEntry);
-                    }
+                        TaxAdministrations.Add(Read(query));
 
 
                     selectCommand = new SqliteCommand(
@@ -139,6 +183,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         "AND (@IBAN1 IS NULL OR @IBAN1 = '' OR IBAN1 LIKE @IBAN1) " +
                         "AND (@SWIFT IS NULL OR @SWIFT = '' OR SWIFT LIKE @SWIFT) " +
                         "AND CompanyId = @CompanyId;", db);
+                    
                     selectCommand.Parameters.AddWithValue("@Code", ((object)TaxAdministrationSearchObject.SearchBy_Code) != null ? "%" + TaxAdministrationSearchObject.SearchBy_Code + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)TaxAdministrationSearchObject.SearchBy_Name) != null ? "%" + TaxAdministrationSearchObject.SearchBy_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CityName", ((object)TaxAdministrationSearchObject.SearchBy_City) != null ? "%" + TaxAdministrationSearchObject.SearchBy_City + "%" : "");
@@ -184,6 +229,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC " +
                         "LIMIT @ItemsPerPage;", db);
+                   
                     selectCommand.Parameters.AddWithValue("@Name", ((object)filterString) != null ? "%" + filterString + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", ((object)filterString) != null ? companyId : 0);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", 100);
@@ -191,29 +237,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                    {
-                        int counter = 0;
-                        TaxAdministrationViewModel dbEntry = new TaxAdministrationViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
-
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address1 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address2 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address3 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Bank1 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.Bank2 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.IBAN1 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SWIFT = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        TaxAdministrations.Add(dbEntry);
-                    }
+                        TaxAdministrations.Add(Read(query));
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -249,29 +274,8 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                    {
-                        int counter = 0;
-                        TaxAdministrationViewModel dbEntry = new TaxAdministrationViewModel();
-                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
-                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SecondCode = SQLiteHelper.GetString(query, ref counter);
-
-                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address1 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address2 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.Address3 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
-                        dbEntry.Bank1 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.Bank2 = SQLiteHelper.GetBank(query, ref counter);
-                        dbEntry.IBAN1 = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.SWIFT = SQLiteHelper.GetString(query, ref counter);
-                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
-                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
-                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
-                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
-                        TaxAdministration = dbEntry;
-                    }
+                        TaxAdministration = Read(query);
+                    
                 }
                 catch (SqliteException error)
                 {
@@ -287,6 +291,10 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             response.TaxAdministration = TaxAdministration;
             return response;
         }
+
+        #endregion
+
+        #region Sync
 
         public void Sync(ITaxAdministrationService taxAdministrationService, Action<int, int> callback = null)
         {
@@ -304,16 +312,40 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                 {
                     toSync = response?.TaxAdministrations?.Count ?? 0;
                     List<TaxAdministrationViewModel> taxAdministrationsFromDB = response.TaxAdministrations;
-                    foreach (var taxAdministration in taxAdministrationsFromDB.OrderBy(x => x.Id))
+
+                    using (SqliteConnection db = new SqliteConnection(SQLiteHelper.SqLiteTableName))
                     {
-                            Delete(taxAdministration.Identifier);
-                            if (taxAdministration.IsActive)
+                        db.Open();
+                        using (var transaction = db.BeginTransaction())
+                        {
+                            SqliteCommand deleteCommand = db.CreateCommand();
+                            deleteCommand.CommandText = "DELETE FROM TaxAdministrations WHERE Identifier = @Identifier";
+
+                            SqliteCommand insertCommand = db.CreateCommand();
+                            insertCommand.CommandText = SqlCommandInsertPart;
+
+                            foreach (var taxAdministration in taxAdministrationsFromDB)
                             {
-                                taxAdministration.IsSynced = true;
-                                Create(taxAdministration);
-                                syncedItems++;
-                                callback?.Invoke(syncedItems, toSync);
+                                deleteCommand.Parameters.AddWithValue("@Identifier", taxAdministration.Identifier);
+                                deleteCommand.ExecuteNonQuery();
+                                deleteCommand.Parameters.Clear();
+
+                                if (taxAdministration.IsActive)
+                                {
+                                    taxAdministration.IsSynced = true;
+
+                                    insertCommand = AddCreateParameters(insertCommand, taxAdministration);
+                                    insertCommand.ExecuteNonQuery();
+                                    insertCommand.Parameters.Clear();
+
+                                    syncedItems++;
+                                    callback?.Invoke(syncedItems, toSync);
+                                }
                             }
+
+                            transaction.Commit();
+                        }
+                        db.Close();
                     }
                 }
                 else
@@ -359,6 +391,10 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             return null;
         }
 
+        #endregion
+
+        #region Create
+
         public TaxAdministrationResponse Create(TaxAdministrationViewModel taxAdministration)
         {
             TaxAdministrationResponse response = new TaxAdministrationResponse();
@@ -367,46 +403,13 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             {
                 db.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                //Use parameterized query to prevent SQL injection attacks
+                SqliteCommand insertCommand = db.CreateCommand();
                 insertCommand.CommandText = SqlCommandInsertPart;
 
-                insertCommand.Parameters.AddWithValue("@ServerId", taxAdministration.Id);
-                insertCommand.Parameters.AddWithValue("@Identifier", taxAdministration.Identifier);
-                insertCommand.Parameters.AddWithValue("@Code", ((object)taxAdministration.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SecondCode", ((object)taxAdministration.SecondCode) ?? DBNull.Value);
-
-                insertCommand.Parameters.AddWithValue("@Name", ((object)taxAdministration.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Address1", ((object)taxAdministration.Address1) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Address2", ((object)taxAdministration.Address2) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@Address3", ((object)taxAdministration.Address3) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityId", ((object)taxAdministration.City?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)taxAdministration.City?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityCode", ((object)taxAdministration.City?.ZipCode) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CityName", ((object)taxAdministration.City?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankId1", ((object)taxAdministration.Bank1?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankIdentifier1", ((object)taxAdministration.Bank1?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankCode1", ((object)taxAdministration.Bank1?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankName1", ((object)taxAdministration.Bank1?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankId2", ((object)taxAdministration.Bank2?.Id) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankIdentifier2", ((object)taxAdministration.Bank2?.Identifier) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankCode2", ((object)taxAdministration.Bank2?.Code) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@BankName2", ((object)taxAdministration.Bank2?.Name) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@IBAN1", ((object)taxAdministration.IBAN1) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@SWIFT", ((object)taxAdministration.SWIFT) ?? DBNull.Value);
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", taxAdministration.IsSynced);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)taxAdministration.UpdatedAt) ?? DBNull.Value);
-                insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
-                insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
-                insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
-                insertCommand.Parameters.AddWithValue("@CompanyName", MainWindow.CurrentCompany.CompanyName);
-
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand = AddCreateParameters(insertCommand, taxAdministration);
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -422,47 +425,9 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             }
         }
 
-        public TaxAdministrationResponse UpdateSyncStatus(Guid identifier, string code, DateTime? updatedAt, int serverId, bool isSynced)
-        {
-            TaxAdministrationResponse response = new TaxAdministrationResponse();
+        #endregion
 
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-
-                SqliteCommand insertCommand = new SqliteCommand();
-                insertCommand.Connection = db;
-
-                insertCommand.CommandText = "UPDATE TaxAdministrations SET " +
-                    "IsSynced = @IsSynced, " +
-                    "Code = @Code, " +
-                    "UpdatedAt = @UpdatedAt, " +
-                    "ServerId = @ServerId " +
-                    "WHERE Identifier = @Identifier ";
-
-                insertCommand.Parameters.AddWithValue("@IsSynced", isSynced);
-                insertCommand.Parameters.AddWithValue("@Code", code);
-                insertCommand.Parameters.AddWithValue("@UpdatedAt", updatedAt);
-                insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-                insertCommand.Parameters.AddWithValue("@ServerId", serverId);
-
-                try
-                {
-                    insertCommand.ExecuteReader();
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    return response;
-                }
-                db.Close();
-
-                response.Success = true;
-                return response;
-            }
-        }
+        #region Delete
 
         public TaxAdministrationResponse Delete(Guid identifier)
         {
@@ -476,12 +441,12 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText =
-                    "DELETE FROM TaxAdministrations WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM TaxAdministrations WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
+                
                 try
                 {
-                    insertCommand.ExecuteReader();
+                    insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
                 {
@@ -515,7 +480,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
                     insertCommand.CommandText = "DELETE FROM TaxAdministrations";
                     try
                     {
-                        insertCommand.ExecuteReader();
+                        insertCommand.ExecuteNonQuery();
                     }
                     catch (SqliteException error)
                     {
@@ -538,5 +503,7 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             response.Success = true;
             return response;
         }
+
+        #endregion
     }
 }
