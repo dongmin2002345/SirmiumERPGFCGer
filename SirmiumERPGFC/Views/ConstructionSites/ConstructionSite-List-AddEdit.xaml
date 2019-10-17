@@ -60,11 +60,13 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_gradilištaDvotacka}" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtName"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Name}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="Status *" VerticalAlignment="Center" Margin="5 2 5 2" />
-                    <ComboBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxStatus" Margin="2"
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource StatusDvotacka}" VerticalAlignment="Center" Margin="5 2 5 2" />
+                    <popups:StatusPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popStatus" 
+                                        CurrentStatus="{Binding Path=CurrentConstructionSite.Status, Mode=TwoWay}"/>
+                    <!--<ComboBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxStatus" Margin="2"
                         SelectedItem="{Binding Path=CurrentConstructionSite.Status, Converter={StaticResource StatusConverter}}"
                         ItemsSource="{Binding Path=StatusOptions}">
-                    </ComboBox>
+                    </ComboBox>-->
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
                     <popups:CountryPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
@@ -89,6 +91,10 @@
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
                     <DatePicker Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Poslovni_partnerDvotacka}" />
+                    <popups:BusinessPartnerPopup Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popBusinessPartner" 
+                                        CurrentBusinessPartner="{Binding Path=CurrentConstructionSite.BusinessPartner, Mode=TwoWay}"/>
 
                 </Grid>
             </GroupBox>

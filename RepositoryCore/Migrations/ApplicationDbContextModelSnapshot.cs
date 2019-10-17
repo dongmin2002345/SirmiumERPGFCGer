@@ -1317,6 +1317,94 @@ namespace RepositoryCore.Migrations
                     b.ToTable("Sectors");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.Shipments.Shipment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Acceptor");
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Code");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<DateTime>("DeliveryDate");
+
+                    b.Property<string>("DocumentName");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<string>("Note");
+
+                    b.Property<string>("ReturnReceipt");
+
+                    b.Property<int?>("ServiceDeliveryId");
+
+                    b.Property<DateTime>("ShipmentDate");
+
+                    b.Property<string>("ShipmentNumber");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ServiceDeliveryId");
+
+                    b.ToTable("Shipments");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.Shipments.ShipmentDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<int?>("CreatedById");
+
+                    b.Property<Guid>("Identifier");
+
+                    b.Property<int>("ItemStatus");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<int?>("ShipmentId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ShipmentId");
+
+                    b.ToTable("ShipmentDocuments");
+                });
+
             modelBuilder.Entity("DomainCore.Common.TaxAdministrations.TaxAdministration", b =>
                 {
                     b.Property<int>("Id")
@@ -1423,6 +1511,8 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Address");
 
+                    b.Property<int?>("BusinessPartnerId");
+
                     b.Property<int?>("CityId");
 
                     b.Property<string>("Code");
@@ -1449,11 +1539,13 @@ namespace RepositoryCore.Migrations
 
                     b.Property<DateTime>("ProContractDate");
 
-                    b.Property<int>("Status");
+                    b.Property<int?>("StatusId");
 
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BusinessPartnerId");
 
                     b.HasIndex("CityId");
 
@@ -1462,6 +1554,8 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("ConstructionSites");
                 });
@@ -3094,6 +3188,36 @@ namespace RepositoryCore.Migrations
                         .HasForeignKey("CreatedById");
                 });
 
+            modelBuilder.Entity("DomainCore.Common.Shipments.Shipment", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Common.Prices.ServiceDelivery", "ServiceDelivery")
+                        .WithMany()
+                        .HasForeignKey("ServiceDeliveryId");
+                });
+
+            modelBuilder.Entity("DomainCore.Common.Shipments.ShipmentDocument", b =>
+                {
+                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Common.Shipments.Shipment", "Shipment")
+                        .WithMany()
+                        .HasForeignKey("ShipmentId");
+                });
+
             modelBuilder.Entity("DomainCore.Common.TaxAdministrations.TaxAdministration", b =>
                 {
                     b.HasOne("DomainCore.Banks.Bank", "Bank1")
@@ -3130,6 +3254,10 @@ namespace RepositoryCore.Migrations
 
             modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSite", b =>
                 {
+                    b.HasOne("DomainCore.Common.BusinessPartners.BusinessPartner", "BusinessPartner")
+                        .WithMany()
+                        .HasForeignKey("BusinessPartnerId");
+
                     b.HasOne("DomainCore.Common.Locations.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");
@@ -3145,6 +3273,10 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
+
+                    b.HasOne("DomainCore.Statuses.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
                 });
 
             modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSiteCalculation", b =>

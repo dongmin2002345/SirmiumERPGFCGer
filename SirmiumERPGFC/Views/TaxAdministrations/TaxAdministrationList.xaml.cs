@@ -276,41 +276,24 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
         {
             if (CurrentTaxAdministration == null)
             {
-                MainWindow.WarningMessage = "Sie müssen einen Eintrag fürs Löschen auswählen!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                 return;
             }
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("Eintrag", CurrentTaxAdministration.Code);
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
+            // Delete data
+            var result = taxAdministrationService.Delete(CurrentTaxAdministration.Identifier);
+            if (result.Success)
             {
-                TaxAdministrationResponse response = taxAdministrationService.Delete(CurrentTaxAdministration.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = "Fehler beim Löschen vom Server!";
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
-
-                response = new TaxAdministrationSQLiteRepository().Delete(CurrentTaxAdministration.Identifier);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = "Fehler beim lokalen Löschen!";
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-                    return;
-                }
-
-                MainWindow.SuccessMessage = "Der Eintrag wurde erfolgreich gelöscht!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
                 displayThread.IsBackground = true;
                 displayThread.Start();
             }
-
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
+            else
+            {
+                MainWindow.ErrorMessage = result.Message;
+            }
         }
 
         #endregion

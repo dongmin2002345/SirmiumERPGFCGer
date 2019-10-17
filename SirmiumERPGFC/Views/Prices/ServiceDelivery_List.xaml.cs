@@ -193,7 +193,7 @@ namespace SirmiumERPGFC.Views.Prices
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -239,16 +239,16 @@ namespace SirmiumERPGFC.Views.Prices
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Kurirska sluzba ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Kurirska_Sluzba_TriTacke"));
             new ServiceDeliverySQLiteRepository().Sync(ServiceDeliveryService, (synced, toSync) =>
             {
                 if (toSync > 0)
-                    SyncButtonContent = " Kurirska sluzba (" + synced + "/" + toSync + ")";
+                    SyncButtonContent = ((string)Application.Current.FindResource("Kurirska_Sluzba")) + "(" + synced + "/" + toSync + ")";
             });
 
             DisplayServiceDeliveryData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void DgServiceDeliverys_LoadingRow(object sender, DataGridRowEventArgs e)
@@ -266,19 +266,19 @@ namespace SirmiumERPGFC.Views.Prices
 
             ServiceDelivery_AddEdit addEditForm = new ServiceDelivery_AddEdit(ServiceDelivery, true);
             addEditForm.ServiceDeliveryCreatedUpdated += new ServiceDeliveryHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o popustima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_kurirskoj_sluzbi")), 95, addEditForm);
         }
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentServiceDelivery == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati podatak za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik"));
                 return;
             }
 
             ServiceDelivery_AddEdit addEditForm = new ServiceDelivery_AddEdit(CurrentServiceDelivery, false);
             addEditForm.ServiceDeliveryCreatedUpdated += new ServiceDeliveryHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o popustima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_kurirskoj_sluzbi")), 95, addEditForm);
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -289,7 +289,7 @@ namespace SirmiumERPGFC.Views.Prices
 
                 if (CurrentServiceDelivery == null)
                 {
-                    MainWindow.WarningMessage = "Morate odabrati podatak za brisanje!";
+                    MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                     ServiceDeliveryDataLoading = false;
                     return;
                 }
@@ -297,7 +297,7 @@ namespace SirmiumERPGFC.Views.Prices
                 ServiceDeliveryResponse response = ServiceDeliveryService.Delete(CurrentServiceDelivery.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     ServiceDeliveryDataLoading = false;
                     return;
                 }
@@ -305,12 +305,12 @@ namespace SirmiumERPGFC.Views.Prices
                 response = new ServiceDeliverySQLiteRepository().Delete(CurrentServiceDelivery.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     ServiceDeliveryDataLoading = false;
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Podatak je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
                 DisplayServiceDeliveryData();
 
@@ -372,7 +372,13 @@ namespace SirmiumERPGFC.Views.Prices
         }
         #endregion
 
+        private void btnShowURL_Click(object sender, EventArgs e)
+        {
+            string websiteName = CurrentServiceDelivery.URL;     
+            System.Diagnostics.Process.Start("iexplore.exe", websiteName);
+        }
 
+     
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

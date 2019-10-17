@@ -50,6 +50,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -62,7 +63,7 @@
 
                 <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByCode" Grid.Column="1" 
-                         Text="{Binding Path=ConstructionSiteSearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Path=ConstructionSiteSearchObject.Search_InternalCode, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
@@ -78,10 +79,16 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="1" Grid.Column="3" Background="#007ACC">
+                <TextBlock Text="{DynamicResource Poslovni_partnerDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <TextBox x:Name="txtSearchByBusinessPartner" Grid.Column="3" Grid.Row="1" 
+                         Text="{Binding Path=ConstructionSiteSearchObject.Search_BusinessPartnerName, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+                
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="2" Grid.Column="3" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text="{DynamicResource GradDvotacka}" Foreground="White" FontWeight="Regular" />
+                        <TextBlock Text="{DynamicResource PRIKAŽI}" Foreground="White" FontWeight="Regular" />
                     </StackPanel>
                 </Button>
             </Grid>
@@ -163,8 +170,9 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_gradilišta}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Status" Header="{DynamicResource Status}" Binding="{Binding Status, Converter={StaticResource StatusConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Status.Name" Header="{DynamicResource Status}" Binding="{Binding Status.Name}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Grad}" Binding="{Binding City.Name}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="MaxWorkers" Header="{DynamicResource Max_br_radnika}" Binding="{Binding MaxWorkers}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" Width="Auto" IsReadOnly="True" >

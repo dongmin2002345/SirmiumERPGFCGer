@@ -120,9 +120,12 @@ namespace SirmiumERPGFC.Repository.Banks
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					while (query.Read())
-						Banks.Add(Read(query));
-					
+                    while (query.Read())
+                    {
+                        BankViewModel dbEntry = Read(query);
+
+                        Banks.Add(dbEntry);
+                    }
 
 
 					selectCommand = new SqliteCommand(
@@ -184,9 +187,11 @@ namespace SirmiumERPGFC.Repository.Banks
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					while (query.Read())
-						Banks.Add(Read(query));
-					
+                    while (query.Read())
+                    {
+                        BankViewModel dbEntry = Read(query);
+                        Banks.Add(dbEntry);
+                    }
 				}
 				catch (SqliteException error)
 				{
@@ -221,9 +226,12 @@ namespace SirmiumERPGFC.Repository.Banks
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					if (query.Read())
-						bank = Read(query);
-					
+                    if (query.Read())
+                    {
+                        BankViewModel dbEntry = Read(query);
+
+                        bank = dbEntry;
+                    }
 				}
 				catch (SqliteException error)
 				{
@@ -326,8 +334,9 @@ namespace SirmiumERPGFC.Repository.Banks
 						query = selectCommand.ExecuteReader();
 						if (query.Read())
 						{
-							return query.GetDateTime(0);
-						}
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        }
 					}
 				}
 				catch (Exception ex)

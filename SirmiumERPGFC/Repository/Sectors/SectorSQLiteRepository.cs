@@ -121,9 +121,11 @@ namespace SirmiumERPGFC.Repository.Sectors
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					while (query.Read())
-						Sectors.Add(Read(query));
-					
+                    while (query.Read())
+                    {
+                        SectorViewModel dbEntry = Read(query);
+                        Sectors.Add(dbEntry);
+                    }
 
 
 					selectCommand = new SqliteCommand(
@@ -185,9 +187,12 @@ namespace SirmiumERPGFC.Repository.Sectors
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					while (query.Read())
-						Sectors.Add(Read(query));
-					
+                    while (query.Read())
+                    {
+
+                        SectorViewModel dbEntry = Read(query);
+                        Sectors.Add(dbEntry);
+                    }
 				}
 				catch (SqliteException error)
 				{
@@ -222,9 +227,11 @@ namespace SirmiumERPGFC.Repository.Sectors
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					if (query.Read())
-						sector = Read(query);
-					
+                    if (query.Read())
+                    {
+                        SectorViewModel dbEntry = Read(query);
+                        sector = Read(query);
+                    }
 				}
 				catch (SqliteException error)
 				{
@@ -327,8 +334,9 @@ namespace SirmiumERPGFC.Repository.Sectors
 						query = selectCommand.ExecuteReader();
 						if (query.Read())
 						{
-							return query.GetDateTime(0);
-						}
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        }
 					}
 				}
 				catch (Exception ex)

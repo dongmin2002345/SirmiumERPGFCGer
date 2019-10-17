@@ -479,11 +479,13 @@
     <system:String x:Key="Podsetnik">Erinnerung</system:String>
     <system:String x:Key="Radnici_TriTacke">Arbeiter ...</system:String>
     <system:String x:Key="Stavke_TriTacke">Artikel ...</system:String>
+    <system:String x:Key="Stavke">Artikel</system:String>
     <system:String x:Key="Podaci_o_radnicima">Daten zu den Arbeitern</system:String>
     <system:String x:Key="Morate_odabrati_stavku_za_izmenuUzvičnik">Sie müssen das Bearbeitungselement auswählen!</system:String>
     <system:String x:Key="stavku">Artikel</system:String>
     <system:String x:Key="Podaci_su_uspešno_obrisaniUzvičnik">Daten wurden erfolgreich gelöscht!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Naziv">Pflichtfeld: Name</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Broj_posiljke">Pflichtfeld: Lieferungsnummer</system:String>
     <system:String x:Key="Clanovi_porodice_TriTacke">Familienmitglieder ...</system:String>
     <system:String x:Key="Podaci_o_clanovima_porodice">Daten zu Familienmitgliedern</system:String>
     <system:String x:Key="Morate_odabrati_clana_za_izmenuUzvičnik">Sie müssen ein Mitglied zum Bearbeiten auswählen!</system:String>
@@ -583,8 +585,36 @@
     <system:String x:Key="Istorija_fizickog_lica">Geschichte einer physischen Person</system:String>
     <system:String x:Key="Sifra_gradilista_dvotacka">Bauordnung:</system:String>
     <system:String x:Key="Sifra_kompanije_dvotacka">Buchungskreis:</system:String>
+    <system:String x:Key="Popust">Rabatt</system:String>
+    <system:String x:Key="Iznos">Menge</system:String>
+    <system:String x:Key="URL">URL</system:String>
+    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik">Möchten Sie die ausgewählten Daten wirklich löschen?</system:String>
+    <system:String x:Key="IznosDvotacka">Menge:</system:String>
+    <system:String x:Key="Popust_TriTacke">Rabatt...</system:String>
+    <system:String x:Key="Podaci_o_popustu">Rabattinformationen</system:String>
+    <system:String x:Key="Morate_odabrati_popust_za_izmenuUzvičnik">Sie müssen einen Rabatt zum Bearbeiten auswählen!</system:String>
+    <system:String x:Key="Kurirska_Sluzba">Servicebereitstellung</system:String>
+    <system:String x:Key="Kurirska_Sluzba_TriTacke">Servicebereitstellung...</system:String>
 
+    <system:String x:Key="Kurirska_Sluzba_dvotacka">Servicebereitstellung:</system:String>
+    <system:String x:Key="Primalac_dvotacka">Akzeptor:</system:String>
+    <system:String x:Key="Broj_pošiljke_dvotacka">Lieferungsnummer:</system:String>
+    <system:String x:Key="Datum_pošiljke_dvotacka">Versanddatum:</system:String>
+    <system:String x:Key="Datum_dostave_dvotacka">Lieferdatum:</system:String>
+    <system:String x:Key="Povratnica_dvotacka">Rückschein:</system:String>
+    <system:String x:Key="Naziv_dokumenta_dvotacka">Dokumentname:</system:String>
 
+    <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Informationen zum Kurierdienst</system:String>
+    <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">Sie müssen eine Servicebereitstellung zum Bearbeiten auswählen!</system:String>
+    <system:String x:Key="Pošiljke">Lieferung</system:String>
+    <system:String x:Key="Pošiljke_tritacke">Lieferung...</system:String>
 
-
+    <system:String x:Key="Primalac">Akzeptor</system:String>
+    <system:String x:Key="Broj_pošiljke">Lieferungsnummer</system:String>
+    <system:String x:Key="Datum_pošiljke">Versanddatum</system:String>
+    <system:String x:Key="Datum_dostave">Lieferdatum</system:String>
+    <system:String x:Key="Povratnica">Rückschein</system:String>
+    <system:String x:Key="Naziv_dokumenta">Dokumentname</system:String>
+    <system:String x:Key="Morate_odabrati_posiljku_za_izmenuUzvičnik">Sie müssen eine Sendung zum Bearbeiten auswählen!</system:String>
+    <system:String x:Key="Morate_odabrati_dokumentUzvičnik">Sie müssen das Dokument auswählen!</system:String>
 </ResourceDictionary>

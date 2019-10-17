@@ -15,6 +15,7 @@ using RepositoryCore.DbViews.Common.Locations;
 using RepositoryCore.DbViews.Common.Prices;
 using RepositoryCore.DbViews.Common.Professions;
 using RepositoryCore.DbViews.Common.Sectors;
+using RepositoryCore.DbViews.Common.Shipments;
 using RepositoryCore.DbViews.Common.TaxAdministrations;
 using RepositoryCore.DbViews.Common.ToDos;
 using RepositoryCore.DbViews.ConstructionSites;
@@ -35,6 +36,7 @@ using ServiceCore.Implementations.Common.OutputInvoices;
 using ServiceCore.Implementations.Common.Prices;
 using ServiceCore.Implementations.Common.Professions;
 using ServiceCore.Implementations.Common.Sectors;
+using ServiceCore.Implementations.Common.Shipments;
 using ServiceCore.Implementations.Common.TaxAdministrations;
 using ServiceCore.Implementations.Common.ToDos;
 using ServiceCore.Implementations.ConstructionSites;
@@ -53,6 +55,7 @@ using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Abstractions.Common.Prices;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
+using ServiceInterfaces.Abstractions.Common.Shipments;
 using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
 using ServiceInterfaces.Abstractions.Common.ToDos;
 using ServiceInterfaces.Abstractions.ConstructionSites;
@@ -225,6 +228,9 @@ namespace SirmiumERPWeb
             services.AddScoped<IDiscountService, DiscountService>();
             services.AddScoped<IStatusService, StatusService>();
 
+            services.AddScoped<IShipmentService, ShipmentService>();
+            services.AddScoped<IShipmentDocumentService, ShipmentDocumentService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -327,6 +333,9 @@ namespace SirmiumERPWeb
             ServiceDeliveryView.CreateView();
             DiscountView.CreateView();
             StatusView.CreateView();
+
+            ShipmentView.CreateView();
+            ShipmentDocumentView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));

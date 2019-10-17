@@ -10,6 +10,7 @@ using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Abstractions.Common.Prices;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
+using ServiceInterfaces.Abstractions.Common.Shipments;
 using ServiceInterfaces.Abstractions.Common.TaxAdministrations;
 using ServiceInterfaces.Abstractions.Common.ToDos;
 using ServiceInterfaces.Abstractions.ConstructionSites;
@@ -26,6 +27,7 @@ using ServiceWebApi.Implementations.Common.OutputInvoices;
 using ServiceWebApi.Implementations.Common.Prices;
 using ServiceWebApi.Implementations.Common.Professions;
 using ServiceWebApi.Implementations.Common.Sectors;
+using ServiceWebApi.Implementations.Common.Shipments;
 using ServiceWebApi.Implementations.Common.TaxAdministrations;
 using ServiceWebApi.Implementations.Common.ToDos;
 using ServiceWebApi.Implementations.ConstructionSites;
@@ -122,6 +124,9 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IServiceDeliveryService>().To<ServiceDeliveryService>();
                 Kernel.Bind<IDiscountService>().To<DiscountService>();
                 Kernel.Bind<IStatusService>().To<StatusService>();
+
+                Kernel.Bind<IShipmentService>().To<ShipmentService>();
+                Kernel.Bind<IShipmentDocumentService>().To<ShipmentDocumentService>();
 
             }
         }

@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" Margin="2" Header="Osnovni podaci o popustu ">
+        <GroupBox Grid.Row="0" Margin="2" Header="{DynamicResource OSNOVNI_PODACI}">
             <Grid x:Name="mainGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -26,15 +26,15 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra (automatski) " VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource ŠifraDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" IsEnabled="False" 
                   Text="{Binding Path=CurrentDiscount.Code, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="2"  Text="Naziv *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="0" Grid.Column="2"  Text="{DynamicResource NazivDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtName" 
                          Text="{Binding Path=CurrentDiscount.Name, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0"  Text="Iznos *" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBlock Grid.Row="1" Grid.Column="0"  Text="{DynamicResource IznosDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtAmount" 
                          Text="{Binding Path=CurrentDiscount.Amount, Mode=TwoWay}"/>
 

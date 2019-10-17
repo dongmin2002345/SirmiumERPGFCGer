@@ -193,7 +193,7 @@ namespace SirmiumERPGFC.Views.Prices
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -239,16 +239,16 @@ namespace SirmiumERPGFC.Views.Prices
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Popust ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Popust_TriTacke"));
             new DiscountSQLiteRepository().Sync(DiscountService, (synced, toSync) =>
             {
                 if (toSync > 0)
-                    SyncButtonContent = " Popust (" + synced + "/" + toSync + ")";
+                    SyncButtonContent = ((string)Application.Current.FindResource("Popust")) +"(" + synced + "/" + toSync + ")";
             });
 
             DisplayDiscountData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void DgDiscounts_LoadingRow(object sender, DataGridRowEventArgs e)
@@ -266,19 +266,19 @@ namespace SirmiumERPGFC.Views.Prices
 
             Discount_AddEdit addEditForm = new Discount_AddEdit(Discount, true);
             addEditForm.DiscountCreatedUpdated += new DiscountHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o popustima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_popustu")), 95, addEditForm);
         }
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentDiscount == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati podatak za izmenu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_popust_za_izmenuUzvičnik"));
                 return;
             }
 
             Discount_AddEdit addEditForm = new Discount_AddEdit(CurrentDiscount, false);
             addEditForm.DiscountCreatedUpdated += new DiscountHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o popustima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_popustu")), 95, addEditForm);
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -289,7 +289,7 @@ namespace SirmiumERPGFC.Views.Prices
 
                 if (CurrentDiscount == null)
                 {
-                    MainWindow.WarningMessage = "Morate odabrati podatak za brisanje!";
+                    MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                     DiscountDataLoading = false;
                     return;
                 }
@@ -297,7 +297,7 @@ namespace SirmiumERPGFC.Views.Prices
                 DiscountResponse response = DiscountService.Delete(CurrentDiscount.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod brisanja sa servera!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
                     DiscountDataLoading = false;
                     return;
                 }
@@ -305,12 +305,12 @@ namespace SirmiumERPGFC.Views.Prices
                 response = new DiscountSQLiteRepository().Delete(CurrentDiscount.Identifier);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod lokalnog brisanja!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
                     DiscountDataLoading = false;
                     return;
                 }
 
-                MainWindow.SuccessMessage = "Podatak je uspešno obrisan!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
                 DisplayDiscountData();
 

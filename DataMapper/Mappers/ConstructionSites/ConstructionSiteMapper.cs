@@ -1,6 +1,8 @@
-﻿using DataMapper.Mappers.Common.Companies;
+﻿using DataMapper.Mappers.Common.BusinessPartners;
+using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
 using DataMapper.Mappers.Common.Locations;
+using DataMapper.Mappers.Statuses;
 using DomainCore.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using System;
@@ -34,7 +36,6 @@ namespace DataMapper.Mappers.ConstructionSites
                 Name = constructionSite.Name,
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
-                Status = constructionSite.Status,
 
                 ProContractDate = constructionSite.ProContractDate,
                 ContractStart = constructionSite.ContractStart,
@@ -43,6 +44,8 @@ namespace DataMapper.Mappers.ConstructionSites
                 
                 City = constructionSite.City?.ConvertToCityViewModelLite(),
                 Country = constructionSite.Country?.ConvertToCountryViewModelLite(),
+                BusinessPartner = constructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
+                Status = constructionSite.Status?.ConvertToStatusViewModelLite(),
 
                 IsActive = constructionSite.Active,
 
@@ -80,7 +83,6 @@ namespace DataMapper.Mappers.ConstructionSites
                 Name = constructionSite.Name,
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
-                Status = constructionSite.Status,
 
                 ProContractDate = constructionSite.ProContractDate,
                 ContractStart = constructionSite.ContractStart,
@@ -107,14 +109,15 @@ namespace DataMapper.Mappers.ConstructionSites
                 Address = constructionSiteViewModel.Address,
                 Name = constructionSiteViewModel.Name,
                 MaxWorkers = constructionSiteViewModel.MaxWorkers,
-                Status = constructionSiteViewModel.Status,
 
                 ProContractDate = constructionSiteViewModel.ProContractDate,
                 ContractStart = constructionSiteViewModel.ContractStart,
                 ContractExpiration = constructionSiteViewModel.ContractExpiration,
 
                 CityId = constructionSiteViewModel.City?.Id ?? null,
-                CountryId = constructionSiteViewModel.Country?.Id ?? null, 
+                CountryId = constructionSiteViewModel.Country?.Id ?? null,
+                BusinessPartnerId = constructionSiteViewModel.BusinessPartner?.Id ?? null,
+                StatusId = constructionSiteViewModel.Status?.Id ?? null,
 
                 CreatedById = constructionSiteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = constructionSiteViewModel.Company?.Id ?? null,

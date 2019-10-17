@@ -17,6 +17,7 @@ using SirmiumERPGFC.Repository.Limitations;
 using SirmiumERPGFC.Repository.Vats;
 using SirmiumERPGFC.Repository.Prices;
 using SirmiumERPGFC.Repository.Statuses;
+using SirmiumERPGFC.Repository.Shipments;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -450,8 +451,15 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryIdentifier", "GUID NULL");
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryCode", "NVARCHAR(48) NULL");
                     SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "CountryName", "NVARCHAR(2048) NULL");
-                    SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "Status", "INTEGER NULL");
-
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "Status", "INTEGER NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "BusinessPartnerId", "INTEGER NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "BusinessPartnerIdentifier", "GUID NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "BusinessPartnerCode", "NVARCHAR(48) NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "BusinessPartnerName", "NVARCHAR(2048) NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "StatusId", "INTEGER NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "StatusIdentifier", "GUID NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "StatusCode", "NVARCHAR(48) NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("ConstructionSites", "StatusName", "NVARCHAR(2048) NULL");
                     if (withTableDrop)
                     {
                         try
@@ -949,6 +957,34 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(StatusSQLiteRepository.StatusTableCreatePart, db);
                     createTable.ExecuteReader();
+                    #endregion
+
+                    #region Shipments
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Shipments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ShipmentSQLiteRepository.ShipmentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ShipmentDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(ShipmentDocumentSQLiteRepository.ShipmentDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
                     #endregion
                 }
             }

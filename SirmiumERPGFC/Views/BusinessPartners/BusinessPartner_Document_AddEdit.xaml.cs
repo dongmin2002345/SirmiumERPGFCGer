@@ -409,7 +409,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             fileDIalog.Multiselect = true;
             fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+            fileDIalog.Filter = "All Files (*.*)|*.*";
             fileDIalog.ShowDialog();
         }
 

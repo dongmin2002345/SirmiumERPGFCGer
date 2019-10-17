@@ -217,8 +217,10 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        Cities.Add(Read(query));
-                    
+                    {
+                        CityViewModel dbEntry = Read(query);
+                        Cities.Add(dbEntry);
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -264,8 +266,10 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        Cities.Add(Read(query));
-                    
+                    {
+                        CityViewModel dbEntry = Read(query);
+                        Cities.Add(dbEntry);
+                    }
                 }
                 catch (SqliteException error)
                 {

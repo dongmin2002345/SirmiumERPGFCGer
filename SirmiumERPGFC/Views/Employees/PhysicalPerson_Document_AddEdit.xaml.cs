@@ -417,7 +417,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             fileDIalog.Multiselect = true;
             fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "Image Files | *.pdf";
+            fileDIalog.Filter = "All Files (*.*)|*.*";
             fileDIalog.ShowDialog();
         }
     }
