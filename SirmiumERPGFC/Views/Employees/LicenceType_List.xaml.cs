@@ -278,52 +278,35 @@ namespace SirmiumERPGFC.Views.Employees
 			FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_dozvolu")), 95, addEditForm);
 		}
 
-		private void btnDelete_Click(object sender, RoutedEventArgs e)
-		{
-			if (CurrentLicenceType == null)
-			{
-				MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_dozvolu_za_brisanjeUzvičnik"));
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentLicenceType == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                 return;
-			}
+            }
 
-			SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-			// Create confirmation window
-			DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("dozvola", CurrentLicenceType.Category + CurrentLicenceType.Code);
-			var showDialog = deleteConfirmationForm.ShowDialog();
-			if (showDialog != null && showDialog.Value)
-			{
-				LicenceTypeResponse response = licenceTypeService.Delete(CurrentLicenceType.Identifier);
-				if (!response.Success)
-				{
-					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-					return;
-				}
-
-				response = new LicenceTypeSQLiteRepository().Delete(CurrentLicenceType.Identifier);
-				if (!response.Success)
-				{
-					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
-                    SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-					return;
-				}
-
-				MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Dozvola_je_uspešno_obrisanaUzvičnik"));
+            // Delete data
+            var result = licenceTypeService.Delete(CurrentLicenceType.Identifier);
+            if (result.Success)
+            {
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
                 Thread displayThread = new Thread(() => SyncData());
-				displayThread.IsBackground = true;
-				displayThread.Start();
-			}
+                displayThread.IsBackground = true;
+                displayThread.Start();
+            }
+            else
+            {
+                MainWindow.ErrorMessage = result.Message;
+            }
+        }
 
-			SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
-		}
+        #endregion
 
-		#endregion
+        #region Pagination
 
-		#region Pagination
-
-		private void btnFirstPage_Click(object sender, RoutedEventArgs e)
+        private void btnFirstPage_Click(object sender, RoutedEventArgs e)
 		{
 			if (currentPage > 1)
 			{
