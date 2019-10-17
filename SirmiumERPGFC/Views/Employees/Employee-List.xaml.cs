@@ -740,7 +740,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Radnici ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeSQLiteRepository().Sync(employeeService, (synced, toSync) =>
             {
                 SyncButtonContent = " Radnici (" + synced + " / " + toSync + ")... ";
@@ -936,7 +936,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fizičko_lice_za_izmenuUzvičnik"));
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_izmenuUzvičnik"));
                 return;
             }
 
@@ -949,7 +949,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fizičko_lice_za_brisanjeUzvičnik"));
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                 return;
             }
 

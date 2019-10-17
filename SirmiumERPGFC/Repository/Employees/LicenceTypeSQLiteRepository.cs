@@ -119,9 +119,11 @@ namespace SirmiumERPGFC.Repository.Employees
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					while (query.Read())
-						LicenceTypes.Add(Read(query));
-
+                    while (query.Read())
+                    {
+                        LicenceTypeViewModel dbEntry = Read(query);
+                        LicenceTypes.Add(dbEntry);
+                    }
 
 					selectCommand = new SqliteCommand(
 						"SELECT Count(*) " +
@@ -181,9 +183,11 @@ namespace SirmiumERPGFC.Repository.Employees
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					while (query.Read())
-						LicenceTypes.Add(Read(query));
-					
+                    while (query.Read())
+                    {
+                        LicenceTypeViewModel dbEntry = Read(query);
+                        LicenceTypes.Add(dbEntry);
+                    }
 				}
 				catch (SqliteException error)
 				{
@@ -218,9 +222,11 @@ namespace SirmiumERPGFC.Repository.Employees
 
 					SqliteDataReader query = selectCommand.ExecuteReader();
 
-					if (query.Read())
-						licenceType = Read(query);
-					
+                    if (query.Read())
+                    {
+                        LicenceTypeViewModel dbEntry = Read(query);
+                        licenceType = dbEntry;
+                    }
 				}
 				catch (SqliteException error)
 				{
@@ -323,8 +329,9 @@ namespace SirmiumERPGFC.Repository.Employees
 						query = selectCommand.ExecuteReader();
 						if (query.Read())
 						{
-							return query.GetDateTime(0);
-						}
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        }
 					}
 				}
 				catch (Exception ex)

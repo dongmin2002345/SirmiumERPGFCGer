@@ -123,8 +123,10 @@ namespace SirmiumERPGFC.Repository.Professions
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        Professions.Add(Read(query));
-                    
+                    {
+                        ProfessionViewModel dbEntry = Read(query);
+                        Professions.Add(dbEntry);
+                    }
 
 
                     selectCommand = new SqliteCommand(
@@ -191,8 +193,10 @@ namespace SirmiumERPGFC.Repository.Professions
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        Professions.Add(Read(query));
-                    
+                    {
+                        ProfessionViewModel dbEntry = Read(query);
+                        Professions.Add(dbEntry);
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -228,8 +232,10 @@ namespace SirmiumERPGFC.Repository.Professions
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                        profession = Read(query);
-                    
+                    {
+                        ProfessionViewModel dbEntry = Read(query);
+                        profession = dbEntry;
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -332,7 +338,8 @@ namespace SirmiumERPGFC.Repository.Professions
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }

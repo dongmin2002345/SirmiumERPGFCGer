@@ -131,8 +131,10 @@ namespace SirmiumERPGFC.Repository.Sectors
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        Agencies.Add(Read(query));
-                    
+                    {
+                        AgencyViewModel dbEntry = Read(query);
+                        Agencies.Add(dbEntry);
+                    }
 
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
@@ -194,8 +196,10 @@ namespace SirmiumERPGFC.Repository.Sectors
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        Agencies.Add(Read(query));
-                    
+                    {
+                        AgencyViewModel dbEntry = Read(query);
+                        Agencies.Add(dbEntry);
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -231,8 +235,10 @@ namespace SirmiumERPGFC.Repository.Sectors
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                        Agency = Read(query);
-                    
+                    {
+                        AgencyViewModel dbEntry = Read(query);
+                        Agency = dbEntry;
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -335,7 +341,8 @@ namespace SirmiumERPGFC.Repository.Sectors
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }

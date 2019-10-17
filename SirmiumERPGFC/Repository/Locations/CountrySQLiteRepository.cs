@@ -184,8 +184,10 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        countries.Add(Read(query));
-                    
+                    {
+                        CountryViewModel dbEntry = Read(query);
+                        countries.Add(dbEntry);
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -221,8 +223,10 @@ namespace SirmiumERPGFC.Repository.Locations
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     if (query.Read())
-                        Country = Read(query);
-                    
+                    {
+                        CountryViewModel dbEntry = Read(query);
+                        Country = dbEntry;
+                    }
                 }
                 catch (SqliteException error)
                 {
@@ -325,7 +329,8 @@ namespace SirmiumERPGFC.Repository.Locations
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
                         {
-                            return query.GetDateTime(0);
+                            int counter = 0;
+                            return SQLiteHelper.GetDateTimeNullable(query, ref counter);
                         }
                     }
                 }
