@@ -31,7 +31,7 @@
 
 
             <!--    Invoice data    -->
-            <GroupBox Header="{DynamicResource Podaci_o_fakturi}" Margin="2 2 2 1" Grid.Row="0" Grid.ColumnSpan="2">
+            <GroupBox Header="{DynamicResource OSNOVNI_PODACI}" Margin="2 2 2 1" Grid.Row="0" Grid.ColumnSpan="2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -50,11 +50,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Šifra"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource ŠifraDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
                              x:Name="txtShipmentCode" Text="{Binding Path=currentShipment.Code}" IsReadOnly="True"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Datum pošiljke" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource Datum_pošiljke_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <DatePicker Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="ShipmentDate"
                                 SelectedDate="{Binding Path=currentShipment.ShipmentDate, Mode=TwoWay}"/>
 
@@ -63,34 +63,34 @@
                                 Text="{Binding Path=currentShipment.Address, Mode=TwoWay}"/>
                     
                     <!--    ServiceDelivery with popup    -->
-                    <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="Kuriraska služba" Margin="5 0 5 0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource Kurirska_Sluzba_dvotacka}" Margin="5 0 5 0"/>
                     <popups:ServiceDeliveryPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="serviceDeliveryPopup"
                          CurrentServiceDelivery="{Binding Path=currentShipment.ServiceDelivery, Mode=TwoWay}"/>
 
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Broj pošiljke" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Broj_pošiljke_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" IsEnabled="True"
                              x:Name="txtShipmentNumber" Text="{Binding Path=currentShipment.ShipmentNumber}" />
 
 
-                    <TextBlock Grid.Row="2" Grid.Column="3" Text="Primalac" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource Primalac_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAcceptor"
                                 Text="{Binding Path=currentShipment.Acceptor, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Datum dostave" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource Datum_dostave_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtDeliveryDate"
                                 SelectedDate="{Binding Path=currentShipment.DeliveryDate, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="3" Text="Povratnica" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource Povratnica_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtReturnReceipt"
                                 Text="{Binding Path=currentShipment.ReturnReceipt, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Naziv dokumenta" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource Naziv_dokumenta_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtDocumentName"
                                 Text="{Binding Path=currentShipment.DocumentName, Mode=TwoWay}"/>
 
-                    
-                    <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Napomena}" VerticalAlignment="Center" Margin="5 0 5 0" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource NapomenaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtNote" 
                                 Text="{Binding Path=currentShipment.Note, Mode=TwoWay}"/>
 

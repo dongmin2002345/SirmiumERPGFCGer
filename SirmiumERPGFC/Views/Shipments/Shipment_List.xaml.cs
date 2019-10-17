@@ -336,16 +336,16 @@ namespace SirmiumERPGFC.Views.Shipments
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Posiljke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Pošiljke_tritacke"));
             new ShipmentSQLiteRepository().Sync(ShipmentService, (synced, toSync) => {
-                SyncButtonContent = " Posiljke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Pošiljke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
            
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new ShipmentDocumentSQLiteRepository().Sync(ShipmentDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayData();
@@ -360,9 +360,9 @@ namespace SirmiumERPGFC.Views.Shipments
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new ShipmentDocumentSQLiteRepository().Sync(ShipmentDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayShipmentDocumentData();
@@ -392,20 +392,20 @@ namespace SirmiumERPGFC.Views.Shipments
 
             Shipment_AddEdit addEditForm = new Shipment_AddEdit(Shipment, true, false);
             addEditForm.ShipmentCreatedUpdated += new ShipmentHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("ULAZNE_FAKTURE")), 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Pošiljke")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentShipment == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_moguće_menjati_ulayne_faktureUzvičnik"));
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_posiljku_za_izmenuUzvičnik"));
                 return;
             }
 
             Shipment_AddEdit ShipmentAddEditForm = new Shipment_AddEdit(CurrentShipment, false);
             ShipmentAddEditForm.ShipmentCreatedUpdated += new ShipmentHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("ULAZNE_FAKTURE")), 95, ShipmentAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Pošiljke")), 95, ShipmentAddEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -439,7 +439,7 @@ namespace SirmiumERPGFC.Views.Shipments
 
             if (CurrentShipment == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_dokumentUzvičnik"));
                 return;
             }
 

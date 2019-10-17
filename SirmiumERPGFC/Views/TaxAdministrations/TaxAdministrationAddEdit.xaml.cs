@@ -10,21 +10,11 @@ using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Locations;
 using SirmiumERPGFC.Repository.TaxAdministrations;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.TaxAdministrations
 {
@@ -208,7 +198,6 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
                 if (response.Success)
                 {
-                    new TaxAdministrationSQLiteRepository().UpdateSyncStatus(response.TaxAdministration.Identifier, response.TaxAdministration.Code, response.TaxAdministration.UpdatedAt, response.TaxAdministration.Id, true);
                     MainWindow.SuccessMessage = "Daten wurden erfolgreich gespeichert!";
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
