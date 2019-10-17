@@ -475,11 +475,13 @@
     <system:String x:Key="Podsetnik">Reminder</system:String>
     <system:String x:Key="Radnici_TriTacke">Workers ...</system:String>
     <system:String x:Key="Stavke_TriTacke">Items ...</system:String>
+    <system:String x:Key="Stavke">Items</system:String>
     <system:String x:Key="Podaci_o_radnicima">Data on workers</system:String>
     <system:String x:Key="Morate_odabrati_stavku_za_izmenuUzvičnik">You must select the edit item!</system:String>
     <system:String x:Key="stavku">item</system:String>
     <system:String x:Key="Podaci_su_uspešno_obrisaniUzvičnik">Data was successfully deleted!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Naziv">Required field: Name</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Broj_posiljke">Required field: Shipment number</system:String>
     <system:String x:Key="Clanovi_porodice_TriTacke">Family members ...</system:String>
     <system:String x:Key="Podaci_o_clanovima_porodice">Data on family members</system:String>
     <system:String x:Key="Morate_odabrati_clana_za_izmenuUzvičnik">You must select a member to edit!</system:String>
@@ -587,6 +589,29 @@
     <system:String x:Key="Morate_odabrati_popust_za_izmenuUzvičnik">You need to select a discount to edit!</system:String>
     <system:String x:Key="Kurirska_Sluzba">Service delivery</system:String>
     <system:String x:Key="Kurirska_Sluzba_TriTacke">Service delivery...</system:String>
+
+    <system:String x:Key="Kurirska_Sluzba_dvotacka">Service delivery:</system:String>
+    <system:String x:Key="Primalac_dvotacka">Acceptor:</system:String>
+    <system:String x:Key="Broj_pošiljke_dvotacka">Shipment number:</system:String>
+    <system:String x:Key="Datum_pošiljke_dvotacka">Shipment date:</system:String>
+    <system:String x:Key="Datum_dostave_dvotacka">Delivery date:</system:String>
+    <system:String x:Key="Povratnica_dvotacka">Return receipt:</system:String>
+    <system:String x:Key="Naziv_dokumenta_dvotacka">Document name:</system:String>
+
     <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Courier service information</system:String>
     <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">You need to select a service delivery to edit!</system:String>
+    <system:String x:Key="Pošiljke">Shipments</system:String>
+    <system:String x:Key="Pošiljke_tritacke">Shipments...</system:String>
+    <system:String x:Key="Primalac">Acceptor</system:String>
+    <system:String x:Key="Broj_pošiljke">Shipment number</system:String>
+    <system:String x:Key="Datum_pošiljke">Shipment date</system:String>
+    <system:String x:Key="Datum_dostave">Delivery date</system:String>
+    <system:String x:Key="Povratnica">Return receipt</system:String>
+    <system:String x:Key="Naziv_dokumenta">Document name</system:String>
+    <system:String x:Key="Morate_odabrati_posiljku_za_izmenuUzvičnik">You need to select a shipment to edit!</system:String>
+    <system:String x:Key="Morate_odabrati_dokumentUzvičnik">You need to select document!</system:String>
+    
+    
+    
+    
 </ResourceDictionary>

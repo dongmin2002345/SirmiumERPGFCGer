@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.Shipments
 
             if (CurrentShipmentDocumentForm.Name == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Napomena";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
                 return;
             }
 
@@ -363,7 +363,7 @@ namespace SirmiumERPGFC.Views.Shipments
 
             if (ShipmentDocumentsFromDB == null || ShipmentDocumentsFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_uneti_osnovne_podatkeUzvičnik"));
                 return;
             }
 

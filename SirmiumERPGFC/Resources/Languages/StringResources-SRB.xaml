@@ -479,11 +479,13 @@
     <system:String x:Key="Podsetnik">Podsetnik</system:String>
     <system:String x:Key="Radnici_TriTacke">Radnici ...</system:String>
     <system:String x:Key="Stavke_TriTacke">Stavke ...</system:String>
+    <system:String x:Key="Stavke">Stavke</system:String>
     <system:String x:Key="Podaci_o_radnicima">Podaci o radnicima</system:String>
     <system:String x:Key="Morate_odabrati_stavku_za_izmenuUzvičnik">Morate odabrati stavku za izmenu!</system:String>
     <system:String x:Key="stavku">stavku</system:String>
     <system:String x:Key="Podaci_su_uspešno_obrisaniUzvičnik">Podaci su uspešno obrisani!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Naziv">Obavezno polje: Naziv</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Broj_posiljke">Obavezno polje: Broj pošiljke</system:String>
     <system:String x:Key="Clanovi_porodice_TriTacke">Clanovi porodice ...</system:String>
     <system:String x:Key="Podaci_o_clanovima_porodice">Podaci o clanovima porodice</system:String>
     <system:String x:Key="Morate_odabrati_clana_za_izmenuUzvičnik">Morate odabrati clana za izmenu!</system:String>
@@ -594,8 +596,29 @@
     <system:String x:Key="Podaci_o_popustu">Podaci o popustu</system:String>
     <system:String x:Key="Morate_odabrati_popust_za_izmenuUzvičnik">Morate odabrati popust za izmenu!</system:String>
     <system:String x:Key="Kurirska_Sluzba">Kurirska služba</system:String>
+    <system:String x:Key="Kurirska_Sluzba_dvotacka">Kurirska služba:</system:String>
+    <system:String x:Key="Primalac_dvotacka">Primalac:</system:String>
+    <system:String x:Key="Broj_pošiljke_dvotacka">Broj pošiljke:</system:String>
+    <system:String x:Key="Datum_pošiljke_dvotacka">Datum pošiljke:</system:String>
+    <system:String x:Key="Datum_dostave_dvotacka">Datum dostave:</system:String>
+    <system:String x:Key="Povratnica_dvotacka">Povratnica:</system:String>
+    <system:String x:Key="Naziv_dokumenta_dvotacka">Naziv dokumenta:</system:String>
     <system:String x:Key="Kurirska_Sluzba_TriTacke">Kurirska služba...</system:String>
     <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Podaci o kurirskoj službi</system:String>
     <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">Morate odabrati kurirsku službu za izmenu!</system:String>
-
+    <system:String x:Key="Pošiljke">Pošiljke</system:String>
+    <system:String x:Key="Pošiljke_tritacke">Pošiljke...</system:String>
+    <system:String x:Key="Primalac">Primalac</system:String>
+    <system:String x:Key="Broj_pošiljke">Broj pošiljke</system:String>
+    <system:String x:Key="Datum_pošiljke">Datum pošiljke</system:String>
+    <system:String x:Key="Datum_dostave">Datum dostave</system:String>
+    <system:String x:Key="Povratnica">Povratnica</system:String>
+    <system:String x:Key="Naziv_dokumenta">Naziv dokumenta</system:String>
+    <system:String x:Key="Morate_odabrati_posiljku_za_izmenuUzvičnik">Morate odabrati pošiljku za izmenu!</system:String>
+    <system:String x:Key="Morate_odabrati_dokumentUzvičnik">Morate odabrati dokument!</system:String>
+    
+    
+    
+    
+    
 </ResourceDictionary>

@@ -141,7 +141,7 @@ namespace SirmiumERPGFC.Views.Prices
 
             if (String.IsNullOrEmpty(CurrentServiceDelivery.Name))
             {
-                MainWindow.WarningMessage = "Obavezno polje: Naziv popusta";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv"));
                 return;
             }
 
