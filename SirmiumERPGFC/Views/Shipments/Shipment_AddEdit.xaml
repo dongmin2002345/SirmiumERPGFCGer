@@ -10,6 +10,17 @@
              mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Background="White">
 
     <UserControl.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
         <!--<cbxConverters:PdvPercentRateConverter x:Key="cbxPdvPercentRateConverter" />-->
         <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />

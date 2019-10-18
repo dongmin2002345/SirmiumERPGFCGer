@@ -9,6 +9,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <UserControl.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <cbxConverters:MultiConverter x:Key="MultiConverter" />
         <cbxConverters:ItemStatusConverter x:Key="ItemStatusConverter" />
         <cbxConverters:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />

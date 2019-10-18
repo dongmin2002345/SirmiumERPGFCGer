@@ -15,7 +15,17 @@
     </Control.Background>
     <UserControl.Resources>
         <ResourceDictionary>
-            
+            <Style TargetType="ToolTip">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
             <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
             <cbxConverters:MultiConverter x:Key="MultiConverter" />
