@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.Employees
 
             #endregion
 
-            new EmployeeItemSQLiteRepository().Delete(CurrentEmployeeItemForm.Identifier);
-
-            CurrentEmployeeItemForm.Employee = CurrentEmployee;
-
-            CurrentEmployeeItemForm.IsSynced = false;
-            CurrentEmployeeItemForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentEmployeeItemForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new EmployeeItemSQLiteRepository().Create(CurrentEmployeeItemForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentEmployeeItemForm.Employee = CurrentEmployee;
+
+
+                CurrentEmployeeItemForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentEmployeeItemForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new EmployeeItemSQLiteRepository().Delete(CurrentEmployeeItemForm.Identifier);
+                var response = new EmployeeItemSQLiteRepository().Create(CurrentEmployeeItemForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentEmployeeItemForm = new EmployeeItemViewModel();
+                    CurrentEmployeeItemForm.Identifier = Guid.NewGuid();
+                    CurrentEmployeeItemForm.ItemStatus = ItemStatus.Added;
+                    CurrentEmployeeItemForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentEmployeeItemForm = new EmployeeItemViewModel();
                 CurrentEmployeeItemForm.Identifier = Guid.NewGuid();
                 CurrentEmployeeItemForm.ItemStatus = ItemStatus.Added;
+                CurrentEmployeeItemForm.IsSynced = false;
+                EmployeeCreatedUpdated();
 
-                return;
-            }
+                DisplayEmployeeItemData();
 
-            CurrentEmployeeItemForm = new EmployeeItemViewModel();
-            CurrentEmployeeItemForm.Identifier = Guid.NewGuid();
-            CurrentEmployeeItemForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtName.Focus();
+                    })
+                );
 
-            EmployeeCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayEmployeeItemData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtName.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditItem_Click(object sender, RoutedEventArgs e)
@@ -299,11 +304,14 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeItemForm.Identifier = CurrentEmployeeItemDG.Identifier;
             CurrentEmployeeItemForm.ItemStatus = ItemStatus.Edited;
 
-            CurrentEmployeeItemForm.FamilyMember.Name = CurrentEmployeeItemDG.FamilyMember.Name;
+
+            CurrentEmployeeItemForm.IsSynced = CurrentEmployeeItemDG.IsSynced;
+            CurrentEmployeeItemForm.FamilyMember = CurrentEmployeeItemDG.FamilyMember;
             CurrentEmployeeItemForm.Name = CurrentEmployeeItemDG.Name;
             CurrentEmployeeItemForm.DateOfBirth = CurrentEmployeeItemDG.DateOfBirth;
             CurrentEmployeeItemForm.Passport = CurrentEmployeeItemDG.Passport;
             CurrentEmployeeItemForm.EmbassyDate = CurrentEmployeeItemDG.EmbassyDate;
+            CurrentEmployeeItemForm.UpdatedAt = CurrentEmployeeItemDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

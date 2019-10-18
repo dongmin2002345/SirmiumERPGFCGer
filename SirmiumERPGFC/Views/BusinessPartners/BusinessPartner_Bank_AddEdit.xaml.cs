@@ -252,56 +252,62 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             #endregion
 
-            new BusinessPartnerBankSQLiteRepository().Delete(CurrentBusinessPartnerBankForm.Identifier);
-
-            CurrentBusinessPartnerBankForm.BusinessPartner = CurrentBusinessPartner;
-
-            CurrentBusinessPartnerBankForm.IsSynced = false;
-            CurrentBusinessPartnerBankForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentBusinessPartnerBankForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new BusinessPartnerBankSQLiteRepository().Create(CurrentBusinessPartnerBankForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentBusinessPartnerBankForm.BusinessPartner = CurrentBusinessPartner;
+
+
+                CurrentBusinessPartnerBankForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentBusinessPartnerBankForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new BusinessPartnerBankSQLiteRepository().Delete(CurrentBusinessPartnerBankForm.Identifier);
+                var response = new BusinessPartnerBankSQLiteRepository().Create(CurrentBusinessPartnerBankForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentBusinessPartnerBankForm = new BusinessPartnerBankViewModel();
+                    CurrentBusinessPartnerBankForm.Identifier = Guid.NewGuid();
+                    CurrentBusinessPartnerBankForm.ItemStatus = ItemStatus.Added;
+                    CurrentBusinessPartnerBankForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentBusinessPartnerBankForm = new BusinessPartnerBankViewModel();
                 CurrentBusinessPartnerBankForm.Identifier = Guid.NewGuid();
                 CurrentBusinessPartnerBankForm.ItemStatus = ItemStatus.Added;
+                CurrentBusinessPartnerBankForm.IsSynced = false;
+                BusinessPartnerCreatedUpdated();
 
-                return;
-            }
+                DisplayBusinessPartnerBankData();
 
-            CurrentBusinessPartnerBankForm = new BusinessPartnerBankViewModel();
-            CurrentBusinessPartnerBankForm.Identifier = Guid.NewGuid();
-            CurrentBusinessPartnerBankForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtAccountNumber.Focus();
+                    })
+                );
 
-            BusinessPartnerCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayBusinessPartnerBankData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtAccountNumber.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
-
         private void btnEditBank_Click(object sender, RoutedEventArgs e)
         {
             CurrentBusinessPartnerBankForm = new BusinessPartnerBankViewModel();
             CurrentBusinessPartnerBankForm.Identifier = CurrentBusinessPartnerBankDG.Identifier;
             CurrentBusinessPartnerBankForm.ItemStatus = ItemStatus.Edited;
 
-            CurrentBusinessPartnerBankForm.Country.Name = CurrentBusinessPartnerBankDG.Country.Name;
-            CurrentBusinessPartnerBankForm.Bank.Name = CurrentBusinessPartnerBankDG.Bank.Name;
+            CurrentBusinessPartnerBankForm.IsSynced = CurrentBusinessPartnerBankDG.IsSynced;
+            CurrentBusinessPartnerBankForm.Country = CurrentBusinessPartnerBankDG.Country;
+            CurrentBusinessPartnerBankForm.Bank = CurrentBusinessPartnerBankDG.Bank;
             CurrentBusinessPartnerBankForm.AccountNumber = CurrentBusinessPartnerBankDG.AccountNumber;
+            CurrentBusinessPartnerBankForm.UpdatedAt = CurrentBusinessPartnerBankDG.UpdatedAt;
 
         }
 

@@ -252,56 +252,62 @@ namespace SirmiumERPGFC.Views.Employees
 
             #endregion
 
-            new EmployeeDocumentSQLiteRepository().Delete(CurrentEmployeeDocumentForm.Identifier);
-
-            CurrentEmployeeDocumentForm.Employee = CurrentEmployee;
-
-            CurrentEmployeeDocumentForm.IsSynced = false;
-            CurrentEmployeeDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentEmployeeDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new EmployeeDocumentSQLiteRepository().Create(CurrentEmployeeDocumentForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentEmployeeDocumentForm.Employee = CurrentEmployee;
+
+
+                CurrentEmployeeDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentEmployeeDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new EmployeeDocumentSQLiteRepository().Delete(CurrentEmployeeDocumentForm.Identifier);
+                var response = new EmployeeDocumentSQLiteRepository().Create(CurrentEmployeeDocumentForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
+                    CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
+                    CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
+                    CurrentEmployeeDocumentForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
                 CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
                 CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentEmployeeDocumentForm.IsSynced = false;
+                EmployeeCreatedUpdated();
 
-                return;
-            }
+                DisplayEmployeeDocumentData();
 
-            CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
-            CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
-            CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtDocumentName.Focus();
+                    })
+                );
 
-            EmployeeCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayEmployeeDocumentData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtDocumentName.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
-
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)
         {
             CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
             CurrentEmployeeDocumentForm.Identifier = CurrentEmployeeDocumentDG.Identifier;
             CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentEmployeeDocumentForm.IsSynced = CurrentEmployeeDocumentDG.IsSynced;
             CurrentEmployeeDocumentForm.Name = CurrentEmployeeDocumentDG.Name;
             CurrentEmployeeDocumentForm.CreateDate = CurrentEmployeeDocumentDG.CreateDate;
             CurrentEmployeeDocumentForm.Path = CurrentEmployeeDocumentDG.Path;
+            CurrentEmployeeDocumentForm.UpdatedAt = CurrentEmployeeDocumentDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

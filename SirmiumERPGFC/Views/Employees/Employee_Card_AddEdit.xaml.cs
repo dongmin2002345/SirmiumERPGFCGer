@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.Employees
 
             #endregion
 
-            new EmployeeCardSQLiteRepository().Delete(CurrentEmployeeCardForm.Identifier);
-
-            CurrentEmployeeCardForm.Employee = CurrentEmployee;
-
-            CurrentEmployeeCardForm.IsSynced = false;
-            CurrentEmployeeCardForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentEmployeeCardForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new EmployeeCardSQLiteRepository().Create(CurrentEmployeeCardForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentEmployeeCardForm.Employee = CurrentEmployee;
+
+
+                CurrentEmployeeCardForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentEmployeeCardForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new EmployeeCardSQLiteRepository().Delete(CurrentEmployeeCardForm.Identifier);
+                var response = new EmployeeCardSQLiteRepository().Create(CurrentEmployeeCardForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentEmployeeCardForm = new EmployeeCardViewModel();
+                    CurrentEmployeeCardForm.Identifier = Guid.NewGuid();
+                    CurrentEmployeeCardForm.ItemStatus = ItemStatus.Added;
+                    CurrentEmployeeCardForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentEmployeeCardForm = new EmployeeCardViewModel();
                 CurrentEmployeeCardForm.Identifier = Guid.NewGuid();
                 CurrentEmployeeCardForm.ItemStatus = ItemStatus.Added;
+                CurrentEmployeeCardForm.IsSynced = false;
+                EmployeeCreatedUpdated();
 
-                return;
-            }
+                DisplayEmployeeCardData();
 
-            CurrentEmployeeCardForm = new EmployeeCardViewModel();
-            CurrentEmployeeCardForm.Identifier = Guid.NewGuid();
-            CurrentEmployeeCardForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                );
 
-            EmployeeCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayEmployeeCardData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditCard_Click(object sender, RoutedEventArgs e)
@@ -298,10 +303,12 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeCardForm = new EmployeeCardViewModel();
             CurrentEmployeeCardForm.Identifier = CurrentEmployeeCardDG.Identifier;
             CurrentEmployeeCardForm.ItemStatus = ItemStatus.Edited;
+            CurrentEmployeeCardForm.IsSynced = CurrentEmployeeCardDG.IsSynced;
 
             CurrentEmployeeCardForm.Description = CurrentEmployeeCardDG.Description;
             CurrentEmployeeCardForm.CardDate = CurrentEmployeeCardDG.CardDate;
             CurrentEmployeeCardForm.PlusMinus = CurrentEmployeeCardDG.PlusMinus;
+            CurrentEmployeeCardForm.UpdatedAt = CurrentEmployeeCardDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

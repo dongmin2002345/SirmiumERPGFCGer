@@ -252,35 +252,37 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             #endregion
 
+            Thread th = new Thread(() =>
+            {
+            SubmitButtonEnabled = false;
+
+
+                CurrentBusinessPartnerPhoneForm.BusinessPartner = CurrentBusinessPartner;
+
+
+                CurrentBusinessPartnerPhoneForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentBusinessPartnerPhoneForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
             new BusinessPartnerPhoneSQLiteRepository().Delete(CurrentBusinessPartnerPhoneForm.Identifier);
-
-            CurrentBusinessPartnerPhoneForm.BusinessPartner = CurrentBusinessPartner;
-
-            CurrentBusinessPartnerPhoneForm.IsSynced = false;
-            CurrentBusinessPartnerPhoneForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentBusinessPartnerPhoneForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
             var response = new BusinessPartnerPhoneSQLiteRepository().Create(CurrentBusinessPartnerPhoneForm);
             if (!response.Success)
             {
                 MainWindow.ErrorMessage = response.Message;
 
-                CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
+                    CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
                 CurrentBusinessPartnerPhoneForm.Identifier = Guid.NewGuid();
                 CurrentBusinessPartnerPhoneForm.ItemStatus = ItemStatus.Added;
-
+                CurrentBusinessPartnerPhoneForm.IsSynced = false;
                 return;
             }
 
-            CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
+                CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
             CurrentBusinessPartnerPhoneForm.Identifier = Guid.NewGuid();
             CurrentBusinessPartnerPhoneForm.ItemStatus = ItemStatus.Added;
-
+            CurrentBusinessPartnerPhoneForm.IsSynced = false;
             BusinessPartnerCreatedUpdated();
 
-            Thread displayThread = new Thread(() => DisplayBusinessPartnerPhoneData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
+                DisplayBusinessPartnerPhoneData();
 
             Application.Current.Dispatcher.BeginInvoke(
                 System.Windows.Threading.DispatcherPriority.Normal,
@@ -289,16 +291,18 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     txtPhoneContactPersonFirstName.Focus();
                 })
             );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
-
         private void btnEditPhone_Click(object sender, RoutedEventArgs e)
         {
             CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
             CurrentBusinessPartnerPhoneForm.Identifier = CurrentBusinessPartnerPhoneDG.Identifier;
             CurrentBusinessPartnerPhoneForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentBusinessPartnerPhoneForm.IsSynced = CurrentBusinessPartnerPhoneDG.IsSynced;
             CurrentBusinessPartnerPhoneForm.ContactPersonFirstName = CurrentBusinessPartnerPhoneDG.ContactPersonFirstName;
             CurrentBusinessPartnerPhoneForm.ContactPersonLastName = CurrentBusinessPartnerPhoneDG.ContactPersonLastName;
             CurrentBusinessPartnerPhoneForm.Description = CurrentBusinessPartnerPhoneDG.Description;
@@ -308,6 +312,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerPhoneForm.Email = CurrentBusinessPartnerPhoneDG.Email;
             CurrentBusinessPartnerPhoneForm.Birthday = CurrentBusinessPartnerPhoneDG.Birthday;
             CurrentBusinessPartnerPhoneForm.Path = CurrentBusinessPartnerPhoneDG.Path;
+            CurrentBusinessPartnerPhoneForm.UpdatedAt = CurrentBusinessPartnerPhoneDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

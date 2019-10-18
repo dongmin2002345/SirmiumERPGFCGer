@@ -252,15 +252,19 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             #endregion
 
-            new BusinessPartnerInstitutionSQLiteRepository().Delete(CurrentBusinessPartnerInstitutionForm.Identifier);
+            Thread th = new Thread(() =>
+            {
+                SubmitButtonEnabled = false;
+                
 
             CurrentBusinessPartnerInstitutionForm.BusinessPartner = CurrentBusinessPartner;
 
-            CurrentBusinessPartnerInstitutionForm.IsSynced = false;
+            
             CurrentBusinessPartnerInstitutionForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
             CurrentBusinessPartnerInstitutionForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-            var response = new BusinessPartnerInstitutionSQLiteRepository().Create(CurrentBusinessPartnerInstitutionForm);
+                new BusinessPartnerInstitutionSQLiteRepository().Delete(CurrentBusinessPartnerInstitutionForm.Identifier);
+                var response = new BusinessPartnerInstitutionSQLiteRepository().Create(CurrentBusinessPartnerInstitutionForm);
             if (!response.Success)
             {
                 MainWindow.ErrorMessage = response.Message;
@@ -268,20 +272,18 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 CurrentBusinessPartnerInstitutionForm = new BusinessPartnerInstitutionViewModel();
                 CurrentBusinessPartnerInstitutionForm.Identifier = Guid.NewGuid();
                 CurrentBusinessPartnerInstitutionForm.ItemStatus = ItemStatus.Added;
-
-                return;
+                    CurrentBusinessPartnerInstitutionForm.IsSynced = false;
+                    return;
             }
 
             CurrentBusinessPartnerInstitutionForm = new BusinessPartnerInstitutionViewModel();
             CurrentBusinessPartnerInstitutionForm.Identifier = Guid.NewGuid();
             CurrentBusinessPartnerInstitutionForm.ItemStatus = ItemStatus.Added;
+                CurrentBusinessPartnerInstitutionForm.IsSynced = false;
+                BusinessPartnerCreatedUpdated();
 
-            BusinessPartnerCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayBusinessPartnerInstitutionData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
+           DisplayBusinessPartnerInstitutionData();
+           
             Application.Current.Dispatcher.BeginInvoke(
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
@@ -291,13 +293,16 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             );
 
             SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
-
         private void btnEditInstitution_Click(object sender, RoutedEventArgs e)
         {
             CurrentBusinessPartnerInstitutionForm = new BusinessPartnerInstitutionViewModel();
             CurrentBusinessPartnerInstitutionForm.Identifier = CurrentBusinessPartnerInstitutionDG.Identifier;
             CurrentBusinessPartnerInstitutionForm.ItemStatus = ItemStatus.Edited;
+            CurrentBusinessPartnerInstitutionForm.IsSynced = CurrentBusinessPartnerInstitutionDG.IsSynced;
 
             CurrentBusinessPartnerInstitutionForm.Code = CurrentBusinessPartnerInstitutionDG.Code;
             CurrentBusinessPartnerInstitutionForm.Institution = CurrentBusinessPartnerInstitutionDG.Institution;
@@ -308,6 +313,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerInstitutionForm.Fax = CurrentBusinessPartnerInstitutionDG.Fax;
             CurrentBusinessPartnerInstitutionForm.Email = CurrentBusinessPartnerInstitutionDG.Email;
             CurrentBusinessPartnerInstitutionForm.Note = CurrentBusinessPartnerInstitutionDG.Note;
+            CurrentBusinessPartnerInstitutionForm.UpdatedAt = CurrentBusinessPartnerInstitutionDG.UpdatedAt;
+
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
