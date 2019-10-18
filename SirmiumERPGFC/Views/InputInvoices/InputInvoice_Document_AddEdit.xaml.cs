@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             #endregion
 
-            new InputInvoiceDocumentSQLiteRepository().Delete(CurrentInputInvoiceDocumentForm.Identifier);
-
-            CurrentInputInvoiceDocumentForm.InputInvoice = CurrentInputInvoice;
-
-            CurrentInputInvoiceDocumentForm.IsSynced = false;
-            CurrentInputInvoiceDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentInputInvoiceDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new InputInvoiceDocumentSQLiteRepository().Create(CurrentInputInvoiceDocumentForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentInputInvoiceDocumentForm.InputInvoice = CurrentInputInvoice;
+
+
+                CurrentInputInvoiceDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentInputInvoiceDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new InputInvoiceDocumentSQLiteRepository().Delete(CurrentInputInvoiceDocumentForm.Identifier);
+                var response = new InputInvoiceDocumentSQLiteRepository().Create(CurrentInputInvoiceDocumentForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
+                    CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
+                    CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+                    CurrentInputInvoiceDocumentForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
                 CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
                 CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentInputInvoiceDocumentForm.IsSynced = false;
+                InputInvoiceCreatedUpdated();
 
-                return;
-            }
+                DisplayInputInvoiceDocumentData();
 
-            CurrentInputInvoiceDocumentForm = new InputInvoiceDocumentViewModel();
-            CurrentInputInvoiceDocumentForm.Identifier = Guid.NewGuid();
-            CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtDocumentName.Focus();
+                    })
+                );
 
-            InputInvoiceCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayInputInvoiceDocumentData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtDocumentName.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)
@@ -299,9 +304,11 @@ namespace SirmiumERPGFC.Views.InputInvoices
             CurrentInputInvoiceDocumentForm.Identifier = CurrentInputInvoiceDocumentDG.Identifier;
             CurrentInputInvoiceDocumentForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentInputInvoiceDocumentForm.IsSynced = CurrentInputInvoiceDocumentDG.IsSynced;
             CurrentInputInvoiceDocumentForm.Name = CurrentInputInvoiceDocumentDG.Name;
             CurrentInputInvoiceDocumentForm.CreateDate = CurrentInputInvoiceDocumentDG.CreateDate;
             CurrentInputInvoiceDocumentForm.Path = CurrentInputInvoiceDocumentDG.Path;
+            CurrentInputInvoiceDocumentForm.UpdatedAt = CurrentInputInvoiceDocumentDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

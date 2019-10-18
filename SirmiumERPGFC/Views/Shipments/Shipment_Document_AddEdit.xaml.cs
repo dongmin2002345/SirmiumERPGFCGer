@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.Shipments
 
             #endregion
 
-            new ShipmentDocumentSQLiteRepository().Delete(CurrentShipmentDocumentForm.Identifier);
-
-            CurrentShipmentDocumentForm.Shipment = CurrentShipment;
-
-            CurrentShipmentDocumentForm.IsSynced = false;
-            CurrentShipmentDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentShipmentDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new ShipmentDocumentSQLiteRepository().Create(CurrentShipmentDocumentForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentShipmentDocumentForm.Shipment = CurrentShipment;
+
+
+                CurrentShipmentDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentShipmentDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new ShipmentDocumentSQLiteRepository().Delete(CurrentShipmentDocumentForm.Identifier);
+                var response = new ShipmentDocumentSQLiteRepository().Create(CurrentShipmentDocumentForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
+                    CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
+                    CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
+                    CurrentShipmentDocumentForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
                 CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
                 CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentShipmentDocumentForm.IsSynced = false;
+                ShipmentCreatedUpdated();
 
-                return;
-            }
+                DisplayShipmentDocumentData();
 
-            CurrentShipmentDocumentForm = new ShipmentDocumentViewModel();
-            CurrentShipmentDocumentForm.Identifier = Guid.NewGuid();
-            CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtDocumentName.Focus();
+                    })
+                );
 
-            ShipmentCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayShipmentDocumentData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtDocumentName.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)
@@ -299,9 +304,11 @@ namespace SirmiumERPGFC.Views.Shipments
             CurrentShipmentDocumentForm.Identifier = CurrentShipmentDocumentDG.Identifier;
             CurrentShipmentDocumentForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentShipmentDocumentForm.IsSynced = CurrentShipmentDocumentDG.IsSynced;
             CurrentShipmentDocumentForm.Name = CurrentShipmentDocumentDG.Name;
             CurrentShipmentDocumentForm.CreateDate = CurrentShipmentDocumentDG.CreateDate;
             CurrentShipmentDocumentForm.Path = CurrentShipmentDocumentDG.Path;
+            CurrentShipmentDocumentForm.UpdatedAt = CurrentShipmentDocumentDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

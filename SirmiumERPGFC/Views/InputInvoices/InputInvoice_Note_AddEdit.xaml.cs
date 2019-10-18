@@ -253,46 +253,52 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             #endregion
 
-            new InputInvoiceNoteSQLiteRepository().Delete(CurrentInputInvoiceNoteForm.Identifier);
-
-            CurrentInputInvoiceNoteForm.InputInvoice = CurrentInputInvoice;
-
-            CurrentInputInvoiceNoteForm.IsSynced = false;
-            CurrentInputInvoiceNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentInputInvoiceNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new InputInvoiceNoteSQLiteRepository().Create(CurrentInputInvoiceNoteForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentInputInvoiceNoteForm.InputInvoice = CurrentInputInvoice;
+
+
+                CurrentInputInvoiceNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentInputInvoiceNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new InputInvoiceNoteSQLiteRepository().Delete(CurrentInputInvoiceNoteForm.Identifier);
+                var response = new InputInvoiceNoteSQLiteRepository().Create(CurrentInputInvoiceNoteForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentInputInvoiceNoteForm = new InputInvoiceNoteViewModel();
+                    CurrentInputInvoiceNoteForm.Identifier = Guid.NewGuid();
+                    CurrentInputInvoiceNoteForm.ItemStatus = ItemStatus.Added;
+                    CurrentInputInvoiceNoteForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentInputInvoiceNoteForm = new InputInvoiceNoteViewModel();
                 CurrentInputInvoiceNoteForm.Identifier = Guid.NewGuid();
                 CurrentInputInvoiceNoteForm.ItemStatus = ItemStatus.Added;
+                CurrentInputInvoiceNoteForm.IsSynced = false;
+                InputInvoiceCreatedUpdated();
 
-                return;
-            }
+                DisplayInputInvoiceNoteData();
 
-            CurrentInputInvoiceNoteForm = new InputInvoiceNoteViewModel();
-            CurrentInputInvoiceNoteForm.Identifier = Guid.NewGuid();
-            CurrentInputInvoiceNoteForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                );
 
-            InputInvoiceCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayInputInvoiceNoteData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
+
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
         {
@@ -300,9 +306,10 @@ namespace SirmiumERPGFC.Views.InputInvoices
             CurrentInputInvoiceNoteForm.Identifier = CurrentInputInvoiceNoteDG.Identifier;
             CurrentInputInvoiceNoteForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentInputInvoiceNoteForm.IsSynced = CurrentInputInvoiceNoteDG.IsSynced;
             CurrentInputInvoiceNoteForm.Note = CurrentInputInvoiceNoteDG.Note;
             CurrentInputInvoiceNoteForm.NoteDate = CurrentInputInvoiceNoteDG.NoteDate;
-            
+            CurrentInputInvoiceNoteForm.UpdatedAt = CurrentInputInvoiceNoteDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
