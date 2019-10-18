@@ -26,9 +26,9 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource ŠifraDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode" IsEnabled="False" 
-                  Text="{Binding Path=CurrentServiceDelivery.Code, Mode=TwoWay}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Interna_šifraDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtCode"  
+                  Text="{Binding Path=CurrentServiceDelivery.InternalCode, Mode=TwoWay}"/>
 
                 <TextBlock Grid.Row="0" Grid.Column="2"  Text="{DynamicResource NazivDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                 <TextBox Grid.Row="0" Grid.Column="3" Margin="2" x:Name="txtName" 

@@ -102,7 +102,7 @@
                           SelectedItem="{Binding Path=CurrentServiceDelivery}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>

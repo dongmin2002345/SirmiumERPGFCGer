@@ -27,7 +27,24 @@ namespace ServiceInterfaces.ViewModels.Common.Sectors
             }
         }
         #endregion
-        
+
+        #region InternalCode
+        private string _InternalCode;
+
+        public string InternalCode
+        {
+            get { return _InternalCode; }
+            set
+            {
+                if (_InternalCode != value)
+                {
+                    _InternalCode = value;
+                    NotifyPropertyChanged("InternalCode");
+                }
+            }
+        }
+        #endregion
+
         #region Name
         private string _Name;
 

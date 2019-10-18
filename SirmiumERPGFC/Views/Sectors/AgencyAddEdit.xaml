@@ -35,8 +35,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentAgency.Code}" IsEnabled="False" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Interna_šifraDvotacka}" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentAgency.InternalCode}" />
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_delatnostiDvotacka}" />
                     <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtName" Margin="2" Text="{Binding Path=CurrentAgency.Name}" />

@@ -28,6 +28,7 @@ namespace DataMapper.Mappers.Common.Prices
                 Identifier = serviceDelivery.Identifier,
 
                 Code = serviceDelivery.Code,
+                InternalCode = serviceDelivery.InternalCode,
                 Name = serviceDelivery.Name,
                 URL = serviceDelivery.URL,
 
@@ -51,6 +52,7 @@ namespace DataMapper.Mappers.Common.Prices
                 Identifier = serviceDelivery.Identifier,
 
                 Code = serviceDelivery.Code,
+                InternalCode = serviceDelivery.InternalCode,
                 Name = serviceDelivery.Name,
                 URL = serviceDelivery.URL,
 
@@ -71,6 +73,7 @@ namespace DataMapper.Mappers.Common.Prices
                 Identifier = serviceDeliveryViewModel.Identifier,
 
                 Code = serviceDeliveryViewModel.Code,
+                InternalCode = serviceDeliveryViewModel.InternalCode,
                 Name = serviceDeliveryViewModel.Name,
                 URL = serviceDeliveryViewModel.URL,
 

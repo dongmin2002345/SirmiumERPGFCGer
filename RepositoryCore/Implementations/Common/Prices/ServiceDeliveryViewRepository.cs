@@ -19,7 +19,7 @@ namespace RepositoryCore.Implementations.Common.Prices
         private string connectionString;
 
         private string SelectString =
-            "SELECT ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryName, ServiceDeliveryURL, " +
+            "SELECT ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryInternalCode, ServiceDeliveryName, ServiceDeliveryURL, " +
             "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
             "FROM vServiceDeliverys ";
 
@@ -31,6 +31,8 @@ namespace RepositoryCore.Implementations.Common.Prices
 
             if (reader["ServiceDeliveryCode"] != DBNull.Value)
                 serviceDelivery.Code = reader["ServiceDeliveryCode"].ToString();
+            if (reader["ServiceDeliveryInternalCode"] != DBNull.Value)
+                serviceDelivery.InternalCode = reader["ServiceDeliveryInternalCode"].ToString();
             if (reader["ServiceDeliveryName"] != DBNull.Value)
                 serviceDelivery.Name = reader["ServiceDeliveryName"].ToString();
             if (reader["ServiceDeliveryURL"] != DBNull.Value)
@@ -208,6 +210,7 @@ namespace RepositoryCore.Implementations.Common.Prices
 
                     // Set properties
                     dbEntry.Code = serviceDelivery.Code;
+                    dbEntry.InternalCode = serviceDelivery.InternalCode;
                     dbEntry.Name = serviceDelivery.Name;
                     dbEntry.URL = serviceDelivery.URL;
 

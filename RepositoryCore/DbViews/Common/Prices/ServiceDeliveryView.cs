@@ -25,6 +25,7 @@ namespace RepositoryCore.DbViews.Common.Prices
                 "serviceDelivery.Id AS ServiceDeliveryId, " +
                 "serviceDelivery.Identifier AS ServiceDeliveryIdentifier, " +
                 "serviceDelivery.Code AS ServiceDeliveryCode, " +
+                "serviceDelivery.InternalCode AS ServiceDeliveryInternalCode, " +
                 "serviceDelivery.Name AS ServiceDeliveryName, " +
                 "serviceDelivery.URL AS ServiceDeliveryURL, " +
 

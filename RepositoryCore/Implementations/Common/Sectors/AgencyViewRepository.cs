@@ -30,7 +30,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
             List<Agency> Agencies = new List<Agency>();
 
             string queryString =
-                "SELECT AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
+                "SELECT AgencyId, AgencyIdentifier, AgencyCode, AgencyInternalCode, AgencyName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -53,6 +53,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         agency.Id = Int32.Parse(reader["AgencyId"].ToString());
                         agency.Identifier = Guid.Parse(reader["AgencyIdentifier"].ToString());
                         agency.Code = reader["AgencyCode"]?.ToString();
+                        agency.InternalCode = reader["AgencyInternalCode"]?.ToString();
                         agency.Name = reader["AgencyName"].ToString();
 
                         if (reader["CountryId"] != DBNull.Value)
@@ -119,7 +120,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
             List<Agency> Agencies = new List<Agency>();
 
             string queryString =
-                "SELECT AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
+                "SELECT AgencyId, AgencyIdentifier, AgencyCode, AgencyInternalCode, AgencyName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -144,6 +145,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                         agency.Id = Int32.Parse(reader["AgencyId"].ToString());
                         agency.Identifier = Guid.Parse(reader["AgencyIdentifier"].ToString());
                         agency.Code = reader["AgencyCode"]?.ToString();
+                        agency.InternalCode = reader["AgencyInternalCode"]?.ToString();
                         agency.Name = reader["AgencyName"].ToString();
 
                         if (reader["CountryId"] != DBNull.Value)
@@ -263,6 +265,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
 
                     // Set properties
                     dbEntry.Code = Agency.Code;
+                    dbEntry.InternalCode = Agency.InternalCode;
                     dbEntry.Name = Agency.Name;
 
                     // Set timestamp

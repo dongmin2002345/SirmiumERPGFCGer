@@ -29,6 +29,7 @@ namespace DataMapper.Mappers.Common.Sectors
                 Identifier = Agency.Identifier,
 
                 Code = Agency.Code,
+                InternalCode = Agency.InternalCode,
                 Name = Agency.Name,
 
                 Country = Agency.Country?.ConvertToCountryViewModelLite(),
@@ -65,6 +66,7 @@ namespace DataMapper.Mappers.Common.Sectors
                 Identifier = Agency.Identifier,
 
                 Code = Agency.Code,
+                InternalCode = Agency.InternalCode,
                 Name = Agency.Name,
 
                 IsActive = Agency.Active,
@@ -83,6 +85,7 @@ namespace DataMapper.Mappers.Common.Sectors
                 Identifier = AgencyViewModel.Identifier,
 
                 Code = AgencyViewModel.Code,
+                InternalCode = AgencyViewModel.InternalCode,
                 Name = AgencyViewModel.Name,
 
                 CountryId = AgencyViewModel.Country?.Id ?? null,

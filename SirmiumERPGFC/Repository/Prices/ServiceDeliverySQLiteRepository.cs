@@ -18,6 +18,7 @@ namespace SirmiumERPGFC.Repository.Prices
            "ServerId INTEGER NULL, " +
            "Identifier GUID, " +
            "Code NVARCHAR(2048) NULL, " +
+            "InternalCode NVARCHAR(2048) NULL, " +
            "Name NVARCHAR(2048) NULL, " +
            "URL NVARCHAR(2048) NULL, " +
            "IsSynced BOOL NULL, " +
@@ -28,14 +29,14 @@ namespace SirmiumERPGFC.Repository.Prices
            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, URL, " +
+            "SELECT ServerId, Identifier, Code, InternalCode, Name, URL, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ServiceDeliverys " +
-            "(Id, ServerId, Identifier, Code, Name, URL, " +
+            "(Id, ServerId, Identifier, Code, InternalCode, Name, URL, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @URL, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @URL, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -49,6 +50,7 @@ namespace SirmiumERPGFC.Repository.Prices
             dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
             dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.URL = SQLiteHelper.GetString(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
@@ -64,6 +66,7 @@ namespace SirmiumERPGFC.Repository.Prices
             insertCommand.Parameters.AddWithValue("@ServerId", serviceDelivery.Id);
             insertCommand.Parameters.AddWithValue("@Identifier", serviceDelivery.Identifier);
             insertCommand.Parameters.AddWithValue("@Code", ((object)serviceDelivery.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InternalCode", ((object)serviceDelivery.InternalCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Name", ((object)serviceDelivery.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@URL", ((object)serviceDelivery.URL) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", serviceDelivery.IsSynced);

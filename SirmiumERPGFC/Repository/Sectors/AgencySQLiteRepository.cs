@@ -18,6 +18,7 @@ namespace SirmiumERPGFC.Repository.Sectors
             "ServerId INTEGER NULL, " +
             "Identifier GUID, " +
             "Code NVARCHAR(48) NULL, " +
+            "InternalCode NVARCHAR(48) NULL, " +
             "Name NVARCHAR(48) NULL, " +
             "CountryId INTEGER NULL, " +
             "CountryIdentifier GUID NULL, " +
@@ -35,18 +36,18 @@ namespace SirmiumERPGFC.Repository.Sectors
             "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, " +
+            "SELECT ServerId, Identifier, Code, InternalCode, Name, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Agencies " +
-            "(Id, ServerId, Identifier, Code, Name, " +
+            "(Id, ServerId, Identifier, Code, InternalCode, Name, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -62,6 +63,7 @@ namespace SirmiumERPGFC.Repository.Sectors
             dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
             dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InternalCode = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
             dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
@@ -78,6 +80,7 @@ namespace SirmiumERPGFC.Repository.Sectors
             insertCommand.Parameters.AddWithValue("@ServerId", Agency.Id);
             insertCommand.Parameters.AddWithValue("@Identifier", Agency.Identifier);
             insertCommand.Parameters.AddWithValue("@Code", ((object)Agency.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InternalCode", ((object)Agency.InternalCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Name", ((object)Agency.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)Agency.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)Agency.Country?.Identifier) ?? DBNull.Value);
