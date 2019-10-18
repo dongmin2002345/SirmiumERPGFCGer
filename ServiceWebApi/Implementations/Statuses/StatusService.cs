@@ -1,5 +1,6 @@
 ﻿using ApiExtension.Sender;
 using ServiceInterfaces.Abstractions;
+using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Messages.Statuses;
 using ServiceInterfaces.ViewModels.Statuses;
 using System;

@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions;
+using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Messages.Statuses;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;

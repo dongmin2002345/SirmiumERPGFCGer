@@ -9,7 +9,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Abstractions\Statuses\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   

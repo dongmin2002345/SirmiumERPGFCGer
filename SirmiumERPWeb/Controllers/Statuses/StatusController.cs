@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceInterfaces.Abstractions;
+using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Messages.Statuses;
 using ServiceInterfaces.ViewModels.Statuses;
 

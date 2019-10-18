@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using ServiceInterfaces.Abstractions;
+using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Messages.Statuses;
 using ServiceInterfaces.ViewModels.Statuses;
 using SirmiumERPGFC.Repository.Common;

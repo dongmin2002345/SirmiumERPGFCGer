@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServiceInterfaces.Abstractions
+namespace ServiceInterfaces.Abstractions.Statuses
 {
     public interface IStatusService
     {
