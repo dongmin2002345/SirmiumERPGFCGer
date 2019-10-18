@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.Employees
 
             #endregion
 
-            new EmployeeProfessionItemSQLiteRepository().Delete(CurrentEmployeeProfessionForm.Identifier);
-
-            CurrentEmployeeProfessionForm.Employee = CurrentEmployee;
-
-            CurrentEmployeeProfessionForm.IsSynced = false;
-            CurrentEmployeeProfessionForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentEmployeeProfessionForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new EmployeeProfessionItemSQLiteRepository().Create(CurrentEmployeeProfessionForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentEmployeeProfessionForm.Employee = CurrentEmployee;
+
+
+                CurrentEmployeeProfessionForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentEmployeeProfessionForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new EmployeeProfessionItemSQLiteRepository().Delete(CurrentEmployeeProfessionForm.Identifier);
+                var response = new EmployeeProfessionItemSQLiteRepository().Create(CurrentEmployeeProfessionForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentEmployeeProfessionForm = new EmployeeProfessionItemViewModel();
+                    CurrentEmployeeProfessionForm.Identifier = Guid.NewGuid();
+                    CurrentEmployeeProfessionForm.ItemStatus = ItemStatus.Added;
+                    CurrentEmployeeProfessionForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentEmployeeProfessionForm = new EmployeeProfessionItemViewModel();
                 CurrentEmployeeProfessionForm.Identifier = Guid.NewGuid();
                 CurrentEmployeeProfessionForm.ItemStatus = ItemStatus.Added;
+                CurrentEmployeeProfessionForm.IsSynced = false;
+                EmployeeCreatedUpdated();
 
-                return;
-            }
+                DisplayEmployeeProfessionData();
 
-            CurrentEmployeeProfessionForm = new EmployeeProfessionItemViewModel();
-            CurrentEmployeeProfessionForm.Identifier = Guid.NewGuid();
-            CurrentEmployeeProfessionForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        popCountry.Focus();
+                    })
+                );
 
-            EmployeeCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayEmployeeProfessionData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    popCountry.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditEmployee_Click(object sender, RoutedEventArgs e)
@@ -299,9 +304,10 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeProfessionForm.Identifier = CurrentEmployeeProfessionDG.Identifier;
             CurrentEmployeeProfessionForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentEmployeeProfessionForm.IsSynced = CurrentEmployeeProfessionDG.IsSynced;
             CurrentEmployeeProfessionForm.Country = CurrentEmployeeProfessionDG.Country;
             CurrentEmployeeProfessionForm.Profession = CurrentEmployeeProfessionDG.Profession;
-            
+            CurrentEmployeeProfessionForm.UpdatedAt = CurrentEmployeeProfessionDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

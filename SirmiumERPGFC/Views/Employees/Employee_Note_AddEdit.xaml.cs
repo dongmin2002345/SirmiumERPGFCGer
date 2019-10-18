@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.Employees
 
             #endregion
 
-            new EmployeeNoteSQLiteRepository().Delete(CurrentEmployeeNoteForm.Identifier);
-
-            CurrentEmployeeNoteForm.Employee = CurrentEmployee;
-
-            CurrentEmployeeNoteForm.IsSynced = false;
-            CurrentEmployeeNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentEmployeeNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new EmployeeNoteSQLiteRepository().Create(CurrentEmployeeNoteForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentEmployeeNoteForm.Employee = CurrentEmployee;
+
+
+                CurrentEmployeeNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentEmployeeNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new EmployeeNoteSQLiteRepository().Delete(CurrentEmployeeNoteForm.Identifier);
+                var response = new EmployeeNoteSQLiteRepository().Create(CurrentEmployeeNoteForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentEmployeeNoteForm = new EmployeeNoteViewModel();
+                    CurrentEmployeeNoteForm.Identifier = Guid.NewGuid();
+                    CurrentEmployeeNoteForm.ItemStatus = ItemStatus.Added;
+                    CurrentEmployeeNoteForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentEmployeeNoteForm = new EmployeeNoteViewModel();
                 CurrentEmployeeNoteForm.Identifier = Guid.NewGuid();
                 CurrentEmployeeNoteForm.ItemStatus = ItemStatus.Added;
+                CurrentEmployeeNoteForm.IsSynced = false;
+                EmployeeCreatedUpdated();
 
-                return;
-            }
+                DisplayEmployeeNoteData();
 
-            CurrentEmployeeNoteForm = new EmployeeNoteViewModel();
-            CurrentEmployeeNoteForm.Identifier = Guid.NewGuid();
-            CurrentEmployeeNoteForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                );
 
-            EmployeeCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayEmployeeNoteData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -299,9 +304,10 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeNoteForm.Identifier = CurrentEmployeeNoteDG.Identifier;
             CurrentEmployeeNoteForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentEmployeeNoteForm.IsSynced = CurrentEmployeeNoteDG.IsSynced;
             CurrentEmployeeNoteForm.Note = CurrentEmployeeNoteDG.Note;
             CurrentEmployeeNoteForm.NoteDate = CurrentEmployeeNoteDG.NoteDate;
-           
+            CurrentEmployeeNoteForm.UpdatedAt = CurrentEmployeeNoteDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

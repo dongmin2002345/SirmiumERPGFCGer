@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.Employees
 
             #endregion
 
-            new EmployeeLicenceItemSQLiteRepository().Delete(CurrentEmployeeLicenceForm.Identifier);
-
-            CurrentEmployeeLicenceForm.Employee = CurrentEmployee;
-
-            CurrentEmployeeLicenceForm.IsSynced = false;
-            CurrentEmployeeLicenceForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentEmployeeLicenceForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new EmployeeLicenceItemSQLiteRepository().Create(CurrentEmployeeLicenceForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentEmployeeLicenceForm.Employee = CurrentEmployee;
+
+
+                CurrentEmployeeLicenceForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentEmployeeLicenceForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new EmployeeLicenceItemSQLiteRepository().Delete(CurrentEmployeeLicenceForm.Identifier);
+                var response = new EmployeeLicenceItemSQLiteRepository().Create(CurrentEmployeeLicenceForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentEmployeeLicenceForm = new EmployeeLicenceItemViewModel();
+                    CurrentEmployeeLicenceForm.Identifier = Guid.NewGuid();
+                    CurrentEmployeeLicenceForm.ItemStatus = ItemStatus.Added;
+                    CurrentEmployeeLicenceForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentEmployeeLicenceForm = new EmployeeLicenceItemViewModel();
                 CurrentEmployeeLicenceForm.Identifier = Guid.NewGuid();
                 CurrentEmployeeLicenceForm.ItemStatus = ItemStatus.Added;
+                CurrentEmployeeLicenceForm.IsSynced = false;
+                EmployeeCreatedUpdated();
 
-                return;
-            }
+                DisplayEmployeeLicenceData();
 
-            CurrentEmployeeLicenceForm = new EmployeeLicenceItemViewModel();
-            CurrentEmployeeLicenceForm.Identifier = Guid.NewGuid();
-            CurrentEmployeeLicenceForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        ValidFrom.Focus();
+                    })
+                );
 
-            EmployeeCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayEmployeeLicenceData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    ValidFrom.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditLicence_Click(object sender, RoutedEventArgs e)
@@ -299,10 +304,12 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeLicenceForm.Identifier = CurrentEmployeeLicenceDG.Identifier;
             CurrentEmployeeLicenceForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentEmployeeLicenceForm.IsSynced = CurrentEmployeeLicenceDG.IsSynced;
             CurrentEmployeeLicenceForm.Country = CurrentEmployeeLicenceDG.Country;
             CurrentEmployeeLicenceForm.Licence = CurrentEmployeeLicenceDG.Licence;
             CurrentEmployeeLicenceForm.ValidFrom = CurrentEmployeeLicenceDG.ValidFrom;
             CurrentEmployeeLicenceForm.ValidTo = CurrentEmployeeLicenceDG.ValidTo;
+            CurrentEmployeeLicenceForm.UpdatedAt = CurrentEmployeeLicenceDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
