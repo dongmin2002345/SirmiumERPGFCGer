@@ -646,4 +646,7 @@
     <system:String x:Key="PDV_procenti">PDV procenti</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_clanporodice">Obavezno polje: Član porodice</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Licence">Obavezno polje: Licence</system:String>
+    <system:String x:Key="Podaci">Podaci</system:String>
+    <system:String x:Key="Nije_odabrano_fizičko_liceUzvičnik">Nije odabrano fizičko lice!</system:String>
+    <system:String x:Key="Obavezno_polje_poslovni_partner">Obavezno polje: Poslovni partner</system:String>
 </ResourceDictionary>

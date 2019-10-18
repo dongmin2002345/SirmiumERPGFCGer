@@ -302,7 +302,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -502,7 +502,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ConstructionSiteDocumentsFromDB = new ObservableCollection<ConstructionSiteDocumentViewModel>();
             ConstructionSiteCalculationsFromDB = new ObservableCollection<ConstructionSiteCalculationViewModel>();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -517,7 +517,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             DisplayConstructionSiteNoteData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -532,7 +532,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             DisplayConstructionSiteDocumentData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -547,7 +547,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             DisplayConstructionSiteCalculationData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -724,7 +724,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSite_Note_AddEdit constructionSiteNoteAddEditForm = new ConstructionSite_Note_AddEdit(CurrentConstructionSite);
             constructionSiteNoteAddEditForm.ConstructionSiteCreatedUpdated += new ConstructionSiteHandler(SyncConstructionSiteNoteData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, constructionSiteNoteAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci")), 95, constructionSiteNoteAddEditForm);
         }
 
         private void BtnAddConstructionSiteDocument_Click(object sender, RoutedEventArgs e)
@@ -741,7 +741,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSite_Document_AddEdit constructionSiteDocumentAddEditForm = new ConstructionSite_Document_AddEdit(CurrentConstructionSite);
             constructionSiteDocumentAddEditForm.ConstructionSiteCreatedUpdated += new ConstructionSiteHandler(SyncConstructionSiteDocumentData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, constructionSiteDocumentAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci")), 95, constructionSiteDocumentAddEditForm);
         }
 
         private void BtnAddConstructionSiteCalculation_Click(object sender, RoutedEventArgs e)
@@ -758,7 +758,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             ConstructionSite_Calculation_AddEdit outputInvoiceCalculationAddEditForm = new ConstructionSite_Calculation_AddEdit(CurrentConstructionSite);
             outputInvoiceCalculationAddEditForm.ConstructionSiteCreatedUpdated += new ConstructionSiteHandler(SyncConstructionSiteCalculationData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, outputInvoiceCalculationAddEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci")), 95, outputInvoiceCalculationAddEditForm);
         }
 
         #endregion

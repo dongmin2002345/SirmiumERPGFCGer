@@ -492,7 +492,7 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -775,7 +775,7 @@ namespace SirmiumERPGFC.Views.Employees
             PhysicalPersonProfessionsFromDB = new ObservableCollection<PhysicalPersonProfessionViewModel>();
             PhysicalPersonLicencesFromDB = new ObservableCollection<PhysicalPersonLicenceViewModel>();
             PhysicalPersonItemsFromDB = new ObservableCollection<PhysicalPersonItemViewModel>();
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void SyncNoteData()
@@ -790,7 +790,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             DisplayPhysicalPersonNoteData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -806,7 +806,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             DisplayPhysicalPersonDocumentData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -822,7 +822,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             DisplayPhysicalPersonCardData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -838,7 +838,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             DisplayPhysicalPersonProfessionData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -854,7 +854,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             DisplayPhysicalPersonLicenceData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -870,7 +870,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             DisplayPhysicalPersonItemData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void DgPhysicalPersons_LoadingRow(object sender, DataGridRowEventArgs e)
@@ -962,7 +962,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPerson == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Nije_odabrano_fizičko_liceUzvičnik");
                 return;
             }
 
@@ -970,7 +970,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             PhysicalPerson_Card_AddEdit physicalPersonCardAddEditForm = new PhysicalPerson_Card_AddEdit(CurrentPhysicalPerson);
             physicalPersonCardAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncCardData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonCardAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, physicalPersonCardAddEditForm);
         }
 
         private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
@@ -979,7 +979,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPerson == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Nije_odabrano_fizičko_liceUzvičnik");
                 return;
             }
 
@@ -987,7 +987,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             PhysicalPerson_Document_AddEdit physicalPersonDocumentAddEditForm = new PhysicalPerson_Document_AddEdit(CurrentPhysicalPerson);
             physicalPersonDocumentAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncDocumentData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonDocumentAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, physicalPersonDocumentAddEditForm);
         }
 
         private void BtnAddNotes_Click(object sender, RoutedEventArgs e)
@@ -996,7 +996,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPerson == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Nije_odabrano_fizičko_liceUzvičnik");
                 return;
             }
 
@@ -1004,7 +1004,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             PhysicalPerson_Note_AddEdit physicalPersonNoteAddEditForm = new PhysicalPerson_Note_AddEdit(CurrentPhysicalPerson);
             physicalPersonNoteAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncNoteData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonNoteAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, physicalPersonNoteAddEditForm);
         }
         private void BtnAddProfessions_Click(object sender, RoutedEventArgs e)
         {
@@ -1012,7 +1012,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPerson == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Nije_odabrano_fizičko_liceUzvičnik");
                 return;
             }
 
@@ -1020,7 +1020,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             PhysicalPerson_Profession_AddEdit physicalPersonProfessionAddEditForm = new PhysicalPerson_Profession_AddEdit(CurrentPhysicalPerson);
             physicalPersonProfessionAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncProfessionData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonProfessionAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, physicalPersonProfessionAddEditForm);
         }
         private void BtnAddLicences_Click(object sender, RoutedEventArgs e)
         {
@@ -1028,7 +1028,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPerson == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Nije_odabrano_fizičko_liceUzvičnik");
                 return;
             }
 
@@ -1036,7 +1036,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             PhysicalPerson_Licence_AddEdit physicalPersonLicenceAddEditForm = new PhysicalPerson_Licence_AddEdit(CurrentPhysicalPerson);
             physicalPersonLicenceAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncLicenceData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonLicenceAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, physicalPersonLicenceAddEditForm);
         }
         private void BtnAddItems_Click(object sender, RoutedEventArgs e)
         {
@@ -1044,7 +1044,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPerson == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati račun!";
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Nije_odabrano_fizičko_liceUzvičnik");
                 return;
             }
 
@@ -1052,7 +1052,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             PhysicalPerson_Item_AddEdit physicalPersonItemAddEditForm = new PhysicalPerson_Item_AddEdit(CurrentPhysicalPerson);
             physicalPersonItemAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncItemData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, physicalPersonItemAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, physicalPersonItemAddEditForm);
         }
 
         #endregion

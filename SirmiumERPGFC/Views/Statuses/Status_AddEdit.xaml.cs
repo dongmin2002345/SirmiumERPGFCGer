@@ -170,7 +170,7 @@ namespace SirmiumERPGFC.Views.Statuses
                 response = new StatusSQLiteRepository().Create(CurrentStatus);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                     return;

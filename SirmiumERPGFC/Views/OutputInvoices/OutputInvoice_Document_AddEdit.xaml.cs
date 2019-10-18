@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             if (CurrentOutputInvoiceDocumentForm.Name == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Napomena";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Napomena"));
                 return;
             }
 
@@ -309,7 +309,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             var response = new OutputInvoiceDocumentSQLiteRepository().SetStatusDeleted(CurrentOutputInvoiceDocumentDG.Identifier);
             if (response.Success)
             {
-                MainWindow.SuccessMessage = "Stavka je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
                 CurrentOutputInvoiceDocumentForm = new OutputInvoiceDocumentViewModel();
                 CurrentOutputInvoiceDocumentForm.Identifier = Guid.NewGuid();
@@ -363,7 +363,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             if (OutputInvoiceDocumentsFromDB == null || OutputInvoiceDocumentsFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Ne_postoje_stavke_za_proknjižavanje"));
                 return;
             }
 
@@ -371,22 +371,22 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             Thread td = new Thread(() => {
 
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentOutputInvoice.OutputInvoiceDocuments = OutputInvoiceDocumentsFromDB;
                 OutputInvoiceResponse response = outputInvoiceService.Create(CurrentOutputInvoice);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod čuvanja podataka!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     OutputInvoiceCreatedUpdated();

@@ -386,14 +386,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             CurrentConstructionSite = constructionSiteViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
-
-            //Thread displayThread = new Thread(() =>
-            //{
-            //    DisplayDocumentData();
-            //    DisplayConstructionSiteNoteData();
-            //});
-            //displayThread.IsBackground = true;
-            //displayThread.Start();
         }
 
         #endregion

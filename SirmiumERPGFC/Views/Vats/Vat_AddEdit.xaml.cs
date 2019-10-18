@@ -180,8 +180,7 @@ namespace SirmiumERPGFC.Views.Vats
 
                 if (response.Success)
                 {
-                   // new VatSQLiteRepository().UpdateSyncStatus(response.Vat.Identifier, response.Vat.Id, true, response.Vat.UpdatedAt, response.Vat.Code);
-                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 

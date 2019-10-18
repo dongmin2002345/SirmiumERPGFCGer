@@ -640,4 +640,7 @@
     <system:String x:Key="Obavezno_poljeDvotačka_clanporodice">Required field: Family member</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Licence">Required field: Licence</system:String>
     <system:String x:Key="Obavezno_polje_naziv_profesije">Required field: Profesion name</system:String>
+    <system:String x:Key="Podaci">Data</system:String>
+    <system:String x:Key="Nije_odabrano_fizičko_liceUzvičnik">Required field: Physical Person!</system:String>
+    <system:String x:Key="Obavezno_polje_poslovni_partner">Required field: Business Partner</system:String>
 </ResourceDictionary>

@@ -336,7 +336,7 @@
     <system:String x:Key="Zanimanje">Tätigkeit</system:String>
     <system:String x:Key="ZanimanjeDvotacka">Tätigkeit:</system:String>
     <system:String x:Key="ZATVORI">SCHLIESSEN</system:String>
-    <system:String x:Key="Fizička_lica">Individuelle Personen</system:String>
+    <system:String x:Key="Fizička_lica">Natürliche Personen</system:String>
     <system:String x:Key="Delatnosti">Aktivitäten</system:String>
     <system:String x:Key="Regioni">Regionen</system:String>
     <system:String x:Key="Poreska_Uprava">Steuerverwaltung</system:String>
@@ -373,13 +373,13 @@
     <system:String x:Key="Radnik_Crta_Radna_dozvola">Arbeiter - Arbeitserlaubnis</system:String>
     <system:String x:Key="Radnik_Crta_Vozačka_dozvola">Arbeiter - Führerschein</system:String>
     <system:String x:Key="Radnik_Crta_Ambasada_porodica">Arbeiter - Familienbotschaft</system:String>
-    <system:String x:Key="Fizičko_lice_Crta_Pasoši">Individuelle Person - Pässe</system:String>
-    <system:String x:Key="Fizičko_lice_Crta_Ambasada_prijem">Individuelle Person - Botschaftsempfang</system:String>
-    <system:String x:Key="Fizičko_lice_Crta_Viza_podizanje">Individuelle Person - Visum erhalten</system:String>
-    <system:String x:Key="Fizičko_lice_Crta_Viza_isticanje">Individuelle Person - Visumablauf</system:String>
-    <system:String x:Key="Fizičko_lice_Crta_Radna_dozvola">Individuelle Person - Arbeitserlaubnis</system:String>
-    <system:String x:Key="Fizičko_lice_Crta_Vozaćka_dozvola">Individuelle Person - Führerschein</system:String>
-    <system:String x:Key="Fizičko_lice_Crta_Ambasada_porodica">Individuelle Person - Familienbotschaft</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Pasoši">Natürliche Person - Pässe</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Ambasada_prijem">Natürliche Person - Botschaftsempfang</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Viza_podizanje">Natürliche Person - Visum erhalten</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Viza_isticanje">Natürliche Person - Visumablauf</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Radna_dozvola">Natürliche Person - Arbeitserlaubnis</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Vozaćka_dozvola">Natürliche Person - Führerschein</system:String>
+    <system:String x:Key="Fizičko_lice_Crta_Ambasada_porodica">Natürliche Person - Familienbotschaft</system:String>
     <system:String x:Key="Gradilište">Baustelle</system:String>
     <system:String x:Key="Ograničenja">Einschränkungen</system:String>
     <system:String x:Key="RAČUNI">KONTEN</system:String>
@@ -638,7 +638,7 @@
     <system:String x:Key="Obavezno_polje_skraćeni_naziv">Obligatorisches Feld: Abkürzung</system:String>
     <system:String x:Key="Obavezno_polje_naziv_PDV">Obligatorisches Feld: Mwst.</system:String>
     <system:String x:Key="Podaci_o_PDV_u">Mwst. Daten</system:String>
-    <system:String x:Key="Morate_izabrati_stavku">Sie müssen zuerst einen Eintrag wehlen</system:String>
+    <system:String x:Key="Morate_izabrati_stavku">Sie müssen zuerst einen Eintrag wählen</system:String>
     <system:String x:Key="PDV_procenat">Mwst. Prozent</system:String>
     <system:String x:Key="Naziv_PDV_procenta">Mwst. Prozentname</system:String>
     <system:String x:Key="Statusi">Statuse</system:String>
@@ -647,4 +647,8 @@
     <system:String x:Key="Obavezno_poljeDvotačka_clanporodice">Pflichtfeld: Familienmitglied</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Licence">Pflichtfeld: Lizenz</system:String>
     <system:String x:Key="Obavezno_polje_naziv_profesije">Obligatorisches Feld: Berufsname</system:String>
+    <system:String x:Key="Podaci">Daten</system:String>
+    <system:String x:Key="Nije_odabrano_fizičko_liceUzvičnik">Sie müssen zuerst eine natürliche Person auswählen!</system:String>
+    <system:String x:Key="Obavezno_polje_poslovni_partner">Obligatorisches Feld: Geschäftspartner</system:String>
+
 </ResourceDictionary>

@@ -269,7 +269,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         #endregion
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -439,7 +439,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             CurrentOutputInvoice = null;
             NotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>();
             OutputInvoiceDocumentsFromDB = new ObservableCollection<OutputInvoiceDocumentViewModel>();
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void SyncItemData()
@@ -453,7 +453,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             DisplayOutputInvoiceNoteData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void SyncDocumentData()
@@ -550,7 +550,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             OutputInvoice_Note_AddEdit outputInvoiceNoteAddEditForm = new OutputInvoice_Note_AddEdit(CurrentOutputInvoice);
             outputInvoiceNoteAddEditForm.OutputInvoiceCreatedUpdated += new OutputInvoiceHandler(SyncItemData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, outputInvoiceNoteAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, outputInvoiceNoteAddEditForm);
         }
 
         private void BtnAddDocuments_Click(object sender, RoutedEventArgs e)
@@ -567,7 +567,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             OutputInvoice_Document_AddEdit outputInvoiceDocumentAddEditForm = new OutputInvoice_Document_AddEdit(CurrentOutputInvoice);
             outputInvoiceDocumentAddEditForm.OutputInvoiceCreatedUpdated += new OutputInvoiceHandler(SyncDocumentData);
-            FlyoutHelper.OpenFlyout(this, "Podaci", 95, outputInvoiceDocumentAddEditForm);
+            FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, outputInvoiceDocumentAddEditForm);
         }
 
         #endregion

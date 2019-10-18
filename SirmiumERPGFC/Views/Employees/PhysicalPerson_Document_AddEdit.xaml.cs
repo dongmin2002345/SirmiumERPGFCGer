@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Views.Employees
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPersonDocumentForm.Name == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Naziv";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Naziv"));
                 return;
             }
 
@@ -310,7 +310,7 @@ namespace SirmiumERPGFC.Views.Employees
             var response = new PhysicalPersonDocumentSQLiteRepository().SetStatusDeleted(CurrentPhysicalPersonDocumentDG.Identifier);
             if (response.Success)
             {
-                MainWindow.SuccessMessage = "Stavka je uspešno obrisana!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
                 CurrentPhysicalPersonDocumentForm = new PhysicalPersonDocumentViewModel();
                 CurrentPhysicalPersonDocumentForm.Identifier = Guid.NewGuid();
@@ -345,7 +345,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (PhysicalPersonDocumentsFromDB == null || PhysicalPersonDocumentsFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Ne_postoje_stavke_za_proknjižavanje"));
                 return;
             }
 
@@ -353,22 +353,22 @@ namespace SirmiumERPGFC.Views.Employees
 
             Thread td = new Thread(() => {
 
-                SubmitButtonContent = " Čuvanje u toku... ";
+                SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
                 CurrentPhysicalPerson.PhysicalPersonDocuments = PhysicalPersonDocumentsFromDB;
                 PhysicalPersonResponse response = physicalPersonService.Create(CurrentPhysicalPerson);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Greška kod čuvanja podataka!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    MainWindow.SuccessMessage = "Podaci su uspešno sačuvani!";
-                    SubmitButtonContent = " PROKNJIŽI ";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
                     PhysicalPersonCreatedUpdated();

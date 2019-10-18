@@ -362,7 +362,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 ConstructionSiteResponse response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }
