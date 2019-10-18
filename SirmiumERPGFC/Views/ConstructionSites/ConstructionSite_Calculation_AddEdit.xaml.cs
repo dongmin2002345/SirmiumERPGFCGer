@@ -251,49 +251,54 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             //}
 
             #endregion
-
-            new ConstructionSiteCalculationSQLiteRepository().Delete(CurrentConstructionSiteCalculationForm.Identifier);
-
-            CurrentConstructionSiteCalculationForm.ConstructionSite = CurrentConstructionSite;
-
-            CurrentConstructionSiteCalculationForm.IsSynced = false;
-            CurrentConstructionSiteCalculationForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentConstructionSiteCalculationForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-            CurrentConstructionSiteCalculationForm.NewValue =
-                CurrentConstructionSiteCalculationForm.NumOfEmployees *
-                CurrentConstructionSiteCalculationForm.EmployeePrice *
-                CurrentConstructionSiteCalculationForm.NumOfMonths;
-            var response = new ConstructionSiteCalculationSQLiteRepository().Create(CurrentConstructionSiteCalculationForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentConstructionSiteCalculationForm.ConstructionSite = CurrentConstructionSite;
+
+                CurrentConstructionSiteCalculationForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentConstructionSiteCalculationForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                CurrentConstructionSiteCalculationForm.NewValue =
+                    CurrentConstructionSiteCalculationForm.NumOfEmployees *
+                    CurrentConstructionSiteCalculationForm.EmployeePrice *
+                    CurrentConstructionSiteCalculationForm.NumOfMonths;
+
+                new ConstructionSiteCalculationSQLiteRepository().Delete(CurrentConstructionSiteCalculationForm.Identifier);
+               
+                var response = new ConstructionSiteCalculationSQLiteRepository().Create(CurrentConstructionSiteCalculationForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentConstructionSiteCalculationForm = new ConstructionSiteCalculationViewModel();
+                    CurrentConstructionSiteCalculationForm.Identifier = Guid.NewGuid();
+                    CurrentConstructionSiteCalculationForm.ItemStatus = ItemStatus.Added;
+                    CurrentConstructionSiteCalculationForm.IsSynced = false;
+
+                    return;
+                }
 
                 CurrentConstructionSiteCalculationForm = new ConstructionSiteCalculationViewModel();
                 CurrentConstructionSiteCalculationForm.Identifier = Guid.NewGuid();
                 CurrentConstructionSiteCalculationForm.ItemStatus = ItemStatus.Added;
+                CurrentConstructionSiteCalculationForm.IsSynced = false;
 
-                return;
-            }
+                ConstructionSiteCreatedUpdated();
+                DisplayConstructionSiteCalculationData();
 
-            CurrentConstructionSiteCalculationForm = new ConstructionSiteCalculationViewModel();
-            CurrentConstructionSiteCalculationForm.Identifier = Guid.NewGuid();
-            CurrentConstructionSiteCalculationForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNumOfEmployees.Focus();
+                    })
+                );
 
-            ConstructionSiteCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayConstructionSiteCalculationData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNumOfEmployees.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditCalculation_Click(object sender, RoutedEventArgs e)
@@ -305,6 +310,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             CurrentConstructionSiteCalculationForm.NumOfEmployees = CurrentConstructionSiteCalculationDG.NumOfEmployees;
             CurrentConstructionSiteCalculationForm.EmployeePrice = CurrentConstructionSiteCalculationDG.EmployeePrice;
             CurrentConstructionSiteCalculationForm.NumOfMonths = CurrentConstructionSiteCalculationDG.NumOfMonths;
+            CurrentConstructionSiteCalculationForm.IsSynced = CurrentConstructionSiteCalculationDG.IsSynced;
+            CurrentConstructionSiteCalculationForm.UpdatedAt = CurrentConstructionSiteCalculationDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

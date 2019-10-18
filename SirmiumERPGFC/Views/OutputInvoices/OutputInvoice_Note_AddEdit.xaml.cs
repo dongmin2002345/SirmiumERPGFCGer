@@ -251,47 +251,50 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             }
 
             #endregion
-
-            new OutputInvoiceNoteSQLiteRepository().Delete(CurrentOutputInvoiceNoteForm.Identifier);
-
-            CurrentOutputInvoiceNoteForm.OutputInvoice = CurrentOutputInvoice;
-
-            CurrentOutputInvoiceNoteForm.IsSynced = false;
-            CurrentOutputInvoiceNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentOutputInvoiceNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new OutputInvoiceNoteSQLiteRepository().Create(CurrentOutputInvoiceNoteForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentOutputInvoiceNoteForm.OutputInvoice = CurrentOutputInvoice;
 
+                CurrentOutputInvoiceNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentOutputInvoiceNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new OutputInvoiceNoteSQLiteRepository().Delete(CurrentOutputInvoiceNoteForm.Identifier);
+
+                var response = new OutputInvoiceNoteSQLiteRepository().Create(CurrentOutputInvoiceNoteForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel();
+                    CurrentOutputInvoiceNoteForm.Identifier = Guid.NewGuid();
+                    CurrentOutputInvoiceNoteForm.ItemStatus = ItemStatus.Added;
+                    CurrentOutputInvoiceNoteForm.IsSynced = false;
+                    return;
+                }
                 CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel();
                 CurrentOutputInvoiceNoteForm.Identifier = Guid.NewGuid();
                 CurrentOutputInvoiceNoteForm.ItemStatus = ItemStatus.Added;
+                CurrentOutputInvoiceNoteForm.IsSynced = false;
+                OutputInvoiceCreatedUpdated();
 
-                return;
-            }
+                DisplayOutputInvoiceNoteData();
 
-            CurrentOutputInvoiceNoteForm = new OutputInvoiceNoteViewModel();
-            CurrentOutputInvoiceNoteForm.Identifier = Guid.NewGuid();
-            CurrentOutputInvoiceNoteForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                );
 
-            OutputInvoiceCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayOutputInvoiceNoteData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
+
+    
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
         {
@@ -299,9 +302,10 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             CurrentOutputInvoiceNoteForm.Identifier = CurrentOutputInvoiceNoteDG.Identifier;
             CurrentOutputInvoiceNoteForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentOutputInvoiceNoteForm.IsSynced = CurrentOutputInvoiceNoteDG.IsSynced;
             CurrentOutputInvoiceNoteForm.Note = CurrentOutputInvoiceNoteDG.Note;
             CurrentOutputInvoiceNoteForm.NoteDate = CurrentOutputInvoiceNoteDG.NoteDate;
-
+            CurrentOutputInvoiceNoteForm.UpdatedAt = CurrentOutputInvoiceNoteDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

@@ -643,4 +643,6 @@
     <system:String x:Key="Podaci">Data</system:String>
     <system:String x:Key="Nije_odabrano_fizičko_liceUzvičnik">Required field: Physical Person!</system:String>
     <system:String x:Key="Obavezno_polje_poslovni_partner">Required field: Business Partner</system:String>
+    <system:String x:Key="Obavezno_polje_drzava">Required field: Country</system:String>
+    <system:String x:Key="Obavezno_polje_licenca">Required field: Licence</system:String>
 </ResourceDictionary>

@@ -257,46 +257,48 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             #endregion
-
-            new PhysicalPersonItemSQLiteRepository().Delete(CurrentPhysicalPersonItemForm.Identifier);
-
-            CurrentPhysicalPersonItemForm.PhysicalPerson = CurrentPhysicalPerson;
-
-            CurrentPhysicalPersonItemForm.IsSynced = false;
-            CurrentPhysicalPersonItemForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentPhysicalPersonItemForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new PhysicalPersonItemSQLiteRepository().Create(CurrentPhysicalPersonItemForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentPhysicalPersonItemForm.PhysicalPerson = CurrentPhysicalPerson;
+
+                CurrentPhysicalPersonItemForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentPhysicalPersonItemForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new PhysicalPersonItemSQLiteRepository().Delete(CurrentPhysicalPersonItemForm.Identifier);
+
+                var response = new PhysicalPersonItemSQLiteRepository().Create(CurrentPhysicalPersonItemForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentPhysicalPersonItemForm = new PhysicalPersonItemViewModel();
+                    CurrentPhysicalPersonItemForm.Identifier = Guid.NewGuid();
+                    CurrentPhysicalPersonItemForm.ItemStatus = ItemStatus.Added;
+                    CurrentPhysicalPersonItemForm.IsSynced = false;
+
+                    return;
+                }
 
                 CurrentPhysicalPersonItemForm = new PhysicalPersonItemViewModel();
                 CurrentPhysicalPersonItemForm.Identifier = Guid.NewGuid();
                 CurrentPhysicalPersonItemForm.ItemStatus = ItemStatus.Added;
+                CurrentPhysicalPersonItemForm.IsSynced = false;
 
-                return;
-            }
+                PhysicalPersonCreatedUpdated();
+                DisplayPhysicalPersonItemData();
 
-            CurrentPhysicalPersonItemForm = new PhysicalPersonItemViewModel();
-            CurrentPhysicalPersonItemForm.Identifier = Guid.NewGuid();
-            CurrentPhysicalPersonItemForm.ItemStatus = ItemStatus.Added;
-
-            PhysicalPersonCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayPhysicalPersonItemData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    //txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        //txtNote.Focus();
+                    })
+                );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -310,7 +312,8 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentPhysicalPersonItemForm.DateOfBirth = CurrentPhysicalPersonItemDG.DateOfBirth;
             CurrentPhysicalPersonItemForm.Passport = CurrentPhysicalPersonItemDG.Passport;
             CurrentPhysicalPersonItemForm.EmbassyDate = CurrentPhysicalPersonItemDG.EmbassyDate;
-
+            CurrentPhysicalPersonItemForm.IsSynced = CurrentPhysicalPersonItemDG.IsSynced;
+            CurrentPhysicalPersonItemForm.UpdatedAt = CurrentPhysicalPersonItemDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

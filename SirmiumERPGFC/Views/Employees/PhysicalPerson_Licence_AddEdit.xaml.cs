@@ -244,53 +244,61 @@ namespace SirmiumERPGFC.Views.Employees
         {
             #region Validation
 
-            if (CurrentPhysicalPersonLicenceForm.Country.Name == null)
+            if (CurrentPhysicalPersonLicenceForm.Country == null)
             {
-                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Država"));
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_polje_drzava"));
+                return;
+            }
+
+            if (CurrentPhysicalPersonLicenceForm.Licence == null)
+            {
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_polje_licenca"));
                 return;
             }
 
             #endregion
-
-            new PhysicalPersonLicenceSQLiteRepository().Delete(CurrentPhysicalPersonLicenceForm.Identifier);
-
-            CurrentPhysicalPersonLicenceForm.PhysicalPerson = CurrentPhysicalPerson;
-
-            CurrentPhysicalPersonLicenceForm.IsSynced = false;
-            CurrentPhysicalPersonLicenceForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentPhysicalPersonLicenceForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new PhysicalPersonLicenceSQLiteRepository().Create(CurrentPhysicalPersonLicenceForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentPhysicalPersonLicenceForm.PhysicalPerson = CurrentPhysicalPerson;
+
+                CurrentPhysicalPersonLicenceForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentPhysicalPersonLicenceForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new PhysicalPersonLicenceSQLiteRepository().Delete(CurrentPhysicalPersonLicenceForm.Identifier);
+
+                var response = new PhysicalPersonLicenceSQLiteRepository().Create(CurrentPhysicalPersonLicenceForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentPhysicalPersonLicenceForm = new PhysicalPersonLicenceViewModel();
+                    CurrentPhysicalPersonLicenceForm.Identifier = Guid.NewGuid();
+                    CurrentPhysicalPersonLicenceForm.ItemStatus = ItemStatus.Added;
+                    CurrentPhysicalPersonLicenceForm.IsSynced = false;
+
+                    return;
+                }
 
                 CurrentPhysicalPersonLicenceForm = new PhysicalPersonLicenceViewModel();
                 CurrentPhysicalPersonLicenceForm.Identifier = Guid.NewGuid();
                 CurrentPhysicalPersonLicenceForm.ItemStatus = ItemStatus.Added;
+                CurrentPhysicalPersonLicenceForm.IsSynced = false;
 
-                return;
-            }
+                PhysicalPersonCreatedUpdated();
+                DisplayPhysicalPersonLicenceData();
 
-            CurrentPhysicalPersonLicenceForm = new PhysicalPersonLicenceViewModel();
-            CurrentPhysicalPersonLicenceForm.Identifier = Guid.NewGuid();
-            CurrentPhysicalPersonLicenceForm.ItemStatus = ItemStatus.Added;
-
-            PhysicalPersonCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayPhysicalPersonLicenceData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    //txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        //txtNote.Focus();
+                    })
+                );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -303,7 +311,8 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentPhysicalPersonLicenceForm.Licence = CurrentPhysicalPersonLicenceDG.Licence;
             CurrentPhysicalPersonLicenceForm.ValidFrom = CurrentPhysicalPersonLicenceDG.ValidFrom;
             CurrentPhysicalPersonLicenceForm.ValidTo = CurrentPhysicalPersonLicenceDG.ValidTo;
-
+            CurrentPhysicalPersonLicenceForm.IsSynced = CurrentPhysicalPersonLicenceDG.IsSynced;
+            CurrentPhysicalPersonLicenceForm.UpdatedAt = CurrentPhysicalPersonLicenceDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

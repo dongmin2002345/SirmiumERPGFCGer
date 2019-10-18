@@ -649,4 +649,6 @@
     <system:String x:Key="Podaci">Podaci</system:String>
     <system:String x:Key="Nije_odabrano_fizičko_liceUzvičnik">Nije odabrano fizičko lice!</system:String>
     <system:String x:Key="Obavezno_polje_poslovni_partner">Obavezno polje: Poslovni partner</system:String>
+    <system:String x:Key="Obavezno_polje_drzava">Obavezno polje: Država</system:String>
+    <system:String x:Key="Obavezno_polje_licenca">Obavezno polje: Licenca</system:String>
 </ResourceDictionary>

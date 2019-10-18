@@ -251,46 +251,47 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             }
 
             #endregion
-
-            new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentForm.Identifier);
-
-            CurrentConstructionSiteDocumentForm.ConstructionSite = CurrentConstructionSite;
-
-            CurrentConstructionSiteDocumentForm.IsSynced = false;
-            CurrentConstructionSiteDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentConstructionSiteDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new ConstructionSiteDocumentSQLiteRepository().Create(CurrentConstructionSiteDocumentForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentConstructionSiteDocumentForm.ConstructionSite = CurrentConstructionSite;
+
+                CurrentConstructionSiteDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentConstructionSiteDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new ConstructionSiteDocumentSQLiteRepository().Delete(CurrentConstructionSiteDocumentForm.Identifier);
+
+                var response = new ConstructionSiteDocumentSQLiteRepository().Create(CurrentConstructionSiteDocumentForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
+                    CurrentConstructionSiteDocumentForm.Identifier = Guid.NewGuid();
+                    CurrentConstructionSiteDocumentForm.ItemStatus = ItemStatus.Added;
+                    CurrentConstructionSiteDocumentForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
                 CurrentConstructionSiteDocumentForm.Identifier = Guid.NewGuid();
                 CurrentConstructionSiteDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentConstructionSiteDocumentForm.IsSynced = false;
 
-                return;
-            }
+                ConstructionSiteCreatedUpdated();
+                DisplayConstructionSiteDocumentData();
 
-            CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
-            CurrentConstructionSiteDocumentForm.Identifier = Guid.NewGuid();
-            CurrentConstructionSiteDocumentForm.ItemStatus = ItemStatus.Added;
-
-            ConstructionSiteCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayConstructionSiteDocumentData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtDocumentName.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtDocumentName.Focus();
+                    })
+                );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)
@@ -302,6 +303,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             CurrentConstructionSiteDocumentForm.Name = CurrentConstructionSiteDocumentDG.Name;
             CurrentConstructionSiteDocumentForm.CreateDate = CurrentConstructionSiteDocumentDG.CreateDate;
             CurrentConstructionSiteDocumentForm.Path = CurrentConstructionSiteDocumentDG.Path;
+            CurrentConstructionSiteDocumentForm.IsSynced = CurrentConstructionSiteDocumentDG.IsSynced;
+            CurrentConstructionSiteDocumentForm.UpdatedAt = CurrentConstructionSiteDocumentDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

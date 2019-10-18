@@ -251,46 +251,48 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             #endregion
-
-            new PhysicalPersonProfessionSQLiteRepository().Delete(CurrentPhysicalPersonProfessionForm.Identifier);
-
-            CurrentPhysicalPersonProfessionForm.PhysicalPerson = CurrentPhysicalPerson;
-
-            CurrentPhysicalPersonProfessionForm.IsSynced = false;
-            CurrentPhysicalPersonProfessionForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentPhysicalPersonProfessionForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new PhysicalPersonProfessionSQLiteRepository().Create(CurrentPhysicalPersonProfessionForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentPhysicalPersonProfessionForm.PhysicalPerson = CurrentPhysicalPerson;
+
+                CurrentPhysicalPersonProfessionForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentPhysicalPersonProfessionForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new PhysicalPersonProfessionSQLiteRepository().Delete(CurrentPhysicalPersonProfessionForm.Identifier);
+
+                var response = new PhysicalPersonProfessionSQLiteRepository().Create(CurrentPhysicalPersonProfessionForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentPhysicalPersonProfessionForm = new PhysicalPersonProfessionViewModel();
+                    CurrentPhysicalPersonProfessionForm.Identifier = Guid.NewGuid();
+                    CurrentPhysicalPersonProfessionForm.ItemStatus = ItemStatus.Added;
+                    CurrentPhysicalPersonProfessionForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentPhysicalPersonProfessionForm = new PhysicalPersonProfessionViewModel();
                 CurrentPhysicalPersonProfessionForm.Identifier = Guid.NewGuid();
                 CurrentPhysicalPersonProfessionForm.ItemStatus = ItemStatus.Added;
+                CurrentPhysicalPersonProfessionForm.IsSynced = false;
 
-                return;
-            }
+                PhysicalPersonCreatedUpdated();
+                DisplayPhysicalPersonProfessionData();
 
-            CurrentPhysicalPersonProfessionForm = new PhysicalPersonProfessionViewModel();
-            CurrentPhysicalPersonProfessionForm.Identifier = Guid.NewGuid();
-            CurrentPhysicalPersonProfessionForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        //txtNote.Focus();
+                    })
 
-            PhysicalPersonCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayPhysicalPersonProfessionData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    //txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -301,7 +303,8 @@ namespace SirmiumERPGFC.Views.Employees
 
             CurrentPhysicalPersonProfessionForm.Country = CurrentPhysicalPersonProfessionDG.Country;
             CurrentPhysicalPersonProfessionForm.Profession = CurrentPhysicalPersonProfessionDG.Profession;
-
+            CurrentPhysicalPersonProfessionForm.IsSynced = CurrentPhysicalPersonProfessionDG.IsSynced;
+            CurrentPhysicalPersonProfessionForm.UpdatedAt = CurrentPhysicalPersonProfessionDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

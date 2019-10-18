@@ -251,46 +251,48 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             #endregion
-
-            new PhysicalPersonDocumentSQLiteRepository().Delete(CurrentPhysicalPersonDocumentForm.Identifier);
-
-            CurrentPhysicalPersonDocumentForm.PhysicalPerson = CurrentPhysicalPerson;
-
-            CurrentPhysicalPersonDocumentForm.IsSynced = false;
-            CurrentPhysicalPersonDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentPhysicalPersonDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new PhysicalPersonDocumentSQLiteRepository().Create(CurrentPhysicalPersonDocumentForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentPhysicalPersonDocumentForm.PhysicalPerson = CurrentPhysicalPerson;
+
+                CurrentPhysicalPersonDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentPhysicalPersonDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new PhysicalPersonDocumentSQLiteRepository().Delete(CurrentPhysicalPersonDocumentForm.Identifier);
+
+                var response = new PhysicalPersonDocumentSQLiteRepository().Create(CurrentPhysicalPersonDocumentForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentPhysicalPersonDocumentForm = new PhysicalPersonDocumentViewModel();
+                    CurrentPhysicalPersonDocumentForm.Identifier = Guid.NewGuid();
+                    CurrentPhysicalPersonDocumentForm.ItemStatus = ItemStatus.Added;
+                    CurrentPhysicalPersonDocumentForm.IsSynced = false;
+
+                    return;
+                }
 
                 CurrentPhysicalPersonDocumentForm = new PhysicalPersonDocumentViewModel();
                 CurrentPhysicalPersonDocumentForm.Identifier = Guid.NewGuid();
                 CurrentPhysicalPersonDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentPhysicalPersonDocumentForm.IsSynced = false;
 
-                return;
-            }
+                PhysicalPersonCreatedUpdated();
+                DisplayPhysicalPersonDocumentData();
 
-            CurrentPhysicalPersonDocumentForm = new PhysicalPersonDocumentViewModel();
-            CurrentPhysicalPersonDocumentForm.Identifier = Guid.NewGuid();
-            CurrentPhysicalPersonDocumentForm.ItemStatus = ItemStatus.Added;
-
-            PhysicalPersonCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayPhysicalPersonDocumentData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -299,10 +301,11 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentPhysicalPersonDocumentForm.Identifier = CurrentPhysicalPersonDocumentDG.Identifier;
             CurrentPhysicalPersonDocumentForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentPhysicalPersonDocumentForm.IsSynced = CurrentPhysicalPersonDocumentDG.IsSynced;
             CurrentPhysicalPersonDocumentForm.Name = CurrentPhysicalPersonDocumentDG.Name;
             CurrentPhysicalPersonDocumentForm.Path = CurrentPhysicalPersonDocumentDG.Path;
             CurrentPhysicalPersonDocumentForm.CreateDate = CurrentPhysicalPersonDocumentDG.CreateDate;
-
+            CurrentPhysicalPersonDocumentForm.UpdatedAt = CurrentPhysicalPersonDocumentDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

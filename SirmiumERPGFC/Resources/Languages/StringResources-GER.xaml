@@ -650,5 +650,7 @@
     <system:String x:Key="Podaci">Daten</system:String>
     <system:String x:Key="Nije_odabrano_fizičko_liceUzvičnik">Sie müssen zuerst eine natürliche Person auswählen!</system:String>
     <system:String x:Key="Obavezno_polje_poslovni_partner">Obligatorisches Feld: Geschäftspartner</system:String>
+    <system:String x:Key="Obavezno_polje_drzava">Obligatorisches Feld: Land</system:String>
+    <system:String x:Key="Obavezno_polje_licenca">Obligatorisches Feld: Lizenz</system:String>
 
 </ResourceDictionary>

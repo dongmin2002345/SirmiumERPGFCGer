@@ -251,46 +251,48 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             }
 
             #endregion
-
-            new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteForm.Identifier);
-
-            CurrentConstructionSiteNoteForm.ConstructionSite = CurrentConstructionSite;
-
-            CurrentConstructionSiteNoteForm.IsSynced = false;
-            CurrentConstructionSiteNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentConstructionSiteNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new ConstructionSiteNoteSQLiteRepository().Create(CurrentConstructionSiteNoteForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentConstructionSiteNoteForm.ConstructionSite = CurrentConstructionSite;
+
+                CurrentConstructionSiteNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentConstructionSiteNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new ConstructionSiteNoteSQLiteRepository().Delete(CurrentConstructionSiteNoteForm.Identifier);
+
+                var response = new ConstructionSiteNoteSQLiteRepository().Create(CurrentConstructionSiteNoteForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
+                    CurrentConstructionSiteNoteForm.Identifier = Guid.NewGuid();
+                    CurrentConstructionSiteNoteForm.ItemStatus = ItemStatus.Added;
+                    CurrentConstructionSiteNoteForm.IsSynced = false;
+
+                    return;
+                }
 
                 CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
                 CurrentConstructionSiteNoteForm.Identifier = Guid.NewGuid();
                 CurrentConstructionSiteNoteForm.ItemStatus = ItemStatus.Added;
+                CurrentConstructionSiteNoteForm.IsSynced = false;
 
-                return;
-            }
+                ConstructionSiteCreatedUpdated();
+                DisplayConstructionSiteNoteData();
 
-            CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
-            CurrentConstructionSiteNoteForm.Identifier = Guid.NewGuid();
-            CurrentConstructionSiteNoteForm.ItemStatus = ItemStatus.Added;
-
-            ConstructionSiteCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayConstructionSiteNoteData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                 );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -301,7 +303,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             CurrentConstructionSiteNoteForm.Note = CurrentConstructionSiteNoteDG.Note;
             CurrentConstructionSiteNoteForm.NoteDate = CurrentConstructionSiteNoteDG.NoteDate;
-
+            CurrentConstructionSiteNoteForm.IsSynced = CurrentConstructionSiteNoteDG.IsSynced;
+            CurrentConstructionSiteNoteForm.UpdatedAt = CurrentConstructionSiteNoteDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -332,6 +335,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             CurrentConstructionSiteNoteForm = new ConstructionSiteNoteViewModel();
             CurrentConstructionSiteNoteForm.Identifier = Guid.NewGuid();
             CurrentConstructionSiteNoteForm.ItemStatus = ItemStatus.Added;
+
         }
 
         #endregion

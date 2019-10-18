@@ -251,46 +251,47 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             #endregion
-
-            new PhysicalPersonNoteSQLiteRepository().Delete(CurrentPhysicalPersonNoteForm.Identifier);
-
-            CurrentPhysicalPersonNoteForm.PhysicalPerson = CurrentPhysicalPerson;
-
-            CurrentPhysicalPersonNoteForm.IsSynced = false;
-            CurrentPhysicalPersonNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentPhysicalPersonNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new PhysicalPersonNoteSQLiteRepository().Create(CurrentPhysicalPersonNoteForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentPhysicalPersonNoteForm.PhysicalPerson = CurrentPhysicalPerson;
+
+                CurrentPhysicalPersonNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentPhysicalPersonNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new PhysicalPersonNoteSQLiteRepository().Delete(CurrentPhysicalPersonNoteForm.Identifier);
+
+                var response = new PhysicalPersonNoteSQLiteRepository().Create(CurrentPhysicalPersonNoteForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentPhysicalPersonNoteForm = new PhysicalPersonNoteViewModel();
+                    CurrentPhysicalPersonNoteForm.Identifier = Guid.NewGuid();
+                    CurrentPhysicalPersonNoteForm.ItemStatus = ItemStatus.Added;
+                    CurrentPhysicalPersonNoteForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentPhysicalPersonNoteForm = new PhysicalPersonNoteViewModel();
                 CurrentPhysicalPersonNoteForm.Identifier = Guid.NewGuid();
                 CurrentPhysicalPersonNoteForm.ItemStatus = ItemStatus.Added;
+                CurrentPhysicalPersonNoteForm.IsSynced = false;
 
-                return;
-            }
+                PhysicalPersonCreatedUpdated();
+                DisplayPhysicalPersonNoteData();
 
-            CurrentPhysicalPersonNoteForm = new PhysicalPersonNoteViewModel();
-            CurrentPhysicalPersonNoteForm.Identifier = Guid.NewGuid();
-            CurrentPhysicalPersonNoteForm.ItemStatus = ItemStatus.Added;
-
-            PhysicalPersonCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayPhysicalPersonNoteData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -301,7 +302,8 @@ namespace SirmiumERPGFC.Views.Employees
 
             CurrentPhysicalPersonNoteForm.Note = CurrentPhysicalPersonNoteDG.Note;
             CurrentPhysicalPersonNoteForm.NoteDate = CurrentPhysicalPersonNoteDG.NoteDate;
-
+            CurrentPhysicalPersonNoteForm.IsSynced = CurrentPhysicalPersonNoteDG.IsSynced;
+            CurrentPhysicalPersonNoteForm.UpdatedAt = CurrentPhysicalPersonNoteDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

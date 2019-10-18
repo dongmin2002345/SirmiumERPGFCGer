@@ -251,46 +251,48 @@ namespace SirmiumERPGFC.Views.Employees
             }
 
             #endregion
-
-            new PhysicalPersonCardSQLiteRepository().Delete(CurrentPhysicalPersonCardForm.Identifier);
-
-            CurrentPhysicalPersonCardForm.PhysicalPerson = CurrentPhysicalPerson;
-
-            CurrentPhysicalPersonCardForm.IsSynced = false;
-            CurrentPhysicalPersonCardForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentPhysicalPersonCardForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new PhysicalPersonCardSQLiteRepository().Create(CurrentPhysicalPersonCardForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+                CurrentPhysicalPersonCardForm.PhysicalPerson = CurrentPhysicalPerson;
+
+                CurrentPhysicalPersonCardForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentPhysicalPersonCardForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new PhysicalPersonCardSQLiteRepository().Delete(CurrentPhysicalPersonCardForm.Identifier);
+
+                var response = new PhysicalPersonCardSQLiteRepository().Create(CurrentPhysicalPersonCardForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentPhysicalPersonCardForm = new PhysicalPersonCardViewModel();
+                    CurrentPhysicalPersonCardForm.Identifier = Guid.NewGuid();
+                    CurrentPhysicalPersonCardForm.ItemStatus = ItemStatus.Added;
+                    CurrentPhysicalPersonCardForm.IsSynced = false;
+
+                    return;
+                }
 
                 CurrentPhysicalPersonCardForm = new PhysicalPersonCardViewModel();
                 CurrentPhysicalPersonCardForm.Identifier = Guid.NewGuid();
                 CurrentPhysicalPersonCardForm.ItemStatus = ItemStatus.Added;
+                CurrentPhysicalPersonCardForm.IsSynced = false;
 
-                return;
-            }
+                PhysicalPersonCreatedUpdated();
+                DisplayPhysicalPersonCardData();
 
-            CurrentPhysicalPersonCardForm = new PhysicalPersonCardViewModel();
-            CurrentPhysicalPersonCardForm.Identifier = Guid.NewGuid();
-            CurrentPhysicalPersonCardForm.ItemStatus = ItemStatus.Added;
-
-            PhysicalPersonCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayPhysicalPersonCardData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+              );
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -299,9 +301,10 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentPhysicalPersonCardForm.Identifier = CurrentPhysicalPersonCardDG.Identifier;
             CurrentPhysicalPersonCardForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentPhysicalPersonCardForm.IsSynced = CurrentPhysicalPersonCardDG.IsSynced;
             CurrentPhysicalPersonCardForm.Description = CurrentPhysicalPersonCardDG.Description;
             CurrentPhysicalPersonCardForm.CardDate = CurrentPhysicalPersonCardDG.CardDate;
-
+            CurrentPhysicalPersonCardForm.UpdatedAt = CurrentPhysicalPersonCardDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -350,7 +353,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             #endregion
 
-            Thread td = new Thread(() => {
+            Thread th = new Thread(() => {
 
                 SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
@@ -381,8 +384,8 @@ namespace SirmiumERPGFC.Views.Employees
                     );
                 }
             });
-            td.IsBackground = true;
-            td.Start();
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
