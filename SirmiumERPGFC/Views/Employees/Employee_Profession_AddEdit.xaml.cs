@@ -299,8 +299,8 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeProfessionForm.Identifier = CurrentEmployeeProfessionDG.Identifier;
             CurrentEmployeeProfessionForm.ItemStatus = ItemStatus.Edited;
 
-            CurrentEmployeeProfessionForm.Country.Name = CurrentEmployeeProfessionDG.Country.Name;
-            CurrentEmployeeProfessionForm.Profession.Name = CurrentEmployeeProfessionDG.Profession.Name;
+            CurrentEmployeeProfessionForm.Country = CurrentEmployeeProfessionDG.Country;
+            CurrentEmployeeProfessionForm.Profession = CurrentEmployeeProfessionDG.Profession;
             
         }
 

@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             #endregion
 
-            new BusinessPartnerNoteSQLiteRepository().Delete(CurrentBusinessPartnerNoteForm.Identifier);
-
-            CurrentBusinessPartnerNoteForm.BusinessPartner = CurrentBusinessPartner;
-
-            CurrentBusinessPartnerNoteForm.IsSynced = false;
-            CurrentBusinessPartnerNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentBusinessPartnerNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new BusinessPartnerNoteSQLiteRepository().Create(CurrentBusinessPartnerNoteForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentBusinessPartnerNoteForm.BusinessPartner = CurrentBusinessPartner;
+
+
+                CurrentBusinessPartnerNoteForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentBusinessPartnerNoteForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new BusinessPartnerNoteSQLiteRepository().Delete(CurrentBusinessPartnerNoteForm.Identifier);
+                var response = new BusinessPartnerNoteSQLiteRepository().Create(CurrentBusinessPartnerNoteForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentBusinessPartnerNoteForm = new BusinessPartnerNoteViewModel();
+                    CurrentBusinessPartnerNoteForm.Identifier = Guid.NewGuid();
+                    CurrentBusinessPartnerNoteForm.ItemStatus = ItemStatus.Added;
+                    CurrentBusinessPartnerNoteForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentBusinessPartnerNoteForm = new BusinessPartnerNoteViewModel();
                 CurrentBusinessPartnerNoteForm.Identifier = Guid.NewGuid();
                 CurrentBusinessPartnerNoteForm.ItemStatus = ItemStatus.Added;
+                CurrentBusinessPartnerNoteForm.IsSynced = false;
+                BusinessPartnerCreatedUpdated();
 
-                return;
-            }
+                DisplayBusinessPartnerNoteData();
 
-            CurrentBusinessPartnerNoteForm = new BusinessPartnerNoteViewModel();
-            CurrentBusinessPartnerNoteForm.Identifier = Guid.NewGuid();
-            CurrentBusinessPartnerNoteForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtNote.Focus();
+                    })
+                );
 
-            BusinessPartnerCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayBusinessPartnerNoteData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtNote.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditNote_Click(object sender, RoutedEventArgs e)
@@ -299,9 +304,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerNoteForm.Identifier = CurrentBusinessPartnerNoteDG.Identifier;
             CurrentBusinessPartnerNoteForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentBusinessPartnerNoteForm.IsSynced = CurrentBusinessPartnerNoteDG.IsSynced;
             CurrentBusinessPartnerNoteForm.Note = CurrentBusinessPartnerNoteDG.Note;
             CurrentBusinessPartnerNoteForm.NoteDate = CurrentBusinessPartnerNoteDG.NoteDate;
-
+            CurrentBusinessPartnerNoteForm.UpdatedAt = CurrentBusinessPartnerNoteDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

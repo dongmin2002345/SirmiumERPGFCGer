@@ -299,7 +299,7 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeItemForm.Identifier = CurrentEmployeeItemDG.Identifier;
             CurrentEmployeeItemForm.ItemStatus = ItemStatus.Edited;
 
-            CurrentEmployeeItemForm.FamilyMember.Name = CurrentEmployeeItemDG.FamilyMember.Name;
+            CurrentEmployeeItemForm.FamilyMember = CurrentEmployeeItemDG.FamilyMember;
             CurrentEmployeeItemForm.Name = CurrentEmployeeItemDG.Name;
             CurrentEmployeeItemForm.DateOfBirth = CurrentEmployeeItemDG.DateOfBirth;
             CurrentEmployeeItemForm.Passport = CurrentEmployeeItemDG.Passport;

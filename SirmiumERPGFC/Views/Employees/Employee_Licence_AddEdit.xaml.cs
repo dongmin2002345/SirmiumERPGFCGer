@@ -299,9 +299,8 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployeeLicenceForm.Identifier = CurrentEmployeeLicenceDG.Identifier;
             CurrentEmployeeLicenceForm.ItemStatus = ItemStatus.Edited;
 
-            CurrentEmployeeLicenceForm.Country.Name = CurrentEmployeeLicenceDG.Country.Name;
-            CurrentEmployeeLicenceForm.Licence.Category = CurrentEmployeeLicenceDG.Licence.Category;
-            CurrentEmployeeLicenceForm.Licence.Description = CurrentEmployeeLicenceDG.Licence.Description;
+            CurrentEmployeeLicenceForm.Country = CurrentEmployeeLicenceDG.Country;
+            CurrentEmployeeLicenceForm.Licence = CurrentEmployeeLicenceDG.Licence;
             CurrentEmployeeLicenceForm.ValidFrom = CurrentEmployeeLicenceDG.ValidFrom;
             CurrentEmployeeLicenceForm.ValidTo = CurrentEmployeeLicenceDG.ValidTo;
         }

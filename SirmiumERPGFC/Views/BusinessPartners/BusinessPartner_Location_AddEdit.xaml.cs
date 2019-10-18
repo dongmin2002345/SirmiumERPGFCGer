@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             #endregion
 
-            new BusinessPartnerLocationSQLiteRepository().Delete(CurrentBusinessPartnerLocationForm.Identifier);
-
-            CurrentBusinessPartnerLocationForm.BusinessPartner = CurrentBusinessPartner;
-
-            CurrentBusinessPartnerLocationForm.IsSynced = false;
-            CurrentBusinessPartnerLocationForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentBusinessPartnerLocationForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new BusinessPartnerLocationSQLiteRepository().Create(CurrentBusinessPartnerLocationForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentBusinessPartnerLocationForm.BusinessPartner = CurrentBusinessPartner;
+
+
+                CurrentBusinessPartnerLocationForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentBusinessPartnerLocationForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new BusinessPartnerLocationSQLiteRepository().Delete(CurrentBusinessPartnerLocationForm.Identifier);
+                var response = new BusinessPartnerLocationSQLiteRepository().Create(CurrentBusinessPartnerLocationForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentBusinessPartnerLocationForm = new BusinessPartnerLocationViewModel();
+                    CurrentBusinessPartnerLocationForm.Identifier = Guid.NewGuid();
+                    CurrentBusinessPartnerLocationForm.ItemStatus = ItemStatus.Added;
+                    CurrentBusinessPartnerLocationForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentBusinessPartnerLocationForm = new BusinessPartnerLocationViewModel();
                 CurrentBusinessPartnerLocationForm.Identifier = Guid.NewGuid();
                 CurrentBusinessPartnerLocationForm.ItemStatus = ItemStatus.Added;
+                CurrentBusinessPartnerLocationForm.IsSynced = false;
+                BusinessPartnerCreatedUpdated();
 
-                return;
-            }
+                DisplayBusinessPartnerLocationData();
 
-            CurrentBusinessPartnerLocationForm = new BusinessPartnerLocationViewModel();
-            CurrentBusinessPartnerLocationForm.Identifier = Guid.NewGuid();
-            CurrentBusinessPartnerLocationForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtAddress.Focus();
+                    })
+                );
 
-            BusinessPartnerCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayBusinessPartnerLocationData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtAddress.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditLocation_Click(object sender, RoutedEventArgs e)
@@ -299,11 +304,13 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerLocationForm.Identifier = CurrentBusinessPartnerLocationDG.Identifier;
             CurrentBusinessPartnerLocationForm.ItemStatus = ItemStatus.Edited;
 
-            CurrentBusinessPartnerLocationForm.Country.Name = CurrentBusinessPartnerLocationDG.Country.Name;
-            CurrentBusinessPartnerLocationForm.Municipality.Name = CurrentBusinessPartnerLocationDG.Municipality.Name;
-            CurrentBusinessPartnerLocationForm.Region.Name = CurrentBusinessPartnerLocationDG.Region.Name;
-            CurrentBusinessPartnerLocationForm.City.Name = CurrentBusinessPartnerLocationDG.City.Name;
+            CurrentBusinessPartnerLocationForm.IsSynced = CurrentBusinessPartnerLocationDG.IsSynced;
+            CurrentBusinessPartnerLocationForm.Country = CurrentBusinessPartnerLocationDG.Country;
+            CurrentBusinessPartnerLocationForm.Municipality = CurrentBusinessPartnerLocationDG.Municipality;
+            CurrentBusinessPartnerLocationForm.Region = CurrentBusinessPartnerLocationDG.Region;
+            CurrentBusinessPartnerLocationForm.City = CurrentBusinessPartnerLocationDG.City;
             CurrentBusinessPartnerLocationForm.Address = CurrentBusinessPartnerLocationDG.Address;
+            CurrentBusinessPartnerLocationForm.UpdatedAt = CurrentBusinessPartnerLocationDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)

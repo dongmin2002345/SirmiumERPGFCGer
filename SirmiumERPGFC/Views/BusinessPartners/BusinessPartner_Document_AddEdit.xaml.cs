@@ -252,45 +252,50 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             #endregion
 
-            new BusinessPartnerDocumentSQLiteRepository().Delete(CurrentBusinessPartnerDocumentForm.Identifier);
-
-            CurrentBusinessPartnerDocumentForm.BusinessPartner = CurrentBusinessPartner;
-
-            CurrentBusinessPartnerDocumentForm.IsSynced = false;
-            CurrentBusinessPartnerDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
-            CurrentBusinessPartnerDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-            var response = new BusinessPartnerDocumentSQLiteRepository().Create(CurrentBusinessPartnerDocumentForm);
-            if (!response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.ErrorMessage = response.Message;
+                SubmitButtonEnabled = false;
+
+
+                CurrentBusinessPartnerDocumentForm.BusinessPartner = CurrentBusinessPartner;
+
+
+                CurrentBusinessPartnerDocumentForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentBusinessPartnerDocumentForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                new BusinessPartnerDocumentSQLiteRepository().Delete(CurrentBusinessPartnerDocumentForm.Identifier);
+                var response = new BusinessPartnerDocumentSQLiteRepository().Create(CurrentBusinessPartnerDocumentForm);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+
+                    CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
+                    CurrentBusinessPartnerDocumentForm.Identifier = Guid.NewGuid();
+                    CurrentBusinessPartnerDocumentForm.ItemStatus = ItemStatus.Added;
+                    CurrentBusinessPartnerDocumentForm.IsSynced = false;
+                    return;
+                }
 
                 CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
                 CurrentBusinessPartnerDocumentForm.Identifier = Guid.NewGuid();
                 CurrentBusinessPartnerDocumentForm.ItemStatus = ItemStatus.Added;
+                CurrentBusinessPartnerDocumentForm.IsSynced = false;
+                BusinessPartnerCreatedUpdated();
 
-                return;
-            }
+                DisplayBusinessPartnerDocumentData();
 
-            CurrentBusinessPartnerDocumentForm = new BusinessPartnerDocumentViewModel();
-            CurrentBusinessPartnerDocumentForm.Identifier = Guid.NewGuid();
-            CurrentBusinessPartnerDocumentForm.ItemStatus = ItemStatus.Added;
+                Application.Current.Dispatcher.BeginInvoke(
+                    System.Windows.Threading.DispatcherPriority.Normal,
+                    new Action(() =>
+                    {
+                        txtBusinessPartnerDocumentName.Focus();
+                    })
+                );
 
-            BusinessPartnerCreatedUpdated();
-
-            Thread displayThread = new Thread(() => DisplayBusinessPartnerDocumentData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                System.Windows.Threading.DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    txtBusinessPartnerDocumentName.Focus();
-                })
-            );
-
-            SubmitButtonEnabled = true;
+                SubmitButtonEnabled = true;
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnEditDocument_Click(object sender, RoutedEventArgs e)
@@ -299,9 +304,11 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerDocumentForm.Identifier = CurrentBusinessPartnerDocumentDG.Identifier;
             CurrentBusinessPartnerDocumentForm.ItemStatus = ItemStatus.Edited;
 
+            CurrentBusinessPartnerDocumentForm.IsSynced = CurrentBusinessPartnerDocumentDG.IsSynced;
             CurrentBusinessPartnerDocumentForm.Name = CurrentBusinessPartnerDocumentDG.Name;
             CurrentBusinessPartnerDocumentForm.CreateDate = CurrentBusinessPartnerDocumentDG.CreateDate;
             CurrentBusinessPartnerDocumentForm.Path = CurrentBusinessPartnerDocumentDG.Path;
+            CurrentBusinessPartnerDocumentForm.UpdatedAt = CurrentBusinessPartnerDocumentDG.UpdatedAt;
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
