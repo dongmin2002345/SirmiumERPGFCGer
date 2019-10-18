@@ -631,7 +631,7 @@
     <system:String x:Key="Kupac_Dvotacka">Kunde:</system:String>
     <system:String x:Key="Morate_odabrati_poslovnogpartneraUzvičnik">Sie müssen den Geschäftspartner auswählen!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Institucija">Required field: Institution</system:String>
-    
+    <system:String x:Key="Obavezno_poljeDvotačka_Opis">Pflichtfeld: Beschreibung</system:String>
     <system:String x:Key="Podaci_o_statusu">Statusdaten</system:String>
     <system:String x:Key="Šifra_automatski">Code (automatisch)</system:String>
     <system:String x:Key="Skraćenica">Abkürzung</system:String>
@@ -643,4 +643,8 @@
     <system:String x:Key="Naziv_PDV_procenta">Mwst. Prozentname</system:String>
     <system:String x:Key="Statusi">Statuse</system:String>
     <system:String x:Key="PDV_procenti">Mwst. Prozente</system:String>
+    <system:String x:Key="Morate_odabrati_radnikaUzvičnik">Sie müssen Mitarbeiter auswählen!</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_clanporodice">Pflichtfeld: Familienmitglied</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Licence">Pflichtfeld: Lizenz</system:String>
+    <system:String x:Key="Obavezno_polje_naziv_profesije">Obligatorisches Feld: Berufsname</system:String>
 </ResourceDictionary>

@@ -422,6 +422,7 @@
     <system:String x:Key="Morate_odabrati_sektor_za_brisanjeUzvičnik">Morate odabrati sektor za brisanje!</system:String>
     <system:String x:Key="Sektor_je_uspešno_obrisanUzvičnik">Sektor je uspešno obrisan!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Šifra">Obavezno polje: Šifra</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Opis">Obavezno polje: Opis</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Naziv_sektora">Obavezno polje: Naziv sektora</system:String>
     <system:String x:Key="Greška_kod_lokalnog_čuvanjaUzvičnik">Greška kod lokalnog čuvanja!</system:String>
     <system:String x:Key="Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik">Podaci su sačuvani u lokalu!. Greška kod čuvanja na serveru!</system:String>
@@ -627,6 +628,7 @@
 
     <system:String x:Key="Morate_odabrati_racunUzvičnik">Morate odabrati račun!</system:String>
     <system:String x:Key="Morate_odabrati_poslovnogpartneraUzvičnik">Morate odabrati poslovnog partnera!</system:String>
+    <system:String x:Key="Morate_odabrati_radnikaUzvičnik">Morate odabrati radnika!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Poslovni_partner">Obavezno polje: Poslovni partner</system:String>
     <system:String x:Key="Kupac_Dvotacka">Kupac:</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Institucija">Obavezno polje: Institucije</system:String>
@@ -635,10 +637,13 @@
     <system:String x:Key="Skraćenica">Skraćenica</system:String>
     <system:String x:Key="Obavezno_polje_skraćeni_naziv">Obavezno polje skraćeni: Naziv</system:String>
     <system:String x:Key="Obavezno_polje_naziv_PDV">Obavezno polje: Naziv PDV-a</system:String>
+    <system:String x:Key="Obavezno_polje_naziv_profesije">Obavezno polje: Naziv profesije</system:String>
     <system:String x:Key="Podaci_o_PDV_u">Podaci o PDV-u</system:String>
     <system:String x:Key="Morate_izabrati_stavku">Morate izabrati stavku</system:String>
     <system:String x:Key="PDV_procenat">PDV procenat</system:String>
     <system:String x:Key="Naziv_PDV_procenta">Naziv PDV procenta</system:String>
     <system:String x:Key="Statusi">Statusi</system:String>
     <system:String x:Key="PDV_procenti">PDV procenti</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_clanporodice">Obavezno polje: Član porodice</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Licence">Obavezno polje: Licence</system:String>
 </ResourceDictionary>

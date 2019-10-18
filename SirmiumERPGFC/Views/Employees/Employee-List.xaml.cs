@@ -499,7 +499,7 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
         #region SyncButtonContent
-        private string _SyncButtonContent = " OSVEŽI ";
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
         public string SyncButtonContent
         {
@@ -743,43 +743,43 @@ namespace SirmiumERPGFC.Views.Employees
             SyncButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
             new EmployeeSQLiteRepository().Sync(employeeService, (synced, toSync) =>
             {
-                SyncButtonContent = " Radnici (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("RADNICI")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeNoteSQLiteRepository().Sync(employeeNoteService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeCardSQLiteRepository().Sync(employeeCardService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeItemSQLiteRepository().Sync(employeeItemService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
             DisplayData();
             CurrentEmployee = null;
@@ -789,22 +789,22 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeProfessionsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
             EmployeeLicencesFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>();
             EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void SyncNoteData()
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeNoteSQLiteRepository().Sync(employeeNoteService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayEmployeeNoteData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -812,15 +812,15 @@ namespace SirmiumERPGFC.Views.Employees
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeDocumentSQLiteRepository().Sync(employeeDocumentService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayEmployeeDocumentData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -828,15 +828,15 @@ namespace SirmiumERPGFC.Views.Employees
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeCardSQLiteRepository().Sync(employeeCardService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayEmployeeCardData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -844,15 +844,15 @@ namespace SirmiumERPGFC.Views.Employees
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeProfessionItemSQLiteRepository().Sync(employeeProfessionService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayEmployeeProfessionData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -860,15 +860,15 @@ namespace SirmiumERPGFC.Views.Employees
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeLicenceItemSQLiteRepository().Sync(employeeLicenceService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayEmployeeLicenceData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
 
@@ -876,15 +876,15 @@ namespace SirmiumERPGFC.Views.Employees
         {
             SyncButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            SyncButtonContent = ((string)Application.Current.FindResource("Stavke_TriTacke"));
             new EmployeeItemSQLiteRepository().Sync(employeeItemService, (synced, toSync) =>
             {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
 
             DisplayEmployeeItemData();
 
-            SyncButtonContent = " OSVEŽI ";
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
         private void dgEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
@@ -975,7 +975,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati radnika!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
                 return;
             }
 
@@ -992,7 +992,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati radnika!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
                 return;
             }
 
@@ -1009,7 +1009,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati radnika!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
                 return;
             }
 
@@ -1025,7 +1025,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati radnika!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
                 return;
             }
 
@@ -1041,7 +1041,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati radnika!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
                 return;
             }
 
@@ -1057,7 +1057,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployee == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati radnika!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
                 return;
             }
 

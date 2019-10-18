@@ -136,7 +136,7 @@ namespace SirmiumERPGFC.Views.Employees
 
 
         #region SubmitButtonContent
-        private string _SubmitButtonContent = " PROKNJIŽI ";
+        private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
 
         public string SubmitButtonContent
         {
@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentEmployeeLicenceForm.Licence.Description == null)
             {
-                MainWindow.ErrorMessage = "Obavezno polje: Licenca";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Licence"));
                 return;
             }
 
@@ -346,7 +346,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (EmployeeLicencesFromDB == null || EmployeeLicencesFromDB.Count == 0)
             {
-                MainWindow.WarningMessage = "Ne postoje stavke za proknjižavanje!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_uneti_osnovne_podatkeUzvičnik"));
                 return;
             }
 

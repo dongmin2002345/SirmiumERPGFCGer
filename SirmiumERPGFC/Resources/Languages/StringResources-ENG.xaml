@@ -630,10 +630,14 @@
     <system:String x:Key="Statusi">Statuses</system:String>
     <system:String x:Key="PDV_procenti">VAT Percents</system:String>
 
-
+    <system:String x:Key="Obavezno_poljeDvotačka_Opis">Required field: Description</system:String>
     <system:String x:Key="Morate_odabrati_racunUzvičnik">You need to select invoice!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Poslovni_partner">Required field: Business partner</system:String>
     <system:String x:Key="Kupac_Dvotacka">Customer:</system:String>
     <system:String x:Key="Morate_odabrati_poslovnogpartneraUzvičnik">You need to select business partner!</system:String>
     <system:String x:Key="Obavezno_poljeDvotačka_Institucija">Required field: Institution</system:String>
+    <system:String x:Key="Morate_odabrati_radnikaUzvičnik">You need to select employee!</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_clanporodice">Required field: Family member</system:String>
+    <system:String x:Key="Obavezno_poljeDvotačka_Licence">Required field: Licence</system:String>
+    <system:String x:Key="Obavezno_polje_naziv_profesije">Required field: Profesion name</system:String>
 </ResourceDictionary>

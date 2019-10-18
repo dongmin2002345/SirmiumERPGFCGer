@@ -25,7 +25,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <GroupBox Header="{DynamicResource Dokumenti}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+            <GroupBox Header="{DynamicResource OSNOVNI_PODACI}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -78,7 +78,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header="Dodate stavke" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
+            <GroupBox Header="{DynamicResource Dokumenti}" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
                 <DataGrid x:Name="dgEmployeeDocuments"
                               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
                               Margin="5" MinHeight="200"
@@ -102,7 +102,7 @@
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_dokumentaDvotacka}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Path" Header="{DynamicResource PutanjaDvotacka}" Binding="{Binding Path}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_unosaDvotacka}" Binding="{Binding Path=CreateDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -132,7 +132,7 @@
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
 
-                                                    <TextBlock Text="DA LI STE SIGURNI DA ŽELITE DA OBRIŠETE ODABRNI PODATAK?" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                    <TextBlock Text="{DynamicResource Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik}" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
                                                     <Separator Grid.Row="1" Margin="2" />
 
                                                     <Grid Grid.Row="2">
@@ -144,13 +144,13 @@
                                                         <Button Grid.Column="0" x:Name="btnDelete" Click="BtnDelete_Click" Margin="2" Background="DeepSkyBlue">
                                                             <StackPanel Orientation="Horizontal">
                                                                 <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                                                <TextBlock Text=" DA "  FontWeight="Bold" Foreground="white"/>
+                                                                <TextBlock Text="{DynamicResource DA}"  FontWeight="Bold" Foreground="white"/>
                                                             </StackPanel>
                                                         </Button>
                                                         <Button Grid.Column="1" x:Name="btnCancel" Margin="2" Background="DeepSkyBlue">
                                                             <StackPanel Orientation="Horizontal">
                                                                 <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                                                <TextBlock Text=" NE "  FontWeight="Bold" Foreground="white"/>
+                                                                <TextBlock Text="{DynamicResource NE}"  FontWeight="Bold" Foreground="white"/>
                                                             </StackPanel>
                                                         </Button>
                                                     </Grid>
@@ -196,7 +196,7 @@
                 <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="2">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text=" ZATVORI " FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
             </Grid>

@@ -278,7 +278,7 @@
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
 
-                                                    <TextBlock Text="Da li ste sigurni da želite da obrišete odabrani podatak?" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                    <TextBlock Text="{DynamicResource Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik}" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
                                                     <Separator Grid.Row="1" Margin="2" />
 
                                                     <Grid Grid.Row="2">
@@ -372,7 +372,7 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn SortMemberPath="CardDate" Header="{DynamicResource Datum_izmene}" Binding="{Binding Path=CardDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="{x:Type DataGridCell}" >
@@ -459,7 +459,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -562,7 +562,7 @@
                                 <DataGridTextColumn SortMemberPath="FamilyMember.Name" Header="{DynamicResource Član_porodice}" Binding="{Binding FamilyMember.Name}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="DateOfBirth" Header="{DynamicResource Datum_rođenja}" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
                                 <DataGridTextColumn SortMemberPath="EmbassyDate" Header="{DynamicResource Ambasada}" Binding="{Binding EmbassyDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="{x:Type DataGridCell}" >
@@ -649,7 +649,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Note" Header="{DynamicResource Napomena}" Binding="{Binding Note}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="{x:Type DataGridCell}" >
@@ -737,7 +737,7 @@
                                 <DataGridTextColumn SortMemberPath="Profession.SecondCode" Header="{DynamicResource Šifra_zanimanja}" Binding="{Binding Profession.SecondCode}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Profession.Name" Header="{DynamicResource Zanimanje}" Binding="{Binding Profession.Name}" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="{x:Type DataGridCell}" >
@@ -826,8 +826,8 @@
                                 <DataGridTextColumn SortMemberPath="Licence.Description" Header="{DynamicResource Dozvola}" Binding="{Binding Licence.Description}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" IsReadOnly="True"  />
                                 <DataGridTextColumn SortMemberPath="ValidTo" Header="{DynamicResource Ističe}" Binding="{Binding ValidTo, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True"  />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="{x:Type DataGridCell}" >
                                             <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
