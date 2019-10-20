@@ -76,6 +76,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 CountryId = businessPartnerBankViewModel.Country?.Id ?? 0,
                 AccountNumber = businessPartnerBankViewModel.AccountNumber,
                 ItemStatus = businessPartnerBankViewModel.ItemStatus,
+
+                Active = businessPartnerBankViewModel.IsActive,
                 CreatedById = businessPartnerBankViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerBankViewModel.Company?.Id ?? null,
 

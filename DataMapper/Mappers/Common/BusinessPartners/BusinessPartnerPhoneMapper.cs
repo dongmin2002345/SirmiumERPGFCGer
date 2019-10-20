@@ -100,6 +100,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Description = businessPartnerPhoneViewModel.Description,
                 Path = businessPartnerPhoneViewModel.Path,
                 ItemStatus = businessPartnerPhoneViewModel.ItemStatus,
+                Active = businessPartnerPhoneViewModel.IsActive,
                 CreatedById = businessPartnerPhoneViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerPhoneViewModel.Company?.Id ?? null,
 

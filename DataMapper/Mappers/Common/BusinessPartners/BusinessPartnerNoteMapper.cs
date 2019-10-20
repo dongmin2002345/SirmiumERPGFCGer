@@ -75,6 +75,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Note = BusinessPartnerNoteViewModel.Note,
                 NoteDate = BusinessPartnerNoteViewModel.NoteDate,
                 ItemStatus = BusinessPartnerNoteViewModel.ItemStatus,
+                Active = BusinessPartnerNoteViewModel.IsActive,
                 CreatedById = BusinessPartnerNoteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = BusinessPartnerNoteViewModel.Company?.Id ?? null,
 

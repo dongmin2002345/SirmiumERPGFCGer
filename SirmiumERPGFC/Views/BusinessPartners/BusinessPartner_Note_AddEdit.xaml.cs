@@ -186,7 +186,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerNoteForm = new BusinessPartnerNoteViewModel();
             CurrentBusinessPartnerNoteForm.Identifier = Guid.NewGuid();
             CurrentBusinessPartnerNoteForm.ItemStatus = ItemStatus.Added;
-
+          
             Thread displayThread = new Thread(() => DisplayBusinessPartnerNoteData());
             displayThread.IsBackground = true;
             displayThread.Start();
