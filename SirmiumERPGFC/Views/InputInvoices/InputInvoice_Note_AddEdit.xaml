@@ -107,7 +107,7 @@
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum_napomeneDvotacka}" Binding="{Binding Path=NoteDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                             <DataGridTemplateColumn Header="" Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

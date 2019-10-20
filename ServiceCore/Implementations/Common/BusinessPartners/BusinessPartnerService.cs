@@ -100,8 +100,8 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                 re.Banks = null;
 
                 //Type
-                //List<BusinessPartnerTypeViewModel> businessPartnerTypes = re.BusinessPartnerTypes?.ToList();
-                //re.BusinessPartnerTypes = null;
+                List<BusinessPartnerTypeViewModel> businessPartnerTypes = re.BusinessPartnerTypes?.ToList();
+                re.BusinessPartnerTypes = null;
 
                 BusinessPartner createdBusinessPartner = unitOfWork.GetBusinessPartnerRepository().Create(re.ConvertToBusinessPartner());
 
@@ -249,27 +249,27 @@ namespace ServiceCore.Implementations.Common.BusinessPartners
                 //{
                 //    unitOfWork.GetBusinessPartnerBusinessPartnerTypeRepository().Create(createdBusinessPartner.Id, item.Id);
                 //}
-                //if (businessPartnerTypes != null && businessPartnerTypes.Count > 0)
-                //{
-                //    // Items for create or update
-                //    foreach (var businessPartnerType in businessPartnerTypes
-                //        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<BusinessPartnerTypeViewModel>())
-                //    {
-                //        businessPartnerType.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
-                //        businessPartnerType.ItemStatus = ItemStatus.Submited;
-                //        BusinessPartnerType createdBusinessPartnerType = unitOfWork.GetBusinessPartnerTypeRepository()
-                //            .Create(businessPartnerType.ConvertToBusinessPartnerType());
-                //    }
+                if (businessPartnerTypes != null && businessPartnerTypes.Count > 0)
+                {
+                    // Items for create or update
+                    foreach (var businessPartnerType in businessPartnerTypes
+                        .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<BusinessPartnerTypeViewModel>())
+                    {
+                        businessPartnerType.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
+                        businessPartnerType.ItemStatus = ItemStatus.Submited;
+                        BusinessPartnerType createdBusinessPartnerType = unitOfWork.GetBusinessPartnerTypeRepository()
+                            .Create(businessPartnerType.ConvertToBusinessPartnerType());
+                    }
 
-                //    foreach (var item in businessPartnerTypes
-                //        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<BusinessPartnerTypeViewModel>())
-                //    {
-                //        item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
-                //        unitOfWork.GetBusinessPartnerTypeRepository().Create(item.ConvertToBusinessPartnerType());
+                    foreach (var item in businessPartnerTypes
+                        .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<BusinessPartnerTypeViewModel>())
+                    {
+                        item.BusinessPartner = new BusinessPartnerViewModel() { Id = createdBusinessPartner.Id };
+                        unitOfWork.GetBusinessPartnerTypeRepository().Create(item.ConvertToBusinessPartnerType());
 
-                //        unitOfWork.GetBusinessPartnerTypeRepository().Delete(item.Identifier);
-                //    }
-                //}
+                        unitOfWork.GetBusinessPartnerTypeRepository().Delete(item.Identifier);
+                    }
+                }
 
                 unitOfWork.Save();
 

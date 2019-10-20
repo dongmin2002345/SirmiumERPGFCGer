@@ -194,14 +194,14 @@ namespace SirmiumERPGFC.Views.Home
 
             ToDoAddEdit addEditForm = new ToDoAddEdit(toDo, false, true);
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podsetnik")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             ToDoAddEdit addEditForm = new ToDoAddEdit(CurrentToDo, false, false);
             addEditForm.ToDoCreatedUpdated += new ToDoHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podsetnik", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podsetnik")), 95, addEditForm);
         }
 
         private void btnShowDocument_Click(object sender, RoutedEventArgs e)

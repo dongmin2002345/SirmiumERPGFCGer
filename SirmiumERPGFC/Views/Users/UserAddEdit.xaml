@@ -131,7 +131,7 @@
                                         Width="Auto"
                                         Binding="{Binding Path=IsChecked, Mode=TwoWay}" IsReadOnly="False"
                                         />
-                                <DataGridTextColumn SortMemberPath="Name" Header="PRAVA PRISTUPA" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Prava_pristupa}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                             </DataGrid.Columns>
                         </DataGrid>
 

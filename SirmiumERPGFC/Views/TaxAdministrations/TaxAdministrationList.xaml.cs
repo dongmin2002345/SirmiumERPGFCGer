@@ -190,7 +190,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Die Daten wurden erfolgreich synchronisiert!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -236,7 +236,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
         {
             RefreshButtonEnabled = false;
 
-            RefreshButtonContent = " Steuerverwaltungen ... ";
+            RefreshButtonContent = ((string)Application.Current.FindResource("Poreska_Uprava_tritacke"));
             new TaxAdministrationSQLiteRepository().Sync(taxAdministrationService);
 
             DisplayData();
@@ -256,20 +256,20 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
             TaxAdministrationAddEdit addEditForm = new TaxAdministrationAddEdit(TaxAdministration, true);
             addEditForm.TaxAdministrationCreatedUpdated += new TaxAdministrationHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Daten über die Steuerverwaltungen", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Poreska_Uprava")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentTaxAdministration == null)
             {
-                MainWindow.WarningMessage = "Sie müssen einen Eintrag für die Veränderung auswählen!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_izmenuUzvičnik"));
                 return;
             }
 
             TaxAdministrationAddEdit addEditForm = new TaxAdministrationAddEdit(CurrentTaxAdministration, false);
             addEditForm.TaxAdministrationCreatedUpdated += new TaxAdministrationHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Daten über die Steuerverwaltungen", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Poreska_Uprava")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

@@ -340,6 +340,7 @@
     <system:String x:Key="Delatnosti">Aktivitäten</system:String>
     <system:String x:Key="Regioni">Regionen</system:String>
     <system:String x:Key="Poreska_Uprava">Steuerverwaltung</system:String>
+    <system:String x:Key="Poreska_Uprava_tritacke">Steuerverwaltung...</system:String>
     <system:String x:Key="Ulazni_računi">Eingangsrechnungen</system:String>
     <system:String x:Key="Ulazni_računi_tritacke">Eingangsrechnungen...</system:String>
 

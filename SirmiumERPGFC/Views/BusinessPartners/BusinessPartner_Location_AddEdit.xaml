@@ -109,7 +109,7 @@
                         <DataGridTextColumn SortMemberPath="Region.Name" Header="{DynamicResource RegionDvotacka}" Binding="{Binding Path=Region.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource GradDvotacka}" Binding="{Binding Path=City.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Path=Address}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

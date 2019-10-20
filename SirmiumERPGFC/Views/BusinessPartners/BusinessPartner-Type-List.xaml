@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.BusinessPartners"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
+             xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -19,6 +20,8 @@
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
         <cbxConverters:MultiConverter x:Key="MultiConverter" />
+        <cbxConverters:ItemStatusConverter x:Key="ItemStatusConverter" />
+        <cbxConverters:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -129,6 +132,8 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
@@ -201,6 +206,18 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
+                    <DataGrid.RowStyle>
+                        <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                    <Setter Property="FontStyle" Value="Italic" />
+                                    <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
                 </DataGrid>
             </Grid>
         </GroupBox>

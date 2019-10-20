@@ -261,7 +261,7 @@ namespace SirmiumERPGFC.Views.Sectors
 
             AgencyAddEdit addEditForm = new AgencyAddEdit(Agency, true);
             addEditForm.AgencyCreatedUpdated += new AgencyHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o delatnostima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Delatnosti")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -274,7 +274,7 @@ namespace SirmiumERPGFC.Views.Sectors
 
             AgencyAddEdit addEditForm = new AgencyAddEdit(CurrentAgency, false);
             addEditForm.AgencyCreatedUpdated += new AgencyHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o delatnostima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Delatnosti")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

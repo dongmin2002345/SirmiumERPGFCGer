@@ -161,7 +161,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
             if (String.IsNullOrEmpty(CurrentTaxAdministration.Name))
             {
-                MainWindow.WarningMessage = "Sie müssen einen Namen schreiben!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_NazivUzvičnik"));
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
 
             Thread th = new Thread(() =>
             {
-                SaveButtonContent = " Wird geschpeichert... ";
+                SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
                 CurrentTaxAdministration.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
@@ -182,7 +182,7 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
                 response = new TaxAdministrationSQLiteRepository().Create(CurrentTaxAdministration);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Lokaler Speicherfehler!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                     return;
@@ -191,14 +191,14 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
                 response = taxAdministrationService.Create(CurrentTaxAdministration);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = "Die Daten wurden im Lokal gespeichert. Server-Speicherfehler!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
 
                 if (response.Success)
                 {
-                    MainWindow.SuccessMessage = "Daten wurden erfolgreich gespeichert!";
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 
