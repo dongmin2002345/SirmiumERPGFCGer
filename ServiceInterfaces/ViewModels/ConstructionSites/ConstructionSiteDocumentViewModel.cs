@@ -44,7 +44,7 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         #endregion
 
         #region CreateDate
-        private DateTime? _CreateDate;
+        private DateTime? _CreateDate = DateTime.Now;
 
         public DateTime? CreateDate
         {
