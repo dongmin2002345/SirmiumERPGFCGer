@@ -8,6 +8,7 @@ namespace SirmiumERPGFC.RdlcReports.InputInvoices
 {
     public class InputInvoicesReportViewModel
     {
+        public string OrderNumberInputInvoice { get; set; }
         public string BusinessPartnerName { get; set; }
         public string Supplier { get; set; }
         public string Address { get; set; }
