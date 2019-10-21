@@ -68,7 +68,7 @@
                                     Header="" />
                             <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Tip_poslovnog_partnera}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                            <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                                 <DataGridTextColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}" >
                                         <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />

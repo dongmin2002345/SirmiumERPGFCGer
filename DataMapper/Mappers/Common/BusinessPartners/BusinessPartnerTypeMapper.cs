@@ -78,7 +78,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 IsBuyer = businessPartnerTypeViewModel.IsBuyer,
                 IsSupplier = businessPartnerTypeViewModel.IsSupplier,
                 ItemStatus = businessPartnerTypeViewModel.ItemStatus,
-
+                Active = businessPartnerTypeViewModel.IsActive,
                 CreatedById = businessPartnerTypeViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerTypeViewModel.Company?.Id ?? null,
 

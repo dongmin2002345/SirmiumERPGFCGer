@@ -9,6 +9,22 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
 {
     public class BusinessPartnerTypeViewModel : BaseEntityViewModel
     {
+        #region BusinessPartner
+        private BusinessPartnerViewModel _BusinessPartner;
+
+        public BusinessPartnerViewModel BusinessPartner
+        {
+            get { return _BusinessPartner; }
+            set
+            {
+                if (_BusinessPartner != value)
+                {
+                    _BusinessPartner = value;
+                    NotifyPropertyChanged("BusinessPartner");
+                }
+            }
+        }
+        #endregion
 
         #region Code    
         private string _Code;

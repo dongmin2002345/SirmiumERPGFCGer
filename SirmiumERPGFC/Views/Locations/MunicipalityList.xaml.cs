@@ -194,7 +194,7 @@ namespace SirmiumERPGFC.Views.Locations
             {
                 SyncData();
 
-                MainWindow.SuccessMessage = "Podaci su uspešno sinhronizovani!";
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
             });
             syncThread.IsBackground = true;
             syncThread.Start();
@@ -243,7 +243,7 @@ namespace SirmiumERPGFC.Views.Locations
             RefreshButtonContent = ((string)Application.Current.FindResource("Opštine_TriTacke"));
             new MunicipalitySQLiteRepository().Sync(municipalityService, (synced, toSync) => {
                 if (toSync > 0)
-                    RefreshButtonContent = ((string)Application.Current.FindResource("Opštine_TriTacke")) + " (" + synced + "/" + toSync + ")";
+                    RefreshButtonContent = ((string)Application.Current.FindResource("Opština")) + " (" + synced + "/" + toSync + ")";
             });
 
             DisplayData();

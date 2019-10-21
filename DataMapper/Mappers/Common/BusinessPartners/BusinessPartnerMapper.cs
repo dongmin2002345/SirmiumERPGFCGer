@@ -165,7 +165,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
 
                 VatDeductionFrom = businessPartnerViewModel.VatDeductionFrom,
                 VatDeductionTo = businessPartnerViewModel.VatDeductionTo,
-
+                Active = businessPartnerViewModel.IsActive,
                 CreatedById = businessPartnerViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerViewModel.Company?.Id ?? null,
 

@@ -335,7 +335,7 @@ namespace SirmiumERPGFC.Views.Users
             {
                 new CompanyViewModel()
                 {
-                    CompanyName = "Odaberite firmu..."
+                    CompanyName = ((string)Application.Current.FindResource("Odaberite_firmuTriTacke"))
                 }
             };
             if (response.Success)
@@ -348,7 +348,7 @@ namespace SirmiumERPGFC.Views.Users
                 {
                     new CompanyViewModel()
                     {
-                        CompanyName = "Greška pri učitavanju podataka!"
+                        CompanyName = ((string)Application.Current.FindResource("Greška_pri_učitavanju_podatakaUzvičnik"))
                     }
                 };
                 MainWindow.ErrorMessage = response.Message;

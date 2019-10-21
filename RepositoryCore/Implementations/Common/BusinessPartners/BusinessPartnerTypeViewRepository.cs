@@ -223,7 +223,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Name = businessPartnerType.Name;
                     dbEntry.IsBuyer = businessPartnerType.IsBuyer;
                     dbEntry.IsSupplier = businessPartnerType.IsSupplier;
-
+                    dbEntry.ItemStatus = businessPartnerType.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

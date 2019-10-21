@@ -334,7 +334,7 @@ namespace SirmiumERPGFC.Views.Users
 
             UserAddEdit addEditForm = new UserAddEdit(user, true);
             addEditForm.UserCreatedUpdated += new UserHandler(DisplayData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o korisnicima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_korisnicima")), 95, addEditForm);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -347,7 +347,7 @@ namespace SirmiumERPGFC.Views.Users
 
             UserAddEdit addEditForm = new UserAddEdit(CurrentUser, false);
             addEditForm.UserCreatedUpdated += new UserHandler(DisplayData);
-            FlyoutHelper.OpenFlyout(this, "Podaci o korisnicima", 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_korisnicima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

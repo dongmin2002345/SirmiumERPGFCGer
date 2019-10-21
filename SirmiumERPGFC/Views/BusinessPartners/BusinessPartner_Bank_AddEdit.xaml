@@ -100,7 +100,7 @@
                         <DataGridTextColumn SortMemberPath="Country.Name" Header="{DynamicResource Država}" Binding="{Binding Country.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Bank.Name" Header="{DynamicResource Banka}" Binding="{Binding Bank.Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="AccountNumber" Header="{DynamicResource Broj_računa}" Binding="{Binding Path=AccountNumber}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ItemStatus" Header="{DynamicResource Status}" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
