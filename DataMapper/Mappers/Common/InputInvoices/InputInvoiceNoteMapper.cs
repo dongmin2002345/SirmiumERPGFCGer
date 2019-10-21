@@ -75,6 +75,8 @@ namespace DataMapper.Mappers.Common.InputInvoices
                 Note = InputInvoiceNoteViewModel.Note,
                 NoteDate = InputInvoiceNoteViewModel.NoteDate,
                 ItemStatus = InputInvoiceNoteViewModel.ItemStatus,
+                Active = InputInvoiceNoteViewModel.IsActive,
+
                 CreatedById = InputInvoiceNoteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = InputInvoiceNoteViewModel.Company?.Id ?? null,
 

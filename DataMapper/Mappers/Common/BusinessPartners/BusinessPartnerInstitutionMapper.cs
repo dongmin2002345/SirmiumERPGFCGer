@@ -91,6 +91,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Email = businessPartnerInstitutionViewModel.Email,
                 Note = businessPartnerInstitutionViewModel.Note,
                 ItemStatus = businessPartnerInstitutionViewModel.ItemStatus,
+                Active = businessPartnerInstitutionViewModel.IsActive,
                 CreatedById = businessPartnerInstitutionViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerInstitutionViewModel.Company?.Id ?? null,
 

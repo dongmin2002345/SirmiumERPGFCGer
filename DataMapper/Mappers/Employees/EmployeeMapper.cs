@@ -153,7 +153,7 @@ namespace DataMapper.Mappers.Employees
                 VisaValidTo = employeeViewModel.VisaValidTo,
                 WorkPermitFrom = employeeViewModel.WorkPermitFrom,
                 WorkPermitTo = employeeViewModel.WorkPermitTo,
-
+                Active = employeeViewModel.IsActive,
                 CreatedById = employeeViewModel.CreatedBy?.Id ?? null,
                 CompanyId = employeeViewModel.Company?.Id ?? null,
 

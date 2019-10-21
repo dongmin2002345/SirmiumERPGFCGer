@@ -339,6 +339,7 @@
     <system:String x:Key="Delatnosti">Activities</system:String>
     <system:String x:Key="Regioni">Regions</system:String>
     <system:String x:Key="Poreska_Uprava">Tax Administration</system:String>
+    <system:String x:Key="Poreska_Uprava_tritacke">Tax Administration...</system:String>
     <system:String x:Key="Ulazni_računi">Incoming accounts</system:String>
     <system:String x:Key="Ulazni_računi_tritacke">Input invoices...</system:String>
     <system:String x:Key="Izlazni_računi">Outgoing accounts</system:String>

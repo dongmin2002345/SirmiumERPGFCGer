@@ -186,6 +186,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
             CurrentBusinessPartnerPhoneForm.Identifier = Guid.NewGuid();
             CurrentBusinessPartnerPhoneForm.ItemStatus = ItemStatus.Added;
+            CurrentBusinessPartnerPhoneForm.IsSynced = false;
 
             Thread displayThread = new Thread(() => DisplayBusinessPartnerPhoneData());
             displayThread.IsBackground = true;
@@ -317,25 +318,32 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var response = new BusinessPartnerPhoneSQLiteRepository().SetStatusDeleted(CurrentBusinessPartnerPhoneDG.Identifier);
-            if (response.Success)
+            Thread th = new Thread(() =>
             {
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
+                SubmitButtonEnabled = false;
 
-                CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
-                CurrentBusinessPartnerPhoneForm.Identifier = Guid.NewGuid();
-                CurrentBusinessPartnerPhoneForm.ItemStatus = ItemStatus.Added;
+                var response = new BusinessPartnerPhoneSQLiteRepository().SetStatusDeleted(CurrentBusinessPartnerPhoneDG.Identifier);
+                if (response.Success)
+                {
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
-                CurrentBusinessPartnerPhoneDG = null;
+                    BusinessPartnerCreatedUpdated();
 
-                BusinessPartnerCreatedUpdated();
+                    DisplayBusinessPartnerPhoneData();
 
-                Thread displayThread = new Thread(() => DisplayBusinessPartnerPhoneData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-            else
-                MainWindow.ErrorMessage = response.Message;
+                    CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
+                    CurrentBusinessPartnerPhoneForm.Identifier = Guid.NewGuid();
+                    CurrentBusinessPartnerPhoneForm.ItemStatus = ItemStatus.Added;
+                    CurrentBusinessPartnerPhoneForm.IsSynced = false;
+
+                    CurrentBusinessPartnerPhoneDG = null;
+                }
+                else
+                    MainWindow.ErrorMessage = response.Message;
+
+                SubmitButtonEnabled = true;
+            });
+            th.Start();
         }
 
         private void btnCancelPhone_Click(object sender, RoutedEventArgs e)
@@ -343,6 +351,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             CurrentBusinessPartnerPhoneForm = new BusinessPartnerPhoneViewModel();
             CurrentBusinessPartnerPhoneForm.Identifier = Guid.NewGuid();
             CurrentBusinessPartnerPhoneForm.ItemStatus = ItemStatus.Added;
+            CurrentBusinessPartnerPhoneForm.IsSynced = false;
         }
 
         #endregion

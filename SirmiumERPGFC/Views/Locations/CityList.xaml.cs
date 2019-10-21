@@ -255,7 +255,7 @@ namespace SirmiumERPGFC.Views.Locations
 			new CitySQLiteRepository().Sync(cityService, (synced, toSync) =>
 			{
 				if (toSync > 0)
-					SyncButtonContent = " Grad (" + synced + "/" + toSync + ")";
+					SyncButtonContent = ((string)Application.Current.FindResource("Gradovi")) +"(" + synced + "/" + toSync + ")";
 			});
 
 			DisplayData();
@@ -299,7 +299,7 @@ namespace SirmiumERPGFC.Views.Locations
 
             CityAddEdit addEditForm = new CityAddEdit(CurrentCity, false);
             addEditForm.CityCreatedUpdated += new CityHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_lekovima")), 95, addEditForm);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradovima")), 95, addEditForm);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

@@ -81,6 +81,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 MunicipalityId = businessPartnerLocationViewModel.Municipality?.Id ?? null,
                 RegionId = businessPartnerLocationViewModel.Region?.Id ?? null,
                 ItemStatus = businessPartnerLocationViewModel.ItemStatus,
+
+                Active = businessPartnerLocationViewModel.IsActive,
                 CreatedById = businessPartnerLocationViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerLocationViewModel.Company?.Id ?? null,
 

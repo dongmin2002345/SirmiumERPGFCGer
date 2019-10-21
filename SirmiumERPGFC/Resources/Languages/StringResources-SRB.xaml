@@ -341,6 +341,7 @@
     <system:String x:Key="Delatnosti">Delatnosti</system:String>
     <system:String x:Key="Regioni">Regioni</system:String>
     <system:String x:Key="Poreska_Uprava">Poreska Uprava</system:String>
+    <system:String x:Key="Poreska_Uprava_tritacke">Poreska Uprava...</system:String>
     <system:String x:Key="Ulazni_računi">Ulazni računi</system:String>
     <system:String x:Key="Ulazni_računi_tritacke">Ulazni računi...</system:String>
     <system:String x:Key="Izlazni_računi">Izlazni računi</system:String>
