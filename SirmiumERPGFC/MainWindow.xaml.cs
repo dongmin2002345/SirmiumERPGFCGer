@@ -374,7 +374,7 @@ namespace SirmiumERPGFC
 		private void mniInputInvoices_Click(object sender, RoutedEventArgs e)
 		{
 			cntCtrl.Content = new InputInvoiceList();
-			//OpenTab("Ulayni računi", new InputInvoiceList());
+			//OpenTab("Ulazni računi", new InputInvoiceList());
 		}
 
 		private void mniCities_Click(object sender, RoutedEventArgs e)

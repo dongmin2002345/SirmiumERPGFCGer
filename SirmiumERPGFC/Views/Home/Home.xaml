@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Home"
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Background="White">
+             d:DesignHeight="300" d:DesignWidth="300" Background="White" Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
         <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
@@ -25,13 +25,33 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Image Grid.Row="0" Source="..\..\Resources\erp8.png" RenderOptions.BitmapScalingMode="HighQuality" />
-                <Image Grid.Row="1" Source="..\..\Resources\GFC.png" VerticalAlignment="Bottom" RenderOptions.BitmapScalingMode="HighQuality" Margin="15 0 15 15" />
+                <Image Grid.Row="1" Source="..\..\Resources\GFC.png" VerticalAlignment="Bottom" RenderOptions.BitmapScalingMode="HighQuality" Margin="15 40 15 15" />
             </Grid>
         </Grid>
+        
+        <Grid Grid.Row="1" Margin="2" VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="2">
+                <TextBlock Margin="2" Text="Sinhronizacija: " />
+                <TextBlock Margin="2" Text="{Binding Path=ItemContent}" x:Name="lblItemConten"/>
+            </StackPanel>
+            <Controls:MetroProgressBar Grid.Row="3" Height="20" Foreground="DodgerBlue" Margin="1"
+                                           Minimum="{Binding Path=MinItemCounter}" 
+                                           Maximum="{Binding Path=MaxItemCounter}" 
+                                           Value="{Binding Path=ItemValue}"/>
+        </Grid>
+
+
 
         <Grid Grid.Column="1">
             <TabControl TabStripPlacement="Top" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
