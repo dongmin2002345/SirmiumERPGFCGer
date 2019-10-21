@@ -17,7 +17,8 @@ namespace RepositoryCore.DbViews.Common.Invoices
 
             string strSQLCommand = "DROP VIEW IF EXISTS vOutputInvoices";
             SqlCommand command = new SqlCommand(strSQLCommand, conn);
-            string returnvalue = (string)command.ExecuteScalar();
+            //string returnvalue = (string)command.ExecuteScalar();
+            command.ExecuteScalar();
 
             strSQLCommand =
                 "CREATE VIEW vOutputInvoices AS " +
@@ -34,7 +35,8 @@ namespace RepositoryCore.DbViews.Common.Invoices
 
 
             command = new SqlCommand(strSQLCommand, conn);
-            returnvalue = (string)command.ExecuteScalar();
+            //returnvalue = (string)command.ExecuteScalar();
+            command.ExecuteScalar();
 
             conn.Close();
         }

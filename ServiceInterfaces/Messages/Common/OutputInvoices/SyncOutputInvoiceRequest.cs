@@ -11,6 +11,5 @@ namespace ServiceInterfaces.Messages.Common.OutputInvoices
     {
         public int CompanyId { get; set; }
         public DateTime? LastUpdatedAt { get; set; }
-        public List<OutputInvoiceViewModel> UnSyncedOutputInvoices { get; set; }
     }
 }

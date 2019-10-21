@@ -393,8 +393,20 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                             </DataGrid.Columns>
+                            <DataGrid.RowStyle>
+                                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                    <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                            <Setter Property="FontStyle" Value="Italic" />
+                                            <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
                         </DataGrid>
                     </Grid>
 
