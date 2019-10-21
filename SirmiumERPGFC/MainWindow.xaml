@@ -159,7 +159,7 @@
                 <Fluent:RibbonGroupBox Header="PDV">
                     <Fluent:Button x:Name="mniVat" Click="MniVat_Click" Header="{DynamicResource PDV_procenti}" KeyTip="PP" >
                         <Fluent:Button.Icon>
-                            <Image Source="Resources\Icons\Procenat poreza.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\PDV procenat.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.Icon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
@@ -173,21 +173,21 @@
                 <Fluent:RibbonGroupBox Header="{DynamicResource Kurirska_Sluzba}">
                     <Fluent:Button x:Name="mniServiceDelivery" Click="MniServiceDelivery_Click" Header="{DynamicResource Kurirska_Sluzba}" KeyTip="PP" >
                         <Fluent:Button.Icon>
-                            <Image Source="Resources\Icons\Popust.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\KurirskaSluzba.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.Icon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="Status">
                     <Fluent:Button x:Name="mniStatus" Click="MniStatus_Click" Header="{DynamicResource Statusi}" KeyTip="PP" >
                         <Fluent:Button.Icon>
-                            <Image Source="Resources\Icons\Procenat poreza.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\Status.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.Icon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="{DynamicResource Pošiljke}">
                     <Fluent:Button x:Name="mniShipment" Click="MniShipment_Click" Header="{DynamicResource Pošiljke}" KeyTip="PP" >
                         <Fluent:Button.Icon>
-                            <Image Source="Resources\Icons\Procenat poreza.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\Posiljke.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.Icon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>

@@ -37,7 +37,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         #region Services
         IOutputInvoiceService outputInvoiceService;
-        IOutputInvoiceDocumentService outputInvoiceDocumentService;
         #endregion
 
 
@@ -176,7 +175,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         public OutputInvoice_Document_AddEdit(OutputInvoiceViewModel outputInvoice)
         {
             outputInvoiceService = DependencyResolver.Kernel.Get<IOutputInvoiceService>();
-            outputInvoiceDocumentService = DependencyResolver.Kernel.Get<IOutputInvoiceDocumentService>();
 
             InitializeComponent();
 

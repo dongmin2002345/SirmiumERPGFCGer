@@ -8,7 +8,6 @@ namespace RepositoryCore.Abstractions.Common.Invoices
     public interface IOutputInvoiceNoteRepository
     {
         List<OutputInvoiceNote> GetOutputInvoiceNotes(int companyId);
-        List<OutputInvoiceNote> GetOutputInvoiceNotesByOutputInvoice(int OutputInvoiceId);
         List<OutputInvoiceNote> GetOutputInvoiceNotesNewerThen(int companyId, DateTime lastUpdateTime);
 
         OutputInvoiceNote Create(OutputInvoiceNote OutputInvoiceNote);

@@ -27,7 +27,7 @@ namespace ServiceInterfaces.ViewModels.Employees
         #endregion
 
         #region CardDate
-        private DateTime? _CardDate;
+        private DateTime? _CardDate =  DateTime.Now;
 
         public DateTime? CardDate
         {

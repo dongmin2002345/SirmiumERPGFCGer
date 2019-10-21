@@ -361,23 +361,6 @@ namespace ServiceInterfaces.ViewModels.Common.OutputInvoices
         }
         #endregion
 
-        //#region SearchBy_Construction
-        //private string _SearchBy_Construction;
-
-        //public string SearchBy_Construction
-        //{
-        //    get { return _SearchBy_Construction; }
-        //    set
-        //    {
-        //        if (_SearchBy_Construction != value)
-        //        {
-        //            _SearchBy_Construction = value;
-        //            NotifyPropertyChanged("SearchBy_Construction");
-        //        }
-        //    }
-        //}
-        //#endregion
-
         #region SearchBy_BusinessPartner
         private string _SearchBy_BusinessPartner;
 

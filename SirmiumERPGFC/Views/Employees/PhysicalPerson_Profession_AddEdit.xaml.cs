@@ -246,7 +246,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPersonProfessionForm.Country == null)
             {
-                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Država"));
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_polje_drzava"));
                 return;
             }
 

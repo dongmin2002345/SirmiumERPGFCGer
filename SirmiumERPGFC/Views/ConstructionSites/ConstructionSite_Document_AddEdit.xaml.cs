@@ -82,7 +82,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         #endregion
 
         #region CurrentConstructionSiteDocumentForm
-        private ConstructionSiteDocumentViewModel _CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel() { CreateDate = DateTime.Now };
+        private ConstructionSiteDocumentViewModel _CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
 
         public ConstructionSiteDocumentViewModel CurrentConstructionSiteDocumentForm
         {
@@ -186,6 +186,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             CurrentConstructionSiteDocumentForm = new ConstructionSiteDocumentViewModel();
             CurrentConstructionSiteDocumentForm.Identifier = Guid.NewGuid();
             CurrentConstructionSiteDocumentForm.ItemStatus = ItemStatus.Added;
+
 
             Thread displayThread = new Thread(() => DisplayConstructionSiteDocumentData());
             displayThread.IsBackground = true;

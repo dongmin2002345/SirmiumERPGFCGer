@@ -357,9 +357,9 @@ namespace SirmiumERPGFC.Repository.Employees
 
 				SqliteCommand insertCommand = new SqliteCommand();
 				insertCommand.CommandText = SqlCommandInsertPart;
-				
+                insertCommand.Connection = db;
 
-				try
+                try
 				{
                     insertCommand = AddCreateParameters(insertCommand, licenceType);
 					insertCommand.ExecuteNonQuery();

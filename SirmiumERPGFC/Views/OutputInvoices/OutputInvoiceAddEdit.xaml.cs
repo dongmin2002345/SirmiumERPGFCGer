@@ -50,18 +50,18 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         public event OutputInvoiceHandler OutputInvoiceCreatedUpdated;
         #endregion
 
-        #region currentOutputInvoice
-        private OutputInvoiceViewModel _currentOutputInvoice;
+        #region CurrentOutputInvoice
+        private OutputInvoiceViewModel _CurrentOutputInvoice;
 
         public OutputInvoiceViewModel CurrentOutputInvoice
         {
-            get { return _currentOutputInvoice; }
+            get { return _CurrentOutputInvoice; }
             set
             {
-                if (_currentOutputInvoice != value)
+                if (_CurrentOutputInvoice != value)
                 {
-                    _currentOutputInvoice = value;
-                    NotifyPropertyChanged("currentOutputInvoice");
+                    _CurrentOutputInvoice = value;
+                    NotifyPropertyChanged("CurrentOutputInvoice");
                 }
             }
         }

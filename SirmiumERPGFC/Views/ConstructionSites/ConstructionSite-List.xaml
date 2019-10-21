@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.ConstructionSites"
+             xmlns:helpers="clr-namespace:WpfAppCommonCode.Helpers;assembly=WpfAppCommonCode"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
@@ -286,6 +287,18 @@
                                 <DataGridTextColumn SortMemberPath="ValueDifference" Header="{DynamicResource Razlika_vrednosti}" Binding="{Binding ValueDifference}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                             </DataGrid.Columns>
+                            <DataGrid.RowStyle>
+                                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                    <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                            <Setter Property="FontStyle" Value="Italic" />
+                                            <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
                         </DataGrid>
                     </Grid>
 
@@ -355,6 +368,18 @@
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                                 
                             </DataGrid.Columns>
+                            <DataGrid.RowStyle>
+                                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                    <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                            <Setter Property="FontStyle" Value="Italic" />
+                                            <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
                         </DataGrid>
                     </Grid>
 
@@ -410,7 +435,7 @@
                                   HeadersVisibility="All"
                                   LoadingRow="DgConstructionSiteDocuments_LoadingRow"
                               ItemsSource="{Binding Path=ConstructionSiteDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentConstructionSiteDocumentDG, Mode=TwoWay}" Grid.ColumnSpan="2">
+                              SelectedItem="{Binding Path=CurrentConstructionSiteDocument, Mode=TwoWay}" Grid.ColumnSpan="2">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="*" />
@@ -430,6 +455,18 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
+                            <DataGrid.RowStyle>
+                                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                                    <Setter Property="Background" Value="{Binding ItemStatus, Converter={StaticResource ItemStatusColorConverter}}"  />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ItemStatus}" Value="4" >
+                                            <Setter Property="FontStyle" Value="Italic" />
+                                            <Setter Property="helpers:StrikeThrough.TextDecoration" Value="Strikethrough"/>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
                         </DataGrid>
                     </Grid>
 

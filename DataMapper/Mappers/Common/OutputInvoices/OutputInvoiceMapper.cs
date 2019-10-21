@@ -100,7 +100,6 @@ namespace DataMapper.Mappers.Common.OutputInvoices
 
                 UpdatedAt = outputInvoice.UpdatedAt,
                 CreatedAt = outputInvoice.CreatedAt,
-                //IsCancelItem = outputInvoice.IsCancelItem,
             };
 
             return outputInvoiceViewModel;

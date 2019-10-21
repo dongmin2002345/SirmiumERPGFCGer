@@ -346,7 +346,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
         public OutputInvoice Delete(Guid identifier)
         {
-            // Load Favor that will be deleted
+            // Load OutputInvoice that will be deleted
             OutputInvoice dbEntry = context.OutputInvoices
                 .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
 

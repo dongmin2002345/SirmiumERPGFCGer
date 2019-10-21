@@ -184,6 +184,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportViewModel.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerGerExcelReport.cs" />
     <Compile Include="Reports\ConstructionSites\ConstructionSiteExcelReport.cs" />
@@ -603,9 +604,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1318,6 +1321,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Korisnici01.png" />
+    <Resource Include="Resources\Icons\KurirskaSluzba.png" />
     <Content Include="Resources\Icons\lager po magacinima.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1391,6 +1395,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\PDFBeli.png" />
+    <Resource Include="Resources\Icons\PDV procenat.png" />
     <Content Include="Resources\Icons\percentage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1415,6 +1420,7 @@
     <Resource Include="Resources\Icons\Porodica01.png" />
     <Resource Include="Resources\Icons\Plus02.png" />
     <Resource Include="Resources\Icons\Popust.png" />
+    <Resource Include="Resources\Icons\Posiljke.png" />
     <Content Include="Resources\Icons\price-tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1489,6 +1495,7 @@
     <Content Include="Resources\Icons\Sledljivost.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Status.png" />
     <Content Include="Resources\Icons\steak.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
