@@ -267,45 +267,6 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
             return response;
         }
 
-        public OutputInvoiceResponse GetOutputInvoice(Guid identifier)
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-            OutputInvoiceViewModel OutputInvoice = new OutputInvoiceViewModel();
-
-            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-            {
-                db.Open();
-                try
-                {
-                    SqliteCommand selectCommand = new SqliteCommand(
-                        SqlCommandSelectPart +
-                        "FROM OutputInvoices " +
-                        "WHERE Identifier = @Identifier;", db);
-                    selectCommand.Parameters.AddWithValue("@Identifier", identifier);
-
-                    SqliteDataReader query = selectCommand.ExecuteReader();
-
-                    if (query.Read())
-                    {
-                        OutputInvoiceViewModel dbEntry = Read(query);
-                        OutputInvoice = dbEntry;
-                    }
-                }
-                catch (SqliteException error)
-                {
-                    MainWindow.ErrorMessage = error.Message;
-                    response.Success = false;
-                    response.Message = error.Message;
-                    response.OutputInvoice = new OutputInvoiceViewModel();
-                    return response;
-                }
-                db.Close();
-            }
-            response.Success = true;
-            response.OutputInvoice = OutputInvoice;
-            return response;
-        }
-
         #endregion
 
         #region Sync
@@ -474,48 +435,6 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                 response.Success = true;
                 return response;
             }
-        }
-
-        public OutputInvoiceResponse DeleteAll()
-        {
-            OutputInvoiceResponse response = new OutputInvoiceResponse();
-
-            try
-            {
-                using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-                {
-                    db.Open();
-                    db.EnableExtensions(true);
-
-                    SqliteCommand insertCommand = new SqliteCommand();
-                    insertCommand.Connection = db;
-
-                    //Use parameterized query to prevent SQL injection attacks
-                    insertCommand.CommandText = "DELETE FROM OutputInvoices";
-                    try
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-                    catch (SqliteException error)
-                    {
-                        response.Success = false;
-                        response.Message = error.Message;
-
-                        MainWindow.ErrorMessage = error.Message;
-                        return response;
-                    }
-                    db.Close();
-                }
-            }
-            catch (SqliteException error)
-            {
-                response.Success = false;
-                response.Message = error.Message;
-                return response;
-            }
-
-            response.Success = true;
-            return response;
         }
 
         #endregion

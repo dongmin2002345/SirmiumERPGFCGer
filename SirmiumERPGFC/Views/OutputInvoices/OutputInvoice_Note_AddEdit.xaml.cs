@@ -37,7 +37,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         #region Services
         IOutputInvoiceService outputInvoiceService;
-        IOutputInvoiceNoteService outputInvoiceNoteService;
         #endregion
 
 
@@ -176,7 +175,6 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         public OutputInvoice_Note_AddEdit(OutputInvoiceViewModel outputInvoice)
         {
             outputInvoiceService = DependencyResolver.Kernel.Get<IOutputInvoiceService>();
-            outputInvoiceNoteService = DependencyResolver.Kernel.Get<IOutputInvoiceNoteService>();
 
             InitializeComponent();
 
@@ -246,7 +244,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
             if (CurrentOutputInvoiceNoteForm.Note == null)
             {
-                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Napomena"));
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Napomena"));
                 return;
             }
 
