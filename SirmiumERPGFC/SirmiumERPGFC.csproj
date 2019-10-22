@@ -197,6 +197,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportsViewModel.cs" />
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportViewModel.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerGerExcelReport.cs" />
@@ -494,6 +495,9 @@
     <Compile Include="Views\InputInvoices\InputInvoice_Note_AddEdit.xaml.cs">
       <DependentUpon>InputInvoice_Note_AddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InputInvoices\InputInvoice_ReportWindow.xaml.cs">
+      <DependentUpon>InputInvoice_ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
     </Compile>
@@ -618,11 +622,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -963,6 +967,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InputInvoices\InputInvoice_Note_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputInvoices\InputInvoice_ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1579,7 +1587,9 @@
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>

@@ -649,15 +649,17 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
 		private void btnPrint_Click(object sender, RoutedEventArgs e)
 		{
-            try
-            {
-                InputInvoicesExcelReport.Show(InputInvoicesFromDB.ToList());
-            }
-            catch(Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
-		}
+            //try
+            //{
+            //    InputInvoicesExcelReport.Show(InputInvoicesFromDB.ToList());
+            //}
+            //catch(Exception ex)
+            //{
+            //    MainWindow.ErrorMessage = ex.Message;
+            //}
+            InputInvoice_ReportWindow reportWindow = new InputInvoice_ReportWindow();
+            reportWindow.Show();
+        }
 
 		//private void btnExcel_Click(object sender, RoutedEventArgs e)
 		//{
@@ -731,7 +733,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
 
             if (CurrentInputInvoice == null)
             {
-                MainWindow.WarningMessage = "Morate odabrati prijemnicu!";
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
                 return;
             }
 
