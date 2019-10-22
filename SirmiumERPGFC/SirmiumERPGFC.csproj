@@ -632,6 +632,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlcReports\Employees\EmployeeReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\EmployeesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
@@ -640,6 +641,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.EmployeeReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.EmployeesReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReportViewModel.datasource" />

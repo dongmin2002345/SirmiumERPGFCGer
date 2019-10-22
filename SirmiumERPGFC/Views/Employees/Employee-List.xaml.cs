@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Reporting.WinForms;
+using Newtonsoft.Json;
 using Ninject;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.RdlcReports.Employees;
 using SirmiumERPGFC.Reports.Employees;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Views.Common;
@@ -12,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,7 +27,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.Employees
@@ -1213,7 +1215,156 @@ namespace SirmiumERPGFC.Views.Employees
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
-        
+
+        private void BtnPrintEmployeeReport_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
+                return;
+            }
+
+            #endregion
+
+            rdlcEmployeeReport.LocalReport.DataSources.Clear();
+
+            List<EmployeeReportViewModel> employee = new List<EmployeeReportViewModel>()
+            {
+                new EmployeeReportViewModel()
+                {
+
+                    EmployeeCode = CurrentEmployee?.EmployeeCode ?? "",
+                    Name = CurrentEmployee?.Name ?? "",
+                    SurName = CurrentEmployee?.SurName ?? "",
+                    DateOfBirth = CurrentEmployee?.DateOfBirth?.ToString("dd.MM.yyyy") ?? "",
+                    Gender = CurrentEmployee?.Gender.ToString() ?? "",
+                    CountryName = CurrentEmployee?.Country?.Name ?? "",
+                    RegionName = CurrentEmployee?.Region?.Name ?? "",
+                    MunicipalityName = CurrentEmployee?.Municipality?.Name ?? "",
+                    CityName = CurrentEmployee?.City?.Name ?? "",
+                    Address = CurrentEmployee?.Address ?? "",
+                    ConstructionSiteCode = CurrentEmployee?.ConstructionSiteCode ?? "",
+                    //podaci o pasošu
+                    PassportCountryName = CurrentEmployee?.PassportCountry?.Name ?? "",
+                    PassportCityName = CurrentEmployee?.PassportCity?.Name ?? "",
+                    Passport = CurrentEmployee?.Passport ?? "",
+                    VisaFrom = CurrentEmployee?.VisaFrom?.ToString("dd.MM.yyyy") ?? "",
+                    VisaTo = CurrentEmployee?.VisaTo?.ToString("dd.MM.yyyy") ?? "",
+                    //Podaci o prebivalištu
+                    ResidenceCountryName = CurrentEmployee?.ResidenceCountry?.Name ?? "",
+                    ResidenceCityName = CurrentEmployee?.ResidenceCity?.Name ?? "",
+                    ResidenceAddress = CurrentEmployee?.ResidenceAddress ?? "",
+                    //Podaci o radnoj dozvoli
+                    EmbassyDate = CurrentEmployee?.EmbassyDate?.ToString("dd.MM.yyyy") ?? "",
+                    VisaDate = CurrentEmployee?.VisaDate?.ToString("dd.MM.yyyy") ?? "",
+                    VisaValidFrom = CurrentEmployee?.VisaValidFrom?.ToString("dd.MM.yyyy") ?? "",
+                    VisaValidTo = CurrentEmployee?.VisaValidTo?.ToString("dd.MM.yyyy") ?? "",
+                    WorkPermitFrom = CurrentEmployee?.WorkPermitFrom?.ToString("dd.MM.yyyy") ?? "",
+                    WorkPermitTo = CurrentEmployee?.WorkPermitTo?.ToString("dd.MM.yyyy") ?? ""
+                }
+            };
+
+            List<EmployeeProfessionItemViewModel> ProfessionItems = new EmployeeProfessionItemSQLiteRepository().GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeProfessionItems;
+            int counter = 1;
+            foreach (var ProfessionItem in ProfessionItems)
+            {
+                employee.Add(new EmployeeReportViewModel()
+                {
+                    OrderNumberProfession = counter++,
+                    ProfessionCountryName = ProfessionItem?.Country?.Name ?? "",
+                    ProfessionName = ProfessionItem?.Profession?.Name ?? "",
+                 
+                });
+            }
+
+            List<EmployeeLicenceItemViewModel> LicenceItems = new EmployeeLicenceItemSQLiteRepository().GetEmployeeLicencesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeLicenceItems;
+            int Licencecounter = 1;
+            foreach (var LicenceItem in LicenceItems)
+            {
+                employee.Add(new EmployeeReportViewModel()
+                {
+                    OrderNumberLicence = Licencecounter++,
+                    LicenceCountryName = LicenceItem?.Country?.Name ?? "",
+                    LicenceCode = LicenceItem?.Licence?.Code ?? "",
+                    LicenceValidFrom = LicenceItem?.ValidFrom?.ToString("dd.MM.yyyy") ?? "",
+                    LicenceValidTo = LicenceItem?.ValidTo?.ToString("dd.MM.yyyy") ?? ""
+
+                });
+            }
+
+            List<EmployeeNoteViewModel> NoteItems = new EmployeeNoteSQLiteRepository().GetEmployeeNotesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeNotes;
+            int Notecounter = 1;
+            foreach (var NoteItem in NoteItems)
+            {
+                employee.Add(new EmployeeReportViewModel()
+                {
+                    OrderNumberNote = Notecounter++,
+                    Note = NoteItem?.Note ?? "",
+                    NoteDAte = NoteItem?.NoteDate.ToString("dd.MM.yyyy") ?? ""
+
+                });
+            }
+
+            List<EmployeeCardViewModel> CardItems = new EmployeeCardSQLiteRepository().GetEmployeeCardsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeCards;
+            int Cardcounter = 1;
+            foreach (var CardItem in CardItems)
+            {
+                employee.Add(new EmployeeReportViewModel()
+                {
+                    OrderNumberCard = Cardcounter++,
+                    CardDescription = CardItem?.Description ?? "",
+                    CardDate = CardItem?.CardDate?.ToString("dd.MM.yyyy") ?? ""
+
+                });
+            }
+
+            List<EmployeeItemViewModel> Items = new EmployeeItemSQLiteRepository().GetEmployeeItemsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeItems;
+            int Itemcounter = 1;
+            foreach (var Item in Items)
+            {
+                employee.Add(new EmployeeReportViewModel()
+                {
+                    OrderNumberFamilyMember = Itemcounter++,
+                    FamilyMemberName = Item?.FamilyMember?.Name ?? "",
+                    ItemName = Item?.Name ?? "",
+                    ItemsDateOfBirth = Item?.DateOfBirth?.ToString("dd.MM.yyyy") ?? "",
+                    ItemPassport = Item?.Passport ?? "",
+                    ItemEmbassyDate = Item?.EmbassyDate?.ToString("dd.MM.yyyy") ?? ""
+                });
+            }
+
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = employee
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModel);
+
+          
+            //List<ReportParameter> reportParams = new List<ReportParameter>();
+            //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
+            //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
+
+
+            //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
+            //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
+            //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
+            //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
+
+            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\Employees\EmployeeReport.rdlc");
+
+            rdlcEmployeeReport.LocalReport.ReportPath = ContentStart;
+            // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
+            rdlcEmployeeReport.SetDisplayMode(DisplayMode.PrintLayout);
+            rdlcEmployeeReport.Refresh();
+            rdlcEmployeeReport.ZoomMode = ZoomMode.Percent;
+            rdlcEmployeeReport.ZoomPercent = 100;
+            rdlcEmployeeReport.RefreshReport();
+        }
+
     }
 }
 
