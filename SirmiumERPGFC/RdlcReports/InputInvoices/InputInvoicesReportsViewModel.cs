@@ -9,18 +9,18 @@ namespace SirmiumERPGFC.RdlcReports.InputInvoices
     public class InputInvoicesReportsViewModel
     {
         public string OrderNumbersForInputInvoices { get; set; }
-        public string BusinessPartnerNames { get; set; }
-        public string Suppliers { get; set; }
-        public string Addresss { get; set; }
-        public string InvoiceNumbers { get; set; }
-        public string InvoiceDates { get; set; }
-        public string AmountNets { get; set; }
-        public string PDVPercents { get; set; }
-        public string PDVs { get; set; }
-        public string AmountGross { get; set; }
-        public string Currencys { get; set; }
-        public string DateOfPaymetses { get; set; }
-        public string Statuses { get; set; }
-        public string StatusDates { get; set; }
+        public string BusinessPartnerName { get; set; }
+        public string Supplier { get; set; }
+        public string Address { get; set; }
+        public string InvoiceNumber { get; set; }
+        public string InvoiceDate { get; set; }
+        public string AmountNet { get; set; }
+        public string PDVPercent { get; set; }
+        public string PDV { get; set; }
+        public string AmountGros { get; set; }
+        public string Currency { get; set; }
+        public string DateOfPaymetse { get; set; }
+        public string Statuse { get; set; }
+        public string StatusDate { get; set; }
     }
 }
