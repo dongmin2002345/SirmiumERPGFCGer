@@ -512,8 +512,8 @@
                     
             </TabItem>
 
-            <TabItem Header="ŠTAMPA PRIJEMA">
-                <GroupBox Grid.Row="5" Margin="2" Header="ŠTAMPA PRIJEMA">
+            <TabItem Header="PDF">
+                <GroupBox Grid.Row="5" Margin="2" Header="PDF">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
