@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Reporting.WinForms;
+using Newtonsoft.Json;
 using Ninject;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Messages.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.RdlcReports.OutputInvoices;
 using SirmiumERPGFC.Reports.OutputInvoices;
 using SirmiumERPGFC.Repository.OutputInvoices;
 using SirmiumERPGFC.Views.Common;
@@ -12,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,7 +27,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfAppCommonCode.Converters;
 
 namespace SirmiumERPGFC.Views.OutputInvoices
@@ -681,7 +683,71 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         #endregion
 
-       
+        private void BtnPrintOutputInvoiceReport_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentOutputInvoice == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
+                return;
+            }
+
+            #endregion
+
+            rdlcOutputInvoiceReport.LocalReport.DataSources.Clear();
+
+            List<OutputInvoiceReportViewModel> outputInvoice = new List<OutputInvoiceReportViewModel>()
+            {
+                new OutputInvoiceReportViewModel()
+                {
+
+                    BusinessPartnerName = CurrentOutputInvoice?.BusinessPartner?.Name ?? "",
+                    Supplier = CurrentOutputInvoice?.Supplier ?? "",
+                    Address = CurrentOutputInvoice?.Address ?? "",
+                    InvoiceNumber = CurrentOutputInvoice?.InvoiceNumber ?? "",
+                    InvoiceDate = CurrentOutputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "",
+                    AmountNet = CurrentOutputInvoice?.AmountNet.ToString("#.00") ?? "",
+                    PDVPercent = CurrentOutputInvoice?.PdvPercent.ToString("#.00") ?? "",
+                    PDV = CurrentOutputInvoice?.Pdv.ToString() ?? "",
+                    AmountGross = CurrentOutputInvoice?.AmountGross.ToString("#.00") ?? "",
+                    Currency = CurrentOutputInvoice?.Currency.ToString("#.00") ?? "",
+                    DateOfPaymet = CurrentOutputInvoice?.DateOfPayment.ToString("dd.MM.yyyy") ?? "",
+                    Status = CurrentOutputInvoice?.Status.ToString() ?? "",
+                    StatusDate = CurrentOutputInvoice?.StatusDate.ToString("dd.MM.yyyy") ?? ""
+
+                }
+            };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = outputInvoice
+            };
+            rdlcOutputInvoiceReport.LocalReport.DataSources.Add(rpdsModel);
+
+            //List<ReportParameter> reportParams = new List<ReportParameter>();
+            //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
+            //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
+
+
+            //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
+            //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
+            //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
+            //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
+
+            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\OutputInvoices\OutputInvoiceReport.rdlc");
+
+            rdlcOutputInvoiceReport.LocalReport.ReportPath = ContentStart;
+            // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
+            rdlcOutputInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
+            rdlcOutputInvoiceReport.Refresh();
+            rdlcOutputInvoiceReport.ZoomMode = ZoomMode.Percent;
+            rdlcOutputInvoiceReport.ZoomPercent = 100;
+            rdlcOutputInvoiceReport.RefreshReport();
+        }
+
+
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
