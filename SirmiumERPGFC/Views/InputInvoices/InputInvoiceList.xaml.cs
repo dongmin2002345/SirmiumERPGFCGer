@@ -657,7 +657,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
             //{
             //    MainWindow.ErrorMessage = ex.Message;
             //}
-            InputInvoice_ReportWindow reportWindow = new InputInvoice_ReportWindow();
+            InputInvoice_ReportWindow reportWindow = new InputInvoice_ReportWindow(CurrentInputInvoice);
             reportWindow.Show();
         }
 

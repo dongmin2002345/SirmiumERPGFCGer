@@ -12,7 +12,7 @@
     <Grid>
         <GroupBox Grid.Row="0" Margin="2" Header="{DynamicResource Ulazne_fakture}">
             <WindowsFormsHost Name="windowsFormsHost">
-                <rdlcreport:ReportViewer x:Name="rdlcReport" />
+                <rdlcreport:ReportViewer x:Name="rdlcInputInvoiceReport" />
             </WindowsFormsHost>
         </GroupBox>
     </Grid>

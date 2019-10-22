@@ -622,10 +622,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1586,9 +1588,7 @@
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>

@@ -346,6 +346,7 @@
     <system:String x:Key="Ulazni_računi_tritacke">Ulazni računi...</system:String>
     <system:String x:Key="Izlazni_računi">Izlazni računi</system:String>
     <system:String x:Key="IZVEZI_U_EXCEL">IZVEZI U EXCEL</system:String>
+    <system:String x:Key="Izveštaj">Izveštaj</system:String>
     <system:String x:Key="SAČUVAJ_ZAGLAVLJE">SAČUVAJ ZAGLAVLJE</system:String>
     <system:String x:Key="IBANDvotacka">IBAN:</system:String>
     <system:String x:Key="Betriebs_brojDvotacka">Betriebs broj:</system:String>

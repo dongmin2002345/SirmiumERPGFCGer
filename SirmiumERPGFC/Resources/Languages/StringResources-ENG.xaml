@@ -32,6 +32,7 @@
     <system:String x:Key="BrutoDvotacka">Gross:</system:String>
     <system:String x:Key="Cena_po_radnikuDvotacka">Price per worker:</system:String>
     <system:String x:Key="Cena_za_radnika">Price for the worker</system:String>
+    <system:String x:Key="Izveštaj">Report</system:String>
     <system:String x:Key="Član_porodice">Family member</system:String>
     <system:String x:Key="Član_porodiceDvotacka">Family member:</system:String>
     <system:String x:Key="Članovi_porodice">Family members</system:String>

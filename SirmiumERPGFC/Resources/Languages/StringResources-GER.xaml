@@ -31,6 +31,7 @@
     <system:String x:Key="Broj_radnika">Anzahl der Mitarbeiter die noch kommen</system:String>
     <system:String x:Key="Broj_radnika_koji_dolazeDvotacka">Anzahl der Mitarbeiter die noch kommen</system:String>
     <system:String x:Key="BrutoDvotacka">Brutto:</system:String>
+    <system:String x:Key="Izveštaj">Bericht</system:String>
     <system:String x:Key="Cena_po_radnikuDvotacka">Preis pro Mitarbeiter</system:String>
     <system:String x:Key="Cena_za_radnika">Preis für jeden Mitarbeiter</system:String> 
     <system:String x:Key="Član_porodice">Familienmitglied</system:String>
