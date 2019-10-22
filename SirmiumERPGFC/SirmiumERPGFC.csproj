@@ -552,6 +552,9 @@
     <Compile Include="Views\OutputInvoices\OutputInvoice_Note_AddEdit.xaml.cs">
       <DependentUpon>OutputInvoice_Note_AddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OutputInvoices\OutputInvoice_ReportWindow.xaml.cs">
+      <DependentUpon>OutputInvoice_ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Prices\Discount_AddEdit.xaml.cs">
       <DependentUpon>Discount_AddEdit.xaml</DependentUpon>
     </Compile>
@@ -626,12 +629,14 @@
     </Compile>
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
+    <EmbeddedResource Include="RdlcReports\OutputInvoices\OutputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\OutputInvoices\OutputInvoiceReport.rdlc" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReportViewModel.datasource" />
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoicesReportViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1047,6 +1052,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\OutputInvoices\OutputInvoice_ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Prices\Discount_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1157,6 +1166,7 @@
     <Content Include="Resources\erp8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icons\Print.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll" />
     <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll" />

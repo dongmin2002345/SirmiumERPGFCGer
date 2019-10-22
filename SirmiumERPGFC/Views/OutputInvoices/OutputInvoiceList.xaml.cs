@@ -628,14 +628,16 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         #endregion
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                OutputInvoicesExcelReport.Show(OutputInvoicesFromDB.ToList());
-            }
-            catch (Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
+            //try
+            //{
+            //    OutputInvoicesExcelReport.Show(OutputInvoicesFromDB.ToList());
+            //}
+            //catch (Exception ex)
+            //{
+            //    MainWindow.ErrorMessage = ex.Message;
+            //}
+            OutputInvoice_ReportWindow reportWindow = new OutputInvoice_ReportWindow(CurrentOutputInvoice);
+            reportWindow.Show();
         }
         //private void btnShow_Click(object sender, RoutedEventArgs e)
         //{
