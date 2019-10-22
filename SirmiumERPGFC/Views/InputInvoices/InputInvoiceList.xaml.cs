@@ -1,9 +1,11 @@
-﻿using Ninject;
+﻿using Microsoft.Reporting.WinForms;
+using Ninject;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Messages.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.RdlcReports.InputInvoices;
 using SirmiumERPGFC.Reports.InputInvoices;
 using SirmiumERPGFC.Repository.InputInvoices;
 using SirmiumERPGFC.Views.Common;
@@ -23,8 +25,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfAppCommonCode.Converters;
+using System.IO;
 
 namespace SirmiumERPGFC.Views.InputInvoices
 {
@@ -722,5 +724,70 @@ namespace SirmiumERPGFC.Views.InputInvoices
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
+
+        private void BtnPrintInputInvoiceReport_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentInputInvoice == null)
+            {
+                MainWindow.WarningMessage = "Morate odabrati prijemnicu!";
+                return;
+            }
+
+            #endregion
+
+            rdlcInputInvoiceReport.LocalReport.DataSources.Clear();
+
+            List<InputInvoicesReportViewModel> inputInvoice = new List<InputInvoicesReportViewModel>()
+            {
+                new InputInvoicesReportViewModel()
+                {
+
+                    BusinessPartnerName = CurrentInputInvoice?.BusinessPartner?.Name ?? "",
+                    Supplier = CurrentInputInvoice?.Supplier ?? "",
+                    Address = CurrentInputInvoice?.Address ?? "",
+                    InvoiceNumber = CurrentInputInvoice?.InvoiceNumber ?? "",
+                    InvoiceDate = CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "",
+                    AmountNet = CurrentInputInvoice?.AmountNet.ToString("#.00") ?? "",
+                    PDVPercent = CurrentInputInvoice?.PDVPercent.ToString("#.00") ?? "",
+                    PDV = CurrentInputInvoice?.PDV.ToString() ?? "",
+                    AmountGross = CurrentInputInvoice?.AmountGross.ToString("#.00") ?? "",
+                    Currency = CurrentInputInvoice?.Currency.ToString("#.00") ?? "",
+                    DateOfPaymet = CurrentInputInvoice?.DateOfPaymet.ToString("dd.MM.yyyy") ?? "",
+                    Status = CurrentInputInvoice?.Status.ToString() ?? "",
+                    StatusDate = CurrentInputInvoice?.StatusDate.ToString("dd.MM.yyyy") ?? ""
+
+                }
+            };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = inputInvoice
+            };
+            rdlcInputInvoiceReport.LocalReport.DataSources.Add(rpdsModel);
+
+            //List<ReportParameter> reportParams = new List<ReportParameter>();
+            //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
+            //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
+
+
+            //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
+            //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
+            //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
+            //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
+
+            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\InputInvoices\InputInvoiceReport.rdlc");
+
+            rdlcInputInvoiceReport.LocalReport.ReportPath = ContentStart;
+           // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
+            rdlcInputInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
+            rdlcInputInvoiceReport.Refresh();
+            rdlcInputInvoiceReport.ZoomMode = ZoomMode.Percent;
+            rdlcInputInvoiceReport.ZoomPercent = 100;
+            rdlcInputInvoiceReport.RefreshReport();
+        }
+
     }
 }

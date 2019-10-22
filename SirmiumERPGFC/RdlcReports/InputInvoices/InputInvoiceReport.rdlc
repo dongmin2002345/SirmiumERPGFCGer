@@ -6,43 +6,43 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.66667in</Width>
+              <Width>0.3951in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.81676in</Width>
+              <Width>0.39661in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.81417in</Width>
+              <Width>0.38435in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.63542in</Width>
+              <Width>0.43024in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.61532in</Width>
+              <Width>0.48434in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.60417in</Width>
+              <Width>0.53449in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.58333in</Width>
+              <Width>0.56417in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.60861in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.38542in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.41226in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.52283in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.51041in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.57292in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.46875in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.59375in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.57292in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.83333in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -867,9 +867,9 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>1.15625in</Top>
-        <Left>0.44667in</Left>
+        <Left>0.01431in</Left>
         <Height>0.5in</Height>
-        <Width>8.7775in</Width>
+        <Width>6.20175in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -877,13 +877,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>4.41667in</Height>
+    <Height>4.21875in</Height>
     <Style />
   </Body>
-  <Width>9.81792in</Width>
+  <Width>7.0314in</Width>
   <Page>
     <PageHeader>
-      <Height>1.62375in</Height>
+      <Height>1.23833in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -891,8 +891,7 @@
           <Source>Embedded</Source>
           <Value>Logo</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.23958in</Top>
-          <Left>0.17134in</Left>
+          <Left>2.07926in</Left>
           <Height>1.20708in</Height>
           <Width>2.57292in</Width>
           <Style>
@@ -901,6 +900,53 @@
             </Border>
           </Style>
         </Image>
+        <Textbox Name="Textbox2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>ULAZNI FAKTURE/</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>14pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Eingangsrechnungen</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>14pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>0.30083in</Top>
+          <Left>0.07093in</Left>
+          <Height>0.53125in</Height>
+          <Width>1.93889in</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
@@ -909,7 +955,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>0.70834in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -931,8 +977,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox51</rd:DefaultName>
-          <Top>0.5625in</Top>
-          <Left>5.88283in</Left>
+          <Top>0.47917in</Top>
+          <Left>4.00477in</Left>
           <Height>0.15625in</Height>
           <Width>0.93509in</Width>
           <Style>
@@ -963,8 +1009,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox51</rd:DefaultName>
-          <Top>0.5625in</Top>
-          <Left>4.5314in</Left>
+          <Top>0.47917in</Top>
+          <Left>2.65334in</Left>
           <Height>0.15625in</Height>
           <Width>1.35143in</Width>
           <ZIndex>1</ZIndex>
@@ -996,8 +1042,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox51</rd:DefaultName>
-          <Top>0.5625in</Top>
-          <Left>3.45774in</Left>
+          <Top>0.47917in</Top>
+          <Left>1.57968in</Left>
           <Height>0.15625in</Height>
           <Width>1.05976in</Width>
           <ZIndex>2</ZIndex>
@@ -1015,8 +1061,8 @@
           <Source>Embedded</Source>
           <Value>erp8</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.28125in</Top>
-          <Left>4.75015in</Left>
+          <Top>0.19792in</Top>
+          <Left>2.87209in</Left>
           <Height>0.23958in</Height>
           <Width>0.845in</Width>
           <ZIndex>3</ZIndex>
