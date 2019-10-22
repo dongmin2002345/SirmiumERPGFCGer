@@ -1133,6 +1133,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 MainWindow.ErrorMessage = ex.Message;
             }
+
         }
         
         
@@ -1171,15 +1172,17 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var employeeResponse = new EmployeeSQLiteRepository().GetEmployeesByPage(MainWindow.CurrentCompanyId, EmployeeSearchObject, 1, Int32.MaxValue);
-                EmployeesExcelReport.Show(employeeResponse.Employees);
-            }
-            catch(Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
+            //try
+            //{
+            //    var employeeResponse = new EmployeeSQLiteRepository().GetEmployeesByPage(MainWindow.CurrentCompanyId, EmployeeSearchObject, 1, Int32.MaxValue);
+            //    EmployeesExcelReport.Show(employeeResponse.Employees);
+            //}
+            //catch(Exception ex)
+            //{
+            //    MainWindow.ErrorMessage = ex.Message;
+            //}
+            Employee_ReportWindow reportWindow = new Employee_ReportWindow(CurrentEmployee);
+            reportWindow.Show();
         }
 
         private void btnEmployeeExcel_Click(object sender, RoutedEventArgs e)

@@ -8,7 +8,7 @@ namespace SirmiumERPGFC.RdlcReports.Employees
 {
     public class EmployeesReportViewModel
     {
-        public string OrderNumbersForEmployees { get; set; }
+        public int OrderNumbersForEmployees { get; set; }
         public string EmployeeCode { get; set; }
         public string Name { get; set; }
         public string SurName { get; set; }

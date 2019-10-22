@@ -54,7 +54,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             {
                 outputInvoice.Add(new OutputInvoicesReportViewModel()
                 {
-                    OrderNumbersForOutputInvoices = OutputInvoiceItem?.Code ?? "",
+                    OrderNumbersForOutputInvoices = counter++,
                     BusinessPartnerName = OutputInvoiceItem?.BusinessPartner?.Name ?? "",
                     Supplier = OutputInvoiceItem?.Supplier ?? "",
                     Address = OutputInvoiceItem?.Address ?? "",

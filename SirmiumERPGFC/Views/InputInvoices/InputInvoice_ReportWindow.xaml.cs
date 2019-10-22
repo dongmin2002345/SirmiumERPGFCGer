@@ -55,7 +55,7 @@ namespace SirmiumERPGFC.Views.InputInvoices
             {
                 inputInvoice.Add(new InputInvoicesReportsViewModel()
                 {
-                    OrderNumbersForInputInvoices = InputInvoiceItem?.Code ?? "",
+                    OrderNumbersForInputInvoices = counter++,
                     BusinessPartnerName = InputInvoiceItem?.BusinessPartner?.Name ?? "",
                     Supplier = InputInvoiceItem?.Supplier ?? "",
                     Address = InputInvoiceItem?.Address ?? "",

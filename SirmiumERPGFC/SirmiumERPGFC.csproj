@@ -197,6 +197,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RdlcReports\Employees\EmployeeReportViewModel.cs" />
     <Compile Include="RdlcReports\Employees\EmployeesReportViewModel.cs" />
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportsViewModel.cs" />
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportViewModel.cs" />
@@ -441,6 +442,9 @@
     <Compile Include="Views\Employees\Employee_Profession_AddEdit.xaml.cs">
       <DependentUpon>Employee_Profession_AddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Employees\Employee_ReportWindow.xaml.cs">
+      <DependentUpon>Employee_ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Employees\FamilyMember-List-AddEdit.xaml.cs">
       <DependentUpon>FamilyMember-List-AddEdit.xaml</DependentUpon>
     </Compile>
@@ -628,6 +632,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlcReports\Employees\EmployeesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\OutputInvoices\OutputInvoicesReport.rdlc" />
@@ -635,6 +640,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.EmployeesReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoicesReportViewModel.datasource" />
@@ -902,6 +908,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Employees\Employee_Profession_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\Employee_ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
