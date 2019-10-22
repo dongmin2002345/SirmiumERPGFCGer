@@ -1072,7 +1072,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1237,7 +1236,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.16667in</Top>
         <Height>0.71875in</Height>
-        <Width>11.56452in</Width>
+        <Width>11.56453in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1292,7 +1291,7 @@
     <Height>11.03313cm</Height>
     <Style />
   </Body>
-  <Width>29.37387cm</Width>
+  <Width>29.37391cm</Width>
   <Page>
     <PageHeader>
       <Height>2.13112cm</Height>
@@ -1306,7 +1305,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>ULAZNI FAKTURE/</Value>
+                  <Value>ULAZNE FAKTURE/</Value>
                   <Style>
                     <FontFamily>times New Roman</FontFamily>
                     <FontSize>14pt</FontSize>

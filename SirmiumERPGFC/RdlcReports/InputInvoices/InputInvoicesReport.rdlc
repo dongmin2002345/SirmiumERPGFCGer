@@ -1397,7 +1397,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>ULAZNI FAKTURE/</Value>
+                  <Value>ULAZNE FAKTURE/</Value>
                   <Style>
                     <FontFamily>times New Roman</FontFamily>
                     <FontSize>14pt</FontSize>
