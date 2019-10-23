@@ -201,6 +201,7 @@
     <Compile Include="RdlcReports\ConstructionSites\ConstructionSitesReportViewModel.cs" />
     <Compile Include="RdlcReports\Employees\EmployeeReportViewModel.cs" />
     <Compile Include="RdlcReports\Employees\EmployeesReportViewModel.cs" />
+    <Compile Include="RdlcReports\Employees\PhysicalPersonsReportViewModel.cs" />
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportsViewModel.cs" />
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportViewModel.cs" />
     <Compile Include="RdlcReports\OutputInvoices\OutputInvoiceReportViewModel.cs" />
@@ -486,6 +487,9 @@
     <Compile Include="Views\Employees\PhysicalPerson_Profession_AddEdit.xaml.cs">
       <DependentUpon>PhysicalPerson_Profession_AddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Employees\PhysicalPerson_ReportWindow.xaml.cs">
+      <DependentUpon>PhysicalPerson_ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Home\ToDoAddEdit.xaml.cs">
       <DependentUpon>ToDoAddEdit.xaml</DependentUpon>
     </Compile>
@@ -640,6 +644,7 @@
     <EmbeddedResource Include="RdlcReports\ConstructionSites\ConstructionSitesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\ConstructionSites\ConstructionSiteReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\EmployeeReport.rdlc" />
+    <EmbeddedResource Include="RdlcReports\Employees\PhysicalsReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\EmployeesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
@@ -652,6 +657,7 @@
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.ConstructionSites.ConstructionSitesReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.EmployeeReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.EmployeesReportViewModel.datasource" />
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.PhysicalPersonsReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoicesReportViewModel.datasource" />
@@ -976,6 +982,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Employees\PhysicalPerson_Profession_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employees\PhysicalPerson_ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

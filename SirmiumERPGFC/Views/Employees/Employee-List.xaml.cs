@@ -1265,12 +1265,19 @@ namespace SirmiumERPGFC.Views.Employees
                     WorkPermitTo = CurrentEmployee?.WorkPermitTo?.ToString("dd.MM.yyyy") ?? ""
                 }
             };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = employee
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModel);
 
+            List<EmployeeReportViewModel> employeeProfession = new List<EmployeeReportViewModel>();
             List<EmployeeProfessionItemViewModel> ProfessionItems = new EmployeeProfessionItemSQLiteRepository().GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeProfessionItems;
             int counter = 1;
             foreach (var ProfessionItem in ProfessionItems)
             {
-                employee.Add(new EmployeeReportViewModel()
+                employeeProfession.Add(new EmployeeReportViewModel()
                 {
                     OrderNumberProfession = counter++,
                     ProfessionCountryName = ProfessionItem?.Country?.Name ?? "",
@@ -1278,12 +1285,19 @@ namespace SirmiumERPGFC.Views.Employees
                  
                 });
             }
+            var rpdsModelProfession = new ReportDataSource()
+            {
+                Name = "DataSet2",
+                Value = employeeProfession
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelProfession);
 
+            List<EmployeeReportViewModel> employeeLicence = new List<EmployeeReportViewModel>();
             List<EmployeeLicenceItemViewModel> LicenceItems = new EmployeeLicenceItemSQLiteRepository().GetEmployeeLicencesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeLicenceItems;
             int Licencecounter = 1;
             foreach (var LicenceItem in LicenceItems)
             {
-                employee.Add(new EmployeeReportViewModel()
+                employeeLicence.Add(new EmployeeReportViewModel()
                 {
                     OrderNumberLicence = Licencecounter++,
                     LicenceCountryName = LicenceItem?.Country?.Name ?? "",
@@ -1293,12 +1307,19 @@ namespace SirmiumERPGFC.Views.Employees
 
                 });
             }
+            var rpdsModelLicence = new ReportDataSource()
+            {
+                Name = "DataSet5",
+                Value = employeeLicence
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelLicence);
 
+            List<EmployeeReportViewModel> employeeNote = new List<EmployeeReportViewModel>();
             List<EmployeeNoteViewModel> NoteItems = new EmployeeNoteSQLiteRepository().GetEmployeeNotesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeNotes;
             int Notecounter = 1;
             foreach (var NoteItem in NoteItems)
             {
-                employee.Add(new EmployeeReportViewModel()
+                employeeNote.Add(new EmployeeReportViewModel()
                 {
                     OrderNumberNote = Notecounter++,
                     Note = NoteItem?.Note ?? "",
@@ -1306,12 +1327,19 @@ namespace SirmiumERPGFC.Views.Employees
 
                 });
             }
+            var rpdsModelNote = new ReportDataSource()
+            {
+                Name = "DataSet3",
+                Value = employeeNote
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelNote);
 
+            List<EmployeeReportViewModel> employeeCard = new List<EmployeeReportViewModel>();
             List<EmployeeCardViewModel> CardItems = new EmployeeCardSQLiteRepository().GetEmployeeCardsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeCards;
             int Cardcounter = 1;
             foreach (var CardItem in CardItems)
             {
-                employee.Add(new EmployeeReportViewModel()
+                employeeCard.Add(new EmployeeReportViewModel()
                 {
                     OrderNumberCard = Cardcounter++,
                     CardDescription = CardItem?.Description ?? "",
@@ -1319,12 +1347,19 @@ namespace SirmiumERPGFC.Views.Employees
 
                 });
             }
+            var rpdsModelCard = new ReportDataSource()
+            {
+                Name = "DataSet4",
+                Value = employeeCard
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelCard);
 
+            List<EmployeeReportViewModel> employeeItem = new List<EmployeeReportViewModel>();
             List<EmployeeItemViewModel> Items = new EmployeeItemSQLiteRepository().GetEmployeeItemsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeItems;
             int Itemcounter = 1;
             foreach (var Item in Items)
             {
-                employee.Add(new EmployeeReportViewModel()
+                employeeItem.Add(new EmployeeReportViewModel()
                 {
                     OrderNumberFamilyMember = Itemcounter++,
                     FamilyMemberName = Item?.FamilyMember?.Name ?? "",
@@ -1334,14 +1369,15 @@ namespace SirmiumERPGFC.Views.Employees
                     ItemEmbassyDate = Item?.EmbassyDate?.ToString("dd.MM.yyyy") ?? ""
                 });
             }
-
-            var rpdsModel = new ReportDataSource()
+            var rpdsModelItem = new ReportDataSource()
             {
-                Name = "DataSet1",
-                Value = employee
+                Name = "DataSet6",
+                Value = employeeItem
             };
-            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModel);
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelItem);
 
+
+            
           
             //List<ReportParameter> reportParams = new List<ReportParameter>();
             //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";

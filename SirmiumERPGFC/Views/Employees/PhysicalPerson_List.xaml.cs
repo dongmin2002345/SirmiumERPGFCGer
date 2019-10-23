@@ -1137,14 +1137,16 @@ namespace SirmiumERPGFC.Views.Employees
         //}
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                PhysicalPersonExcelReport.Show(CurrentPhysicalPerson);
-            }
-            catch (Exception ex)
-            {
-                MainWindow.ErrorMessage = ex.Message;
-            }
+            //try
+            //{
+            //     PhysicalPersonExcelReport.Show(CurrentPhysicalPerson);
+            //}
+            //catch (Exception ex)
+            //{
+            //  MainWindow.ErrorMessage = ex.Message;
+            //}
+            PhysicalPerson_ReportWindow reportWindow = new PhysicalPerson_ReportWindow(CurrentPhysicalPerson);
+            reportWindow.Show();
         }
         #region Display documents
 
