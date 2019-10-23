@@ -65,6 +65,10 @@
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceDocumentService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceNoteService.cs" />
     <Compile Include="Implementations\Common\OutputInvoices\OutputInvoiceService.cs" />
+    <Compile Include="Implementations\Common\Phonebooks\PhonebookDocumentService.cs" />
+    <Compile Include="Implementations\Common\Phonebooks\PhonebookNoteService.cs" />
+    <Compile Include="Implementations\Common\Phonebooks\PhonebookPhoneService.cs" />
+    <Compile Include="Implementations\Common\Phonebooks\PhonebookService.cs" />
     <Compile Include="Implementations\Common\Prices\DiscountService.cs" />
     <Compile Include="Implementations\Common\Prices\ServiceDeliveryService.cs" />
     <Compile Include="Implementations\Common\Sectors\AgencyService.cs" />

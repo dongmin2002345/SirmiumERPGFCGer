@@ -299,7 +299,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     // Set properties
                     dbEntry.Note = BusinessPartnerNote.Note;
                     dbEntry.NoteDate = BusinessPartnerNote.NoteDate;
-
+                    dbEntry.ItemStatus = BusinessPartnerNote.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
