@@ -345,6 +345,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Fax = businessPartnerInstitution.Fax;
                     dbEntry.Email = businessPartnerInstitution.Email;
                     dbEntry.Note = businessPartnerInstitution.Note;
+                    dbEntry.ItemStatus = businessPartnerInstitution.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

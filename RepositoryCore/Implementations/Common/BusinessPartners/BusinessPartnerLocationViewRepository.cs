@@ -425,7 +425,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                     // Set properties
                     dbEntry.Address = businessPartnerLocation.Address;
-
+                    dbEntry.ItemStatus = businessPartnerLocation.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

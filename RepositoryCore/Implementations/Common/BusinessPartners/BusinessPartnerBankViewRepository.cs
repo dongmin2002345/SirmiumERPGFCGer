@@ -359,10 +359,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.CountryId = businessPartnerBank.CountryId ?? null;
                     dbEntry.CompanyId = businessPartnerBank.CompanyId ?? null;
                     dbEntry.CreatedById = businessPartnerBank.CreatedById ?? null;
-
+                    
                     // Set properties
                     dbEntry.AccountNumber = businessPartnerBank.AccountNumber;
-
+                    dbEntry.ItemStatus = businessPartnerBank.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

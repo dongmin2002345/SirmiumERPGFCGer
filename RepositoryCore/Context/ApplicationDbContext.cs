@@ -5,6 +5,7 @@ using DomainCore.Common.Identity;
 using DomainCore.Common.InputInvoices;
 using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
+using DomainCore.Common.Phonebooks;
 using DomainCore.Common.Prices;
 using DomainCore.Common.Professions;
 using DomainCore.Common.Sectors;
@@ -146,6 +147,10 @@ namespace RepositoryCore.Context
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<ShipmentDocument> ShipmentDocuments { get; set; }
 
+        public DbSet<Phonebook> Phonebooks { get; set; }
+        public DbSet<PhonebookPhone> PhonebookPhones { get; set; }
+        public DbSet<PhonebookDocument> PhonebookDocuments { get; set; }
+        public DbSet<PhonebookNote> PhonebookNotes { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 

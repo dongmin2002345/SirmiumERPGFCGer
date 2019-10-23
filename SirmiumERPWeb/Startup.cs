@@ -12,6 +12,7 @@ using RepositoryCore.DbViews.Common.Companies;
 using RepositoryCore.DbViews.Common.Identity;
 using RepositoryCore.DbViews.Common.Invoices;
 using RepositoryCore.DbViews.Common.Locations;
+using RepositoryCore.DbViews.Common.Phonebooks;
 using RepositoryCore.DbViews.Common.Prices;
 using RepositoryCore.DbViews.Common.Professions;
 using RepositoryCore.DbViews.Common.Sectors;
@@ -33,6 +34,7 @@ using ServiceCore.Implementations.Common.Identity;
 using ServiceCore.Implementations.Common.InputInvoices;
 using ServiceCore.Implementations.Common.Locations;
 using ServiceCore.Implementations.Common.OutputInvoices;
+using ServiceCore.Implementations.Common.Phonebooks;
 using ServiceCore.Implementations.Common.Prices;
 using ServiceCore.Implementations.Common.Professions;
 using ServiceCore.Implementations.Common.Sectors;
@@ -52,6 +54,7 @@ using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Phonebook;
 using ServiceInterfaces.Abstractions.Common.Prices;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
@@ -232,6 +235,11 @@ namespace SirmiumERPWeb
             services.AddScoped<IShipmentService, ShipmentService>();
             services.AddScoped<IShipmentDocumentService, ShipmentDocumentService>();
 
+            services.AddScoped<IPhonebookService, PhonebookService>();
+            services.AddScoped<IPhonebookDocumentService, PhonebookDocumentService>();
+            services.AddScoped<IPhonebookNoteService, PhonebookNoteService>();
+            services.AddScoped<IPhonebookPhoneService, PhonebookPhoneService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -337,6 +345,11 @@ namespace SirmiumERPWeb
 
             ShipmentView.CreateView();
             ShipmentDocumentView.CreateView();
+
+            PhonebookView.CreateView();
+            PhonebookDocumentView.CreateView();
+            PhonebookNoteView.CreateView();
+            PhonebookPhoneView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));

@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using ServiceInterfaces.ViewModels.Statuses;
+using ServiceInterfaces.ViewModels.Common.Phonebooks;
 
 namespace ApiExtension.Sender
 {
@@ -296,6 +297,20 @@ namespace ApiExtension.Sender
 
                 { typeof(ShipmentDocumentViewModel), "ShipmentDocument" },
                 { typeof(List<ShipmentDocumentViewModel>), "ShipmentDocument" },
+            #endregion
+
+            #region Phonebooks
+				{ typeof(PhonebookViewModel), "Phonebook" },
+                { typeof(List<PhonebookViewModel>), "Phonebook" },
+
+                { typeof(PhonebookDocumentViewModel), "PhonebookDocument" },
+                { typeof(List<PhonebookDocumentViewModel>), "PhonebookDocument" },
+
+                { typeof(PhonebookNoteViewModel), "PhonebookNote" },
+                { typeof(List<PhonebookNoteViewModel>), "PhonebookNote" },
+
+                { typeof(PhonebookPhoneViewModel), "PhonebookPhone" },
+                { typeof(List<PhonebookPhoneViewModel>), "PhonebookPhone" },
             #endregion
 		};
 

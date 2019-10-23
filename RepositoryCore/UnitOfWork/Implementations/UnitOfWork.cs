@@ -6,6 +6,7 @@ using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
+using RepositoryCore.Abstractions.Common.Phonebooks;
 using RepositoryCore.Abstractions.Common.Prices;
 using RepositoryCore.Abstractions.Common.Professions;
 using RepositoryCore.Abstractions.Common.Sectors;
@@ -24,6 +25,7 @@ using RepositoryCore.Implementations.Common.Companies;
 using RepositoryCore.Implementations.Common.Identity;
 using RepositoryCore.Implementations.Common.Invoices;
 using RepositoryCore.Implementations.Common.Locations;
+using RepositoryCore.Implementations.Common.Phonebooks;
 using RepositoryCore.Implementations.Common.Prices;
 using RepositoryCore.Implementations.Common.Professions;
 using RepositoryCore.Implementations.Common.Sectors;
@@ -121,6 +123,11 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IStatusRepository statusRepository;
         private IShipmentRepository shipmentRepository;
         private IShipmentDocumentRepository shipmentDocumentRepository;
+
+        private IPhonebookRepository phonebookRepository;
+        private IPhonebookPhoneRepository phonebookPhoneRepository;
+        private IPhonebookNoteRepository phonebookNoteRepository;
+        private IPhonebookDocumentRepository phonebookDocumentRepository;
 
         #endregion
 
@@ -580,6 +587,34 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (shipmentDocumentRepository == null)
                 shipmentDocumentRepository = new ShipmentDocumentViewRepository(context);
             return shipmentDocumentRepository;
+        }
+
+        public IPhonebookRepository GetPhonebookRepository()
+        {
+            if (phonebookRepository == null)
+                phonebookRepository = new PhonebookViewRepository(context);
+            return phonebookRepository;
+        }
+
+        public IPhonebookDocumentRepository GetPhonebookDocumentRepository()
+        {
+            if (phonebookDocumentRepository == null)
+                phonebookDocumentRepository = new PhonebookDocumentViewRepository(context);
+            return phonebookDocumentRepository;
+        }
+
+        public IPhonebookNoteRepository GetPhonebookNoteRepository()
+        {
+            if (phonebookNoteRepository == null)
+                phonebookNoteRepository = new PhonebookNoteViewRepository(context);
+            return phonebookNoteRepository;
+        }
+
+        public IPhonebookPhoneRepository GetPhonebookPhoneRepository()
+        {
+            if (phonebookPhoneRepository == null)
+                phonebookPhoneRepository = new PhonebookPhoneViewRepository(context);
+            return phonebookPhoneRepository;
         }
 
         #endregion

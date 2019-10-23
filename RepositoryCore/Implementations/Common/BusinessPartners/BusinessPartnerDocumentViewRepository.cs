@@ -309,7 +309,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.Name = BusinessPartnerDocument.Name;
                     dbEntry.CreateDate = BusinessPartnerDocument.CreateDate;
                     dbEntry.Path = BusinessPartnerDocument.Path;
-
+                    dbEntry.ItemStatus = BusinessPartnerDocument.ItemStatus;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }
