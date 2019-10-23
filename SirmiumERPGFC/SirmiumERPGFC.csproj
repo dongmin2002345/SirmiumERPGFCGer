@@ -197,6 +197,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RdlcReports\ConstructionSites\ConstructionSiteReportViewModel.cs" />
+    <Compile Include="RdlcReports\ConstructionSites\ConstructionSitesReportViewModel.cs" />
     <Compile Include="RdlcReports\Employees\EmployeeReportViewModel.cs" />
     <Compile Include="RdlcReports\Employees\EmployeesReportViewModel.cs" />
     <Compile Include="RdlcReports\Employees\PhysicalPersonsReportViewModel.cs" />
@@ -425,6 +427,9 @@
     <Compile Include="Views\ConstructionSites\ConstructionSite_Note_AddEdit.xaml.cs">
       <DependentUpon>ConstructionSite_Note_AddEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSite_ReportWindow.xaml.cs">
+      <DependentUpon>ConstructionSite_ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Employees\Employee_Card_AddEdit.xaml.cs">
       <DependentUpon>Employee_Card_AddEdit.xaml</DependentUpon>
     </Compile>
@@ -636,6 +641,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RdlcReports\ConstructionSites\ConstructionSitesReport.rdlc" />
+    <EmbeddedResource Include="RdlcReports\ConstructionSites\ConstructionSiteReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\EmployeeReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\PhysicalsReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\EmployeesReport.rdlc" />
@@ -646,12 +653,15 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.ConstructionSites.ConstructionSiteReportViewModel.datasource" />
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.ConstructionSites.ConstructionSitesReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.EmployeeReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.EmployeesReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.PhysicalPersonsReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoicesReportViewModel.datasource" />
+    <None Include="Properties\DataSources\SirmiumERPGFC.Reports.ConstructionSites.ConstructionSitesExcelReport.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -892,6 +902,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConstructionSites\ConstructionSite_Note_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSite_ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
