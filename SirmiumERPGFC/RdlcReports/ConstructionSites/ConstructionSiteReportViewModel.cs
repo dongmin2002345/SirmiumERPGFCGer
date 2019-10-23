@@ -8,7 +8,7 @@ namespace SirmiumERPGFC.RdlcReports.ConstructionSites
 {
     public class ConstructionSiteReportViewModel
     {
-        public string OrderNumberForConstructionSite { get; set; }
+        //public string OrderNumberForConstructionSite { get; set; }
         public string ConstructionSiteCode { get; set; }
         public string InternalCode { get; set; }
 
