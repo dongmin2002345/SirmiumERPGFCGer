@@ -9,6 +9,7 @@
              xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              xmlns:statusConverter="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:rdlcreport="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
 
@@ -116,10 +117,17 @@
                             <TextBlock Text="{Binding Path=RefreshButtonContent, Mode=TwoWay}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="btnExcel" Click="btnExcel_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
+                    <!--<Button x:Name="btnExcel" Click="btnExcel_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Excel01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
                             <TextBlock Text="{DynamicResource IZVEZI_U_EXCEL}" Foreground="White" FontWeight="Regular"/>
+                        </StackPanel>
+                    </Button>-->
+                    <Button x:Name="btnPrint" Click="btnPrint_Click" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Print.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+
+                            <TextBlock Text="{DynamicResource Izveštaj}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -472,7 +480,27 @@
 
                 </GroupBox>
             </TabItem>
+            <TabItem Header="PDF">
+                <GroupBox Grid.Row="5" Margin="2" Header="PDF">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
+                        <Button x:Name="btnPrintConstructionSiteReport" Click="BtnPrintConstructionSiteReport_Click" Margin="0 0 0 5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{DynamicResource PRIKAŽI}" FontWeight="Bold" />
+                            </StackPanel>
+                        </Button>
+
+                        <WindowsFormsHost Grid.Row="1" Name="windowsFormsHost">
+                            <rdlcreport:ReportViewer x:Name="rdlcConstructionSiteReport" />
+                        </WindowsFormsHost>
+                    </Grid>
+                </GroupBox>
+            </TabItem>
 
         </TabControl>
             

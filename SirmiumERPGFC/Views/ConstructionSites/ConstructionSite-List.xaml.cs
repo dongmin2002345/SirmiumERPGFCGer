@@ -1,9 +1,11 @@
-﻿using Ninject;
+﻿using Microsoft.Reporting.WinForms;
+using Ninject;
 using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.RdlcReports.ConstructionSites;
 using SirmiumERPGFC.Reports.ConstructionSites;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Views.Common;
@@ -11,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,7 +26,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace SirmiumERPGFC.Views.ConstructionSites
 {
@@ -710,19 +713,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #endregion
 
-        #region INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
+       
 
         #region Add Items
         private void BtnAddConstructionSiteNote_Click(object sender, RoutedEventArgs e)
@@ -777,6 +768,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
 
         #endregion
+
+
         #region Excel
         private void btnExcel_Click(object sender, RoutedEventArgs e)
         {
@@ -801,45 +794,128 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             }
         }
         #endregion
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            ConstructionSite_ReportWindow reportWindow = new ConstructionSite_ReportWindow(CurrentConstructionSite);
+            reportWindow.Show();
+        }
 
-        //private void btnAddEmployees_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (CurrentConstructionSite == null)
-        //    {
-        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_odabrano_gradilišteUzvičnik"));
-        //        return;
-        //    }
+        private void BtnPrintConstructionSiteReport_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
 
-        //    ConstructionSiteCalculationViewModel constructionSiteCalculation = new ConstructionSiteCalculationViewModel();
-        //    constructionSiteCalculation.Identifier = Guid.NewGuid();
-        //    constructionSiteCalculation.ConstructionSite = CurrentConstructionSite;
-        //    constructionSiteCalculation.EmployeePrice = 75M;
-        //    constructionSiteCalculation.PlusMinus = "+";
+            if (CurrentConstructionSite == null)
+            {
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Nije_odabrano_gradilišteUzvičnik");
+                return;
+            }
 
-        //    ConstructionSite_List_Calculation_Add addForm = new ConstructionSite_List_Calculation_Add(constructionSiteCalculation);
-        //    addForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
-        //    FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, addForm);
-        //}
+            #endregion
 
-        //private void btnRemoveEmployees_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (CurrentConstructionSite == null)
-        //    {
-        //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_odabrano_gradilišteUzvičnik"));
-        //        return;
-        //    }
+            rdlcConstructionSiteReport.LocalReport.DataSources.Clear();
 
-        //    ConstructionSiteCalculationViewModel constructionSiteCalculation = new ConstructionSiteCalculationViewModel();
-        //    constructionSiteCalculation.Identifier = Guid.NewGuid();
-        //    constructionSiteCalculation.ConstructionSite = CurrentConstructionSite;
-        //    constructionSiteCalculation.EmployeePrice = 75M;
-        //    constructionSiteCalculation.PlusMinus = "-";
+            List<ConstructionSiteReportViewModel> constructionSite = new List<ConstructionSiteReportViewModel>()
+            {
+                new ConstructionSiteReportViewModel()
+                {
+                    ConstructionSiteCode = CurrentConstructionSite?.Code ?? "",
+                    InternalCode = CurrentConstructionSite?.InternalCode ?? "",
+                    Name = CurrentConstructionSite?.Name ?? "",
+                    CityName = CurrentConstructionSite?.City?.Name ?? "",
+                    CountryName = CurrentConstructionSite?.Country?.Name ?? "",
+                    BusinessPartnerName = CurrentConstructionSite?.BusinessPartner?.Name ?? "",
+                    StatusName = CurrentConstructionSite?.Status?.Name ?? "",
+                    Address = CurrentConstructionSite?.Address ?? "",
+                    MaxWorkers = CurrentConstructionSite?.MaxWorkers.ToString() ?? "",
+                    ProContractDate = CurrentConstructionSite?.ProContractDate.ToString("dd.MM.yyyy") ?? "",
+                    ContractStart = CurrentConstructionSite?.ContractStart.ToString("dd.MM.yyyy") ?? "",
+                    ContractExpiration = CurrentConstructionSite?.ContractExpiration.ToString("dd.MM.yyyy") ?? "",
+                }
+            };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = constructionSite
+            };
+            rdlcConstructionSiteReport.LocalReport.DataSources.Add(rpdsModel);
 
-        //    ConstructionSite_List_Calculation_Remove removeForm = new ConstructionSite_List_Calculation_Remove(constructionSiteCalculation);
-        //    removeForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
-        //    FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, removeForm);
-        //}
+            //List<ReportParameter> reportParams = new List<ReportParameter>();
+            //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
+            //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
 
 
+            //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
+            //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
+            //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
+            //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
+
+            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\ConstructionSites\ConstructionSiteReport.rdlc");
+
+            rdlcConstructionSiteReport.LocalReport.ReportPath = ContentStart;
+            // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
+            rdlcConstructionSiteReport.SetDisplayMode(DisplayMode.PrintLayout);
+            rdlcConstructionSiteReport.Refresh();
+            rdlcConstructionSiteReport.ZoomMode = ZoomMode.Percent;
+            rdlcConstructionSiteReport.ZoomPercent = 100;
+            rdlcConstructionSiteReport.RefreshReport();
+        }
+        #region INotifyPropertyChanged implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+
+        
     }
+    
+
+    //private void btnAddEmployees_Click(object sender, RoutedEventArgs e)
+    //{
+    //    if (CurrentConstructionSite == null)
+    //    {
+    //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_odabrano_gradilišteUzvičnik"));
+    //        return;
+    //    }
+
+    //    ConstructionSiteCalculationViewModel constructionSiteCalculation = new ConstructionSiteCalculationViewModel();
+    //    constructionSiteCalculation.Identifier = Guid.NewGuid();
+    //    constructionSiteCalculation.ConstructionSite = CurrentConstructionSite;
+    //    constructionSiteCalculation.EmployeePrice = 75M;
+    //    constructionSiteCalculation.PlusMinus = "+";
+
+    //    ConstructionSite_List_Calculation_Add addForm = new ConstructionSite_List_Calculation_Add(constructionSiteCalculation);
+    //    addForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
+    //    FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, addForm);
+    //}
+
+    //private void btnRemoveEmployees_Click(object sender, RoutedEventArgs e)
+    //{
+    //    if (CurrentConstructionSite == null)
+    //    {
+    //        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_odabrano_gradilišteUzvičnik"));
+    //        return;
+    //    }
+
+    //    ConstructionSiteCalculationViewModel constructionSiteCalculation = new ConstructionSiteCalculationViewModel();
+    //    constructionSiteCalculation.Identifier = Guid.NewGuid();
+    //    constructionSiteCalculation.ConstructionSite = CurrentConstructionSite;
+    //    constructionSiteCalculation.EmployeePrice = 75M;
+    //    constructionSiteCalculation.PlusMinus = "-";
+
+    //    ConstructionSite_List_Calculation_Remove removeForm = new ConstructionSite_List_Calculation_Remove(constructionSiteCalculation);
+    //    removeForm.ConstructionSiteCalculationCreatedUpdated += new ConstructionSiteCalculationHandler(SyncData);
+    //    FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Podaci_o_gradilistima")), 95, removeForm);
+    //}
+
+
 }
+
