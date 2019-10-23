@@ -129,8 +129,8 @@
 
                     <Button x:Name="btnExcel" Click="btnExcel_Click" Margin="2" IsEnabled="{Binding Path=RefreshButtonEnabled, Mode=TwoWay}"  Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\Excel01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="{DynamicResource IZVEZI_U_EXCEL}" Foreground="White" FontWeight="Regular" />
+                            <Image Source="..\..\Resources\Icons\Print.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="{DynamicResource Izveštaj}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
 
@@ -732,6 +732,7 @@
                     </GroupBox>
 
                 </TabItem>
+                
             </TabControl>
 
             <!--<GroupBox Grid.Column="0" Header="{DynamicResource Istorija_fizickog_lica}" Margin=" 2 1 1 1 ">

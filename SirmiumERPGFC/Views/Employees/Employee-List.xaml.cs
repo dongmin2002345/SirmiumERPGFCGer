@@ -1265,6 +1265,13 @@ namespace SirmiumERPGFC.Views.Employees
                     WorkPermitTo = CurrentEmployee?.WorkPermitTo?.ToString("dd.MM.yyyy") ?? ""
                 }
             };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = employee
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModel);
+
 
             List<EmployeeProfessionItemViewModel> ProfessionItems = new EmployeeProfessionItemSQLiteRepository().GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeProfessionItems;
             int counter = 1;
@@ -1278,6 +1285,12 @@ namespace SirmiumERPGFC.Views.Employees
                  
                 });
             }
+            var rpdsModelProfession = new ReportDataSource()
+            {
+                Name = "DataSet2",
+                Value = employee
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelProfession);
 
             List<EmployeeLicenceItemViewModel> LicenceItems = new EmployeeLicenceItemSQLiteRepository().GetEmployeeLicencesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeLicenceItems;
             int Licencecounter = 1;
@@ -1293,6 +1306,12 @@ namespace SirmiumERPGFC.Views.Employees
 
                 });
             }
+            var rpdsModelLicence = new ReportDataSource()
+            {
+                Name = "DataSet5",
+                Value = employee
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelLicence);
 
             List<EmployeeNoteViewModel> NoteItems = new EmployeeNoteSQLiteRepository().GetEmployeeNotesByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeNotes;
             int Notecounter = 1;
@@ -1306,6 +1325,12 @@ namespace SirmiumERPGFC.Views.Employees
 
                 });
             }
+            var rpdsModelNote = new ReportDataSource()
+            {
+                Name = "DataSet3",
+                Value = employee
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelNote);
 
             List<EmployeeCardViewModel> CardItems = new EmployeeCardSQLiteRepository().GetEmployeeCardsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeCards;
             int Cardcounter = 1;
@@ -1319,6 +1344,12 @@ namespace SirmiumERPGFC.Views.Employees
 
                 });
             }
+            var rpdsModelCard = new ReportDataSource()
+            {
+                Name = "DataSet4",
+                Value = employee
+            };
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelCard);
 
             List<EmployeeItemViewModel> Items = new EmployeeItemSQLiteRepository().GetEmployeeItemsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeItems;
             int Itemcounter = 1;
@@ -1334,14 +1365,15 @@ namespace SirmiumERPGFC.Views.Employees
                     ItemEmbassyDate = Item?.EmbassyDate?.ToString("dd.MM.yyyy") ?? ""
                 });
             }
-
-            var rpdsModel = new ReportDataSource()
+            var rpdsModelItem = new ReportDataSource()
             {
-                Name = "DataSet1",
+                Name = "DataSet6",
                 Value = employee
             };
-            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModel);
+            rdlcEmployeeReport.LocalReport.DataSources.Add(rpdsModelItem);
 
+
+            
           
             //List<ReportParameter> reportParams = new List<ReportParameter>();
             //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
