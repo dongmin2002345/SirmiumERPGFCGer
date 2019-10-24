@@ -832,12 +832,54 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     ContractExpiration = CurrentConstructionSite?.ContractExpiration.ToString("dd.MM.yyyy") ?? "",
                 }
             };
+
             var rpdsModel = new ReportDataSource()
             {
                 Name = "DataSet1",
                 Value = constructionSite
             };
             rdlcConstructionSiteReport.LocalReport.DataSources.Add(rpdsModel);
+
+            List<ConstructionSiteNoteViewModel> constructionSiteNotes = new ConstructionSiteNoteSQLiteRepository().GetConstructionSiteNotesByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier).ConstructionSiteNotes;
+            List<ConstructionSiteReportViewModel> notes = new List<ConstructionSiteReportViewModel>();
+            int counter = 1;
+            foreach (var note in constructionSiteNotes)
+            {
+                notes.Add(new ConstructionSiteReportViewModel() 
+                {
+                    NoteOrderNumber = counter++,
+                    NoteName = note.Note,
+                    NoteDate = note.NoteDate.ToString()
+                });
+            }
+
+            var rpdsNoteModel = new ReportDataSource()
+            {
+                Name = "DataSet2",
+                Value = notes
+            };
+
+            rdlcConstructionSiteReport.LocalReport.DataSources.Add(rpdsNoteModel);
+
+            List<ConstructionSiteDocumentViewModel> constructionSiteDocuments = new ConstructionSiteDocumentSQLiteRepository().GetConstructionSiteDocumentsByConstructionSite(MainWindow.CurrentCompanyId, CurrentConstructionSite.Identifier).ConstructionSiteDocuments;
+            List<ConstructionSiteReportViewModel> documents = new List<ConstructionSiteReportViewModel>();
+            counter = 1;
+            foreach (var document in constructionSiteDocuments)
+            {
+                documents.Add(new ConstructionSiteReportViewModel()
+                {
+                    DocumentOrderNumber = counter++,
+                    DocumentName = document.Name,
+                    DocumentDate = document.CreateDate.ToString()
+                });
+            }
+                var rpdsDocumentModel = new ReportDataSource()
+                {
+                    Name = "DataSet3",
+                    Value = documents
+                };
+                rdlcConstructionSiteReport.LocalReport.DataSources.Add(rpdsDocumentModel);
+          
 
             //List<ReportParameter> reportParams = new List<ReportParameter>();
             //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";

@@ -680,6 +680,7 @@
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoicesReportViewModel.datasource" />
+    <None Include="Properties\DataSources\SirmiumERPGFC.Reports.ConstructionSites.ConstructionSiteExcelReport.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.Reports.ConstructionSites.ConstructionSitesExcelReport.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
