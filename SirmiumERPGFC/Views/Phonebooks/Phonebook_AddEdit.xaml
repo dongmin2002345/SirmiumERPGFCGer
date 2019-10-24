@@ -50,23 +50,21 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Šifra_računaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
-                             x:Name="txtCode" Text="{Binding Path=currentPhonebook.Code}" IsReadOnly="True"/>
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ImeDvotacka}" />
-                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=currentPhonebook.Name}"  />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ImeDvotacka}" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=currentPhonebook.Name}"  />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpštinaDvotacka}" />
-                    <popups:MunicipalityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popMunicipality" 
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpštinaDvotacka}" />
+                    <popups:MunicipalityPopup Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popMunicipality" 
                                         CurrentMunicipality="{Binding Path=currentPhonebook.Municipality, Mode=TwoWay}"/>
                     
-                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
-                    <popups:CityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" 
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
+                    <popups:CityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
+                                      CurrentMunicipality="{Binding Path=currentPhonebook.Municipality, Mode=TwoWay}"
                                              CurrentCity="{Binding Path=currentPhonebook.City, Mode=TwoWay}" />
                     
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource AdresaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddress"
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource AdresaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddress"
                                 Text="{Binding Path=currentPhonebook.Address, Mode=TwoWay}"/>
 
                     
