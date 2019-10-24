@@ -10,6 +10,12 @@ namespace DomainCore.Common.Phonebooks
     {
         public string Code { get; set; }
         public string Name { get; set; }
+
+        public int? CountryId { get; set; }
+        public Country Country { get; set; }
+
+        public int? RegionId { get; set; }
+        public Region Region { get; set; }
         public int? MunicipalityId { get; set; }
         public Municipality Municipality { get; set; }
 

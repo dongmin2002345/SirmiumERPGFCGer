@@ -44,6 +44,40 @@ namespace ServiceInterfaces.ViewModels.Common.Phonebooks
         }
         #endregion
 
+        #region Country
+        private CountryViewModel _Country;
+
+        public CountryViewModel Country
+        {
+            get { return _Country; }
+            set
+            {
+                if (_Country != value)
+                {
+                    _Country = value;
+                    NotifyPropertyChanged("Country");
+                }
+            }
+        }
+        #endregion
+
+        #region Region
+        private RegionViewModel _Region;
+
+        public RegionViewModel Region
+        {
+            get { return _Region; }
+            set
+            {
+                if (_Region != value)
+                {
+                    _Region = value;
+                    NotifyPropertyChanged("Region");
+                }
+            }
+        }
+        #endregion
+
         #region Municipality
         private MunicipalityViewModel _Municipality;
 

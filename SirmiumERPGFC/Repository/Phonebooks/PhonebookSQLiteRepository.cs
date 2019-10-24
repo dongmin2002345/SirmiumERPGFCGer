@@ -22,6 +22,14 @@ namespace SirmiumERPGFC.Repository.Phonebooks
           "Identifier GUID, " +
           "Code NVARCHAR(48) NULL, " +
           "Name NVARCHAR(48) NULL, " +
+          "CountryId INTEGER NULL, " +
+          "CountryIdentifier GUID, " +
+          "CountryCode NVARCHAR(2048) NULL, " +
+          "CountryName NVARCHAR(2048) NULL, " +
+          "RegionId INTEGER NULL, " +
+          "RegionIdentifier GUID, " +
+          "RegionCode NVARCHAR(2048) NULL, " +
+          "RegionName NVARCHAR(2048) NULL, " +
           "MunicipalityId INTEGER NULL, " +
           "MunicipalityIdentifier GUID, " +
           "MunicipalityCode NVARCHAR(2048) NULL, " +
@@ -40,16 +48,23 @@ namespace SirmiumERPGFC.Repository.Phonebooks
           "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, Name, MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+            "SELECT ServerId, Identifier, Code, Name, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+
             "CityId, CityIdentifier, CityCode, CityName, Address, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Phonebooks " +
-            "(Id, ServerId, Identifier, Code, Name, MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+            "(Id, ServerId, Identifier, Code, Name, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
             "CityId, CityIdentifier, CityCode, CityName, Address, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, @MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @Name, " +
+            "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, @RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
+            "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName, @Address, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -65,6 +80,8 @@ namespace SirmiumERPGFC.Repository.Phonebooks
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
             dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
             dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
             dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
             dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
@@ -82,7 +99,14 @@ namespace SirmiumERPGFC.Repository.Phonebooks
             insertCommand.Parameters.AddWithValue("@Identifier", Phonebook.Identifier);
             insertCommand.Parameters.AddWithValue("@Code", ((object)Phonebook.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Name", ((object)Phonebook.Name) ?? DBNull.Value);
-
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)Phonebook.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)Phonebook.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)Phonebook.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)Phonebook.Country?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionId", ((object)Phonebook.Region?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)Phonebook.Region?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)Phonebook.Region?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionName", ((object)Phonebook.Region?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)Phonebook.Municipality?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)Phonebook.Municipality?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)Phonebook.Municipality?.MunicipalityCode) ?? DBNull.Value);

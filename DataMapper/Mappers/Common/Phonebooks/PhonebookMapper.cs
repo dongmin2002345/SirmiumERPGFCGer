@@ -31,7 +31,8 @@ namespace DataMapper.Mappers.Common.Phonebooks
                 Code = Phonebook.Code,
 
                 Name = Phonebook.Name,
-
+                Country = Phonebook.Country?.ConvertToCountryViewModelLite(),
+                Region = Phonebook.Region?.ConvertToRegionViewModelLite(),
                 Municipality = Phonebook.Municipality?.ConvertToMunicipalityViewModelLite(),
                 City = Phonebook.City?.ConvertToCityViewModelLite(),
 
@@ -79,7 +80,8 @@ namespace DataMapper.Mappers.Common.Phonebooks
 
                 Code = PhonebookViewModel.Code,
                 Name = PhonebookViewModel.Name,
-
+                CountryId = PhonebookViewModel?.Country?.Id ?? null,
+                RegionId = PhonebookViewModel?.Region?.Id ?? null,
                 MunicipalityId = PhonebookViewModel?.Municipality?.Id ?? null,
                 CityId = PhonebookViewModel?.City?.Id ?? null,
                 Address = PhonebookViewModel.Address,

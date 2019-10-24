@@ -399,7 +399,12 @@ namespace SirmiumERPGFC.Views.Phonebooks
             displayThread.IsBackground = true;
             displayThread.Start();
         }
-
+        private void txtSearchByPhonebookName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
+        }
         public void DisplayData()
         {
             PhonebookDataLoading = true;

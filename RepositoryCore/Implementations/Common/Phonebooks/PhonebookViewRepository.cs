@@ -21,6 +21,8 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
 
         private string SelectString =
             "SELECT PhonebookId, PhonebookIdentifier, PhonebookCode, PhonebookName, " +
+            "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
             "CityId, CityIdentifier, CityCode, CityName, " +
             "Address, " +
@@ -38,6 +40,25 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
             if (reader["PhonebookName"] != DBNull.Value)
                 Phonebook.Name = reader["PhonebookName"].ToString();
 
+            if (reader["CountryId"] != DBNull.Value)
+            {
+                Phonebook.Country = new Country();
+                Phonebook.CountryId = Int32.Parse(reader["CountryId"].ToString());
+                Phonebook.Country.Id = Int32.Parse(reader["CountryId"].ToString());
+                Phonebook.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
+                Phonebook.Country.Code = reader["CountryCode"].ToString();
+                Phonebook.Country.Name = reader["CountryName"].ToString();
+            }
+
+            if (reader["RegionId"] != DBNull.Value) //"RegionId, RegionIdentifier, RegionCode, RegionName, " +
+            {
+                Phonebook.Region = new Region();
+                Phonebook.RegionId = Int32.Parse(reader["RegionId"].ToString());
+                Phonebook.Region.Id = Int32.Parse(reader["RegionId"].ToString());
+                Phonebook.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
+                Phonebook.Region.Code = reader["RegionCode"].ToString();
+                Phonebook.Region.Name = reader["RegionName"].ToString();
+            }
 
             if (reader["MunicipalityId"] != DBNull.Value) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
             {
@@ -231,6 +252,8 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
                 {
                     dbEntry.CompanyId = Phonebook.CompanyId ?? null;
                     dbEntry.CreatedById = Phonebook.CreatedById ?? null;
+                    dbEntry.CountryId = Phonebook.CountryId;
+                    dbEntry.RegionId = Phonebook.RegionId;
                     dbEntry.MunicipalityId = Phonebook.MunicipalityId ?? null;
                     dbEntry.CityId = Phonebook.CityId ?? null;
                     // Set properties
