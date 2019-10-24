@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191024122056_Invoices_Changes_Katarina")]
+    partial class Invoices_Changes_Katarina
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1278,8 +1280,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int?>("CompanyId");
 
-                    b.Property<int?>("CountryId");
-
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<int?>("CreatedById");
@@ -1290,8 +1290,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("RegionId");
-
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
@@ -1300,13 +1298,9 @@ namespace RepositoryCore.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("CountryId");
-
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("MunicipalityId");
-
-                    b.HasIndex("RegionId");
 
                     b.ToTable("Phonebooks");
                 });
@@ -3475,10 +3469,6 @@ namespace RepositoryCore.Migrations
                         .WithMany()
                         .HasForeignKey("CompanyId");
 
-                    b.HasOne("DomainCore.Common.Locations.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -3486,10 +3476,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Locations.Municipality", "Municipality")
                         .WithMany()
                         .HasForeignKey("MunicipalityId");
-
-                    b.HasOne("DomainCore.Common.Locations.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId");
                 });
 
             modelBuilder.Entity("DomainCore.Common.Phonebooks.PhonebookDocument", b =>

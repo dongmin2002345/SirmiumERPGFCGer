@@ -25,6 +25,7 @@ using System.Text;
 using System.Xml;
 using ServiceInterfaces.ViewModels.Statuses;
 using ServiceInterfaces.ViewModels.Common.Phonebooks;
+using ServiceInterfaces.ViewModels.Common.Invoices;
 
 namespace ApiExtension.Sender
 {
@@ -312,7 +313,17 @@ namespace ApiExtension.Sender
                 { typeof(PhonebookPhoneViewModel), "PhonebookPhone" },
                 { typeof(List<PhonebookPhoneViewModel>), "PhonebookPhone" },
             #endregion
+
+                 #region Invoices
+				{ typeof(InvoiceViewModel), "Invoice" },
+                { typeof(List<InvoiceViewModel>), "Invoice" },
+
+                { typeof(InvoiceItemViewModel), "InvoiceItem" },
+                { typeof(List<InvoiceItemViewModel>), "InvoiceItem" },
+
+            #endregion
 		};
+
 
         static WpfApiHandler()
         {

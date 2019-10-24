@@ -32,6 +32,7 @@ using ServiceCore.Implementations.Common.BusinessPartners;
 using ServiceCore.Implementations.Common.Companies;
 using ServiceCore.Implementations.Common.Identity;
 using ServiceCore.Implementations.Common.InputInvoices;
+using ServiceCore.Implementations.Common.Invoices;
 using ServiceCore.Implementations.Common.Locations;
 using ServiceCore.Implementations.Common.OutputInvoices;
 using ServiceCore.Implementations.Common.Phonebooks;
@@ -52,6 +53,7 @@ using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
+using ServiceInterfaces.Abstractions.Common.Invoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Abstractions.Common.Phonebook;
@@ -240,6 +242,9 @@ namespace SirmiumERPWeb
             services.AddScoped<IPhonebookNoteService, PhonebookNoteService>();
             services.AddScoped<IPhonebookPhoneService, PhonebookPhoneService>();
 
+            services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IInvoiceItemService, InvoiceItemService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -350,6 +355,9 @@ namespace SirmiumERPWeb
             PhonebookDocumentView.CreateView();
             PhonebookNoteView.CreateView();
             PhonebookPhoneView.CreateView();
+
+            InvoiceView.CreateView();
+            InvoiceItemView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));
