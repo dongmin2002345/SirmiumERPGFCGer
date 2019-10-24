@@ -12,6 +12,7 @@
         <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
         <cbxConverters:ToDoDateConverter x:Key="ToDoDateConverter" />
+        <cbxConverters:MultiConverter x:Key="MultiConverter" />
     </UserControl.Resources>
 
     <Grid>

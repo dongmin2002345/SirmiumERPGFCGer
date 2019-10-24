@@ -270,6 +270,10 @@
     <Compile Include="Repository\OutputInvoices\OutputInvoiceDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\OutputInvoices\OutputInvoiceSQLiteRepository.cs" />
+    <Compile Include="Repository\Phonebooks\PhonebookDocumentSQLiteRepository.cs" />
+    <Compile Include="Repository\Phonebooks\PhonebookNoteSQLiteRepository.cs" />
+    <Compile Include="Repository\Phonebooks\PhonebookPhoneSQLiteRepository.cs" />
+    <Compile Include="Repository\Phonebooks\PhonebookSQLiteRepository.cs" />
     <Compile Include="Repository\Prices\DiscountSQLiteRepository.cs" />
     <Compile Include="Repository\Prices\ServiceDeliverySQLiteRepository.cs" />
     <Compile Include="Repository\Sectors\AgencySQLiteRepository.cs" />
@@ -568,6 +572,21 @@
     </Compile>
     <Compile Include="Views\OutputInvoices\OutputInvoice_ReportWindow.xaml.cs">
       <DependentUpon>OutputInvoice_ReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Phonebooks\Phonebook_AddEdit.xaml.cs">
+      <DependentUpon>Phonebook_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Phonebooks\Phonebook_Document_AddEdit.xaml.cs">
+      <DependentUpon>Phonebook_Document_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Phonebooks\Phonebook_List.xaml.cs">
+      <DependentUpon>Phonebook_List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Phonebooks\Phonebook_Note_AddEdit.xaml.cs">
+      <DependentUpon>Phonebook_Note_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Phonebooks\Phonebook_Phone_AddEdit.xaml.cs">
+      <DependentUpon>Phonebook_Phone_AddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Prices\Discount_AddEdit.xaml.cs">
       <DependentUpon>Discount_AddEdit.xaml</DependentUpon>
@@ -1091,6 +1110,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\OutputInvoices\OutputInvoice_ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Phonebooks\Phonebook_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Phonebooks\Phonebook_Document_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Phonebooks\Phonebook_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Phonebooks\Phonebook_Note_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Phonebooks\Phonebook_Phone_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

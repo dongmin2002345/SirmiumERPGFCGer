@@ -162,5 +162,22 @@ namespace ServiceInterfaces.ViewModels.Common.Phonebooks
             }
         }
         #endregion
+
+        #region Search_Name
+        private string _Search_Name;
+
+        public string Search_Name
+        {
+            get { return _Search_Name; }
+            set
+            {
+                if (_Search_Name != value)
+                {
+                    _Search_Name = value;
+                    NotifyPropertyChanged("Search_Name");
+                }
+            }
+        }
+        #endregion
     }
 }

@@ -1,25 +1,29 @@
 ﻿using Microsoft.Data.Sqlite;
-using ServiceInterfaces.Abstractions.Common.InputInvoices;
+using ServiceInterfaces.Abstractions.Common.Phonebook;
 using ServiceInterfaces.Gloabals;
-using ServiceInterfaces.Messages.Common.InputInvoices;
-using ServiceInterfaces.ViewModels.Common.InputInvoices;
+using ServiceInterfaces.Messages.Common.Phonebooks;
+using ServiceInterfaces.ViewModels.Common.Phonebooks;
 using SirmiumERPGFC.Repository.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SirmiumERPGFC.Repository.InputInvoices
+namespace SirmiumERPGFC.Repository.Phonebooks
 {
-    public class InputInvoiceNoteSQLiteRepository
+    public class PhonebookNoteSQLiteRepository
     {
         #region SQL
-        public static string InputInvoiceNoteTableCreatePart =
-                        "CREATE TABLE IF NOT EXISTS InputInvoiceNotes " +
+        public static string PhonebookNoteTableCreatePart =
+                        "CREATE TABLE IF NOT EXISTS PhonebookNotes " +
                         "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "ServerId INTEGER NULL, " +
                         "Identifier GUID, " +
-                        "InputInvoiceId INTEGER NULL, " +
-                        "InputInvoiceIdentifier GUID NULL, " +
-                        "InputInvoiceCode NVARCHAR(48) NULL, " +
+                        "PhonebookId INTEGER NULL, " +
+                        "PhonebookIdentifier GUID NULL, " +
+                        "PhonebookCode NVARCHAR(48) NULL, " +
+                        "PhonebookName NVARCHAR(48) NULL, " +
                         "Note NVARCHAR(2048), " +
                         "NoteDate DATETIME NULL, " +
                         "ItemStatus INTEGER NOT NULL, " +
@@ -31,29 +35,29 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                         "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, InputInvoiceId, InputInvoiceIdentifier, " +
-            "InputInvoiceCode, Note, NoteDate, ItemStatus, " +
+            "SELECT ServerId, Identifier, PhonebookId, PhonebookIdentifier, " +
+            "PhonebookCode, PhonebookName, Note, NoteDate, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
-        public string SqlCommandInsertPart = "INSERT INTO InputInvoiceNotes " +
-            "(Id, ServerId, Identifier, InputInvoiceId, InputInvoiceIdentifier, " +
-            "InputInvoiceCode, Note, NoteDate, ItemStatus, " +
+        public string SqlCommandInsertPart = "INSERT INTO PhonebookNotes " +
+            "(Id, ServerId, Identifier, PhonebookId, PhonebookIdentifier, " +
+            "PhonebookCode, PhonebookName, Note, NoteDate, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @InputInvoiceId, @InputInvoiceIdentifier, " +
-            "@InputInvoiceCode, @Note, @NoteDate, @ItemStatus, " +
+            "VALUES (NULL, @ServerId, @Identifier, @PhonebookId, @PhonebookIdentifier, " +
+            "@PhonebookCode, @PhonebookName, @Note, @NoteDate, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
 
         #region Helper methods
-        private static InputInvoiceNoteViewModel Read(SqliteDataReader query)
+        private static PhonebookNoteViewModel Read(SqliteDataReader query)
         {
             int counter = 0;
-            InputInvoiceNoteViewModel dbEntry = new InputInvoiceNoteViewModel();
+            PhonebookNoteViewModel dbEntry = new PhonebookNoteViewModel();
             dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-            dbEntry.InputInvoice = SQLiteHelper.GetInputInvoice(query, ref counter);
+            dbEntry.Phonebook = SQLiteHelper.GetPhonebook(query, ref counter);
             dbEntry.Note = SQLiteHelper.GetString(query, ref counter);
             dbEntry.NoteDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
@@ -64,18 +68,19 @@ namespace SirmiumERPGFC.Repository.InputInvoices
             return dbEntry;
         }
 
-        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, InputInvoiceNoteViewModel InputInvoiceNote)
+        private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, PhonebookNoteViewModel PhonebookNote)
         {
-            insertCommand.Parameters.AddWithValue("@ServerId", InputInvoiceNote.Id);
-            insertCommand.Parameters.AddWithValue("@Identifier", InputInvoiceNote.Identifier);
-            insertCommand.Parameters.AddWithValue("@InputInvoiceId", ((object)InputInvoiceNote.InputInvoice.Id) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@InputInvoiceIdentifier", ((object)InputInvoiceNote.InputInvoice.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@InputInvoiceCode", ((object)InputInvoiceNote.InputInvoice.Code) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Note", ((object)InputInvoiceNote.Note) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@NoteDate", ((object)InputInvoiceNote.NoteDate) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)InputInvoiceNote.ItemStatus) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@IsSynced", InputInvoiceNote.IsSynced);
-            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)InputInvoiceNote.UpdatedAt) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ServerId", PhonebookNote.Id);
+            insertCommand.Parameters.AddWithValue("@Identifier", PhonebookNote.Identifier);
+            insertCommand.Parameters.AddWithValue("@PhonebookId", ((object)PhonebookNote.Phonebook.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PhonebookIdentifier", ((object)PhonebookNote.Phonebook.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PhonebookCode", ((object)PhonebookNote.Phonebook.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PhonebookName", ((object)PhonebookNote.Phonebook.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Note", ((object)PhonebookNote.Note) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@NoteDate", ((object)PhonebookNote.NoteDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)PhonebookNote.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsSynced", PhonebookNote.IsSynced);
+            insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)PhonebookNote.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
             insertCommand.Parameters.AddWithValue("@CreatedByName", MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
             insertCommand.Parameters.AddWithValue("@CompanyId", MainWindow.CurrentCompany.Id);
@@ -88,10 +93,10 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
         #region Read
 
-        public InputInvoiceNoteListResponse GetInputInvoiceNotesByInputInvoice(int companyId, Guid InputInvoiceIdentifier)
+        public PhonebookNoteListResponse GetPhonebookNotesByPhonebook(int companyId, Guid PhonebookIdentifier)
         {
-            InputInvoiceNoteListResponse response = new InputInvoiceNoteListResponse();
-            List<InputInvoiceNoteViewModel> InputInvoiceNotes = new List<InputInvoiceNoteViewModel>();
+            PhonebookNoteListResponse response = new PhonebookNoteListResponse();
+            List<PhonebookNoteViewModel> PhonebookNotes = new List<PhonebookNoteViewModel>();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -100,12 +105,12 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        "FROM InputInvoiceNotes " +
-                        "WHERE InputInvoiceIdentifier = @InputInvoiceIdentifier " +
+                        "FROM PhonebookNotes " +
+                        "WHERE PhonebookIdentifier = @PhonebookIdentifier " +
                         "AND CompanyId = @CompanyId " +
                         "ORDER BY IsSynced, Id DESC;", db);
-                    
-                    selectCommand.Parameters.AddWithValue("@InputInvoiceIdentifier", InputInvoiceIdentifier);
+
+                    selectCommand.Parameters.AddWithValue("@PhonebookIdentifier", PhonebookIdentifier);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
@@ -113,8 +118,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                     while (query.Read())
                     {
 
-                        InputInvoiceNoteViewModel dbEntry = Read(query);
-                        InputInvoiceNotes.Add(dbEntry);
+                        PhonebookNoteViewModel dbEntry = Read(query);
+                        PhonebookNotes.Add(dbEntry);
                     }
 
                 }
@@ -123,20 +128,20 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                     MainWindow.ErrorMessage = error.Message;
                     response.Success = false;
                     response.Message = error.Message;
-                    response.InputInvoiceNotes = new List<InputInvoiceNoteViewModel>();
+                    response.PhonebookNotes = new List<PhonebookNoteViewModel>();
                     return response;
                 }
                 db.Close();
             }
             response.Success = true;
-            response.InputInvoiceNotes = InputInvoiceNotes;
+            response.PhonebookNotes = PhonebookNotes;
             return response;
         }
 
-        public InputInvoiceNoteResponse GetInputInvoiceNote(Guid identifier)
+        public PhonebookNoteResponse GetPhonebookNote(Guid identifier)
         {
-            InputInvoiceNoteResponse response = new InputInvoiceNoteResponse();
-            InputInvoiceNoteViewModel InputInvoiceNote = new InputInvoiceNoteViewModel();
+            PhonebookNoteResponse response = new PhonebookNoteResponse();
+            PhonebookNoteViewModel PhonebookNote = new PhonebookNoteViewModel();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -145,7 +150,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        "FROM InputInvoiceNotes " +
+                        "FROM PhonebookNotes " +
                         "WHERE Identifier = @Identifier;", db);
                     selectCommand.Parameters.AddWithValue("@Identifier", identifier);
 
@@ -153,8 +158,8 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
                     if (query.Read())
                     {
-                        InputInvoiceNoteViewModel dbEntry = Read(query);
-                        InputInvoiceNote = dbEntry;
+                        PhonebookNoteViewModel dbEntry = Read(query);
+                        PhonebookNote = dbEntry;
                     }
                 }
                 catch (SqliteException error)
@@ -162,35 +167,35 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                     MainWindow.ErrorMessage = error.Message;
                     response.Success = false;
                     response.Message = error.Message;
-                    response.InputInvoiceNote = new InputInvoiceNoteViewModel();
+                    response.PhonebookNote = new PhonebookNoteViewModel();
                     return response;
                 }
                 db.Close();
             }
             response.Success = true;
-            response.InputInvoiceNote = InputInvoiceNote;
+            response.PhonebookNote = PhonebookNote;
             return response;
         }
 
         #endregion
 
         #region Sync
-        public void Sync(IInputInvoiceNoteService InputInvoiceNoteservice, Action<int, int> callback = null)
+        public void Sync(IPhonebookNoteService PhonebookNoteservice, Action<int, int> callback = null)
         {
             try
             {
-                SyncInputInvoiceNoteRequest request = new SyncInputInvoiceNoteRequest();
+                SyncPhonebookNoteRequest request = new SyncPhonebookNoteRequest();
                 request.CompanyId = MainWindow.CurrentCompanyId;
                 request.LastUpdatedAt = GetLastUpdatedAt(MainWindow.CurrentCompanyId);
 
                 int toSync = 0;
                 int syncedItems = 0;
 
-                InputInvoiceNoteListResponse response = InputInvoiceNoteservice.Sync(request);
+                PhonebookNoteListResponse response = PhonebookNoteservice.Sync(request);
                 if (response.Success)
                 {
-                    toSync = response?.InputInvoiceNotes?.Count ?? 0;
-                    List<InputInvoiceNoteViewModel> items = response.InputInvoiceNotes;
+                    toSync = response?.PhonebookNotes?.Count ?? 0;
+                    List<PhonebookNoteViewModel> items = response.PhonebookNotes;
 
                     using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
                     {
@@ -198,7 +203,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                         using (var transaction = db.BeginTransaction())
                         {
                             SqliteCommand deleteCommand = db.CreateCommand();
-                            deleteCommand.CommandText = "DELETE FROM InputInvoiceNotes WHERE Identifier = @Identifier";
+                            deleteCommand.CommandText = "DELETE FROM PhonebookNotes WHERE Identifier = @Identifier";
 
                             SqliteCommand insertCommand = db.CreateCommand();
                             insertCommand.CommandText = SqlCommandInsertPart;
@@ -243,7 +248,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 db.Open();
                 try
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from InputInvoiceNotes WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from PhonebookNotes WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     SqliteDataReader query = selectCommand.ExecuteReader();
                     int count = query.Read() ? query.GetInt32(0) : 0;
@@ -252,7 +257,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                         return null;
                     else
                     {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from InputInvoiceNotes WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from PhonebookNotes WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
                         if (query.Read())
@@ -275,9 +280,9 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
         #region Create
 
-        public InputInvoiceNoteResponse Create(InputInvoiceNoteViewModel InputInvoiceNote)
+        public PhonebookNoteResponse Create(PhonebookNoteViewModel PhonebookNote)
         {
-            InputInvoiceNoteResponse response = new InputInvoiceNoteResponse();
+            PhonebookNoteResponse response = new PhonebookNoteResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -287,7 +292,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
                 try
                 {
-                    insertCommand = AddCreateParameters(insertCommand, InputInvoiceNote);
+                    insertCommand = AddCreateParameters(insertCommand, PhonebookNote);
                     insertCommand.ExecuteNonQuery();
                 }
                 catch (SqliteException error)
@@ -308,9 +313,9 @@ namespace SirmiumERPGFC.Repository.InputInvoices
 
         #region Delete
 
-        public InputInvoiceNoteResponse Delete(Guid identifier)
+        public PhonebookNoteResponse Delete(Guid identifier)
         {
-            InputInvoiceNoteResponse response = new InputInvoiceNoteResponse();
+            PhonebookNoteResponse response = new PhonebookNoteResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -320,9 +325,9 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText = "DELETE FROM InputInvoiceNotes WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "DELETE FROM PhonebookNotes WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-                
+
                 try
                 {
                     insertCommand.ExecuteNonQuery();
@@ -341,50 +346,10 @@ namespace SirmiumERPGFC.Repository.InputInvoices
             }
         }
 
-        //public InputInvoiceNoteResponse DeleteAll()
-        //{
-        //    InputInvoiceNoteResponse response = new InputInvoiceNoteResponse();
-
-        //    try
-        //    {
-        //        using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
-        //        {
-        //            db.Open();
-        //            db.EnableExtensions(true);
-
-        //            SqliteCommand insertCommand = new SqliteCommand();
-        //            insertCommand.Connection = db;
-
-        //            //Use parameterized query to prevent SQL injection attacks
-        //            insertCommand.CommandText = "DELETE FROM InputInvoiceNotes";
-        //            try
-        //            {
-        //                insertCommand.ExecuteReader();
-        //            }
-        //            catch (SqliteException error)
-        //            {
-        //                response.Success = false;
-        //                response.Message = error.Message;
-
-        //                MainWindow.ErrorMessage = error.Message;
-        //                return response;
-        //            }
-        //            db.Close();
-        //        }
-        //    }
-        //    catch (SqliteException error)
-        //    {
-        //        response.Success = false;
-        //        response.Message = error.Message;
-        //        return response;
-        //    }
-
-        //    response.Success = true;
-        //    return response;
-        //}
-        public InputInvoiceNoteResponse SetStatusDeleted(Guid identifier)
+      
+        public PhonebookNoteResponse SetStatusDeleted(Guid identifier)
         {
-            InputInvoiceNoteResponse response = new InputInvoiceNoteResponse();
+            PhonebookNoteResponse response = new PhonebookNoteResponse();
 
             using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
             {
@@ -394,10 +359,10 @@ namespace SirmiumERPGFC.Repository.InputInvoices
                 insertCommand.Connection = db;
 
                 //Use parameterized query to prevent SQL injection attacks
-                insertCommand.CommandText = "UPDATE InputInvoiceNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
+                insertCommand.CommandText = "UPDATE PhonebookNotes SET ItemStatus = @ItemStatus WHERE Identifier = @Identifier";
                 insertCommand.Parameters.AddWithValue("@ItemStatus", ItemStatus.Deleted);
                 insertCommand.Parameters.AddWithValue("@Identifier", identifier);
-               
+
                 try
                 {
                     insertCommand.ExecuteNonQuery();

@@ -647,4 +647,6 @@
     <system:String x:Key="Obavezno_polje_poslovni_partner">Required field: Business Partner</system:String>
     <system:String x:Key="Obavezno_polje_drzava">Required field: Country</system:String>
     <system:String x:Key="Obavezno_polje_licenca">Required field: Licence</system:String>
+    <system:String x:Key="Telefonski_imenik">Phonebook</system:String>
+    <system:String x:Key="Telefonski_imenik_tritacke">Phonebook...</system:String>
 </ResourceDictionary>
