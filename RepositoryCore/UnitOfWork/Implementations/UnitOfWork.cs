@@ -129,6 +129,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IPhonebookNoteRepository phonebookNoteRepository;
         private IPhonebookDocumentRepository phonebookDocumentRepository;
 
+        private IInvoiceRepository invoiceRepository;
+        private IInvoiceItemRepository invoiceItemRepository;
+
         #endregion
 
         #region Constructor
@@ -615,6 +618,20 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (phonebookPhoneRepository == null)
                 phonebookPhoneRepository = new PhonebookPhoneViewRepository(context);
             return phonebookPhoneRepository;
+        }
+
+        public IInvoiceRepository GetInvoiceRepository()
+        {
+            if (invoiceRepository == null)
+                invoiceRepository = new InvoiceViewRepository(context);
+            return invoiceRepository;
+        }
+
+        public IInvoiceItemRepository GetInvoiceItemRepository()
+        {
+            if (invoiceItemRepository == null)
+                invoiceItemRepository = new InvoiceItemViewRepository(context);
+            return invoiceItemRepository;
         }
 
         #endregion

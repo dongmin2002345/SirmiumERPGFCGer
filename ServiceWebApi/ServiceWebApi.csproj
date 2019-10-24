@@ -55,6 +55,8 @@
     <Compile Include="Implementations\Common\InputInvoices\InputInvoiceDocumentService.cs" />
     <Compile Include="Implementations\Common\InputInvoices\InputInvoiceNoteService.cs" />
     <Compile Include="Implementations\Common\InputInvoices\InputInvoiceService.cs" />
+    <Compile Include="Implementations\Common\Invoices\InvoiceItemService.cs" />
+    <Compile Include="Implementations\Common\Invoices\InvoiceService.cs" />
     <Compile Include="Implementations\Common\Locations\CityService.cs" />
     <Compile Include="Implementations\Common\Companies\CompanyService.cs" />
     <Compile Include="Implementations\Common\Identity\AuthenticationService.cs" />

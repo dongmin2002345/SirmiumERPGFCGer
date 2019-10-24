@@ -3,6 +3,7 @@ using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.InputInvoices;
+using DomainCore.Common.Invoices;
 using DomainCore.Common.Locations;
 using DomainCore.Common.OutputInvoices;
 using DomainCore.Common.Phonebooks;
@@ -151,6 +152,10 @@ namespace RepositoryCore.Context
         public DbSet<PhonebookPhone> PhonebookPhones { get; set; }
         public DbSet<PhonebookDocument> PhonebookDocuments { get; set; }
         public DbSet<PhonebookNote> PhonebookNotes { get; set; }
+
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceItem> InvoiceItems { get; set; }
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 

@@ -1641,6 +1641,7 @@
     <Content Include="sm-erp.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Repository\Invoices\" />
     <Folder Include="Repository\Phonebooks\" />
   </ItemGroup>
   <ItemGroup>

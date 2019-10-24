@@ -104,6 +104,9 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IPhonebookPhoneRepository GetPhonebookPhoneRepository();
         IPhonebookNoteRepository GetPhonebookNoteRepository();
         IPhonebookDocumentRepository GetPhonebookDocumentRepository();
+        IInvoiceRepository GetInvoiceRepository();
+        IInvoiceItemRepository GetInvoiceItemRepository();
+
 
         void Save();
     }
