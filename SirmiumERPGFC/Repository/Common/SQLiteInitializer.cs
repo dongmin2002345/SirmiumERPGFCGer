@@ -19,6 +19,7 @@ using SirmiumERPGFC.Repository.Prices;
 using SirmiumERPGFC.Repository.Statuses;
 using SirmiumERPGFC.Repository.Shipments;
 using SirmiumERPGFC.Repository.Phonebooks;
+using SirmiumERPGFC.Repository.Invoices;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -1036,6 +1037,34 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(PhonebookPhoneSQLiteRepository.PhonebookPhoneTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    #endregion
+
+                    #region Invoices
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Invoices", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(InvoiceSQLiteRepository.InvoiceTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE InvoiceItems", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(InvoiceItemSQLiteRepository.InvoiceItemTableCreatePart, db);
                     createTable.ExecuteReader();
 
                     #endregion

@@ -4,6 +4,7 @@ using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
+using ServiceInterfaces.ViewModels.Common.Invoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.Phonebooks;
@@ -642,6 +643,22 @@ namespace SirmiumERPGFC.Repository.Common
                     Identifier = query.GetGuid(counter++),
                     Code = query.GetString(counter++),
                     Name = query.GetString(counter++)
+                };
+        }
+
+        public static InvoiceViewModel GetInvoice(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 3;
+                return null;
+            }
+            else
+                return new InvoiceViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Code = query.GetString(counter++),
                 };
         }
     }

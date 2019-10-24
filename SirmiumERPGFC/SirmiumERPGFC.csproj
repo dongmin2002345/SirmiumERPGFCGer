@@ -258,6 +258,8 @@
     <Compile Include="Repository\InputInvoices\InputInvoiceDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\InputInvoices\InputInvoiceNoteSQLiteRepository.cs" />
     <Compile Include="Repository\InputInvoices\InputInvoiceSQLiteRepository.cs" />
+    <Compile Include="Repository\Invoices\InvoiceItemSQLiteRepository.cs" />
+    <Compile Include="Repository\Invoices\InvoiceSQLiteRepository.cs" />
     <Compile Include="Repository\Limitations\LimitationEmailSQLiteRepository.cs" />
     <Compile Include="Repository\Limitations\LimitationSQLiteRepository.cs" />
     <Compile Include="Repository\Locations\CitySQLiteRepository.cs" />
@@ -517,6 +519,9 @@
     </Compile>
     <Compile Include="Views\InputInvoices\InputInvoice_ReportWindow.xaml.cs">
       <DependentUpon>InputInvoice_ReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\Invoice_Item_AddEdit.xaml.cs">
+      <DependentUpon>Invoice_Item_AddEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Locations\CityAddEdit.xaml.cs">
       <DependentUpon>CityAddEdit.xaml</DependentUpon>
@@ -1038,6 +1043,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InputInvoices\InputInvoice_ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Invoices\Invoice_Item_AddEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1679,10 +1688,7 @@
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repository\Invoices\" />
-    <Folder Include="Repository\Phonebooks\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
