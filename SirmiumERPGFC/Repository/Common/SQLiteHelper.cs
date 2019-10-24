@@ -6,6 +6,7 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
+using ServiceInterfaces.ViewModels.Common.Phonebooks;
 using ServiceInterfaces.ViewModels.Common.Prices;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
@@ -264,6 +265,23 @@ namespace SirmiumERPGFC.Repository.Common
             }
             else
                 return new CountryViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
+                };
+        }
+
+        public static PhonebookViewModel GetPhonebook(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new PhonebookViewModel()
                 {
                     Id = query.GetInt32(counter++),
                     Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),

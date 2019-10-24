@@ -74,7 +74,7 @@ namespace SirmiumERPGFC.Repository.InputInvoices
             insertCommand.Parameters.AddWithValue("@InputInvoiceId", ((object)InputInvoiceDocument.InputInvoice.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@InputInvoiceIdentifier", ((object)InputInvoiceDocument.InputInvoice.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@InputInvoiceCode", ((object)InputInvoiceDocument.InputInvoice.Code) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Name", InputInvoiceDocument.Name);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)InputInvoiceDocument.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreateDate", ((object)InputInvoiceDocument.CreateDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Path", ((object)InputInvoiceDocument.Path) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)InputInvoiceDocument.ItemStatus) ?? DBNull.Value);

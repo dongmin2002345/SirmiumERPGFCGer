@@ -164,14 +164,14 @@
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="{DynamicResource Popust}">
-                    <Fluent:Button x:Name="mniRabat" Click="MniRabat_Click" Header="{DynamicResource Popust}" KeyTip="PP" >
+                    <Fluent:Button x:Name="mniRabat" Click="MniRabat_Click" Header="{DynamicResource Popust}" KeyTip="Popust" Width="70">
                         <Fluent:Button.Icon>
                             <Image Source="Resources\Icons\Popust.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.Icon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="{DynamicResource Kurirska_Sluzba}">
-                    <Fluent:Button x:Name="mniServiceDelivery" Click="MniServiceDelivery_Click" Header="{DynamicResource Kurirska_Sluzba}" KeyTip="PP" >
+                    <Fluent:Button x:Name="mniServiceDelivery" Click="MniServiceDelivery_Click" Header="{DynamicResource Kurirska_Sluzba}" KeyTip="KS" Width="70">
                         <Fluent:Button.Icon>
                             <Image Source="Resources\Icons\KurirskaSluzba.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.Icon>
@@ -185,7 +185,7 @@
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="{DynamicResource Pošiljke}">
-                    <Fluent:Button x:Name="mniShipment" Click="MniShipment_Click" Header="{DynamicResource Pošiljke}" KeyTip="PP" >
+                    <Fluent:Button x:Name="mniShipment" Click="MniShipment_Click" Header="{DynamicResource Pošiljke}" KeyTip="Poš" Width="70">
                         <Fluent:Button.Icon>
                             <Image Source="Resources\Icons\Posiljke.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.Icon>

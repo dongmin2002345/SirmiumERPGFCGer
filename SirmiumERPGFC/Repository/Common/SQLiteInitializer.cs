@@ -18,6 +18,7 @@ using SirmiumERPGFC.Repository.Vats;
 using SirmiumERPGFC.Repository.Prices;
 using SirmiumERPGFC.Repository.Statuses;
 using SirmiumERPGFC.Repository.Shipments;
+using SirmiumERPGFC.Repository.Phonebooks;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -983,6 +984,58 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(ShipmentDocumentSQLiteRepository.ShipmentDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    #endregion
+
+                    #region Phonebooks
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE Phonebooks", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhonebookSQLiteRepository.PhonebookTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhonebookDocuments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhonebookDocumentSQLiteRepository.PhonebookDocumentTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhonebookNotes", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhonebookNoteSQLiteRepository.PhonebookNoteTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhonebookPhones", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhonebookPhoneSQLiteRepository.PhonebookPhoneTableCreatePart, db);
                     createTable.ExecuteReader();
 
                     #endregion

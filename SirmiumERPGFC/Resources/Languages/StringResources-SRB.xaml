@@ -653,4 +653,6 @@
     <system:String x:Key="Obavezno_polje_poslovni_partner">Obavezno polje: Poslovni partner</system:String>
     <system:String x:Key="Obavezno_polje_drzava">Obavezno polje: Država</system:String>
     <system:String x:Key="Obavezno_polje_licenca">Obavezno polje: Licenca</system:String>
+    <system:String x:Key="Telefonski_imenik">Telefonski imenik</system:String>
+    <system:String x:Key="Telefonski_imenik_tritacke">Telefonski imenik...</system:String>
 </ResourceDictionary>

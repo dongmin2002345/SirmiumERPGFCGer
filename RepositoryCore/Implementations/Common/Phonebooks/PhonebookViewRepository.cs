@@ -37,36 +37,26 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
                 Phonebook.Code = reader["PhonebookCode"].ToString();
             if (reader["PhonebookName"] != DBNull.Value)
                 Phonebook.Name = reader["PhonebookName"].ToString();
-            
 
-            if (reader["MunicipalityId"] != DBNull.Value)
+
+            if (reader["MunicipalityId"] != DBNull.Value) /*"MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +*/
             {
                 Phonebook.Municipality = new Municipality();
-                if (reader["MunicipalityId"] != DBNull.Value)
-                    Phonebook.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
-                if (reader["MunicipalityId"] != DBNull.Value)
-                    Phonebook.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
-                if (reader["MunicipalityIdentifier"] != DBNull.Value)
-                    Phonebook.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
-                if (reader["MunicipalityCode"] != DBNull.Value)
-                    Phonebook.Municipality.Code = reader["MunicipalityCode"].ToString();
-                if (reader["MunicipalityName"] != DBNull.Value)
-                    Phonebook.Municipality.Name = reader["MunicipalityName"].ToString();
+                Phonebook.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
+                Phonebook.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
+                Phonebook.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
+                Phonebook.Municipality.Code = reader["MunicipalityCode"].ToString();
+                Phonebook.Municipality.Name = reader["MunicipalityName"].ToString();
             }
 
-            if (reader["CityId"] != DBNull.Value)
+            if (reader["CityId"] != DBNull.Value) // "CityId, CityIdentifier, CityCode, CityName, " +
             {
                 Phonebook.City = new City();
-                if (reader["CityId"] != DBNull.Value)
-                    Phonebook.CityId = Int32.Parse(reader["CityId"].ToString());
-                if (reader["CityId"] != DBNull.Value)
-                    Phonebook.City.Id = Int32.Parse(reader["CityId"].ToString());
-                if (reader["CityIdentifier"] != DBNull.Value)
-                    Phonebook.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                if (reader["CityCode"] != DBNull.Value)
-                    Phonebook.City.Code = reader["CityCode"].ToString();
-                if (reader["CityName"] != DBNull.Value)
-                    Phonebook.City.Name = reader["CityName"].ToString();
+                Phonebook.CityId = Int32.Parse(reader["CityId"].ToString());
+                Phonebook.City.Id = Int32.Parse(reader["CityId"].ToString());
+                Phonebook.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
+                Phonebook.City.Code = reader["CityCode"].ToString();
+                Phonebook.City.Name = reader["CityName"].ToString();
             }
 
             if (reader["Address"] != DBNull.Value)
