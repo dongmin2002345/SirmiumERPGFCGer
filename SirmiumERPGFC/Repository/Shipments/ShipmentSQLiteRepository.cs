@@ -24,7 +24,7 @@ namespace SirmiumERPGFC.Repository.Shipments
           "ServiceDeliveryIdentifier GUID NULL, " +
           "ServiceDeliveryCode NVARCHAR(48) NULL, " +
           "ServiceDeliveryName NVARCHAR(2048) NULL, " +
-
+          "ServiceDeliveryURL NVARCHAR(2048) NULL, " +
           "ShipmentNumber NVARCHAR(48) NULL, " +
           "Acceptor NVARCHAR(48) NULL, " +
 
@@ -42,16 +42,16 @@ namespace SirmiumERPGFC.Repository.Shipments
           "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, ShipmentDate, Address, ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryName, " +
+            "SELECT ServerId, Identifier, Code, ShipmentDate, Address, ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryName, ServiceDeliveryURL, " +
             "ShipmentNumber, Acceptor, DeliveryDate, ReturnReceipt, DocumentName, Note, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Shipments " +
-            "(Id, ServerId, Identifier,Code, ShipmentDate, Address, ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryName, " +
+            "(Id, ServerId, Identifier,Code, ShipmentDate, Address, ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryName, ServiceDeliveryURL, " +
             "ShipmentNumber, Acceptor, DeliveryDate, ReturnReceipt, DocumentName, Note, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, @ShipmentDate, @Address, @ServiceDeliveryId, @ServiceDeliveryIdentifier, @ServiceDeliveryCode, @ServiceDeliveryName, " +
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @ShipmentDate, @Address, @ServiceDeliveryId, @ServiceDeliveryIdentifier, @ServiceDeliveryCode, @ServiceDeliveryName, @ServiceDeliveryURL, " +
             "@ShipmentNumber, @Acceptor, @DeliveryDate, @ReturnReceipt, @DocumentName, @Note, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -94,7 +94,7 @@ namespace SirmiumERPGFC.Repository.Shipments
             insertCommand.Parameters.AddWithValue("@ServiceDeliveryIdentifier", ((object)Shipment.ServiceDelivery?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ServiceDeliveryCode", ((object)Shipment.ServiceDelivery?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ServiceDeliveryName", ((object)Shipment.ServiceDelivery?.Name) ?? DBNull.Value);
-            
+            insertCommand.Parameters.AddWithValue("@ServiceDeliveryURL", ((object)Shipment.ServiceDelivery?.URL) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ShipmentNumber", ((object)Shipment.ShipmentNumber) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Acceptor", ((object)Shipment.Acceptor) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DeliveryDate", ((object)Shipment.DeliveryDate) ?? DBNull.Value);

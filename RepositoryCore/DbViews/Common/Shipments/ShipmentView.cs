@@ -28,7 +28,7 @@ namespace RepositoryCore.DbViews.Common.Shipments
                 "CREATE VIEW vShipments AS " +
                 "SELECT shipment.Id AS ShipmentId, shipment.Identifier AS ShipmentIdentifier, shipment.Code AS ShipmentCode, " +
                 "shipment.ShipmentDate, shipment.Address, " +
-                "serviceDelivery.Id AS ServiceDeliveryId, serviceDelivery.Identifier AS ServiceDeliveryIdentifier, serviceDelivery.Code AS ServiceDeliveryCode, serviceDelivery.Name AS ServiceDeliveryName, " +
+                "serviceDelivery.Id AS ServiceDeliveryId, serviceDelivery.Identifier AS ServiceDeliveryIdentifier, serviceDelivery.Code AS ServiceDeliveryCode, serviceDelivery.Name AS ServiceDeliveryName, serviceDelivery.URL AS ServiceDeliveryURL, " +
                 "shipment.ShipmentNumber, shipment.Acceptor, shipment.DeliveryDate, shipment.ReturnReceipt, shipment.DocumentName, shipment.Note, shipment.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (shipment.UpdatedAt), (serviceDelivery.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

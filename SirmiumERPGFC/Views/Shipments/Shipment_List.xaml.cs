@@ -540,6 +540,11 @@ namespace SirmiumERPGFC.Views.Shipments
 
         #endregion
 
-        
+        private void btnShowURL_Click(object sender, EventArgs e)
+        {
+            string websiteName = CurrentShipment.ServiceDelivery.URL;
+            System.Diagnostics.Process.Start("chrome.exe", websiteName);
+        }
+
     }
 }

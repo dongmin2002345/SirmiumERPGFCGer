@@ -294,7 +294,7 @@ namespace SirmiumERPGFC.Repository.Common
         {
             if (query.IsDBNull(counter))
             {
-                counter += 4;
+                counter += 5;
                 return null;
             }
             else
@@ -303,7 +303,8 @@ namespace SirmiumERPGFC.Repository.Common
                     Id = query.GetInt32(counter++),
                     Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
                     Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
-                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    URL = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 

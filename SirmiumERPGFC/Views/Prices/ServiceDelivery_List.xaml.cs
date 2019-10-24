@@ -375,7 +375,7 @@ namespace SirmiumERPGFC.Views.Prices
         private void btnShowURL_Click(object sender, EventArgs e)
         {
             string websiteName = CurrentServiceDelivery.URL;     
-            System.Diagnostics.Process.Start("iexplore.exe", websiteName);
+            System.Diagnostics.Process.Start("chrome.exe", websiteName);
         }
 
      

@@ -22,7 +22,7 @@ namespace RepositoryCore.Implementations.Common.Shipments
         private string SelectString =
             "SELECT ShipmentId, ShipmentIdentifier, ShipmentCode, " +
             "ShipmentDate, Address, " +
-            "ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryName, " +
+            "ServiceDeliveryId, ServiceDeliveryIdentifier, ServiceDeliveryCode, ServiceDeliveryName, ServiceDeliveryURL, " +
             "ShipmentNumber, Acceptor, DeliveryDate, ReturnReceipt, DocumentName, Note, " +
             "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
             "FROM vShipments ";
@@ -53,6 +53,8 @@ namespace RepositoryCore.Implementations.Common.Shipments
                     shipment.ServiceDelivery.Code = reader["ServiceDeliveryCode"].ToString();
                 if (reader["ServiceDeliveryName"] != DBNull.Value)
                     shipment.ServiceDelivery.Name = reader["ServiceDeliveryName"].ToString();
+                if (reader["ServiceDeliveryURL"] != DBNull.Value)
+                    shipment.ServiceDelivery.URL = reader["ServiceDeliveryURL"].ToString();
             }
 
             if (reader["ShipmentNumber"] != DBNull.Value)
