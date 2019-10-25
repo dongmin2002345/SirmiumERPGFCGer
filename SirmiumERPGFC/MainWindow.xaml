@@ -195,6 +195,14 @@
 
             <Fluent:RibbonTabItem Header="{DynamicResource RAČUNI}" KeyTip="RAC">
 
+                <Fluent:RibbonGroupBox Header="{DynamicResource Fakture}">
+                    <Fluent:Button Click="mniInvoices_Click" Header="{DynamicResource Fakture}" KeyTip="IZL" Width="80">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+                
                 <Fluent:RibbonGroupBox Header="{DynamicResource Ulazni_računi}">
                     <Fluent:Button Click="mniInputInvoices_Click" Header="{DynamicResource Ulazni_računi}" KeyTip="IZL" Width="70">
                         <Fluent:Button.LargeIcon>

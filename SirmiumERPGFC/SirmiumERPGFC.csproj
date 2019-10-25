@@ -520,6 +520,12 @@
     <Compile Include="Views\InputInvoices\InputInvoice_ReportWindow.xaml.cs">
       <DependentUpon>InputInvoice_ReportWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Invoices\InvoiceAddEdit.xaml.cs">
+      <DependentUpon>InvoiceAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\InvoiceList.xaml.cs">
+      <DependentUpon>InvoiceList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Invoices\Invoice_Item_AddEdit.xaml.cs">
       <DependentUpon>Invoice_Item_AddEdit.xaml</DependentUpon>
     </Compile>
@@ -1043,6 +1049,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InputInvoices\InputInvoice_ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Invoices\InvoiceAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Invoices\InvoiceList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

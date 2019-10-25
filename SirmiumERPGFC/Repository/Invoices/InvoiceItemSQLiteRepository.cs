@@ -75,6 +75,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.UnitOfMeasure = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Quantity = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.PriceWithPDV = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.PriceWithoutPDV = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.Discount = SQLiteHelper.GetDecimal(query, ref counter);

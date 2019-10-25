@@ -40,6 +40,7 @@ using SirmiumERPGFC.Views.Vats;
 using SirmiumERPGFC.Views.Prices;
 using SirmiumERPGFC.Views.Statuses;
 using SirmiumERPGFC.Views.Shipments;
+using SirmiumERPGFC.Views.Invoices;
 
 namespace SirmiumERPGFC
 {
@@ -502,6 +503,11 @@ namespace SirmiumERPGFC
         private void MniShipment_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new Shipment_List();
+        }
+
+        private void mniInvoices_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new InvoiceList();
         }
     }
 }

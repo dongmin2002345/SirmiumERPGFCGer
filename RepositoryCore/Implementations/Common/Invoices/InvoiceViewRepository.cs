@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
               "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
               "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods," +
               "Customer, PIB, BPName, Address," +
-              "Currency, Active, UpdatedAt," +
+              "Currency, IsInPDV, Active, UpdatedAt," +
               "CreatedById, CreatedByFirstName, CreatedByLastName, " +
               "CompanyId, CompanyName " +
               "FROM vInvoices ";
@@ -116,7 +116,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Address = reader["Address"].ToString();
             if (reader["Currency"] != DBNull.Value)
                 invoice.Currency = DateTime.Parse(reader["Currency"].ToString());
-
+            if (reader["IsInPDV"] != DBNull.Value)
+                invoice.Currency = DateTime.Parse(reader["IsInPDV"].ToString());
+            
             invoice.Active = bool.Parse(reader["Active"].ToString());
             invoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -264,6 +266,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     dbEntry.BPName = invoice.BPName;
                     dbEntry.Address = invoice.Address;
                     dbEntry.Currency = invoice.Currency;
+                    dbEntry.IsInPDV = invoice.IsInPDV;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

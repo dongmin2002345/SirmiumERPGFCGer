@@ -42,6 +42,7 @@ namespace DataMapper.Mappers.Common.Invoices
                 Address = invoice.Address,
 
                 Currency = invoice.Currency,
+                IsInPDV = invoice.IsInPDV,
 
                 IsActive = invoice.Active,
 

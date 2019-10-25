@@ -43,6 +43,10 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -53,22 +57,54 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource NapomenaDvotacka}" />
-                    <TextBox Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtNote" Height="50" TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentInvoiceItemForm.Note, Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
+                    <TextBox Grid.Row="0"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtCode"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.Code, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Datum_napomeneDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <DatePicker Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
-                                SelectedDate="{Binding Path=CurrentInvoiceItemForm.NoteDate, Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource ImeDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="0"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtName"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.Name, Mode=TwoWay}"/>
 
-                    <Button x:Name="btnAddNote" Grid.Row="1" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Jedinica_MereDvotacka}" />
+                    <TextBox Grid.Row="1"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtUnitOfMeasure"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.UnitOfMeasure, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource KoličinaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="1"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtQuantity"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.Quantity, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cena_Sa_PDVDvotacka}" />
+                    <TextBox Grid.Row="2"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPriceWithPDV"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.PriceWithPDV, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource Cena_Bez_PDVDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="2"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPriceWithoutPDV"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.PriceWithoutPDV, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PopustDvotacka}" />
+                    <TextBox Grid.Row="3"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtDiscount"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.Discount, Mode=TwoWay}"/>
+                    
+                    <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PDVDvotacka}" />
+                    <TextBox Grid.Row="3"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPDVPercent"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.PDVPercent, Mode=TwoWay}"/>
+                    
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PDVDvotacka}" />
+                    <TextBox Grid.Row="4"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPDV"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.PDV, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource IznosDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="4"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtAmount"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.Amount, Mode=TwoWay}"/>
+
+                    <Button x:Name="btnAddNote" Grid.Row="5" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="btnCancelNote" Grid.Row="1" Grid.Column="5" Click="btnCancelNote_Click" Margin="2" Background="#007ACC" >
+                    <Button x:Name="btnCancelNote" Grid.Row="5" Grid.Column="5" Click="btnCancelNote_Click" Margin="2" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
                             <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular"/>
@@ -79,9 +115,9 @@
 
             <GroupBox Header="Dodate stavke" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
                 <DataGrid x:Name="dgInvoiceItems"
-                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
-                              Margin="5" MinHeight="200"
-                                 AutoGenerateColumns="False"
+                          Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
+                          Margin="5" MinHeight="200"
+                          AutoGenerateColumns="False"
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           CanUserResizeRows="False"
@@ -94,18 +130,20 @@
 		                  HeadersVisibility="All"
                           LoadingRow="DgInvoiceItems_LoadingRow"
                           PreviewMouseWheel="dg_PreviewMouseWheel"
-                              ItemsSource="{Binding Path=InvoiceItemsFromDB}"
-                              SelectedItem="{Binding Path=CurrentInvoiceItemDG, Mode=TwoWay}">
+                          ItemsSource="{Binding Path=InvoiceItemsFromDB}"
+                          SelectedItem="{Binding Path=CurrentInvoiceItemDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" >
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="ToolTip" Value="{Binding Note}"/>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum_napomeneDvotacka}" Binding="{Binding Path=NoteDate, Converter={StaticResource StringDateTimeShortConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_Mere}" Binding="{Binding Path=UnitOfMeasure}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Quantity" Header="{DynamicResource KoličinaDvotacka}" Binding="{Binding Path=Quantity}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PriceWithPDV" Header="{DynamicResource Cena_Sa_PDV}" Binding="{Binding Path=PriceWithPDV}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PriceWithoutPDV" Header="{DynamicResource Cena_Bez_PDV}" Binding="{Binding Path=PriceWithoutPDV}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Discount" Header="{DynamicResource Popust}" Binding="{Binding Path=Discount}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDV_procenat}" Binding="{Binding Path=PDVPercent}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding Path=PDV}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Path=Amount}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

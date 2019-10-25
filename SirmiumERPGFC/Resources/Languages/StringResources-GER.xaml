@@ -304,7 +304,7 @@
     <system:String x:Key="Šifra_sektoraDvotacka">Sektorcode:</system:String>
     <system:String x:Key="Šifra_zanimanja">Tätigkeitscode</system:String>
     <system:String x:Key="Šifra_zanimanjaDvotacka">Berufscode:</system:String>
-    <system:String x:Key="ŠifraDvotacka">Nummer</system:String>
+    <system:String x:Key="ŠifraDvotacka">Code:</system:String>
     <system:String x:Key="Sin">Sin</system:String>
     <system:String x:Key="Slobodan_tekstDvotacka">Anmerkung:</system:String>
     <system:String x:Key="Spajanje_porodice">Familienzusammenführung</system:String>
@@ -656,4 +656,23 @@
     <system:String x:Key="Obavezno_polje_licenca">Obligatorisches Feld: Lizenz</system:String>
     <system:String x:Key="Telefonski_imenik">Telefonbuch</system:String>
     <system:String x:Key="Telefonski_imenik_tritacke">Telefonbuch...</system:String>
+    
+    <system:String x:Key="Datum_izdavanja_od">Ausgabedatum von</system:String>
+    <system:String x:Key="Fakture">Fakturen</system:String>
+    <system:String x:Key="Datum_Prometa_Dobara_I_Usluga">Datum der Warenlieferung</system:String>
+    <system:String x:Key="Jedinica_Mere">Maßeinheit</system:String>
+    <system:String x:Key="Jedinica_MereDvotacka">Maßeinheit:</system:String>
+    <system:String x:Key="Količina">Quantität</system:String>
+    <system:String x:Key="KoličinaDvotacka">Quantität:</system:String>
+    <system:String x:Key="Cena_Sa_PDV">Preis mit MwSt</system:String>
+    <system:String x:Key="Cena_Bez_PDV">Preis ohne MwSt</system:String>
+    <system:String x:Key="Cena_Sa_PDVDvotacka">Preis mit MwSt:</system:String>
+    <system:String x:Key="Cena_Bez_PDVDvotacka">Preis ohne MwSt:</system:String>
+    <system:String x:Key="Podaci_o_fakturama">Daten über Rechnungen</system:String>
+    <system:String x:Key="Datum_Prometa_Dobara_I_UslugaDvotacka">Datum der Warenlieferung:</system:String>
+    <system:String x:Key="PopustDvotacka">Rabatt:</system:String>
+    <system:String x:Key="Poslovni_partner_ImeDvotacka">Geschäftspartnername:</system:String>
+    <system:String x:Key="PIBDvotacka">Steuernummer:</system:String>
+    <system:String x:Key="PDVDvotacka">MwSt:</system:String>
+
 </ResourceDictionary>

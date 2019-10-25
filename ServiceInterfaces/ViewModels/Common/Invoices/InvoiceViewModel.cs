@@ -253,6 +253,22 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
+        #region IsInPDV
+        private bool _IsInPDV;
+
+        public bool IsInPDV
+        {
+            get { return _IsInPDV; }
+            set
+            {
+                if (_IsInPDV != value)
+                {
+                    _IsInPDV = value;
+                    NotifyPropertyChanged("IsInPDV");
+                }
+            }
+        }
+        #endregion
 
         #region InvoiceItems
         private ObservableCollection<InvoiceItemViewModel> _InvoiceItems;

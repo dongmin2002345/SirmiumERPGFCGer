@@ -41,7 +41,7 @@ namespace SirmiumERPGFC.Views.Invoices
 
 
         #region Event
-        //public event InvoiceHandler InvoiceCreatedUpdated;
+        public event InvoiceHandler InvoiceCreatedUpdated;
         #endregion
 
 
@@ -274,7 +274,7 @@ namespace SirmiumERPGFC.Views.Invoices
                 CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
                 CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
                 CurrentInvoiceItemForm.IsSynced = false;
-                //InvoiceCreatedUpdated();
+                InvoiceCreatedUpdated();
 
                 DisplayInvoiceItemData();
 
@@ -282,7 +282,7 @@ namespace SirmiumERPGFC.Views.Invoices
                     System.Windows.Threading.DispatcherPriority.Normal,
                     new Action(() =>
                     {
-                        txtNote.Focus();
+                        txtName.Focus();
                     })
                 );
 
@@ -319,7 +319,7 @@ namespace SirmiumERPGFC.Views.Invoices
 
                 CurrentInvoiceItemDG = null;
 
-                //InvoiceCreatedUpdated();
+                InvoiceCreatedUpdated();
 
                 Thread displayThread = new Thread(() => DisplayInvoiceItemData());
                 displayThread.IsBackground = true;
@@ -372,7 +372,7 @@ namespace SirmiumERPGFC.Views.Invoices
                     SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
 
-                    //InvoiceCreatedUpdated();
+                    InvoiceCreatedUpdated();
 
                     Application.Current.Dispatcher.BeginInvoke(
                         System.Windows.Threading.DispatcherPriority.Normal,
@@ -389,7 +389,7 @@ namespace SirmiumERPGFC.Views.Invoices
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            //InvoiceCreatedUpdated();
+            InvoiceCreatedUpdated();
 
             FlyoutHelper.CloseFlyout(this);
         }

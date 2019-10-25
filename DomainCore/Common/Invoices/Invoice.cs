@@ -34,5 +34,6 @@ namespace DomainCore.Common.Invoices
         public Discount Discount { get; set; }
         public int? VatId { get; set; }
         public Vat Vat { get; set; }
+        public bool IsInPDV { get; set; }
     }
 }

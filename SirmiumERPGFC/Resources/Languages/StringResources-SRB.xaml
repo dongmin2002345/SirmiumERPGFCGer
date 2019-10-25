@@ -655,4 +655,22 @@
     <system:String x:Key="Obavezno_polje_licenca">Obavezno polje: Licenca</system:String>
     <system:String x:Key="Telefonski_imenik">Telefonski imenik</system:String>
     <system:String x:Key="Telefonski_imenik_tritacke">Telefonski imenik...</system:String>
+
+    <system:String x:Key="Datum_izdavanja_od">Datum izdavanja od</system:String>
+    <system:String x:Key="Fakture">Fakture</system:String>
+    <system:String x:Key="Datum_Prometa_Dobara_I_Usluga">Datum prometa  dobara i usluga</system:String>
+    <system:String x:Key="Jedinica_Mere">Jedinica mere</system:String>
+    <system:String x:Key="Jedinica_MereDvotacka">Jedinica mere:</system:String>
+    <system:String x:Key="Količina">Količina</system:String>
+    <system:String x:Key="KoličinaDvotacka">Količina:</system:String>
+    <system:String x:Key="Cena_Sa_PDV">Cena sa PDV-om</system:String>
+    <system:String x:Key="Cena_Bez_PDV">Cena bez PDV-a </system:String>
+    <system:String x:Key="Cena_Sa_PDVDvotacka">Cena sa PDV-om:</system:String>
+    <system:String x:Key="Cena_Bez_PDVDvotacka">Cena bez PDV-a:</system:String>
+    <system:String x:Key="Podaci_o_fakturama">Podaci o fakturama</system:String>
+    <system:String x:Key="Datum_Prometa_Dobara_I_UslugaDvotacka">Datum prometa  dobara i usluga:</system:String>
+    <system:String x:Key="PopustDvotacka">Popust:</system:String>
+    <system:String x:Key="Poslovni_partner_ImeDvotacka">Poslovni partner:</system:String>
+    <system:String x:Key="PIBDvotacka">PIB:</system:String>
+    <system:String x:Key="PDVDvotacka">PDV:</system:String>
 </ResourceDictionary>
