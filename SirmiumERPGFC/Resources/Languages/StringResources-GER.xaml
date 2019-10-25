@@ -275,6 +275,7 @@
     <system:String x:Key="Razlika_vrednosti">Differenzwert</system:String>
     <system:String x:Key="REGION">REGION</system:String>
     <system:String x:Key="RegionDvotacka">Region:</system:String>
+    <system:String x:Key="Region">Region</system:String>
     <system:String x:Key="Registarski_broj">Handelsregisternummer</system:String>
     <system:String x:Key="Registarski_broj_ZagradaPIOZagradaDvotacka">Registrierungsnummer (PIO):</system:String>
     <system:String x:Key="Registarski_brojDvotacka">Handelsregisternummer</system:String>

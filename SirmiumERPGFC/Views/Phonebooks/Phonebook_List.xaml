@@ -73,7 +73,7 @@
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="{DynamicResource Pretraga_po_nazivuDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtSearchByPhonebookName" Width="150"
                                          Text="{Binding Path=PhonebookSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}"
                                          TextChanged="txtSearchByPhonebookName_TextChanged"
