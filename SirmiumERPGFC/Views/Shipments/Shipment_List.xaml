@@ -187,14 +187,14 @@
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="ShipmentNumber" Header="{DynamicResource Broj_pošiljke}" Binding="{Binding ShipmentNumber}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Acceptor" Header="{DynamicResource Primalac}" Binding="{Binding Acceptor}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="Acceptor" Header="{DynamicResource Primalac}" Binding="{Binding Acceptor}" Width="Auto" IsReadOnly="True"/>
 
                         <DataGridTextColumn SortMemberPath="DeliveryDate" Binding="{Binding DeliveryDate, Converter={StaticResource cbxDatetimeToStringConverter}}"  IsReadOnly="True" >
                             <DataGridTextColumn.Header>
                                 <TextBlock Text="{DynamicResource Datum_dostave}" TextWrapping="Wrap" MaxWidth="70" />
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
-                        <DataGridTextColumn SortMemberPath="ReturnReceipt" Header="{DynamicResource Povratnica}" Binding="{Binding ReturnReceipt}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="ReturnReceipt" Header="{DynamicResource Povratnica}" Binding="{Binding ReturnReceipt}" Width="Auto" IsReadOnly="True"/>
 
 
                         <DataGridTextColumn SortMemberPath="DocumentName" Binding="{Binding DocumentName}"   IsReadOnly="True" >
