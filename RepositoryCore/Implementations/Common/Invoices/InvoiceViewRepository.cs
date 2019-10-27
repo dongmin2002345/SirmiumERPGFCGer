@@ -23,7 +23,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
         private string connectionString;
 
         string selectString =
-              "SELECT InvoiceId, InvoiceIdentifier, InvoiceCode " +
+              "SELECT InvoiceId, InvoiceIdentifier, InvoiceCode, " +
               "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
               "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
               "VatId, VatIdentifier, VatCode, VatDescription, " +
@@ -47,6 +47,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             Invoice invoice = new Invoice();
             invoice.Id = Int32.Parse(reader["InvoiceId"].ToString());
             invoice.Identifier = Guid.Parse(reader["InvoiceIdentifier"].ToString());
+            invoice.Code = reader["InvoiceCode"].ToString();
 
             if (reader["BusinessPartnerId"] != DBNull.Value)
             {
@@ -75,7 +76,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Vat.Id = Int32.Parse(reader["VatId"].ToString());
                 invoice.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
                 invoice.Vat.Code = reader["VatCode"].ToString();
-                invoice.Vat.Description = reader["VatCode"].ToString();
+                invoice.Vat.Description = reader["VatDescription"].ToString();
             }
 
             if (reader["CityId"] != DBNull.Value)
@@ -84,7 +85,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.CityId = Int32.Parse(reader["CityId"].ToString());
                 invoice.City.Id = Int32.Parse(reader["CityId"].ToString());
                 invoice.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                invoice.City.ZipCode = reader["CityCode"].ToString();
+                invoice.City.ZipCode = reader["CityZipCode"].ToString();
                 invoice.City.Name = reader["CityName"].ToString();
             }
 
@@ -107,7 +108,6 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
             if (reader["Customer"] != DBNull.Value)
                 invoice.Customer = reader["Customer"].ToString();
-
             if (reader["PIB"] != DBNull.Value)
                 invoice.PIB = reader["PIB"].ToString();
             if (reader["BusinessPartnerName"] != DBNull.Value)
@@ -117,7 +117,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
             if (reader["Currency"] != DBNull.Value)
                 invoice.Currency = DateTime.Parse(reader["Currency"].ToString());
             if (reader["IsInPDV"] != DBNull.Value)
-                invoice.Currency = DateTime.Parse(reader["IsInPDV"].ToString());
+                invoice.IsInPDV = bool.Parse(reader["IsInPDV"].ToString());
             
             invoice.Active = bool.Parse(reader["Active"].ToString());
             invoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());

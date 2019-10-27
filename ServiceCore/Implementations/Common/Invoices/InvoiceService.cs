@@ -75,7 +75,7 @@ namespace ServiceCore.Implementations.Common.Invoices
             try
             {
                 //Backup items
-                List<InvoiceItemViewModel> invoiceNotes = invoice
+                List<InvoiceItemViewModel> invoiceItems = invoice
                     .InvoiceItems?.ToList() ?? new List<InvoiceItemViewModel>();
                 invoice.InvoiceItems = null;
 
@@ -84,9 +84,9 @@ namespace ServiceCore.Implementations.Common.Invoices
                     .Create(invoice.ConvertToInvoice());
 
                 // Update items
-                if (invoiceNotes != null && invoiceNotes.Count > 0)
+                if (invoiceItems != null && invoiceItems.Count > 0)
                 {
-                    foreach (InvoiceItemViewModel item in invoiceNotes
+                    foreach (InvoiceItemViewModel item in invoiceItems
                         .Where(x => x.ItemStatus == ItemStatus.Added || x.ItemStatus == ItemStatus.Edited)?.ToList() ?? new List<InvoiceItemViewModel>())
                     {
                         item.Invoice = new InvoiceViewModel() { Id = createdInvoice.Id };
@@ -94,7 +94,7 @@ namespace ServiceCore.Implementations.Common.Invoices
                         var createdItem = unitOfWork.GetInvoiceItemRepository().Create(item.ConvertToInvoiceItem());
                     }
 
-                    foreach (InvoiceItemViewModel item in invoiceNotes
+                    foreach (InvoiceItemViewModel item in invoiceItems
                         .Where(x => x.ItemStatus == ItemStatus.Deleted)?.ToList() ?? new List<InvoiceItemViewModel>())
                     {
                         item.Invoice = new InvoiceViewModel() { Id = createdInvoice.Id };

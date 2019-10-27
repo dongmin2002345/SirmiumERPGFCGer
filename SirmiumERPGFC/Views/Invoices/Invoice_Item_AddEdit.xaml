@@ -59,7 +59,7 @@
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
                     <TextBox Grid.Row="0"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtCode"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentInvoiceItemForm.Code, Mode=TwoWay}"/>
+                             Text="{Binding Path=CurrentInvoiceItemForm.Code, Mode=TwoWay}" IsReadOnly="True"/>
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource ImeDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="0"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtName"  TextWrapping="Wrap"
@@ -134,8 +134,8 @@
                           SelectedItem="{Binding Path=CurrentInvoiceItemDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" />
+                        <!--<DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="*" IsReadOnly="True" />-->
+                        <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_Mere}" Binding="{Binding Path=UnitOfMeasure}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Quantity" Header="{DynamicResource KoličinaDvotacka}" Binding="{Binding Path=Quantity}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PriceWithPDV" Header="{DynamicResource Cena_Sa_PDV}" Binding="{Binding Path=PriceWithPDV}" IsReadOnly="True" />
@@ -149,7 +149,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnEditNote" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditNote_Click">
+                                        <Button x:Name="btnEditItem" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditItem_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>

@@ -57,7 +57,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoiceItem.Invoice = new Invoice();
                 invoiceItem.InvoiceId = Int32.Parse(reader["InvoiceId"].ToString());
                 invoiceItem.Invoice.Id = Int32.Parse(reader["InvoiceId"].ToString());
-                invoiceItem.Invoice.Identifier = Guid.Parse(reader["OutputInvoiceGPIdentifier"].ToString());
+                invoiceItem.Invoice.Identifier = Guid.Parse(reader["InvoiceIdentifier"].ToString());
                 invoiceItem.Invoice.Code = reader["InvoiceCode"].ToString();
             }
 
@@ -162,6 +162,34 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
             return invoiceItems;
         }
+        private string GetNewCodeValue(int companyId)
+        {
+            int count = context.InvoiceItems
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(InvoiceItem))
+                    .Select(x => x.Entity as InvoiceItem))
+                .Where(x => x.CompanyId == companyId).Count();
+            if (count == 0)
+                return "1";
+            else
+            {
+                string activeCode = context.InvoiceItems
+                    .Union(context.ChangeTracker.Entries()
+                        .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(InvoiceItem))
+                        .Select(x => x.Entity as InvoiceItem))
+                    .Where(x => x.CompanyId == companyId)
+                    .OrderByDescending(x => x.Id).FirstOrDefault()
+                    ?.Code ?? "";
+
+                if (!String.IsNullOrEmpty(activeCode))
+                {
+                    int intValue = Int32.Parse(activeCode);
+                    return (intValue + 1).ToString();
+                }
+                else
+                    return "";
+            }
+        }
         public InvoiceItem Create(InvoiceItem invoiceItem)
         {
             if (context.InvoiceItems.Where(x => x.Identifier != null && x.Identifier == invoiceItem.Identifier).Count() == 0)
@@ -169,6 +197,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoiceItem.Id = 0;
 
                 invoiceItem.Active = true;
+                invoiceItem.Code = GetNewCodeValue(invoiceItem.CompanyId ?? 0);
 
                 invoiceItem.UpdatedAt = DateTime.Now;
                 invoiceItem.CreatedAt = DateTime.Now;
@@ -187,6 +216,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     dbEntry.CompanyId = invoiceItem.CompanyId;
                     dbEntry.CreatedById = invoiceItem.CreatedById;
 
+                    dbEntry.Code = invoiceItem.Code;
                     dbEntry.UnitOfMeasure = invoiceItem.UnitOfMeasure;
                     dbEntry.Quantity = invoiceItem.Quantity;
                     dbEntry.PriceWithPDV = invoiceItem.PriceWithPDV;

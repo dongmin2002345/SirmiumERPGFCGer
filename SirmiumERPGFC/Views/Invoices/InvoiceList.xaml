@@ -311,8 +311,8 @@
                               SelectedItem="{Binding Path=CurrentInvoiceItemDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="*" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}"  IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" Width="*"/>
                                 <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_Mere}" Binding="{Binding Path=UnitOfMeasure}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Quantity" Header="{DynamicResource KoličinaDvotacka}" Binding="{Binding Path=Quantity}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="PriceWithPDV" Header="{DynamicResource Cena_Sa_PDV}" Binding="{Binding Path=PriceWithPDV}" IsReadOnly="True" />

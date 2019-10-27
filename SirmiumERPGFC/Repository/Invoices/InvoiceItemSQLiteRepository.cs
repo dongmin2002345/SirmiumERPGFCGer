@@ -94,18 +94,18 @@ namespace SirmiumERPGFC.Repository.Invoices
         {
             insertCommand.Parameters.AddWithValue("@ServerId", InvoiceItem.Id);
             insertCommand.Parameters.AddWithValue("@Identifier", InvoiceItem.Identifier);
-            insertCommand.Parameters.AddWithValue("@InvoiceId", ((object)InvoiceItem.Invoice.Id) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@InvoiceIdentifier", ((object)InvoiceItem.Invoice.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@InvoiceCode", ((object)InvoiceItem.Invoice.Code) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Code", InvoiceItem.Code);
+            insertCommand.Parameters.AddWithValue("@InvoiceId", ((object)InvoiceItem.Invoice?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceIdentifier", ((object)InvoiceItem.Invoice?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceCode", ((object)InvoiceItem.Invoice?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Code", ((object)InvoiceItem.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Name", ((object)InvoiceItem.Name) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@UnitOfMeasure", InvoiceItem.UnitOfMeasure);
+            insertCommand.Parameters.AddWithValue("@UnitOfMeasure", ((object)InvoiceItem.UnitOfMeasure) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Quantity", ((object)InvoiceItem.Quantity) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@PriceWithPDV", InvoiceItem.PriceWithPDV);
-            insertCommand.Parameters.AddWithValue("@PriceWithoutPDV", InvoiceItem.PriceWithoutPDV);
-            insertCommand.Parameters.AddWithValue("@Discount", InvoiceItem.Discount);
+            insertCommand.Parameters.AddWithValue("@PriceWithPDV", ((object)InvoiceItem.PriceWithPDV) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PriceWithoutPDV", ((object)InvoiceItem.PriceWithoutPDV) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Discount", ((object)InvoiceItem.Discount) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PDVPercent", ((object)InvoiceItem.PDVPercent) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@PDV", InvoiceItem.PDV);
+            insertCommand.Parameters.AddWithValue("@PDV", ((object)InvoiceItem.PDV) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Amount", ((object)InvoiceItem.Amount) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)InvoiceItem.ItemStatus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", InvoiceItem.IsSynced);

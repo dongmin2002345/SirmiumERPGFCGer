@@ -294,15 +294,23 @@ namespace SirmiumERPGFC.Views.Invoices
 
     
 
-        private void btnEditNote_Click(object sender, RoutedEventArgs e)
+        private void btnEditItem_Click(object sender, RoutedEventArgs e)
         {
             CurrentInvoiceItemForm = new InvoiceItemViewModel();
             CurrentInvoiceItemForm.Identifier = CurrentInvoiceItemDG.Identifier;
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Edited;
 
             CurrentInvoiceItemForm.IsSynced = CurrentInvoiceItemDG.IsSynced;
-            //CurrentInvoiceItemForm.Note = CurrentInvoiceItemDG.Note;
-            //CurrentInvoiceItemForm.NoteDate = CurrentInvoiceItemDG.NoteDate;
+            CurrentInvoiceItemForm.Code = CurrentInvoiceItemDG.Code;
+            CurrentInvoiceItemForm.Name = CurrentInvoiceItemDG.Name;
+            CurrentInvoiceItemForm.UnitOfMeasure = CurrentInvoiceItemDG.UnitOfMeasure;
+            CurrentInvoiceItemForm.Quantity = CurrentInvoiceItemDG.Quantity;
+            CurrentInvoiceItemForm.PriceWithPDV = CurrentInvoiceItemDG.PriceWithPDV;
+            CurrentInvoiceItemForm.PriceWithoutPDV = CurrentInvoiceItemDG.PriceWithoutPDV;
+            CurrentInvoiceItemForm.Discount = CurrentInvoiceItemDG.Discount;
+            CurrentInvoiceItemForm.PDVPercent = CurrentInvoiceItemDG.PDVPercent;
+            CurrentInvoiceItemForm.PDV = CurrentInvoiceItemDG.PDV;
+            CurrentInvoiceItemForm.Amount = CurrentInvoiceItemDG.Amount;
             CurrentInvoiceItemForm.UpdatedAt = CurrentInvoiceItemDG.UpdatedAt;
         }
 
@@ -404,5 +412,6 @@ namespace SirmiumERPGFC.Views.Invoices
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
         }
         #endregion
+
     }
 }
