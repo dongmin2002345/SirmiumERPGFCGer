@@ -20,6 +20,7 @@ using SirmiumERPGFC.Repository.Statuses;
 using SirmiumERPGFC.Repository.Shipments;
 using SirmiumERPGFC.Repository.Phonebooks;
 using SirmiumERPGFC.Repository.Invoices;
+using SirmiumERPGFC.Repository.CallCentars;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -1067,6 +1068,20 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(InvoiceItemSQLiteRepository.InvoiceItemTableCreatePart, db);
                     createTable.ExecuteReader();
 
+                    #endregion
+
+                    #region CallCentars
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE CallCentars", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(CallCentarSQLiteRepository.CallCentarTableCreatePart, db);
+                    createTable.ExecuteReader();
                     #endregion
                 }
             }

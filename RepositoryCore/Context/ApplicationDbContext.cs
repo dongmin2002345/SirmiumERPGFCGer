@@ -1,5 +1,6 @@
 ﻿using DomainCore.Banks;
 using DomainCore.Common.BusinessPartners;
+using DomainCore.Common.CallCentars;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.InputInvoices;
@@ -155,6 +156,8 @@ namespace RepositoryCore.Context
 
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
+
+        public DbSet<CallCentar> CallCentars { get; set; }
 
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -385,6 +385,8 @@
     <system:String x:Key="Ograničenja">Limitations</system:String>
     <system:String x:Key="RAČUNI">ACCOUNTS</system:String>
     <system:String x:Key="Korisnici">Users</system:String>
+    <system:String x:Key="Korisnik">User</system:String>
+    <system:String x:Key="Korisnici_Dvotacka">Users:</system:String>
     <system:String x:Key="Datum_predugovoraDvotacka">Pre-Contract Date:</system:String>
     <system:String x:Key="Podaci_su_uspešno_sinhronizovaniUzvičnik">Data is synchronized successfully!</system:String>
     <system:String x:Key="Pristupna_prava">Access rights</system:String>
@@ -668,4 +670,13 @@
     <system:String x:Key="Poslovni_partner_ImeDvotacka">Business Partner Name:</system:String>
     <system:String x:Key="PIBDvotacka">PIB:</system:String>
     <system:String x:Key="PDVDvotacka">VAT:</system:String>
+    <system:String x:Key="CallCentar">Call Centar</system:String>
+    <system:String x:Key="CallCentarTritacke">Call Centar...</system:String>
+    <system:String x:Key="Datum_prijema_poziva">Date of receiving call</system:String>
+    <system:String x:Key="Datum_prijema_pozivaDvotacka">Date of receiving call:</system:String>
+    <system:String x:Key="Komentar">Comment</system:String>
+    <system:String x:Key="KomentarDvotacka">Comment:</system:String>
+    <system:String x:Key="DatumZavrsetkaNotifikacije">Date of completing notification</system:String>
+    <system:String x:Key="DatumZavrsetkaDvotacka">Date of completion:</system:String>
+    <system:String x:Key="ObaveznoPoljeKorisnik">Required field: User</system:String>
 </ResourceDictionary>
