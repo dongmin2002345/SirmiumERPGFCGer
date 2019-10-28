@@ -63,7 +63,7 @@
 
                     <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource Poslovni_partnerDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <popups:BusinessPartnerPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="businessPartnerPopup"
-                         CurrentBusinessPartner="{Binding Path=CurrentInvoice.BusinessPartner, Mode=TwoWay}"/>
+                         CurrentBusinessPartner="{Binding Path=CurrentBusinessPartnerInvoice, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Kupac_dvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
@@ -93,8 +93,12 @@
                     <DatePicker Grid.Row="5"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
                                 SelectedDate="{Binding Path=CurrentInvoice.Currency, Mode=TwoWay}"/>
                     <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="5"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
-                             x:Name="txtIsInPDV" Text="{Binding Path=CurrentInvoice.IsInPDV}" IsReadOnly="True"/>
+                    <!--<TextBox Grid.Row="5"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
+                             x:Name="txtIsInPDV" Text="{Binding Path=CurrentInvoice.IsInPDV}" IsReadOnly="True"/>-->
+                    <ComboBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2" IsEditable="False" IsHitTestVisible="False" Focusable="False"
+                            SelectedItem="{Binding Path=CurrentInvoice.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
+                            ItemsSource="{Binding Path=IsInPdvOptions}">
+                    </ComboBox>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource PopustDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <popups:DiscountPopup Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" x:Name="DiscountPopup"

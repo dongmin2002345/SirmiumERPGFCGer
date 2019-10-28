@@ -671,7 +671,7 @@
     <system:String x:Key="Podaci_o_fakturama">Podaci o fakturama</system:String>
     <system:String x:Key="Datum_Prometa_Dobara_I_UslugaDvotacka">Datum prometa  dobara i usluga:</system:String>
     <system:String x:Key="PopustDvotacka">Popust:</system:String>
-    <system:String x:Key="Poslovni_partner_ImeDvotacka">Poslovni partner:</system:String>
+    <system:String x:Key="Poslovni_partner_ImeDvotacka">Naziv poslovnog partnera:</system:String>
     <system:String x:Key="PIBDvotacka">PIB:</system:String>
     <system:String x:Key="PDVDvotacka">PDV:</system:String>
 </ResourceDictionary>
