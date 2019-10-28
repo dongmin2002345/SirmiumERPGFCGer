@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.Invoices;
 using ServiceInterfaces.Messages.Common.Invoices;
+using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Invoices;
@@ -9,6 +10,7 @@ using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Invoices;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -57,7 +59,12 @@ namespace SirmiumERPGFC.Views.Invoices
             }
         }
         #endregion
-
+        #region IsInPdvOptions
+        public ObservableCollection<String> IsInPdvOptions
+        {
+            get { return new ObservableCollection<String>(new List<string>() { (string)Application.Current.FindResource("DA"), (string)Application.Current.FindResource("NE") }); }
+        }
+        #endregion
         //#region StatusOptions
         //public ObservableCollection<String> StatusOptions
         //{
@@ -73,7 +80,35 @@ namespace SirmiumERPGFC.Views.Invoices
         //}
         //#endregion
 
+        #region CurrentBusinessPartnerInvoice
+        private BusinessPartnerViewModel _CurrentBusinessPartnerInvoice;
 
+        public BusinessPartnerViewModel CurrentBusinessPartnerInvoice
+        {
+            get { return _CurrentBusinessPartnerInvoice; }
+            set
+            {
+                if (_CurrentBusinessPartnerInvoice != value)
+                {
+                    _CurrentBusinessPartnerInvoice = value;
+                    NotifyPropertyChanged("CurrentBusinessPartnerInvoice");
+
+                    if (CurrentInvoice != null)
+                    {
+                        CurrentInvoice.Customer = _CurrentBusinessPartnerInvoice?.Customer;
+                        CurrentInvoice.PIB = _CurrentBusinessPartnerInvoice?.PIB;
+                        CurrentInvoice.BPName = _CurrentBusinessPartnerInvoice?.Name;
+                        CurrentInvoice.IsInPDV = _CurrentBusinessPartnerInvoice?.IsInPDV ?? false;
+                        //CurrentInvoice.Address = _CurrentBusinessPartnerInvoice?.Address;
+                        //CurrentInvoice.City.ZipCode = _CurrentBusinessPartnerInvoice?.City.ZipCode;
+                        //CurrentInvoice.City = _CurrentBusinessPartnerInvoice?.City;
+                        CurrentInvoice.Vat = _CurrentBusinessPartnerInvoice?.Vat;
+                        CurrentInvoice.Discount = _CurrentBusinessPartnerInvoice?.Discount;
+                    }
+                }
+            }
+        }
+        #endregion
 
         #region IsHeaderCreated
         private bool _IsHeaderCreated;
@@ -180,6 +215,7 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoice = InvoiceViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
+            CurrentBusinessPartnerInvoice = InvoiceViewModel.BusinessPartner;
         }
 
         #endregion
@@ -190,7 +226,7 @@ namespace SirmiumERPGFC.Views.Invoices
         {
             #region Validation
 
-            if (CurrentInvoice?.BusinessPartner == null)
+            if (CurrentBusinessPartnerInvoice == null)
             {
                 MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_polje_poslovni_partner"));
                 return;
@@ -202,7 +238,7 @@ namespace SirmiumERPGFC.Views.Invoices
 
                 SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
-
+                CurrentInvoice.BusinessPartner = CurrentBusinessPartnerInvoice;
                 CurrentInvoice.IsSynced = false;
                 CurrentInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
