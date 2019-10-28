@@ -95,15 +95,18 @@ namespace SirmiumERPGFC.Views.Invoices
 
                     if (CurrentInvoice != null)
                     {
-                        CurrentInvoice.Customer = _CurrentBusinessPartnerInvoice?.Customer;
-                        CurrentInvoice.PIB = _CurrentBusinessPartnerInvoice?.PIB;
-                        CurrentInvoice.BPName = _CurrentBusinessPartnerInvoice?.Name;
-                        CurrentInvoice.IsInPDV = _CurrentBusinessPartnerInvoice?.IsInPDV ?? false;
-                        //CurrentInvoice.Address = _CurrentBusinessPartnerInvoice?.Address;
-                        //CurrentInvoice.City.ZipCode = _CurrentBusinessPartnerInvoice?.City.ZipCode;
-                        //CurrentInvoice.City = _CurrentBusinessPartnerInvoice?.City;
-                        CurrentInvoice.Vat = _CurrentBusinessPartnerInvoice?.Vat;
-                        CurrentInvoice.Discount = _CurrentBusinessPartnerInvoice?.Discount;
+                        if (_CurrentBusinessPartnerInvoice?.Customer != null)
+                        {
+                            CurrentInvoice.Customer = _CurrentBusinessPartnerInvoice?.Customer;
+                            CurrentInvoice.PIB = _CurrentBusinessPartnerInvoice?.PIB;
+                            CurrentInvoice.BPName = _CurrentBusinessPartnerInvoice?.Name;
+                            CurrentInvoice.IsInPDV = _CurrentBusinessPartnerInvoice?.IsInPDV ?? false;
+                            //CurrentInvoice.Address = _CurrentBusinessPartnerInvoice?.Address;
+                            //CurrentInvoice.City.ZipCode = _CurrentBusinessPartnerInvoice?.City.ZipCode;
+                            //CurrentInvoice.City = _CurrentBusinessPartnerInvoice?.City;
+                            CurrentInvoice.Vat = _CurrentBusinessPartnerInvoice?.Vat;
+                            CurrentInvoice.Discount = _CurrentBusinessPartnerInvoice?.Discount;
+                        }
                     }
                 }
             }
@@ -201,7 +204,7 @@ namespace SirmiumERPGFC.Views.Invoices
 
         #region Constructor
 
-        public InvoiceAddEdit(InvoiceViewModel InvoiceViewModel, bool isCreateProcess, bool isPopup = false)
+        public InvoiceAddEdit(InvoiceViewModel invoiceViewModel, bool isCreateProcess, bool isPopup = false)
         {
             // Initialize service
             outputInvoiceService = DependencyResolver.Kernel.Get<IInvoiceService>();
@@ -212,10 +215,16 @@ namespace SirmiumERPGFC.Views.Invoices
 
             IsHeaderCreated = !isCreateProcess;
 
-            CurrentInvoice = InvoiceViewModel;
+            CurrentInvoice = invoiceViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
-            CurrentBusinessPartnerInvoice = InvoiceViewModel.BusinessPartner;
+            CurrentBusinessPartnerInvoice = invoiceViewModel.BusinessPartner;
+            //CurrentBusinessPartnerInvoice.Customer = CurrentInvoice?.Customer;
+            //CurrentBusinessPartnerInvoice.PIB = CurrentInvoice?.PIB;
+            //CurrentBusinessPartnerInvoice.Name = CurrentInvoice?.BPName;
+            //CurrentBusinessPartnerInvoice.IsInPDV = CurrentInvoice?.IsInPDV ?? false;
+            //CurrentBusinessPartnerInvoice.Vat = CurrentInvoice?.Vat;
+            //CurrentBusinessPartnerInvoice.Discount = CurrentInvoice?.Discount;
         }
 
         #endregion
