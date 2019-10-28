@@ -26,6 +26,7 @@ using System.Xml;
 using ServiceInterfaces.ViewModels.Statuses;
 using ServiceInterfaces.ViewModels.Common.Phonebooks;
 using ServiceInterfaces.ViewModels.Common.Invoices;
+using ServiceInterfaces.ViewModels.Common.CallCentars;
 
 namespace ApiExtension.Sender
 {
@@ -322,7 +323,13 @@ namespace ApiExtension.Sender
                 { typeof(List<InvoiceItemViewModel>), "InvoiceItem" },
 
             #endregion
-		};
+
+            #region CallCentars
+            { typeof(CallCentarViewModel), "CallCentar" },
+            { typeof(List<CallCentarViewModel>), "CallCentar" },
+
+            #endregion
+        };
 
 
         static WpfApiHandler()

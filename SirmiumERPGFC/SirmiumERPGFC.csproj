@@ -232,6 +232,7 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
+    <Compile Include="Repository\CallCentars\CallCentarSQLiteRepository.cs" />
     <Compile Include="Repository\Companies\CompanyUserSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteCalculationSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteDocumentSQLiteRepository.cs" />
@@ -297,6 +298,9 @@
     </Compile>
     <Compile Include="ViewComponents\Popups\BusinessPartnerPopup.xaml.cs">
       <DependentUpon>BusinessPartnerPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\UserPopup.xaml.cs">
+      <DependentUpon>UserPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\CityPopup.xaml.cs">
       <DependentUpon>CityPopup.xaml</DependentUpon>
@@ -396,6 +400,12 @@
     </Compile>
     <Compile Include="Views\BusinessPartners\BusinessPartner_Types_AddEdit.xaml.cs">
       <DependentUpon>BusinessPartner_Types_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CallCentars\CallCentar_AddEdit.xaml.cs">
+      <DependentUpon>CallCentar_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CallCentars\CallCentar_List.xaml.cs">
+      <DependentUpon>CallCentar_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Common\SubmitConfirmation.xaml.cs">
       <DependentUpon>SubmitConfirmation.xaml</DependentUpon>
@@ -756,6 +766,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ViewComponents\Popups\UserPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewComponents\Popups\CityPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -885,6 +899,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusinessPartners\BusinessPartner_Types_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CallCentars\CallCentar_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CallCentars\CallCentar_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,6 +8,7 @@ using RepositoryCore.Context;
 using RepositoryCore.DbSeed;
 using RepositoryCore.DbViews.Banks;
 using RepositoryCore.DbViews.Common.BusinessPartners;
+using RepositoryCore.DbViews.Common.CallCentars;
 using RepositoryCore.DbViews.Common.Companies;
 using RepositoryCore.DbViews.Common.Identity;
 using RepositoryCore.DbViews.Common.Invoices;
@@ -50,6 +51,7 @@ using ServiceCore.Implementations.Vats;
 using ServiceInterfaces.Abstractions;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Abstractions.Common.CallCentars;
 using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
@@ -245,6 +247,8 @@ namespace SirmiumERPWeb
             services.AddScoped<IInvoiceService, InvoiceService>();
             services.AddScoped<IInvoiceItemService, InvoiceItemService>();
 
+            services.AddScoped<ICallCentarService, CallCentarService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -358,6 +362,8 @@ namespace SirmiumERPWeb
 
             InvoiceView.CreateView();
             InvoiceItemView.CreateView();
+
+            CallCentarView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));

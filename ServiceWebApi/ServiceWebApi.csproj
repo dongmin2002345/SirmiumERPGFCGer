@@ -51,6 +51,7 @@
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerPhoneService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerTypeService.cs" />
+    <Compile Include="Implementations\Common\CallCentars\CallCentarService.cs" />
     <Compile Include="Implementations\Common\Companies\CompanyUserService.cs" />
     <Compile Include="Implementations\Common\InputInvoices\InputInvoiceDocumentService.cs" />
     <Compile Include="Implementations\Common\InputInvoices\InputInvoiceNoteService.cs" />

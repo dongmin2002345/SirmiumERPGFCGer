@@ -2,6 +2,7 @@
 using ServiceInterfaces.Abstractions;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Abstractions.Common.CallCentars;
 using ServiceInterfaces.Abstractions.Common.Companies;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
@@ -22,6 +23,7 @@ using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Abstractions.Vats;
 using ServiceWebApi.Implementations.Banks;
 using ServiceWebApi.Implementations.Common.BusinessPartners;
+using ServiceWebApi.Implementations.Common.CallCentars;
 using ServiceWebApi.Implementations.Common.Companies;
 using ServiceWebApi.Implementations.Common.Identity;
 using ServiceWebApi.Implementations.Common.InputInvoices;
@@ -140,7 +142,7 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<IInvoiceService>().To<InvoiceService>();
                 Kernel.Bind<IInvoiceItemService>().To<InvoiceItemService>();
-
+                Kernel.Bind<ICallCentarService>().To<CallCentarService>();
             }
         }
     }

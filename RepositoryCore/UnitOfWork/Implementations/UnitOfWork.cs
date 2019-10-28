@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Banks;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
+using RepositoryCore.Abstractions.Common.CallCentars;
 using RepositoryCore.Abstractions.Common.Companies;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Invoices;
@@ -21,6 +22,7 @@ using RepositoryCore.Abstractions.Vats;
 using RepositoryCore.Context;
 using RepositoryCore.Implementations.Banks;
 using RepositoryCore.Implementations.Common.BusinessPartners;
+using RepositoryCore.Implementations.Common.CallCentars;
 using RepositoryCore.Implementations.Common.Companies;
 using RepositoryCore.Implementations.Common.Identity;
 using RepositoryCore.Implementations.Common.Invoices;
@@ -131,6 +133,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private IInvoiceRepository invoiceRepository;
         private IInvoiceItemRepository invoiceItemRepository;
+
+        private ICallCentarRepository callCentarRepository;
 
         #endregion
 
@@ -632,6 +636,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (invoiceItemRepository == null)
                 invoiceItemRepository = new InvoiceItemViewRepository(context);
             return invoiceItemRepository;
+        }
+
+        public ICallCentarRepository GetCallCentarRepository()
+        {
+            if (callCentarRepository == null)
+                callCentarRepository = new CallCentarViewRepository(context);
+            return callCentarRepository;
         }
 
         #endregion
