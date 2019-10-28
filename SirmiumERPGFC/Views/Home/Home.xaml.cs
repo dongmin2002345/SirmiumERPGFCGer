@@ -1,10 +1,12 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using ServiceInterfaces.Abstractions.Common.CallCentars;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
 using ServiceInterfaces.Abstractions.Common.OutputInvoices;
+using ServiceInterfaces.Abstractions.Common.Phonebook;
 using ServiceInterfaces.Abstractions.Common.Prices;
 using ServiceInterfaces.Abstractions.Common.Professions;
 using ServiceInterfaces.Abstractions.Common.Sectors;
@@ -19,12 +21,14 @@ using ServiceInterfaces.Abstractions.Vats;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Banks;
 using SirmiumERPGFC.Repository.BusinessPartners;
+using SirmiumERPGFC.Repository.CallCentars;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Repository.InputInvoices;
 using SirmiumERPGFC.Repository.Limitations;
 using SirmiumERPGFC.Repository.Locations;
 using SirmiumERPGFC.Repository.OutputInvoices;
+using SirmiumERPGFC.Repository.Phonebooks;
 using SirmiumERPGFC.Repository.Prices;
 using SirmiumERPGFC.Repository.Professions;
 using SirmiumERPGFC.Repository.Sectors;
@@ -122,7 +126,10 @@ namespace SirmiumERPGFC.Views.Home
         private IShipmentService shipmentService; 
         //private IShipmentDocumentService shipmentDocumentService;
 
-        private IToDoService toDoService; 
+        private IToDoService toDoService;
+
+        private IPhonebookService phonebookService;
+        private ICallCentarService callCentarService;
 
         #endregion
 
@@ -265,7 +272,10 @@ namespace SirmiumERPGFC.Views.Home
             statusService = DependencyResolver.Kernel.Get<IStatusService>(); 
             shipmentService = DependencyResolver.Kernel.Get<IShipmentService>(); 
 
-            toDoService = DependencyResolver.Kernel.Get<IToDoService>(); 
+            toDoService = DependencyResolver.Kernel.Get<IToDoService>();
+
+            phonebookService = DependencyResolver.Kernel.Get<IPhonebookService>();
+            callCentarService = DependencyResolver.Kernel.Get<ICallCentarService>();
 
             InitializeComponent();
 
@@ -861,6 +871,30 @@ namespace SirmiumERPGFC.Views.Home
                 MaxItemCounter = toSync;
                 ItemValue = synced;
                 ItemContent = "Podsetnik (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
+            });
+            #endregion
+
+            #region 49. Telefonski imenik
+            ItemContent = "Telefonski imenik (" + ++counter + "/" + numOfTables + "): ";
+            MinItemCounter = 0;
+            ItemValue = 0;
+            new PhonebookSQLiteRepository().Sync(phonebookService, (synced, toSync) =>
+            {
+                MaxItemCounter = toSync;
+                ItemValue = synced;
+                ItemContent = "Telefonski imenik (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
+            });
+            #endregion
+
+            #region 50. Call centar
+            ItemContent = "Call centar (" + ++counter + "/" + numOfTables + "): ";
+            MinItemCounter = 0;
+            ItemValue = 0;
+            new CallCentarSQLiteRepository().Sync(callCentarService, (synced, toSync) =>
+            {
+                MaxItemCounter = toSync;
+                ItemValue = synced;
+                ItemContent = "Call centar (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
             });
             #endregion
 

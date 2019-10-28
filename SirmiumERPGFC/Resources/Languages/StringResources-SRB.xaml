@@ -682,7 +682,7 @@
     <system:String x:Key="Datum_prijema_pozivaDvotacka">Datum prijema poziva:</system:String>
     <system:String x:Key="Komentar">Komentar</system:String>
     <system:String x:Key="KomentarDvotacka">Komentar:</system:String>
-    <system:String x:Key="DatumZavrsetkaNotifikacije">Datum zavrsetka notifikacije</system:String>
-    <system:String x:Key="DatumZavrsetkaDvotacka">Datum zavrsetka:</system:String>
+    <system:String x:Key="DatumZavrsetkaNotifikacije">Datum završetka notifikacije</system:String>
+    <system:String x:Key="DatumZavrsetkaDvotacka">Datum završetka:</system:String>
     <system:String x:Key="ObaveznoPoljeKorisnik">Obavezno polje: Korisnik</system:String>
 </ResourceDictionary>
