@@ -367,6 +367,14 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm = new InvoiceItemViewModel();
             CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
+            if (CurrentInvoice.Vat?.Amount != null)
+            {
+                CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+            }
+            if (CurrentInvoice.Discount?.Amount != null)
+            {
+                CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+            }
         }
 
         #endregion
