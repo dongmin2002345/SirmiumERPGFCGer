@@ -1353,7 +1353,9 @@
     </Content>
     <Resource Include="Resources\Icons\Banka Ikonica.png" />
     <Resource Include="Resources\Icons\Banka_Ikonica.png" />
-    <Resource Include="Resources\Icons\bank.png" />
+    <Content Include="Resources\Icons\bank.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\barcode-tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1460,7 +1462,9 @@
     <Resource Include="Resources\Icons\Gradovi_Ikonica.png" />
     <Resource Include="Resources\Icons\Gradiliste.png" />
     <Resource Include="Resources\Icons\Gradiliste02.png" />
-    <Resource Include="Resources\Icons\Gradovi2.png" />
+    <Content Include="Resources\Icons\Gradovi2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\ham.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1487,7 +1491,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Korisnici01.png" />
-    <Resource Include="Resources\Icons\KurirskaSluzba.png" />
+    <Content Include="Resources\Icons\KurirskaSluzba.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\lager po magacinima.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1563,7 +1569,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\PDFBeli.png" />
-    <Resource Include="Resources\Icons\PDV procenat.png" />
+    <Content Include="Resources\Icons\PDV procenat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\percentage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1587,8 +1595,12 @@
     </Content>
     <Resource Include="Resources\Icons\Porodica01.png" />
     <Resource Include="Resources\Icons\Plus02.png" />
-    <Resource Include="Resources\Icons\Popust.png" />
-    <Resource Include="Resources\Icons\Posiljke.png" />
+    <Content Include="Resources\Icons\Popust.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Icons\Posiljke.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\price-tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1665,7 +1677,9 @@
     <Content Include="Resources\Icons\Sledljivost.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Status.png" />
+    <Content Include="Resources\Icons\Status.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\steak.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1675,7 +1689,9 @@
     <Content Include="Resources\Icons\stock1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\tax.png" />
+    <Content Include="Resources\Icons\tax.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Icons\Sunhronizuj.png" />
     <Resource Include="Resources\Icons\StrelicaDesna.png" />
     <Resource Include="Resources\Icons\StrelicaLeva.png" />
