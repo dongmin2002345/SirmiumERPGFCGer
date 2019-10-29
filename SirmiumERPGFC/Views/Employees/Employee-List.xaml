@@ -327,7 +327,7 @@
 
         <TabControl TabStripPlacement="Top" Grid.Row="3" Grid.Column="0" Margin="0 1 0 0" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
             <TabItem Header="{DynamicResource Istorija_radnika}">
-                <GroupBox Header="{DynamicResource Istorija_radnika}" Grid.Column="0" Margin="2 1 1 2">
+                <GroupBox Header="{DynamicResource Istorija_radnika}" Grid.Column="0" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -343,12 +343,12 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Button x:Name="btnAddCard" Click="BtnAddCards_Click" HorizontalAlignment="Left" Margin="2" Width="150">
+                            <!--<Button x:Name="btnAddCard" Click="BtnAddCards_Click" HorizontalAlignment="Left" Margin="2" Width="150">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                     <TextBlock Text="{DynamicResource DODAJ}" FontWeight="Bold" />
                                 </StackPanel>
-                            </Button>
+                            </Button>-->
                         </Grid>
 
                         <Separator Grid.Row="1" Margin="2" />
@@ -417,7 +417,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Fajlovi_za_radnika}">
-                <GroupBox Header="{DynamicResource Fajlovi_za_radnika}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Fajlovi_za_radnika}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -518,7 +518,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Članovi_porodice}">
-                <GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Članovi_porodice}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -607,7 +607,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Napomena}">
-                <GroupBox Header="{DynamicResource Napomena}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Napomena}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -700,7 +700,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Zanimanja}">
-                <GroupBox Header="{DynamicResource Zanimanja}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Zanimanja}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -788,7 +788,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Dozvole}">
-                <GroupBox Header="{DynamicResource Dozvole}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Dozvole}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -877,7 +877,7 @@
             </TabItem>
 
             <TabItem Header="PDF">
-                <GroupBox Grid.Row="5" Margin="2" Header="PDF">
+                <GroupBox Grid.Row="5" Margin="-1" Header="PDF">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
