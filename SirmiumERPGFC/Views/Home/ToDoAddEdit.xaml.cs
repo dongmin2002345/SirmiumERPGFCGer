@@ -171,11 +171,10 @@ namespace SirmiumERPGFC.Views.Home
                 SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
+                CurrentToDo.IsSynced = false;
                 CurrentToDo.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentToDo.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentToDo.IsSynced = false;
-                CurrentToDo.UpdatedAt = DateTime.Now;
 
                 ToDoResponse response = new ToDoSQLiteRepository().Delete(CurrentToDo.Identifier);
                 response = new ToDoSQLiteRepository().Create(CurrentToDo);
