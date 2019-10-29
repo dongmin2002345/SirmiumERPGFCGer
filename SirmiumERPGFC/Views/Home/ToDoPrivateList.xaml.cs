@@ -175,20 +175,41 @@ namespace SirmiumERPGFC.Views.Home
                 return;
             }
 
-            // Delete data
-            var result = toDoService.Delete(CurrentToDo.Identifier);
-            if (result.Success)
+            Thread th = new Thread(() =>
             {
+
+
+                if (CurrentToDo == null)
+                {
+                    MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
+
+                    return;
+                }
+
+                ToDoResponse response = toDoService.Delete(CurrentToDo.Identifier);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+
+                    return;
+                }
+
+                response = new ToDoSQLiteRepository().Delete(CurrentToDo.Identifier);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+
+                    return;
+                }
+
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
 
-                Thread displayThread = new Thread(() => SyncData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-            else
-            {
-                MainWindow.ErrorMessage = result.Message;
-            }
+                DisplayData();
+
+
+            });
+            th.IsBackground = true;
+            th.Start();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
