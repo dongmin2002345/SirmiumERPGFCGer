@@ -28,8 +28,8 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
                 "sector.Id AS SectorId, sector.Identifier AS SectorIdentifier, sector.Code AS SectorCode, sector.Name AS SectorName, " +
                 "agency.Id AS AgencyId, agency.Identifier AS AgencyIdentifier, agency.Code AS AgencyCode, agency.Name AS AgencyName, " +
-                "vat.Id AS VatId, vat.Identifier AS VatIdentifier, vat.Code AS VatCode, vat.Description AS VatDescription, " +
-                "discount.Id AS DiscountId, discount.Identifier AS DiscountIdentifier, discount.Code AS DiscountCode, discount.Name AS DiscountName, " +
+                "vat.Id AS VatId, vat.Identifier AS VatIdentifier, vat.Code AS VatCode, vat.Description AS VatDescription, vat.Amount AS VatAmount, " +
+                "discount.Id AS DiscountId, discount.Identifier AS DiscountIdentifier, discount.Code AS DiscountCode, discount.Name AS DiscountName, discount.Amount AS DiscountAmount, " +
                 "businessPartner.TaxNr, businessPartner.CommercialNr, businessPartner.ContactPersonGer, businessPartner.VatDeductionFrom, businessPartner.VatDeductionTo,  businessPartner.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (businessPartner.UpdatedAt), (taxAdministration.UpdatedAt), (country.UpdatedAt), (sector.UpdatedAt), (agency.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

@@ -184,8 +184,14 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm = new InvoiceItemViewModel();
             CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
-            CurrentInvoiceItemForm.PDV = invoice.Vat.Amount;
-            CurrentInvoiceItemForm.Discount = invoice.Discount.Amount;
+            if (CurrentInvoice.Vat?.Amount != null)
+            {
+                CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+            }
+            if (CurrentInvoice.Discount?.Amount != null)
+            {
+                CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+            }
 
             Thread displayThread = new Thread(() => DisplayInvoiceItemData());
             displayThread.IsBackground = true;
@@ -270,16 +276,28 @@ namespace SirmiumERPGFC.Views.Invoices
                     CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
                     CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
                     CurrentInvoiceItemForm.IsSynced = false;
-                    CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
-                    CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+                    if (CurrentInvoice.Vat?.Amount != null)
+                    {
+                        CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                    }
+                    if (CurrentInvoice.Discount?.Amount != null)
+                    {
+                        CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+                    }
                     return;
                 }
                 CurrentInvoiceItemForm = new InvoiceItemViewModel();
                 CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
                 CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
                 CurrentInvoiceItemForm.IsSynced = false;
-                CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
-                CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+                if (CurrentInvoice.Vat?.Amount != null)
+                {
+                    CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                }
+                if (CurrentInvoice.Discount?.Amount != null)
+                {
+                    CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+                }
 
                 InvoiceCreatedUpdated();
 
