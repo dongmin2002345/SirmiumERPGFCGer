@@ -1421,7 +1421,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Drzava.png" />
-    <Resource Include="Resources\Icons\Dodavanje_Drzave1.png" />
+    <Content Include="Resources\Icons\Dodavanje_Drzave1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Icons\Dodaj01.png" />
     <Resource Include="Resources\Icons\DuplaStrelcaLeva.png" />
     <Resource Include="Resources\Icons\DuplaStrelicaDesna.png" />
@@ -1512,7 +1514,9 @@
     <Resource Include="Resources\Icons\Opstina Ikonica.png" />
     <Resource Include="Resources\Icons\Opstina_Ikonica.png" />
     <Resource Include="Resources\Icons\Opstine.png" />
-    <Resource Include="Resources\Icons\Opstine2.png" />
+    <Content Include="Resources\Icons\Opstine2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Icons\Ok02.png" />
     <Resource Include="Resources\Icons\Ok10.png" />
     <Resource Include="Resources\Icons\Ogranicenja01.png" />
@@ -1616,7 +1620,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Region.png" />
-    <Resource Include="Resources\Icons\Regioni.png" />
+    <Content Include="Resources\Icons\Regioni.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\requisition.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1710,9 +1716,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Zanimanja.png" />
-    <Resource Include="Resources\Icons\Zatvori.png" />
-    <Resource Include="Resources\Icons\Zanimanje.png" />
-    <Resource Include="Resources\Icons\_cancel.png" />
+    <Content Include="Resources\Icons\Zatvori.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Icons\Zanimanje.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Icons\_cancel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Icons\_correct.png" />
     <Content Include="Resources\image005.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
