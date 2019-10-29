@@ -73,24 +73,26 @@
                     <TextBox Grid.Row="1"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtQuantity"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentInvoiceItemForm.Quantity, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cena_Sa_PDVDvotacka}" />
-                    <TextBox Grid.Row="2"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPriceWithPDV"  TextWrapping="Wrap"
+                   
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Cena_Bez_PDVDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="2"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPriceWithoutPDV"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.PriceWithoutPDV, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cena_Sa_PDVDvotacka}" />
+                    <TextBox Grid.Row="2"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPriceWithPDV"  TextWrapping="Wrap" IsEnabled="False"
                              Text="{Binding Path=CurrentInvoiceItemForm.PriceWithPDV, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource Cena_Bez_PDVDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="2"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPriceWithoutPDV"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentInvoiceItemForm.PriceWithoutPDV, Mode=TwoWay}"/>
-
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PopustDvotacka}" />
-                    <TextBox Grid.Row="3"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtDiscount"  TextWrapping="Wrap"
+                    <TextBox Grid.Row="3"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtDiscount"  TextWrapping="Wrap" IsEnabled="False"
                              Text="{Binding Path=CurrentInvoiceItemForm.Discount, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PDVProcenatDvotacka}" />
                     <TextBox Grid.Row="3"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPDVPercent"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentInvoiceItemForm.PDVPercent, Mode=TwoWay}"/>
-                    
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PDVDvotacka}" />
-                    <TextBox Grid.Row="4"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPDV"  TextWrapping="Wrap"
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PDVDvotacka}" IsEnabled="False" />
+                    <TextBox Grid.Row="4"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPDV"  TextWrapping="Wrap" IsEnabled="False"
                              Text="{Binding Path=CurrentInvoiceItemForm.PDV, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource IznosDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />

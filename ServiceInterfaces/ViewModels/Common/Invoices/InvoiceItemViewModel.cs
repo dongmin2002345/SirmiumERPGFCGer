@@ -108,7 +108,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             }
         }
         #endregion
-
+        private decimal amountTemp;
         #region PriceWithoutPDV
         private decimal _PriceWithoutPDV;
 
@@ -121,6 +121,9 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _PriceWithoutPDV = value;
                     NotifyPropertyChanged("PriceWithoutPDV");
+                    amountTemp = (PriceWithoutPDV * Quantity) + (PriceWithoutPDV * Quantity * PDV/100);
+                    Amount = amountTemp - amountTemp * Discount / 100;
+                    PriceWithPDV = amountTemp / Quantity;
                 }
             }
         }
