@@ -155,6 +155,7 @@ namespace SirmiumERPGFC.Views.Employees
 			{
 				SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
+
                 CurrentLicenceType.IsSynced = false;
 
                 CurrentLicenceType.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };

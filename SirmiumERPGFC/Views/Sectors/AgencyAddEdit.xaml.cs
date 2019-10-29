@@ -171,26 +171,15 @@ namespace SirmiumERPGFC.Views.Sectors
                 SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
+                CurrentAgency.IsSynced = false;
+
                 CurrentAgency.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentAgency.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentAgency.IsSynced = false;
-                CurrentAgency.UpdatedAt = DateTime.Now;
-
-                AgencyResponse response = new AgencySQLiteRepository().Delete(CurrentAgency.Identifier);
-                response = new AgencySQLiteRepository().Create(CurrentAgency);
+                AgencyResponse response = AgencyService.Create(CurrentAgency);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
-                    return;
-                }
-
-                response = AgencyService.Create(CurrentAgency);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }

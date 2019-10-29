@@ -686,4 +686,8 @@
     <system:String x:Key="DatumZavrsetkaNotifikacije">Datum des Abschlusses der Benachrichtigung</system:String>
     <system:String x:Key="DatumZavrsetkaDvotacka">Datum des Abschlusses:</system:String>
     <system:String x:Key="ObaveznoPoljeKorisnik">Pflichtfeld: Benutzer</system:String>
+    <system:String x:Key="Računi_tritacke">Rechnungen...</system:String>
+    <system:String x:Key="Stavke_tritacke">Einträge...</system:String>
+    <system:String x:Key="Računi">Rechnungen</system:String>
+
 </ResourceDictionary>

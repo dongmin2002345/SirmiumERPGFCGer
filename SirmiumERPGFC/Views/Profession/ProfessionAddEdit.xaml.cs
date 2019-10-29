@@ -165,22 +165,13 @@ namespace SirmiumERPGFC.Views.Profession
                 CurrentProfession.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
                 CurrentProfession.IsSynced = false;
-                CurrentProfession.UpdatedAt = DateTime.Now;
 
-                ProfessionResponse response = new ProfessionSQLiteRepository().Delete(CurrentProfession.Identifier);
-                response = new ProfessionSQLiteRepository().Create(CurrentProfession);
+                //ProfessionResponse response = new ProfessionSQLiteRepository().Delete(CurrentProfession.Identifier);
+
+                ProfessionResponse response = professionService.Create(CurrentProfession);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
-                    return;
-                }
-
-                response = professionService.Create(CurrentProfession);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
