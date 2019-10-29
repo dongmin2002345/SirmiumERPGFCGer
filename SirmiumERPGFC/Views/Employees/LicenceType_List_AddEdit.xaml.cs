@@ -155,27 +155,15 @@ namespace SirmiumERPGFC.Views.Employees
 			{
 				SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
+                CurrentLicenceType.IsSynced = false;
 
-				CurrentLicenceType.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                CurrentLicenceType.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
 				CurrentLicenceType.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-				CurrentLicenceType.IsSynced = false;
-				CurrentLicenceType.UpdatedAt = DateTime.Now;
-
-				LicenceTypeResponse response = new LicenceTypeSQLiteRepository().Delete(CurrentLicenceType.Identifier);
-				response = new LicenceTypeSQLiteRepository().Create(CurrentLicenceType);
+                LicenceTypeResponse response = licenceTypeService.Create(CurrentLicenceType);
 				if (!response.Success)
 				{
-					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
-					return;
-				}
-
-				response = licenceTypeService.Create(CurrentLicenceType);
-				if (!response.Success)
-				{
-					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+					MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
 				}
