@@ -167,7 +167,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             TaxAdministrationAddEdit addEditForm = new TaxAdministrationAddEdit(TaxAdministration, true, true);
             addEditForm.TaxAdministrationCreatedUpdated += new TaxAdministrationHandler(TaxAdministrationAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o delatnostima", 95, addEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Poreska_Uprava")), 95, addEditForm);
 
             txtTaxAdministration.Focus();
         }

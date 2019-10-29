@@ -59,8 +59,8 @@
                               SelectedItem="{Binding Path=CurrentUser}">
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />-->
-                            <DataGridTextColumn SortMemberPath="FirstName" Header="Ime" Binding="{Binding FirstName}" IsReadOnly="True" MinWidth="200"/>
-                            <DataGridTextColumn SortMemberPath="LastName" Header="Prezime" Binding="{Binding LastName}" IsReadOnly="True" MinWidth="200"/>
+                            <DataGridTextColumn SortMemberPath="FirstName" Header="{DynamicResource Ime}" Binding="{Binding FirstName}" IsReadOnly="True" MinWidth="200"/>
+                            <DataGridTextColumn SortMemberPath="LastName" Header="{DynamicResource Prezime}" Binding="{Binding LastName}" IsReadOnly="True" MinWidth="200"/>
 
                         </DataGrid.Columns>
                     </DataGrid>

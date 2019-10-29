@@ -164,7 +164,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             Vat_AddEdit vatAddEditForm = new Vat_AddEdit(vat, true, true);
             vatAddEditForm.VatCreatedUpdated += new VatHandler(VatAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o PDV-u", 95, vatAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, (string)Application.Current.FindResource("Podaci_o_PDV_u"), 95, vatAddEditForm);
 
             txtVat.Focus();
         }

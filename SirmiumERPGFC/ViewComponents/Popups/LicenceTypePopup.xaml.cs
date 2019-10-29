@@ -161,7 +161,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             LicenceType_List_AddEdit LicenceTypeAddEditForm = new LicenceType_List_AddEdit(LicenceType, true, true);
             LicenceTypeAddEditForm.LicenceTypeCreatedUpdated += new LicenceTypeHandler(LicenceTypeAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o drzavama", 95, LicenceTypeAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_dozvolu")), 95, LicenceTypeAddEditForm);
 
             txtLicenceType.Focus();
         }

@@ -195,7 +195,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             MunicipalityAddEdit municipalityAddEditForm = new MunicipalityAddEdit(municipality, true, true);
             municipalityAddEditForm.MunicipalityCreatedUpdated += new MunicipalityHandler(MunicipalityAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o opštini", 95, municipalityAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_opštinama")), 95, municipalityAddEditForm);
 
             txtMunicipality.Focus();
         }
