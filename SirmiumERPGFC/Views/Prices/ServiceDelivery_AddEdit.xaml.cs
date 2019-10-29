@@ -156,20 +156,10 @@ namespace SirmiumERPGFC.Views.Prices
                 CurrentServiceDelivery.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentServiceDelivery.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                ServiceDeliveryResponse response = new ServiceDeliverySQLiteRepository().Delete(CurrentServiceDelivery.Identifier);
-                response = new ServiceDeliverySQLiteRepository().Create(CurrentServiceDelivery);
+                ServiceDeliveryResponse response = ServiceDeliveryService.Create(CurrentServiceDelivery);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
-                    SubmitButtonEnabled = true;
-                    return;
-                }
-
-                response = ServiceDeliveryService.Create(CurrentServiceDelivery);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
                     SubmitButtonEnabled = true;
                 }

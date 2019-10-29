@@ -163,26 +163,15 @@ namespace SirmiumERPGFC.Views.Locations
             {
                 SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
+                CurrentCountry.IsSynced = false;
 
                 CurrentCountry.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentCountry.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
-
-                CurrentCountry.IsSynced = false;
-
-                CountryResponse response = new CountrySQLiteRepository().Delete(CurrentCountry.Identifier);
-                response = new CountrySQLiteRepository().Create(CurrentCountry);
+                             
+                CountryResponse response = countryService.Create(CurrentCountry);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
-                    return;
-                }
-
-                response = countryService.Create(CurrentCountry);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }

@@ -171,27 +171,15 @@ namespace SirmiumERPGFC.Views.TaxAdministrations
             {
                 SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
+                CurrentTaxAdministration.IsSynced = false;
 
                 CurrentTaxAdministration.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentTaxAdministration.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentTaxAdministration.IsSynced = false;
-                CurrentTaxAdministration.UpdatedAt = DateTime.Now;
-
-                TaxAdministrationResponse response = new TaxAdministrationSQLiteRepository().Delete(CurrentTaxAdministration.Identifier);
-                response = new TaxAdministrationSQLiteRepository().Create(CurrentTaxAdministration);
+                TaxAdministrationResponse response = taxAdministrationService.Create(CurrentTaxAdministration);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
-                    return;
-                }
-
-                response = taxAdministrationService.Create(CurrentTaxAdministration);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));
                     SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
                     SaveButtonEnabled = true;
                 }
