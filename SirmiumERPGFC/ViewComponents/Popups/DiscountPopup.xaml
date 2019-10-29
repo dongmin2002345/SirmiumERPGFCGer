@@ -59,8 +59,8 @@
                               ItemsSource="{Binding Path=DiscountsFromDB}"
                               SelectedItem="{Binding Path=CurrentDiscount}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Amount" Header="Iznos" Binding="{Binding Amount}" IsReadOnly="True" MinWidth="300"/>
+                            <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Amount}" IsReadOnly="True" MinWidth="300"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

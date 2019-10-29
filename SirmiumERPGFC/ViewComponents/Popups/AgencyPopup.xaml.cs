@@ -192,7 +192,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             AgencyAddEdit addEditForm = new AgencyAddEdit(Agency, true, true);
             addEditForm.AgencyCreatedUpdated += new AgencyHandler(AgencyAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o delatnostima", 95, addEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Delatnosti")), 95, addEditForm);
 
             txtAgency.Focus();
         }

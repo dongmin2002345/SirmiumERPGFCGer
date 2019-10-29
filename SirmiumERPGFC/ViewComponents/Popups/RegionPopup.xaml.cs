@@ -190,7 +190,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             RegionAddEdit regionAddEditForm = new RegionAddEdit(region, true, true);
             regionAddEditForm.RegionCreatedUpdated += new RegionHandler(RegionAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o regionu", 95, regionAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_regionu")), 95, regionAddEditForm);
 
             txtRegion.Focus();
         }

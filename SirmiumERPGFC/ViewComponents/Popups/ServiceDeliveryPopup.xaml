@@ -59,8 +59,8 @@
                               ItemsSource="{Binding Path=ServiceDeliverysFromDB}"
                               SelectedItem="{Binding Path=CurrentServiceDelivery}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300"/>
+                            <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

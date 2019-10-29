@@ -186,7 +186,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             Bank_List_AddEdit regionAddEditForm = new Bank_List_AddEdit(region, true, true);
             regionAddEditForm.BankCreatedUpdated += new BankHandler(BankAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o regionu", 95, regionAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_bankama")), 95, regionAddEditForm);
 
             txtBank.Focus();
         }

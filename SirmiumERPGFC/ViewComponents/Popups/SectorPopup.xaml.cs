@@ -190,7 +190,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             Sector_AddEdit SectorAddEditForm = new Sector_AddEdit(Sector, true, true);
             SectorAddEditForm.SectorCreatedUpdated += new SectorHandler(SectorAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o sektorima", 95, SectorAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_sektrorima")), 95, SectorAddEditForm);
 
             txtSector.Focus();
         }

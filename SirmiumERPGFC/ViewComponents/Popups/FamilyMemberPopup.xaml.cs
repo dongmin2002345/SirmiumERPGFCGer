@@ -161,7 +161,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             FamilyMember_List_AddEdit FamilyMemberAddEditForm = new FamilyMember_List_AddEdit(FamilyMember, true, true);
             FamilyMemberAddEditForm.FamilyMemberCreatedUpdated += new FamilyMemberHandler(FamilyMemberAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o članovima porodice", 95, FamilyMemberAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_clanovima_porodice")), 95, FamilyMemberAddEditForm);
 
             txtFamilyMember.Focus();
         }

@@ -50,9 +50,9 @@
                               ItemsSource="{Binding Path=StatusesFromDB}"
                               SelectedItem="{Binding Path=CurrentStatus}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="Šifra" Binding="{Binding Code}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Name" Header="Naziv" Binding="{Binding Name}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="ShortName" Header="Skraćenica" Binding="{Binding ShortName}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="ShortName" Header="{DynamicResource Skraćenica}" Binding="{Binding ShortName}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseStatusPopup" Click="btnCloseStatusPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">
