@@ -180,6 +180,11 @@
                         <DataGridTextColumn SortMemberPath="InternalCode" Header="{DynamicResource Šifra}" Binding="{Binding InternalCode}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv_gradilišta}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Status.Name" Header="{DynamicResource Status}" Binding="{Binding Status.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="StatusDate" Binding="{Binding StatusDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_statusa}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Grad}" Binding="{Binding City.Name}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="Auto" IsReadOnly="True" />

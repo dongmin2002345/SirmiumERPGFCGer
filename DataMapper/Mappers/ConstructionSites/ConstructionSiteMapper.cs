@@ -46,7 +46,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Country = constructionSite.Country?.ConvertToCountryViewModelLite(),
                 BusinessPartner = constructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
                 Status = constructionSite.Status?.ConvertToStatusViewModelLite(),
-
+                StatusDate = constructionSite.StatusDate,
                 IsActive = constructionSite.Active,
 
                 CreatedBy = constructionSite.CreatedBy?.ConvertToUserViewModelLite(),
@@ -87,7 +87,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 ProContractDate = constructionSite.ProContractDate,
                 ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
-
+                StatusDate = constructionSite.StatusDate,
                 IsActive = constructionSite.Active,
 
                 CreatedAt = constructionSite.CreatedAt,
@@ -118,7 +118,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 CountryId = constructionSiteViewModel.Country?.Id ?? null,
                 BusinessPartnerId = constructionSiteViewModel.BusinessPartner?.Id ?? null,
                 StatusId = constructionSiteViewModel.Status?.Id ?? null,
-
+                StatusDate = constructionSiteViewModel.StatusDate,
                 CreatedById = constructionSiteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = constructionSiteViewModel.Company?.Id ?? null,
 

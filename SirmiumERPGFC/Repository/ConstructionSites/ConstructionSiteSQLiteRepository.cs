@@ -43,6 +43,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
            "StatusIdentifier GUID NULL, " +
            "StatusCode NVARCHAR(2048) NULL, " +
            "StatusName NVARCHAR(2048) NULL, " +
+            "StatusDate DATETIME NULL, " +
            "IsSynced BOOL NULL, " +
            "UpdatedAt DATETIME NULL, " +
            "CreatedById INTEGER NULL, " +
@@ -55,7 +56,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
-            "StatusId, StatusIdentifier, StatusCode, StatusName, " +
+            "StatusId, StatusIdentifier, StatusCode, StatusName, StatusDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSites " +
@@ -63,7 +64,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "CityId, CityIdentifier, CityCode, CityName, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
-            "StatusId, StatusIdentifier, StatusCode, StatusName, " +
+            "StatusId, StatusIdentifier, StatusCode, StatusName, StatusDate, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (" +
@@ -71,7 +72,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "@CityId, @CityIdentifier, @CityCode, @CityName, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
-            "@StatusId, @StatusIdentifier, @StatusCode, @StatusName, " +
+            "@StatusId, @StatusIdentifier, @StatusCode, @StatusName, @StatusDate, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -96,6 +97,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
             dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
             dbEntry.Status = SQLiteHelper.GetStatus(query, ref counter);
+            dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -133,6 +135,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@StatusIdentifier", ((object)constructionSite.Status?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@StatusCode", ((object)constructionSite.Status?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@StatusName", ((object)constructionSite.Status?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusDate", ((object)constructionSite.StatusDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", constructionSite.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSite.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
