@@ -184,7 +184,7 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm = new InvoiceItemViewModel();
             CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
-            //CurrentInvoiceItemForm.PDV = int.Parse(invoice.Vat.Description);
+            CurrentInvoiceItemForm.PDV = invoice.Vat.Amount;
             //CurrentInvoiceItemForm.Discount = invoice.Discount.Amount;
 
             Thread displayThread = new Thread(() => DisplayInvoiceItemData());
