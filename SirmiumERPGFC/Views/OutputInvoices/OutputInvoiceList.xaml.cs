@@ -270,35 +270,35 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         }
         #endregion
 
-        #region SyncButtonContent
-        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+        #region RefreshButtonContent
+        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
-        public string SyncButtonContent
+        public string RefreshButtonContent
         {
-            get { return _SyncButtonContent; }
+            get { return _RefreshButtonContent; }
             set
             {
-                if (_SyncButtonContent != value)
+                if (_RefreshButtonContent != value)
                 {
-                    _SyncButtonContent = value;
-                    NotifyPropertyChanged("SyncButtonContent");
+                    _RefreshButtonContent = value;
+                    NotifyPropertyChanged("RefreshButtonContent");
                 }
             }
         }
         #endregion
 
-        #region SyncButtonEnabled
-        private bool _SyncButtonEnabled = true;
+        #region RefreshButtonEnabled
+        private bool _RefreshButtonEnabled = true;
 
-        public bool SyncButtonEnabled
+        public bool RefreshButtonEnabled
         {
-            get { return _SyncButtonEnabled; }
+            get { return _RefreshButtonEnabled; }
             set
             {
-                if (_SyncButtonEnabled != value)
+                if (_RefreshButtonEnabled != value)
                 {
-                    _SyncButtonEnabled = value;
-                    NotifyPropertyChanged("SyncButtonEnabled");
+                    _RefreshButtonEnabled = value;
+                    NotifyPropertyChanged("RefreshButtonEnabled");
                 }
             }
         }
@@ -420,57 +420,58 @@ namespace SirmiumERPGFC.Views.OutputInvoices
 
         private void SyncData()
         {
-            SyncButtonEnabled = false;
+            RefreshButtonEnabled = false;
 
-            SyncButtonContent = " Računi ... ";
+            RefreshButtonContent = (string)Application.Current.FindResource("Računi_tritacke");
+            
             new OutputInvoiceSQLiteRepository().Sync(outputInvoiceService, (synced, toSync) => {
-                SyncButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = (string)Application.Current.FindResource("Računi") + " (" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            RefreshButtonContent = (string)Application.Current.FindResource("Stavke_tritacke");
             new OutputInvoiceNoteSQLiteRepository().Sync(outputInvoiceNoteService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = (string)Application.Current.FindResource("Stavke") + " (" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            RefreshButtonContent = (string)Application.Current.FindResource("Stavke_tritacke");
             new OutputInvoiceDocumentSQLiteRepository().Sync(outputInvoiceDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = (string)Application.Current.FindResource("Stavke") + " (" + synced + " / " + toSync + ")... ";
             });
 
             DisplayData();
             CurrentOutputInvoice = null;
             NotesFromDB = new ObservableCollection<OutputInvoiceNoteViewModel>();
             OutputInvoiceDocumentsFromDB = new ObservableCollection<OutputInvoiceDocumentViewModel>();
-            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            SyncButtonEnabled = true;
+            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            RefreshButtonEnabled = true;
         }
         private void SyncItemData()
         {
-            SyncButtonEnabled = false;
+            RefreshButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            RefreshButtonContent = (string)Application.Current.FindResource("Stavke_tritacke");
             new OutputInvoiceNoteSQLiteRepository().Sync(outputInvoiceNoteService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = (string)Application.Current.FindResource("Stavke") + " (" + synced + " / " + toSync + ")... ";
             });
 
             DisplayOutputInvoiceNoteData();
 
-            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            SyncButtonEnabled = true;
+            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            RefreshButtonEnabled = true;
         }
         private void SyncDocumentData()
         {
-            SyncButtonEnabled = false;
+            RefreshButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            RefreshButtonContent = (string)Application.Current.FindResource("Stavke_tritacke");
             new OutputInvoiceDocumentSQLiteRepository().Sync(outputInvoiceDocumentService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = (string)Application.Current.FindResource("Stavke") + " (" + synced + " / " + toSync + ")... ";
             });
 
             DisplayOutputInvoiceDocumentData();
 
-            SyncButtonContent = " OSVEŽI ";
-            SyncButtonEnabled = true;
+            RefreshButtonContent = (string)Application.Current.FindResource("OSVEŽI");
+            RefreshButtonEnabled = true;
         }
 
         private void DgOutputInvoices_LoadingRow(object sender, DataGridRowEventArgs e)

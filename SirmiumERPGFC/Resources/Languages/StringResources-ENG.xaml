@@ -679,4 +679,7 @@
     <system:String x:Key="DatumZavrsetkaNotifikacije">Date of completing notification</system:String>
     <system:String x:Key="DatumZavrsetkaDvotacka">Date of completion:</system:String>
     <system:String x:Key="ObaveznoPoljeKorisnik">Required field: User</system:String>
+    <system:String x:Key="Računi_tritacke">Invoices...</system:String>
+    <system:String x:Key="Stavke_tritacke">Items...</system:String>
+    <system:String x:Key="Računi">Invoices</system:String>
 </ResourceDictionary>
