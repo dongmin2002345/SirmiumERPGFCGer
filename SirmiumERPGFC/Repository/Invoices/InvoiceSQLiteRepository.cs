@@ -39,6 +39,7 @@ namespace SirmiumERPGFC.Repository.Invoices
           "DiscountIdentifier GUID NULL, " +
           "DiscountCode NVARCHAR(48) NULL, " +
           "DiscountName NVARCHAR(48) NULL, " +
+          "DiscountAmount DECIMAL NULL, " +
           "VatId INTEGER NULL, " +
           "VatIdentifier GUID NULL, " +
           "VatCode NVARCHAR(48) NULL, " +
@@ -65,7 +66,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "CityId, CityIdentifier, CityCode, CityName," +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName," +
-            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName," +
+            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
             "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, Customer, PIB, BPName, Address, Currency, IsInPDV, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
@@ -75,7 +76,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "CityId, CityIdentifier, CityCode, CityName," +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName," +
-            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName," +
+            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
             "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, Customer, PIB, BPName, Address, Currency, IsInPDV, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
@@ -84,7 +85,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
             "@CityId, @CityIdentifier, @CityCode, @CityName," +
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName," +
-            "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName," +
+            "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, @DiscountAmount, " +
             "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount, " +
             "@InvoiceNumber, @InvoiceDate, @DateOfSupplyOfGoods, @Customer, @PIB, @BPName, @Address, @Currency, @IsInPDV, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
@@ -145,6 +146,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             insertCommand.Parameters.AddWithValue("@DiscountIdentifier", ((object)Invoice.Discount?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountCode", ((object)Invoice.Discount?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountName", ((object)Invoice.Discount?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DiscountAmount", ((object)Invoice.Discount?.Amount) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatId", ((object)Invoice.Vat?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatIdentifier", ((object)Invoice.Vat?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatCode", ((object)Invoice.Vat?.Code) ?? DBNull.Value);

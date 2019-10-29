@@ -654,7 +654,7 @@ namespace SirmiumERPGFC.Repository.Common
         {
             if (query.IsDBNull(counter))
             {
-                counter += 4;
+                counter += 5;
                 return null;
             }
             else
@@ -663,7 +663,8 @@ namespace SirmiumERPGFC.Repository.Common
                     Id = query.GetInt32(counter++),
                     Identifier = query.GetGuid(counter++),
                     Code = query.GetString(counter++),
-                    Name = query.GetString(counter++)
+                    Name = query.GetString(counter++),
+                    Amount = query.GetDecimal(counter++),
                 };
         }
 

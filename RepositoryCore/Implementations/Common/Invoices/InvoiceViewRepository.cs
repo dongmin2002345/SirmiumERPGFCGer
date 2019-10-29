@@ -25,7 +25,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
         string selectString =
               "SELECT InvoiceId, InvoiceIdentifier, InvoiceCode, " +
               "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-              "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
+              "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
               "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
               "CityId, CityIdentifier, CityZipCode, CityName, " +
               "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
@@ -67,6 +67,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
                 invoice.Discount.Code = reader["DiscountCode"].ToString();
                 invoice.Discount.Name = reader["DiscountName"].ToString();
+                invoice.Discount.Amount = decimal.Parse(reader["DiscountAmount"].ToString());
             }
 
             if (reader["VatId"] != DBNull.Value)
