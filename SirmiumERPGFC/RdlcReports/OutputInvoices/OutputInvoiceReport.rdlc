@@ -1119,7 +1119,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Status.Value</Value>
+                              <Value>=IIf(Fields!Status.Value = 1, "OTVORENO (Offen)", IIf(Fields!Status.Value = 2, "PLAĆEN (Bezahlt)",IIf(Fields!Status.Value = 3, "OPOMENA (Mähnung)", "????")))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -1140,6 +1140,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
