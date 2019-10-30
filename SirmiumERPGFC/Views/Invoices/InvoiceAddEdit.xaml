@@ -79,7 +79,7 @@
 
                     <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource AdresaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="3"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
-                             x:Name="txtAddress" Text="{Binding Path=CurrentInvoice.Address}" IsReadOnly="True"/>
+                             x:Name="txtAddress" Text="{Binding Path=CurrentInvoice.Address}"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource GradDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <popups:CityPopup Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cityPopup"

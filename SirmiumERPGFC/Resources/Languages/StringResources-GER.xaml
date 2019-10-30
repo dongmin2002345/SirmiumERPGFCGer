@@ -689,5 +689,9 @@
     <system:String x:Key="Računi_tritacke">Rechnungen...</system:String>
     <system:String x:Key="Stavke_tritacke">Einträge...</system:String>
     <system:String x:Key="Računi">Rechnungen</system:String>
+    <system:String x:Key="Fajlovi_za_fizicko_lice">Dateien für natürliche Personen</system:String>
+    <system:String x:Key="Dodavanje_fizičkog_lica">Natürliche Person hinzufügen</system:String>
+    <system:String x:Key="Šifra_fizičkog_licaDvotacka">Code der natürlichen Person:</system:String>
 
+    
 </ResourceDictionary>

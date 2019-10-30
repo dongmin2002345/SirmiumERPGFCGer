@@ -682,4 +682,7 @@
     <system:String x:Key="Računi_tritacke">Invoices...</system:String>
     <system:String x:Key="Stavke_tritacke">Items...</system:String>
     <system:String x:Key="Računi">Invoices</system:String>
+    <system:String x:Key="Fajlovi_za_fizicko_lice">Files for physical person</system:String>
+    <system:String x:Key="Dodavanje_fizičkog_lica">Add physical person</system:String>
+    <system:String x:Key="Šifra_fizičkog_licaDvotacka">Physical person Code:</system:String>
 </ResourceDictionary>
