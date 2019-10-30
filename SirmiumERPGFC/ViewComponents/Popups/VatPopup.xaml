@@ -52,7 +52,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
                             <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Amount}" IsReadOnly="True" />
-                            <DataGridTextColumn SortMemberPath="Description" Header="{DynamicResource Napomena}" Binding="{Binding Description}" IsReadOnly="True" MinWidth="300" />
+                            <DataGridTextColumn SortMemberPath="Description" Header="{DynamicResource Opis}" Binding="{Binding Description}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseVatPopup" Click="btnCloseVatPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">

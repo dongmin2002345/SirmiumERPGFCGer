@@ -187,7 +187,7 @@
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="TaxNr" Binding="{Binding TaxNr}" IsReadOnly="True" >
                         <DataGridTextColumn.Header>
-                            <TextBlock Text="{DynamicResource Poreski_brojDvotacka}" TextWrapping="Wrap" MaxWidth="70" />
+                                <TextBlock Text="{DynamicResource Poreski_broj}" TextWrapping="Wrap" MaxWidth="70" />
                         </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="DueDate" Header="{DynamicResource Valuta}" Binding="{Binding DueDate}" Width="*" IsReadOnly="True" />
