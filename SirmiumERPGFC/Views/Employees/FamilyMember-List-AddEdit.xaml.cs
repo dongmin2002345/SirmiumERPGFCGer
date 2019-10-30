@@ -153,23 +153,11 @@ namespace SirmiumERPGFC.Views.Employees
                 SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
+                CurrentFamilyMember.IsSynced = false;
                 CurrentFamilyMember.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentFamilyMember.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentFamilyMember.IsSynced = false;
-                CurrentFamilyMember.UpdatedAt = DateTime.Now;
-
-                FamilyMemberResponse response = new FamilyMemberSQLiteRepository().Delete(CurrentFamilyMember.Identifier);
-                response = new FamilyMemberSQLiteRepository().Create(CurrentFamilyMember);
-                if (!response.Success)
-                {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
-                    SaveButtonContent = ((string)Application.Current.FindResource("Sačuvaj"));
-                    SaveButtonEnabled = true;
-                    return;
-                }
-
-                response = familyMemberService.Create(CurrentFamilyMember);
+                FamilyMemberResponse response = familyMemberService.Create(CurrentFamilyMember);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));

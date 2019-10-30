@@ -157,7 +157,7 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
 
-            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            //dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
 
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -288,7 +288,48 @@ namespace SirmiumERPGFC.Repository.Employees
 
                     while (query.Read())
                     {
-                        EmployeeViewModel dbEntry = Read(query);
+                        int counter = 0;
+                        EmployeeViewModel dbEntry = new EmployeeViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.EmployeeCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.SurName = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteCode = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.ConstructionSiteName = SQLiteHelper.GetString(query, ref counter);
+
+                        dbEntry.DateOfBirth = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.Gender = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.Region = SQLiteHelper.GetRegion(query, ref counter);
+                        dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
+                        dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+
+                        dbEntry.PassportCountry = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.PassportCity = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.Passport = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
+                        dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
+                        dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
+
+                        dbEntry.EmbassyDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.VisaDate = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.VisaValidFrom = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.VisaValidTo = SQLiteHelper.GetDateTimeNullable(query, ref counter);
+                        dbEntry.WorkPermitFrom = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.WorkPermitTo = SQLiteHelper.GetDateTime(query, ref counter);
+
+                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
                         Employees.Add(dbEntry);
 
                     }

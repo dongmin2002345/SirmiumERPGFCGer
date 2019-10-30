@@ -141,7 +141,6 @@
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
-
                 <Fluent:RibbonGroupBox Header="{DynamicResource Banke}">
                     <Fluent:Button x:Name="mniBanks" Click="mniBanks_Click" Header="{DynamicResource Banke}" KeyTip="BAN" Width="70">
                         <Fluent:Button.LargeIcon>
