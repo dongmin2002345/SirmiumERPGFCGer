@@ -146,6 +146,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region StatusDate
+        private DateTime _StatusDate = DateTime.Now;
+
+        public DateTime StatusDate
+        {
+            get { return _StatusDate; }
+            set
+            {
+                if (_StatusDate != value)
+                {
+                    _StatusDate = value;
+                    NotifyPropertyChanged("StatusDate");
+                }
+            }
+        }
+        #endregion
+
         #region MaxWorkers
         private int _MaxWorkers;
 

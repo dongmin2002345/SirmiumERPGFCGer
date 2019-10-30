@@ -41,8 +41,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
-                "VatId, VatIdentifier, VatCode, VatDescription, " +
-                "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
+                "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
+                "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
                 "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
@@ -144,6 +144,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
                             businessPartner.Vat.Code = reader["VatCode"].ToString();
                             businessPartner.Vat.Description = reader["VatDescription"].ToString();
+                            businessPartner.Vat.Amount = decimal.Parse(reader["VatAmount"].ToString());
                         }
 
                         if (reader["DiscountId"] != DBNull.Value)
@@ -154,6 +155,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
                             businessPartner.Discount.Code = reader["DiscountCode"].ToString();
                             businessPartner.Discount.Name = reader["DiscountName"].ToString();
+                            businessPartner.Discount.Amount = decimal.Parse(reader["DiscountAmount"].ToString());
                         }
 
                         if (reader["TaxNr"] != DBNull.Value)
@@ -219,8 +221,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
-                "VatId, VatIdentifier, VatCode, VatDescription, " +
-                "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
+                "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
+                "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
                 "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
@@ -324,6 +326,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
                             businessPartner.Vat.Code = reader["VatCode"].ToString();
                             businessPartner.Vat.Description = reader["VatDescription"].ToString();
+                            businessPartner.Vat.Amount = decimal.Parse(reader["VatAmount"].ToString());
+
                         }
 
                         if (reader["DiscountId"] != DBNull.Value)
@@ -334,6 +338,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
                             businessPartner.Discount.Code = reader["DiscountCode"].ToString();
                             businessPartner.Discount.Name = reader["DiscountName"].ToString();
+                            businessPartner.Discount.Amount = decimal.Parse(reader["DiscountAmount"].ToString());
                         }
 
                         if (reader["TaxNr"] != DBNull.Value)
@@ -400,6 +405,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
+                "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
+                "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
                 "TaxNr, CommercialNr, ContactPersonGer, VatDeductionFrom, VatDeductionTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vBusinessPartners " +
@@ -500,6 +507,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
                             businessPartner.Vat.Code = reader["VatCode"].ToString();
                             businessPartner.Vat.Description = reader["VatDescription"].ToString();
+                            businessPartner.Vat.Amount = decimal.Parse(reader["VatAmount"].ToString());
                         }
 
                         if (reader["DiscountId"] != DBNull.Value)
@@ -510,6 +518,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
                             businessPartner.Discount.Code = reader["DiscountCode"].ToString();
                             businessPartner.Discount.Name = reader["DiscountName"].ToString();
+                            businessPartner.Discount.Amount = decimal.Parse(reader["DiscountAmount"].ToString());
                         }
 
                         if (reader["TaxNr"] != DBNull.Value)

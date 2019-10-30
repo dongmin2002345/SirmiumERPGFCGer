@@ -214,7 +214,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             CityAddEdit cityAddEditForm = new CityAddEdit(city, true, true);
             cityAddEditForm.CityCreatedUpdated += new CityHandler(CityAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o gradovima", 95, cityAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_gradovima")), 95, cityAddEditForm);
 
             txtCity.Focus();
         }

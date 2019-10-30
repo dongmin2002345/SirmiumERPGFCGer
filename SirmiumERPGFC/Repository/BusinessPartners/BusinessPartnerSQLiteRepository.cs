@@ -52,10 +52,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "VatIdentifier GUID NULL, " +
             "VatCode NVARCHAR(48) NULL, " +
             "VatDescription NVARCHAR(2048) NULL, " +
+            "VatAmount DECIMAL NULL, " +
             "DiscountId INTEGER NULL, " +
             "DiscountIdentifier GUID NULL, " +
             "DiscountCode NVARCHAR(48) NULL, " +
             "DiscountName NVARCHAR(2048) NULL, " +
+            "DiscountAmount DECIMAL NULL, " +
             "AgencyId INTEGER NULL, " +
             "AgencyIdentifier GUID NULL, " +
             "AgencyCode NVARCHAR(48) NULL, " +
@@ -76,8 +78,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
-            "VatId, VatIdentifier, VatCode, VatDescription, " +
-            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
+            "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
+            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
             "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
@@ -88,8 +90,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
-            "VatId, VatIdentifier, VatCode, VatDescription, " +
-            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
+            "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
+            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
             "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
@@ -99,8 +101,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@IBAN, @BetriebsNumber, @Customer, @TaxNr, @CommercialNr, @ContactPersonGer, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
-            "@VatId, @VatIdentifier, @VatCode, @VatDescription, " +
-            "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, " +
+            "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount, " +
+            "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, @DiscountAmount," +
             "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, @VatDeductionFrom, @VatDeductionTo, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -188,10 +190,12 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@VatIdentifier", ((object)businessPartner.Vat?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatCode", ((object)businessPartner.Vat?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatDescription", ((object)businessPartner.Vat?.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@VatAmount", ((object)businessPartner.Vat?.Amount) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountId", ((object)businessPartner.Discount?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountIdentifier", ((object)businessPartner.Discount?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountCode", ((object)businessPartner.Discount?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountName", ((object)businessPartner.Discount?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DiscountAmount", ((object)businessPartner.Discount?.Amount) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@AgencyId", ((object)businessPartner.Agency?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@AgencyIdentifier", ((object)businessPartner.Agency?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@AgencyCode", ((object)businessPartner.Agency?.Code) ?? DBNull.Value);
@@ -229,8 +233,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "bp.IBAN, bp.BetriebsNumber, bp.Customer, bp.TaxNr, bp.CommercialNr, bp.ContactPersonGer, " +
                         "bp.CountryId, bp.CountryIdentifier, bp.CountryCode, bp.CountryName, " +
                         "bp.SectorId, bp.SectorIdentifier, bp.SectorCode, bp.SectorName, " +
-                        "bp.VatId, bp.VatIdentifier, bp.VatCode, bp.VatDescription, " +
-                        "bp.DiscountId, bp.DiscountIdentifier, bp.DiscountCode, bp.DiscountName, " +
+                        "bp.VatId, bp.VatIdentifier, bp.VatCode, bp.VatDescription, bp.VatAmount, " +
+                        "bp.DiscountId, bp.DiscountIdentifier, bp.DiscountCode, bp.DiscountName, bp.DiscountAmount, " +
                         "bp.AgencyId, bp.AgencyIdentifier, bp.AgencyCode, bp.AgencyName, bp.VatDeductionFrom, bp.VatDeductionTo, " +
                         "bp.IsSynced, bp.UpdatedAt, bp.CreatedById, bp.CreatedByName, bp.CompanyId, bp.CompanyName " +
                         "FROM BusinessPartners bp " +

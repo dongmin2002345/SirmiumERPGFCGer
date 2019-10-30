@@ -161,7 +161,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             CountryAddEdit countryAddEditForm = new CountryAddEdit(country, true, true);
             countryAddEditForm.CountryCreatedUpdated += new CountryHandler(CountryAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o drzavama", 95, countryAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_drzavi")), 95, countryAddEditForm);
 
             txtCountry.Focus();
         }

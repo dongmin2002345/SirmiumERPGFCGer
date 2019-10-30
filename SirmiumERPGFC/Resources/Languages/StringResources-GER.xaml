@@ -414,7 +414,7 @@
     <system:String x:Key="Zaglavlje_nije_sačuvano">Kopfzeile nicht gespeichert</system:String>
     <system:String x:Key="Podaci_su_uspešno_sačuvaniUzvičnik">Daten wurden erfolgreich gespeichert!</system:String>
     <system:String x:Key="Proknjiži">Speichern</system:String>
-    <system:String x:Key="Greška_kod_čuvanja_na_serveruUzvičnik">Fehler beim Speichern des Servers!</system:String>
+    <system:String x:Key="Greška_kod_čuvanja_na_serveruUzvičnik">Während des Speicherns der Daten am Server ist ein Fehler unterlaufen!</system:String>
     <system:String x:Key="Korisnici_TriTacke">Benutzer ...</system:String>
     <system:String x:Key="Prava_pristupa_TriTacke">Richtiger Zugang ...</system:String>
     <system:String x:Key="Podaci_o_korisnicima">Kundendaten</system:String>
@@ -686,4 +686,8 @@
     <system:String x:Key="DatumZavrsetkaNotifikacije">Datum des Abschlusses der Benachrichtigung</system:String>
     <system:String x:Key="DatumZavrsetkaDvotacka">Datum des Abschlusses:</system:String>
     <system:String x:Key="ObaveznoPoljeKorisnik">Pflichtfeld: Benutzer</system:String>
+    <system:String x:Key="Računi_tritacke">Rechnungen...</system:String>
+    <system:String x:Key="Stavke_tritacke">Einträge...</system:String>
+    <system:String x:Key="Računi">Rechnungen</system:String>
+
 </ResourceDictionary>

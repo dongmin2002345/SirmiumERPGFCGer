@@ -498,7 +498,7 @@
     <system:String x:Key="Morate_odabrati_clana_za_izmenuUzvičnik">Morate odabrati clana za izmenu!</system:String>
     <system:String x:Key="Morate_odabrati_clana_za_brisanjeUzvičnik">Morate odabrati clana za brisanje!</system:String>
     <system:String x:Key="Tip_dozvole_TriTacke">Tip dozvole ...</system:String>
-    <system:String x:Key="Podaci_o_dozvolu">Podaci o dozvolu</system:String>
+    <system:String x:Key="Podaci_o_dozvolu">Podaci o dozvoli</system:String>
     <system:String x:Key="Morate_odabrati_dozvolu_za_izmenuUzvičnik">Morate odabrati dozvolu za izmenu!</system:String>
     <system:String x:Key="Podaci_o_dozvoli">Podaci o dozvoli</system:String>
     <system:String x:Key="Morate_odabrati_dozvolu_za_brisanjeUzvičnik">Morate odabrati dozvolu za brisanje!</system:String>
@@ -685,4 +685,7 @@
     <system:String x:Key="DatumZavrsetkaNotifikacije">Datum završetka notifikacije</system:String>
     <system:String x:Key="DatumZavrsetkaDvotacka">Datum završetka:</system:String>
     <system:String x:Key="ObaveznoPoljeKorisnik">Obavezno polje: Korisnik</system:String>
+    <system:String x:Key="Računi_tritacke">Računi...</system:String>
+    <system:String x:Key="Stavke_tritacke">Stavke...</system:String>
+    <system:String x:Key="Računi">Računi</system:String>
 </ResourceDictionary>

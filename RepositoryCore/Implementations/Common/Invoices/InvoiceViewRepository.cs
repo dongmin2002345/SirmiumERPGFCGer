@@ -25,8 +25,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
         string selectString =
               "SELECT InvoiceId, InvoiceIdentifier, InvoiceCode, " +
               "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-              "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, " +
-              "VatId, VatIdentifier, VatCode, VatDescription, " +
+              "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
+              "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
               "CityId, CityIdentifier, CityZipCode, CityName, " +
               "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
               "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods," +
@@ -67,6 +67,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Discount.Identifier = Guid.Parse(reader["DiscountIdentifier"].ToString());
                 invoice.Discount.Code = reader["DiscountCode"].ToString();
                 invoice.Discount.Name = reader["DiscountName"].ToString();
+                invoice.Discount.Amount = decimal.Parse(reader["DiscountAmount"].ToString());
             }
 
             if (reader["VatId"] != DBNull.Value)
@@ -77,6 +78,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Vat.Identifier = Guid.Parse(reader["VatIdentifier"].ToString());
                 invoice.Vat.Code = reader["VatCode"].ToString();
                 invoice.Vat.Description = reader["VatDescription"].ToString();
+                invoice.Vat.Amount = decimal.Parse(reader["VatAmount"].ToString());
             }
 
             if (reader["CityId"] != DBNull.Value)

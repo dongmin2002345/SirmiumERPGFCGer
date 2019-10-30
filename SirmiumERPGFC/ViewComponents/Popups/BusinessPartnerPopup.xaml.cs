@@ -172,7 +172,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             BusinessPartner_List_AddEdit BusinessPartnerAddEditForm = new BusinessPartner_List_AddEdit(BusinessPartner, true, true);
             BusinessPartnerAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(BusinessPartnerAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o poslovnim partnerima", 95, BusinessPartnerAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, BusinessPartnerAddEditForm);
 
             txtBusinessPartner.Focus();
         }

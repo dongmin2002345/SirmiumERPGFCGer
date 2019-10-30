@@ -48,6 +48,7 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "status.Code AS StatusCode, " +
                 "status.Name AS StatusName, " +
 
+                "constructionSite.StatusDate, " +
                 "constructionSite.Address, " +
                 "constructionSite.MaxWorkers, " +
                 "constructionSite.ProContractDate, " +

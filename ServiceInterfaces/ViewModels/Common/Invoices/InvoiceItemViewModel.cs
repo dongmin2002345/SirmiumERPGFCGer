@@ -87,6 +87,11 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _Quantity = value;
                     NotifyPropertyChanged("Quantity");
+                    basePrice = PriceWithoutPDV * Quantity;
+                    PriceWithPDV = basePrice + (basePrice * PDV / 100);
+                    rabat = PriceWithPDV * Discount / 100;
+                    Amount = PriceWithPDV - rabat;
+                    
                 }
             }
         }
@@ -108,6 +113,8 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             }
         }
         #endregion
+        private decimal basePrice;
+        private decimal rabat;
 
         #region PriceWithoutPDV
         private decimal _PriceWithoutPDV;
@@ -121,10 +128,15 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _PriceWithoutPDV = value;
                     NotifyPropertyChanged("PriceWithoutPDV");
+                    basePrice = PriceWithoutPDV * Quantity;
+                    PriceWithPDV = basePrice + (basePrice * PDV / 100);
+                    rabat = PriceWithPDV * Discount / 100;
+                    Amount = PriceWithPDV - rabat;
                 }
             }
         }
         #endregion
+
 
         #region Discount
         private decimal _Discount;

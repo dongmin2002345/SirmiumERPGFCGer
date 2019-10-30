@@ -287,7 +287,7 @@
 
         <TabControl TabStripPlacement="Top" Grid.Row="3" Grid.Column="0" Margin="0 1 0 0" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
             <TabItem Header="{DynamicResource Lokacije}">
-                <GroupBox Header="{DynamicResource Lokacije}" Grid.Column="0" Margin="2 1 1 2">
+                <GroupBox Header="{DynamicResource Lokacije}" Grid.Column="0" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -374,7 +374,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Napomena}">
-                <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="2 1 1 2">
+                <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -464,7 +464,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Telefoni}">
-                <GroupBox Header="{DynamicResource Telefoni}" Grid.Column="0" Margin="2 1 1 2">
+                <GroupBox Header="{DynamicResource Telefoni}" Grid.Column="0" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -565,7 +565,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Dokumenti}">
-                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -664,7 +664,7 @@
 
             </TabItem>
             <TabItem Header="{DynamicResource Banke}">
-                <GroupBox Header="{DynamicResource Banke}" Grid.Column="0" Margin="2 1 1 2">
+                <GroupBox Header="{DynamicResource Banke}" Grid.Column="0" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -749,7 +749,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Institucije}">
-                <GroupBox Header="{DynamicResource Institucije}" Grid.Column="0" Margin="2 1 1 2">
+                <GroupBox Header="{DynamicResource Institucije}" Grid.Column="0" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -854,7 +854,7 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource Tip_poslovnog_partnera}">
-                <GroupBox Header="{DynamicResource Tip_poslovnog_partnera}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Tip_poslovnog_partnera}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

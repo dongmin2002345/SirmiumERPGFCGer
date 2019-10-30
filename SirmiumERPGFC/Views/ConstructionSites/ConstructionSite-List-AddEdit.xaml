@@ -40,6 +40,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -60,40 +61,45 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Naziv_gradilištaDvotacka}" />
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtName"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Name}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource StatusDvotacka}" VerticalAlignment="Center" Margin="5 2 5 2" />
-                    <popups:StatusPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popStatus" 
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource Datum_statusaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <DatePicker Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtStatusDate"
+                                SelectedDate="{Binding Path=CurrentConstructionSite.StatusDate, Mode=TwoWay}"/>
+
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource StatusDvotacka}" VerticalAlignment="Center" Margin="5 2 5 2" />
+                    <popups:StatusPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popStatus" 
                                         CurrentStatus="{Binding Path=CurrentConstructionSite.Status, Mode=TwoWay}"/>
                     <!--<ComboBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxStatus" Margin="2"
                         SelectedItem="{Binding Path=CurrentConstructionSite.Status, Converter={StaticResource StatusConverter}}"
                         ItemsSource="{Binding Path=StatusOptions}">
                     </ComboBox>-->
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
-                    <popups:CountryPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountry" 
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource DržavaDvotacka}" />
+                    <popups:CountryPopup Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCountry" 
                                         CurrentCountry="{Binding Path=CurrentConstructionSite.Country, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
-                    <popups:CityPopup Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCity" 
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
+                    <popups:CityPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCity" 
                                         CurrentCountry="{Binding Path=CurrentConstructionSite.Country, Mode=TwoWay}"
                                         CurrentCity="{Binding Path=CurrentConstructionSite.City, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource AdresaDvotacka}" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtAddress"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Address}" IsEnabled="True" />
+                    <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource AdresaDvotacka}" />
+                    <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtAddress"  Margin="2" Text="{Binding Path=CurrentConstructionSite.Address}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Maksimalni_broj_radnikaDvotacka}" />
-                    <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtMaxNumOfEmployees"  Margin="2" Text="{Binding Path=CurrentConstructionSite.MaxWorkers}" IsEnabled="True" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Maksimalni_broj_radnikaDvotacka}" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtMaxNumOfEmployees"  Margin="2" Text="{Binding Path=CurrentConstructionSite.MaxWorkers}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Datum_predugovoraDvotacka}" />
-                    <DatePicker Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtProContractDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ProContractDate}" IsEnabled="True" />
+                    <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Datum_predugovoraDvotacka}" />
+                    <DatePicker Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtProContractDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ProContractDate}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Početak_ugovoraDvotacka}" />
-                    <DatePicker Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractStartDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractStart}" IsEnabled="True" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Početak_ugovoraDvotacka}" />
+                    <DatePicker Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractStartDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractStart}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
-                    <DatePicker Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
+                    <TextBlock Grid.Row="5" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
+                    <DatePicker Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="6" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Poslovni_partnerDvotacka}" />
-                    <popups:BusinessPartnerPopup Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popBusinessPartner" 
+                    <TextBlock Grid.Row="6" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Poslovni_partnerDvotacka}" />
+                    <popups:BusinessPartnerPopup Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popBusinessPartner" 
                                         CurrentBusinessPartner="{Binding Path=CurrentConstructionSite.BusinessPartner, Mode=TwoWay}"/>
 
                 </Grid>

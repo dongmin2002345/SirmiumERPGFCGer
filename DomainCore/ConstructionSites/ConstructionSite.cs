@@ -26,7 +26,7 @@ namespace DomainCore.ConstructionSites
 
         public int? StatusId { get; set; }
         public Status Status { get; set; }
-
+        public DateTime StatusDate { get; set; }
         public string Address { get; set; }
 
         public int MaxWorkers { get; set; }

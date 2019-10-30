@@ -165,7 +165,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             Status_AddEdit statusAddEditForm = new Status_AddEdit(status, true, true);
             statusAddEditForm.StatusCreatedUpdated += new StatusHandler(StatusAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o statusima", 95, statusAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, (string)Application.Current.FindResource("Podaci_o_statusu"), 95, statusAddEditForm);
 
             txtStatus.Focus();
         }

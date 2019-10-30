@@ -184,8 +184,14 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm = new InvoiceItemViewModel();
             CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
-            //CurrentInvoiceItemForm.PDV = int.Parse(invoice.Vat.Description);
-            //CurrentInvoiceItemForm.Discount = invoice.Discount.Amount;
+            if (CurrentInvoice.Vat?.Amount != null)
+            {
+                CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+            }
+            if (CurrentInvoice.Discount?.Amount != null)
+            {
+                CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+            }
 
             Thread displayThread = new Thread(() => DisplayInvoiceItemData());
             displayThread.IsBackground = true;
@@ -270,12 +276,29 @@ namespace SirmiumERPGFC.Views.Invoices
                     CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
                     CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
                     CurrentInvoiceItemForm.IsSynced = false;
+                    if (CurrentInvoice.Vat?.Amount != null)
+                    {
+                        CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                    }
+                    if (CurrentInvoice.Discount?.Amount != null)
+                    {
+                        CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+                    }
                     return;
                 }
                 CurrentInvoiceItemForm = new InvoiceItemViewModel();
                 CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
                 CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
                 CurrentInvoiceItemForm.IsSynced = false;
+                if (CurrentInvoice.Vat?.Amount != null)
+                {
+                    CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                }
+                if (CurrentInvoice.Discount?.Amount != null)
+                {
+                    CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+                }
+
                 InvoiceCreatedUpdated();
 
                 DisplayInvoiceItemData();
@@ -344,6 +367,14 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm = new InvoiceItemViewModel();
             CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
+            if (CurrentInvoice.Vat?.Amount != null)
+            {
+                CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+            }
+            if (CurrentInvoice.Discount?.Amount != null)
+            {
+                CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+            }
         }
 
         #endregion
@@ -415,5 +446,14 @@ namespace SirmiumERPGFC.Views.Invoices
         }
         #endregion
 
+        //private void txtPriceWithoutPDV_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if(CurrentInvoiceItemForm.PriceWithoutPDV != 0)
+        //    {
+        //        CurrentInvoiceItemForm.Amount = CurrentInvoiceItemForm.PriceWithoutPDV * CurrentInvoiceItemForm.Quantity
+        //            + (CurrentInvoiceItemForm.PriceWithoutPDV * CurrentInvoiceItemForm.Quantity * CurrentInvoiceItemForm.PDV / 100);
+        //        CurrentInvoiceItemForm.PriceWithPDV = CurrentInvoiceItemForm.Amount/ CurrentInvoiceItemForm.Quantity;
+        //    }
+        //}
     }
 }

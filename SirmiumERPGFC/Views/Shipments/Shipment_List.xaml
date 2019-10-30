@@ -310,7 +310,7 @@
             
 
             <TabItem Header="{DynamicResource Dokumenti}">
-                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="2 1 2 2">
+                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

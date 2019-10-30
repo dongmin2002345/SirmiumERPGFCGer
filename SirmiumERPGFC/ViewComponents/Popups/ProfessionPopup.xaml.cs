@@ -161,7 +161,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             ProfessionAddEdit ProfessionAddEditForm = new ProfessionAddEdit(Profession, true, true);
             ProfessionAddEditForm.ProfessionCreatedUpdated += new ProfessionHandler(ProfessionAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, "Podaci o drzavama", 95, ProfessionAddEditForm);
+            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_zanimanjima")), 95, ProfessionAddEditForm);
 
             txtProfession.Focus();
         }

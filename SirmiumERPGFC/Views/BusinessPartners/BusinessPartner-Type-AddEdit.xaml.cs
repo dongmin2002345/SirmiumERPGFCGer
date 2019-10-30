@@ -171,14 +171,14 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 SaveButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SaveButtonEnabled = false;
 
+                CurrentBusinessPartnerType.IsSynced = false;
+
                 CurrentBusinessPartnerType.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentBusinessPartnerType.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
 
-                CurrentBusinessPartnerType.IsSynced = false;
-                CurrentBusinessPartnerType.UpdatedAt = DateTime.Now;
 
-                BusinessPartnerTypeResponse response = new BusinessPartnerTypeSQLiteRepository().Delete(CurrentBusinessPartnerType.Identifier);
-                response = new BusinessPartnerTypeSQLiteRepository().Create(CurrentBusinessPartnerType);
+                //BusinessPartnerTypeResponse response = new BusinessPartnerTypeSQLiteRepository().Delete(CurrentBusinessPartnerType.Identifier);
+                BusinessPartnerTypeResponse response = new BusinessPartnerTypeSQLiteRepository().Create(CurrentBusinessPartnerType);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
