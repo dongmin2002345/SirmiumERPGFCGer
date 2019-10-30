@@ -597,7 +597,7 @@
     <system:String x:Key="Popust">Popust</system:String>
     <system:String x:Key="Iznos">Iznos</system:String>
     <system:String x:Key="URL">URL</system:String>
-    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik">Da li ste sigurni da želite da obrišete odabrni podatak?</system:String>
+    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik">Da li ste sigurni da želite da obrišete odabrani podatak?</system:String>
     <system:String x:Key="IznosDvotacka">Iznos:</system:String>
     <system:String x:Key="Popust_TriTacke">Popust...</system:String>
     <system:String x:Key="Podaci_o_popustu">Podaci o popustu</system:String>
@@ -688,4 +688,7 @@
     <system:String x:Key="Računi_tritacke">Računi...</system:String>
     <system:String x:Key="Stavke_tritacke">Stavke...</system:String>
     <system:String x:Key="Računi">Računi</system:String>
+    <system:String x:Key="Fajlovi_za_fizicko_lice">Fajlovi za fizicko lice</system:String>
+    <system:String x:Key="Dodavanje_fizičkog_lica">Dodavanje fizičkog lica </system:String>
+    <system:String x:Key="Šifra_fizičkog_licaDvotacka">Šifra fizičkog lica:</system:String>
 </ResourceDictionary>

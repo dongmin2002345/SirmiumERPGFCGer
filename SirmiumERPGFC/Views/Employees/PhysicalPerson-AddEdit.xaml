@@ -40,7 +40,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Dodavanje_radnika}" Margin="2">
+                <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Dodavanje_fizičkog_lica}" Margin="2">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -63,7 +63,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
                         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" IsEnabled="False" Text="{Binding Path=CurrentPhysicalPerson.Code}"  />
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Šifra_radnikaDvotacka}" />
+                        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Šifra_fizičkog_licaDvotacka}" />
                         <TextBox Grid.Row="0" Grid.Column="4" x:Name="txtCode" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentPhysicalPerson.PhysicalPersonCode}"  />
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ImeDvotacka}" />

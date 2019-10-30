@@ -210,35 +210,35 @@ namespace SirmiumERPGFC.Views.Invoices
         //}
         #endregion
 
-        #region SyncButtonContent
-        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+        #region RefreshButtonContent
+        private string _RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
 
-        public string SyncButtonContent
+        public string RefreshButtonContent
         {
-            get { return _SyncButtonContent; }
+            get { return _RefreshButtonContent; }
             set
             {
-                if (_SyncButtonContent != value)
+                if (_RefreshButtonContent != value)
                 {
-                    _SyncButtonContent = value;
-                    NotifyPropertyChanged("SyncButtonContent");
+                    _RefreshButtonContent = value;
+                    NotifyPropertyChanged("RefreshButtonContent");
                 }
             }
         }
         #endregion
 
-        #region SyncButtonEnabled
-        private bool _SyncButtonEnabled = true;
+        #region RefreshButtonEnabled
+        private bool _RefreshButtonEnabled = true;
 
-        public bool SyncButtonEnabled
+        public bool RefreshButtonEnabled
         {
-            get { return _SyncButtonEnabled; }
+            get { return _RefreshButtonEnabled; }
             set
             {
-                if (_SyncButtonEnabled != value)
+                if (_RefreshButtonEnabled != value)
                 {
-                    _SyncButtonEnabled = value;
-                    NotifyPropertyChanged("SyncButtonEnabled");
+                    _RefreshButtonEnabled = value;
+                    NotifyPropertyChanged("RefreshButtonEnabled");
                 }
             }
         }
@@ -339,38 +339,38 @@ namespace SirmiumERPGFC.Views.Invoices
         }
         private void SyncData()
         {
-            SyncButtonEnabled = false;
+            RefreshButtonEnabled = false;
 
-            SyncButtonContent = " Računi ... ";
+            RefreshButtonContent = " Računi ... ";
             new InvoiceSQLiteRepository().Sync(invoiceService, (synced, toSync) => {
-                SyncButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = " Računi (" + synced + " / " + toSync + ")... ";
             });
 
-            SyncButtonContent = " Stavke ... ";
+            RefreshButtonContent = " Stavke ... ";
             new InvoiceItemSQLiteRepository().Sync(invoiceItemService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
             });
 
 
             DisplayData();
             CurrentInvoice = null;
             InvoiceItemsFromDB = new ObservableCollection<InvoiceItemViewModel>();
-            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            SyncButtonEnabled = true;
+            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            RefreshButtonEnabled = true;
         }
         private void SyncItemData()
         {
-            SyncButtonEnabled = false;
+            RefreshButtonEnabled = false;
 
-            SyncButtonContent = " Stavke ... ";
+            RefreshButtonContent = " Stavke ... ";
             new InvoiceItemSQLiteRepository().Sync(invoiceItemService, (synced, toSync) => {
-                SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
+                RefreshButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
             });
 
             DisplayInvoiceItemData();
 
-            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
-            SyncButtonEnabled = true;
+            RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            RefreshButtonEnabled = true;
         }
         private void DgInvoices_LoadingRow(object sender, DataGridRowEventArgs e)
         {
