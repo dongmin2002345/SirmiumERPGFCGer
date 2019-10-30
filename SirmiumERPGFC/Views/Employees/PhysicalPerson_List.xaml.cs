@@ -24,8 +24,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfAppCommonCode.Converters;
+using SirmiumERPGFC.RdlcReports.Employees;
+using Microsoft.Reporting.WinForms;
+using System.IO;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -1168,6 +1170,77 @@ namespace SirmiumERPGFC.Views.Employees
 
         #endregion
 
+
+        #region PDF izvesataj
+        private void BtnPrintPhysicalPersonReport_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentPhysicalPerson == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
+                return;
+            }
+
+            #endregion
+
+            rdlcPhysicalPersonReport.LocalReport.DataSources.Clear();
+
+            List<PhysicalPersonReportViewModel> physicalPerson = new List<PhysicalPersonReportViewModel>()
+            {
+                new PhysicalPersonReportViewModel()
+                {
+
+                    PhysicalPersonCode = CurrentPhysicalPerson?.PhysicalPersonCode ?? "",
+                    Name = CurrentPhysicalPerson?.Name ?? "",
+                    SurName = CurrentPhysicalPerson?.SurName ?? "",
+                    DateOfBirth = CurrentPhysicalPerson?.DateOfBirth?.ToString("dd.MM.yyyy") ?? "",
+                    Gender = CurrentPhysicalPerson?.Gender.ToString() ?? "",
+                    CountryName = CurrentPhysicalPerson?.Country?.Name ?? "",
+                    RegionName = CurrentPhysicalPerson?.Region?.Name ?? "",
+                    MunicipalityName = CurrentPhysicalPerson?.Municipality?.Name ?? "",
+                    CityName = CurrentPhysicalPerson?.City?.Name ?? "",
+                    Address = CurrentPhysicalPerson?.Address ?? "",
+                    ConstructionSiteCode = CurrentPhysicalPerson?.ConstructionSiteCode ?? "",
+                    //podaci o pasošu
+                    PassportCountryName = CurrentPhysicalPerson?.PassportCountry?.Name ?? "",
+                    PassportCityName = CurrentPhysicalPerson?.PassportCity?.Name ?? "",
+                    Passport = CurrentPhysicalPerson?.Passport ?? "",
+                    VisaFrom = CurrentPhysicalPerson?.VisaFrom?.ToString("dd.MM.yyyy") ?? "",
+                    VisaTo = CurrentPhysicalPerson?.VisaTo?.ToString("dd.MM.yyyy") ?? "",
+                    //Podaci o prebivalištu
+                    ResidenceCountryName = CurrentPhysicalPerson?.ResidenceCountry?.Name ?? "",
+                    ResidenceCityName = CurrentPhysicalPerson?.ResidenceCity?.Name ?? "",
+                    ResidenceAddress = CurrentPhysicalPerson?.ResidenceAddress ?? "",
+                    //Podaci o radnoj dozvoli
+                    EmbassyDate = CurrentPhysicalPerson?.EmbassyDate?.ToString("dd.MM.yyyy") ?? "",
+                    VisaDate = CurrentPhysicalPerson?.VisaDate?.ToString("dd.MM.yyyy") ?? "",
+                    VisaValidFrom = CurrentPhysicalPerson?.VisaValidFrom?.ToString("dd.MM.yyyy") ?? "",
+                    VisaValidTo = CurrentPhysicalPerson?.VisaValidTo?.ToString("dd.MM.yyyy") ?? "",
+                    WorkPermitFrom = CurrentPhysicalPerson?.WorkPermitFrom?.ToString("dd.MM.yyyy") ?? "",
+                    WorkPermitTo = CurrentPhysicalPerson?.WorkPermitTo?.ToString("dd.MM.yyyy") ?? ""
+
+                }
+            };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = physicalPerson
+            };
+            rdlcPhysicalPersonReport.LocalReport.DataSources.Add(rpdsModel);
+                       
+            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\Employees\PhysicalPersonReport.rdlc");
+
+            rdlcPhysicalPersonReport.LocalReport.ReportPath = ContentStart;
+            // rdlcPhysicalPersonReport.LocalReport.SetParameters(reportParams);
+            rdlcPhysicalPersonReport.SetDisplayMode(DisplayMode.PrintLayout);
+            rdlcPhysicalPersonReport.Refresh();
+            rdlcPhysicalPersonReport.ZoomMode = ZoomMode.Percent;
+            rdlcPhysicalPersonReport.ZoomPercent = 100;
+            rdlcPhysicalPersonReport.RefreshReport();
+        }
+        #endregion
 
 
         #region INotifyPropertyChanged implementation
