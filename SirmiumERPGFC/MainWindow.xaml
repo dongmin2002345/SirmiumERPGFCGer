@@ -158,7 +158,7 @@
                 <Fluent:RibbonGroupBox Header="PDV">
                     <Fluent:Button x:Name="mniVat" Click="MniVat_Click" Header="{DynamicResource PDV_procenti}" KeyTip="PP" >
                         <Fluent:Button.LargeIcon>
-                            <Image Source="Resources\Icons\PDV procenat.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Source="Resources\Icons\PDVprocenat.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>

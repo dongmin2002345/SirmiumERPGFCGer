@@ -185,6 +185,9 @@
     <Compile Include="CloseableTabItem.cs" />
     <Compile Include="Common\FlyoutHelper.cs" />
     <Compile Include="Common\UserRolesHelper.cs" />
+    <Compile Include="ErrorWindow.xaml.cs">
+      <DependentUpon>ErrorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Identity\AnonymousIdentity.cs" />
     <Compile Include="Identity\CustomIdentity.cs" />
     <Compile Include="Identity\CustomPrincipal.cs" />
@@ -726,6 +729,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ErrorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Identity\Views\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1571,7 +1578,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\PDFBeli.png" />
-    <Content Include="Resources\Icons\PDV procenat.png">
+    <Content Include="Resources\Icons\PDVprocenat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Icons\percentage.png">

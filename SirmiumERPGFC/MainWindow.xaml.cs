@@ -2,51 +2,37 @@
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Identity;
+using SirmiumERPGFC.Views.Administrations;
+using SirmiumERPGFC.Views.Banks;
 using SirmiumERPGFC.Views.BusinessPartners;
-using SirmiumERPGFC.Views.Locations;
-using SirmiumERPGFC.Views.Home;
+using SirmiumERPGFC.Views.ConstructionSites;
 using SirmiumERPGFC.Views.Employees;
+using SirmiumERPGFC.Views.Home;
+using SirmiumERPGFC.Views.InputInvoices;
+using SirmiumERPGFC.Views.Invoices;
+using SirmiumERPGFC.Views.Locations;
 using SirmiumERPGFC.Views.OutputInvoices;
+using SirmiumERPGFC.Views.Prices;
+using SirmiumERPGFC.Views.Profession;
+using SirmiumERPGFC.Views.Sectors;
+using SirmiumERPGFC.Views.Shipments;
+using SirmiumERPGFC.Views.Statuses;
+using SirmiumERPGFC.Views.TaxAdministrations;
+using SirmiumERPGFC.Views.Users;
+using SirmiumERPGFC.Views.Vats;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
-using SirmiumERPGFC.Views.Sectors;
-using SirmiumERPGFC.Views.Profession;
-using SirmiumERPGFC.Views.Banks;
-using SirmiumERPGFC.Views.ConstructionSites;
-using SirmiumERPGFC.Views.Common;
-using SirmiumERPGFC.Views.Administrations;
-using SirmiumERPGFC.Views.InputInvoices;
-using SirmiumERPGFC.Views.TaxAdministrations;
-using SirmiumERPGFC.Views.Users;
-using SirmiumERPGFC.Views.Vats;
-using SirmiumERPGFC.Views.Prices;
-using SirmiumERPGFC.Views.Statuses;
-using SirmiumERPGFC.Views.Shipments;
-using SirmiumERPGFC.Views.Invoices;
 
 namespace SirmiumERPGFC
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : MetroWindow
     {
         #region Global attributes
@@ -351,6 +337,7 @@ namespace SirmiumERPGFC
         private void mniBusinessPartners_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new BusinessPartner_List();
+            //throw new Exception();
             //OpenTab("Poslovni partneri", new BusinessPartnerList());
         }
 

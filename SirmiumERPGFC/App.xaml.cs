@@ -1,14 +1,7 @@
-﻿using Ninject;
-using SirmiumERPGFC.Identity;
+﻿using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Identity.Views;
-using SirmiumERPGFC.Infrastructure;
-using SirmiumERPGFC.ViewComponents;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,7 +24,7 @@ namespace SirmiumERPGFC
             this.DispatcherUnhandledException += App_DispatcherUnhandledException;
             //ISeedDataService seedData = DependencyResolver.Kernel.Get<ISeedDataService>();
             //seedData.PopulateData();
-
+            
             //Create a custom principal with an anonymous identity at startup
             CustomPrincipal customPrincipal = new CustomPrincipal();
             AppDomain.CurrentDomain.SetThreadPrincipal(customPrincipal);
@@ -73,6 +66,11 @@ namespace SirmiumERPGFC
             if (e != null && e.Exception != null)
             {
                 var ex = (Exception)e.Exception;
+
+                ErrorWindow ew = new ErrorWindow(ex.Message, ex.StackTrace, ex.InnerException?.Message);
+                ew.ShowDialog();
+
+
                 string logMessage = ex.StackTrace; // (Environment.StackTrace);
 
                 string appPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
