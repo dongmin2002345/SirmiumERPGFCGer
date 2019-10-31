@@ -122,8 +122,8 @@
                         </Button>
                         <Button x:Name="btnPrint" Click="btnPrint_Click" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="..\..\Resources\Icons\Excel01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                <TextBlock Text="{DynamicResource IZVEZI_U_EXCEL}" Foreground="White" FontWeight="Regular" />
+                                <Image Source="..\..\Resources\Icons\Print.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text="{DynamicResource Izveštaj}" Foreground="White" FontWeight="Regular" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
@@ -195,7 +195,7 @@
                         <!--<DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding PDV}" Width="*" IsReadOnly="True" />-->
                         <DataGridTextColumn SortMemberPath="PIO" Header="{DynamicResource PIO}" Binding="{Binding PIO}" Width="*" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="Customer" Header="{DynamicResource Kupac}" Binding="{Binding Customer}" Width="*" IsReadOnly="True"/>
-                        <DataGridTextColumn SortMemberPath="Vat.Amount" Header="{DynamicResource PDVProcenat}" Binding="{Binding Vat.Amount}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="Vat.Amount" Header="{DynamicResource PDV}" Binding="{Binding Vat.Amount}" Width="*" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="Discount.Amount" Header="{DynamicResource Popust}" Binding="{Binding Discount.Amount}" Width="*" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="IsInPDV" Binding="{Binding IsInPDV, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True">
                         <DataGridTextColumn.Header>
