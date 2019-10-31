@@ -1,9 +1,11 @@
-﻿using Ninject;
+﻿using Microsoft.Reporting.WinForms;
+using Ninject;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.RdlcReports.BusinessPartners;
 using SirmiumERPGFC.Reports.BusinessPartners;
 using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Views.Common;
@@ -11,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,7 +26,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.BusinessPartners
 {
@@ -1281,8 +1283,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
-       
-		private void btnPrint_Click(object sender, RoutedEventArgs e)
+        #region Report
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
 		{
             //try
             //{
@@ -1307,6 +1309,233 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
+
+        private void BtnPrintBusinessPartnerReport_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentBusinessPartner == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_poslovnogpartneraUzvičnik"));
+                return;
+            }
+
+            #endregion
+
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Clear();
+
+            List<BusinessPartnerReportViewModel> businessPartner = new List<BusinessPartnerReportViewModel>()
+            {
+                new BusinessPartnerReportViewModel()
+                {
+                    //Poslovni partner Srbije
+                    Code = CurrentBusinessPartner?.Code ?? "",
+                    InternalCode = CurrentBusinessPartner?.InternalCode ?? "",
+                    Name = CurrentBusinessPartner?.Name ?? "",
+                    IdentificationNumber = CurrentBusinessPartner?.IdentificationNumber ?? "",
+                    PIB = CurrentBusinessPartner?.PIB ?? "",
+                    PIO = CurrentBusinessPartner?.PIO ?? "",
+                    VatDescription = CurrentBusinessPartner?.Vat?.Description ?? "",
+                    DiscountName = CurrentBusinessPartner?.Discount?.Name ?? "",
+                    DuoDate = CurrentBusinessPartner?.DueDate.ToString("#.00") ?? "",
+                    IsInPDV = CurrentBusinessPartner?.IsInPDV.ToString() ?? "",
+                    WebSite = CurrentBusinessPartner?.WebSite ?? "",
+
+                    //Poslovni partner Nemacke
+                    InternalCodeGer = CurrentBusinessPartner?.InternalCode ?? "",
+                    GerName = CurrentBusinessPartner?.NameGer ?? "",
+                    CountryName = CurrentBusinessPartner?.Country?.Name ?? "",
+                    SectorName = CurrentBusinessPartner?.Sector?.Name ?? "",
+                    AgencyName = CurrentBusinessPartner?.Agency?.Name ?? "",
+                    TaxNr = CurrentBusinessPartner?.TaxNr ?? "",
+                    IsInPDVGer = CurrentBusinessPartner?.IsInPDVGer.ToString() ?? "",
+                    BetriebsNumber = CurrentBusinessPartner?.BetriebsNumber ?? "",
+                    CommercialNr = CurrentBusinessPartner?.CommercialNr ?? "",
+                    ContactPersonGer = CurrentBusinessPartner?.ContactPersonGer ?? "",
+                    VatDeductionFrom = CurrentBusinessPartner?.VatDeductionFrom?.ToString("dd.MM.yyyy") ?? "",
+                    VatDeductionTo = CurrentBusinessPartner?.VatDeductionTo?.ToString("dd.MM.yyyy") ?? ""                      
+                }
+            };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = businessPartner
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModel);
+
+
+            //Telefoni
+            List<BusinessPartnerReportViewModel> BusinessPartnerPhone = new List<BusinessPartnerReportViewModel>();
+            List<BusinessPartnerPhoneViewModel> PhoneItems = new BusinessPartnerPhoneSQLiteRepository().GetBusinessPartnerPhonesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerPhones;
+            int counter = 1;
+            foreach (var PhoneItem in PhoneItems)
+            {
+                BusinessPartnerPhone.Add(new BusinessPartnerReportViewModel()
+                {
+                    OrderNumbersForPhones = counter++,
+                    ContactPersonFirstName = PhoneItem?.ContactPersonFirstName ?? "",
+                    ContactPersonLastName = PhoneItem?.ContactPersonLastName ?? "",
+                    Mobile = PhoneItem?.Mobile ?? "",
+                    Phone = PhoneItem?.Phone ?? "",
+                    Fax = PhoneItem?.Fax ?? "",
+                    Email = PhoneItem?.Email ?? "",
+                    Birthday = PhoneItem?.Birthday?.ToString("dd.MM.yyyy") ?? "",
+                    Description = PhoneItem?.Description ?? ""
+
+                });
+            }
+            var rpdsModelPhone = new ReportDataSource()
+            {
+                Name = "DataSet2",
+                Value = BusinessPartnerPhone
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelPhone);
+
+
+            //Lokacije
+            List<BusinessPartnerReportViewModel> BusinessPartnerLocation = new List<BusinessPartnerReportViewModel>();
+            List<BusinessPartnerLocationViewModel> LocationItems = new BusinessPartnerLocationSQLiteRepository().GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerLocations;
+            int Licencecounter = 1;
+            foreach (var LocationItem in LocationItems)
+            {
+                BusinessPartnerLocation.Add(new BusinessPartnerReportViewModel()
+                {
+                    OrderNumbersForLocations = Licencecounter++,
+                    LocationCountryName = LocationItem?.Country?.Name ?? "",
+                    LocationRegionName = LocationItem?.Region?.Name ?? "",
+                    LocationMunicipalityName = LocationItem?.Municipality?.Name ?? "",
+                    LocationCityName = LocationItem?.City?.Name ?? "",
+                    LocationAddress = LocationItem?.Address ?? ""
+                });
+            }
+            var rpdsModelLocation = new ReportDataSource()
+            {
+                Name = "DataSet3",
+                Value = BusinessPartnerLocation
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelLocation);
+
+            //Banke
+            List<BusinessPartnerReportViewModel> BusinessPartnerBank = new List<BusinessPartnerReportViewModel>();
+            List<BusinessPartnerBankViewModel> BankItems = new BusinessPartnerBankSQLiteRepository().GetBusinessPartnerBanksByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerBanks;
+            int Bankcounter = 1;
+            foreach (var BankItem in BankItems)
+            {
+                BusinessPartnerBank.Add(new BusinessPartnerReportViewModel()
+                {
+                    OrderNumbersForBanks = Bankcounter++,
+                    BankCountryName = BankItem?.Country?.Name ?? "",
+                    BankName = BankItem?.Bank?.Name ?? "",
+                    BankAccountNumber = BankItem?.AccountNumber ?? ""
+                });
+            }
+            var rpdsModelBank = new ReportDataSource()
+            {
+                Name = "DataSet4",
+                Value = BusinessPartnerBank
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelBank);
+
+            //Institucije
+            List<BusinessPartnerReportViewModel> BusinessPartnerInstitution = new List<BusinessPartnerReportViewModel>();
+            List<BusinessPartnerInstitutionViewModel> InstitutionItems = new BusinessPartnerInstitutionSQLiteRepository().GetBusinessPartnerInstitutionsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerInstitutions;
+            int Institutioncounter = 1;
+            foreach (var InstitutionItem in InstitutionItems)
+            {
+                BusinessPartnerInstitution.Add(new BusinessPartnerReportViewModel()
+                {
+                    OrderNumbersForLocations = Institutioncounter++,
+                    Institution = InstitutionItem?.Institution ?? "",
+                    InstitutionUsername = InstitutionItem?.Username ?? "",
+                    InstitutionPassword = InstitutionItem?.Password ?? "",
+                    InstitutionContactPerson = InstitutionItem?.ContactPerson ?? "",
+                    InstitutionPhone = InstitutionItem?.Phone ?? "",
+                    InstitutionFax = InstitutionItem?.Fax ?? "",
+                    InstitutionEmail = InstitutionItem?.Email ?? ""
+                });
+            }
+            var rpdsModelInstitution = new ReportDataSource()
+            {
+                Name = "DataSet5",
+                Value = BusinessPartnerInstitution
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelInstitution);
+
+
+            //Dokumenta
+            List<BusinessPartnerReportViewModel> BusinessPartnerDocument = new List<BusinessPartnerReportViewModel>();
+            List<BusinessPartnerDocumentViewModel> DocumentItems = new BusinessPartnerDocumentSQLiteRepository().GetBusinessPartnerDocumentsByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerDocuments;
+            int Documentcounter = 1;
+            foreach (var DocumentItem in DocumentItems)
+            {
+                BusinessPartnerDocument.Add(new BusinessPartnerReportViewModel()
+                {
+                    OrderNumbersForDocuments = Documentcounter++,
+                    DocumentName = DocumentItem?.Name ?? "",
+                    DocumentCreateDate = DocumentItem?.CreateDate?.ToString("dd.MM.yyyy") ?? "",
+                    DocumentPath = DocumentItem?.Path ?? ""
+                });
+            }
+            var rpdsModelDocument = new ReportDataSource()
+            {
+                Name = "DataSet6",
+                Value = BusinessPartnerDocument
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelDocument);
+
+            //Napomena
+            List<BusinessPartnerReportViewModel> BusinessPartnerNote = new List<BusinessPartnerReportViewModel>();
+            List<BusinessPartnerNoteViewModel> NoteItems = new BusinessPartnerNoteSQLiteRepository().GetBusinessPartnerNotesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerNotes;
+            int Notecounter = 1;
+            foreach (var NoteItem in NoteItems)
+            {
+                BusinessPartnerNote.Add(new BusinessPartnerReportViewModel()
+                {
+                    OrderNumbersForNotes = Notecounter++,
+                    Note = NoteItem?.Note ?? "",
+                    NoteDate = NoteItem?.NoteDate.ToString("dd.MM.yyyy") ?? ""
+
+                });
+            }
+            var rpdsModelNote = new ReportDataSource()
+            {
+                Name = "DataSet7",
+                Value = BusinessPartnerNote
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelNote);
+
+            //Tip poslovnog partnera
+            List<BusinessPartnerReportViewModel> BusinessPartnerType = new List<BusinessPartnerReportViewModel>();
+            List<BusinessPartnerTypeViewModel> TypeItems = new BusinessPartnerTypeSQLiteRepository().GetBusinessPartnerTypesByBusinessPartner(MainWindow.CurrentCompanyId, CurrentBusinessPartner.Identifier).BusinessPartnerTypes;
+            int Typecounter = 1;
+            foreach (var TypeItem in TypeItems)
+            {
+                BusinessPartnerType.Add(new BusinessPartnerReportViewModel()
+                {
+                    OrderNumbersForTypes = Typecounter++,
+                    TypeCode = TypeItem?.Code ?? "",
+                    TypeName = TypeItem?.Name ?? ""
+                });
+            }
+            var rpdsModelType = new ReportDataSource()
+            {
+                Name = "DataSet8",
+                Value = BusinessPartnerType
+            };
+            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelType);
+                        
+            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\BusinessPartners\BusinessPartnerReport.rdlc");
+
+            rdlcBusinessPartnerReport.LocalReport.ReportPath = ContentStart;
+            rdlcBusinessPartnerReport.SetDisplayMode(DisplayMode.PrintLayout);
+            rdlcBusinessPartnerReport.Refresh();
+            rdlcBusinessPartnerReport.ZoomMode = ZoomMode.Percent;
+            rdlcBusinessPartnerReport.ZoomPercent = 100;
+            rdlcBusinessPartnerReport.RefreshReport();
+        }
+
+        #endregion
     }
 }
 

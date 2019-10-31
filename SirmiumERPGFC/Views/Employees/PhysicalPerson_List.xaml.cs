@@ -1178,7 +1178,7 @@ namespace SirmiumERPGFC.Views.Employees
 
             if (CurrentPhysicalPerson == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Nije_odabrano_fizičko_liceUzvičnik"));
                 return;
             }
 
