@@ -61,10 +61,10 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     NameGer = BusinessPartnerItem?.NameGer ?? "",
                     TaxNr = BusinessPartnerItem?.TaxNr ?? "",
                     Valuta = BusinessPartnerItem?.DueDate.ToString("#.00") ?? "",
-                    VatDescription = BusinessPartnerItem?.Vat?.Description ?? "",
+                    VatDescription = BusinessPartnerItem?.Vat?.Amount.ToString() ?? "",
                     PIO = BusinessPartnerItem?.PIO ?? "",
                     Customer = BusinessPartnerItem?.Customer ?? "",
-                    DiscountName = BusinessPartnerItem?.Discount?.Name ?? "",
+                    DiscountName = BusinessPartnerItem?.Discount?.Amount.ToString("#.00") ?? "",
                     IsInPDV = BusinessPartnerItem?.IsInPDV.ToString() ?? ""
                 });
             }

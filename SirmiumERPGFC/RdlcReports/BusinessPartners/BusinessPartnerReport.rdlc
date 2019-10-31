@@ -880,7 +880,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!VatDescription.Value</Value>
+                              <Value>=Fields!VatDescription.Value + "%"</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -901,6 +901,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1063,7 +1064,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.41667in</Top>
         <Height>0.71875in</Height>
-        <Width>11.59933in</Width>
+        <Width>11.59932in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2127,7 +2128,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2324,7 +2324,7 @@
         <Top>4.45383cm</Top>
         <Left>0cm</Left>
         <Height>1.78208cm</Height>
-        <Width>29.4623cm</Width>
+        <Width>29.46231cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -3783,7 +3783,7 @@
         <Top>10.96258cm</Top>
         <Left>0cm</Left>
         <Height>1.835cm</Height>
-        <Width>29.4623cm</Width>
+        <Width>29.46231cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -4229,7 +4229,7 @@
         <Top>14.1905cm</Top>
         <Left>0cm</Left>
         <Height>1.88792cm</Height>
-        <Width>29.4623cm</Width>
+        <Width>29.46231cm</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -5843,7 +5843,7 @@
         <Top>24.69446cm</Top>
         <Left>0cm</Left>
         <Height>1.835cm</Height>
-        <Width>29.4583cm</Width>
+        <Width>29.45829cm</Width>
         <ZIndex>17</ZIndex>
         <Style>
           <Border>
@@ -6209,7 +6209,7 @@
     <Height>30.74459cm</Height>
     <Style />
   </Body>
-  <Width>29.4623cm</Width>
+  <Width>29.46231cm</Width>
   <Page>
     <PageHeader>
       <Height>2.13112cm</Height>

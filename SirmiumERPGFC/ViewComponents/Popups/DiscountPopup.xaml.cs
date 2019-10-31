@@ -53,7 +53,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             DiscountPopup popup = source as DiscountPopup;
             DiscountViewModel discount = (DiscountViewModel)e.NewValue;
-            popup.txtDiscount.Text = discount != null ? discount.Amount.ToString() : "";
+            popup.txtDiscount.Text = discount != null ? discount.Code + " (" + discount.Amount + ")" : "";
         }
         #endregion
 
