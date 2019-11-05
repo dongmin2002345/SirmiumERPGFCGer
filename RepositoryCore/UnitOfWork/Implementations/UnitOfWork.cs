@@ -1,6 +1,7 @@
 ﻿using Configurator;
 using Microsoft.EntityFrameworkCore;
 using RepositoryCore.Abstractions.Banks;
+using RepositoryCore.Abstractions.CalendarAssignments;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Abstractions.Common.CallCentars;
 using RepositoryCore.Abstractions.Common.Companies;
@@ -21,6 +22,7 @@ using RepositoryCore.Abstractions.Statuses;
 using RepositoryCore.Abstractions.Vats;
 using RepositoryCore.Context;
 using RepositoryCore.Implementations.Banks;
+using RepositoryCore.Implementations.CalendarAssignments;
 using RepositoryCore.Implementations.Common.BusinessPartners;
 using RepositoryCore.Implementations.Common.CallCentars;
 using RepositoryCore.Implementations.Common.Companies;
@@ -136,6 +138,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
 
         private ICallCentarRepository callCentarRepository;
 
+        private ICalendarAssignmentRepository calendarAssignmentRepository;
         #endregion
 
         #region Constructor
@@ -643,6 +646,14 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (callCentarRepository == null)
                 callCentarRepository = new CallCentarViewRepository(context);
             return callCentarRepository;
+        }
+
+        public ICalendarAssignmentRepository GetCalendarAssignmentRepository()
+        {
+            if (calendarAssignmentRepository == null)
+                calendarAssignmentRepository = new CalendarAssignmentRepository(context);
+
+            return calendarAssignmentRepository;
         }
 
         #endregion

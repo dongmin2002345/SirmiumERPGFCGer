@@ -8,6 +8,7 @@
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:local1="clr-namespace:SirmiumERPGFC.Views.Phonebooks"
              xmlns:local11="clr-namespace:SirmiumERPGFC.Views.CallCentars"
+             xmlns:businesscalendar="clr-namespace:SirmiumERPGFC.Views.BusinessCalendar"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Background="White" Loaded="UserControl_Loaded">
 
@@ -57,6 +58,9 @@
 
         <Grid Grid.Column="1">
             <TabControl TabStripPlacement="Top" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
+                <TabItem Header="{DynamicResource Radni_zadaci_kalendar}">
+                    <businesscalendar:Calendar_List x:Name="calendarViewer" />
+                </TabItem>
                 <TabItem Header="{DynamicResource Podsetnik_za_uraditi}">
                     <local:ToDoList x:Name="toDoList" />
                 </TabItem>

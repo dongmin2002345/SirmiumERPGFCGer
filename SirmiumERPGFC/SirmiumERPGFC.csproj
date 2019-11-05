@@ -185,6 +185,7 @@
     <Compile Include="CloseableTabItem.cs" />
     <Compile Include="Common\FlyoutHelper.cs" />
     <Compile Include="Common\UserRolesHelper.cs" />
+    <Compile Include="CustomControls\CustomCalendarButton.cs" />
     <Compile Include="ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
@@ -238,6 +239,7 @@
     <Compile Include="Repository\BusinessPartners\BusinessPartnerPhoneSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\BusinessPartners\BusinessPartnerTypeSQLiteRepository.cs" />
+    <Compile Include="Repository\CalendarAssignments\CalendarAssignmentSQLiteRepository.cs" />
     <Compile Include="Repository\CallCentars\CallCentarSQLiteRepository.cs" />
     <Compile Include="Repository\Companies\CompanyUserSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteCalculationSQLiteRepository.cs" />
@@ -296,6 +298,12 @@
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="Repository\Vats\VatSQLiteRepository.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Views\BusinessCalendar\Calendar_AddEdit.xaml.cs">
+      <DependentUpon>Calendar_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessCalendar\Calendar_List.xaml.cs">
+      <DependentUpon>Calendar_List.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Popups\AgencyPopup.xaml.cs">
       <DependentUpon>AgencyPopup.xaml</DependentUpon>
     </Compile>
@@ -772,6 +780,14 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusinessCalendar\Calendar_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessCalendar\Calendar_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Popups\AgencyPopup.xaml">
       <SubType>Designer</SubType>

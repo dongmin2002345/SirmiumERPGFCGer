@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RepositoryCore.Context;
 using RepositoryCore.DbSeed;
 using RepositoryCore.DbViews.Banks;
+using RepositoryCore.DbViews.CalendarAssignments;
 using RepositoryCore.DbViews.Common.BusinessPartners;
 using RepositoryCore.DbViews.Common.CallCentars;
 using RepositoryCore.DbViews.Common.Companies;
@@ -28,6 +29,7 @@ using RepositoryCore.DbViews.Vats;
 using RepositoryCore.UnitOfWork.Abstractions;
 using RepositoryCore.UnitOfWork.Implementations;
 using ServiceCore.Implementations.Banks;
+using ServiceCore.Implementations.CalendarAssignments;
 using ServiceCore.Implementations.Common;
 using ServiceCore.Implementations.Common.BusinessPartners;
 using ServiceCore.Implementations.Common.Companies;
@@ -50,6 +52,7 @@ using ServiceCore.Implementations.Statuses;
 using ServiceCore.Implementations.Vats;
 using ServiceInterfaces.Abstractions;
 using ServiceInterfaces.Abstractions.Banks;
+using ServiceInterfaces.Abstractions.CalendarAssignments;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.CallCentars;
 using ServiceInterfaces.Abstractions.Common.Companies;
@@ -249,6 +252,8 @@ namespace SirmiumERPWeb
 
             services.AddScoped<ICallCentarService, CallCentarService>();
 
+            services.AddScoped<ICalendarAssignmentService, CalendarAssignmentService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -364,6 +369,8 @@ namespace SirmiumERPWeb
             InvoiceItemView.CreateView();
 
             CallCentarView.CreateView();
+
+            CalendarAssignmentView.CreateView();
 
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));

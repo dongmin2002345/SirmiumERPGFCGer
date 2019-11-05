@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="SirmiumERPGFC.Views.BusinessCalendar.Calendar_List"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.BusinessCalendar"
+		     xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:converters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:customcontrols="clr-namespace:SirmiumERPGFC.CustomControls"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type customcontrols:CustomCalendarButton}" >
+            <Setter Property="Background" Value="#007ACC" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="BorderBrush" Value="Black" />
+            
+            <Style.Triggers>
+                <!--<Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#33ABFF" />
+                </Trigger>-->
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#33ABFF" />
+                    <Setter Property="BorderBrush" Value="White" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Black" />
+                </Trigger>
+
+                <!--<MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsEnabled" Value="True" />
+                        <Condition Property="IsMouseOver" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Background" Value="Red" />
+                        <Setter Property="BorderBrush" Value="White" />
+                    </MultiTrigger.Setters>
+                </MultiTrigger>-->
+            </Style.Triggers>
+        </Style>
+        <converters:StringDateForCalendarConverter x:Key="dateForCalendarConverter" />
+        <converters:SelectedBorderColorConverter x:Key="selectedBorderConverter" />
+        <converters:StringDateTimeShortConverter x:Key="dateTimeConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="{DynamicResource Kalendar}" Margin="2,0,2,0" Grid.Row="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                    <Button x:Name="btnPrevMonth" Click="btnPrevMonth_Click" Margin="2" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                        </StackPanel>
+                    </Button>
+                    <TextBox Text="{Binding StartingMonth, Converter={StaticResource dateForCalendarConverter}}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="100" HorizontalContentAlignment="Center" IsEnabled="False" />
+                    <Button x:Name="btnNextMonth" Click="btnNextMonth_Click" Margin="2" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnAdd" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Regular"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <UniformGrid Grid.Row="1" Grid.ColumnSpan="7" Columns="7" Background="#41B1E1" Height="28">
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource Ponedeljak}" Foreground="White" TextAlignment="Center" />
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource Utorak}" Foreground="White" TextAlignment="Center" />
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource Sreda}" Foreground="White" TextAlignment="Center" />
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource Četvrtak}" Foreground="White" TextAlignment="Center" />
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource Petak}" Foreground="White" TextAlignment="Center" />
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource Subota}" Foreground="White" TextAlignment="Center" />
+                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource Nedelja}" Foreground="White" TextAlignment="Center" />
+                </UniformGrid>
+                <ItemsControl Grid.Row="3" Grid.ColumnSpan="7" ItemsSource="{Binding Path=CalendarItems}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="7" Rows="6" Margin="0" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <customcontrols:CustomCalendarButton Content="{Binding DayInAMonth}" Click="CalendarDayButton_Click" BorderThickness="1"   
+                                    IsSelected="{Binding IsSelected, Mode=TwoWay}"
+                                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}" CommandParameter="{Binding}">
+                                <!--<Button.Triggers>
+                                    <Trigger SourceName="CustomCalendarButton" Property="IsSelected" Value="True">
+                                        
+                                    </Trigger>
+                                </Button.Triggers>-->
+                            </customcontrols:CustomCalendarButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </GroupBox>
+
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2" Margin="0" Grid.ColumnSpan="7" />
+
+        <Grid Grid.Row="2" Margin="2,0,2,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="{Binding Path=TodayDate, Converter={StaticResource dateTimeConverter}}" Grid.Column="0" Margin="0">
+                <mah:ProgressRing IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}" />
+            </GroupBox>
+
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2" />
+
+            <GroupBox Header="{Binding Path=TomorrowDate, Converter={StaticResource dateTimeConverter}}" Grid.Column="2">
+                <mah:ProgressRing IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}" />
+            </GroupBox>
+        </Grid>
+    </Grid>
+    
+</UserControl>

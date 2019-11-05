@@ -27,6 +27,7 @@ using ServiceInterfaces.ViewModels.Statuses;
 using ServiceInterfaces.ViewModels.Common.Phonebooks;
 using ServiceInterfaces.ViewModels.Common.Invoices;
 using ServiceInterfaces.ViewModels.Common.CallCentars;
+using ServiceInterfaces.ViewModels.CalendarAssignments;
 
 namespace ApiExtension.Sender
 {
@@ -123,20 +124,20 @@ namespace ApiExtension.Sender
                 { typeof(OutputInvoiceNoteViewModel), "OutputInvoiceNote" },
                 { typeof(List<OutputInvoiceNoteViewModel>), "OutputInvoiceNote" },
 
-				{ typeof(OutputInvoiceDocumentViewModel), "OutputInvoiceDocument" },
-				{ typeof(List<OutputInvoiceDocumentViewModel>), "OutputInvoiceDocument" },
+                { typeof(OutputInvoiceDocumentViewModel), "OutputInvoiceDocument" },
+                { typeof(List<OutputInvoiceDocumentViewModel>), "OutputInvoiceDocument" },
                 #endregion
 
 				#region IntputInvoices
 
                 { typeof(InputInvoiceViewModel), "InputInvoice" },
-				{ typeof(List<InputInvoiceViewModel>), "InputInvoice" },
+                { typeof(List<InputInvoiceViewModel>), "InputInvoice" },
 
                 { typeof(InputInvoiceNoteViewModel), "InputInvoiceNote" },
                 { typeof(List<InputInvoiceNoteViewModel>), "InputInvoiceNote" },
 
-				{ typeof(InputInvoiceDocumentViewModel), "InputInvoiceDocument" },
-				{ typeof(List<InputInvoiceDocumentViewModel>), "InputInvoiceDocument" },
+                { typeof(InputInvoiceDocumentViewModel), "InputInvoiceDocument" },
+                { typeof(List<InputInvoiceDocumentViewModel>), "InputInvoiceDocument" },
 
                 #endregion
 
@@ -184,7 +185,7 @@ namespace ApiExtension.Sender
                 #region Employees
 
 				{ typeof(PhysicalPersonViewModel), "PhysicalPerson" },
-				{ typeof(List<PhysicalPersonViewModel>), "PhysicalPerson" },
+                { typeof(List<PhysicalPersonViewModel>), "PhysicalPerson" },
 
                 { typeof(PhysicalPersonItemViewModel), "PhysicalPersonItem" },
                 { typeof(List<PhysicalPersonItemViewModel>), "PhysicalPersonItem" },
@@ -315,7 +316,7 @@ namespace ApiExtension.Sender
                 { typeof(List<PhonebookPhoneViewModel>), "PhonebookPhone" },
             #endregion
 
-                 #region Invoices
+            #region Invoices
 				{ typeof(InvoiceViewModel), "Invoice" },
                 { typeof(List<InvoiceViewModel>), "Invoice" },
 
@@ -328,6 +329,11 @@ namespace ApiExtension.Sender
             { typeof(CallCentarViewModel), "CallCentar" },
             { typeof(List<CallCentarViewModel>), "CallCentar" },
 
+            #endregion
+
+            #region CalendarAssignments
+            { typeof(CalendarAssignmentViewModel), "CalendarAssignment" },
+            { typeof(List<CalendarAssignmentViewModel>), "CalendarAssignment" },
             #endregion
         };
 

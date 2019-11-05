@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementations\Banks\BankService.cs" />
+    <Compile Include="Implementations\CalendarAssignments\CalendarAssignmentService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerBankService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerByConstructionSiteService.cs" />
     <Compile Include="Implementations\Common\BusinessPartners\BusinessPartnerDocumentService.cs" />

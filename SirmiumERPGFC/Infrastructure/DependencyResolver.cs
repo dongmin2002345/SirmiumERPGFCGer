@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions;
 using ServiceInterfaces.Abstractions.Banks;
+using ServiceInterfaces.Abstractions.CalendarAssignments;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.CallCentars;
 using ServiceInterfaces.Abstractions.Common.Companies;
@@ -22,6 +23,7 @@ using ServiceInterfaces.Abstractions.Limitations;
 using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Abstractions.Vats;
 using ServiceWebApi.Implementations.Banks;
+using ServiceWebApi.Implementations.CalendarAssignments;
 using ServiceWebApi.Implementations.Common.BusinessPartners;
 using ServiceWebApi.Implementations.Common.CallCentars;
 using ServiceWebApi.Implementations.Common.Companies;
@@ -143,6 +145,7 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IInvoiceService>().To<InvoiceService>();
                 Kernel.Bind<IInvoiceItemService>().To<InvoiceItemService>();
                 Kernel.Bind<ICallCentarService>().To<CallCentarService>();
+                Kernel.Bind<ICalendarAssignmentService>().To<CalendarAssignmentService>();
             }
         }
     }

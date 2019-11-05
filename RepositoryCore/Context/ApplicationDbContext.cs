@@ -1,4 +1,5 @@
 ﻿using DomainCore.Banks;
+using DomainCore.CalendarAssignments;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.CallCentars;
 using DomainCore.Common.Companies;
@@ -159,6 +160,7 @@ namespace RepositoryCore.Context
 
         public DbSet<CallCentar> CallCentars { get; set; }
 
+        public DbSet<CalendarAssignment> CalendarAssignments { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 

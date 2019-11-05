@@ -691,4 +691,16 @@
     <system:String x:Key="Fajlovi_za_fizicko_lice">Fajlovi za fizicko lice</system:String>
     <system:String x:Key="Dodavanje_fizičkog_lica">Dodavanje fizičkog lica </system:String>
     <system:String x:Key="Šifra_fizičkog_licaDvotacka">Šifra fizičkog lica:</system:String>
+
+    <system:String x:Key="Ponedeljak">Ponedeljak</system:String>
+    <system:String x:Key="Utorak">Utorak</system:String>
+    <system:String x:Key="Sreda">Sreda</system:String>
+    <system:String x:Key="Četvrtak">Četvrtak</system:String>
+    <system:String x:Key="Petak">Petak</system:String>
+    <system:String x:Key="Subota">Subota</system:String>
+    <system:String x:Key="Nedelja">Nedelja</system:String>
+    <system:String x:Key="Kalendar">Kalendar</system:String>
+    <system:String x:Key="Danas">Danas</system:String>
+    <system:String x:Key="Sutra">Sutra</system:String>
+    <system:String x:Key="Radni_zadaci_kalendar">Kalendar</system:String>
 </ResourceDictionary>

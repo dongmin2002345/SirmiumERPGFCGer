@@ -1,4 +1,5 @@
 ﻿using RepositoryCore.Abstractions.Banks;
+using RepositoryCore.Abstractions.CalendarAssignments;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Abstractions.Common.CallCentars;
 using RepositoryCore.Abstractions.Common.Companies;
@@ -110,6 +111,7 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         ICallCentarRepository GetCallCentarRepository();
 
+        ICalendarAssignmentRepository GetCalendarAssignmentRepository();
 
         void Save();
     }
