@@ -11,24 +11,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.BusinessCalendar
 {
-    /// <summary>
-    /// Interaction logic for CalendarControl.xaml
-    /// </summary>
     public partial class Calendar_List : UserControl, INotifyPropertyChanged
     {
         #region Attributes
@@ -433,7 +421,7 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
         {
             CalendarAssignmentViewModel calendarAssignment = new CalendarAssignmentViewModel();
             calendarAssignment.Identifier = Guid.NewGuid();
-            calendarAssignment.Date = DateTime.Now.Date;
+            calendarAssignment.Date = TodayDate?.Date ?? DateTime.Now.Date;
 
             Calendar_AddEdit addEditForm = new Calendar_AddEdit(calendarAssignment, true);
             addEditForm.CalendarAssignmentCreatedUpdated += new CalendarAssignmentHandler(SyncData);

@@ -8,28 +8,14 @@ using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.CalendarAssignments;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using static SirmiumERPGFC.Views.BusinessCalendar.Calendar_List;
 
 namespace SirmiumERPGFC.Views.BusinessCalendar
 {
-    /// <summary>
-    /// Interaction logic for Calendar_AddEdit.xaml
-    /// </summary>
     public partial class Calendar_AddEdit : UserControl, INotifyPropertyChanged
     {
 
@@ -42,6 +28,24 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
 
         #region Events
         public event CalendarAssignmentHandler CalendarAssignmentCreatedUpdated;
+        #endregion
+
+
+        #region CurrentCalendarAssignment
+        private CalendarAssignmentViewModel _CurrentCalendarAssignment;
+
+        public CalendarAssignmentViewModel CurrentCalendarAssignment
+        {
+            get { return _CurrentCalendarAssignment; }
+            set
+            {
+                if (_CurrentCalendarAssignment != value)
+                {
+                    _CurrentCalendarAssignment = value;
+                    NotifyPropertyChanged("CurrentCalendarAssignment");
+                }
+            }
+        }
         #endregion
 
 
@@ -108,23 +112,6 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
                 {
                     _SubmitButtonEnabled = value;
                     NotifyPropertyChanged("SubmitButtonEnabled");
-                }
-            }
-        }
-        #endregion
-
-        #region CurrentCalendarAssignment
-        private CalendarAssignmentViewModel _CurrentCalendarAssignment;
-
-        public CalendarAssignmentViewModel CurrentCalendarAssignment
-        {
-            get { return _CurrentCalendarAssignment; }
-            set
-            {
-                if (_CurrentCalendarAssignment != value)
-                {
-                    _CurrentCalendarAssignment = value;
-                    NotifyPropertyChanged("CurrentCalendarAssignment");
                 }
             }
         }
@@ -207,8 +194,10 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
 
                     if (IsCreateProcess)
                     {
+                        DateTime tmpDate = CurrentCalendarAssignment.Date;
                         CurrentCalendarAssignment = new CalendarAssignmentViewModel();
                         CurrentCalendarAssignment.Identifier = Guid.NewGuid();
+                        CurrentCalendarAssignment.Date = tmpDate;
 
                         Application.Current.Dispatcher.BeginInvoke(
                             System.Windows.Threading.DispatcherPriority.Normal,
