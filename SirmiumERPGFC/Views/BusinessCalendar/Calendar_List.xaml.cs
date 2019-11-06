@@ -321,7 +321,7 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             if (dayOfWeek > 0)
                 startOfMonth = startOfMonth.AddDays(-dayOfWeek);
             else
-                startOfMonth = startOfMonth.AddDays(-1);
+                startOfMonth = startOfMonth.AddDays(-7);
 
             var today = DateTime.Now.Date;
 
