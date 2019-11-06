@@ -21,6 +21,7 @@ using SirmiumERPGFC.Repository.Shipments;
 using SirmiumERPGFC.Repository.Phonebooks;
 using SirmiumERPGFC.Repository.Invoices;
 using SirmiumERPGFC.Repository.CallCentars;
+using SirmiumERPGFC.Repository.CalendarAssignments;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -1081,6 +1082,20 @@ namespace SirmiumERPGFC.Repository.Common
                         catch (Exception ex) { }
                     }
                     createTable = new SqliteCommand(CallCentarSQLiteRepository.CallCentarTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region CalendarAssignments
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE CalendarAssignments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(CalendarAssignmentSQLiteRepository.CalendarAssignmentTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
                 }

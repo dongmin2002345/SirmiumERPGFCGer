@@ -93,5 +93,23 @@ namespace ServiceInterfaces.ViewModels.CalendarAssignments
         }
         #endregion
 
+        #region SearchBy_Date
+        private DateTime _SearchBy_Date;
+
+        public DateTime SearchBy_Date
+        {
+            get { return _SearchBy_Date; }
+            set
+            {
+                if (_SearchBy_Date != value)
+                {
+                    _SearchBy_Date = value;
+                    NotifyPropertyChanged("SearchBy_Date");
+                }
+            }
+        }
+        #endregion
+
+
     }
 }

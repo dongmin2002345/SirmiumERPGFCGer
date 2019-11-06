@@ -22,7 +22,7 @@
                     <Setter.Value>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                                <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
                     </Setter.Value>

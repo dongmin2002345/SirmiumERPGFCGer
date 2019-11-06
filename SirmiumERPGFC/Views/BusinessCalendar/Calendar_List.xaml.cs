@@ -1,4 +1,11 @@
-﻿using ServiceInterfaces.ViewModels.Base;
+﻿using Ninject;
+using ServiceInterfaces.Abstractions.CalendarAssignments;
+using ServiceInterfaces.Messages.CalendarAssignments;
+using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.CalendarAssignments;
+using SirmiumERPGFC.Common;
+using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.CalendarAssignments;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +31,11 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
     /// </summary>
     public partial class Calendar_List : UserControl, INotifyPropertyChanged
     {
+
+        private ICalendarAssignmentService calendarAssignmentService;
+
+        public delegate void CalendarAssignmentHandler();
+
         #region CalendarItems
         private ObservableCollection<CalendarDate> _CalendarItems;
 
@@ -111,14 +123,130 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
         }
         #endregion
 
+        #region SyncButtonContent
+        private string _SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+
+        public string SyncButtonContent
+        {
+            get { return _SyncButtonContent; }
+            set
+            {
+                if (_SyncButtonContent != value)
+                {
+                    _SyncButtonContent = value;
+                    NotifyPropertyChanged("SyncButtonContent");
+                }
+            }
+        }
+        #endregion
+
+        #region SyncButtonEnabled
+        private bool _SyncButtonEnabled = true;
+
+        public bool SyncButtonEnabled
+        {
+            get { return _SyncButtonEnabled; }
+            set
+            {
+                if (_SyncButtonEnabled != value)
+                {
+                    _SyncButtonEnabled = value;
+                    NotifyPropertyChanged("SyncButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+        #region CalendarAssignmentsToday
+        private ObservableCollection<CalendarAssignmentViewModel> _CalendarAssignmentsToday;
+
+        public ObservableCollection<CalendarAssignmentViewModel> CalendarAssignmentsToday
+        {
+            get { return _CalendarAssignmentsToday; }
+            set
+            {
+                if (_CalendarAssignmentsToday != value)
+                {
+                    _CalendarAssignmentsToday = value;
+                    NotifyPropertyChanged("CalendarAssignmentsToday");
+                }
+            }
+        }
+        #endregion
+
+        #region CalendarAssignmentsTomorrow
+        private ObservableCollection<CalendarAssignmentViewModel> _CalendarAssignmentsTomorrow;
+
+        public ObservableCollection<CalendarAssignmentViewModel> CalendarAssignmentsTomorrow
+        {
+            get { return _CalendarAssignmentsTomorrow; }
+            set
+            {
+                if (_CalendarAssignmentsTomorrow != value)
+                {
+                    _CalendarAssignmentsTomorrow = value;
+                    NotifyPropertyChanged("CalendarAssignmentsTomorrow");
+                }
+            }
+        }
+        #endregion
+
+
+        #region Constructor
         public Calendar_List()
         {
             InitializeComponent();
+
+            calendarAssignmentService = DependencyResolver.Kernel.Get<ICalendarAssignmentService>();
 
             this.DataContext = this;
 
             DisplayDates();
         }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Thread displayThread = new Thread(() => SyncData());
+            displayThread.IsBackground = true;
+            displayThread.Start();
+        }
+        #endregion
+
+        #region Display
+
+        private void BtnSync_Click(object sender, RoutedEventArgs e)
+        {
+            Thread syncThread = new Thread(() =>
+            {
+                SyncData();
+
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sinhronizovaniUzvičnik"));
+            });
+            syncThread.IsBackground = true;
+            syncThread.Start();
+        }
+
+        private void SyncData()
+        {
+            SyncButtonEnabled = false;
+
+            SyncButtonContent = ((string)Application.Current.FindResource("CalendarTritacke"));
+            new CalendarAssignmentSQLiteRepository().Sync(calendarAssignmentService, (synced, toSync) =>
+            {
+                if (toSync > 0)
+                    SyncButtonContent = ((string)Application.Current.FindResource("Kalendar")) + "(" + synced + "/" + toSync + ")";
+            });
+
+            if(TodayDate != null && TomorrowDate != null)
+            {
+                DisplayTodayItems();
+                DisplayTomorrowItems();
+                UpdateDateMarkers(StartingMonth);
+            }
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
+        #endregion
 
         void DisplayDates()
         {
@@ -135,27 +263,46 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             var today = DateTime.Now.Date;
 
 
+            var finalDayOfMonth = StartingMonth.AddMonths(1).AddHours(-1);
+
+            List<DateTime> markedDates = new CalendarAssignmentSQLiteRepository().GetAssignedDates(MainWindow.CurrentCompanyId, StartingMonth, finalDayOfMonth);
+
+
             for (int i = 1; i <= 42; i++) // 6 x 7 grid
             {
                 var calculated = startOfMonth.AddDays(i);
-
+                var visibleIcon = markedDates.Any(x => x == calculated);
                 dates.Add(new CalendarDate()
                 {
                     Identifier = new Guid(),
                     Date = calculated,
-                    IsEnabled = calculated.Date.Month == StartingMonth.Date.Month
+                    IsEnabled = calculated.Date.Month == StartingMonth.Date.Month,
+                    MarkedDateVisible = visibleIcon ? Visibility.Visible : Visibility.Hidden
                 });
             }
 
             CalendarItems = new ObservableCollection<CalendarDate>(dates);
 
-            var todaysDate = CalendarItems.FirstOrDefault(x => x.Date == today);
+            var todaysDate = CalendarItems.FirstOrDefault(x => x.Date == today && x.IsEnabled);
             if (todaysDate != null)
             {
                 todaysDate.IsSelected = true;
                 TodayDate = today;
                 TomorrowDate = today.AddDays(1);
+            } else
+            {
+                TodayDate = StartingMonth.Date;
+                TomorrowDate = TodayDate.Value.AddDays(1);
             }
+
+
+            Thread td = new Thread(() => {
+                DisplayTodayItems();
+
+                DisplayTomorrowItems();
+            });
+            td.IsBackground = true;
+            td.Start();
         }
 
 
@@ -195,13 +342,69 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
 
 
                 Thread td = new Thread(() => {
-                    LoadingData = true;
+                    DisplayTodayItems();
 
-                    LoadingData = false;                
+                    DisplayTomorrowItems();
                 });
                 td.IsBackground = true;
                 td.Start();
             }
+        }
+
+        void UpdateDateMarkers(DateTime startOfMOnth)
+        {
+            if(CalendarItems != null)
+            {
+                var finalDayOfMonth = StartingMonth.AddMonths(1).AddHours(-1);
+
+                List<DateTime> markedDates = new CalendarAssignmentSQLiteRepository().GetAssignedDates(MainWindow.CurrentCompanyId, StartingMonth, finalDayOfMonth);
+
+                foreach (var item in CalendarItems)
+                {
+                    if (markedDates.Any(x => x == item.Date))
+                        item.MarkedDateVisible = Visibility.Visible;
+                    else
+                        item.MarkedDateVisible = Visibility.Hidden;
+                }
+            }
+        }
+
+        private void DisplayTodayItems()
+        {
+            LoadingData = true;
+
+            CalendarAssignmentListResponse response = new CalendarAssignmentSQLiteRepository()
+                .GetCalendarAssignmentsByDate(MainWindow.CurrentCompanyId, TodayDate);
+
+            if (response.Success)
+            {
+                CalendarAssignmentsToday = new ObservableCollection<CalendarAssignmentViewModel>(response.CalendarAssignments ?? new List<CalendarAssignmentViewModel>());
+            }
+            else
+            {
+                CalendarAssignmentsToday = new ObservableCollection<CalendarAssignmentViewModel>();
+                MainWindow.ErrorMessage = response.Message;
+            }
+            LoadingData = false;
+        }
+
+        private void DisplayTomorrowItems()
+        {
+            LoadingData = true;
+
+            CalendarAssignmentListResponse response = new CalendarAssignmentSQLiteRepository()
+                .GetCalendarAssignmentsByDate(MainWindow.CurrentCompanyId, TomorrowDate);
+
+            if (response.Success)
+            {
+                CalendarAssignmentsTomorrow = new ObservableCollection<CalendarAssignmentViewModel>(response.CalendarAssignments ?? new List<CalendarAssignmentViewModel>());
+            }
+            else
+            {
+                CalendarAssignmentsTomorrow = new ObservableCollection<CalendarAssignmentViewModel>();
+                MainWindow.ErrorMessage = response.Message;
+            }
+            LoadingData = false;
         }
 
         private void btnPrevMonth_Click(object sender, RoutedEventArgs e)
@@ -219,9 +422,133 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             StartingMonth = StartingMonth.AddMonths(1);
             DisplayDates();
         }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CalendarAssignmentViewModel calendarAssignment = new CalendarAssignmentViewModel();
+            calendarAssignment.Identifier = Guid.NewGuid();
+            calendarAssignment.Date = DateTime.Now.Date;
+
+            Calendar_AddEdit addEditForm = new Calendar_AddEdit(calendarAssignment, true);
+            addEditForm.CalendarAssignmentCreatedUpdated += new CalendarAssignmentHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Kalendar")), 95, addEditForm);
+        }
+
+        private void dgTodayItems_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void dgTomorrowItems_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void BtnEditToday_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = ((Button)sender).CommandParameter as CalendarAssignmentViewModel;
+
+            if(selected != null)
+            {
+                Calendar_AddEdit addEditForm = new Calendar_AddEdit(selected, false);
+                addEditForm.CalendarAssignmentCreatedUpdated += new CalendarAssignmentHandler(SyncData);
+                FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("CallCentar")), 95, addEditForm);
+            }
+        }
+
+        private void BtnDeleteToday_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = ((Button)sender).CommandParameter as CalendarAssignmentViewModel;
+
+            if (selected != null)
+            {
+                Thread th = new Thread(() =>
+                {
+                    LoadingData = true;
+
+                    var response = calendarAssignmentService.Delete(selected.Identifier);
+                    if (!response.Success)
+                    {
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                        LoadingData = false;
+                        return;
+                    }
+
+                    response = new CalendarAssignmentSQLiteRepository().Delete(selected.Identifier);
+                    if (!response.Success)
+                    {
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                        LoadingData = false;
+                        return;
+                    }
+
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
+
+                    DisplayTodayItems();
+
+                    UpdateDateMarkers(StartingMonth);
+
+                    LoadingData = false;
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+        }
+
+
+        private void BtnEditTomorrow_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = ((Button)sender).CommandParameter as CalendarAssignmentViewModel;
+
+            if (selected != null)
+            {
+                Calendar_AddEdit addEditForm = new Calendar_AddEdit(selected, false);
+                addEditForm.CalendarAssignmentCreatedUpdated += new CalendarAssignmentHandler(SyncData);
+                FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("CallCentar")), 95, addEditForm);
+            }
+        }
+
+        private void BtnDeleteTomorrow_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = ((Button)sender).CommandParameter as CalendarAssignmentViewModel;
+
+            if (selected != null)
+            {
+                Thread th = new Thread(() =>
+                {
+                    LoadingData = true;
+
+                    var response = calendarAssignmentService.Delete(selected.Identifier);
+                    if (!response.Success)
+                    {
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                        LoadingData = false;
+                        return;
+                    }
+
+                    response = new CalendarAssignmentSQLiteRepository().Delete(selected.Identifier);
+                    if (!response.Success)
+                    {
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                        LoadingData = false;
+                        return;
+                    }
+
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
+
+                    DisplayTomorrowItems();
+
+                    UpdateDateMarkers(StartingMonth);
+
+                    LoadingData = false;
+                });
+                th.IsBackground = true;
+                th.Start();
+            }
+        }
     }
 
-    
+
     public class CalendarDate : BaseEntityViewModel
     {
         #region IsEnabled
@@ -285,6 +612,22 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
         }
         #endregion
 
+        #region MarkedDateVisible
+        private Visibility _MarkedDateVisible;
+
+        public Visibility MarkedDateVisible
+        {
+            get { return _MarkedDateVisible; }
+            set
+            {
+                if (_MarkedDateVisible != value)
+                {
+                    _MarkedDateVisible = value;
+                    NotifyPropertyChanged("MarkedDateVisible");
+                }
+            }
+        }
+        #endregion
 
 
     }

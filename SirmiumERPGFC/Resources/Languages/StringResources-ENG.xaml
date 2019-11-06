@@ -686,15 +686,21 @@
     <system:String x:Key="Dodavanje_fizičkog_lica">Add physical person</system:String>
     <system:String x:Key="Šifra_fizičkog_licaDvotacka">Physical person Code:</system:String>
 
-    <system:String x:Key="Ponedeljak">Ponedeljak</system:String>
-    <system:String x:Key="Utorak">Utorak</system:String>
-    <system:String x:Key="Sreda">Sreda</system:String>
-    <system:String x:Key="Četvrtak">Četvrtak</system:String>
-    <system:String x:Key="Petak">Petak</system:String>
-    <system:String x:Key="Subota">Subota</system:String>
-    <system:String x:Key="Nedelja">Nedelja</system:String>
-    <system:String x:Key="Kalendar">Kalendar</system:String>
-    <system:String x:Key="Danas">Danas</system:String>
-    <system:String x:Key="Sutra">Sutra</system:String>
-    <system:String x:Key="Radni_zadaci_kalendar">Kalendar</system:String>
+    <system:String x:Key="Ponedeljak">Monday</system:String>
+    <system:String x:Key="Utorak">Tuesday</system:String>
+    <system:String x:Key="Sreda">Wednesday</system:String>
+    <system:String x:Key="Četvrtak">Thursday</system:String>
+    <system:String x:Key="Petak">Friday</system:String>
+    <system:String x:Key="Subota">Saturday</system:String>
+    <system:String x:Key="Nedelja">Sunday</system:String>
+    <system:String x:Key="Kalendar">Calendar</system:String>
+    <system:String x:Key="Danas">Today</system:String>
+    <system:String x:Key="Sutra">Tomorrow</system:String>
+    <system:String x:Key="Radni_zadaci_kalendar">Calendar</system:String>
+    <system:String x:Key="Datum_Kalendar">Date:</system:String>
+    <system:String x:Key="ObaveznoPoljeDatum">Required: Date</system:String>
+    <system:String x:Key="ObaveznoPoljeNaziv">Required: Name</system:String>
+    <system:String x:Key="ObaveznoPoljeOpis">Required: Description</system:String>
+    <system:String x:Key="KreiraoStavku">Created by</system:String>
+    <system:String x:Key="CalendarTritacke">Calendar...</system:String>
 </ResourceDictionary>

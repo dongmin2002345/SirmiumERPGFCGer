@@ -694,15 +694,21 @@
     <system:String x:Key="Šifra_fizičkog_licaDvotacka">Code der natürlichen Person:</system:String>
 
 
-    <system:String x:Key="Ponedeljak">Ponedeljak</system:String>
-    <system:String x:Key="Utorak">Utorak</system:String>
-    <system:String x:Key="Sreda">Sreda</system:String>
-    <system:String x:Key="Četvrtak">Četvrtak</system:String>
-    <system:String x:Key="Petak">Petak</system:String>
-    <system:String x:Key="Subota">Subota</system:String>
-    <system:String x:Key="Nedelja">Nedelja</system:String>
-    <system:String x:Key="Kalendar">Kalendar</system:String>
-    <system:String x:Key="Danas">Danas</system:String>
-    <system:String x:Key="Sutra">Sutra</system:String>
-    <system:String x:Key="Radni_zadaci_kalendar">Kalendar</system:String>
+    <system:String x:Key="Ponedeljak">Montag</system:String>
+    <system:String x:Key="Utorak">Dienstag</system:String>
+    <system:String x:Key="Sreda">Mittwoch</system:String>
+    <system:String x:Key="Četvrtak">Donnerstag</system:String>
+    <system:String x:Key="Petak">Freitag</system:String>
+    <system:String x:Key="Subota">Samstag</system:String>
+    <system:String x:Key="Nedelja">Sonntag</system:String>
+    <system:String x:Key="Kalendar">Kalender</system:String>
+    <system:String x:Key="Danas">Heute</system:String>
+    <system:String x:Key="Sutra">Morgen</system:String>
+    <system:String x:Key="Radni_zadaci_kalendar">Kalender</system:String>
+    <system:String x:Key="Datum_Kalendar">Datum:</system:String>
+    <system:String x:Key="ObaveznoPoljeDatum">Datum: Datum</system:String>
+    <system:String x:Key="ObaveznoPoljeNaziv">Erforderlich: Name</system:String>
+    <system:String x:Key="ObaveznoPoljeOpis">Erforderlich: Beschreibung</system:String>
+    <system:String x:Key="KreiraoStavku">Erstellt von</system:String>
+    <system:String x:Key="CalendarTritacke">Kalender...</system:String>
 </ResourceDictionary>

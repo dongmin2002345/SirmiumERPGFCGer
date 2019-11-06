@@ -8,9 +8,22 @@
              xmlns:converters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:customcontrols="clr-namespace:SirmiumERPGFC.CustomControls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+             d:DesignHeight="450" d:DesignWidth="800" Background="White"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="{x:Type customcontrols:CustomCalendarButton}" >
             <Setter Property="Background" Value="#007ACC" />
             <Setter Property="Foreground" Value="White" />
@@ -52,6 +65,9 @@
         <converters:StringDateForCalendarConverter x:Key="dateForCalendarConverter" />
         <converters:SelectedBorderColorConverter x:Key="selectedBorderConverter" />
         <converters:StringDateTimeShortConverter x:Key="dateTimeConverter" />
+        <converters:BoolStringConverter x:Key="BoolStringConverter" />
+        <converters:MultiConverter x:Key="MultiConverter" />
+        <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -77,7 +93,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="5" Orientation="Horizontal">
                     <Button x:Name="btnPrevMonth" Click="btnPrevMonth_Click" Margin="2" HorizontalAlignment="Left">
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
@@ -89,10 +105,16 @@
                             <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="btnAdd" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC">
+                    <Button x:Name="btnAdd" HorizontalAlignment="Left" Margin="2" Width="150" Background="#007ACC" Click="btnAdd_Click">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock Text="{DynamicResource DODAJ}" Foreground="White" FontWeight="Regular"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Column="1" x:Name="btnSync" Click="BtnSync_Click" Margin="2" IsEnabled="{Binding Path=SyncButtonEnabled, Mode=TwoWay}"  Width="150">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{Binding Path=SyncButtonContent, Mode=TwoWay}" FontWeight="Bold" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -114,15 +136,19 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <customcontrols:CustomCalendarButton Content="{Binding DayInAMonth}" Click="CalendarDayButton_Click" BorderThickness="1"   
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <customcontrols:CustomCalendarButton Grid.Row="0" Grid.RowSpan="2" Click="CalendarDayButton_Click" BorderThickness="1"  Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                     IsSelected="{Binding IsSelected, Mode=TwoWay}"
                                     IsEnabled="{Binding IsEnabled, Mode=TwoWay}" CommandParameter="{Binding}">
-                                <!--<Button.Triggers>
-                                    <Trigger SourceName="CustomCalendarButton" Property="IsSelected" Value="True">
-                                        
-                                    </Trigger>
-                                </Button.Triggers>-->
-                            </customcontrols:CustomCalendarButton>
+                                    <TextBlock Grid.Row="0" Grid.RowSpan="2" Text="{Binding DayInAMonth}" FontSize="18" FontWeight="Bold" />
+                                </customcontrols:CustomCalendarButton>
+
+                                <Image Source="..\..\Resources\Icons\kalendarImaNesto.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="16" Width="16" Margin="5" RenderOptions.BitmapScalingMode="HighQuality" Visibility="{Binding MarkedDateVisible}" />
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -139,13 +165,260 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox Header="{Binding Path=TodayDate, Converter={StaticResource dateTimeConverter}}" Grid.Column="0" Margin="0">
-                <mah:ProgressRing IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}" />
+                <Grid>
+                    <DataGrid x:Name="dgTodayItems"
+                          Grid.Row="1"
+                          Margin="2"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          CanUserResizeColumns="True"  
+                          IsManipulationEnabled="False"
+                          GridLinesVisibility="All"
+                          HorizontalGridLinesBrush="Gray"
+                          VerticalAlignment="Stretch"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+		                  RowHeaderWidth="25"
+		                  HeadersVisibility="All"
+		                  LoadingRow="dgTodayItems_LoadingRow"
+                          ItemsSource="{Binding Path=CalendarAssignmentsToday}">
+
+                        <DataGrid.Columns>
+                            <!--<DataGridTextColumn SortMemberPath="Date" Binding="{Binding Date, Converter={StaticResource dateTimeConverter}}" Width="Auto"  IsReadOnly="True" Header="{DynamicResource Datum}" />-->
+                            <DataGridTextColumn SortMemberPath="User" Header="{DynamicResource KreiraoStavku}" Width="Auto" IsReadOnly="True">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} ">
+                                        <Binding Path="CreatedBy.FullName" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="{DynamicResource Naziv}" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="{DynamicResource Opis}" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Description}" ToolTip="{Binding Description}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="Margin" Value="2 0 2 0" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                            <Button x:Name="btnEditToday" Click="BtnEditToday_Click" Margin="2 1 1 1" Width="30" ToolTip="Promeni" CommandParameter="{Binding}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button x:Name="btnDeleteTodayPopup" Margin="1 1 2 1" Width="30" ToolTip="Obriši" >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Popup x:Name="popDeleteToday" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+                                                <Popup.IsOpen>
+                                                    <MultiBinding Converter="{StaticResource MultiConverter}">
+                                                        <Binding ElementName="btnDeleteTodayPopup" Path="IsFocused" Mode="OneWay"/>
+                                                        <Binding ElementName="btnDeleteToday" Path="IsMouseCaptured" Mode="OneWay"/>
+                                                    </MultiBinding>
+                                                </Popup.IsOpen>
+                                                <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="Teal" BorderThickness="5" CornerRadius="15">
+                                                    <Grid Width="300" Margin="10">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <TextBlock Text="{DynamicResource Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik}" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap"/>
+                                                        <Separator Grid.Row="1" Margin="2" />
+
+                                                        <Grid Grid.Row="2">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Button Grid.Column="0" x:Name="btnDeleteToday" Click="BtnDeleteToday_Click" Margin="2" CommandParameter="{Binding}" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    <TextBlock Text="{DynamicResource DA}"  FontWeight="Bold" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                            <Button Grid.Column="1" x:Name="btnCancel" Margin="2" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    <TextBlock Text="{DynamicResource NE}"  FontWeight="Bold" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <mah:ProgressRing IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}" />
+                </Grid>
             </GroupBox>
 
             <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2" />
 
             <GroupBox Header="{Binding Path=TomorrowDate, Converter={StaticResource dateTimeConverter}}" Grid.Column="2">
-                <mah:ProgressRing IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}" />
+                <Grid>
+                    <DataGrid x:Name="dgTomorrowItems"
+                          Grid.Row="1"
+                          Margin="2"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          CanUserResizeColumns="True"  
+                          IsManipulationEnabled="False"
+                          GridLinesVisibility="All"
+                          HorizontalGridLinesBrush="Gray"
+                          VerticalAlignment="Stretch"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+		                  RowHeaderWidth="25"
+		                  HeadersVisibility="All"
+		                  LoadingRow="dgTomorrowItems_LoadingRow"
+                          ItemsSource="{Binding Path=CalendarAssignmentsTomorrow}">
+
+                        <DataGrid.Columns>
+                            <!--<DataGridTextColumn SortMemberPath="Date" Binding="{Binding Date, Converter={StaticResource dateTimeConverter}}" Width="Auto"  IsReadOnly="True" Header="{DynamicResource Datum}" />-->
+                            <DataGridTextColumn SortMemberPath="User" Header="{DynamicResource KreiraoStavku}" Width="Auto" IsReadOnly="True">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat="{}{0} ">
+                                        <Binding Path="CreatedBy.FullName" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="{DynamicResource Naziv}" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="{DynamicResource Opis}" Width="*" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Description}" ToolTip="{Binding Description}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Setter Property="Background" Value="{Binding IsSynced, Converter={StaticResource SyncedConverter}}" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="Margin" Value="2 0 2 0" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                            <Button x:Name="btnEditTomorrow" Click="BtnEditTomorrow_Click" Margin="2 1 1 1" Width="30" ToolTip="Promeni" CommandParameter="{Binding}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button x:Name="btnDeleteTomorrowPopup" Margin="1 1 2 1" Width="30" ToolTip="Obriši" >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Popup x:Name="popDeleteTomorrow" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+                                                <Popup.IsOpen>
+                                                    <MultiBinding Converter="{StaticResource MultiConverter}">
+                                                        <Binding ElementName="btnDeleteTomorrowPopup" Path="IsFocused" Mode="OneWay"/>
+                                                        <Binding ElementName="btnDeleteTomorrow" Path="IsMouseCaptured" Mode="OneWay"/>
+                                                    </MultiBinding>
+                                                </Popup.IsOpen>
+                                                <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="Teal" BorderThickness="5" CornerRadius="15">
+                                                    <Grid Width="300" Margin="10">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <TextBlock Text="{DynamicResource Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik}" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap"/>
+                                                        <Separator Grid.Row="1" Margin="2" />
+
+                                                        <Grid Grid.Row="2">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Button Grid.Column="0" x:Name="btnDeleteTomorrow" Click="BtnDeleteTomorrow_Click" Margin="2" CommandParameter="{Binding}" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    <TextBlock Text="{DynamicResource DA}"  FontWeight="Bold" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                            <Button Grid.Column="1" x:Name="btnCancel" Margin="2" >
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    <TextBlock Text="{DynamicResource NE}"  FontWeight="Bold" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </Popup>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <mah:ProgressRing IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}" />
+                </Grid>
             </GroupBox>
         </Grid>
     </Grid>

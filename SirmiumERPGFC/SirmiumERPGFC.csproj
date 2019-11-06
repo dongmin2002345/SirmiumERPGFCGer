@@ -1328,6 +1328,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Print.png" />
+    <Content Include="Resources\Icons\kalendarImaNesto.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll" />
     <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll" />

@@ -18,6 +18,12 @@ namespace RepositoryCore.Implementations.CalendarAssignments
         private ApplicationDbContext context { get; set; }
         private string connectionString;
 
+        string selectPart = "SELECT CalendarAssignmentId, CalendarAssignmentIdentifier, Active, CalendarAssignmentName, CalendarAssignmentDescription, " +
+                "CalendarAssignmentDate, CompanyId, CompanyIdentifier, CompanyCode, CompanyName, " +
+                "CreatedById, CreatedByIdentifier, CreatedByFirstName, CreatedByLastName, " +
+                "UpdatedAt, AssignedToId, AsignedToIdentifier, AssignedToFirstName, AssignedToLastName " +
+                "FROM vCalendarAssignments ";
+
         public CalendarAssignmentRepository(ApplicationDbContext ctx)
         {
             context = ctx;
@@ -28,11 +34,7 @@ namespace RepositoryCore.Implementations.CalendarAssignments
         public List<CalendarAssignment> GetCalendarAssignments(int companyId)
         {
             List<CalendarAssignment> calendarAssignments = new List<CalendarAssignment>();
-            string queryString = "SELECT CalendarAssignmentId, CalendarAssignmentIdentifier, Active, CalendarAssignmentName, CalendarAssignmentDescription, " +
-                "CalendarAssignmentDate, CompanyId, CompanyIdentifier, CompanyCode, CompanyName, " +
-                "CreatedById, CreatedByIdentifier, CreatedByCode, CreatedByName, " +
-                "UpdatedAt, AssignedToId, AsignedToIdentifier, AssignedToFirstName, AssignedToLastName " +
-                "FROM vCalendarAssignments " +
+            string queryString = selectPart + 
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -78,11 +80,11 @@ namespace RepositoryCore.Implementations.CalendarAssignments
 
             if (reader["AssignedToId"] != DBNull.Value)
             {
-                assignment.CreatedBy = new User();
-                assignment.CreatedById = Int32.Parse(reader["AssignedToId"].ToString());
-                assignment.CreatedBy.Id = Int32.Parse(reader["AssignedToId"].ToString());
-                assignment.CreatedBy.FirstName = reader["AssignedToFirstName"]?.ToString();
-                assignment.CreatedBy.LastName = reader["AssignedToLastName"]?.ToString();
+                assignment.AssignedTo = new User();
+                assignment.AssignedToId = Int32.Parse(reader["AssignedToId"].ToString());
+                assignment.AssignedTo.Id = Int32.Parse(reader["AssignedToId"].ToString());
+                assignment.AssignedTo.FirstName = reader["AssignedToFirstName"]?.ToString();
+                assignment.AssignedTo.LastName = reader["AssignedToLastName"]?.ToString();
             }
 
             if (reader["CompanyId"] != DBNull.Value)
@@ -99,11 +101,7 @@ namespace RepositoryCore.Implementations.CalendarAssignments
         public List<CalendarAssignment> GetCalendarAssignmentsByEmployee(int EmployeeId)
         {
             List<CalendarAssignment> calendarAssignments = new List<CalendarAssignment>();
-            string queryString = "SELECT CalendarAssignmentId, CalendarAssignmentIdentifier, Active, CalendarAssignmentName, CalendarAssignmentDescription, " +
-                "CalendarAssignmentDate, CompanyId, CompanyIdentifier, CompanyCode, CompanyName, " +
-                "CreatedById, CreatedByIdentifier, CreatedByCode, CreatedByName, " +
-                "UpdatedAt, AssignedToId, AsignedToIdentifier, AssignedToFirstName, AssignedToLastName " +
-                "FROM vCalendarAssignments " +
+            string queryString = selectPart +
                 "WHERE AssignedToId = @AssignedToId AND Active = 1;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -129,11 +127,7 @@ namespace RepositoryCore.Implementations.CalendarAssignments
         public List<CalendarAssignment> GetCalendarAssignmentsNewerThen(int companyId, DateTime lastUpdateTime)
         {
             List<CalendarAssignment> calendarAssignments = new List<CalendarAssignment>();
-            string queryString = "SELECT CalendarAssignmentId, CalendarAssignmentIdentifier, Active, CalendarAssignmentName, CalendarAssignmentDescription, " +
-                "CalendarAssignmentDate, CompanyId, CompanyIdentifier, CompanyCode, CompanyName, " +
-                "CreatedById, CreatedByIdentifier, CreatedByCode, CreatedByName, " +
-                "UpdatedAt, AssignedToId, AsignedToIdentifier, AssignedToFirstName, AssignedToLastName " +
-                "FROM vCalendarAssignments " +
+            string queryString = selectPart +
                 "WHERE CompanyId = @CompanyId " +
                 "AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120)) ";
 

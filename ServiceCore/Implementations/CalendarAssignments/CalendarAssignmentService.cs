@@ -19,12 +19,46 @@ namespace ServiceCore.Implementations.CalendarAssignments
         }
         public CalendarAssignmentResponse Create(CalendarAssignmentViewModel assignment)
         {
-            throw new NotImplementedException();
+            CalendarAssignmentResponse response = new CalendarAssignmentResponse();
+            try
+            {
+                response.CalendarAssignment = unitOfWork.GetCalendarAssignmentRepository()
+                    .Create(assignment.ConvertToCalendarAssignment())
+                    .ConvertToCalendarAssignmentViewModel();
+
+                unitOfWork.Save();
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.CalendarAssignment = new CalendarAssignmentViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
         }
 
         public CalendarAssignmentResponse Delete(Guid identifier)
         {
-            throw new NotImplementedException();
+            CalendarAssignmentResponse response = new CalendarAssignmentResponse();
+            try
+            {
+                response.CalendarAssignment = unitOfWork.GetCalendarAssignmentRepository()
+                    .Delete(identifier)
+                    .ConvertToCalendarAssignmentViewModel();
+
+                unitOfWork.Save();
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.CalendarAssignment = new CalendarAssignmentViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
         }
 
         public CalendarAssignmentListResponse GetCalendarAssignments(int companyId)

@@ -703,4 +703,10 @@
     <system:String x:Key="Danas">Danas</system:String>
     <system:String x:Key="Sutra">Sutra</system:String>
     <system:String x:Key="Radni_zadaci_kalendar">Kalendar</system:String>
+    <system:String x:Key="Datum_Kalendar">Datum:</system:String>
+    <system:String x:Key="ObaveznoPoljeDatum">Obavezno polje: Datum</system:String>
+    <system:String x:Key="ObaveznoPoljeNaziv">Obavezno polje: Naziv</system:String>
+    <system:String x:Key="ObaveznoPoljeOpis">Obavezno polje: Opis</system:String>
+    <system:String x:Key="KreiraoStavku">Kreirao</system:String>
+    <system:String x:Key="CalendarTritacke">Kalendar...</system:String>
 </ResourceDictionary>

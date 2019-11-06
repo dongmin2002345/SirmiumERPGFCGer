@@ -4,9 +4,95 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.BusinessCalendar"
+             xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
+    <UserControl.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" Width="400" TextWrapping='Wrap' />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
+        <!--<cbxConverters:PdvPercentRateConverter x:Key="cbxPdvPercentRateConverter" />-->
+        <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
+        <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
+        <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Margin="2" Header="{DynamicResource OSNOVNI_PODACI}">
+            <Grid x:Name="mainGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Datum_Kalendar}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <DatePicker Grid.Row="0" Grid.Column="1"  Margin="2" x:Name="dtSelectedDate"
+                                SelectedDate="{Binding Path=CurrentCalendarAssignment.Date, Mode=TwoWay}"/>
+
+                <!--<TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="{DynamicResource Korisnici_Dvotacka}" Margin="5 0 5 0"/>
+                <popups:UserPopup Grid.Row="0" Grid.Column="3" x:Name="UserPopup"
+                         CurrentUser="{Binding Path=CurrentCalendarAssignment.AssignedTo, Mode=TwoWay}"/>-->
+
+
+                <TextBlock Grid.Row="0" Grid.Column="2"  Text="{DynamicResource NazivDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Margin="2" x:Name="txtName" VerticalAlignment="Center"
+                         Text="{Binding Path=CurrentCalendarAssignment.Name, Mode=TwoWay}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0"  Text="{DynamicResource KomentarDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" x:Name="txtDescription" Height="50" TextWrapping="Wrap"
+                         Text="{Binding Path=CurrentCalendarAssignment.Description, Mode=TwoWay}"/>
+
+
+            </Grid>
+        </GroupBox>
+
+        <!--    Cancel and Submit buttons    -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2" 
+                    IsEnabled="{Binding Path=SubmitButtonEnabled}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" 
+                           Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="2">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" 
+                           Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
+                </StackPanel>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>
