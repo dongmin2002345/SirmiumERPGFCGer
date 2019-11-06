@@ -21,7 +21,7 @@ namespace SirmiumERPGFC
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+            //this.DispatcherUnhandledException += App_DispatcherUnhandledException;
             //ISeedDataService seedData = DependencyResolver.Kernel.Get<ISeedDataService>();
             //seedData.PopulateData();
             
@@ -67,8 +67,8 @@ namespace SirmiumERPGFC
             {
                 var ex = (Exception)e.Exception;
 
-                ErrorWindow ew = new ErrorWindow(ex.Message, ex.StackTrace, ex.InnerException?.Message);
-                ew.ShowDialog();
+                //ErrorWindow ew = new ErrorWindow(ex.Message, ex.StackTrace, ex.InnerException?.Message);
+                //ew.ShowDialog();
 
 
                 string logMessage = ex.StackTrace; // (Environment.StackTrace);
