@@ -31,10 +31,15 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
     /// </summary>
     public partial class Calendar_List : UserControl, INotifyPropertyChanged
     {
+        #region Attributes
 
+        #region Services
         private ICalendarAssignmentService calendarAssignmentService;
+        #endregion
 
+        #region Events
         public delegate void CalendarAssignmentHandler();
+        #endregion
 
         #region CalendarItems
         private ObservableCollection<CalendarDate> _CalendarItems;
@@ -70,7 +75,6 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
         }
         #endregion
 
-
         #region TodayDate
         private DateTime? _TodayDate;
 
@@ -87,7 +91,6 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             }
         }
         #endregion
-
 
         #region TomorrowDate
         private DateTime? _TomorrowDate;
@@ -191,6 +194,7 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
         }
         #endregion
 
+        #endregion
 
         #region Constructor
         public Calendar_List()
@@ -212,7 +216,6 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
         #endregion
 
         #region Display
-
         private void BtnSync_Click(object sender, RoutedEventArgs e)
         {
             Thread syncThread = new Thread(() =>
@@ -246,114 +249,10 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
-        #endregion
-
-        void DisplayDates()
-        {
-
-            List<CalendarDate> dates = new List<CalendarDate>();
-
-            var startOfMonth = StartingMonth;
-            var dayOfWeek = (int)startOfMonth.DayOfWeek;
-            if (dayOfWeek > 0)
-                startOfMonth = startOfMonth.AddDays(-dayOfWeek);
-            else
-                startOfMonth = startOfMonth.AddDays(-1);
-
-            var today = DateTime.Now.Date;
-
-
-            var finalDayOfMonth = StartingMonth.AddMonths(1).AddHours(-1);
-
-            List<DateTime> markedDates = new CalendarAssignmentSQLiteRepository().GetAssignedDates(MainWindow.CurrentCompanyId, StartingMonth, finalDayOfMonth);
-
-
-            for (int i = 1; i <= 42; i++) // 6 x 7 grid
-            {
-                var calculated = startOfMonth.AddDays(i);
-                var visibleIcon = markedDates.Any(x => x == calculated);
-                dates.Add(new CalendarDate()
-                {
-                    Identifier = new Guid(),
-                    Date = calculated,
-                    IsEnabled = calculated.Date.Month == StartingMonth.Date.Month,
-                    MarkedDateVisible = visibleIcon ? Visibility.Visible : Visibility.Hidden
-                });
-            }
-
-            CalendarItems = new ObservableCollection<CalendarDate>(dates);
-
-            var todaysDate = CalendarItems.FirstOrDefault(x => x.Date == today && x.IsEnabled);
-            if (todaysDate != null)
-            {
-                todaysDate.IsSelected = true;
-                TodayDate = today;
-                TomorrowDate = today.AddDays(1);
-            } else
-            {
-                TodayDate = StartingMonth.Date;
-                TomorrowDate = TodayDate.Value.AddDays(1);
-            }
-
-
-            Thread td = new Thread(() => {
-                DisplayTodayItems();
-
-                DisplayTomorrowItems();
-            });
-            td.IsBackground = true;
-            td.Start();
-        }
-
-
-        #region INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
-        private void CalendarDayButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (LoadingData)
-                return;
-            var item = (((Button)e.Source).CommandParameter) as CalendarDate;
-            if(item != null)
-            {
-                foreach (var date in CalendarItems)
-                    date.IsSelected = false;
-
-                item.IsSelected = true;
-
-                var today = item;
-
-                TodayDate = today.Date;
-
-                var nextDay = CalendarItems.FirstOrDefault(x => x.Date == item.Date.AddDays(1));
-
-                TomorrowDate = nextDay.Date;
-
-
-                Thread td = new Thread(() => {
-                    DisplayTodayItems();
-
-                    DisplayTomorrowItems();
-                });
-                td.IsBackground = true;
-                td.Start();
-            }
-        }
 
         void UpdateDateMarkers(DateTime startOfMOnth)
         {
-            if(CalendarItems != null)
+            if (CalendarItems != null)
             {
                 var finalDayOfMonth = StartingMonth.AddMonths(1).AddHours(-1);
 
@@ -423,15 +322,63 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             DisplayDates();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            CalendarAssignmentViewModel calendarAssignment = new CalendarAssignmentViewModel();
-            calendarAssignment.Identifier = Guid.NewGuid();
-            calendarAssignment.Date = DateTime.Now.Date;
 
-            Calendar_AddEdit addEditForm = new Calendar_AddEdit(calendarAssignment, true);
-            addEditForm.CalendarAssignmentCreatedUpdated += new CalendarAssignmentHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Kalendar")), 95, addEditForm);
+        void DisplayDates()
+        {
+
+            List<CalendarDate> dates = new List<CalendarDate>();
+
+            var startOfMonth = StartingMonth;
+            var dayOfWeek = (int)startOfMonth.DayOfWeek;
+            if (dayOfWeek > 0)
+                startOfMonth = startOfMonth.AddDays(-dayOfWeek);
+            else
+                startOfMonth = startOfMonth.AddDays(-1);
+
+            var today = DateTime.Now.Date;
+
+
+            var finalDayOfMonth = StartingMonth.AddMonths(1).AddHours(-1);
+
+            List<DateTime> markedDates = new CalendarAssignmentSQLiteRepository().GetAssignedDates(MainWindow.CurrentCompanyId, StartingMonth, finalDayOfMonth);
+
+
+            for (int i = 1; i <= 42; i++) // 6 x 7 grid
+            {
+                var calculated = startOfMonth.AddDays(i);
+                var visibleIcon = markedDates.Any(x => x == calculated);
+                dates.Add(new CalendarDate()
+                {
+                    Identifier = new Guid(),
+                    Date = calculated,
+                    IsEnabled = calculated.Date.Month == StartingMonth.Date.Month,
+                    MarkedDateVisible = visibleIcon ? Visibility.Visible : Visibility.Hidden
+                });
+            }
+
+            CalendarItems = new ObservableCollection<CalendarDate>(dates);
+
+            var todaysDate = CalendarItems.FirstOrDefault(x => x.Date == today && x.IsEnabled);
+            if (todaysDate != null)
+            {
+                todaysDate.IsSelected = true;
+                TodayDate = today;
+                TomorrowDate = today.AddDays(1);
+            }
+            else
+            {
+                TodayDate = StartingMonth.Date;
+                TomorrowDate = TodayDate.Value.AddDays(1);
+            }
+
+
+            Thread td = new Thread(() => {
+                DisplayTodayItems();
+
+                DisplayTomorrowItems();
+            });
+            td.IsBackground = true;
+            td.Start();
         }
 
         private void dgTodayItems_LoadingRow(object sender, DataGridRowEventArgs e)
@@ -444,11 +391,60 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
+        #endregion
+
+        #region Selected Date
+
+        private void CalendarDayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoadingData)
+                return;
+            var item = (((Button)e.Source).CommandParameter) as CalendarDate;
+            if(item != null)
+            {
+                foreach (var date in CalendarItems)
+                    date.IsSelected = false;
+
+                item.IsSelected = true;
+
+                var today = item;
+
+                TodayDate = today.Date;
+
+                var nextDay = CalendarItems.FirstOrDefault(x => x.Date == item.Date.AddDays(1));
+
+                TomorrowDate = nextDay.Date;
+
+
+                Thread td = new Thread(() => {
+                    DisplayTodayItems();
+
+                    DisplayTomorrowItems();
+                });
+                td.IsBackground = true;
+                td.Start();
+            }
+        }
+
+        #endregion
+
+        #region Add, Edit and Delete
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CalendarAssignmentViewModel calendarAssignment = new CalendarAssignmentViewModel();
+            calendarAssignment.Identifier = Guid.NewGuid();
+            calendarAssignment.Date = DateTime.Now.Date;
+
+            Calendar_AddEdit addEditForm = new Calendar_AddEdit(calendarAssignment, true);
+            addEditForm.CalendarAssignmentCreatedUpdated += new CalendarAssignmentHandler(SyncData);
+            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Kalendar")), 95, addEditForm);
+        }
+
         private void BtnEditToday_Click(object sender, RoutedEventArgs e)
         {
             var selected = ((Button)sender).CommandParameter as CalendarAssignmentViewModel;
 
-            if(selected != null)
+            if (selected != null)
             {
                 Calendar_AddEdit addEditForm = new Calendar_AddEdit(selected, false);
                 addEditForm.CalendarAssignmentCreatedUpdated += new CalendarAssignmentHandler(SyncData);
@@ -546,6 +542,21 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
                 th.Start();
             }
         }
+        #endregion
+
+        #region INotifyPropertyChanged implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 
 

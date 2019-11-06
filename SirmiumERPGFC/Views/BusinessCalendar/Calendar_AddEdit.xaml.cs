@@ -132,7 +132,7 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
 
         #endregion
 
-
+        #region Constructor
         public Calendar_AddEdit(CalendarAssignmentViewModel calendarAssignment, bool isCreateProcess, bool isPopup = false)
         {
             InitializeComponent();
@@ -144,6 +144,8 @@ namespace SirmiumERPGFC.Views.BusinessCalendar
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
         }
+
+        #endregion
 
         #region Submit and cancel
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
