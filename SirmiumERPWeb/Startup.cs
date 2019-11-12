@@ -372,6 +372,10 @@ namespace SirmiumERPWeb
 
             CalendarAssignmentView.CreateView();
 
+            EmployeeAttachmentView.CreateView();
+
+            PhysicalPersonAttachmentView.CreateView();
+
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));
 
