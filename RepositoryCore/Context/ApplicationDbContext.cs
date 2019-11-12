@@ -162,6 +162,10 @@ namespace RepositoryCore.Context
 
         public DbSet<CalendarAssignment> CalendarAssignments { get; set; }
 
+        public DbSet<EmployeeAttachment> EmployeeAttachments { get; set; }
+
+        public DbSet<PhysicalPersonAttachment> PhysicalPersonAttachments { get; set; }
+
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
