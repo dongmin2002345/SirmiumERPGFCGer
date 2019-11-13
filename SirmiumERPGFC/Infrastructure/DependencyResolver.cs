@@ -146,6 +146,9 @@ namespace SirmiumERPGFC.Infrastructure
                 Kernel.Bind<IInvoiceItemService>().To<InvoiceItemService>();
                 Kernel.Bind<ICallCentarService>().To<CallCentarService>();
                 Kernel.Bind<ICalendarAssignmentService>().To<CalendarAssignmentService>();
+
+                Kernel.Bind<IEmployeeAttachmentService>().To<EmployeeAttachmentService>();
+                Kernel.Bind<IPhysicalPersonAttachmentService>().To<PhysicalPersonAttachmentService>();
             }
         }
     }

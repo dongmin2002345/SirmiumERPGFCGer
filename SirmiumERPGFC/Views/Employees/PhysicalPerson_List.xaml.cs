@@ -28,6 +28,8 @@ using WpfAppCommonCode.Converters;
 using SirmiumERPGFC.RdlcReports.Employees;
 using Microsoft.Reporting.WinForms;
 using System.IO;
+using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Common.Companies;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -45,6 +47,7 @@ namespace SirmiumERPGFC.Views.Employees
         IPhysicalPersonProfessionService physicalPersonProfessionService;
         IPhysicalPersonLicenceService physicalPersonLicenceService;
         IPhysicalPersonItemService physicalPersonItemService;
+        IPhysicalPersonAttachmentService physicalPersonAttachmentService;
         #endregion
 
         #region PhysicalPersonSearchObject
@@ -103,6 +106,7 @@ namespace SirmiumERPGFC.Views.Employees
                             DisplayPhysicalPersonProfessionData();
                             DisplayPhysicalPersonLicenceData();
                             DisplayPhysicalPersonItemData();
+                            DisplayPhysicalPersonAttachmentsData();
 
 
                         });
@@ -456,6 +460,62 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
+
+
+        #region PhysicalPersonAttachmentsFromDB
+        private ObservableCollection<PhysicalPersonAttachmentViewModel> _PhysicalPersonAttachmentsFromDB;
+
+        public ObservableCollection<PhysicalPersonAttachmentViewModel> PhysicalPersonAttachmentsFromDB
+        {
+            get { return _PhysicalPersonAttachmentsFromDB; }
+            set
+            {
+                if (_PhysicalPersonAttachmentsFromDB != value)
+                {
+                    _PhysicalPersonAttachmentsFromDB = value;
+                    NotifyPropertyChanged("PhysicalPersonAttachmentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentPhysicalPersonAttachment
+        private PhysicalPersonAttachmentViewModel _CurrentPhysicalPersonAttachment;
+
+        public PhysicalPersonAttachmentViewModel CurrentPhysicalPersonAttachment
+        {
+            get { return _CurrentPhysicalPersonAttachment; }
+            set
+            {
+                if (_CurrentPhysicalPersonAttachment != value)
+                {
+                    _CurrentPhysicalPersonAttachment = value;
+                    NotifyPropertyChanged("CurrentPhysicalPersonAttachment");
+                }
+            }
+        }
+        #endregion
+
+        #region PhysicalPersonAttachmentDataLoading
+        private bool _PhysicalPersonAttachmentDataLoading;
+
+        public bool PhysicalPersonAttachmentDataLoading
+        {
+            get { return _PhysicalPersonAttachmentDataLoading; }
+            set
+            {
+                if (_PhysicalPersonAttachmentDataLoading != value)
+                {
+                    _PhysicalPersonAttachmentDataLoading = value;
+                    NotifyPropertyChanged("PhysicalPersonAttachmentDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+
+
         #region Pagination data
         int currentPage = 1;
         int itemsPerPage = 50;
@@ -541,6 +601,7 @@ namespace SirmiumERPGFC.Views.Employees
             this.physicalPersonProfessionService = DependencyResolver.Kernel.Get<IPhysicalPersonProfessionService>();
             this.physicalPersonLicenceService = DependencyResolver.Kernel.Get<IPhysicalPersonLicenceService>();
             this.physicalPersonItemService = DependencyResolver.Kernel.Get<IPhysicalPersonItemService>();
+            this.physicalPersonAttachmentService = DependencyResolver.Kernel.Get<IPhysicalPersonAttachmentService>();
             InitializeComponent();
 
             this.DataContext = this;
@@ -724,6 +785,47 @@ namespace SirmiumERPGFC.Views.Employees
             PhysicalPersonItemDataLoading = false;
         }
 
+
+        private void DisplayPhysicalPersonAttachmentsData()
+        {
+            PhysicalPersonAttachmentDataLoading = true;
+
+            PhysicalPersonAttachmentListResponse response = new PhysicalPersonAttachmentSQLiteRepository()
+                .GetPhysicalPersonAttachmentsByPhysicalPerson(MainWindow.CurrentCompanyId, CurrentPhysicalPerson.Identifier);
+
+            if (response.Success)
+            {
+                PhysicalPersonAttachmentsFromDB = new ObservableCollection<PhysicalPersonAttachmentViewModel>(
+                    response.PhysicalPersonAttachments ?? new List<PhysicalPersonAttachmentViewModel>());
+
+                if (PhysicalPersonAttachmentsFromDB.Count == 0)
+                {
+                    for (int i = 0; i < 12; i++)
+                    {
+                        PhysicalPersonAttachmentsFromDB.Add(new PhysicalPersonAttachmentViewModel()
+                        {
+                            Identifier = Guid.NewGuid(),
+                            Code = "Prilog " + (i + 1).ToString(),
+                            PhysicalPerson = CurrentPhysicalPerson,
+                            IsActive = false,
+                            IsSynced = false,
+                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                            CreatedBy = new UserViewModel()
+                            {
+                                Id = MainWindow.CurrentUserId,
+                                FullName = MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName
+                            }
+                        });
+                    }
+                }
+            }
+            else
+            {
+                PhysicalPersonAttachmentsFromDB = new ObservableCollection<PhysicalPersonAttachmentViewModel>();
+            }
+            PhysicalPersonAttachmentDataLoading = false;
+        }
+
         private void SyncData()
         {
             SyncButtonEnabled = false;
@@ -769,6 +871,10 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 SyncButtonContent = " Stavke (" + synced + " / " + toSync + ")... ";
             });
+            SyncButtonContent = ((string)Application.Current.FindResource("FizickoLicePrilozi_TriTacke"));
+            new PhysicalPersonAttachmentSQLiteRepository().Sync(physicalPersonAttachmentService, (synced, toSync) => {
+                SyncButtonContent = ((string)Application.Current.FindResource("FizickoLicePrilozi")) + "(" + synced + " / " + toSync + ")... ";
+            });
             DisplayData();
             CurrentPhysicalPerson = null;
             PhysicalPersonNotesFromDB = new ObservableCollection<PhysicalPersonNoteViewModel>();
@@ -777,6 +883,7 @@ namespace SirmiumERPGFC.Views.Employees
             PhysicalPersonProfessionsFromDB = new ObservableCollection<PhysicalPersonProfessionViewModel>();
             PhysicalPersonLicencesFromDB = new ObservableCollection<PhysicalPersonLicenceViewModel>();
             PhysicalPersonItemsFromDB = new ObservableCollection<PhysicalPersonItemViewModel>();
+            PhysicalPersonAttachmentsFromDB = new ObservableCollection<PhysicalPersonAttachmentViewModel>();
             SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
@@ -875,6 +982,20 @@ namespace SirmiumERPGFC.Views.Employees
             SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
+        private void SyncEmployeeAttachmentsData()
+        {
+            SyncButtonEnabled = false;
+            SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi_TriTacke"));
+            new PhysicalPersonAttachmentSQLiteRepository().Sync(physicalPersonAttachmentService, (synced, toSync) =>
+            {
+                SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi")) + "(" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayPhysicalPersonAttachmentsData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
         private void DgPhysicalPersons_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
@@ -905,7 +1026,11 @@ namespace SirmiumERPGFC.Views.Employees
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
-       
+        private void DgPhysicalPersonAttachments_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
         #endregion
 
         #region Add, edit, delete, lock and cancel
@@ -1055,6 +1180,54 @@ namespace SirmiumERPGFC.Views.Employees
             PhysicalPerson_Item_AddEdit physicalPersonItemAddEditForm = new PhysicalPerson_Item_AddEdit(CurrentPhysicalPerson);
             physicalPersonItemAddEditForm.PhysicalPersonCreatedUpdated += new PhysicalPersonHandler(SyncItemData);
             FlyoutHelper.OpenFlyout(this, (string)Application.Current.FindResource("Podaci"), 95, physicalPersonItemAddEditForm);
+        }
+        private void btnSaveAttachments_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentPhysicalPerson == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
+                return;
+            }
+
+            #endregion
+
+            SaveChangesOnPhysicalPersonAttachments();
+        }
+
+        void SaveChangesOnPhysicalPersonAttachments()
+        {
+            Thread td = new Thread(() => {
+                var attachments = PhysicalPersonAttachmentsFromDB.ToList();
+
+                foreach (var attachment in attachments)
+                {
+                    attachment.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                    attachment.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                    new PhysicalPersonAttachmentSQLiteRepository().Delete(attachment.Identifier);
+                    var localResponse = new PhysicalPersonAttachmentSQLiteRepository().Create(attachment);
+                    if (!localResponse.Success)
+                    {
+                        MainWindow.ErrorMessage = localResponse.Message;
+                        return;
+                    }
+                }
+
+                var response = physicalPersonAttachmentService.CreateList(attachments);
+
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+                }
+                else
+                {
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SyncEmployeeAttachmentsData();
+                }
+            });
+            td.IsBackground = true;
+            td.Start();
         }
 
         #endregion
@@ -1230,7 +1403,7 @@ namespace SirmiumERPGFC.Views.Employees
             rdlcPhysicalPersonReport.LocalReport.DataSources.Add(rpdsModel);
                        
             string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\Employees\PhysicalPersonReport.rdlc");
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\PhysicalPersons\PhysicalPersonReport.rdlc");
 
             rdlcPhysicalPersonReport.LocalReport.ReportPath = ContentStart;
             // rdlcPhysicalPersonReport.LocalReport.SetParameters(reportParams);

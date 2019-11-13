@@ -113,6 +113,9 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         ICalendarAssignmentRepository GetCalendarAssignmentRepository();
 
+        IEmployeeAttachmentRepository GetEmployeeAttachmentRepository();
+        IPhysicalPersonAttachmentRepository GetPhysicalPersonAttachmentRepository();
+
         void Save();
     }
 }

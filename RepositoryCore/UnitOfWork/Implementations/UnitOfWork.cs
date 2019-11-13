@@ -139,6 +139,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private ICallCentarRepository callCentarRepository;
 
         private ICalendarAssignmentRepository calendarAssignmentRepository;
+        private IEmployeeAttachmentRepository employeeAttachmentRepository;
+        private IPhysicalPersonAttachmentRepository physicalPersonAttachmentRepository;
         #endregion
 
         #region Constructor
@@ -656,6 +658,22 @@ namespace RepositoryCore.UnitOfWork.Implementations
             return calendarAssignmentRepository;
         }
 
+        public IEmployeeAttachmentRepository GetEmployeeAttachmentRepository()
+        {
+            if (employeeAttachmentRepository == null)
+                employeeAttachmentRepository = new EmployeeAttachmentRepository(context);
+
+            return employeeAttachmentRepository;
+        }
+
+        public IPhysicalPersonAttachmentRepository GetPhysicalPersonAttachmentRepository()
+        {
+            if (physicalPersonAttachmentRepository == null)
+                physicalPersonAttachmentRepository = new PhysicalPersonAttachmentRepository(context);
+
+            return physicalPersonAttachmentRepository;
+        }
+
         #endregion
 
         #region Save method
@@ -688,6 +706,7 @@ namespace RepositoryCore.UnitOfWork.Implementations
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
 
         #endregion
     }

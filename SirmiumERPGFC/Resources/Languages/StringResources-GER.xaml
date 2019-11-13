@@ -711,4 +711,10 @@
     <system:String x:Key="ObaveznoPoljeOpis">Erforderlich: Beschreibung</system:String>
     <system:String x:Key="KreiraoStavku">Erstellt von</system:String>
     <system:String x:Key="CalendarTritacke">Kalender...</system:String>
+
+    <system:String x:Key="RadnikPrilozi">Anhänge</system:String>
+    <system:String x:Key="RadnikPrilozi_TriTacke">Anhänge...</system:String>
+    <system:String x:Key="Prilog">Anhang</system:String>
+    <system:String x:Key="FizickoLicePrilozi">Anhänge</system:String>
+    <system:String x:Key="FizickoLicePrilozi_TriTacke">Anhänge..</system:String>
 </ResourceDictionary>

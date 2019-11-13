@@ -335,6 +335,16 @@ namespace ApiExtension.Sender
             { typeof(CalendarAssignmentViewModel), "CalendarAssignment" },
             { typeof(List<CalendarAssignmentViewModel>), "CalendarAssignment" },
             #endregion
+
+            #region EmployeeAttachments
+            { typeof(EmployeeAttachmentViewModel), "EmployeeAttachment" },
+            { typeof(List<EmployeeAttachmentViewModel>), "EmployeeAttachment" },
+            #endregion
+
+            #region PhysicalPersonAttachments
+            { typeof(PhysicalPersonAttachmentViewModel), "PhysicalPersonAttachment" },
+            { typeof(List<PhysicalPersonAttachmentViewModel>), "PhysicalPersonAttachment" },
+            #endregion
         };
 
 

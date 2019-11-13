@@ -253,6 +253,8 @@ namespace SirmiumERPWeb
             services.AddScoped<ICallCentarService, CallCentarService>();
 
             services.AddScoped<ICalendarAssignmentService, CalendarAssignmentService>();
+            services.AddScoped<IEmployeeAttachmentService, EmployeeAttachmentService>();
+            services.AddScoped<IPhysicalPersonAttachmentService, PhysicalPersonAttachmentService>();
 
         }
 

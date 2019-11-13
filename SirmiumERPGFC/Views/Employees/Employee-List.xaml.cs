@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using Ninject;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
+using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
@@ -45,6 +47,7 @@ namespace SirmiumERPGFC.Views.Employees
         IEmployeeDocumentService employeeDocumentService;
         IEmployeeCardService employeeCardService;
         IEmployeeNoteService employeeNoteService;
+        IEmployeeAttachmentService employeeAttachmentService;
         #endregion
 
         #region EmployeeSearchObject
@@ -105,6 +108,7 @@ namespace SirmiumERPGFC.Views.Employees
                             DisplayEmployeeDocumentData();
                             DisplayEmployeeCardData();
                             DisplayEmployeeNoteData();
+                            DisplayEmployeeAttachmentsData();
 
                         });
                         displayItemThread.IsBackground = true;
@@ -463,6 +467,60 @@ namespace SirmiumERPGFC.Views.Employees
         #endregion
 
 
+        #region EmployeeAttachmentsFromDB
+        private ObservableCollection<EmployeeAttachmentViewModel> _EmployeeAttachmentsFromDB;
+
+        public ObservableCollection<EmployeeAttachmentViewModel> EmployeeAttachmentsFromDB
+        {
+            get { return _EmployeeAttachmentsFromDB; }
+            set
+            {
+                if (_EmployeeAttachmentsFromDB != value)
+                {
+                    _EmployeeAttachmentsFromDB = value;
+                    NotifyPropertyChanged("EmployeeAttachmentsFromDB");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrentEmployeeAttachment
+        private EmployeeAttachmentViewModel _CurrentEmployeeAttachment;
+
+        public EmployeeAttachmentViewModel CurrentEmployeeAttachment
+        {
+            get { return _CurrentEmployeeAttachment; }
+            set
+            {
+                if (_CurrentEmployeeAttachment != value)
+                {
+                    _CurrentEmployeeAttachment = value;
+                    NotifyPropertyChanged("CurrentEmployeeAttachment");
+                }
+            }
+        }
+        #endregion
+
+        #region EmployeeAttachmentDataLoading
+        private bool _EmployeeAttachmentDataLoading;
+
+        public bool EmployeeAttachmentDataLoading
+        {
+            get { return _EmployeeAttachmentDataLoading; }
+            set
+            {
+                if (_EmployeeAttachmentDataLoading != value)
+                {
+                    _EmployeeAttachmentDataLoading = value;
+                    NotifyPropertyChanged("EmployeeAttachmentDataLoading");
+                }
+            }
+        }
+        #endregion
+
+
+
+
         #region Pagination data
         int currentPage = 1;
         int itemsPerPage = 50;
@@ -548,6 +606,7 @@ namespace SirmiumERPGFC.Views.Employees
             employeeProfessionService = DependencyResolver.Kernel.Get<IEmployeeProfessionService>();
             employeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
             employeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
+            employeeAttachmentService = DependencyResolver.Kernel.Get<IEmployeeAttachmentService>();
             InitializeComponent();
 
             this.DataContext = this;
@@ -738,6 +797,46 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeItemDataLoading = false;
         }
 
+        private void DisplayEmployeeAttachmentsData()
+        {
+            EmployeeAttachmentDataLoading = true;
+
+            EmployeeAttachmentListResponse response = new EmployeeAttachmentSQLiteRepository()
+                .GetEmployeeAttachmentsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier);
+
+            if (response.Success)
+            {
+                EmployeeAttachmentsFromDB = new ObservableCollection<EmployeeAttachmentViewModel>(
+                    response.EmployeeAttachments ?? new List<EmployeeAttachmentViewModel>());
+
+                if(EmployeeAttachmentsFromDB.Count == 0)
+                {
+                    for (int i = 0; i < 12; i++)
+                    {
+                        EmployeeAttachmentsFromDB.Add(new EmployeeAttachmentViewModel()
+                        {
+                            Identifier = Guid.NewGuid(),
+                            Code = "Prilog " + (i + 1).ToString(),
+                            Employee = CurrentEmployee,
+                            IsActive = false,
+                            IsSynced = false,
+                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                            CreatedBy = new UserViewModel()
+                            {
+                                Id = MainWindow.CurrentUserId,
+                                FullName = MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName
+                            }
+                        });
+                    }
+                }
+            }
+            else
+            {
+                EmployeeAttachmentsFromDB = new ObservableCollection<EmployeeAttachmentViewModel>();
+            }
+            EmployeeAttachmentDataLoading = false;
+        }
+
         private void SyncData()
         {
             SyncButtonEnabled = false;
@@ -783,6 +882,11 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 SyncButtonContent = ((string)Application.Current.FindResource("Stavke")) + "(" + synced + " / " + toSync + ")... ";
             });
+
+            SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi_TriTacke"));
+            new EmployeeAttachmentSQLiteRepository().Sync(employeeAttachmentService, (synced, toSync) => {
+                SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi")) + "(" + synced + " / " + toSync + ")... ";
+            });
             DisplayData();
             CurrentEmployee = null;
             EmployeeNotesFromDB = new ObservableCollection<EmployeeNoteViewModel>();
@@ -791,6 +895,7 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeProfessionsFromDB = new ObservableCollection<EmployeeProfessionItemViewModel>();
             EmployeeLicencesFromDB = new ObservableCollection<EmployeeLicenceItemViewModel>();
             EmployeeItemsFromDB = new ObservableCollection<EmployeeItemViewModel>();
+            EmployeeAttachmentsFromDB = new ObservableCollection<EmployeeAttachmentViewModel>();
             SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
@@ -889,6 +994,21 @@ namespace SirmiumERPGFC.Views.Employees
             SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
+
+        private void SyncEmployeeAttachmentsData()
+        {
+            SyncButtonEnabled = false;
+            SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi_TriTacke"));
+            new EmployeeAttachmentSQLiteRepository().Sync(employeeAttachmentService, (synced, toSync) =>
+            {
+                SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi")) + "(" + synced + " / " + toSync + ")... ";
+            });
+
+            DisplayEmployeeAttachmentsData();
+
+            SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
+            SyncButtonEnabled = true;
+        }
         private void dgEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
@@ -916,6 +1036,11 @@ namespace SirmiumERPGFC.Views.Employees
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
         private void DgEmployeeItems_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void DgEmployeeAttachments_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
@@ -1069,7 +1194,55 @@ namespace SirmiumERPGFC.Views.Employees
             EmployeeItemAddEditForm.EmployeeCreatedUpdated += new EmployeeHandler(SyncItemData);
             FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("Članovi_porodice")), 95, EmployeeItemAddEditForm);
         }
-        
+        private void btnSaveAttachments_Click(object sender, RoutedEventArgs e)
+        {
+            #region Validation
+
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_radnikaUzvičnik"));
+                return;
+            }
+
+            #endregion
+
+            SaveChangesOnEmployeeAttachments();
+        }
+
+        void SaveChangesOnEmployeeAttachments()
+        {
+            Thread td = new Thread(() => {
+                var attachments = EmployeeAttachmentsFromDB.ToList();
+
+                foreach(var attachment in attachments)
+                {
+                    attachment.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
+                    attachment.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+                    new EmployeeAttachmentSQLiteRepository().Delete(attachment.Identifier);
+                    var localResponse = new EmployeeAttachmentSQLiteRepository().Create(attachment);
+                    if (!localResponse.Success)
+                    {
+                        MainWindow.ErrorMessage = localResponse.Message;
+                        return;
+                    }
+                }
+
+                var response = employeeAttachmentService.CreateList(attachments);
+
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = response.Message;
+                }
+                else
+                {
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
+                    SyncEmployeeAttachmentsData();
+                }
+            });
+            td.IsBackground = true;
+            td.Start();
+        }
+
         #endregion
 
         #region Pagination
@@ -1400,7 +1573,6 @@ namespace SirmiumERPGFC.Views.Employees
             rdlcEmployeeReport.ZoomPercent = 100;
             rdlcEmployeeReport.RefreshReport();
         }
-
     }
 }
 

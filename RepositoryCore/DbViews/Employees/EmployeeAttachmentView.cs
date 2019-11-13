@@ -21,8 +21,8 @@ namespace RepositoryCore.DbViews.Employees
 
             strSQLCommand =
                 @"  CREATE VIEW vEmployeeAttachments AS 
-                    SELECT attachment.Id as AttachmentId, attachment.Identifier as AttachmentIdentifier, attachment.OK as AttachmentOK, attachment.Active,
-	                    employee.Id as EmployeeId, employee.Identifier as EmployeeIdentifier, employee.Code as EmployeeCode, employee.Name as EmployeeName,
+                    SELECT attachment.Id as AttachmentId, attachment.Identifier as AttachmentIdentifier, attachment.Code as AttachmentCode, attachment.OK as AttachmentOK, attachment.Active,
+	                    employee.Id as EmployeeId, employee.Identifier as EmployeeIdentifier, employee.Code as EmployeeCode, employee.Name as EmployeeName, employee.EmployeeCode as EmployeeInternalCode, 
 	                    (SELECT MAX(v) FROM (VALUES (attachment.UpdatedAt), (employee.UpdatedAt)) AS value(v)) AS UpdatedAt,
 	                    createdBy.Id as CreatedById, createdBy.FirstName as CreatedByFirstName, createdBy.LastName as CreatedBylastName, 
 	                    company.Id as CompanyId, company.Name as CompanyName

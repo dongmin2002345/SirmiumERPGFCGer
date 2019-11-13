@@ -15,13 +15,13 @@ namespace RepositoryCore.DbViews.Employees
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
 
-            string strSQLCommand = "DROP VIEW IF EXISTS vEmployeeAttachments;";
+            string strSQLCommand = "DROP VIEW IF EXISTS vPhysicalPersonAttachments;";
             SqlCommand command = new SqlCommand(strSQLCommand, conn);
             string returnvalue = (string)command.ExecuteScalar();
 
             strSQLCommand =
-                @"  CREATE VIEW vEmployeeAttachments AS
-                    SELECT attachment.Id as AttachmentId, attachment.Identifier as AttachmentIdentifier, attachment.OK as AttachmentOK, attachment.Active,
+                @"  CREATE VIEW vPhysicalPersonAttachments AS
+                    SELECT attachment.Id as AttachmentId, attachment.Identifier as AttachmentIdentifier, attachment.Code as AttachmentCode, attachment.OK as AttachmentOK, attachment.Active,
 	                    physicalPerson.Id as PhysicalPersonId, physicalPerson.Identifier as PhysicalPersonIdentifier, physicalPerson.Code as PhysicalPersonCode, physicalPerson.Name as PhysicalPersonName,
 	                    (SELECT MAX(v) FROM (VALUES (attachment.UpdatedAt), (physicalPerson.UpdatedAt)) AS value(v)) AS UpdatedAt,
 	                    createdBy.Id as CreatedById, createdBy.FirstName as CreatedByFirstName, createdBy.LastName as CreatedBylastName, 

@@ -246,6 +246,8 @@
     <Compile Include="Repository\ConstructionSites\ConstructionSiteDocumentSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteNoteSQLiteRepository.cs" />
     <Compile Include="Repository\ConstructionSites\ConstructionSiteSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\PhysicalPersonAttachmentSQLiteRepository.cs" />
+    <Compile Include="Repository\Employees\EmployeeAttachmentSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByBusinessPartnerSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeByConstructionSiteSQLiteRepository.cs" />
     <Compile Include="Repository\Employees\EmployeeCardSQLiteRepository.cs" />

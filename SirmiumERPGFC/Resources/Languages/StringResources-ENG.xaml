@@ -703,4 +703,10 @@
     <system:String x:Key="ObaveznoPoljeOpis">Required: Description</system:String>
     <system:String x:Key="KreiraoStavku">Created by</system:String>
     <system:String x:Key="CalendarTritacke">Calendar...</system:String>
+
+    <system:String x:Key="RadnikPrilozi">Attachments</system:String>
+    <system:String x:Key="RadnikPrilozi_TriTacke">Attachments...</system:String>
+    <system:String x:Key="Prilog">Attachment</system:String>
+    <system:String x:Key="FizickoLicePrilozi">Attachments</system:String>
+    <system:String x:Key="FizickoLicePrilozi_TriTacke">Attachments...</system:String>
 </ResourceDictionary>

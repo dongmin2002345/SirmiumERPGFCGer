@@ -709,4 +709,10 @@
     <system:String x:Key="ObaveznoPoljeOpis">Obavezno polje: Opis</system:String>
     <system:String x:Key="KreiraoStavku">Kreirao</system:String>
     <system:String x:Key="CalendarTritacke">Kalendar...</system:String>
+
+    <system:String x:Key="RadnikPrilozi">Prilozi</system:String>
+    <system:String x:Key="RadnikPrilozi_TriTacke">Prilozi...</system:String>
+    <system:String x:Key="Prilog">Prilog</system:String>
+    <system:String x:Key="FizickoLicePrilozi">Prilozi</system:String>
+    <system:String x:Key="FizickoLicePrilozi_TriTacke">Prilozi..</system:String>
 </ResourceDictionary>

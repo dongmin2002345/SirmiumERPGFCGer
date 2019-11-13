@@ -13,40 +13,40 @@ using System.Text;
 
 namespace RepositoryCore.Implementations.Employees
 {
-    public class EmployeeAttachmentRepository : IEmployeeAttachmentRepository
+    public class PhysicalPersonAttachmentRepository : IPhysicalPersonAttachmentRepository
     {
         private ApplicationDbContext context;
         private readonly string connectionString;
 
         private readonly string selectPart = @"
             SELECT AttachmentId, AttachmentIdentifier, AttachmentCode, AttachmentOK, Active, UpdatedAt, 
-                EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeInternalCode,
+                PhysicalPersonId, PhysicalPersonIdentifier, PhysicalPersonCode, PhysicalPersonName,
                 CreatedById, CreatedByFirstName, createdByLastName, 
                 CompanyId, CompanyName 
-            FROM vEmployeeAttachments 
+            FROM vPhysicalPersonAttachments 
         ";
 
-        public EmployeeAttachmentRepository(ApplicationDbContext ctx)
+        public PhysicalPersonAttachmentRepository(ApplicationDbContext ctx)
         {
             context = ctx;
             connectionString = new Config().GetConfiguration()["ConnectionString"] as string;
         }
-        public EmployeeAttachment Create(EmployeeAttachment attachment)
+        public PhysicalPersonAttachment Create(PhysicalPersonAttachment attachment)
         {
-            if(context.EmployeeAttachments.Where(x => x.Identifier == attachment.Identifier).Count() == 0)
+            if(context.PhysicalPersonAttachments.Where(x => x.Identifier == attachment.Identifier).Count() == 0)
             {
                 attachment.CreatedAt = DateTime.Now;
                 attachment.UpdatedAt = DateTime.Now;
                 attachment.Active = true;
 
-                context.EmployeeAttachments.Add(attachment);
+                context.PhysicalPersonAttachments.Add(attachment);
                 return attachment;
             } else
             {
-                var attachmentFromDb = context.EmployeeAttachments.FirstOrDefault(x => x.Identifier == attachment.Identifier);
+                var attachmentFromDb = context.PhysicalPersonAttachments.FirstOrDefault(x => x.Identifier == attachment.Identifier);
                 if(attachmentFromDb != null)
                 {
-                    attachmentFromDb.EmployeeId = attachment?.EmployeeId ?? null;
+                    attachmentFromDb.PhysicalPersonId = attachment?.PhysicalPersonId ?? null;
                     attachmentFromDb.OK = attachment.OK;
                     attachmentFromDb.UpdatedAt = DateTime.Now;
                 }
@@ -54,12 +54,12 @@ namespace RepositoryCore.Implementations.Employees
             }
         }
 
-        public EmployeeAttachment Delete(Guid identifier)
+        public PhysicalPersonAttachment Delete(Guid identifier)
         {
-            var attachmentFromDb = context.EmployeeAttachments
+            var attachmentFromDb = context.PhysicalPersonAttachments
                 .Union(context.ChangeTracker.Entries()
-                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeAttachment))
-                   .Select(x => x.Entity as EmployeeAttachment))
+                   .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonAttachment))
+                   .Select(x => x.Entity as PhysicalPersonAttachment))
                 .FirstOrDefault(x => x.Identifier == identifier);
             if (attachmentFromDb != null)
             {
@@ -69,9 +69,9 @@ namespace RepositoryCore.Implementations.Employees
             return attachmentFromDb;
         }
 
-        public List<EmployeeAttachment> GetEmployeeAttachments(int companyId)
+        public List<PhysicalPersonAttachment> GetPhysicalPersonAttachments(int companyId)
         {
-            List<EmployeeAttachment> attachments = new List<EmployeeAttachment>();
+            List<PhysicalPersonAttachment> attachments = new List<PhysicalPersonAttachment>();
             string queryString = selectPart +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
 
@@ -87,7 +87,7 @@ namespace RepositoryCore.Implementations.Employees
                 {
                     while(reader.Read())
                     {
-                        EmployeeAttachment attachment = Read(reader);
+                        PhysicalPersonAttachment attachment = Read(reader);
 
                         attachments.Add(attachment);
                     }
@@ -97,9 +97,9 @@ namespace RepositoryCore.Implementations.Employees
             return attachments;
         }
 
-        private EmployeeAttachment Read(SqlDataReader reader)
+        private PhysicalPersonAttachment Read(SqlDataReader reader)
         {
-            EmployeeAttachment attachment = new EmployeeAttachment();
+            PhysicalPersonAttachment attachment = new PhysicalPersonAttachment();
             if(reader["AttachmentId"] != DBNull.Value)
             {
                 attachment.Id = Int32.Parse(reader["AttachmentId"].ToString());
@@ -110,15 +110,14 @@ namespace RepositoryCore.Implementations.Employees
                 attachment.Active = bool.Parse(reader["Active"].ToString());
             }
 
-            if(reader["EmployeeId"] != DBNull.Value)
+            if(reader["PhysicalPersonId"] != DBNull.Value)
             {
-                attachment.Employee = new Employee();
-                attachment.EmployeeId = Int32.Parse(reader["EmployeeId"].ToString());
-                attachment.Employee.Id = Int32.Parse(reader["EmployeeId"].ToString());
-                attachment.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
-                attachment.Employee.Code = reader["EmployeeCode"]?.ToString();
-                attachment.Employee.Name = reader["EmployeeName"]?.ToString();
-                attachment.Employee.EmployeeCode = reader["EmployeeInternalCode"]?.ToString();
+                attachment.PhysicalPerson = new PhysicalPerson();
+                attachment.PhysicalPersonId = Int32.Parse(reader["PhysicalPersonId"].ToString());
+                attachment.PhysicalPerson.Id = Int32.Parse(reader["PhysicalPersonId"].ToString());
+                attachment.PhysicalPerson.Identifier = Guid.Parse(reader["PhysicalPersonIdentifier"].ToString());
+                attachment.PhysicalPerson.Code = reader["PhysicalPersonCode"]?.ToString();
+                attachment.PhysicalPerson.Name = reader["PhysicalPersonName"]?.ToString();
             }
 
 
@@ -141,25 +140,25 @@ namespace RepositoryCore.Implementations.Employees
             return attachment;
         }
 
-        public List<EmployeeAttachment> GetEmployeeAttachmentsByEmployee(int EmployeeId)
+        public List<PhysicalPersonAttachment> GetPhysicalPersonAttachmentsByPhysicalPerson(int PhysicalPersonId)
         {
-            List<EmployeeAttachment> attachments = new List<EmployeeAttachment>();
+            List<PhysicalPersonAttachment> attachments = new List<PhysicalPersonAttachment>();
             string queryString = selectPart +
-                "WHERE EmployeeId = @EmployeeId AND Active = 1;";
+                "WHERE PhysicalPersonId = @PhysicalPersonId AND Active = 1;";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = queryString;
-                command.Parameters.Add(new SqlParameter("@EmployeeId", EmployeeId));
+                command.Parameters.Add(new SqlParameter("@PhysicalPersonId", PhysicalPersonId));
 
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        EmployeeAttachment attachment = Read(reader);
+                        PhysicalPersonAttachment attachment = Read(reader);
 
                         attachments.Add(attachment);
                     }
@@ -169,9 +168,9 @@ namespace RepositoryCore.Implementations.Employees
             return attachments;
         }
 
-        public List<EmployeeAttachment> GetEmployeeAttachmentsNewerThen(int companyId, DateTime lastUpdateTime)
+        public List<PhysicalPersonAttachment> GetPhysicalPersonAttachmentsNewerThen(int companyId, DateTime lastUpdateTime)
         {
-            List<EmployeeAttachment> attachments = new List<EmployeeAttachment>();
+            List<PhysicalPersonAttachment> attachments = new List<PhysicalPersonAttachment>();
             string queryString = selectPart +
                 @"  WHERE CompanyId = @CompanyId 
                     AND CONVERT(DATETIME, CONVERT(VARCHAR(20), UpdatedAt, 120)) > CONVERT(DATETIME, CONVERT(VARCHAR(20), @LastUpdateTime, 120));
@@ -190,7 +189,7 @@ namespace RepositoryCore.Implementations.Employees
                 {
                     while (reader.Read())
                     {
-                        EmployeeAttachment attachment = Read(reader);
+                        PhysicalPersonAttachment attachment = Read(reader);
 
                         attachments.Add(attachment);
                     }

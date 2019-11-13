@@ -1098,6 +1098,35 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(CalendarAssignmentSQLiteRepository.CalendarAssignmentTableCreatePart, db);
                     createTable.ExecuteReader();
                     #endregion
+                    
+
+                    #region EmployeeAttachments
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE EmployeeAttachments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(EmployeeAttachmentSQLiteRepository.EmployeeAttachmentsTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region PhysicalPersonAttachments
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE PhysicalPersonAttachments", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(PhysicalPersonAttachmentSQLiteRepository.PhysicalPersonAttachmentsTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
                 }
             }
 

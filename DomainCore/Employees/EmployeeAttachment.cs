@@ -7,6 +7,8 @@ namespace DomainCore.Employees
 {
     public class EmployeeAttachment : BaseEntity
     {
+        public string Code { get; set; }
+
         public int? EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public bool OK { get; set; }

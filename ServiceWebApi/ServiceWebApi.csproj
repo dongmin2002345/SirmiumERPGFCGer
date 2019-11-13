@@ -86,6 +86,8 @@
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteDocumentService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteNoteService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteService.cs" />
+    <Compile Include="Implementations\Employees\PhysicalPersonAttachmentService.cs" />
+    <Compile Include="Implementations\Employees\EmployeeAttachmentService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByBusinessPartnerService.cs" />
     <Compile Include="Implementations\Employees\EmployeeByConstructionSiteService.cs" />
     <Compile Include="Implementations\Employees\EmployeeCardService.cs" />
