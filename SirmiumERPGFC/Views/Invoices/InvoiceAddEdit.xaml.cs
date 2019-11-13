@@ -106,9 +106,30 @@ namespace SirmiumERPGFC.Views.Invoices
                             //CurrentInvoice.City = _CurrentBusinessPartnerInvoice?.City;
                             CurrentInvoice.Vat = _CurrentBusinessPartnerInvoice?.Vat;
                             CurrentInvoice.Discount = _CurrentBusinessPartnerInvoice?.Discount;
+
+                            CurrentInvoice.PdvType = _CurrentBusinessPartnerInvoice?.PdvType;
+                            CurrentInvoice.Discount = _CurrentBusinessPartnerInvoice?.Discount;
+                            //CurrentInvoice.Address = _CurrentBusinessPartnerInvoice?.TaxAdministration
                         }
                     }
                 }
+            }
+        }
+        #endregion
+
+
+
+        #region PdvTypeOptions
+
+        public ObservableCollection<string> PdvTypeOptions
+        {
+            get
+            {
+                return new ObservableCollection<string>(new List<string>() {
+                    WpfAppCommonCode.Converters.PdvTypeConverter.SA_PDV,
+                    WpfAppCommonCode.Converters.PdvTypeConverter.BEZ_PDV,
+                    WpfAppCommonCode.Converters.PdvTypeConverter.NIJE_OBVEZNIK,
+                });
             }
         }
         #endregion
@@ -218,6 +239,8 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoice = invoiceViewModel;
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
+
+            CurrentInvoice.PdvType = null;
             CurrentBusinessPartnerInvoice = invoiceViewModel.BusinessPartner;
             //CurrentBusinessPartnerInvoice.Customer = CurrentInvoice?.Customer;
             //CurrentBusinessPartnerInvoice.PIB = CurrentInvoice?.PIB;

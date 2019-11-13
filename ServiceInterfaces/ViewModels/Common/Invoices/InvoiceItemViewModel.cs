@@ -128,12 +128,19 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _PriceWithoutPDV = value;
                     NotifyPropertyChanged("PriceWithoutPDV");
-                    basePrice = PriceWithoutPDV * Quantity;
-                    PriceWithPDV = basePrice + (basePrice * PDV / 100);
-                    rabat = PriceWithPDV * Discount / 100;
-                    Amount = PriceWithPDV - rabat;
+                    CalculateFieldsAfterPrice();
                 }
             }
+        }
+
+        private void CalculateFieldsAfterPrice()
+        {
+            var calculatedBase = PriceWithoutPDV * Quantity;
+            basePrice = calculatedBase;
+            PriceWithPDV = basePrice + (basePrice * PDVPercent / 100);
+            PDV = PriceWithPDV - basePrice;
+            rabat = PriceWithPDV * Discount / 100;
+            Amount = PriceWithPDV - rabat;
         }
         #endregion
 
@@ -167,6 +174,8 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _PDVPercent = value;
                     NotifyPropertyChanged("PDVPercent");
+
+                    CalculateFieldsAfterPrice();
                 }
             }
         }

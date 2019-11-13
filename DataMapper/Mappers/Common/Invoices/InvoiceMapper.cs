@@ -43,6 +43,7 @@ namespace DataMapper.Mappers.Common.Invoices
 
                 Currency = invoice.Currency,
                 IsInPDV = invoice.IsInPDV,
+                PdvType = invoice.PdvType,
 
                 IsActive = invoice.Active,
 
@@ -79,6 +80,8 @@ namespace DataMapper.Mappers.Common.Invoices
                 Address = invoice.Address,
 
                 Currency = invoice.Currency,
+                IsInPDV = invoice.IsInPDV,
+                PdvType = invoice.PdvType,
 
                 IsActive = invoice.Active,
 
@@ -105,6 +108,8 @@ namespace DataMapper.Mappers.Common.Invoices
                 PIB = invoiceViewModel.PIB,
                 BPName = invoiceViewModel.BPName,
                 Address = invoiceViewModel.Address,
+                IsInPDV = invoiceViewModel.IsInPDV,
+                PdvType = invoiceViewModel.PdvType,
 
                 Currency = invoiceViewModel.Currency,
 

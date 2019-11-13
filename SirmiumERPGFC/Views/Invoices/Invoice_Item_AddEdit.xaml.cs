@@ -286,7 +286,7 @@ namespace SirmiumERPGFC.Views.Invoices
                     }
                     return;
                 }
-                CurrentInvoiceItemForm = new InvoiceItemViewModel();
+                CurrentInvoiceItemForm = new InvoiceItemViewModel() { Discount = CurrentInvoice?.Discount?.Amount ?? 0 };
                 CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
                 CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
                 CurrentInvoiceItemForm.IsSynced = false;

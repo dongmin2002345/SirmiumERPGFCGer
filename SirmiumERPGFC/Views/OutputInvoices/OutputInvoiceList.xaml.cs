@@ -738,10 +738,11 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
             //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
 
-            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\OutputInvoices\OutputInvoiceReport.rdlc");
+            //////string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //////string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\OutputInvoices\OutputInvoiceReport.rdlc");
 
-            rdlcOutputInvoiceReport.LocalReport.ReportPath = ContentStart;
+            //////rdlcOutputInvoiceReport.LocalReport.ReportPath = ContentStart;
+            rdlcOutputInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReport.rdlc";
             // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
             rdlcOutputInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
             rdlcOutputInvoiceReport.Refresh();

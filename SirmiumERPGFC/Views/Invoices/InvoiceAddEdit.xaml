@@ -14,6 +14,7 @@
         <cbxConverters1:BoolStringConverter x:Key="cbxStringToBoolConverter" />
         <cbxConverters1:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
         <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters1:PdvTypeConverter x:Key="cbxPdvTypeConverter" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -32,6 +33,7 @@
             <GroupBox Header="{DynamicResource Podaci_o_fakturi}" Margin="2 2 2 1" Grid.Row="0" Grid.ColumnSpan="2">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -67,7 +69,7 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Kupac_dvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
-                             x:Name="txtCustomer" Text="{Binding Path=CurrentInvoice.Customer}" IsReadOnly="True"/>
+                             x:Name="txtCustomer" Text="{Binding Path=CurrentInvoice.Customer}" IsReadOnly="True" IsEnabled="False"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource PIBDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
@@ -92,14 +94,20 @@
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource ValutaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <DatePicker Grid.Row="5"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2" 
                                 SelectedDate="{Binding Path=CurrentInvoice.Currency, Mode=TwoWay}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <!--<TextBox Grid.Row="5"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
-                             x:Name="txtIsInPDV" Text="{Binding Path=CurrentInvoice.IsInPDV}" IsReadOnly="True"/>-->
+                    <!--<TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                    --><!--<TextBox Grid.Row="5"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
+                             x:Name="txtIsInPDV" Text="{Binding Path=CurrentInvoice.IsInPDV}" IsReadOnly="True"/>--><!--
                     <ComboBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2" IsEditable="False" IsHitTestVisible="False" Focusable="False"
                             SelectedItem="{Binding Path=CurrentInvoice.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
                             ItemsSource="{Binding Path=IsInPdvOptions}">
-                    </ComboBox>
+                    </ComboBox>-->
 
+
+                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource PdvVrsta_Dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                    <ComboBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxPdvType" Margin="2"
+                                            SelectedItem="{Binding Path=CurrentInvoice.PdvType, Converter={StaticResource cbxPdvTypeConverter}}"
+                                            ItemsSource="{Binding Path=PdvTypeOptions}">
+                    </ComboBox>
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource PopustDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <popups:DiscountPopup Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" x:Name="DiscountPopup"
                          CurrentDiscount="{Binding Path=CurrentInvoice.Discount, Mode=TwoWay}"/>

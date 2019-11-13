@@ -162,6 +162,22 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         }
         #endregion
 
+        #region PdvTypeOptions
+
+        public ObservableCollection<string> PdvTypeOptions
+        {
+            get 
+            { 
+                return new ObservableCollection<string>(new List<string>() { 
+                    WpfAppCommonCode.Converters.PdvTypeConverter.SA_PDV,
+                    WpfAppCommonCode.Converters.PdvTypeConverter.BEZ_PDV,
+                    WpfAppCommonCode.Converters.PdvTypeConverter.NIJE_OBVEZNIK,
+                }); 
+            }
+        }
+        #endregion
+
+
 
         #region ItemsEnabled
         private bool _ItemsEnabled;

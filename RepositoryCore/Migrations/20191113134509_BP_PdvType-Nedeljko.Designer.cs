@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191113134509_BP_PdvType-Nedeljko")]
+    partial class BP_PdvTypeNedeljko
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -968,8 +970,6 @@ namespace RepositoryCore.Migrations
                     b.Property<int?>("MunicipalityId");
 
                     b.Property<string>("PIB");
-
-                    b.Property<int?>("PdvType");
 
                     b.Property<DateTime?>("UpdatedAt");
 

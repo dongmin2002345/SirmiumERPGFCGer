@@ -35,5 +35,7 @@ namespace DomainCore.Common.Invoices
         public int? VatId { get; set; }
         public Vat Vat { get; set; }
         public bool IsInPDV { get; set; }
+
+        public int? PdvType { get; set; }
     }
 }

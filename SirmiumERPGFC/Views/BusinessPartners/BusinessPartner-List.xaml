@@ -36,6 +36,7 @@
             <cbxConverters:StringDoubleConverter x:Key="stringToDoubleConverter" />
             <cbxConverters:ItemStatusConverter x:Key="ItemStatusConverter" />
             <cbxConverters:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
+            <cbxConverters:PdvTypeConverter x:Key="pdvTypeConverter" />
             <!--<cbxConverters:DataGridFieldIsNullConverter x:Key="DataGridFieldIsNullConverter" />
             <cbxConverters:DataGridFieldIsTrueConverter x:Key="DataGridFieldIsTrueConverter" />-->
         </ResourceDictionary>
@@ -197,6 +198,11 @@
                         <DataGridTextColumn SortMemberPath="Customer" Header="{DynamicResource Kupac}" Binding="{Binding Customer}" Width="*" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="Vat.Amount" Header="{DynamicResource PDV}" Binding="{Binding Vat.Amount}" Width="*" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="Discount.Amount" Header="{DynamicResource Popust}" Binding="{Binding Discount.Amount}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn SortMemberPath="PdvType" Binding="{Binding PdvType, Converter={StaticResource pdvTypeConverter}}" IsReadOnly="True">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource BPPdvVrsta}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="IsInPDV" Binding="{Binding IsInPDV, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True">
                         <DataGridTextColumn.Header>
                             <TextBlock Text="{DynamicResource Obveznik_PDVCrtaa}" TextWrapping="Wrap" MaxWidth="70" />

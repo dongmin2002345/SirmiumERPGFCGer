@@ -33,6 +33,8 @@ namespace DomainCore.Common.BusinessPartners
 
         public string JBKJS { get; set; }
 
+        public int? PdvType { get; set; }
+
         #region GER
 
         public string NameGer { get; set; }

@@ -214,6 +214,8 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "VatDeductionFrom", "DATETIME NULL");
                     SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "VatDeductionTo", "DATETIME NULL");
 
+                    SQLiteHelper.AddColumnIfNotExists("BusinessPartners", "PdvType", "INTEGER NULL");
+
                     if (withTableDrop)
                     {
                         try
@@ -1056,6 +1058,8 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(InvoiceSQLiteRepository.InvoiceTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("Invoices", "PdvType", "INTEGER NULL");
 
                     if (withTableDrop)
                     {

@@ -491,4 +491,50 @@ namespace WpfAppCommonCode.Converters
             throw new NotImplementedException();
         }
     }
+
+
+    public class PdvTypeConverter : IValueConverter
+    {
+        public static string PraznoPolje = "PdvVrsta_Odaberi";
+        public static string SA_PDV = "BPSaPdv";
+        public static string BEZ_PDV = "BPBezPdv";
+        public static string NIJE_OBVEZNIK = "BPNijeObveznik";
+
+        public PdvTypeConverter() : base()
+        {
+            SA_PDV = ((string)Application.Current.FindResource("BPSaPdv"));
+            BEZ_PDV = ((string)Application.Current.FindResource("BPBezPdv"));
+            NIJE_OBVEZNIK = ((string)Application.Current.FindResource("BPNijeObveznik"));
+            PraznoPolje = ((string)Application.Current.FindResource("PdvVrsta_Odaberi"));
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null || String.IsNullOrEmpty(value.ToString()))
+                return PraznoPolje;
+            if (Int32.TryParse(value.ToString(), out int result))
+            {
+                if (result == 1)
+                    return SA_PDV;
+                else if (result == 2)
+                    return BEZ_PDV;
+                else if (result == 3)
+                    return NIJE_OBVEZNIK;
+                return PraznoPolje;
+            }
+            return PraznoPolje;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value.ToString() == PraznoPolje)
+                return null;
+            else if (value.ToString() == SA_PDV)
+                return 1;
+            else if (value.ToString() == BEZ_PDV)
+                return 2;
+            else if (value.ToString() == NIJE_OBVEZNIK)
+                return 3;
+            return null;
+        }
+    }
 }

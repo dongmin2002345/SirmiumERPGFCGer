@@ -717,4 +717,11 @@
     <system:String x:Key="Prilog">Anhang</system:String>
     <system:String x:Key="FizickoLicePrilozi">Anhänge</system:String>
     <system:String x:Key="FizickoLicePrilozi_TriTacke">Anhänge..</system:String>
+    <system:String x:Key="PdvVrsta_Dvotacka">Art der Umsatzsteuerpflicht:</system:String>
+    <system:String x:Key="BPPdvVrsta">Art der Umsatzsteuerpflicht</system:String>
+    <system:String x:Key="PdvVrsta_Odaberi">Wähle eine Art der Umsatzsteuerpflicht</system:String>
+    <system:String x:Key="PdvVrsta_ObaveznoPolje">Pflichtfeld: Art der Umsatzsteuerpflicht</system:String>
+    <system:String x:Key="BPSaPdv">With PDV</system:String>
+    <system:String x:Key="BPBezPdv">Without PDV</system:String>
+    <system:String x:Key="BPNijeObveznik">Not in PDV System</system:String>
 </ResourceDictionary>

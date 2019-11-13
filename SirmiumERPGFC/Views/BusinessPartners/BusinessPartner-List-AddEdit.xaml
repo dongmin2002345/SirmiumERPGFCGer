@@ -20,6 +20,7 @@
         <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
         <cbxConverters:ChooseStatusConverter x:Key="cbxChooseStatusConverter" />
         <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+        <cbxConverters:PdvTypeConverter x:Key="cbxPdvTypeConverter" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -105,22 +106,31 @@
 
                             <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
                             <ComboBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxIsInPDV" Margin="2"
-                            SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
-                            ItemsSource="{Binding Path=IsInPdvOptions}">
+                                SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDV, Converter={StaticResource cbxStringToBoolConverter}}"
+                                ItemsSource="{Binding Path=IsInPdvOptions}">
                             </ComboBox>
 
                             <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource SajtDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                             <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtWebSite" 
                              Text="{Binding Path=CurrentBusinessPartner.WebSite}" />
 
-                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Kupac_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                         <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Kupac_dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                             <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtCustomer"  
                              Text="{Binding Path=CurrentBusinessPartner.Customer}"/>
 
-                        </Grid>
+
+
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource PdvVrsta_Dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                        <ComboBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxPdvType" Margin="2"
+                                            SelectedItem="{Binding Path=CurrentBusinessPartner.PdvType, Converter={StaticResource cbxPdvTypeConverter}}"
+                                            ItemsSource="{Binding Path=PdvTypeOptions}">
+                        </ComboBox>
+
+                </Grid>
                     </GroupBox>
 
-                    <GroupBox Header="{DynamicResource Podaci_o_poslovnom_partneru_Nemačka}" Margin="2 2 2 1" Grid.Row="1">
+            <GroupBox Header="{DynamicResource Podaci_o_poslovnom_partneru_Nemačka}" Margin="2 2 2 1" Grid.Row="1">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />

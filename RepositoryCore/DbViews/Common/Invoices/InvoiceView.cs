@@ -31,7 +31,7 @@ namespace RepositoryCore.DbViews.Common.Invoices
 
                 "invoice.InvoiceNumber, invoice.InvoiceDate, invoice.DateOfSupplyOfGoods," +
                 "invoice.Customer, invoice.PIB, invoice.BPName, invoice.Address," +
-                "invoice.Currency, invoice.IsInPDV, invoice.Active AS Active," +
+                "invoice.Currency, invoice.IsInPDV, invoice.PdvType, invoice.Active AS Active," +
                 "(SELECT MAX(v) FROM (VALUES (invoice.UpdatedAt), (businessPartner.UpdatedAt), (discount.UpdatedAt), (vat.UpdatedAt), (city.UpdatedAt), (municipality.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

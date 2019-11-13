@@ -715,4 +715,11 @@
     <system:String x:Key="Prilog">Prilog</system:String>
     <system:String x:Key="FizickoLicePrilozi">Prilozi</system:String>
     <system:String x:Key="FizickoLicePrilozi_TriTacke">Prilozi..</system:String>
+    <system:String x:Key="PdvVrsta_Dvotacka">PDV Vrsta:</system:String>
+    <system:String x:Key="BPPdvVrsta">PDV Vrsta</system:String>
+    <system:String x:Key="PdvVrsta_Odaberi">Odaberite vrstu PDV-a...</system:String>
+    <system:String x:Key="PdvVrsta_ObaveznoPolje">Obavezno polje: PDV Vrsta</system:String>
+    <system:String x:Key="BPSaPdv">Sa PDV-om</system:String>
+    <system:String x:Key="BPBezPdv">Bez PDV-a</system:String>
+    <system:String x:Key="BPNijeObveznik">Nije u PDV sistemu</system:String>
 </ResourceDictionary>

@@ -270,6 +270,24 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
+        #region PdvType
+        private int? _PdvType;
+
+        public int? PdvType
+        {
+            get { return _PdvType; }
+            set
+            {
+                if (_PdvType != value)
+                {
+                    _PdvType = value;
+                    NotifyPropertyChanged("PdvType");
+                }
+            }
+        }
+        #endregion
+
+
         #region InvoiceItems
         private ObservableCollection<InvoiceItemViewModel> _InvoiceItems;
 

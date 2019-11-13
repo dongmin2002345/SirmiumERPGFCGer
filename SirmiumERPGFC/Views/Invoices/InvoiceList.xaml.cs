@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Microsoft.Reporting.WinForms;
+using Ninject;
 using ServiceInterfaces.Abstractions.Common.Invoices;
 using ServiceInterfaces.Messages.Common.Invoices;
 using ServiceInterfaces.ViewModels.Common.Invoices;
@@ -551,66 +552,67 @@ namespace SirmiumERPGFC.Views.Invoices
 
         private void BtnPrintInvoiceReport_Click(object sender, RoutedEventArgs e)
         {
-            //#region Validation
+            #region Validation
 
-            //if (CurrentInvoice == null)
-            //{
-            //    MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
-            //    return;
-            //}
+            if (CurrentInvoice == null)
+            {
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_racunUzvičnik"));
+                return;
+            }
 
-            //#endregion
+            #endregion
 
-            //rdlcInvoiceReport.LocalReport.DataSources.Clear();
+            rdlcInvoiceReport.LocalReport.DataSources.Clear();
 
-            //List<InvoiceReportViewModel> invoice = new List<InvoiceReportViewModel>()
-            //{
-            //    new InvoiceReportViewModel()
-            //    {
+            List<dynamic> invoice = new List<dynamic>()
+            {
+                new 
+                {
 
-            //        BusinessPartnerName = CurrentInvoice?.BusinessPartner?.Name ?? "",
-            //        Supplier = CurrentInvoice?.Supplier ?? "",
-            //        Address = CurrentInvoice?.Address ?? "",
-            //        InvoiceNumber = CurrentInvoice?.InvoiceNumber ?? "",
-            //        InvoiceDate = CurrentInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "",
-            //        AmountNet = CurrentInvoice?.AmountNet.ToString("#.00") ?? "",
-            //        PDVPercent = CurrentInvoice?.PdvPercent.ToString("#.00") ?? "",
-            //        PDV = CurrentInvoice?.Pdv.ToString() ?? "",
-            //        AmountGross = CurrentInvoice?.AmountGross.ToString("#.00") ?? "",
-            //        Currency = CurrentInvoice?.Currency.ToString("#.00") ?? "",
-            //        DateOfPaymet = CurrentInvoice?.DateOfPayment.ToString("dd.MM.yyyy") ?? "",
-            //        Status = CurrentInvoice?.Status.ToString() ?? "",
-            //        StatusDate = CurrentInvoice?.StatusDate.ToString("dd.MM.yyyy") ?? ""
+                    BusinessPartnerName = CurrentInvoice?.BusinessPartner?.Name ?? "",
+                    Supplier = "????",//CurrentInvoice?.Supplier ?? "",
+                    Address = CurrentInvoice?.Address ?? "",
+                    InvoiceNumber = CurrentInvoice?.InvoiceNumber ?? "",
+                    InvoiceDate = CurrentInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "",
+                    AmountNet = InvoiceItemsFromDB.Sum(x => x.PriceWithoutPDV).ToString("#.00") ?? "",//CurrentInvoice?.AmountNet.ToString("#.00") ?? "",
+                    PDVPercent = "????",//CurrentInvoice?.PdvPercent.ToString("#.00") ?? "",
+                    PDV = InvoiceItemsFromDB.Sum(x => x.PDV).ToString("#.00") ?? "",
+                    AmountGross = InvoiceItemsFromDB.Sum(x => x.Amount).ToString("#.00") ?? "",//CurrentInvoice?.AmountGross.ToString("#.00") ?? "",
+                    Currency = CurrentInvoice?.Currency.ToString("dd.MM.yyyy") ?? "",
+                    DateOfPaymet = CurrentInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "",
+                    Status = "???",//CurrentInvoice?.Status.ToString() ?? "",
+                    StatusDate = CurrentInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? ""//CurrentInvoice?.StatusDate.ToString("dd.MM.yyyy") ?? ""
 
-            //    }
-            //};
-            //var rpdsModel = new ReportDataSource()
-            //{
-            //    Name = "DataSet1",
-            //    Value = invoice
-            //};
-            //rdlcInvoiceReport.LocalReport.DataSources.Add(rpdsModel);
+                }
+            };
+            var rpdsModel = new ReportDataSource()
+            {
+                Name = "DataSet1",
+                Value = invoice
+            };
+            rdlcInvoiceReport.LocalReport.DataSources.Add(rpdsModel);
 
-            ////List<ReportParameter> reportParams = new List<ReportParameter>();
-            ////string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
-            ////reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
+            //List<ReportParameter> reportParams = new List<ReportParameter>();
+            //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
+            //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
 
 
-            ////var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
-            ////businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
-            ////var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
-            ////rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
+            //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
+            //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
+            //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
+            //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
 
-            //string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+            //string exeFolder = System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory());
             //string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\Invoices\InvoiceReport.rdlc");
 
+            rdlcInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReport.rdlc";
             //rdlcInvoiceReport.LocalReport.ReportPath = ContentStart;
-            //// rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
-            //rdlcInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
-            //rdlcInvoiceReport.Refresh();
-            //rdlcInvoiceReport.ZoomMode = ZoomMode.Percent;
-            //rdlcInvoiceReport.ZoomPercent = 100;
-            //rdlcInvoiceReport.RefreshReport();
+            // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
+            rdlcInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
+            rdlcInvoiceReport.Refresh();
+            rdlcInvoiceReport.ZoomMode = ZoomMode.Percent;
+            rdlcInvoiceReport.ZoomPercent = 100;
+            rdlcInvoiceReport.RefreshReport();
         }
 
 

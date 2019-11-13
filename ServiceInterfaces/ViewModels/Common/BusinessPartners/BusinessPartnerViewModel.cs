@@ -714,7 +714,24 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
-      
+
+        #region PdvType
+        private int? _PdvType;
+
+        public int? PdvType
+        {
+            get { return _PdvType; }
+            set
+            {
+                if (_PdvType != value)
+                {
+                    _PdvType = value;
+                    NotifyPropertyChanged("PdvType");
+                }
+            }
+        }
+        #endregion
+
 
     }
 }

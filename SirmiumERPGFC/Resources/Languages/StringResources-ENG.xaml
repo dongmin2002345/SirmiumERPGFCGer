@@ -709,4 +709,11 @@
     <system:String x:Key="Prilog">Attachment</system:String>
     <system:String x:Key="FizickoLicePrilozi">Attachments</system:String>
     <system:String x:Key="FizickoLicePrilozi_TriTacke">Attachments...</system:String>
+    <system:String x:Key="PdvVrsta_Dvotacka">PDV Type:</system:String>
+    <system:String x:Key="BPPdvVrsta">PDV Type</system:String>
+    <system:String x:Key="PdvVrsta_Odaberi">Choose PDV Type...</system:String>
+    <system:String x:Key="PdvVrsta_ObaveznoPolje">Required field: PDV Type</system:String>
+    <system:String x:Key="BPSaPdv">With PDV</system:String>
+    <system:String x:Key="BPBezPdv">Without PDV</system:String>
+    <system:String x:Key="BPNijeObveznik">Not in PDV System</system:String>
 </ResourceDictionary>
