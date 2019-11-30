@@ -31,6 +31,7 @@ namespace SirmiumERPGFC.Repository.CallCentars
 
            "Comment NVARCHAR(2048) NULL, " +
            "EndingDate DATETIME NULL, " +
+           "CheckedDone BOOL NOT NULL, " +
            "IsSynced BOOL NULL, " +
            "UpdatedAt DATETIME NULL, " +
            "CreatedById INTEGER NULL, " +
@@ -41,18 +42,18 @@ namespace SirmiumERPGFC.Repository.CallCentars
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, ReceivingDate, " +
             "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
-            "Comment, EndingDate, " +
+            "Comment, EndingDate, CheckedDone, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO CallCentars " +
             "(Id, ServerId, Identifier, Code, ReceivingDate, " +
             "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
-            "Comment, EndingDate, " +
+            "Comment, EndingDate, CheckedDone, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @ReceivingDate, " +
             "@UserId, @UserIdentifier, @UserCode, @UserFirstName, @UserLastName, " +
-            "@Comment, @EndingDate, " +
+            "@Comment, @EndingDate, @CheckedDone, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -70,6 +71,7 @@ namespace SirmiumERPGFC.Repository.CallCentars
             dbEntry.User = SQLiteHelper.GetUser(query, ref counter);
             dbEntry.Comment = SQLiteHelper.GetString(query, ref counter);
             dbEntry.EndingDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.CheckedDone = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -92,6 +94,7 @@ namespace SirmiumERPGFC.Repository.CallCentars
             insertCommand.Parameters.AddWithValue("@UserLastName", ((object)CallCentar.User?.LastName) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Comment", ((object)CallCentar.Comment) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@EndingDate", ((object)CallCentar.EndingDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CheckedDone", ((object)CallCentar.CheckedDone) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", CallCentar.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)CallCentar.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -106,7 +109,7 @@ namespace SirmiumERPGFC.Repository.CallCentars
 
         #region Read 
 
-        public CallCentarListResponse GetCallCentarsByPage(int companyId, CallCentarViewModel CallCentarSearchObject, int currentPage = 1, int itemsPerPage = 50)
+        public CallCentarListResponse GetCallCentarsByPage(int companyId, CallCentarViewModel CallCentarSearchObject, int currentPage = 1, int itemsPerPage = 50, int? userId = null)
         {
             CallCentarListResponse response = new CallCentarListResponse();
             List<CallCentarViewModel> CallCentars = new List<CallCentarViewModel>();
@@ -120,12 +123,14 @@ namespace SirmiumERPGFC.Repository.CallCentars
                         SqlCommandSelectPart +
                         "FROM CallCentars " +
                         "WHERE CompanyId = @CompanyId " +
+                        "AND (@UserId IS NULL OR @UserId = '' OR UserId = @UserId) " +
                         "ORDER BY IsSynced, ServerId " +
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
 
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
+                    selectCommand.Parameters.AddWithValue("@UserId", ((object)userId ?? DBNull.Value));
 
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
@@ -137,9 +142,11 @@ namespace SirmiumERPGFC.Repository.CallCentars
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM CallCentars " +
-                        "WHERE CompanyId = @CompanyId;", db);
+                        "WHERE CompanyId = @CompanyId " +
+                        "AND (@UserId IS NULL OR @UserId = '' OR UserId = @UserId) ", db);
 
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+                    selectCommand.Parameters.AddWithValue("@UserId", ((object)userId ?? DBNull.Value));
 
                     query = selectCommand.ExecuteReader();
 

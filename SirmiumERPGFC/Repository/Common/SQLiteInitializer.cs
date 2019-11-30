@@ -1087,6 +1087,8 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(CallCentarSQLiteRepository.CallCentarTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("CallCentars", "CheckedDone", "BOOL NULL");
                     #endregion
 
                     #region CalendarAssignments

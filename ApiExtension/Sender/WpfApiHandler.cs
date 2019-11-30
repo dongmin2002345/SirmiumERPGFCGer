@@ -60,6 +60,13 @@ namespace ApiExtension.Sender
         public static string ApiMethod { get; set; }
         public static string ObjectType { get; set; }
 
+        public static string GetPublicUrl()
+        {
+            var urlWithoutApi = BaseApiUrl.Replace("/api", "");
+
+            return urlWithoutApi;
+        }
+
         public static Dictionary<Type, string> routes = new Dictionary<Type, string>()
         {
             #region Common

@@ -14,5 +14,7 @@ namespace ServiceInterfaces.Abstractions.Common.CallCentars
         CallCentarResponse Delete(Guid identifier);
 
         CallCentarListResponse Sync(SyncCallCentarRequest request);
+
+        CallCentarResponse NotifyUser(CallCentarViewModel callCentar);
     }
 }

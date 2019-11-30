@@ -34,6 +34,7 @@ namespace DataMapper.Mappers.Common.CallCentars
 
                 Comment = CallCentar.Comment,
                 EndingDate = CallCentar.EndingDate,
+                CheckedDone = CallCentar.CheckedDone,
                 IsActive = CallCentar.Active,
 
                 CreatedBy = CallCentar.CreatedBy?.ConvertToUserViewModelLite(),
@@ -57,6 +58,7 @@ namespace DataMapper.Mappers.Common.CallCentars
                 ReceivingDate = CallCentar.ReceivingDate,
                 Comment = CallCentar.Comment,
                 EndingDate = CallCentar.EndingDate,
+                CheckedDone = CallCentar.CheckedDone,
                 IsActive = CallCentar.Active,
 
                 UpdatedAt = CallCentar.UpdatedAt,
@@ -80,6 +82,7 @@ namespace DataMapper.Mappers.Common.CallCentars
 
                 Comment = CallCentarViewModel.Comment,
                 EndingDate = CallCentarViewModel.EndingDate,
+                CheckedDone = CallCentarViewModel.CheckedDone,
                 Active = CallCentarViewModel.IsActive,
 
                 CreatedById = CallCentarViewModel.CreatedBy?.Id ?? null,

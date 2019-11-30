@@ -18,10 +18,15 @@ using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Abstractions.Limitations;
 using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Abstractions.Vats;
+using ServiceInterfaces.Helpers;
+using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.Identity;
+using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Banks;
 using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Repository.CallCentars;
+using SirmiumERPGFC.Repository.Companies;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Repository.InputInvoices;
@@ -39,7 +44,9 @@ using SirmiumERPGFC.Repository.ToDos;
 using SirmiumERPGFC.Repository.Users;
 using SirmiumERPGFC.Repository.Vats;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 
@@ -280,6 +287,16 @@ namespace SirmiumERPGFC.Views.Home
             InitializeComponent();
 
             this.DataContext = this;
+
+            var resp = new CompanyUserSQLiteRepository().GetCompanyUser(MainWindow.CurrentCompanyId, MainWindow.CurrentUser?.Identifier ?? Guid.Empty);
+            if(resp.Success)
+            {
+                var userRoles = resp.CompanyUser?.UserRoles ?? new List<UserRoleViewModel>();
+                if (userRoles.Any(x => x.Name == "CallCentar") || userRoles.Any(x => x.Name == "Admin"))
+                    CallCentarList.Visibility = System.Windows.Visibility.Visible;
+                else
+                    CallCentarList.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
 
         #endregion

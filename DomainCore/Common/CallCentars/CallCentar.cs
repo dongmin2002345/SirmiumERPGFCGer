@@ -17,6 +17,6 @@ namespace DomainCore.Common.CallCentars
 
         public DateTime EndingDate { get; set; }
 
-
+        public bool CheckedDone { get; set; }
     }
 }

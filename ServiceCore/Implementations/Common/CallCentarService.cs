@@ -113,5 +113,11 @@ namespace ServiceCore.Implementations.Common
 
             return response;
         }
+
+        public CallCentarResponse NotifyUser(CallCentarViewModel callCentar)
+        {
+            // Nema potrebe za implementacijom jer se sve izvrsava u kontroleru
+            return null;
+        }
     }
 }

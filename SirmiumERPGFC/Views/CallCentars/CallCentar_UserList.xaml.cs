@@ -25,8 +25,7 @@ using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.CallCentars
 {
-    public delegate void CallCentarHandler();
-    public partial class CallCentar_List : UserControl, INotifyPropertyChanged
+    public partial class CallCentar_UserList : UserControl, INotifyPropertyChanged
     {
         #region Attributes
 
@@ -163,7 +162,7 @@ namespace SirmiumERPGFC.Views.CallCentars
         #endregion
 
         #region Constructor
-        public CallCentar_List()
+        public CallCentar_UserList()
         {
             CallCentarService = DependencyResolver.Kernel.Get<ICallCentarService>();
 
@@ -209,8 +208,10 @@ namespace SirmiumERPGFC.Views.CallCentars
         {
             CallCentarDataLoading = true;
 
+            int userId = (MainWindow.CurrentUser?.Id ?? 0);
+
             CallCentarListResponse response = new CallCentarSQLiteRepository()
-                .GetCallCentarsByPage(MainWindow.CurrentCompanyId, CallCentarSearchObject, currentPage, itemsPerPage, null);
+                .GetCallCentarsByPage(MainWindow.CurrentCompanyId, CallCentarSearchObject, currentPage, itemsPerPage, userId);
 
             if (response.Success)
             {
@@ -256,29 +257,7 @@ namespace SirmiumERPGFC.Views.CallCentars
 
 
         #region Add, Edit and delete 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            CallCentarViewModel CallCentar = new CallCentarViewModel();
-            CallCentar.Identifier = Guid.NewGuid();
-
-            CallCentar_AddEdit addEditForm = new CallCentar_AddEdit(CallCentar, true);
-            addEditForm.CallCentarCreatedUpdated += new CallCentarHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("CallCentar")), 95, addEditForm);
-        }
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentCallCentar == null)
-            {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_popust_za_izmenuUzvičnik"));
-                return;
-            }
-
-            CallCentar_AddEdit addEditForm = new CallCentar_AddEdit(CurrentCallCentar, false);
-            addEditForm.CallCentarCreatedUpdated += new CallCentarHandler(SyncData);
-            FlyoutHelper.OpenFlyout(this, ((string)Application.Current.FindResource("CallCentar")), 95, addEditForm);
-        }
-
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        private void BtnConfirm_Click(object sender, RoutedEventArgs e)
         {
             Thread th = new Thread(() =>
             {
@@ -286,51 +265,37 @@ namespace SirmiumERPGFC.Views.CallCentars
 
                 if (CurrentCallCentar == null)
                 {
-                    MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
+                    //MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_stavku_za_brisanjeUzvičnik"));
                     CallCentarDataLoading = false;
                     return;
                 }
 
-                CallCentarResponse response = CallCentarService.Delete(CurrentCallCentar.Identifier);
+                CurrentCallCentar.CheckedDone = true;
+                CurrentCallCentar.IsSynced = false;
+
+
+                CallCentarResponse response = new CallCentarSQLiteRepository().Delete(CurrentCallCentar.Identifier);
+
+                response = new CallCentarSQLiteRepository().Create(CurrentCallCentar);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_brisanja_sa_serveraUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
                     CallCentarDataLoading = false;
                     return;
                 }
 
-                response = new CallCentarSQLiteRepository().Delete(CurrentCallCentar.Identifier);
+
+                response = CallCentarService.Create(CurrentCallCentar);
                 if (!response.Success)
                 {
-                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_brisanjaUzvičnik"));
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Podaci_su_sačuvani_u_lokaluUzvičnikTačka_Greška_kod_čuvanja_na_serveruUzvičnik"));
                     CallCentarDataLoading = false;
                     return;
                 }
 
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
+                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_sačuvaniUzvičnik"));
 
-                DisplayCallCentarData();
-
-                CallCentarDataLoading = false;
-            });
-            th.IsBackground = true;
-            th.Start();
-        }
-
-
-
-        private void btnNotify_Click(object sender, RoutedEventArgs e)
-        {
-            Thread th = new Thread(() =>
-            {
-                CallCentarDataLoading = true;
-
-                if (CurrentCallCentar == null)
-                {
-                    return;
-                }
-
-                CallCentarResponse response = CallCentarService.NotifyUser(CurrentCallCentar);
+                SyncData();
 
                 CallCentarDataLoading = false;
             });

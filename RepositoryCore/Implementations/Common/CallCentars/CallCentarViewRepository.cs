@@ -21,7 +21,7 @@ namespace RepositoryCore.Implementations.Common.CallCentars
         private string SelectString =
             "SELECT CallCentarId, CallCentarIdentifier, CallCentarCode, CallCentarReceivingDate, " +
             "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
-            "CallCentarComment, CallCentarEndingDate, " +
+            "CallCentarComment, CallCentarEndingDate, CheckedDone, " +
             "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
             "FROM vCallCentars ";
 
@@ -52,6 +52,8 @@ namespace RepositoryCore.Implementations.Common.CallCentars
                 CallCentar.Comment = reader["CallCentarComment"].ToString();
             if (reader["CallCentarEndingDate"] != DBNull.Value)
                 CallCentar.EndingDate = DateTime.Parse(reader["CallCentarEndingDate"].ToString());
+
+            CallCentar.CheckedDone = bool.Parse(reader["CheckedDone"].ToString());
             CallCentar.Active = bool.Parse(reader["Active"].ToString());
             CallCentar.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -227,6 +229,7 @@ namespace RepositoryCore.Implementations.Common.CallCentars
                     dbEntry.ReceivingDate = CallCentar.ReceivingDate;
                     dbEntry.Comment = CallCentar.Comment;
                     dbEntry.EndingDate = CallCentar.EndingDate;
+                    dbEntry.CheckedDone = CallCentar.CheckedDone;
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;
                 }

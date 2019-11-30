@@ -35,6 +35,7 @@ namespace RepositoryCore.DbViews.Common.CallCentars
 
                 "callCentar.Comment AS CallCentarComment, " +
                 "callCentar.EndingDate AS CallCentarEndingDate, " +
+                "callCentar.CheckedDone AS CheckedDone, " +
                 "callCentar.Active AS Active, " +
 
                 "(SELECT MAX(v) FROM (VALUES (callCentar.UpdatedAt), (userr.UpdatedAt)) AS value(v)) AS UpdatedAt, " +

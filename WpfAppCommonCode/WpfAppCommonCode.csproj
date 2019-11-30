@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Converters\ChooseStatusConverter.cs" />
     <Compile Include="Converters\ComboBoxConverters.cs" />
+    <Compile Include="Converters\Common\CallCentarConverter.cs" />
     <Compile Include="Converters\Common\SyncedConverter.cs" />
     <Compile Include="Converters\Common\UserRoleConverter.cs" />
     <Compile Include="Converters\GenderConverter.cs" />

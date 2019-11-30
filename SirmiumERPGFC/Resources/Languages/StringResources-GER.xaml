@@ -677,6 +677,7 @@
     <system:String x:Key="Poslovni_partner_ImeDvotacka">Geschäftspartnername:</system:String>
     <system:String x:Key="PIBDvotacka">Steuernummer:</system:String>
     <system:String x:Key="PDVDvotacka">MwSt:</system:String>
+    <system:String x:Key="CallCentarUnos">Centar Anrufen - Dateneingabe</system:String>
     <system:String x:Key="CallCentar">Centar Anrufen</system:String>
     <system:String x:Key="CallCentarTritacke">Centar Anrufen...</system:String>
     <system:String x:Key="Datum_prijema_poziva">Datum des Anrufempfangs</system:String>
@@ -724,4 +725,8 @@
     <system:String x:Key="BPSaPdv">With PDV</system:String>
     <system:String x:Key="BPBezPdv">Without PDV</system:String>
     <system:String x:Key="BPNijeObveznik">Not in PDV System</system:String>
+
+    <system:String x:Key="URedu"> OK</system:String>
+    <system:String x:Key="Obavestenje_CallCentar">Call Center - New notification</system:String>
+    <system:String x:Key="Odrađeno">Erledigt</system:String>
 </ResourceDictionary>

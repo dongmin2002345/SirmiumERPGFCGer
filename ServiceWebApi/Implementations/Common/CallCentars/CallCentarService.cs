@@ -84,5 +84,22 @@ namespace ServiceWebApi.Implementations.Common.CallCentars
 
             return response;
         }
+
+        public CallCentarResponse NotifyUser(CallCentarViewModel callCentar)
+        {
+            CallCentarResponse response = new CallCentarResponse();
+            try
+            {
+                response = WpfApiHandler.SendToApi<CallCentarViewModel, CallCentarResponse>(callCentar, "NotifyUser");
+            }
+            catch (Exception ex)
+            {
+                response.CallCentar = new CallCentarViewModel();
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
     }
 }

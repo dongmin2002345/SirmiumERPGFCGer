@@ -70,8 +70,11 @@
                 <TabItem Header="{DynamicResource Telefonski_imenik}">
                     <local1:Phonebook_List x:Name="PhonebookList" />
                 </TabItem>
-                <TabItem Header="{DynamicResource CallCentar}">
-                    <local11:CallCentar_List x:Name="CallCentarList" />
+                <TabItem Header="{DynamicResource CallCentarUnos}" x:Name="CallCentarList" >
+                    <local11:CallCentar_List />
+                </TabItem>
+                <TabItem Header="{DynamicResource CallCentar}" x:Name="CallCentarUserList">
+                    <local11:CallCentar_UserList />
                 </TabItem>
                 <!--<TabItem Header="NAJVAZNIJE VESTI">
                         <local:Important x:Name="important"/>

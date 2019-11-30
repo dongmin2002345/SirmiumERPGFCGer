@@ -73,6 +73,7 @@ using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Abstractions.Limitations;
 using ServiceInterfaces.Abstractions.Statuses;
 using ServiceInterfaces.Abstractions.Vats;
+using SirmiumERPWeb.Hubs;
 using SirmiumERPWeb.Tasks;
 using System;
 using System.Threading;
@@ -256,6 +257,8 @@ namespace SirmiumERPWeb
             services.AddScoped<IEmployeeAttachmentService, EmployeeAttachmentService>();
             services.AddScoped<IPhysicalPersonAttachmentService, PhysicalPersonAttachmentService>();
 
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -271,6 +274,10 @@ namespace SirmiumERPWeb
             }
 
             app.UseStaticFiles();
+
+            app.UseSignalR((cfg) => {
+                cfg.MapHub<NotificationHub>("/notifications");
+            });
 
             app.UseMvc(routes =>
                 routes.MapRoute(

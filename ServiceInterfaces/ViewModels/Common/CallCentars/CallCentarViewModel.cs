@@ -93,6 +93,24 @@ namespace ServiceInterfaces.ViewModels.Common.CallCentars
         }
         #endregion
 
+        #region CheckedDone
+        private bool _CheckedDone;
+
+        public bool CheckedDone
+        {
+            get { return _CheckedDone; }
+            set
+            {
+                if (_CheckedDone != value)
+                {
+                    _CheckedDone = value;
+                    NotifyPropertyChanged("CheckedDone");
+                }
+            }
+        }
+        #endregion
+
+
         #region IsSelected
         private bool _IsSelected;
 

@@ -15,6 +15,7 @@ namespace SirmiumERPGFC.Common
             {
                 new UserRoleViewModel() { Name = "Admin" },
                 new UserRoleViewModel() { Name = "Korisnik" },
+                new UserRoleViewModel() { Name = "CallCentar" },
             };
         }
     }
