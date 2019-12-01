@@ -235,6 +235,8 @@ namespace SirmiumERPGFC
         public bool UserIsQuartering = false;
         public bool UserIsExpedition = false;
 
+        private HubConnection hubConnection;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -266,12 +268,14 @@ namespace SirmiumERPGFC
 
             //OpenTab("Početna", new Home());
 
+            this.Closing += MainWindow_Closing;
 
             Thread td = new Thread(() => {
-                var hubConnection = new HubConnectionBuilder()
+                hubConnection = new HubConnectionBuilder()
                     .WithUrl(WpfApiHandler.GetPublicUrl() + "/notifications")
                     .Build();
 
+                hubConnection.KeepAliveInterval = TimeSpan.FromSeconds(60);
                 hubConnection.On<CallCentarViewModel>("SendMessage", (msg) => {
                     Application.Current.Dispatcher.BeginInvoke((System.Action)(() =>
                     {
@@ -295,6 +299,20 @@ namespace SirmiumERPGFC
             });
             td.IsBackground = true;
             td.Start();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(hubConnection != null)
+            {
+                try
+                {
+                    hubConnection.StopAsync();
+                } catch(Exception ex)
+                {
+                    // Ignorisemo jer moze da se desi neocekivan prekid mreze
+                }
+            }
         }
 
         //private void OpenTab(string header, UserControl userControl)

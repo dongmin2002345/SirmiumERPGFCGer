@@ -28,6 +28,9 @@ using ServiceInterfaces.ViewModels.Common.Phonebooks;
 using ServiceInterfaces.ViewModels.Common.Invoices;
 using ServiceInterfaces.ViewModels.Common.CallCentars;
 using ServiceInterfaces.ViewModels.CalendarAssignments;
+using System.IO;
+using System.Linq;
+using System.Diagnostics;
 
 namespace ApiExtension.Sender
 {
@@ -369,11 +372,49 @@ namespace ApiExtension.Sender
                     //var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
                     //string tmpBaseAddress = appConfig.AppSettings.Settings["BaseApiUrl"].Value;
 
-                    ExeConfigurationFileMap map = new ExeConfigurationFileMap();
-                    map.ExeConfigFilename = Assembly.GetEntryAssembly().Location + ".config";
-                    Configuration libConfig = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
-                    AppSettingsSection section = (libConfig.GetSection("appSettings") as AppSettingsSection);
-                    string tmpBaseAddress = section.Settings["BaseApiUrl"]?.Value;
+                    ////ExeConfigurationFileMap map = new ExeConfigurationFileMap();
+                    ////map.ExeConfigFilename = Assembly.GetEntryAssembly().Location + ".config";
+                    ////Configuration libConfig = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
+                    ////AppSettingsSection section = (libConfig.GetSection("appSettings") as AppSettingsSection);
+                    ////string tmpBaseAddress = section.Settings["BaseApiUrl"]?.Value;
+                    ///
+
+                    string tmpBaseAddress = "";
+
+                    var path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
+
+                    var configPath = Path.Combine(path, "gfc.bin");
+
+                    if(Debugger.IsAttached)
+                    {
+                        if (!File.Exists(configPath))
+                        {
+                            File.WriteAllLines(configPath, new string[] {
+                                "//http://sirmiumerp.com:5005/api",
+                                "http://localhost:5005/api",
+                            });
+                        }
+                    } else
+                    {
+                        if (!File.Exists(configPath))
+                        {
+                            File.WriteAllLines(configPath, new string[] {
+                                "http://sirmiumerp.com:5005/api",
+                                "//http://localhost:5005/api",
+                            });
+                        }
+                    }
+                    var contents = File.ReadAllLines(configPath);
+
+                    if(contents != null && contents.Length > 0)
+                    {
+                        var connStr = contents.Where(x => x.Length > 1)
+                            .FirstOrDefault(x => !x.StartsWith("//"));
+
+                        if (!String.IsNullOrEmpty(connStr))
+                            tmpBaseAddress = connStr;
+
+                    }
 
                     if (!string.IsNullOrWhiteSpace(tmpBaseAddress))
                     {
