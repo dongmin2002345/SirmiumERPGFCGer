@@ -29,6 +29,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
@@ -234,6 +235,7 @@ namespace SirmiumERPGFC
         public bool UserIsLivestockReception = false;
         public bool UserIsQuartering = false;
         public bool UserIsExpedition = false;
+        public bool AppIsClosing = false;
 
         private HubConnection hubConnection;
 
@@ -275,7 +277,7 @@ namespace SirmiumERPGFC
                     .WithUrl(WpfApiHandler.GetPublicUrl() + "/notifications")
                     .Build();
 
-                hubConnection.KeepAliveInterval = TimeSpan.FromSeconds(60);
+                hubConnection.KeepAliveInterval = TimeSpan.FromSeconds(15);
                 hubConnection.On<CallCentarViewModel>("SendMessage", (msg) => {
                     Application.Current.Dispatcher.BeginInvoke((System.Action)(() =>
                     {
@@ -286,6 +288,8 @@ namespace SirmiumERPGFC
                     }));
 
                 });
+                hubConnection.Closed += HubConnection_Closed;
+                hubConnection.ServerTimeout = TimeSpan.FromHours(1);
                 hubConnection.On<CallCentarViewModel>("GroupMessage", (msg) => {
                 });
 
@@ -301,9 +305,18 @@ namespace SirmiumERPGFC
             td.Start();
         }
 
+        private async Task HubConnection_Closed(Exception arg)
+        {
+            if(!AppIsClosing)
+            {
+                await hubConnection.StartAsync();
+            }
+        }
+
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(hubConnection != null)
+            AppIsClosing = true;
+            if (hubConnection != null)
             {
                 try
                 {
