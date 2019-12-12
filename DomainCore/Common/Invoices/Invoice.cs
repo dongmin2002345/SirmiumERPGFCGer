@@ -17,6 +17,8 @@ namespace DomainCore.Common.Invoices
         public DateTime InvoiceDate { get; set; }
         public DateTime DateOfSupplyOfGoods { get; set; }
 
+        public DateTime DueDate { get; set; }
+
 
         public int? BusinessPartnerId { get; set; }
         public BusinessPartner BusinessPartner { get; set; }

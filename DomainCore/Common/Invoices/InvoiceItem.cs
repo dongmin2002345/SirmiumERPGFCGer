@@ -20,5 +20,9 @@ namespace DomainCore.Common.Invoices
         public decimal PDV { get; set; }
         public decimal Amount { get; set; }
         public int ItemStatus { get; set; }
+
+        public string CurrencyCode { get; set; }
+        public double? ExchangeRate { get; set; }
+        public double? CurrencyPriceWithPDV { get; set; }
     }
 }
