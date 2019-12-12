@@ -29,7 +29,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
               "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
               "CityId, CityIdentifier, CityZipCode, CityName, " +
               "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
-              "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods," +
+              "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, DueDate, " +
               "Customer, PIB, BPName, Address," +
               "Currency, IsInPDV, PdvType, Active, UpdatedAt," +
               "CreatedById, CreatedByFirstName, CreatedByLastName, " +
@@ -107,6 +107,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.InvoiceDate = DateTime.Parse(reader["InvoiceDate"].ToString());
             if (reader["DateOfSupplyOfGoods"] != DBNull.Value)
                 invoice.DateOfSupplyOfGoods = DateTime.Parse(reader["DateOfSupplyOfGoods"].ToString());
+            if (reader["DueDate"] != DBNull.Value)
+                invoice.DueDate = DateTime.Parse(reader["DueDate"].ToString());
 
             if (reader["Customer"] != DBNull.Value)
                 invoice.Customer = reader["Customer"].ToString();
@@ -266,6 +268,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
                     dbEntry.InvoiceDate = invoice.InvoiceDate;
                     dbEntry.DateOfSupplyOfGoods = invoice.DateOfSupplyOfGoods;
+                    dbEntry.DueDate = invoice.DueDate;
                     dbEntry.Customer = invoice.Customer;
                     dbEntry.PIB = invoice.PIB;
                     dbEntry.BPName = invoice.BPName;

@@ -141,6 +141,16 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             PDV = PriceWithPDV - basePrice;
             rabat = PriceWithPDV * Discount / 100;
             Amount = PriceWithPDV - rabat;
+
+
+            if (_ExchangeRate != null)
+            {
+                CurrencyPriceWithPDV = ((double)Amount * _ExchangeRate.Value);
+            }
+            else
+            {
+                CurrencyPriceWithPDV = null;
+            }
         }
         #endregion
 
@@ -198,6 +208,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
+
         #region Amount
         private decimal _Amount;
 
@@ -231,6 +242,61 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             }
         }
         #endregion
+
+
+        #region CurrencyCode
+        private string _CurrencyCode;
+
+        public string CurrencyCode
+        {
+            get { return _CurrencyCode; }
+            set
+            {
+                if (_CurrencyCode != value)
+                {
+                    _CurrencyCode = value;
+                    NotifyPropertyChanged("CurrencyCode");
+                }
+            }
+        }
+        #endregion
+
+        #region ExchangeRate
+        private double? _ExchangeRate;
+
+        public double? ExchangeRate
+        {
+            get { return _ExchangeRate; }
+            set
+            {
+                if (_ExchangeRate != value)
+                {
+                    _ExchangeRate = value;
+                    NotifyPropertyChanged("ExchangeRate");
+
+                    CalculateFieldsAfterPrice();
+                }
+            }
+        }
+        #endregion
+
+        #region CurrencyPriceWithPDV
+        private double? _CurrencyPriceWithPDV;
+
+        public double? CurrencyPriceWithPDV
+        {
+            get { return _CurrencyPriceWithPDV; }
+            set
+            {
+                if (_CurrencyPriceWithPDV != value)
+                {
+                    _CurrencyPriceWithPDV = value;
+                    NotifyPropertyChanged("CurrencyPriceWithPDV");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

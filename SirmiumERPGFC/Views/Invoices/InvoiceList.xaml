@@ -323,6 +323,8 @@
                                 <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDV_procenat}" Binding="{Binding PDVPercent}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding PDV}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Amount}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ExchangeRate" Header="{DynamicResource KursEuro}" Binding="{Binding ExchangeRate}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="CurrencyPriceWithPDV" Header="{DynamicResource IznosUValuti}" Binding="{Binding CurrencyPriceWithPDV}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                             </DataGrid.Columns>
                             <DataGrid.RowStyle>

@@ -39,6 +39,9 @@ namespace RepositoryCore.DbViews.Common.Invoices
                 "invoiceItem.PDV, " +
                 "invoiceItem.Amount, " +
                 "invoiceItem.ItemStatus, " +
+                "invoiceItem.CurrencyCode, " +
+                "invoiceItem.ExchangeRate, " +
+                "invoiceItem.CurrencyPriceWithPDV, " +
                 "invoiceItem.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (invoiceItem.UpdatedAt), (invoice.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

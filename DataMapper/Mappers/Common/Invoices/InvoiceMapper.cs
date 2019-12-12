@@ -35,6 +35,7 @@ namespace DataMapper.Mappers.Common.Invoices
                 InvoiceNumber = invoice.InvoiceNumber,
                 InvoiceDate = invoice.InvoiceDate,
                 DateOfSupplyOfGoods = invoice.DateOfSupplyOfGoods,
+                DueDate = invoice.DueDate,
 
                 Customer = invoice.Customer,
                 PIB = invoice.PIB,
@@ -73,6 +74,7 @@ namespace DataMapper.Mappers.Common.Invoices
                 InvoiceNumber = invoice.InvoiceNumber,
                 InvoiceDate = invoice.InvoiceDate,
                 DateOfSupplyOfGoods = invoice.DateOfSupplyOfGoods,
+                DueDate = invoice.DueDate,
 
                 Customer = invoice.Customer,
                 PIB = invoice.PIB,
@@ -103,6 +105,7 @@ namespace DataMapper.Mappers.Common.Invoices
                 InvoiceNumber = invoiceViewModel.InvoiceNumber,
                 InvoiceDate = invoiceViewModel.InvoiceDate,
                 DateOfSupplyOfGoods = invoiceViewModel.DateOfSupplyOfGoods,
+                DueDate = invoiceViewModel.DueDate,
 
                 Customer = invoiceViewModel.Customer,
                 PIB = invoiceViewModel.PIB,

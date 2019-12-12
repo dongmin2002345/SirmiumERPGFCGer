@@ -48,6 +48,7 @@ namespace SirmiumERPGFC.Repository.Invoices
           "InvoiceNumber NVARCHAR(48) NULL, " +
           "InvoiceDate DATETIME NULL, " +
           "DateOfSupplyOfGoods DATETIME NULL, " +
+          "DueDate DATETIME NULL, " +
           "Customer NVARCHAR(48) NULL, " +
           "PIB NVARCHAR(48) NULL, " +
           "BPName NVARCHAR(48) NULL, " +
@@ -69,7 +70,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName," +
             "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
-            "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, Customer, PIB, BPName, Address, Currency, IsInPDV, PdvType, " +
+            "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, DueDate, Customer, PIB, BPName, Address, Currency, IsInPDV, PdvType, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Invoices " +
@@ -79,7 +80,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName," +
             "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
-            "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, Customer, PIB, BPName, Address, Currency, IsInPDV, PdvType, " +
+            "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, DueDate, Customer, PIB, BPName, Address, Currency, IsInPDV, PdvType, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, " +
@@ -88,7 +89,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName," +
             "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, @DiscountAmount, " +
             "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount, " +
-            "@InvoiceNumber, @InvoiceDate, @DateOfSupplyOfGoods, @Customer, @PIB, @BPName, @Address, @Currency, @IsInPDV, @PdvType, " +
+            "@InvoiceNumber, @InvoiceDate, @DateOfSupplyOfGoods, @DueDate, @Customer, @PIB, @BPName, @Address, @Currency, @IsInPDV, @PdvType, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -110,6 +111,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
             dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.DateOfSupplyOfGoods = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.DueDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Customer = SQLiteHelper.GetString(query, ref counter);
             dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
             dbEntry.BPName = SQLiteHelper.GetString(query, ref counter);
@@ -157,6 +159,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             insertCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)Invoice.InvoiceNumber) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@InvoiceDate", ((object)Invoice.InvoiceDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DateOfSupplyOfGoods", ((object)Invoice.DateOfSupplyOfGoods) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DueDate", ((object)Invoice.DueDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Customer", ((object)Invoice.Customer) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PIB", ((object)Invoice.PIB) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BPName", ((object)Invoice.BPName) ?? DBNull.Value);

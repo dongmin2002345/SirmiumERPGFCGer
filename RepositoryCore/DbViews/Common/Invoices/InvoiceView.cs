@@ -29,7 +29,7 @@ namespace RepositoryCore.DbViews.Common.Invoices
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.ZipCode AS CityZipCode, city.Name AS CityName, " +
                 "municipality.Id AS MunicipalityId, municipality.Identifier AS MunicipalityIdentifier, municipality.Code AS MunicipalityCode, municipality.Name AS MunicipalityName, " +
 
-                "invoice.InvoiceNumber, invoice.InvoiceDate, invoice.DateOfSupplyOfGoods," +
+                "invoice.InvoiceNumber, invoice.InvoiceDate, invoice.DateOfSupplyOfGoods, invoice.DueDate, " +
                 "invoice.Customer, invoice.PIB, invoice.BPName, invoice.Address," +
                 "invoice.Currency, invoice.IsInPDV, invoice.PdvType, invoice.Active AS Active," +
                 "(SELECT MAX(v) FROM (VALUES (invoice.UpdatedAt), (businessPartner.UpdatedAt), (discount.UpdatedAt), (vat.UpdatedAt), (city.UpdatedAt), (municipality.UpdatedAt)) AS value(v)) AS UpdatedAt, " +

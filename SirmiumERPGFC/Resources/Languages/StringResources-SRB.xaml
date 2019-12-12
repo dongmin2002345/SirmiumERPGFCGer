@@ -728,4 +728,8 @@
     <system:String x:Key="URedu"> U REDU</system:String>
     <system:String x:Key="Obavestenje_CallCentar">Call Centar - Novo obaveštenje</system:String>
     <system:String x:Key="Odrađeno">Odrađeno</system:String>
+    <system:String x:Key="Datum_Valute">Valuta dospeća:</system:String>
+    <system:String x:Key="KursValuteDvotacka">Kurs EUR:</system:String>
+    <system:String x:Key="KursEuro">Kurs (RSD/EUR)</system:String>
+    <system:String x:Key="IznosUValuti">Iznos u EUR</system:String>
 </ResourceDictionary>

@@ -17,7 +17,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
     {
         private ApplicationDbContext context;
         private string connectionString;
-
+        
         string selectString =
            "SELECT " +
             "InvoiceItemId, " +
@@ -36,6 +36,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
             "PDV, " +
             "Amount, " +
             "ItemStatus, " +
+            "CurrencyCode, " +
+            "ExchangeRate, " +
+            "CurrencyPriceWithPDV, " +
             "Active, " +
             "UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
             "FROM vInvoiceItems ";
@@ -81,6 +84,12 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoiceItem.Amount = Decimal.Parse(reader["Amount"].ToString());
             if (reader["ItemStatus"] != DBNull.Value)
                 invoiceItem.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+            invoiceItem.CurrencyCode = reader["CurrencyCode"]?.ToString();
+
+            if (reader["ExchangeRate"] != DBNull.Value)
+                invoiceItem.ExchangeRate = double.Parse(reader["ExchangeRate"].ToString());
+            if (reader["CurrencyPriceWithPDV"] != DBNull.Value)
+                invoiceItem.CurrencyPriceWithPDV = double.Parse(reader["CurrencyPriceWithPDV"].ToString());
 
             invoiceItem.Active = bool.Parse(reader["Active"].ToString());
             invoiceItem.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -225,6 +234,9 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     dbEntry.PDVPercent = invoiceItem.PDVPercent;
                     dbEntry.PDV = invoiceItem.PDV;
                     dbEntry.Amount = invoiceItem.Amount;
+                    dbEntry.CurrencyCode = invoiceItem.CurrencyCode;
+                    dbEntry.ExchangeRate = invoiceItem.ExchangeRate;
+                    dbEntry.CurrencyPriceWithPDV = invoiceItem.CurrencyPriceWithPDV;
 
                     dbEntry.ItemStatus = invoiceItem.ItemStatus;
 

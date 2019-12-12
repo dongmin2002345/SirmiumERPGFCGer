@@ -46,6 +46,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -98,15 +99,23 @@
                     <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource IznosDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="4"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtAmount"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentInvoiceItemForm.Amount, Mode=TwoWay}"/>
+                    
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource KursValuteDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="5"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtExchangeRate"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.ExchangeRate, Mode=TwoWay}"/>
+                    
+                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource UValutiPoKursu}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="5"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtTotalInCurrency"  TextWrapping="Wrap"
+                             Text="{Binding Path=CurrentInvoiceItemForm.CurrencyPriceWithPDV, Mode=TwoWay}" IsEnabled="False"/>
 
-                    <Button x:Name="btnAddNote" Grid.Row="5" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
+                    <Button x:Name="btnAddNote" Grid.Row="6" Grid.Column="4" Click="btnAddNote_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="btnCancelNote" Grid.Row="5" Grid.Column="5" Click="btnCancelNote_Click" Margin="2" Background="#007ACC" >
+                    <Button x:Name="btnCancelNote" Grid.Row="6" Grid.Column="5" Click="btnCancelNote_Click" Margin="2" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
                             <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular"/>
@@ -146,6 +155,8 @@
                         <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDV_procenat}" Binding="{Binding Path=PDVPercent}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding Path=PDV}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Path=Amount}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ExchangeRate" Header="{DynamicResource KursEuro}" Binding="{Binding ExchangeRate}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="CurrencyPriceWithPDV" Header="{DynamicResource IznosUValuti}" Binding="{Binding CurrencyPriceWithPDV}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>

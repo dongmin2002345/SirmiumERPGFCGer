@@ -1060,6 +1060,7 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable.ExecuteReader();
 
                     SQLiteHelper.AddColumnIfNotExists("Invoices", "PdvType", "INTEGER NULL");
+                    SQLiteHelper.AddColumnIfNotExists("Invoices", "DueDate", "DATETIME NULL");
 
                     if (withTableDrop)
                     {
@@ -1072,6 +1073,10 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(InvoiceItemSQLiteRepository.InvoiceItemTableCreatePart, db);
                     createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("InvoiceItems", "CurrencyCode", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("InvoiceItems", "ExchangeRate", "DECIMAL(18, 4) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("InvoiceItems", "CurrencyPriceWithPDV", "DECIMAL(18, 4) NULL");
 
                     #endregion
 

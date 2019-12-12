@@ -35,6 +35,9 @@ namespace SirmiumERPGFC.Repository.Invoices
                            "PDV DECIMAL NULL, " +
                            "Amount DECIMAL NULL, " +
                            "ItemStatus INTEGER NOT NULL, " +
+                           "CurrencyCode NVARCHAR(2048) NULL, " +
+                           "ExchangeRate DECIMAL(18, 4) NULL, " +
+                           "CurrencyPriceWithPDV DECIMAL(18, 4) NULL, " +
                            "IsSynced BOOL NULL, " +
                            "UpdatedAt DATETIME NULL, " +
                            "CreatedById INTEGER NULL, " +
@@ -46,20 +49,20 @@ namespace SirmiumERPGFC.Repository.Invoices
             "SELECT ServerId, Identifier, InvoiceId, InvoiceIdentifier, " +
             "InvoiceCode, Code, Name, UnitOfMeasure, Quantity,  " +
             "PriceWithPDV, PriceWithoutPDV, Discount, PDVPercent, PDV,  " +
-            "Amount, ItemStatus, " +
+            "Amount, ItemStatus, CurrencyCode, ExchangeRate, CurrencyPriceWithPDV, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO InvoiceItems " +
             "(Id, ServerId, Identifier, InvoiceId, InvoiceIdentifier, " +
             "InvoiceCode, Code, Name, UnitOfMeasure, Quantity,  " +
             "PriceWithPDV, PriceWithoutPDV, Discount, PDVPercent, PDV,  " +
-            "Amount, ItemStatus, " +
+            "Amount, ItemStatus, CurrencyCode, ExchangeRate, CurrencyPriceWithPDV, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @InvoiceId, @InvoiceIdentifier, " +
             "@InvoiceCode, @Code, @Name, @UnitOfMeasure, @Quantity,  " +
             "@PriceWithPDV, @PriceWithoutPDV, @Discount, @PDVPercent, @PDV, " +
-            "@Amount, @ItemStatus, " +
+            "@Amount, @ItemStatus, @CurrencyCode, @ExchangeRate, @CurrencyPriceWithPDV, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -83,6 +86,10 @@ namespace SirmiumERPGFC.Repository.Invoices
             dbEntry.PDV = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.Amount = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.CurrencyCode = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.ExchangeRate = SQLiteHelper.GetDoubleNullable(query, ref counter);
+            dbEntry.CurrencyPriceWithPDV = SQLiteHelper.GetDoubleNullable(query, ref counter);
+
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -108,6 +115,9 @@ namespace SirmiumERPGFC.Repository.Invoices
             insertCommand.Parameters.AddWithValue("@PDV", ((object)InvoiceItem.PDV) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Amount", ((object)InvoiceItem.Amount) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)InvoiceItem.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CurrencyCode", ((object)InvoiceItem.CurrencyCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ExchangeRate", ((object)InvoiceItem.ExchangeRate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CurrencyPriceWithPDV", ((object)InvoiceItem.CurrencyPriceWithPDV) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", InvoiceItem.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)InvoiceItem.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

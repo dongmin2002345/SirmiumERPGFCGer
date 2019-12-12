@@ -729,4 +729,9 @@
     <system:String x:Key="URedu"> OK</system:String>
     <system:String x:Key="Obavestenje_CallCentar">Call Center - New notification</system:String>
     <system:String x:Key="Odrađeno">Erledigt</system:String>
+    <system:String x:Key="Datum_Valute">Geburtstermin:</system:String>
+    <system:String x:Key="KursValuteDvotacka">Euro-Wechselkurs:</system:String>
+    <system:String x:Key="UValutiPoKursu">Betrag in Euro:</system:String>
+    <system:String x:Key="KursEuro">Euro-Wechselkurs</system:String>
+    <system:String x:Key="IznosUValuti">Betrag in Euro</system:String>
 </ResourceDictionary>

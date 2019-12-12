@@ -287,6 +287,23 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
+        #region DueDate
+        private DateTime _DueDate;
+
+        public DateTime DueDate
+        {
+            get { return _DueDate; }
+            set
+            {
+                if (_DueDate != value)
+                {
+                    _DueDate = value;
+                    NotifyPropertyChanged("DueDate");
+                }
+            }
+        }
+        #endregion
+
 
         #region InvoiceItems
         private ObservableCollection<InvoiceItemViewModel> _InvoiceItems;

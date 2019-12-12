@@ -721,4 +721,9 @@
     <system:String x:Key="URedu"> OK</system:String>
     <system:String x:Key="Obavestenje_CallCentar">Call Center - New notification</system:String>
     <system:String x:Key="Odrađeno">Done</system:String>
+    <system:String x:Key="Datum_Valute">Due Date:</system:String>
+    <system:String x:Key="KursValuteDvotacka">Euro Exchange Rate:</system:String>
+    <system:String x:Key="UValutiPoKursu">Amount in Euros:</system:String>
+    <system:String x:Key="KursEuro">Exchange Rate</system:String>
+    <system:String x:Key="IznosUValuti">Amount in Euros</system:String>
 </ResourceDictionary>

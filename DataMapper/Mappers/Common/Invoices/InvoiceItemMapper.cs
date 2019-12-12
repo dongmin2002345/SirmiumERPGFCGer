@@ -40,6 +40,9 @@ namespace DataMapper.Mappers.Common.Invoices
                 PDV = invoiceItem.PDV,
                 Amount = invoiceItem.Amount,
                 ItemStatus = invoiceItem.ItemStatus,
+                CurrencyCode = invoiceItem.CurrencyCode,
+                ExchangeRate = invoiceItem.ExchangeRate,
+                CurrencyPriceWithPDV = invoiceItem.CurrencyPriceWithPDV,
 
                 IsActive = invoiceItem.Active,
 
@@ -71,6 +74,9 @@ namespace DataMapper.Mappers.Common.Invoices
                 PDV = invoiceItem.PDV,
                 Amount = invoiceItem.Amount,
                 ItemStatus = invoiceItem.ItemStatus,
+                CurrencyCode = invoiceItem.CurrencyCode,
+                ExchangeRate = invoiceItem.ExchangeRate,
+                CurrencyPriceWithPDV = invoiceItem.CurrencyPriceWithPDV,
 
                 IsActive = invoiceItem.Active,
 
@@ -101,6 +107,9 @@ namespace DataMapper.Mappers.Common.Invoices
                 PDV = invoiceItemViewModel.PDV,
                 Amount = invoiceItemViewModel.Amount,
                 ItemStatus = invoiceItemViewModel.ItemStatus,
+                CurrencyCode = invoiceItemViewModel.CurrencyCode,
+                ExchangeRate = invoiceItemViewModel.ExchangeRate,
+                CurrencyPriceWithPDV = invoiceItemViewModel.CurrencyPriceWithPDV,
 
                 CreatedById = invoiceItemViewModel.CreatedBy?.Id ?? null,
                 CompanyId = invoiceItemViewModel.Company?.Id ?? null,
