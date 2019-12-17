@@ -284,6 +284,8 @@
     <Compile Include="RdlcReports\Employees\PhysicalPersonsReportViewModel.cs" />
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportsViewModel.cs" />
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportViewModel.cs" />
+    <Compile Include="RdlcReports\Invoices\InvoiceItemViewModel.cs" />
+    <Compile Include="RdlcReports\Invoices\InvoiceViewModel.cs" />
     <Compile Include="RdlcReports\OutputInvoices\OutputInvoiceReportViewModel.cs" />
     <Compile Include="RdlcReports\OutputInvoices\OutputInvoicesReportViewModel.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
@@ -789,6 +791,9 @@
     <EmbeddedResource Include="RdlcReports\Employees\EmployeesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
+    <EmbeddedResource Include="RdlcReports\Invoices\Invoice_NotInPDV.rdlc" />
+    <EmbeddedResource Include="RdlcReports\Invoices\Invoice_WithoutPDV.rdlc" />
+    <EmbeddedResource Include="RdlcReports\Invoices\Invoice_WithPDV.rdlc" />
     <EmbeddedResource Include="RdlcReports\OutputInvoices\OutputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\OutputInvoices\OutputInvoiceReport.rdlc" />
     <None Include="packages.config">
@@ -803,6 +808,8 @@
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.PhysicalPersonReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Employees.PhysicalPersonsReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReportsViewModel.datasource" />
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Invoices.InvoiceItemViewModel.datasource" />
+    <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.Invoices.InvoiceViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoiceReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoicesReportViewModel.datasource" />
     <None Include="Properties\DataSources\SirmiumERPGFC.Reports.ConstructionSites.ConstructionSiteExcelReport.datasource" />
@@ -1894,7 +1901,9 @@
     <Content Include="Resources\WindowsIcons-license.txt" />
     <Content Include="sm-erp.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Reports\Invoices\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
