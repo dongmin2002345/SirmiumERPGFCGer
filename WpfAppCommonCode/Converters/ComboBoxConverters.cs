@@ -42,6 +42,24 @@ namespace WpfAppCommonCode.Converters
         }
     }
 
+    public class VatEnabledByPdvTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is int?)
+            {
+                int? val = (int?)value;
+
+                return val == 2 ? false : true;
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 
     public class BoolGrossBalanceOptionConverter : IValueConverter
     {

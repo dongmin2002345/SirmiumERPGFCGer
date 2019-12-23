@@ -109,6 +109,7 @@ namespace SirmiumERPGFC.Views.Invoices
                             CurrentInvoice.PdvType = _CurrentBusinessPartnerInvoice?.PdvType;
                             CurrentInvoice.Discount = _CurrentBusinessPartnerInvoice?.Discount;
                             CurrentInvoice.Address = _CurrentBusinessPartnerInvoice?.TaxAdministration?.Address1;
+                            CurrentInvoice.DueDate = DateTime.Now.AddDays(_CurrentBusinessPartnerInvoice.DueDate);
                         }
                     }
                 }
@@ -241,6 +242,11 @@ namespace SirmiumERPGFC.Views.Invoices
 
             //CurrentInvoice.PdvType = null;
             CurrentBusinessPartnerInvoice = CurrentInvoice.Buyer;
+            if(CurrentInvoice?.PdvType == 2)
+            {
+                CurrentInvoice.Vat = null;
+                CurrentInvoice.TotalPDV = 0;
+            }
 
             if (CurrentBusinessPartnerInvoice != null)
             {

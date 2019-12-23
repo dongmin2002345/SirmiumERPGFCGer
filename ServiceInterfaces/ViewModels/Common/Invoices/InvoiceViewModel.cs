@@ -313,6 +313,12 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 if (_PdvType != value)
                 {
                     _PdvType = value;
+
+                    if (_PdvType == 2)
+                    {
+                        TotalPDV = 0;
+                        Vat = null;
+                    }
                     NotifyPropertyChanged("PdvType");
                 }
             }

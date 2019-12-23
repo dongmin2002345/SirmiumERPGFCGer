@@ -26,6 +26,7 @@
         <cbxConverters:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
         <cbxConverters:StringDateTimeShortConverter x:Key="StringDateTimeShortConverter" />
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
+        <cbxConverters:VatEnabledByPdvTypeConverter x:Key="VatEnabledByPdvTypeConverter" />
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
     </UserControl.Resources>
 
@@ -85,7 +86,7 @@
                              Text="{Binding Path=CurrentInvoiceItemForm.Discount, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PDVProcenatDvotacka}" />
-                    <TextBox Grid.Row="3"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPDVPercent"  TextWrapping="Wrap"
+                    <TextBox Grid.Row="3"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPDVPercent"  TextWrapping="Wrap" IsEnabled="{Binding Path=CurrentInvoice.PdvType, Converter={StaticResource VatEnabledByPdvTypeConverter}}"
                              Text="{Binding Path=CurrentInvoiceItemForm.PDVPercent, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource PDVDvotacka}" IsEnabled="False" />
