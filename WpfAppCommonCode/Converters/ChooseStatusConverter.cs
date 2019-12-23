@@ -31,7 +31,7 @@ namespace WpfAppCommonCode.Converters
             //        return ChooseB;
             //    return Choose;
             //}
-            if (value != null && value is string)
+            if (value != null && value is int)
             {
                 int val = 0;
                 Int32.TryParse(value.ToString(), out val);
