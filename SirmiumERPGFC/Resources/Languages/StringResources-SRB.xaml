@@ -732,4 +732,19 @@
     <system:String x:Key="KursValuteDvotacka">Kurs EUR:</system:String>
     <system:String x:Key="KursEuro">Kurs (RSD/EUR)</system:String>
     <system:String x:Key="IznosUValuti">Iznos u EUR</system:String>
+
+    <system:String x:Key="Datum_izdavanja">Datum izdavanja</system:String>
+    <system:String x:Key="Datum_valute">Datum valute</system:String>
+    <system:String x:Key="Kurs_EUR">Kurs EUR</system:String>
+    <system:String x:Key="Kupac_nazivDvotacka">Kupac:</system:String>
+    <system:String x:Key="Datum_izdavanjaDvotacka">Datum izdavanja:</system:String>
+    <system:String x:Key="Datum_valuteDvotacka">Datum valute:</system:String>
+    <system:String x:Key="Datum_placanjaDvotacka">Datum plaćanja:</system:String>
+    <system:String x:Key="UkupanIznos">Ukupan iznos</system:String>
+    <system:String x:Key="UkupanPDV">Ukupno PDV</system:String>
+    <system:String x:Key="UkupanRabat">Ukupan rabat</system:String>
+    <system:String x:Key="Kurs_EURDvotacka">Kurs EUR:</system:String>
+    <system:String x:Key="Porez">Porez</system:String>
+    <system:String x:Key="PorezDvotacka">Porez:</system:String>
+    <system:String x:Key="PDV_vrsta_nije_uneta_na_racunuUzvicnik">PDV Vrsta nije odabrana na računu!</system:String>
 </ResourceDictionary>

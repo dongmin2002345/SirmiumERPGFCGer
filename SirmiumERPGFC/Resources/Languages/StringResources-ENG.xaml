@@ -726,4 +726,19 @@
     <system:String x:Key="UValutiPoKursu">Amount in Euros:</system:String>
     <system:String x:Key="KursEuro">Exchange Rate</system:String>
     <system:String x:Key="IznosUValuti">Amount in Euros</system:String>
+
+    <system:String x:Key="Datum_izdavanja">Invoice Date</system:String>
+    <system:String x:Key="Datum_valute">Due Date</system:String>
+    <system:String x:Key="Kurs_EUR">EUR Exch. Rate</system:String>
+    <system:String x:Key="Kupac_nazivDvotacka">Buyer:</system:String>
+    <system:String x:Key="Datum_izdavanjaDvotacka">Invoice Date:</system:String>
+    <system:String x:Key="Datum_valuteDvotacka">Due Date:</system:String>
+    <system:String x:Key="Datum_placanjaDvotacka">Date of payment:</system:String>
+    <system:String x:Key="UkupanIznos">Total</system:String>
+    <system:String x:Key="UkupanPDV">Total PDV</system:String>
+    <system:String x:Key="UkupanRabat">Total Rebate</system:String>
+    <system:String x:Key="Kurs_EURDvotacka">EUR Exch. Rate:</system:String>
+    <system:String x:Key="Porez">Tax</system:String>
+    <system:String x:Key="PorezDvotacka">Tax:</system:String>
+    <system:String x:Key="PDV_vrsta_nije_uneta_na_racunuUzvicnik">VAT Type is not selected on the invoice!</system:String>
 </ResourceDictionary>

@@ -29,5 +29,7 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
         public string TotalAmount { get; set; }
         
         public string TotalAmountInCurrency { get; set; }
+
+        public string TotalAmountInText { get; set; }
     }
 }

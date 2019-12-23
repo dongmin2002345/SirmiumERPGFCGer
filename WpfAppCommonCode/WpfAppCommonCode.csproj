@@ -64,6 +64,7 @@
     <Compile Include="Converters\StatusConverter.cs" />
     <Compile Include="Converters\ToDoDateConverter.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Helpers\BrojUTekst.cs" />
     <Compile Include="Helpers\CustomWebClient.cs">
       <SubType>Component</SubType>
     </Compile>

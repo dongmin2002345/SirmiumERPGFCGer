@@ -32,7 +32,7 @@ namespace RepositoryCore.DbViews.Common.Invoices
                 "vat.Id AS VatId, vat.Identifier AS VatIdentifier, vat.Code AS VatCode, vat.Description AS VatDescription, vat.Amount AS VatAmount, " +
                 "discount.Id AS DiscountId, discount.Identifier AS DiscountIdentifier, discount.Code AS DiscountCode, discount.Name AS DiscountName, discount.Amount AS DiscountAmount, " +
                 
-                "invoice.PdvType, invoice.Active AS Active," +
+                "invoice.PdvType, invoice.TotalPrice, invoice.TotalPDV, invoice.TotalRebate, invoice.Active AS Active," +
                 "(SELECT MAX(v) FROM (VALUES (invoice.UpdatedAt), (businessPartner.UpdatedAt), (discount.UpdatedAt), (vat.UpdatedAt), (city.UpdatedAt), (municipality.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

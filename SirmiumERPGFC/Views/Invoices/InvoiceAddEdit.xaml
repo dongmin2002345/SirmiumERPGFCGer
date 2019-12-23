@@ -72,34 +72,36 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" Margin="5 0 5 0"/>
                     <popups:CityPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cityPopup"
                          CurrentCity="{Binding Path=CurrentInvoice.City, Mode=TwoWay}"/>
-                    
-                    <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource DatumRacuna}"  VerticalAlignment="Center" Margin="5 0 5 0" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource Datum_izdavanjaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <DatePicker Grid.Row="2"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
                          SelectedDate="{Binding Path=CurrentInvoice.InvoiceDate}" />
                     
                     
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource OpštinaDvotacka}" Margin="5 0 5 0"/>
+                    <!--<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource OpštinaDvotacka}" Margin="5 0 5 0"/>
                     <popups:MunicipalityPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="municipalityPopup"
-                         CurrentMunicipality="{Binding Path=CurrentInvoice.Municipality, Mode=TwoWay}"/>
+                         CurrentMunicipality="{Binding Path=CurrentInvoice.Municipality, Mode=TwoWay}"/>-->
 
 
-                    <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource DatumRacuna}"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource PdvVrsta_Dvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <ComboBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"  x:Name="cbxChoosePdvType" Margin="2"
+                                            SelectedItem="{Binding Path=CurrentInvoice.PdvType, Converter={StaticResource cbxPdvTypeConverter}, Mode=TwoWay}"
+                                            ItemsSource="{Binding Path=PdvTypeOptions}">
+                    </ComboBox>
+
+                    <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource Datum_valuteDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <DatePicker Grid.Row="3"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
                          SelectedDate="{Binding Path=CurrentInvoice.DueDate}" />
 
 
                     <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource PopustDvotacka}" Margin="5 0 5 0"/>
-                    <popups:DiscountPopup Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="discountPopup"
+                    <popups:DiscountPopup Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="discountPopup" Margin="2"  
                          CurrentDiscount="{Binding Path=CurrentInvoice.Discount, Mode=TwoWay}"/>
 
 
-                    <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource DatumRacuna}"  VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <DatePicker Grid.Row="3"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
+                    <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Datum_placanjaDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <DatePicker Grid.Row="4"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
                          SelectedDate="{Binding Path=CurrentInvoice.DateOfPayment}" />
-                    
-                    <TextBlock Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource PorezDvotacka}" Margin="5 0 5 0"/>
-                    <popups:VatPopup Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="vatPopup"
-                         CurrentVat="{Binding Path=CurrentInvoice.Vat, Mode=TwoWay}"/>
 
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource StatusDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
@@ -108,20 +110,22 @@
                                             ItemsSource="{Binding Path=StatusOptions}">
                     </ComboBox>
 
-                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Datum_statusaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <DatePicker Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtStatusDate"
+                    <TextBlock Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource PorezDvotacka}" Margin="5 0 5 0"/>
+                    <popups:VatPopup Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" x:Name="vatPopup" 
+                         CurrentVat="{Binding Path=CurrentInvoice.Vat, Mode=TwoWay}"/>
+
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource Komentar}"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="6"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
+                         Text="{Binding Path=CurrentInvoice.Description}" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="3" Text="{DynamicResource Datum_statusaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <DatePicker Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtStatusDate"
                                 SelectedDate="{Binding Path=CurrentInvoice.StatusDate, Mode=TwoWay}"/>
 
-
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource StatusDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <ComboBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"  x:Name="cbxChoosePdvType" Margin="2"
-                                            SelectedItem="{Binding Path=CurrentInvoice.PdvType, Converter={StaticResource cbxPdvTypeConverter}, Mode=TwoWay}"
-                                            ItemsSource="{Binding Path=PdvTypeOptions}">
-                    </ComboBox>
-                    
-                    <TextBlock Grid.Row="6" Grid.Column="3" Text="{DynamicResource DatumRacuna}"  VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="6"  Grid.Column="4" Grid.ColumnSpan="2" Margin="2"  
-                         Text="{Binding Path=CurrentInvoice.Description}" />
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="{DynamicResource Kurs_EURDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="7"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
+                         Text="{Binding Path=CurrentInvoice.CurrencyExchangeRate, Converter={StaticResource stringToDoubleConverter}}" />
                 </Grid>
             </GroupBox>
 

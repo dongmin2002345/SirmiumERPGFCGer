@@ -186,12 +186,14 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
             if (CurrentInvoice.Vat?.Amount != null)
             {
-                CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                CurrentInvoiceItemForm.PDVPercent = CurrentInvoice.Vat.Amount;
             }
             if (CurrentInvoice.Discount?.Amount != null)
             {
                 CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
             }
+            if (CurrentInvoice.CurrencyExchangeRate != null)
+                CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice.CurrencyExchangeRate;
 
             Thread displayThread = new Thread(() => DisplayInvoiceItemData());
             displayThread.IsBackground = true;
@@ -284,6 +286,8 @@ namespace SirmiumERPGFC.Views.Invoices
                     {
                         CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
                     }
+                    if (CurrentInvoice.CurrencyExchangeRate != null)
+                        CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice.CurrencyExchangeRate;
                     return;
                 }
                 CurrentInvoiceItemForm = new InvoiceItemViewModel() { Discount = CurrentInvoice?.Discount?.Amount ?? 0 };
@@ -298,6 +302,11 @@ namespace SirmiumERPGFC.Views.Invoices
                 {
                     CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
                 }
+                if (CurrentInvoice.CurrencyExchangeRate != null)
+                    CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice.CurrencyExchangeRate;
+
+                //PriceWithPDV * Discount / 100
+
 
                 InvoiceCreatedUpdated();
 
@@ -333,9 +342,12 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm.PriceWithPDV = CurrentInvoiceItemDG.PriceWithPDV;
             CurrentInvoiceItemForm.PriceWithoutPDV = CurrentInvoiceItemDG.PriceWithoutPDV;
             CurrentInvoiceItemForm.Discount = CurrentInvoiceItemDG.Discount;
+            CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice.CurrencyExchangeRate;
+            CurrentInvoiceItemForm.CurrencyCode = CurrentInvoiceItemDG.CurrencyCode;
             CurrentInvoiceItemForm.PDVPercent = CurrentInvoiceItemDG.PDVPercent;
             CurrentInvoiceItemForm.PDV = CurrentInvoiceItemDG.PDV;
             CurrentInvoiceItemForm.Amount = CurrentInvoiceItemDG.Amount;
+            CurrentInvoiceItemForm.CurrencyPriceWithPDV = CurrentInvoiceItemDG.CurrencyPriceWithPDV;
             CurrentInvoiceItemForm.UpdatedAt = CurrentInvoiceItemDG.UpdatedAt;
         }
 
@@ -346,9 +358,20 @@ namespace SirmiumERPGFC.Views.Invoices
             {
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Stavka_je_uspešno_obrisanaUzvičnik"));
 
-                CurrentInvoiceItemForm = new InvoiceItemViewModel();
+                CurrentInvoiceItemForm = new InvoiceItemViewModel() { Discount = CurrentInvoice?.Discount?.Amount ?? 0 };
                 CurrentInvoiceItemForm.Identifier = Guid.NewGuid();
                 CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
+                CurrentInvoiceItemForm.IsSynced = false;
+                if (CurrentInvoice.Vat?.Amount != null)
+                {
+                    CurrentInvoiceItemForm.PDVPercent = CurrentInvoice.Vat.Amount;
+                }
+                if (CurrentInvoice.Discount?.Amount != null)
+                {
+                    CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
+                }
+                if (CurrentInvoice.CurrencyExchangeRate != null)
+                    CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice.CurrencyExchangeRate;
 
                 CurrentInvoiceItemDG = null;
 
@@ -369,12 +392,14 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm.ItemStatus = ItemStatus.Added;
             if (CurrentInvoice.Vat?.Amount != null)
             {
-                CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                CurrentInvoiceItemForm.PDVPercent = CurrentInvoice.Vat.Amount;
             }
             if (CurrentInvoice.Discount?.Amount != null)
             {
                 CurrentInvoiceItemForm.Discount = CurrentInvoice.Discount.Amount;
             }
+            if (CurrentInvoice.CurrencyExchangeRate != null)
+                CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice.CurrencyExchangeRate;
         }
 
         #endregion
@@ -398,8 +423,22 @@ namespace SirmiumERPGFC.Views.Invoices
                 SubmitButtonContent = ((string)Application.Current.FindResource("Čuvanje_u_tokuTriTacke"));
                 SubmitButtonEnabled = false;
 
+
+                CurrentInvoice.TotalPrice = (double)InvoiceItemsFromDB.Sum(x => x.Amount);
+                CurrentInvoice.TotalPDV = (double)InvoiceItemsFromDB.Sum(x => x.PDV);
+                CurrentInvoice.TotalRebate = (double)InvoiceItemsFromDB.Sum(x => x.Rebate);
+
+
+                var response = new InvoiceSQLiteRepository().Create(CurrentInvoice);
+                if (!response.Success)
+                {
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_lokalnog_čuvanjaUzvičnik"));
+                    SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
+                    SubmitButtonEnabled = true;
+                }
+
                 CurrentInvoice.InvoiceItems = InvoiceItemsFromDB;
-                InvoiceResponse response = invoiceService.Create(CurrentInvoice);
+                response = invoiceService.Create(CurrentInvoice);
                 if (!response.Success)
                 {
                     MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Greška_kod_čuvanja_na_serveruUzvičnik"));

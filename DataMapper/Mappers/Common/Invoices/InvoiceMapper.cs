@@ -51,6 +51,11 @@ namespace DataMapper.Mappers.Common.Invoices
                 Vat = invoice.Vat?.ConvertToVatViewModelLite(),
 
                 PdvType = invoice.PdvType,
+
+                TotalPrice = invoice.TotalPrice,
+                TotalPDV = invoice.TotalPDV,
+                TotalRebate = invoice.TotalRebate,
+
                 IsActive = invoice.Active,
 
                 Company = invoice.Company?.ConvertToCompanyViewModelLite(),
@@ -84,6 +89,11 @@ namespace DataMapper.Mappers.Common.Invoices
                 CurrencyExchangeRate = invoice.CurrencyExchangeRate,
 
                 PdvType = invoice.PdvType,
+
+                TotalPrice = invoice.TotalPrice,
+                TotalPDV = invoice.TotalPDV,
+                TotalRebate = invoice.TotalRebate,
+
                 IsActive = invoice.Active,
 
                 UpdatedAt = invoice.UpdatedAt,
@@ -123,6 +133,11 @@ namespace DataMapper.Mappers.Common.Invoices
                 CompanyId = invoiceViewModel.Company?.Id ?? null,
 
                 PdvType = invoiceViewModel.PdvType,
+
+
+                TotalPrice = invoiceViewModel.TotalPrice,
+                TotalPDV = invoiceViewModel.TotalPDV,
+                TotalRebate = invoiceViewModel.TotalRebate,
                 Active = invoiceViewModel.IsActive,
                 
                 UpdatedAt = invoiceViewModel.UpdatedAt,

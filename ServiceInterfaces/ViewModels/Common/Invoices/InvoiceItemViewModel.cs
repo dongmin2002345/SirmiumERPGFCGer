@@ -145,7 +145,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
 
             if (_ExchangeRate != null)
             {
-                CurrencyPriceWithPDV = ((double)Amount * _ExchangeRate.Value);
+                CurrencyPriceWithPDV = Math.Round((double)Amount / _ExchangeRate.Value, 2);
             }
             else
             {
@@ -208,6 +208,15 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
+        #region Rebate
+        private decimal _Rebate;
+
+        public decimal Rebate
+        {
+            get { return PriceWithPDV * Discount / 100; }
+        }
+        #endregion
+
 
         #region Amount
         private decimal _Amount;
@@ -245,7 +254,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
 
 
         #region CurrencyCode
-        private string _CurrencyCode;
+        private string _CurrencyCode = "EUR";
 
         public string CurrencyCode
         {

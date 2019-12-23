@@ -34,7 +34,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
               "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
               "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
 
-              "PdvType, Active, UpdatedAt," +
+              "PdvType, TotalPrice, TotalPDV, TotalRebate, Active, UpdatedAt," +
               "CreatedById, CreatedByFirstName, CreatedByLastName, " +
               "CompanyId, CompanyName " +
               "FROM vInvoices ";
@@ -134,6 +134,12 @@ namespace RepositoryCore.Implementations.Common.Invoices
             if (reader["PdvType"] != DBNull.Value)
                 invoice.PdvType = Int32.Parse(reader["PdvType"].ToString());
 
+            if (reader["TotalPrice"] != DBNull.Value)
+                invoice.TotalPrice = double.Parse(reader["TotalPrice"].ToString());
+            if (reader["TotalPDV"] != DBNull.Value)
+                invoice.TotalPDV = double.Parse(reader["TotalPDV"].ToString());
+            if (reader["TotalRebate"] != DBNull.Value)
+                invoice.TotalRebate = double.Parse(reader["TotalRebate"].ToString());
 
             invoice.Active = bool.Parse(reader["Active"].ToString());
             invoice.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -249,21 +255,19 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     .Select(x => x.Entity as Invoice))
                 .Where(x => x.CompanyId == companyId).Count();
             if (count == 0)
-                return "1";
+                return "00001/" + DateTime.Now.Year;
             else
             {
-                string activeCode = context.Invoices
+                int activeInvoices = context.Invoices
                     .Union(context.ChangeTracker.Entries()
                         .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(Invoice))
                         .Select(x => x.Entity as Invoice))
                     .Where(x => x.CompanyId == companyId)
-                    .OrderByDescending(x => x.Id).FirstOrDefault()
-                    ?.Code ?? "";
+                    .OrderByDescending(x => x.Id).Count();
 
-                if (!String.IsNullOrEmpty(activeCode))
+                if (activeInvoices >= 0)
                 {
-                    int intValue = Int32.Parse(activeCode);
-                    return (intValue + 1).ToString();
+                    return (activeInvoices + 1).ToString("00000") + "/" + DateTime.Now.Year;
                 }
                 else
                     return "";
@@ -316,6 +320,10 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     dbEntry.CurrencyCode = invoice.CurrencyCode;
                     dbEntry.CurrencyExchangeRate = invoice.CurrencyExchangeRate;
                     dbEntry.PdvType = invoice.PdvType;
+
+                    dbEntry.TotalPrice = invoice.TotalPrice;
+                    dbEntry.TotalPDV = invoice.TotalPDV;
+                    dbEntry.TotalRebate = invoice.TotalRebate;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

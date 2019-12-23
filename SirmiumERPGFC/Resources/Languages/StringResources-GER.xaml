@@ -734,4 +734,19 @@
     <system:String x:Key="UValutiPoKursu">Betrag in Euro:</system:String>
     <system:String x:Key="KursEuro">Euro-Wechselkurs</system:String>
     <system:String x:Key="IznosUValuti">Betrag in Euro</system:String>
+
+    <system:String x:Key="Datum_izdavanja">Ausstellungsdatum der Rechnung</system:String>
+    <system:String x:Key="Datum_valute">Zahlungswährung</system:String>
+    <system:String x:Key="Kurs_EUR">Euro-Wechselkurs</system:String>
+    <system:String x:Key="Kupac_nazivDvotacka">Käufer:</system:String>
+    <system:String x:Key="Datum_izdavanjaDvotacka">Ausstellungsdatum der Rechnung:</system:String>
+    <system:String x:Key="Datum_valuteDvotacka">Zahlungswährung:</system:String>
+    <system:String x:Key="Datum_placanjaDvotacka">Zahlungsdatum:</system:String>
+    <system:String x:Key="UkupanIznos">Der Gesamtbetrag</system:String>
+    <system:String x:Key="UkupanPDV">MwSt. Gesamt</system:String>
+    <system:String x:Key="UkupanRabat">Insgesamt Rabat</system:String>
+    <system:String x:Key="Kurs_EURDvotacka">Euro-Wechselkurs:</system:String>
+    <system:String x:Key="Porez">Steuer</system:String>
+    <system:String x:Key="PorezDvotacka">Steuer:</system:String>
+    <system:String x:Key="PDV_vrsta_nije_uneta_na_racunuUzvicnik">Die Umsatzsteuerart ist auf der Rechnung nicht ausgewählt!</system:String>
 </ResourceDictionary>

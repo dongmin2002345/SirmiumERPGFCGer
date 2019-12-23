@@ -67,6 +67,9 @@ namespace SirmiumERPGFC.Repository.Invoices
             "VatAmount DECIMAL NULL, " +
 
             "PdvType INTEGER NULL, " +
+            "TotalPrice DECIMAL(18,2) NULL," +
+            "TotalPDV DECIMAL(18,2) NULL," +
+            "TotalRebate DECIMAL(18,2) NULL," +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -89,7 +92,7 @@ namespace SirmiumERPGFC.Repository.Invoices
 
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount,  " +
 
-            "PdvType, IsSynced, UpdatedAt, CreatedById, CreatedByName, " +
+            "PdvType, TotalPrice, TotalPDV, TotalRebate, IsSynced, UpdatedAt, CreatedById, CreatedByName, " +
             "CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Invoices " +
@@ -107,7 +110,7 @@ namespace SirmiumERPGFC.Repository.Invoices
 
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount,  " +
 
-            "PdvType, IsSynced, UpdatedAt, CreatedById, CreatedByName, " +
+            "PdvType, TotalPrice, TotalPDV, TotalRebate, IsSynced, UpdatedAt, CreatedById, CreatedByName, " +
             "CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @InvoiceNumber, " +
@@ -124,7 +127,7 @@ namespace SirmiumERPGFC.Repository.Invoices
 
             "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount,  " +
 
-            "@PdvType, @IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, " +
+            "@PdvType, @TotalPrice, @TotalPDV, @TotalRebate, @IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, " +
             "@CompanyId, @CompanyName)";
 
         #endregion
@@ -158,6 +161,9 @@ namespace SirmiumERPGFC.Repository.Invoices
             dbEntry.Vat = SQLiteHelper.GetVat(query, ref counter);
 
             dbEntry.PdvType = SQLiteHelper.GetIntNullable(query, ref counter);
+            dbEntry.TotalPrice = SQLiteHelper.GetDouble(query, ref counter);
+            dbEntry.TotalPDV = SQLiteHelper.GetDouble(query, ref counter);
+            dbEntry.TotalRebate = SQLiteHelper.GetDouble(query, ref counter);
 
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -215,6 +221,10 @@ namespace SirmiumERPGFC.Repository.Invoices
             insertCommand.Parameters.AddWithValue("@VatAmount", ((object)Invoice.Vat?.Amount) ?? DBNull.Value);
 
             insertCommand.Parameters.AddWithValue("@PdvType", ((object)Invoice.PdvType) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TotalPrice", ((object)Invoice.TotalPrice) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TotalPDV", ((object)Invoice.TotalPDV) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@TotalRebate", ((object)Invoice.TotalRebate) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@IsSynced", Invoice.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)Invoice.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -244,9 +254,11 @@ namespace SirmiumERPGFC.Repository.Invoices
                          SqlCommandSelectPart +
                          "FROM Invoices " +
                          "WHERE (@BuyerName IS NULL OR @BuyerName = '' OR BuyerName LIKE @BuyerName) " +
-                         "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
-                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(InvoiceDate) <= DATE(@DateTo)) " +
-                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(InvoiceDate) >= DATE(@DateFrom)) " +
+                        "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
+                        "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(InvoiceDate) <= DATE(@DateTo)) " +
+                        "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(InvoiceDate) >= DATE(@DateFrom)) " +
+                        "AND (@DateOfPaymentTo IS NULL OR @DateOfPaymentTo = '' OR DATE(DateOfPayment) <=  DATE(@DateOfPaymentTo)) " +
+                        "AND (@DateOfPaymentFrom IS NULL OR @DateOfPaymentFrom = '' OR DATE(DateOfPayment) >= DATE(@DateOfPaymentFrom)) " +
                          "AND CompanyId = @CompanyId " +
                          "ORDER BY IsSynced, Id DESC " +
                          "LIMIT @ItemsPerPage OFFSET @Offset;", db);
@@ -255,6 +267,8 @@ namespace SirmiumERPGFC.Repository.Invoices
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
                     selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
                     selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentFrom", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentFrom) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentTo", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentTo) ?? "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -273,12 +287,19 @@ namespace SirmiumERPGFC.Repository.Invoices
                         "FROM Invoices " +
                         "WHERE(@BuyerName IS NULL OR @BuyerName = '' OR BuyerName LIKE @BuyerName) " +
                         "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
+                        "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
+                        "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(InvoiceDate) <= DATE(@DateTo)) " +
+                        "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(InvoiceDate) >= DATE(@DateFrom)) " +
+                        "AND (@DateOfPaymentTo IS NULL OR @DateOfPaymentTo = '' OR DATE(DateOfPayment) <=  DATE(@DateOfPaymentTo)) " +
+                        "AND (@DateOfPaymentFrom IS NULL OR @DateOfPaymentFrom = '' OR DATE(DateOfPayment) >= DATE(@DateOfPaymentFrom)) " +
                         "AND CompanyId = @CompanyId;", db);
 
                     selectCommand.Parameters.AddWithValue("@BuyerName", ((object)InvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + InvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
                     selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
                     selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentFrom", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentFrom) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentTo", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentTo) ?? "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();

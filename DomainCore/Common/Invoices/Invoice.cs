@@ -21,7 +21,7 @@ namespace DomainCore.Common.Invoices
         public string Address { get; set; }
         public DateTime InvoiceDate { get; set; }
         public DateTime DueDate { get; set; }
-        public DateTime DateOfPayment { get; set; }
+        public DateTime? DateOfPayment { get; set; }
         public int Status { get; set; }
         public DateTime StatusDate { get; set; }
         public string Description { get; set; }
@@ -41,6 +41,10 @@ namespace DomainCore.Common.Invoices
         public Discount Discount { get; set; }
 
         public int? PdvType { get; set; }
+
+        public double TotalPrice { get; set; }
+        public double TotalPDV { get; set; }
+        public double TotalRebate { get; set; }
 
         public List<InvoiceItem> InvoiceItems { get; set; }
     }

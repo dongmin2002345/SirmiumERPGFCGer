@@ -288,329 +288,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Rectangle Name="Rectangle3">
-        <ReportItems>
-          <Textbox Name="Textbox17">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Kupac:</Value>
-                    <Style>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>0.0125in</Top>
-            <Left>0.025in</Left>
-            <Height>0.25in</Height>
-            <Width>0.45833in</Width>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="CityAndInvoiceDate6">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Label>BusinessPartnerCode</Label>
-                    <Value>=First(Fields!BusinessPartnerCode.Value, "Invoices")</Value>
-                    <Style>
-                      <FontSize>9pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
-            <Top>0.06676cm</Top>
-            <Left>1.26293cm</Left>
-            <Height>0.6cm</Height>
-            <Width>1.50517cm</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox18">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>PIB:</Value>
-                    <Style>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>0.02628in</Top>
-            <Left>1.18889in</Left>
-            <Height>0.25in</Height>
-            <Width>0.30833in</Width>
-            <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="CityAndInvoiceDate7">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Label>BusinessPartnerCode</Label>
-                    <Value>=First(Fields!BusinessPartnerCode.Value, "Invoices")</Value>
-                    <Style>
-                      <FontSize>9pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
-            <Top>0.10177cm</Top>
-            <Left>3.90171cm</Left>
-            <Height>0.6cm</Height>
-            <Width>1.992cm</Width>
-            <ZIndex>3</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox19">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>MB:</Value>
-                    <Style>
-                      <FontSize>9pt</FontSize>
-                      <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>0.04007in</Top>
-            <Left>2.4398in</Left>
-            <Height>0.25in</Height>
-            <Width>0.28333in</Width>
-            <ZIndex>4</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="CityAndInvoiceDate8">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Label>BusinessPartnerMB</Label>
-                    <Value>=First(Fields!BusinessPartnerMB.Value, "Invoices")</Value>
-                    <Style>
-                      <FontSize>9pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
-            <Top>0.13679cm</Top>
-            <Left>7.09315cm</Left>
-            <Height>0.6cm</Height>
-            <Width>2.45534cm</Width>
-            <ZIndex>5</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox15">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Label>BusinessPartnerName</Label>
-                    <Value>=First(Fields!BusinessPartnerName.Value, "Invoices")</Value>
-                    <Style>
-                      <FontWeight>SemiBold</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>1.27301cm</Top>
-            <Left>0.0635cm</Left>
-            <Height>0.6cm</Height>
-            <Width>7.87397cm</Width>
-            <ZIndex>6</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox16">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Label>BusinessPartnerAddress</Label>
-                    <Value>=First(Fields!BusinessPartnerAddress.Value, "Invoices")</Value>
-                    <Style>
-                      <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>2.44707cm</Top>
-            <Left>0cm</Left>
-            <Height>0.6cm</Height>
-            <Width>7.93747cm</Width>
-            <ZIndex>7</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox20">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Label>BusinessPartnerCity</Label>
-                    <Value>=First(Fields!BusinessPartnerCity.Value, "Invoices")</Value>
-                    <Style>
-                      <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>3.67474cm</Top>
-            <Left>0.0635cm</Left>
-            <Height>0.6cm</Height>
-            <Width>7.93747cm</Width>
-            <ZIndex>8</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-        </ReportItems>
-        <KeepTogether>true</KeepTogether>
-        <Top>0.17498cm</Top>
-        <Left>10.95259cm</Left>
-        <Height>5.11315cm</Height>
-        <Width>9.80249cm</Width>
-        <ZIndex>9</ZIndex>
-        <Style>
-          <Border>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Rectangle>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
@@ -1020,7 +697,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Id.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1049,7 +728,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductCode.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1078,7 +759,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductName.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1107,7 +790,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!UnitOfMeasurement.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1136,10 +821,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Quantity.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Quantity</rd:DefaultName>
@@ -1165,10 +854,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PriceWithoutPDV.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PriceWithoutPDV</rd:DefaultName>
@@ -1194,10 +887,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PriceWithPDV.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PriceWithPDV</rd:DefaultName>
@@ -1223,10 +920,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Rebate.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Rebate</rd:DefaultName>
@@ -1252,10 +953,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PDVPercent.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PDVPercent</rd:DefaultName>
@@ -1281,10 +986,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PDVValue.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PDVValue</rd:DefaultName>
@@ -1310,10 +1019,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Amount.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Amount</rd:DefaultName>
@@ -1363,7 +1076,7 @@ PDV</Value>
         <Left>0cm</Left>
         <Height>2.06783cm</Height>
         <Width>20.75508cm</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1392,7 +1105,7 @@ PDV</Value>
         <Left>4.31204in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1428,7 +1141,7 @@ PDV</Value>
         <Left>15.56691cm</Left>
         <Height>0.6cm</Height>
         <Width>5.18817cm</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1462,7 +1175,7 @@ PDV</Value>
         <Left>4.31204in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1498,7 +1211,7 @@ PDV</Value>
         <Left>15.56691cm</Left>
         <Height>0.6cm</Height>
         <Width>5.18817cm</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1532,7 +1245,7 @@ PDV</Value>
         <Left>4.31204in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>Dotted</Style>
@@ -1570,7 +1283,7 @@ PDV</Value>
         <Left>15.56691cm</Left>
         <Height>0.635cm</Height>
         <Width>5.18817cm</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>15</ZIndex>
         <Style>
           <Border>
             <Style>Dotted</Style>
@@ -1605,7 +1318,7 @@ PDV</Value>
         <Left>4.31204in</Left>
         <Height>0.25in</Height>
         <Width>0.55833in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1617,28 +1330,14 @@ PDV</Value>
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox26">
+      <Textbox Name="TotalAmountInText">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>asdfgasdasdsadasasddadasdasda </Value>
-                <Style>
-                  <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>RSD </Value>
-                <Style>
-                  <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>i 10/100</Value>
+                <Value>=First(Fields!TotalAmountInText.Value, "Invoices")</Value>
                 <Style>
                   <FontSize>7pt</FontSize>
                   <FontWeight>Normal</FontWeight>
@@ -1648,12 +1347,11 @@ PDV</Value>
             <Style />
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>4.11015in</Top>
         <Left>4.87037in</Left>
         <Height>0.25in</Height>
         <Width>3.30092in</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>17</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1708,7 +1406,7 @@ PDV</Value>
         <Left>0.09232cm</Left>
         <Height>2.46732cm</Height>
         <Width>6.65521cm</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>18</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1758,7 +1456,7 @@ PDV</Value>
         <Left>7.04431cm</Left>
         <Height>2.46732cm</Height>
         <Width>6.67639cm</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>19</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1808,7 +1506,7 @@ PDV</Value>
         <Left>13.97237cm</Left>
         <Height>2.46732cm</Height>
         <Width>6.67639cm</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>20</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1837,7 +1535,7 @@ PDV</Value>
         <Left>0.03635in</Left>
         <Height>0.25in</Height>
         <Width>4.19259in</Width>
-        <ZIndex>22</ZIndex>
+        <ZIndex>21</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1871,7 +1569,7 @@ PDV</Value>
         <Left>0.03634in</Left>
         <Height>0.25in</Height>
         <Width>4.19259in</Width>
-        <ZIndex>23</ZIndex>
+        <ZIndex>22</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1905,7 +1603,7 @@ PDV</Value>
         <Left>4.31204in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
-        <ZIndex>24</ZIndex>
+        <ZIndex>23</ZIndex>
         <Style>
           <Border>
             <Style>Dotted</Style>
@@ -1943,7 +1641,7 @@ PDV</Value>
         <Left>15.56691cm</Left>
         <Height>0.635cm</Height>
         <Width>5.18817cm</Width>
-        <ZIndex>25</ZIndex>
+        <ZIndex>24</ZIndex>
         <Style>
           <Border>
             <Style>Dotted</Style>
@@ -1956,6 +1654,329 @@ PDV</Value>
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Rectangle Name="Rectangle3">
+        <ReportItems>
+          <Textbox Name="Textbox17">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Kupac:</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.0125in</Top>
+            <Left>0.025in</Left>
+            <Height>0.25in</Height>
+            <Width>0.45833in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="CityAndInvoiceDate6">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Label>BusinessPartnerCode</Label>
+                    <Value>=First(Fields!BusinessPartnerCode.Value, "Invoices")</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
+            <Top>0.06676cm</Top>
+            <Left>1.26293cm</Left>
+            <Height>0.6cm</Height>
+            <Width>1.74274cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox18">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>PIB:</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.02628in</Top>
+            <Left>1.23889in</Left>
+            <Height>0.25in</Height>
+            <Width>0.30833in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="CityAndInvoiceDate7">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Label>BusinessPartnerPIB</Label>
+                    <Value>=First(Fields!BusinessPartnerPIB.Value, "Invoices")</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
+            <Top>0.07002cm</Top>
+            <Left>4.02871cm</Left>
+            <Height>0.6cm</Height>
+            <Width>1.992cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox19">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>MB:</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.02757in</Top>
+            <Left>2.4398in</Left>
+            <Height>0.25in</Height>
+            <Width>0.28333in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="CityAndInvoiceDate8">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Label>BusinessPartnerMB</Label>
+                    <Value>=First(Fields!BusinessPartnerMB.Value, "Invoices")</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
+            <Top>0.10504cm</Top>
+            <Left>7.09315cm</Left>
+            <Height>0.6cm</Height>
+            <Width>2.45534cm</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox15">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Label>BusinessPartnerName</Label>
+                    <Value>=First(Fields!BusinessPartnerName.Value, "Invoices")</Value>
+                    <Style>
+                      <FontWeight>SemiBold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox12</rd:DefaultName>
+            <Top>1.27301cm</Top>
+            <Left>0.0635cm</Left>
+            <Height>0.6cm</Height>
+            <Width>7.87397cm</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox16">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Label>BusinessPartnerAddress</Label>
+                    <Value>=First(Fields!BusinessPartnerAddress.Value, "Invoices")</Value>
+                    <Style>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox12</rd:DefaultName>
+            <Top>2.44707cm</Top>
+            <Left>0cm</Left>
+            <Height>0.6cm</Height>
+            <Width>7.93747cm</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox20">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Label>BusinessPartnerCity</Label>
+                    <Value>=First(Fields!BusinessPartnerCity.Value, "Invoices")</Value>
+                    <Style>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox12</rd:DefaultName>
+            <Top>3.67474cm</Top>
+            <Left>0.0635cm</Left>
+            <Height>0.6cm</Height>
+            <Width>7.93747cm</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <KeepTogether>true</KeepTogether>
+        <Top>0.32695cm</Top>
+        <Left>10.95259cm</Left>
+        <Height>5.11315cm</Height>
+        <Width>9.80249cm</Width>
+        <ZIndex>25</ZIndex>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Rectangle>
     </ReportItems>
     <Height>20.193cm</Height>
     <Style />
@@ -2411,10 +2432,6 @@ PDV</Value>
           <DataField>AmountInCurrency</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="BaseWithPDV">
-          <DataField>BaseWithPDV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="BusinessPartnerAddress">
           <DataField>BusinessPartnerAddress</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2461,6 +2478,18 @@ PDV</Value>
         </Field>
         <Field Name="TotalAmountInCurrency">
           <DataField>TotalAmountInCurrency</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalAmountInText">
+          <DataField>TotalAmountInText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalBase">
+          <DataField>TotalBase</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalPDV">
+          <DataField>TotalPDV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

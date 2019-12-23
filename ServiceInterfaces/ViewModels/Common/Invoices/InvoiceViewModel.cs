@@ -133,9 +133,9 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         #endregion
 
         #region DateOfPayment
-        private DateTime _DateOfPayment = DateTime.Now;
+        private DateTime? _DateOfPayment;
 
-        public DateTime DateOfPayment
+        public DateTime? DateOfPayment
         {
             get { return _DateOfPayment; }
             set
@@ -201,7 +201,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         #endregion
 
         #region CurrencyCode
-        private string _CurrencyCode;
+        private string _CurrencyCode = "EUR";
 
         public string CurrencyCode
         {
@@ -354,6 +354,58 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
+        #region TotalPrice
+        private double _TotalPrice;
+
+        public double TotalPrice
+        {
+            get { return _TotalPrice; }
+            set
+            {
+                if (_TotalPrice != value)
+                {
+                    _TotalPrice = value;
+                    NotifyPropertyChanged("TotalPrice");
+                }
+            }
+        }
+        #endregion
+
+        #region TotalPDV
+        private double _TotalPDV;
+
+        public double TotalPDV
+        {
+            get { return _TotalPDV; }
+            set
+            {
+                if (_TotalPDV != value)
+                {
+                    _TotalPDV = value;
+                    NotifyPropertyChanged("TotalPDV");
+                }
+            }
+        }
+        #endregion
+
+        #region TotalRebate
+        private double _TotalRebate;
+
+        public double TotalRebate
+        {
+            get { return _TotalRebate; }
+            set
+            {
+                if (_TotalRebate != value)
+                {
+                    _TotalRebate = value;
+                    NotifyPropertyChanged("TotalRebate");
+                }
+            }
+        }
+        #endregion
+
+
         #region Search
 
         #region SearchBy_BusinessPartner
@@ -419,6 +471,40 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _SearchBy_InvoiceDateTo = value;
                     NotifyPropertyChanged("SearchBy_InvoiceDateTo");
+                }
+            }
+        }
+        #endregion
+
+        #region SearchBy_DateFrom
+        private DateTime? _SearchBy_DateOfPaymentFrom;
+
+        public DateTime? SearchBy_DateOfPaymentFrom
+        {
+            get { return _SearchBy_DateOfPaymentFrom; }
+            set
+            {
+                if (_SearchBy_DateOfPaymentFrom != value)
+                {
+                    _SearchBy_DateOfPaymentFrom = value;
+                    NotifyPropertyChanged("SearchBy_DateOfPaymentFrom");
+                }
+            }
+        }
+        #endregion
+
+        #region SearchBy_DateTo
+        private DateTime? _SearchBy_DateOfPaymentTo;
+
+        public DateTime? SearchBy_DateOfPaymentTo
+        {
+            get { return _SearchBy_DateOfPaymentTo; }
+            set
+            {
+                if (_SearchBy_DateOfPaymentTo != value)
+                {
+                    _SearchBy_DateOfPaymentTo = value;
+                    NotifyPropertyChanged("SearchBy_DateOfPaymentTo");
                 }
             }
         }

@@ -8,7 +8,7 @@
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:syncedConverter="clr-namespace:WpfAppCommonCode.Converters.Common;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+             d:DesignHeight="582" d:DesignWidth="788" Background="White">
     <UserControl.Resources>
         <Style TargetType="ToolTip">
             <Setter Property="ContentTemplate">
@@ -60,7 +60,7 @@
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
                     <TextBox Grid.Row="0"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtCode"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentInvoiceItemForm.Code, Mode=TwoWay}" />
+                             Text="{Binding Path=CurrentInvoiceItemForm.Code, Mode=TwoWay}" IsEnabled="False" />
 
                     <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource ImeDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="0"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtName"  TextWrapping="Wrap"
@@ -74,7 +74,7 @@
                     <TextBox Grid.Row="1"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtQuantity"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentInvoiceItemForm.Quantity, Mode=TwoWay}"/>
 
-                   
+
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource Cena_Bez_PDVDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="2"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtPriceWithoutPDV"  TextWrapping="Wrap"
@@ -99,12 +99,12 @@
                     <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource IznosDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="4"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtAmount"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentInvoiceItemForm.Amount, Mode=TwoWay}"/>
-                    
+
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource KursValuteDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="5"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtExchangeRate"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentInvoiceItemForm.ExchangeRate, Mode=TwoWay}"/>
-                    
-                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource UValutiPoKursu}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                             Text="{Binding Path=CurrentInvoiceItemForm.ExchangeRate, Mode=TwoWay}" IsEnabled="False"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource IznosUValuti}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="5"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtTotalInCurrency"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentInvoiceItemForm.CurrencyPriceWithPDV, Mode=TwoWay}" IsEnabled="False"/>
 
@@ -147,7 +147,7 @@
                     <DataGrid.Columns>
                         <!--<DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="*" IsReadOnly="True" />-->
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_Mere}" Binding="{Binding Path=UnitOfMeasure}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_MereDvotacka}" Binding="{Binding Path=UnitOfMeasure}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Quantity" Header="{DynamicResource KoličinaDvotacka}" Binding="{Binding Path=Quantity}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PriceWithPDV" Header="{DynamicResource Cena_Sa_PDV}" Binding="{Binding Path=PriceWithPDV}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PriceWithoutPDV" Header="{DynamicResource Cena_Bez_PDV}" Binding="{Binding Path=PriceWithoutPDV}" IsReadOnly="True" />

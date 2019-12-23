@@ -239,7 +239,7 @@ namespace SirmiumERPGFC.Views.Invoices
             IsCreateProcess = isCreateProcess;
             IsPopup = isPopup;
 
-            CurrentInvoice.PdvType = null;
+            //CurrentInvoice.PdvType = null;
             CurrentBusinessPartnerInvoice = CurrentInvoice.Buyer;
 
             if (CurrentBusinessPartnerInvoice != null)

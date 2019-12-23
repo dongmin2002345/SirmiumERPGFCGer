@@ -344,7 +344,7 @@
             <Top>0.06676cm</Top>
             <Left>1.26293cm</Left>
             <Height>0.6cm</Height>
-            <Width>1.50517cm</Width>
+            <Width>1.74274cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -376,7 +376,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>0.02628in</Top>
-            <Left>1.18889in</Left>
+            <Left>1.23889in</Left>
             <Height>0.25in</Height>
             <Width>0.30833in</Width>
             <ZIndex>2</ZIndex>
@@ -398,8 +398,8 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Label>BusinessPartnerCode</Label>
-                    <Value>=First(Fields!BusinessPartnerCode.Value, "Invoices")</Value>
+                    <Label>BusinessPartnerPIB</Label>
+                    <Value>=First(Fields!BusinessPartnerPIB.Value, "Invoices")</Value>
                     <Style>
                       <FontSize>9pt</FontSize>
                     </Style>
@@ -409,8 +409,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
-            <Top>0.10177cm</Top>
-            <Left>3.90171cm</Left>
+            <Top>0.07002cm</Top>
+            <Left>4.02871cm</Left>
             <Height>0.6cm</Height>
             <Width>1.992cm</Width>
             <ZIndex>3</ZIndex>
@@ -443,7 +443,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>0.04007in</Top>
+            <Top>0.02757in</Top>
             <Left>2.4398in</Left>
             <Height>0.25in</Height>
             <Width>0.28333in</Width>
@@ -477,7 +477,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
-            <Top>0.13679cm</Top>
+            <Top>0.10504cm</Top>
             <Left>7.09315cm</Left>
             <Height>0.6cm</Height>
             <Width>2.45534cm</Width>
@@ -636,7 +636,7 @@
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.23232cm</Width>
+              <Width>1.69866cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.85845cm</Width>
@@ -645,7 +645,7 @@
               <Width>1.56637cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.34241cm</Width>
+              <Width>1.87606cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1020,7 +1020,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Id.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1049,7 +1051,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductCode.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1078,7 +1082,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductName.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1107,7 +1113,9 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!UnitOfMeasurement.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -1136,10 +1144,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Quantity.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Quantity</rd:DefaultName>
@@ -1165,10 +1177,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PriceWithoutPDV.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PriceWithoutPDV</rd:DefaultName>
@@ -1194,10 +1210,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PriceWithPDV.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PriceWithPDV</rd:DefaultName>
@@ -1223,10 +1243,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Rebate.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Rebate</rd:DefaultName>
@@ -1252,10 +1276,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PDVPercent.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PDVPercent</rd:DefaultName>
@@ -1281,10 +1309,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PDVValue.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PDVValue</rd:DefaultName>
@@ -1310,10 +1342,14 @@ PDV</Value>
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Amount.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Amount</rd:DefaultName>
@@ -1362,7 +1398,7 @@ PDV</Value>
         <Top>5.61649cm</Top>
         <Left>0cm</Left>
         <Height>2.06783cm</Height>
-        <Width>20.75508cm</Width>
+        <Width>20.75507cm</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -1617,28 +1653,14 @@ PDV</Value>
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox26">
+      <Textbox Name="TotalAmountInText">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>asdfgasdasdsadasasddadasdasda </Value>
-                <Style>
-                  <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>RSD </Value>
-                <Style>
-                  <FontSize>7pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value>i 10/100</Value>
+                <Value>=First(Fields!TotalAmountInText.Value, "Invoices")</Value>
                 <Style>
                   <FontSize>7pt</FontSize>
                   <FontWeight>Normal</FontWeight>
@@ -1648,7 +1670,6 @@ PDV</Value>
             <Style />
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>4.11015in</Top>
         <Left>4.87037in</Left>
         <Height>0.25in</Height>
@@ -2454,6 +2475,10 @@ PDV</Value>
         </Field>
         <Field Name="TotalAmountInCurrency">
           <DataField>TotalAmountInCurrency</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TotalAmountInText">
+          <DataField>TotalAmountInText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TotalBase">
