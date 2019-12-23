@@ -1059,8 +1059,8 @@ namespace SirmiumERPGFC.Repository.Common
                     createTable = new SqliteCommand(InvoiceSQLiteRepository.InvoiceTableCreatePart, db);
                     createTable.ExecuteReader();
 
-                    SQLiteHelper.AddColumnIfNotExists("Invoices", "PdvType", "INTEGER NULL");
-                    SQLiteHelper.AddColumnIfNotExists("Invoices", "DueDate", "DATETIME NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("Invoices", "PdvType", "INTEGER NULL");
+                    //SQLiteHelper.AddColumnIfNotExists("Invoices", "DueDate", "DATETIME NULL");
 
                     if (withTableDrop)
                     {

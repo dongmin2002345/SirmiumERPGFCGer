@@ -33,28 +33,28 @@ namespace DataMapper.Mappers.Common.Invoices
                 Code = invoice.Code,
 
                 InvoiceNumber = invoice.InvoiceNumber,
-                InvoiceDate = invoice.InvoiceDate,
-                DateOfSupplyOfGoods = invoice.DateOfSupplyOfGoods,
-                DueDate = invoice.DueDate,
-
-                Customer = invoice.Customer,
-                PIB = invoice.PIB,
-                BPName = invoice.BPName,
+                Buyer = invoice?.Buyer?.ConvertToBusinessPartnerViewModelLite(),
+                BuyerName = invoice.BuyerName,
                 Address = invoice.Address,
-
-                Currency = invoice.Currency,
-                IsInPDV = invoice.IsInPDV,
-                PdvType = invoice.PdvType,
-
-                IsActive = invoice.Active,
-
-                Company = invoice.Company?.ConvertToCompanyViewModelLite(),
-                CreatedBy = invoice.CreatedBy?.ConvertToUserViewModelLite(),
-                BusinessPartner = invoice.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
+                InvoiceDate = invoice.InvoiceDate,
+                DueDate = invoice.DueDate,
+                DateOfPayment = invoice.DateOfPayment,
+                Status = invoice.Status,
+                StatusDate = invoice.StatusDate,
+                Description = invoice.Description,
+                CurrencyCode = invoice.CurrencyCode,
+                CurrencyExchangeRate = invoice.CurrencyExchangeRate,                
+                
                 City = invoice.City?.ConvertToCityViewModelLite(),
                 Municipality = invoice.Municipality?.ConvertToMunicipalityViewModelLite(),
                 Discount = invoice.Discount?.ConvertToDiscountViewModelLite(),
                 Vat = invoice.Vat?.ConvertToVatViewModelLite(),
+
+                PdvType = invoice.PdvType,
+                IsActive = invoice.Active,
+
+                Company = invoice.Company?.ConvertToCompanyViewModelLite(),
+                CreatedBy = invoice.CreatedBy?.ConvertToUserViewModelLite(),
 
                 UpdatedAt = invoice.UpdatedAt,
                 CreatedAt = invoice.CreatedAt,
@@ -72,19 +72,18 @@ namespace DataMapper.Mappers.Common.Invoices
                 Code = invoice.Code,
 
                 InvoiceNumber = invoice.InvoiceNumber,
-                InvoiceDate = invoice.InvoiceDate,
-                DateOfSupplyOfGoods = invoice.DateOfSupplyOfGoods,
-                DueDate = invoice.DueDate,
-
-                Customer = invoice.Customer,
-                PIB = invoice.PIB,
-                BPName = invoice.BPName,
+                BuyerName = invoice.BuyerName,
                 Address = invoice.Address,
+                InvoiceDate = invoice.InvoiceDate,
+                DueDate = invoice.DueDate,
+                DateOfPayment = invoice.DateOfPayment,
+                Status = invoice.Status,
+                StatusDate = invoice.StatusDate,
+                Description = invoice.Description,
+                CurrencyCode = invoice.CurrencyCode,
+                CurrencyExchangeRate = invoice.CurrencyExchangeRate,
 
-                Currency = invoice.Currency,
-                IsInPDV = invoice.IsInPDV,
                 PdvType = invoice.PdvType,
-
                 IsActive = invoice.Active,
 
                 UpdatedAt = invoice.UpdatedAt,
@@ -103,22 +102,19 @@ namespace DataMapper.Mappers.Common.Invoices
                 Code = invoiceViewModel.Code,
 
                 InvoiceNumber = invoiceViewModel.InvoiceNumber,
-                InvoiceDate = invoiceViewModel.InvoiceDate,
-                DateOfSupplyOfGoods = invoiceViewModel.DateOfSupplyOfGoods,
-                DueDate = invoiceViewModel.DueDate,
 
-                Customer = invoiceViewModel.Customer,
-                PIB = invoiceViewModel.PIB,
-                BPName = invoiceViewModel.BPName,
+                BuyerId = invoiceViewModel.Buyer?.Id ?? null,
+                BuyerName = invoiceViewModel.BuyerName,
                 Address = invoiceViewModel.Address,
-                IsInPDV = invoiceViewModel.IsInPDV,
-                PdvType = invoiceViewModel.PdvType,
+                InvoiceDate = invoiceViewModel.InvoiceDate,
+                DueDate = invoiceViewModel.DueDate,
+                DateOfPayment = invoiceViewModel.DateOfPayment,
+                Status = invoiceViewModel.Status,
+                StatusDate = invoiceViewModel.StatusDate,
+                Description = invoiceViewModel.Description,
+                CurrencyCode = invoiceViewModel.CurrencyCode,
+                CurrencyExchangeRate = invoiceViewModel.CurrencyExchangeRate,
 
-                Currency = invoiceViewModel.Currency,
-
-                Active = invoiceViewModel.IsActive,
-
-                BusinessPartnerId = invoiceViewModel.BusinessPartner?.Id ?? null,
                 CityId = invoiceViewModel.City?.Id ?? null,
                 MunicipalityId = invoiceViewModel.Municipality?.Id ?? null,
                 DiscountId = invoiceViewModel.Discount?.Id ?? null,
@@ -126,8 +122,11 @@ namespace DataMapper.Mappers.Common.Invoices
                 CreatedById = invoiceViewModel.CreatedBy?.Id ?? null,
                 CompanyId = invoiceViewModel.Company?.Id ?? null,
 
+                PdvType = invoiceViewModel.PdvType,
+                Active = invoiceViewModel.IsActive,
+                
+                UpdatedAt = invoiceViewModel.UpdatedAt,
                 CreatedAt = invoiceViewModel.CreatedAt,
-                UpdatedAt = invoiceViewModel.UpdatedAt
             };
 
             return outputinvoice;

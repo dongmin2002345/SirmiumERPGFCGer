@@ -47,6 +47,57 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
+        #region Buyer
+        private BusinessPartnerViewModel _Buyer;
+
+        public BusinessPartnerViewModel Buyer
+        {
+            get { return _Buyer; }
+            set
+            {
+                if (_Buyer != value)
+                {
+                    _Buyer = value;
+                    NotifyPropertyChanged("Buyer");
+                }
+            }
+        }
+        #endregion
+
+        #region BuyerName
+        private string _BuyerName;
+
+        public string BuyerName
+        {
+            get { return _BuyerName; }
+            set
+            {
+                if (_BuyerName != value)
+                {
+                    _BuyerName = value;
+                    NotifyPropertyChanged("BuyerName");
+                }
+            }
+        }
+        #endregion
+
+        #region Address
+        private string _Address;
+
+        public string Address
+        {
+            get { return _Address; }
+            set
+            {
+                if (_Address != value)
+                {
+                    _Address = value;
+                    NotifyPropertyChanged("Address");
+                }
+            }
+        }
+        #endregion
+
         #region InvoiceDate
         private DateTime _InvoiceDate = DateTime.Now;
 
@@ -64,35 +115,120 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
-        #region DateOfSupplyOfGoods
-        private DateTime _DateOfSupplyOfGoods = DateTime.Now;
+        #region DueDate
+        private DateTime _DueDate = DateTime.Now;
 
-        public DateTime DateOfSupplyOfGoods
+        public DateTime DueDate
         {
-            get { return _DateOfSupplyOfGoods; }
+            get { return _DueDate; }
             set
             {
-                if (_DateOfSupplyOfGoods != value)
+                if (_DueDate != value)
                 {
-                    _DateOfSupplyOfGoods = value;
-                    NotifyPropertyChanged("DateOfSupplyOfGoods");
+                    _DueDate = value;
+                    NotifyPropertyChanged("DueDate");
                 }
             }
         }
         #endregion
 
-        #region BusinessPartner
-        private BusinessPartnerViewModel _BusinessPartner;
+        #region DateOfPayment
+        private DateTime _DateOfPayment = DateTime.Now;
 
-        public BusinessPartnerViewModel BusinessPartner
+        public DateTime DateOfPayment
         {
-            get { return _BusinessPartner; }
+            get { return _DateOfPayment; }
             set
             {
-                if (_BusinessPartner != value)
+                if (_DateOfPayment != value)
                 {
-                    _BusinessPartner = value;
-                    NotifyPropertyChanged("BusinessPartner");
+                    _DateOfPayment = value;
+                    NotifyPropertyChanged("DateOfPayment");
+                }
+            }
+        }
+        #endregion
+
+        #region Status
+        private int _Status;
+
+        public int Status
+        {
+            get { return _Status; }
+            set
+            {
+                if (_Status != value)
+                {
+                    _Status = value;
+                    NotifyPropertyChanged("Status");
+                }
+            }
+        }
+        #endregion
+
+        #region StatusDate
+        private DateTime _StatusDate = DateTime.Now;
+
+        public DateTime StatusDate
+        {
+            get { return _StatusDate; }
+            set
+            {
+                if (_StatusDate != value)
+                {
+                    _StatusDate = value;
+                    NotifyPropertyChanged("StatusDate");
+                }
+            }
+        }
+        #endregion
+
+        #region Description
+        private string _Description;
+
+        public string Description
+        {
+            get { return _Description; }
+            set
+            {
+                if (_Description != value)
+                {
+                    _Description = value;
+                    NotifyPropertyChanged("Description");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrencyCode
+        private string _CurrencyCode;
+
+        public string CurrencyCode
+        {
+            get { return _CurrencyCode; }
+            set
+            {
+                if (_CurrencyCode != value)
+                {
+                    _CurrencyCode = value;
+                    NotifyPropertyChanged("CurrencyCode");
+                }
+            }
+        }
+        #endregion
+
+        #region CurrencyExchangeRate
+        private double? _CurrencyExchangeRate;
+
+        public double? CurrencyExchangeRate
+        {
+            get { return _CurrencyExchangeRate; }
+            set
+            {
+                if (_CurrencyExchangeRate != value)
+                {
+                    _CurrencyExchangeRate = value;
+                    NotifyPropertyChanged("CurrencyExchangeRate");
                 }
             }
         }
@@ -132,23 +268,6 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
-        #region Discount
-        private DiscountViewModel _Discount;
-
-        public DiscountViewModel Discount
-        {
-            get { return _Discount; }
-            set
-            {
-                if (_Discount != value)
-                {
-                    _Discount = value;
-                    NotifyPropertyChanged("Discount");
-                }
-            }
-        }
-        #endregion
-
         #region Vat
         private VatViewModel _Vat;
 
@@ -166,105 +285,18 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
-        #region Customer
-        private string _Customer;
+        #region Discount
+        private DiscountViewModel _Discount;
 
-        public string Customer
+        public DiscountViewModel Discount
         {
-            get { return _Customer; }
+            get { return _Discount; }
             set
             {
-                if (_Customer != value)
+                if (_Discount != value)
                 {
-                    _Customer = value;
-                    NotifyPropertyChanged("Customer");
-                }
-            }
-        }
-        #endregion
-
-        #region PIB
-        private string _PIB;
-
-        public string PIB
-        {
-            get { return _PIB; }
-            set
-            {
-                if (_PIB != value)
-                {
-                    _PIB = value;
-                    NotifyPropertyChanged("PIB");
-                }
-            }
-        }
-        #endregion
-
-        #region BPName
-        private string _BPName;
-
-        public string BPName
-        {
-            get { return _BPName; }
-            set
-            {
-                if (_BPName != value)
-                {
-                    _BPName = value;
-                    NotifyPropertyChanged("BPName");
-                }
-            }
-        }
-        #endregion
-
-        #region Address
-        private string _Address;
-
-        public string Address
-        {
-            get { return _Address; }
-            set
-            {
-                if (_Address != value)
-                {
-                    _Address = value;
-                    NotifyPropertyChanged("Address");
-                }
-            }
-        }
-        #endregion
-
-
-        #region Currency
-        private DateTime _Currency = DateTime.Now;
-
-        public DateTime Currency
-        {
-            get { return _Currency; }
-            set
-            {
-                if (_Currency != value)
-                {
-                    _Currency = value;
-                    NotifyPropertyChanged("Currency");
-                    //DateOfPayment = InvoiceDate.AddDays(Currency);
-                }
-            }
-        }
-        #endregion
-
-        #region IsInPDV
-        private bool _IsInPDV;
-
-        public bool IsInPDV
-        {
-            get { return _IsInPDV; }
-            set
-            {
-                if (_IsInPDV != value)
-                {
-                    _IsInPDV = value;
-                    NotifyPropertyChanged("IsInPDV");
+                    _Discount = value;
+                    NotifyPropertyChanged("Discount");
                 }
             }
         }
@@ -282,23 +314,6 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _PdvType = value;
                     NotifyPropertyChanged("PdvType");
-                }
-            }
-        }
-        #endregion
-
-        #region DueDate
-        private DateTime _DueDate;
-
-        public DateTime DueDate
-        {
-            get { return _DueDate; }
-            set
-            {
-                if (_DueDate != value)
-                {
-                    _DueDate = value;
-                    NotifyPropertyChanged("DueDate");
                 }
             }
         }
@@ -375,39 +390,39 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
         }
         #endregion
 
-        //#region SearchBy_DateFrom
-        //private DateTime? _SearchBy_InvoiceDateFrom;
+        #region SearchBy_DateFrom
+        private DateTime? _SearchBy_InvoiceDateFrom;
 
-        //public DateTime? SearchBy_InvoiceDateFrom
-        //{
-        //    get { return _SearchBy_InvoiceDateFrom; }
-        //    set
-        //    {
-        //        if (_SearchBy_InvoiceDateFrom != value)
-        //        {
-        //            _SearchBy_InvoiceDateFrom = value;
-        //            NotifyPropertyChanged("SearchBy_InvoiceDateFrom");
-        //        }
-        //    }
-        //}
-        //#endregion
+        public DateTime? SearchBy_InvoiceDateFrom
+        {
+            get { return _SearchBy_InvoiceDateFrom; }
+            set
+            {
+                if (_SearchBy_InvoiceDateFrom != value)
+                {
+                    _SearchBy_InvoiceDateFrom = value;
+                    NotifyPropertyChanged("SearchBy_InvoiceDateFrom");
+                }
+            }
+        }
+        #endregion
 
-        //#region SearchBy_DateTo
-        //private DateTime? _SearchBy_InvoiceDateTo;
+        #region SearchBy_DateTo
+        private DateTime? _SearchBy_InvoiceDateTo;
 
-        //public DateTime? SearchBy_InvoiceDateTo
-        //{
-        //    get { return _SearchBy_InvoiceDateTo; }
-        //    set
-        //    {
-        //        if (_SearchBy_InvoiceDateTo != value)
-        //        {
-        //            _SearchBy_InvoiceDateTo = value;
-        //            NotifyPropertyChanged("SearchBy_InvoiceDateTo");
-        //        }
-        //    }
-        //}
-        //#endregion
+        public DateTime? SearchBy_InvoiceDateTo
+        {
+            get { return _SearchBy_InvoiceDateTo; }
+            set
+            {
+                if (_SearchBy_InvoiceDateTo != value)
+                {
+                    _SearchBy_InvoiceDateTo = value;
+                    NotifyPropertyChanged("SearchBy_InvoiceDateTo");
+                }
+            }
+        }
+        #endregion
 
         #endregion
 

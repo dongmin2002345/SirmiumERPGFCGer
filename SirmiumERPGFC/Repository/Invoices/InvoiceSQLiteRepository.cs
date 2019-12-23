@@ -16,81 +16,116 @@ namespace SirmiumERPGFC.Repository.Invoices
         #region SQL
 
         public static string InvoiceTableCreatePart =
-          "CREATE TABLE IF NOT EXISTS Invoices " +
-          "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-          "ServerId INTEGER NULL, " +
-          "Identifier GUID, " +
-          "Code NVARCHAR(48) NULL, " +
-          "BusinessPartnerId INTEGER NULL, " +
-          "BusinessPartnerIdentifier GUID NULL, " +
-          "BusinessPartnerCode NVARCHAR(48) NULL, " +
-          "BusinessPartnerName NVARCHAR(48) NULL, " +
-          "BusinessPartnerInternalCode NVARCHAR(2048) NULL, " +
-          "BusinessPartnerNameGer NVARCHAR(2048) NULL, " +
-          "CityId INTEGER NULL, " +
-          "CityIdentifier GUID NULL, " +
-          "CityCode NVARCHAR(48) NULL, " +
-          "CityName NVARCHAR(48) NULL, " +
-          "MunicipalityId INTEGER NULL, " +
-          "MunicipalityIdentifier GUID NULL, " +
-          "MunicipalityCode NVARCHAR(48) NULL, " +
-          "MunicipalityName NVARCHAR(48) NULL, " +
-          "DiscountId INTEGER NULL, " +
-          "DiscountIdentifier GUID NULL, " +
-          "DiscountCode NVARCHAR(48) NULL, " +
-          "DiscountName NVARCHAR(48) NULL, " +
-          "DiscountAmount DECIMAL NULL, " +
-          "VatId INTEGER NULL, " +
-          "VatIdentifier GUID NULL, " +
-          "VatCode NVARCHAR(48) NULL, " +
-          "VatDescription NVARCHAR(48) NULL, " +
-          "VatAmount DECIMAL NULL, " +
-          "InvoiceNumber NVARCHAR(48) NULL, " +
-          "InvoiceDate DATETIME NULL, " +
-          "DateOfSupplyOfGoods DATETIME NULL, " +
-          "DueDate DATETIME NULL, " +
-          "Customer NVARCHAR(48) NULL, " +
-          "PIB NVARCHAR(48) NULL, " +
-          "BPName NVARCHAR(48) NULL, " +
-          "Address NVARCHAR(48) NULL, " +
-          "Currency DATETIME NULL, " +
-          "IsInPDV BOOL NULL, " +
-          "PdvType INTEGER NULL, " +
-          "IsSynced BOOL NULL, " +
-          "UpdatedAt DATETIME NULL, " +
-          "CreatedById INTEGER NULL, " +
-          "CreatedByName NVARCHAR(2048) NULL, " +
-          "CompanyId INTEGER NULL, " +
-          "CompanyName NVARCHAR(2048) NULL)";
+            "CREATE TABLE IF NOT EXISTS Invoices " +
+            "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "ServerId INTEGER NULL, " +
+            "Identifier GUID, " +
+            "Code NVARCHAR(48) NULL, " +
+            "InvoiceNumber NVARCHAR(48) NULL, " +
+
+            "BuyerId INTEGER NULL, " +
+            "BuyerIdentifier GUID NULL, " +
+            "BuyerCode NVARCHAR(48) NULL, " +
+            "BuyerName NVARCHAR(48) NULL, " +
+            "BuyerInternalCode NVARCHAR(2048) NULL, " +
+            "BuyerNameGer NVARCHAR(2048) NULL, " +
+            "EnteredBuyerName NVARCHAR(2048) NULL, " +
+
+            "Address NVARCHAR(2048) NULL, " +
+            "InvoiceDate DATETIME NULL, " +
+            "DueDate DATETIME NULL, " +
+            "DateOfPayment DATETIME NULL, " +
+
+            "Status INTEGER NULL, " +
+            "StatusDate DATETIME NULL, " +
+            
+            "Description NVARCHAR(2048) NULL, " +
+            "CurrencyCode NVARCHAR(2048) NULL, " +
+            "CurrencyExchangeRate DECIMAL(18, 2) NULL, " +
+
+
+            "CityId INTEGER NULL, " +
+            "CityIdentifier GUID NULL, " +
+            "CityCode NVARCHAR(48) NULL, " +
+            "CityName NVARCHAR(48) NULL, " +
+
+            "MunicipalityId INTEGER NULL, " +
+            "MunicipalityIdentifier GUID NULL, " +
+            "MunicipalityCode NVARCHAR(48) NULL, " +
+            "MunicipalityName NVARCHAR(48) NULL, " +
+
+            "DiscountId INTEGER NULL, " +
+            "DiscountIdentifier GUID NULL, " +
+            "DiscountCode NVARCHAR(48) NULL, " +
+            "DiscountName NVARCHAR(48) NULL, " +
+            "DiscountAmount DECIMAL NULL, " +
+
+            "VatId INTEGER NULL, " +
+            "VatIdentifier GUID NULL, " +
+            "VatCode NVARCHAR(48) NULL, " +
+            "VatDescription NVARCHAR(48) NULL, " +
+            "VatAmount DECIMAL NULL, " +
+
+            "PdvType INTEGER NULL, " +
+            "IsSynced BOOL NULL, " +
+            "UpdatedAt DATETIME NULL, " +
+            "CreatedById INTEGER NULL, " +
+            "CreatedByName NVARCHAR(2048) NULL, " +
+            "CompanyId INTEGER NULL, " +
+            "CompanyName NVARCHAR(2048) NULL)";
 
         public string SqlCommandSelectPart =
-            "SELECT ServerId, Identifier, Code, " +
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
-            "CityId, CityIdentifier, CityCode, CityName," +
-            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName," +
+            "SELECT ServerId, Identifier, Code, InvoiceNumber, " +
+            "BuyerId, BuyerIdentifier, BuyerCode, BuyerName, " +
+            "BuyerInternalCode, BuyerNameGer, EnteredBuyerName, " +
+
+            "Address, InvoiceDate, DueDate, DateOfPayment, " +
+            "Status, StatusDate, Description, CurrencyCode, CurrencyExchangeRate, " +
+
+            "CityId, CityIdentifier, CityCode, CityName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+
             "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
-            "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
-            "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, DueDate, Customer, PIB, BPName, Address, Currency, IsInPDV, PdvType, " +
-            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
+
+            "VatId, VatIdentifier, VatCode, VatDescription, VatAmount,  " +
+
+            "PdvType, IsSynced, UpdatedAt, CreatedById, CreatedByName, " +
+            "CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO Invoices " +
-            "(Id, ServerId, Identifier, Code, " +
-            "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
-            "CityId, CityIdentifier, CityCode, CityName," +
-            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName," +
-            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
-            "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
-            "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, DueDate, Customer, PIB, BPName, Address, Currency, IsInPDV, PdvType, " +
-            "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
+            "(Id, ServerId, Identifier, Code, InvoiceNumber, " +
+            "BuyerId, BuyerIdentifier, BuyerCode, BuyerName, " +
+            "BuyerInternalCode, BuyerNameGer, EnteredBuyerName, " +
 
-            "VALUES (NULL, @ServerId, @Identifier, @Code, " +
-            "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
-            "@CityId, @CityIdentifier, @CityCode, @CityName," +
-            "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName," +
+            "Address, InvoiceDate, DueDate, DateOfPayment, " +
+            "Status, StatusDate, Description, CurrencyCode, CurrencyExchangeRate, " +
+
+            "CityId, CityIdentifier, CityCode, CityName, " +
+            "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
+
+            "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
+
+            "VatId, VatIdentifier, VatCode, VatDescription, VatAmount,  " +
+
+            "PdvType, IsSynced, UpdatedAt, CreatedById, CreatedByName, " +
+            "CompanyId, CompanyName) " +
+
+            "VALUES (NULL, @ServerId, @Identifier, @Code, @InvoiceNumber, " +
+            "@BuyerId, @BuyerIdentifier, @BuyerCode, @BuyerName, " +
+            "@BuyerInternalCode, @BuyerNameGer, @EnteredBuyerName, " +
+
+            "@Address, @InvoiceDate, @DueDate, @DateOfPayment, " +
+            "@Status, @StatusDate, @Description, @CurrencyCode, @CurrencyExchangeRate, " +
+
+            "@CityId, @CityIdentifier, @CityCode, @CityName, " +
+            "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, " +
+
             "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, @DiscountAmount, " +
-            "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount, " +
-            "@InvoiceNumber, @InvoiceDate, @DateOfSupplyOfGoods, @DueDate, @Customer, @PIB, @BPName, @Address, @Currency, @IsInPDV, @PdvType, " +
-            "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
+
+            "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount,  " +
+
+            "@PdvType, @IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, " +
+            "@CompanyId, @CompanyName)";
 
         #endregion
 
@@ -103,23 +138,27 @@ namespace SirmiumERPGFC.Repository.Invoices
             dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
             dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.Buyer = SQLiteHelper.GetBusinessPartner(query, ref counter);
+            dbEntry.BuyerName = SQLiteHelper.GetString(query, ref counter);
+
+            dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.DueDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.DateOfPayment = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Status = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Description = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.CurrencyCode = SQLiteHelper.GetString(query, ref counter);
+            dbEntry.CurrencyExchangeRate = SQLiteHelper.GetDoubleNullable(query, ref counter);
+
             dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
             dbEntry.Municipality = SQLiteHelper.GetMunicipality(query, ref counter);
             dbEntry.Discount = SQLiteHelper.GetDiscount(query, ref counter);
             dbEntry.Vat = SQLiteHelper.GetVat(query, ref counter);
-            dbEntry.InvoiceNumber = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.InvoiceDate = SQLiteHelper.GetDateTime(query, ref counter);
-            dbEntry.DateOfSupplyOfGoods = SQLiteHelper.GetDateTime(query, ref counter);
-            dbEntry.DueDate = SQLiteHelper.GetDateTime(query, ref counter);
-            dbEntry.Customer = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.PIB = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.BPName = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.Currency = SQLiteHelper.GetDateTime(query, ref counter);
-            dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
+
             dbEntry.PdvType = SQLiteHelper.GetIntNullable(query, ref counter);
-            
+
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -128,44 +167,53 @@ namespace SirmiumERPGFC.Repository.Invoices
         }
         private SqliteCommand AddCreateParameters(SqliteCommand insertCommand, InvoiceViewModel Invoice)
         {
+
+
             insertCommand.Parameters.AddWithValue("@ServerId", Invoice.Id);
             insertCommand.Parameters.AddWithValue("@Identifier", Invoice.Identifier);
             insertCommand.Parameters.AddWithValue("@Code", ((object)Invoice.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)Invoice.InvoiceNumber) ?? DBNull.Value);
 
-            insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)Invoice.BusinessPartner?.Id) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)Invoice.BusinessPartner?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BusinessPartnerCode", ((object)Invoice.BusinessPartner?.Code) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)Invoice.BusinessPartner?.Name) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BusinessPartnerInternalCode", ((object)Invoice.BusinessPartner?.InternalCode) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BusinessPartnerNameGer", ((object)Invoice.BusinessPartner?.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BuyerId", ((object)Invoice.Buyer?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BuyerIdentifier", ((object)Invoice.Buyer?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BuyerCode", ((object)Invoice.Buyer?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BuyerName", ((object)Invoice.Buyer?.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BuyerInternalCode", ((object)Invoice.Buyer?.InternalCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BuyerNameGer", ((object)Invoice.Buyer?.NameGer) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@EnteredBuyerName", ((object)Invoice.BuyerName) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@Address", ((object)Invoice.Address) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@InvoiceDate", ((object)Invoice.InvoiceDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DueDate", ((object)Invoice.DueDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@DateOfPayment", ((object)Invoice.DateOfPayment) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Status", ((object)Invoice.Status) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusDate", ((object)Invoice.StatusDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Description", ((object)Invoice.Description) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CurrencyCode", ((object)Invoice.CurrencyCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CurrencyExchangeRate", ((object)Invoice.CurrencyExchangeRate) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@CityId", ((object)Invoice.City?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)Invoice.City?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityCode", ((object)Invoice.City?.ZipCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityName", ((object)Invoice.City?.Name) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)Invoice.Municipality?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)Invoice.Municipality?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)Invoice.Municipality?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)Invoice.Municipality?.Name) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@DiscountId", ((object)Invoice.Discount?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountIdentifier", ((object)Invoice.Discount?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountCode", ((object)Invoice.Discount?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountName", ((object)Invoice.Discount?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@DiscountAmount", ((object)Invoice.Discount?.Amount) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@VatId", ((object)Invoice.Vat?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatIdentifier", ((object)Invoice.Vat?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatCode", ((object)Invoice.Vat?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatDescription", ((object)Invoice.Vat?.Description) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatAmount", ((object)Invoice.Vat?.Amount) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)Invoice.InvoiceNumber) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@InvoiceDate", ((object)Invoice.InvoiceDate) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@DateOfSupplyOfGoods", ((object)Invoice.DateOfSupplyOfGoods) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@DueDate", ((object)Invoice.DueDate) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Customer", ((object)Invoice.Customer) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@PIB", ((object)Invoice.PIB) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BPName", ((object)Invoice.BPName) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Address", ((object)Invoice.Address) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Currency", ((object)Invoice.Currency) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@IsInPDV", ((object)Invoice.IsInPDV) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@PdvType", ((object)Invoice.PdvType) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", Invoice.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)Invoice.UpdatedAt) ?? DBNull.Value);
@@ -195,18 +243,18 @@ namespace SirmiumERPGFC.Repository.Invoices
                     SqliteCommand selectCommand = new SqliteCommand(
                          SqlCommandSelectPart +
                          "FROM Invoices " +
-                         "WHERE (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
+                         "WHERE (@BuyerName IS NULL OR @BuyerName = '' OR BuyerName LIKE @BuyerName) " +
                          "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
-                         //"AND (@DateTo IS NULL OR @DateTo = '' OR DATE(InvoiceDate) <= DATE(@DateTo)) " +
-                         //"AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(InvoiceDate) >= DATE(@DateFrom)) " +
+                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(InvoiceDate) <= DATE(@DateTo)) " +
+                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(InvoiceDate) >= DATE(@DateFrom)) " +
                          "AND CompanyId = @CompanyId " +
                          "ORDER BY IsSynced, Id DESC " +
                          "LIMIT @ItemsPerPage OFFSET @Offset;", db);
 
-                    selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + InvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@BuyerName", ((object)InvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + InvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-                    //selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
-                    //selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);
@@ -223,14 +271,14 @@ namespace SirmiumERPGFC.Repository.Invoices
                     selectCommand = new SqliteCommand(
                         "SELECT Count(*) " +
                         "FROM Invoices " +
-                        "WHERE(@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
+                        "WHERE(@BuyerName IS NULL OR @BuyerName = '' OR BuyerName LIKE @BuyerName) " +
                         "AND (@InvoiceNumber IS NULL OR @InvoiceNumber = '' OR InvoiceNumber LIKE @InvoiceNumber) " +
                         "AND CompanyId = @CompanyId;", db);
 
-                    selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)InvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + InvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@BuyerName", ((object)InvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + InvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-                    //selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
-                    //selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
 
                     query = selectCommand.ExecuteReader();

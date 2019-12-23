@@ -50,6 +50,10 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -75,7 +79,39 @@
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Background="#007ACC">
+
+
+                <TextBlock Text="{DynamicResource Datum_fakture_odDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDatefrom" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateFrom}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="{DynamicResource Datum_fakture_doDvotacka}"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDateTo" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceDateTo}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="{DynamicResource Datum_plaćanja_odDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDateOfPaymentfrom" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymetFrom}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="{DynamicResource Datum_plaćanja_odDvotacka}"  Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="5"/>
+                <DatePicker x:Name="dtSearchByDateOfPaymentTo" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2"
+                         SelectedDate="{Binding Path=OutputInvoiceSearchObject.SearchBy_DateOfPaymetTo}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Text="{DynamicResource Broj_faktureDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Margin="5"/>
+                <TextBox x:Name="txtSearchByInvoiceNumber" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                         Text="{Binding Path=OutputInvoiceSearchObject.SearchBy_InvoiceNumber}"
+                         Margin="2"
+                         Controls:TextBoxHelper.ClearTextButton="True"/>
+
+                <Button  x:Name="btnSearch" Click="btnSearch_Click" Margin="2" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Lupa.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock Text="{DynamicResource PRIKAŽI}" Foreground="White" FontWeight="Regular" />
@@ -169,18 +205,17 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="InvoiceNumber" Header="{DynamicResource Broj_računa}" Binding="{Binding InvoiceNumber}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn SortMemberPath="InvoiceDate" Header="{DynamicResource Datum_izdavanja_od}" Binding="{Binding InvoiceDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="DateOfSupplyOfGoods" Header="{DynamicResource Datum_Prometa_Dobara_I_Usluga}" Binding="{Binding DateOfSupplyOfGoods, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Customer" Header="{DynamicResource Kupac}" Binding="{Binding Customer}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="PIB" Header="{DynamicResource PIB}" Binding="{Binding PIB}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="BPName" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BPName}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Grad}" Binding="{Binding City.Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Municipality.Name" Header="{DynamicResource Opština}" Binding="{Binding Municipality.Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Currency" Header="{DynamicResource Valuta}" Binding="{Binding Currency, Converter={StaticResource cbxDatetimeToStringConverter}}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="IsInPDV" Header="{DynamicResource Obveznik_PDVCrtaa}" Binding="{Binding IsInPDV, Converter={StaticResource BoolStringConverter}}"  IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DueDate" Header="{DynamicResource Datum_Prometa_Dobara_I_Usluga}" Binding="{Binding DueDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="DateOfPayment" Header="{DynamicResource Datum_Prometa_Dobara_I_Usluga}" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Buyer.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding Buyer.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="BuyerName" Header="{DynamicResource Kupac}" Binding="{Binding BuyerName}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource PIB}" Binding="{Binding Address}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding City.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Municipality.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding Municipality.Name}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="CurrencyExchangeRate" Header="{DynamicResource Poslovni_partner}" Binding="{Binding CurrencyExchangeRate}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Vat.Amount" Header="{DynamicResource Poslovni_partner}" Binding="{Binding Vat.Amount}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Discount.Name" Header="{DynamicResource Popust}" Binding="{Binding Discount.Name}"  IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Vat.Description" Header="{DynamicResource PDVProcenat}" Binding="{Binding Vat.Description}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Description" Header="{DynamicResource PDVProcenat}" Binding="{Binding Description}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PdvType" Header="{DynamicResource BPPdvVrsta}" Binding="{Binding PdvType, Converter={StaticResource pdvTypeConverter}}" IsReadOnly="True" />
                         
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >

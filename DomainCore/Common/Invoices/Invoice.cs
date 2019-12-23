@@ -11,33 +11,37 @@ namespace DomainCore.Common.Invoices
 {
     public class Invoice : BaseEntity
     {
-        public string InvoiceNumber { get; set; }
         public string Code { get; set; }
+        public string InvoiceNumber { get; set; }
 
-        public DateTime InvoiceDate { get; set; }
-        public DateTime DateOfSupplyOfGoods { get; set; }
+        public int? BuyerId { get; set; }
+        public BusinessPartner Buyer { get; set; }
 
-        public DateTime DueDate { get; set; }
-
-
-        public int? BusinessPartnerId { get; set; }
-        public BusinessPartner BusinessPartner { get; set; }
-        //BusinessPartner fields
-        public string Customer { get; set; }
-        public string PIB { get; set; }
-        public string BPName { get; set; }
+        public string BuyerName { get; set; }
         public string Address { get; set; }
+        public DateTime InvoiceDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime DateOfPayment { get; set; }
+        public int Status { get; set; }
+        public DateTime StatusDate { get; set; }
+        public string Description { get; set; }
+        public string CurrencyCode { get; set; }
+        public double? CurrencyExchangeRate { get; set; }
+        
         public int? CityId { get; set; }
         public City City { get; set; }
+
         public int? MunicipalityId { get; set; }
         public Municipality Municipality { get; set; }
-        public DateTime Currency { get; set; }
-        public int? DiscountId { get; set; }
-        public Discount Discount { get; set; }
+        
         public int? VatId { get; set; }
         public Vat Vat { get; set; }
-        public bool IsInPDV { get; set; }
+
+        public int? DiscountId { get; set; }
+        public Discount Discount { get; set; }
 
         public int? PdvType { get; set; }
+
+        public List<InvoiceItem> InvoiceItems { get; set; }
     }
 }

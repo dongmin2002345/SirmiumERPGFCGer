@@ -23,15 +23,18 @@ namespace RepositoryCore.Implementations.Common.Invoices
         private string connectionString;
 
         string selectString =
-              "SELECT InvoiceId, InvoiceIdentifier, InvoiceCode, " +
-              "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
-              "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
-              "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
+              "SELECT InvoiceId, InvoiceIdentifier, InvoiceCode, InvoiceNumber, " +
+
+              "BuyerId, BuyerIdentifier, BuyerCode, BuyerName, EnteredBuyerName, " +
+              "Address, InvoiceDate, DueDate, DateOfPayment, Status, StatusDate, Description, " +
+              "CurrencyCode, CurrencyExchangeRate, " +
+
               "CityId, CityIdentifier, CityZipCode, CityName, " +
               "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
-              "InvoiceNumber, InvoiceDate, DateOfSupplyOfGoods, DueDate, " +
-              "Customer, PIB, BPName, Address," +
-              "Currency, IsInPDV, PdvType, Active, UpdatedAt," +
+              "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
+              "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
+
+              "PdvType, Active, UpdatedAt," +
               "CreatedById, CreatedByFirstName, CreatedByLastName, " +
               "CompanyId, CompanyName " +
               "FROM vInvoices ";
@@ -48,16 +51,42 @@ namespace RepositoryCore.Implementations.Common.Invoices
             invoice.Id = Int32.Parse(reader["InvoiceId"].ToString());
             invoice.Identifier = Guid.Parse(reader["InvoiceIdentifier"].ToString());
             invoice.Code = reader["InvoiceCode"].ToString();
+            invoice.InvoiceNumber = reader["InvoiceNumber"]?.ToString();
 
-            if (reader["BusinessPartnerId"] != DBNull.Value)
+            if (reader["BuyerId"] != DBNull.Value)
             {
-                invoice.BusinessPartner = new BusinessPartner();
-                invoice.BusinessPartnerId = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                invoice.BusinessPartner.Id = Int32.Parse(reader["BusinessPartnerId"].ToString());
-                invoice.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
-                invoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
-                invoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                invoice.Buyer = new BusinessPartner();
+                invoice.BuyerId = Int32.Parse(reader["BuyerId"].ToString());
+                invoice.Buyer.Id = Int32.Parse(reader["BuyerId"].ToString());
+                invoice.Buyer.Identifier = Guid.Parse(reader["BuyerIdentifier"].ToString());
+                invoice.Buyer.Code = reader["BuyerCode"].ToString();
+                invoice.Buyer.Name = reader["BuyerName"].ToString();
             }
+
+            invoice.BuyerName = reader["EnteredBuyerName"]?.ToString();
+            invoice.Address = reader["Address"]?.ToString();
+
+            if (reader["InvoiceDate"] != DBNull.Value)
+                invoice.InvoiceDate = DateTime.Parse(reader["InvoiceDate"].ToString());
+
+            if (reader["DueDate"] != DBNull.Value)
+                invoice.DueDate = DateTime.Parse(reader["DueDate"].ToString());
+
+            if (reader["DateOfPayment"] != DBNull.Value)
+                invoice.DateOfPayment = DateTime.Parse(reader["DateOfPayment"].ToString());
+
+            if (reader["Status"] != DBNull.Value)
+                invoice.Status = Int32.Parse(reader["Status"].ToString());
+
+            if (reader["StatusDate"] != DBNull.Value)
+                invoice.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
+
+            invoice.Description = reader["Description"]?.ToString();
+            invoice.CurrencyCode = reader["CurrencyCode"]?.ToString();
+
+            if (reader["CurrencyExchangeRate"] != DBNull.Value)
+                invoice.CurrencyExchangeRate = double.Parse(reader["CurrencyExchangeRate"].ToString());
+
 
             if (reader["DiscountId"] != DBNull.Value)
             {
@@ -101,27 +130,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Municipality.Name = reader["MunicipalityName"].ToString();
             }
 
-            if (reader["InvoiceNumber"] != DBNull.Value)
-                invoice.InvoiceNumber = reader["InvoiceNumber"].ToString();
-            if (reader["InvoiceDate"] != DBNull.Value)
-                invoice.InvoiceDate = DateTime.Parse(reader["InvoiceDate"].ToString());
-            if (reader["DateOfSupplyOfGoods"] != DBNull.Value)
-                invoice.DateOfSupplyOfGoods = DateTime.Parse(reader["DateOfSupplyOfGoods"].ToString());
-            if (reader["DueDate"] != DBNull.Value)
-                invoice.DueDate = DateTime.Parse(reader["DueDate"].ToString());
 
-            if (reader["Customer"] != DBNull.Value)
-                invoice.Customer = reader["Customer"].ToString();
-            if (reader["PIB"] != DBNull.Value)
-                invoice.PIB = reader["PIB"].ToString();
-            if (reader["BusinessPartnerName"] != DBNull.Value)
-                invoice.BPName = reader["BPName"].ToString();
-            if (reader["Address"] != DBNull.Value)
-                invoice.Address = reader["Address"].ToString();
-            if (reader["Currency"] != DBNull.Value)
-                invoice.Currency = DateTime.Parse(reader["Currency"].ToString());
-            if (reader["IsInPDV"] != DBNull.Value)
-                invoice.IsInPDV = bool.Parse(reader["IsInPDV"].ToString());
             if (reader["PdvType"] != DBNull.Value)
                 invoice.PdvType = Int32.Parse(reader["PdvType"].ToString());
 
@@ -232,6 +241,34 @@ namespace RepositoryCore.Implementations.Common.Invoices
                     return "";
             }
         }
+        private string GetNewInvoiceNumber(int companyId)
+        {
+            int count = context.Invoices
+                .Union(context.ChangeTracker.Entries()
+                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(Invoice))
+                    .Select(x => x.Entity as Invoice))
+                .Where(x => x.CompanyId == companyId).Count();
+            if (count == 0)
+                return "1";
+            else
+            {
+                string activeCode = context.Invoices
+                    .Union(context.ChangeTracker.Entries()
+                        .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(Invoice))
+                        .Select(x => x.Entity as Invoice))
+                    .Where(x => x.CompanyId == companyId)
+                    .OrderByDescending(x => x.Id).FirstOrDefault()
+                    ?.Code ?? "";
+
+                if (!String.IsNullOrEmpty(activeCode))
+                {
+                    int intValue = Int32.Parse(activeCode);
+                    return (intValue + 1).ToString();
+                }
+                else
+                    return "";
+            }
+        }
         public Invoice Create(Invoice invoice)
         {
             if (context.Invoices.Where(x => x.Identifier != null && x.Identifier == invoice.Identifier).Count() == 0)
@@ -239,6 +276,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Id = 0;
 
                 invoice.Code = GetNewCodeValue(invoice.CompanyId ?? 0);
+                invoice.InvoiceNumber = GetNewInvoiceNumber(invoice.CompanyId ?? 0);
 
                 invoice.Active = true;
 
@@ -256,7 +294,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
                 if (dbEntry != null)
                 {
-                    dbEntry.BusinessPartnerId = invoice.BusinessPartnerId ?? null;
+                    dbEntry.BuyerId = invoice.BuyerId ?? null;
                     dbEntry.DiscountId = invoice.DiscountId ?? null;
                     dbEntry.VatId = invoice.VatId ?? null;
                     dbEntry.CityId = invoice.CityId ?? null;
@@ -266,16 +304,17 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
                     dbEntry.InvoiceNumber = invoice.InvoiceNumber;
 
-                    dbEntry.InvoiceDate = invoice.InvoiceDate;
-                    dbEntry.DateOfSupplyOfGoods = invoice.DateOfSupplyOfGoods;
-                    dbEntry.DueDate = invoice.DueDate;
-                    dbEntry.Customer = invoice.Customer;
-                    dbEntry.PIB = invoice.PIB;
-                    dbEntry.BPName = invoice.BPName;
+                    dbEntry.BuyerName = invoice.BuyerName;
                     dbEntry.Address = invoice.Address;
-                    dbEntry.Currency = invoice.Currency;
-                    dbEntry.IsInPDV = invoice.IsInPDV;
+                    dbEntry.InvoiceDate = invoice.InvoiceDate;
+                    dbEntry.DueDate = invoice.DueDate;
+                    dbEntry.DateOfPayment = invoice.DateOfPayment;
+                    dbEntry.Status = invoice.Status;
+                    dbEntry.StatusDate = invoice.StatusDate;
 
+                    dbEntry.Description = invoice.Description;
+                    dbEntry.CurrencyCode = invoice.CurrencyCode;
+                    dbEntry.CurrencyExchangeRate = invoice.CurrencyExchangeRate;
                     dbEntry.PdvType = invoice.PdvType;
 
                     // Set timestamp

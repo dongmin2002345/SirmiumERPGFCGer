@@ -569,7 +569,7 @@ namespace SirmiumERPGFC.Views.Invoices
                 new 
                 {
 
-                    BusinessPartnerName = CurrentInvoice?.BusinessPartner?.Name ?? "",
+                    ////BusinessPartnerName = CurrentInvoice?.BusinessPartner?.Name ?? "",
                     Supplier = "????",//CurrentInvoice?.Supplier ?? "",
                     Address = CurrentInvoice?.Address ?? "",
                     InvoiceNumber = CurrentInvoice?.InvoiceNumber ?? "",
@@ -578,7 +578,7 @@ namespace SirmiumERPGFC.Views.Invoices
                     PDVPercent = "????",//CurrentInvoice?.PdvPercent.ToString("#.00") ?? "",
                     PDV = InvoiceItemsFromDB.Sum(x => x.PDV).ToString("#.00") ?? "",
                     AmountGross = InvoiceItemsFromDB.Sum(x => x.Amount).ToString("#.00") ?? "",//CurrentInvoice?.AmountGross.ToString("#.00") ?? "",
-                    Currency = CurrentInvoice?.Currency.ToString("dd.MM.yyyy") ?? "",
+                    ////Currency = CurrentInvoice?.Currency.ToString("dd.MM.yyyy") ?? "",
                     DateOfPaymet = CurrentInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "",
                     Status = "???",//CurrentInvoice?.Status.ToString() ?? "",
                     StatusDate = CurrentInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? ""//CurrentInvoice?.StatusDate.ToString("dd.MM.yyyy") ?? ""
