@@ -286,6 +286,9 @@
     <Compile Include="RdlcReports\InputInvoices\InputInvoicesReportViewModel.cs" />
     <Compile Include="RdlcReports\Invoices\InvoiceItemViewModel.cs" />
     <Compile Include="RdlcReports\Invoices\InvoiceViewModel.cs" />
+    <Compile Include="RdlcReports\Invoices\Invoice_PrintPage.xaml.cs">
+      <DependentUpon>Invoice_PrintPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RdlcReports\OutputInvoices\OutputInvoiceReportViewModel.cs" />
     <Compile Include="RdlcReports\OutputInvoices\OutputInvoicesReportViewModel.cs" />
     <Compile Include="Reports\BusinessPartners\BusinessPartnerExcelReport.cs" />
@@ -846,6 +849,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RdlcReports\Invoices\Invoice_PrintPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

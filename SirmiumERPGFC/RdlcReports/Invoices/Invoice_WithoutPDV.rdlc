@@ -572,7 +572,7 @@ PDV</Value>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.108cm</Height>
+              <Height>1.00217cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -859,7 +859,7 @@ PDV</Value>
         <DataSetName>InvoiceItems</DataSetName>
         <Top>5.61649cm</Top>
         <Left>0cm</Left>
-        <Height>2.06783cm</Height>
+        <Height>1.962cm</Height>
         <Width>20.75508cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
