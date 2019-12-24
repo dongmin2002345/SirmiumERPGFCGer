@@ -753,4 +753,18 @@
     <system:String x:Key="OdznaciSve"> NIŠTA </system:String>
     <system:String x:Key="UkloniOznaceno"> UKLONI OZNAČENO </system:String>
     <system:String x:Key="DodajStavke"> DODAJ STAVKE </system:String>
+
+
+    <system:String x:Key="DokumentiPoslovnogPartnera"> DOKUMENTI FIRMI </system:String>
+    <system:String x:Key="DokumentiGradilišta"> DOKUMENTI GRADILIŠTA </system:String>
+    <system:String x:Key="DokumentiRadnika"> DOKUMENTI RADNIKA </system:String>
+    <system:String x:Key="DokumentiFizickogLica"> DOKUMENTI FIZIČKIH LICA </system:String>
+    <system:String x:Key="DODATE_STAVKE"> DODATE STAVKE </system:String>
+    <system:String x:Key="DokumentZa">ZA</system:String>
+    <system:String x:Key="PretragaDvotacka">Pretraga: </system:String>
+    <system:String x:Key="DatumOdDvotacka">Datum od: </system:String>
+    <system:String x:Key="DatumDoDvotacka">Datum do:</system:String>
+    <system:String x:Key="OdabranaLokacijaNijeIspravnaUzvicnik">Lokacija ovog dokumenta je neispravna, proverite da li datoteka postoji na disku!</system:String>
+    <system:String x:Key="OdaberiBarJedanDokumentUzvicnik">Morate odabrati bar jedan dokument za ovu operaciju!</system:String>
+    <system:String x:Key="OutlookNijeInstaliranIliNijePovezanUzvicnik">Outlook nije instaliran ili nije naveden u konfiguraciji aplikacije!</system:String>
 </ResourceDictionary>

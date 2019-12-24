@@ -749,9 +749,23 @@
     <system:String x:Key="Porez">Steuer</system:String>
     <system:String x:Key="PorezDvotacka">Steuer:</system:String>
     <system:String x:Key="PDV_vrsta_nije_uneta_na_racunuUzvicnik">Die Umsatzsteuerart ist auf der Rechnung nicht ausgewählt!</system:String>
-    
-    <system:String x:Key="OznaciSve">SVE</system:String>
-    <system:String x:Key="OdznaciSve">NIŠTA</system:String>
-    <system:String x:Key="UkloniOznaceno">UKLONI OZNAČENO</system:String>
-    <system:String x:Key="DodajStavke">DODAJ STAVKE</system:String>
+
+    <system:String x:Key="OznaciSve">ALL</system:String>
+    <system:String x:Key="OdznaciSve">NICHTS</system:String>
+    <system:String x:Key="UkloniOznaceno">ENTFERNEN MARKIERT</system:String>
+    <system:String x:Key="DodajStavke">EINZELTEILE HINZUFÜGEN</system:String>
+
+
+    <system:String x:Key="DokumentiPoslovnogPartnera">UNTERNEHMENSDOKUMENTE</system:String>
+    <system:String x:Key="DokumentiGradilišta">BAUUNTERLAGEN</system:String>
+    <system:String x:Key="DokumentiRadnika">ARBEITSUNTERLAGEN</system:String>
+    <system:String x:Key="DokumentiFizickogLica">DOKUMENTE VON EINZELNEN</system:String>
+    <system:String x:Key="DODATE_STAVKE">EINZELTEILE HINZUFÜGEN</system:String>
+    <system:String x:Key="DokumentZa">FÜR</system:String>
+    <system:String x:Key="PretragaDvotacka">Suchen:</system:String>
+    <system:String x:Key="DatumOdDvotacka">Datum von:</system:String>
+    <system:String x:Key="DatumDoDvotacka">Datum bis:</system:String>
+    <system:String x:Key="OdabranaLokacijaNijeIspravnaUzvicnik">Der Speicherort dieses Dokuments ist nicht verfügbar. Überprüfen Sie, ob es auf der Festplatte vorhanden ist!</system:String>
+    <system:String x:Key="OdaberiBarJedanDokumentUzvicnik">Sie müssen mindestens ein Dokument für diesen Vorgang auswählen!</system:String>
+    <system:String x:Key="OutlookNijeInstaliranIliNijePovezanUzvicnik">Outlook ist nicht installiert oder nicht in der Anwendungskonfiguration eingerichtet!</system:String>
 </ResourceDictionary>

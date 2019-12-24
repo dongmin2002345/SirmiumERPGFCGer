@@ -26,9 +26,11 @@ using SirmiumERPGFC.Views.TaxAdministrations;
 using SirmiumERPGFC.Views.Users;
 using SirmiumERPGFC.Views.Vats;
 using System;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -238,7 +240,28 @@ namespace SirmiumERPGFC
         public bool UserIsExpedition = false;
         public bool AppIsClosing = false;
 
+
+        public static string OutlookDefinedPath = "";
+
         private HubConnection hubConnection;
+
+        void LoadConfiguration()
+        {
+            try
+            {
+                var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+                OutlookDefinedPath = appConfig.AppSettings.Settings["OutlookDefinedPath"].Value;
+
+                //ExeConfigurationFileMap map = new ExeConfigurationFileMap();
+                //map.ExeConfigFilename = Assembly.GetEntryAssembly().Location + ".config";
+                //Configuration libConfig = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
+                //AppSettingsSection section = (libConfig.GetSection("appSettings") as AppSettingsSection);
+                //string tmpBaseAddress = section.Settings["BaseApiUrl"]?.Value;
+            } catch(Exception ex)
+            {
+
+            }
+        }
 
         public MainWindow()
         {
@@ -268,6 +291,8 @@ namespace SirmiumERPGFC
 
             // First page to display is Home page
             cntCtrl.Content = new Home();
+
+            LoadConfiguration();
 
             //OpenTab("Početna", new Home());
 

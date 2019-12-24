@@ -884,7 +884,6 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     cancelBusinessPartnerTimer?.Cancel();
                     cancelBusinessPartnerTimer = new CancellationTokenSource();
-                    Debug.WriteLine("Cancelling business partner task!!!");
 
                     await Task.Run(BusinessPartnerTimer, cancelBusinessPartnerTimer.Token);
                 }
@@ -903,7 +902,6 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     cancelConstructionSiteTimer?.Cancel();
                     cancelConstructionSiteTimer = new CancellationTokenSource();
-                    Debug.WriteLine("Cancelling business partner task!!!");
 
                     await Task.Run(ConstructionSiteTimer, cancelConstructionSiteTimer.Token);
                 }
@@ -922,7 +920,6 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     cancelEmployeeTimer?.Cancel();
                     cancelEmployeeTimer = new CancellationTokenSource();
-                    Debug.WriteLine("Cancelling business partner task!!!");
 
                     await Task.Run(EmployeeTimer, cancelEmployeeTimer.Token);
                 }
@@ -941,7 +938,6 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     cancelPhysicalPersonTimer?.Cancel();
                     cancelPhysicalPersonTimer = new CancellationTokenSource();
-                    Debug.WriteLine("Cancelling business partner task!!!");
 
                     await Task.Run(PhysicalPersonTimer, cancelPhysicalPersonTimer.Token);
                 }
@@ -968,7 +964,7 @@ namespace SirmiumERPGFC.Views.Documents
             {
                 if (String.IsNullOrEmpty(item.Path))
                 {
-                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OdabranaLokacijaNijeIspravnaUzvicnik"));
                     return;
                 }
                 OpenPath(item.Path?.Replace("/", "\\"));
@@ -982,7 +978,7 @@ namespace SirmiumERPGFC.Views.Documents
             {
                 if (String.IsNullOrEmpty(item.Path))
                 {
-                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OdabranaLokacijaNijeIspravnaUzvicnik"));
                     return;
                 }
                 OpenPath(item.Path?.Replace("/", "\\"));
@@ -996,7 +992,7 @@ namespace SirmiumERPGFC.Views.Documents
             {
                 if (String.IsNullOrEmpty(item.Path))
                 {
-                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OdabranaLokacijaNijeIspravnaUzvicnik"));
                     return;
                 }
                 OpenPath(item.Path?.Replace("/", "\\"));
@@ -1010,7 +1006,7 @@ namespace SirmiumERPGFC.Views.Documents
             {
                 if (String.IsNullOrEmpty(item.Path))
                 {
-                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OdabranaLokacijaNijeIspravnaUzvicnik"));
                     return;
                 }
                 OpenPath(item.Path?.Replace("/", "\\"));
@@ -1022,7 +1018,7 @@ namespace SirmiumERPGFC.Views.Documents
             var folderPath = path.Replace(System.IO.Path.GetFileName(path), "");
             if (!Directory.Exists(folderPath))
             {
-                MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OdabranaLokacijaNijeIspravnaUzvicnik"));
                 return;
             }
 
@@ -1139,7 +1135,7 @@ namespace SirmiumERPGFC.Views.Documents
 
             if (paths.Count() < 1)
             {
-                MainWindow.ErrorMessage = "ODABERI BAR JEDAN DOKUMENT!!!!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OdaberiBarJedanDokumentUzvicnik"));
                 return;
             }
 
@@ -1156,7 +1152,7 @@ namespace SirmiumERPGFC.Views.Documents
 
             if (paths.Count() < 1)
             {
-                MainWindow.ErrorMessage = "ODABERI BAR JEDAN DOKUMENT!!!!";
+                MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OdaberiBarJedanDokumentUzvicnik"));
                 return;
             }
 
@@ -1172,11 +1168,11 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     try
                     {
-                        Process.Start("outlook.exe", $"/a \"{path}\" /c ipm.note /m \"nedeljko.savic.c@gmail.com; nedjosvc2 @gmail.com\"");
+                        Process.Start($"{MainWindow.OutlookDefinedPath}", $"/a \"{path}\" /c ipm.note ");
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OutlookNijeInstaliranIliNijePovezanUzvicnik"));
                     }
                 }
             }

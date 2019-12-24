@@ -741,9 +741,23 @@
     <system:String x:Key="Porez">Tax</system:String>
     <system:String x:Key="PorezDvotacka">Tax:</system:String>
     <system:String x:Key="PDV_vrsta_nije_uneta_na_racunuUzvicnik">VAT Type is not selected on the invoice!</system:String>
-    
-    <system:String x:Key="OznaciSve">SVE</system:String>
-    <system:String x:Key="OdznaciSve">NIŠTA</system:String>
-    <system:String x:Key="UkloniOznaceno">UKLONI OZNAČENO</system:String>
-    <system:String x:Key="DodajStavke">DODAJ STAVKE</system:String>
+
+    <system:String x:Key="OznaciSve">ALL</system:String>
+    <system:String x:Key="OdznaciSve">NONE</system:String>
+    <system:String x:Key="UkloniOznaceno">REMOVE MARKED</system:String>
+    <system:String x:Key="DodajStavke">ADD SELECTED</system:String>
+
+
+    <system:String x:Key="DokumentiPoslovnogPartnera">BUSINESS PARTNER DOCUMENTS</system:String>
+    <system:String x:Key="DokumentiGradilišta">CONSTRUCTION SITE DOCUMENTS</system:String>
+    <system:String x:Key="DokumentiRadnika">EMPLOYEE DOCUMENTS</system:String>
+    <system:String x:Key="DokumentiFizickogLica">PHYSICAL PERSON DOCUMENTS</system:String>
+    <system:String x:Key="DODATE_STAVKE">ADDED DOCUMENTS</system:String>
+    <system:String x:Key="DokumentZa">FOR</system:String>
+    <system:String x:Key="PretragaDvotacka">Search:</system:String>
+    <system:String x:Key="DatumOdDvotacka">Date from:</system:String>
+    <system:String x:Key="DatumDoDvotacka">Date to:</system:String>
+    <system:String x:Key="OdabranaLokacijaNijeIspravnaUzvicnik">Location of this document is not available, check if it exists on the disk!</system:String>
+    <system:String x:Key="OdaberiBarJedanDokumentUzvicnik">You must select at least one document for this operation!</system:String>
+    <system:String x:Key="OutlookNijeInstaliranIliNijePovezanUzvicnik">Outlook is not installed or is not set up in application config!</system:String>
 </ResourceDictionary>
