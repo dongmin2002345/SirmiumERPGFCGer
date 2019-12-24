@@ -747,4 +747,10 @@
     <system:String x:Key="Porez">Porez</system:String>
     <system:String x:Key="PorezDvotacka">Porez:</system:String>
     <system:String x:Key="PDV_vrsta_nije_uneta_na_racunuUzvicnik">PDV Vrsta nije odabrana na računu!</system:String>
+    
+    
+    <system:String x:Key="OznaciSve"> SVE </system:String>
+    <system:String x:Key="OdznaciSve"> NIŠTA </system:String>
+    <system:String x:Key="UkloniOznaceno"> UKLONI OZNAČENO </system:String>
+    <system:String x:Key="DodajStavke"> DODAJ STAVKE </system:String>
 </ResourceDictionary>

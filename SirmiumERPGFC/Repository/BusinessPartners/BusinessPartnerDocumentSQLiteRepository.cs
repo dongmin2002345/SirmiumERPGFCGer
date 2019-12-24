@@ -160,7 +160,10 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM BusinessPartnerDocuments " +
-                        "WHERE (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
+                        "WHERE (" +
+                        "   (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) OR " +
+                        "   (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR Name LIKE @BusinessPartnerName) " +
+                        ") " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
                         "ORDER BY IsSynced, Id DESC;", db);

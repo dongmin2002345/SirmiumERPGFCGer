@@ -749,4 +749,9 @@
     <system:String x:Key="Porez">Steuer</system:String>
     <system:String x:Key="PorezDvotacka">Steuer:</system:String>
     <system:String x:Key="PDV_vrsta_nije_uneta_na_racunuUzvicnik">Die Umsatzsteuerart ist auf der Rechnung nicht ausgewählt!</system:String>
+    
+    <system:String x:Key="OznaciSve">SVE</system:String>
+    <system:String x:Key="OdznaciSve">NIŠTA</system:String>
+    <system:String x:Key="UkloniOznaceno">UKLONI OZNAČENO</system:String>
+    <system:String x:Key="DodajStavke">DODAJ STAVKE</system:String>
 </ResourceDictionary>

@@ -50,7 +50,7 @@ namespace SirmiumERPGFC.Repository.Employees
         #endregion
 
         #region Helper methods
-        private static PhysicalPersonDocumentViewModel Read(SqliteDataReader query)
+        private static PhysicalPersonDocumentViewModel Read(SqliteDataReader query, bool readForMail = false)
         {
             int counter = 0;
             PhysicalPersonDocumentViewModel dbEntry = new PhysicalPersonDocumentViewModel();
@@ -65,6 +65,12 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
             dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            if (readForMail)
+            {
+                dbEntry.PhysicalPerson.Name = SQLiteHelper.GetString(query, ref counter);
+                dbEntry.PhysicalPerson.SurName = SQLiteHelper.GetString(query, ref counter);
+            }
             return dbEntry;
         }
 
@@ -152,8 +158,13 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
+                        ", phys.PhysPersonName as PhysPersonName, phys.PhysPersonSurname as PhysPersonSurname " +
                         "FROM PhysicalPersonDocuments " +
-                        "WHERE (@PhysicalPersonName IS NULL OR @PhysicalPersonName = '' OR PhysicalPersonName LIKE @PhysicalPersonName) " +
+                        "LEFT JOIN (SELECT Identifier AS PhysPersonIdentifier, Name AS PhysPersonName, Surname AS PhysPersonSurname FROM PhysicalPersons) phys ON phys.PhysPersonIdentifier = PhysicalPersonDocuments.PhysicalPersonIdentifier " +
+                        "WHERE (" +
+                        "   ((@PhysicalPersonName IS NULL OR @PhysicalPersonName = '' OR PhysPersonName LIKE @PhysicalPersonName) OR (@PhysicalPersonName IS NULL OR @PhysicalPersonName = '' OR PhysPersonSurName LIKE @PhysicalPersonName)) OR " +
+                        "   (@PhysicalPersonName IS NULL OR @PhysicalPersonName = '' OR Name LIKE @PhysicalPersonName) " +
+                        ") " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
                         "ORDER BY IsSynced, Id DESC;", db);
@@ -168,7 +179,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
 
-                        PhysicalPersonDocumentViewModel dbEntry = Read(query);
+                        PhysicalPersonDocumentViewModel dbEntry = Read(query, readForMail: true);
                         PhysicalPersonDocuments.Add(dbEntry);
                     }
 

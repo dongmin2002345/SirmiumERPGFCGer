@@ -153,7 +153,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
                         "FROM ConstructionSiteDocuments " +
-                        "WHERE (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR ConstructionSiteName LIKE @ConstructionSiteName) " +
+                        "WHERE (" +
+                        "   (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR ConstructionSiteName LIKE @ConstructionSiteName) OR " +
+                        "   (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR Name LIKE @ConstructionSiteName) " +
+                        ") " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
                         "ORDER BY IsSynced, Id DESC;", db);

@@ -59,6 +59,22 @@ namespace SirmiumERPGFC.Views.Documents
         }
         #endregion
 
+        #region BusinessPartnerTimer
+        CancellationTokenSource cancelBusinessPartnerTimer = new CancellationTokenSource();
+        public async void BusinessPartnerTimer()
+        {
+            Debug.WriteLine(DateTime.Now.Ticks);
+            await Task.Delay(1000);
+
+
+            Debug.WriteLine(DateTime.Now.Ticks);
+            Thread td = new Thread(() => {
+                DisplayBusinessPartnerDocumentData();
+            });
+            td.IsBackground = true;
+            td.Start();
+        }
+        #endregion
 
 
         #region FilterBusinessPartnerDocuments
@@ -173,6 +189,24 @@ namespace SirmiumERPGFC.Views.Documents
         #endregion
 
 
+        #region ConstructionSiteTimer
+        CancellationTokenSource cancelConstructionSiteTimer = new CancellationTokenSource();
+        public async void ConstructionSiteTimer()
+        {
+            Debug.WriteLine(DateTime.Now.Ticks);
+            await Task.Delay(1000);
+
+
+            Debug.WriteLine(DateTime.Now.Ticks);
+            Thread td = new Thread(() => {
+                DisplayConstructionSiteDocumentData();
+            });
+            td.IsBackground = true;
+            td.Start();
+        }
+        #endregion
+
+
         #region ConstructionSiteDocumentsFromDB
         private ObservableCollection<ConstructionSiteDocumentViewModel> _ConstructionSiteDocumentsFromDB;
 
@@ -243,6 +277,24 @@ namespace SirmiumERPGFC.Views.Documents
                     FilterEmployeeDocuments.Search_Name = _FilterEmployee?.Name;
                 }
             }
+        }
+        #endregion
+
+
+        #region EmployeeTimer
+        CancellationTokenSource cancelEmployeeTimer = new CancellationTokenSource();
+        public async void EmployeeTimer()
+        {
+            Debug.WriteLine(DateTime.Now.Ticks);
+            await Task.Delay(1000);
+
+
+            Debug.WriteLine(DateTime.Now.Ticks);
+            Thread td = new Thread(() => {
+                DisplayEmployeeDocumentData();
+            });
+            td.IsBackground = true;
+            td.Start();
         }
         #endregion
 
@@ -338,6 +390,24 @@ namespace SirmiumERPGFC.Views.Documents
                     FilterPhysicalPersonDocuments.Search_Name = _FilterPhysicalPerson?.Name;
                 }
             }
+        }
+        #endregion
+
+
+        #region PhysicalPersonTimer
+        CancellationTokenSource cancelPhysicalPersonTimer = new CancellationTokenSource();
+        public async void PhysicalPersonTimer()
+        {
+            Debug.WriteLine(DateTime.Now.Ticks);
+            await Task.Delay(1000);
+
+
+            Debug.WriteLine(DateTime.Now.Ticks);
+            Thread td = new Thread(() => {
+                DisplayPhysicalPersonDocumentData();
+            });
+            td.IsBackground = true;
+            td.Start();
         }
         #endregion
 
@@ -461,12 +531,16 @@ namespace SirmiumERPGFC.Views.Documents
             this.DataContext = this;
 
             FilterBusinessPartnerDocuments = new BusinessPartnerDocumentViewModel();
+            FilterBusinessPartnerDocuments.PropertyChanged += FilterBusinessPartnerDocuments_PropertyChanged;
 
             FilterConstructionSiteDocuments = new ConstructionSiteDocumentViewModel();
+            FilterConstructionSiteDocuments.PropertyChanged += FilterConstructionSiteDocuments_PropertyChanged;
 
             FilterEmployeeDocuments = new EmployeeDocumentViewModel();
+            FilterEmployeeDocuments.PropertyChanged += FilterEmployeeDocuments_PropertyChanged;
 
             FilterPhysicalPersonDocuments = new PhysicalPersonDocumentViewModel();
+            FilterPhysicalPersonDocuments.PropertyChanged += FilterPhysicalPersonDocuments_PropertyChanged;
 
             DocumentsForMail = new ObservableCollection<DocumentForMailViewModel>();
 
@@ -482,7 +556,6 @@ namespace SirmiumERPGFC.Views.Documents
             td.IsBackground = true;
             td.Start();
         }
-
         #endregion
 
         #region Display Data and add items
@@ -798,6 +871,167 @@ namespace SirmiumERPGFC.Views.Documents
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
+
+
+
+
+        private async void FilterBusinessPartnerDocuments_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo")
+            {
+                try
+                {
+                    cancelBusinessPartnerTimer?.Cancel();
+                    cancelBusinessPartnerTimer = new CancellationTokenSource();
+                    Debug.WriteLine("Cancelling business partner task!!!");
+
+                    await Task.Run(BusinessPartnerTimer, cancelBusinessPartnerTimer.Token);
+                }
+                catch (Exception ex)
+                {
+                    MainWindow.ErrorMessage = ex.Message;
+                }
+            }
+        }
+
+        private async void FilterConstructionSiteDocuments_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo")
+            {
+                try
+                {
+                    cancelConstructionSiteTimer?.Cancel();
+                    cancelConstructionSiteTimer = new CancellationTokenSource();
+                    Debug.WriteLine("Cancelling business partner task!!!");
+
+                    await Task.Run(ConstructionSiteTimer, cancelConstructionSiteTimer.Token);
+                }
+                catch (Exception ex)
+                {
+                    MainWindow.ErrorMessage = ex.Message;
+                }
+            }
+        }
+
+        private async void FilterEmployeeDocuments_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo")
+            {
+                try
+                {
+                    cancelEmployeeTimer?.Cancel();
+                    cancelEmployeeTimer = new CancellationTokenSource();
+                    Debug.WriteLine("Cancelling business partner task!!!");
+
+                    await Task.Run(EmployeeTimer, cancelEmployeeTimer.Token);
+                }
+                catch (Exception ex)
+                {
+                    MainWindow.ErrorMessage = ex.Message;
+                }
+            }
+        }
+
+        private async void FilterPhysicalPersonDocuments_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo")
+            {
+                try
+                {
+                    cancelPhysicalPersonTimer?.Cancel();
+                    cancelPhysicalPersonTimer = new CancellationTokenSource();
+                    Debug.WriteLine("Cancelling business partner task!!!");
+
+                    await Task.Run(PhysicalPersonTimer, cancelPhysicalPersonTimer.Token);
+                }
+                catch (Exception ex)
+                {
+                    MainWindow.ErrorMessage = ex.Message;
+                }
+            }
+        }
+        #endregion
+
+
+
+
+        #region Select-Deselect events
+        private void btnSelectAll_PhysicalPerson_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in PhysicalPersonDocumentsFromDB)
+            {
+                item.IsSelected = true;
+            }
+        }
+
+        private void btnDeselectAll_PhysicalPerson_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in PhysicalPersonDocumentsFromDB)
+            {
+                item.IsSelected = false;
+            }
+        }
+
+        private void btnSelectAll_BusinessPartner_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in BusinessPartnerDocumentsFromDB)
+            {
+                item.IsSelected = true;
+            }
+        }
+
+        private void btnDeselectAll_BusinessPartner_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in BusinessPartnerDocumentsFromDB)
+            {
+                item.IsSelected = false;
+            }
+        }
+
+        private void btnSelectAll_ConstructionSite_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in ConstructionSiteDocumentsFromDB)
+            {
+                item.IsSelected = true;
+            }
+        }
+
+        private void btnDeselectAll_ConstructionSite_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in ConstructionSiteDocumentsFromDB)
+            {
+                item.IsSelected = false;
+            }
+        }
+
+        private void btnSelectAll_Employee_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in EmployeeDocumentsFromDB)
+            {
+                item.IsSelected = true;
+            }
+        }
+
+        private void btnDeselectAll_Employee_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in EmployeeDocumentsFromDB)
+            {
+                item.IsSelected = false;
+            }
+        }
+
+        private void btnSelectAllAdded_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in DocumentsForMail)
+                item.IsSelected = true;
+        }
+
+        private void btnDeselectAllAdded_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in DocumentsForMail)
+                item.IsSelected = false;
+        }
+
         #endregion
 
 
@@ -860,6 +1094,14 @@ namespace SirmiumERPGFC.Views.Documents
                         MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
+            }
+        }
+
+        private void btnRemoveSingleMailDocument_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedDocumentForMail != null)
+            {
+                DocumentsForMail.Remove(SelectedDocumentForMail);
             }
         }
     }

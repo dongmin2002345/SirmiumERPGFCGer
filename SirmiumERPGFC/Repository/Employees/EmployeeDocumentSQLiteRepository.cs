@@ -51,7 +51,7 @@ namespace SirmiumERPGFC.Repository.Employees
         #endregion
 
         #region Helper methods
-        private static EmployeeDocumentViewModel Read(SqliteDataReader query)
+        private static EmployeeDocumentViewModel Read(SqliteDataReader query, bool readForMail = false)
         {
             int counter = 0;
             EmployeeDocumentViewModel dbEntry = new EmployeeDocumentViewModel();
@@ -66,6 +66,12 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
             dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+            if(readForMail)
+            {
+                dbEntry.Employee.Name = SQLiteHelper.GetString(query, ref counter);
+                dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter);
+            }
             return dbEntry;
         }
 
@@ -154,8 +160,13 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
+                        ", emp.EmpName as EmpName, emp.EmpSurname as EmpSurName " +
                         "FROM EmployeeDocuments " +
-                        "WHERE (@EmployeeName IS NULL OR @EmployeeName = '' OR EmployeeName LIKE @EmployeeName) " +
+                        "LEFT JOIN (SELECT Identifier AS EmpIdentifier, Name AS EmpName, Surname AS EmpSurname FROM Employees) emp ON emp.EmpIdentifier = EmployeeDocuments.EmployeeIdentifier " +
+                        "WHERE (" +
+                        "   ((@EmployeeName IS NULL OR @EmployeeName = '' OR EmpName LIKE @EmployeeName) OR (@EmployeeName IS NULL OR @EmployeeName = '' OR EmpSurName LIKE @EmployeeName)) OR " +
+                        "   (@EmployeeName IS NULL OR @EmployeeName = '' OR Name LIKE @EmployeeName) " +
+                        ") " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
                         "ORDER BY IsSynced, Id DESC;", db);
@@ -170,7 +181,7 @@ namespace SirmiumERPGFC.Repository.Employees
                     while (query.Read())
                     {
 
-                        EmployeeDocumentViewModel dbEntry = Read(query);
+                        EmployeeDocumentViewModel dbEntry = Read(query, readForMail: true);
                         EmployeeDocuments.Add(dbEntry);
                     }
 
