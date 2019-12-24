@@ -127,6 +127,11 @@
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
+                                                <Button x:Name="btnOpenFolder" Click="btnOpenFolder_BusinessPartner_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -242,6 +247,11 @@
                                                 <Button x:Name="btnShowDocument" Click="btnShowConstructionSiteDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="btnOpenFolderConstructionSite" Click="btnOpenFolder_ConstructionSite_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -365,6 +375,11 @@
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
+                                                <Button x:Name="btnOpenFolderEmployee" Click="btnOpenFolder_Employee_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -483,6 +498,11 @@
                                                 <Button x:Name="btnShowDocument" Click="btnShowPhysicalPersonDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="btnOpenFolderPhysicalPerson" Click="btnOpenFolder_PhysicalPerson_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>

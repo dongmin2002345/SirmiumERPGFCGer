@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -950,6 +951,90 @@ namespace SirmiumERPGFC.Views.Documents
                 }
             }
         }
+
+
+        private void btnRemoveSingleMailDocument_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedDocumentForMail != null)
+            {
+                DocumentsForMail.Remove(SelectedDocumentForMail);
+            }
+        }
+
+        private void btnOpenFolder_BusinessPartner_Click(object sender, RoutedEventArgs e)
+        {
+            var item = ((Button)sender).CommandParameter as BusinessPartnerDocumentViewModel;
+            if (item != null)
+            {
+                if (String.IsNullOrEmpty(item.Path))
+                {
+                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    return;
+                }
+                OpenPath(item.Path?.Replace("/", "\\"));
+            }
+        }
+
+        private void btnOpenFolder_ConstructionSite_Click(object sender, RoutedEventArgs e)
+        {
+            var item = ((Button)sender).CommandParameter as ConstructionSiteDocumentViewModel;
+            if (item != null)
+            {
+                if (String.IsNullOrEmpty(item.Path))
+                {
+                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    return;
+                }
+                OpenPath(item.Path?.Replace("/", "\\"));
+            }
+        }
+
+        private void btnOpenFolder_Employee_Click(object sender, RoutedEventArgs e)
+        {
+            var item = ((Button)sender).CommandParameter as EmployeeDocumentViewModel;
+            if (item != null)
+            {
+                if (String.IsNullOrEmpty(item.Path))
+                {
+                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    return;
+                }
+                OpenPath(item.Path?.Replace("/", "\\"));
+            }
+        }
+
+        private void btnOpenFolder_PhysicalPerson_Click(object sender, RoutedEventArgs e)
+        {
+            var item = ((Button)sender).CommandParameter as PhysicalPersonDocumentViewModel;
+            if (item != null)
+            {
+                if (String.IsNullOrEmpty(item.Path))
+                {
+                    MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                    return;
+                }
+                OpenPath(item.Path?.Replace("/", "\\"));
+            }
+        }
+
+        void OpenPath(string path)
+        {
+            var folderPath = path.Replace(System.IO.Path.GetFileName(path), "");
+            if (!Directory.Exists(folderPath))
+            {
+                MainWindow.ErrorMessage = "Odabrana lokacija nije ispravna!";
+                return;
+            }
+
+            try
+            {
+                Process.Start(folderPath);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
         #endregion
 
 
@@ -1097,12 +1182,5 @@ namespace SirmiumERPGFC.Views.Documents
             }
         }
 
-        private void btnRemoveSingleMailDocument_Click(object sender, RoutedEventArgs e)
-        {
-            if(SelectedDocumentForMail != null)
-            {
-                DocumentsForMail.Remove(SelectedDocumentForMail);
-            }
-        }
     }
 }
