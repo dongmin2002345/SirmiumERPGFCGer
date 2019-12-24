@@ -145,6 +145,56 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             return response;
         }
 
+
+
+        public BusinessPartnerDocumentListResponse GetFilteredBusinessPartnerDocuments(int companyId, BusinessPartnerDocumentViewModel filterObject)
+        {
+            BusinessPartnerDocumentListResponse response = new BusinessPartnerDocumentListResponse();
+            List<BusinessPartnerDocumentViewModel> BusinessPartnerDocuments = new List<BusinessPartnerDocumentViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM BusinessPartnerDocuments " +
+                        "WHERE (@BusinessPartnerName IS NULL OR @BusinessPartnerName = '' OR BusinessPartnerName LIKE @BusinessPartnerName) " +
+                        "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
+                        "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
+                        "ORDER BY IsSynced, Id DESC;", db);
+
+                    selectCommand.Parameters.AddWithValue("@BusinessPartnerName", (String.IsNullOrEmpty(filterObject.Search_Name) ? "" : "%" + filterObject.Search_Name + "%"));
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)filterObject.Search_DateFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)filterObject.Search_DateTo) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+
+                        BusinessPartnerDocumentViewModel dbEntry = Read(query);
+                        BusinessPartnerDocuments.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.BusinessPartnerDocuments = new List<BusinessPartnerDocumentViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.BusinessPartnerDocuments = BusinessPartnerDocuments;
+            return response;
+        }
+
         public BusinessPartnerDocumentResponse GetBusinessPartnerDocument(Guid identifier)
         {
             BusinessPartnerDocumentResponse response = new BusinessPartnerDocumentResponse();

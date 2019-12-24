@@ -81,6 +81,9 @@
     <Reference Include="Fluent, Version=7.0.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
       <HintPath>..\packages\Fluent.Ribbon.7.0.0-alpha0456\lib\net45\Fluent.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.2.0.246, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.0.0-alpha0095\lib\net46\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -262,6 +265,7 @@
     <Compile Include="ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ZipFileHelper.cs" />
     <Compile Include="Identity\AnonymousIdentity.cs" />
     <Compile Include="Identity\CustomIdentity.cs" />
     <Compile Include="Identity\CustomPrincipal.cs" />
@@ -548,6 +552,9 @@
     </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSite_ReportWindow.xaml.cs">
       <DependentUpon>ConstructionSite_ReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Documents\Documents_Mailing_List.xaml.cs">
+      <DependentUpon>Documents_Mailing_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Employees\Employee_Card_AddEdit.xaml.cs">
       <DependentUpon>Employee_Card_AddEdit.xaml</DependentUpon>
@@ -1101,6 +1108,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConstructionSites\ConstructionSite_ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Documents\Documents_Mailing_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

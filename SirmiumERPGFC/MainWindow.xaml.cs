@@ -10,6 +10,7 @@ using SirmiumERPGFC.Views.Administrations;
 using SirmiumERPGFC.Views.Banks;
 using SirmiumERPGFC.Views.BusinessPartners;
 using SirmiumERPGFC.Views.ConstructionSites;
+using SirmiumERPGFC.Views.Documents;
 using SirmiumERPGFC.Views.Employees;
 using SirmiumERPGFC.Views.Home;
 using SirmiumERPGFC.Views.InputInvoices;
@@ -561,6 +562,11 @@ namespace SirmiumERPGFC
         private void mniInvoices_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new InvoiceList();
+        }
+
+        private void mniDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new Documents_Mailing_List();
         }
     }
 }

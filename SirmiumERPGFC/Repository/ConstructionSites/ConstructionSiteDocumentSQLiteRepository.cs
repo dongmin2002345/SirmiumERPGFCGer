@@ -138,6 +138,56 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             return response;
         }
 
+
+
+        public ConstructionSiteDocumentListResponse GetFilteredConstructionSiteDocuments(int companyId, ConstructionSiteDocumentViewModel filterObject)
+        {
+            ConstructionSiteDocumentListResponse response = new ConstructionSiteDocumentListResponse();
+            List<ConstructionSiteDocumentViewModel> ConstructionSiteDocuments = new List<ConstructionSiteDocumentViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM ConstructionSiteDocuments " +
+                        "WHERE (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR ConstructionSiteName LIKE @ConstructionSiteName) " +
+                        "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
+                        "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
+                        "ORDER BY IsSynced, Id DESC;", db);
+
+                    selectCommand.Parameters.AddWithValue("@ConstructionSiteName", (String.IsNullOrEmpty(filterObject.Search_Name) ? "" : "%" + filterObject.Search_Name + "%"));
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)filterObject.Search_DateFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)filterObject.Search_DateTo) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+
+                        ConstructionSiteDocumentViewModel dbEntry = Read(query);
+                        ConstructionSiteDocuments.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.ConstructionSiteDocuments = new List<ConstructionSiteDocumentViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.ConstructionSiteDocuments = ConstructionSiteDocuments;
+            return response;
+        }
+
         public ConstructionSiteDocumentResponse GetConstructionSiteDocument(Guid identifier)
         {
             ConstructionSiteDocumentResponse response = new ConstructionSiteDocumentResponse();

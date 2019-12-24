@@ -218,6 +218,14 @@
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
 
+                <Fluent:RibbonGroupBox Header="{DynamicResource Dokumenti}">
+                    <Fluent:Button Click="mniDocuments_Click" Header="{DynamicResource Dokumenti}" KeyTip="IZL" Width="80">
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\IzlazneFakture.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="{DynamicResource ADMINISTRACIJA}" x:Name="mniAdministration" KeyTip="ADM">

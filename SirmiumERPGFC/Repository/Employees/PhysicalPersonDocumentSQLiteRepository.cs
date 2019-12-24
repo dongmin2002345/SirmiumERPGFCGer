@@ -138,6 +138,56 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
+
+
+        public PhysicalPersonDocumentListResponse GetFilteredPhysicalPersonDocuments(int companyId, PhysicalPersonDocumentViewModel filterObject)
+        {
+            PhysicalPersonDocumentListResponse response = new PhysicalPersonDocumentListResponse();
+            List<PhysicalPersonDocumentViewModel> PhysicalPersonDocuments = new List<PhysicalPersonDocumentViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM PhysicalPersonDocuments " +
+                        "WHERE (@PhysicalPersonName IS NULL OR @PhysicalPersonName = '' OR PhysicalPersonName LIKE @PhysicalPersonName) " +
+                        "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
+                        "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
+                        "ORDER BY IsSynced, Id DESC;", db);
+
+                    selectCommand.Parameters.AddWithValue("@PhysicalPersonName", (String.IsNullOrEmpty(filterObject.Search_Name) ? "" : "%" + filterObject.Search_Name + "%"));
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)filterObject.Search_DateFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)filterObject.Search_DateTo) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+
+                        PhysicalPersonDocumentViewModel dbEntry = Read(query);
+                        PhysicalPersonDocuments.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.PhysicalPersonDocuments = new List<PhysicalPersonDocumentViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.PhysicalPersonDocuments = PhysicalPersonDocuments;
+            return response;
+        }
+
         public PhysicalPersonDocumentResponse GetPhysicalPersonDocument(Guid identifier)
         {
             PhysicalPersonDocumentResponse response = new PhysicalPersonDocumentResponse();

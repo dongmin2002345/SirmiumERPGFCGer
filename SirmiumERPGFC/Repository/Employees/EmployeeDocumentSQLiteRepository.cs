@@ -140,6 +140,56 @@ namespace SirmiumERPGFC.Repository.Employees
             return response;
         }
 
+
+
+        public EmployeeDocumentListResponse GetFilteredEmployeeDocuments(int companyId, EmployeeDocumentViewModel filterObject)
+        {
+            EmployeeDocumentListResponse response = new EmployeeDocumentListResponse();
+            List<EmployeeDocumentViewModel> EmployeeDocuments = new List<EmployeeDocumentViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM EmployeeDocuments " +
+                        "WHERE (@EmployeeName IS NULL OR @EmployeeName = '' OR EmployeeName LIKE @EmployeeName) " +
+                        "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
+                        "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
+                        "ORDER BY IsSynced, Id DESC;", db);
+
+                    selectCommand.Parameters.AddWithValue("@EmployeeName", (String.IsNullOrEmpty(filterObject.Search_Name) ? "" : "%" + filterObject.Search_Name + "%"));
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)filterObject.Search_DateFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)filterObject.Search_DateTo) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+
+                        EmployeeDocumentViewModel dbEntry = Read(query);
+                        EmployeeDocuments.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.EmployeeDocuments = new List<EmployeeDocumentViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.EmployeeDocuments = EmployeeDocuments;
+            return response;
+        }
+
         public EmployeeDocumentResponse GetEmployeeDocument(Guid identifier)
         {
             EmployeeDocumentResponse response = new EmployeeDocumentResponse();
