@@ -27,13 +27,13 @@ namespace SirmiumERPGFC.Repository.Invoices
                            "Code NVARCHAR(2048), " +
                            "Name NVARCHAR(48) NULL, " +
                            "UnitOfMeasure NVARCHAR(48) NULL, " +
-                           "Quantity DECIMAL NULL, " +
-                           "PriceWithPDV DECIMAL NULL, " +
-                           "PriceWithoutPDV DECIMAL NULL, " +
-                           "Discount DECIMAL NULL, " +
-                           "PDVPercent DECIMAL NULL, " +
-                           "PDV DECIMAL NULL, " +
-                           "Amount DECIMAL NULL, " +
+                           "Quantity DECIMAL(18, 3) NULL, " +
+                           "PriceWithPDV DECIMAL(18, 3) NULL, " +
+                           "PriceWithoutPDV DECIMAL(18, 3) NULL, " +
+                           "Discount DECIMAL(18, 3) NULL, " +
+                           "PDVPercent DECIMAL(18, 3) NULL, " +
+                           "PDV DECIMAL(18, 3) NULL, " +
+                           "Amount DECIMAL(18, 3) NULL, " +
                            "ItemStatus INTEGER NOT NULL, " +
                            "CurrencyCode NVARCHAR(2048) NULL, " +
                            "ExchangeRate DECIMAL(18, 4) NULL, " +

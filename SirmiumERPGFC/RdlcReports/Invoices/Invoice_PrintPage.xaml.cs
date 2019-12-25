@@ -154,7 +154,7 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                         DeliveryDateOfGoodsAndServices = CurrentInvoice.DateOfPayment?.ToString("dd.MM.yyyy"),
                         DueDate = CurrentInvoice.DueDate.ToString("dd.MM.yyyy"),
 
-                        BusinessPartnerCode = buyer?.Code,
+                        BusinessPartnerCode = buyer?.InternalCode,
                         BusinessPartnerPIB = buyer?.PIB,
                         BusinessPartnerMB = buyer.IdentificationNumber,
                         BusinessPartnerName = buyer?.Name,
@@ -162,10 +162,10 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                         BusinessPartnerCity = CurrentInvoice.City?.ZipCode + " " + CurrentInvoice.City?.Name,
 
                         Amount = GetFormatted((double)sumOfBase),
-                        AmountInCurrency = GetFormatted((double)sumOfBaseInCurrency),
+                        AmountInCurrency = (CurrentInvoice?.CurrencyExchangeRate == null ? "" : GetFormatted((double)sumOfBaseInCurrency)),
 
                         TotalAmount = GetFormatted((double)sumOfAmount),
-                        TotalAmountInCurrency = GetFormatted((double)sumOfAmountInCurrency),
+                        TotalAmountInCurrency = (CurrentInvoice?.CurrencyExchangeRate == null ? "" : GetFormatted((double)sumOfAmountInCurrency)),
                         TotalBase = GetFormatted((double)sumOfBase),
 
                         TotalPDV = GetFormatted((double)sumOfPDV),

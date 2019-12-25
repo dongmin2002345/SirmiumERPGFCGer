@@ -206,7 +206,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoiceItem.Id = 0;
 
                 invoiceItem.Active = true;
-                invoiceItem.Code = GetNewCodeValue(invoiceItem.CompanyId ?? 0);
+                //invoiceItem.Code = GetNewCodeValue(invoiceItem.CompanyId ?? 0);
 
                 invoiceItem.UpdatedAt = DateTime.Now;
                 invoiceItem.CreatedAt = DateTime.Now;

@@ -28,6 +28,7 @@
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
         <cbxConverters:VatEnabledByPdvTypeConverter x:Key="VatEnabledByPdvTypeConverter" />
         <cbxConverters:StringDoubleCurrencyConverter x:Key="StringDoubleCurrencyConverter" />
+        <cbxConverters:StringDoubleExchangeRateConverter x:Key="StringDoubleExchangeRateConverter" />
         <syncedConverter:SyncedConverter x:Key="SyncedConverter" />
     </UserControl.Resources>
 
@@ -61,12 +62,12 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <!--<TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource ŠifraDvotacka}" />
                     <TextBox Grid.Row="0"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtCode"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentInvoiceItemForm.Code, Mode=TwoWay}" IsEnabled="False" />-->
+                             Text="{Binding Path=CurrentInvoiceItemForm.Code, Mode=TwoWay}" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource ImeDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="0"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="5" x:Name="txtName"  TextWrapping="Wrap"
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="{DynamicResource ImeDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                    <TextBox Grid.Row="0"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="5" x:Name="txtName"  TextWrapping="Wrap"
                              Text="{Binding Path=CurrentInvoiceItemForm.Name, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource KoličinaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
@@ -113,7 +114,7 @@
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource KursValuteDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="6"  Grid.Column="1"  Margin="2" Grid.ColumnSpan="2" x:Name="txtExchangeRate"  TextWrapping="Wrap"
-                             Text="{Binding Path=CurrentInvoiceItemForm.ExchangeRate, Mode=TwoWay, Converter={StaticResource StringDoubleCurrencyConverter}}" IsEnabled="False"/>
+                             Text="{Binding Path=CurrentInvoiceItemForm.ExchangeRate, Mode=TwoWay, Converter={StaticResource StringDoubleExchangeRateConverter}}" />
 
                     <TextBlock Grid.Row="6" Grid.Column="3" Text="{DynamicResource IznosUValuti}" VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="6"  Grid.Column="4"  Margin="2" Grid.ColumnSpan="2" x:Name="txtTotalInCurrency"  TextWrapping="Wrap"
@@ -156,7 +157,7 @@
                           SelectedItem="{Binding Path=CurrentInvoiceItemDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
-                        <!--<DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="*" IsReadOnly="True" />-->
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn SortMemberPath="Quantity" Header="{DynamicResource Količina}" Binding="{Binding Path=Quantity}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_Mere}" Binding="{Binding Path=UnitOfMeasure}" IsReadOnly="True" />
@@ -169,6 +170,7 @@
                         <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDV_procenat}" Binding="{Binding Path=PDVPercent}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding Path=PDV, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Path=Amount, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ExchangeRate" Header="{DynamicResource Kurs_EUR}" Binding="{Binding ExchangeRate, Converter={StaticResource StringDoubleExchangeRateConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="CurrencyPriceWithPDV" Header="{DynamicResource IznosUValuti}" Binding="{Binding CurrencyPriceWithPDV, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                         <DataGridTemplateColumn Header="" Width="Auto">

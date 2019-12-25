@@ -195,9 +195,9 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             Amount = BaseAfterDiscount + PDV;
 
 
-            if (_ExchangeRate != null)
+            if (ExchangeRate != null)
             {
-                CurrencyPriceWithPDV = Math.Round((double)Amount / _ExchangeRate.Value, 2);
+                CurrencyPriceWithPDV = Math.Round((double)Amount / ExchangeRate.Value, 2);
             }
             else
             {

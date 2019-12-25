@@ -256,6 +256,56 @@ namespace WpfAppCommonCode.Converters
         }
     }
 
+    public class StringDoubleExchangeRateConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string toRet = "";
+            if (value != null)
+            {
+                double doubleValue = 0.0;
+                if (value.GetType() == typeof(decimal)) { decimal tmpValue = (decimal)value; doubleValue = (double)tmpValue; }
+                else if (value.GetType() == typeof(double)) { doubleValue = (double)value; }
+
+                toRet = doubleValue.ToString("#,###,###,###,##0.0000");
+
+                var priceDecimalParts = toRet.Split('.');
+
+                toRet = String.Format("{0},{1}", priceDecimalParts[0].Replace(",", "."), priceDecimalParts[1]);
+            }
+            return toRet;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            #region Sa nulabilnim numerckim vrednostima. Stari kod.
+            var clone = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+            clone.NumberFormat.NumberDecimalSeparator = ",";
+            clone.NumberFormat.NumberGroupSeparator = ".";
+
+            double? toRet = null;
+            if (value != null && value.ToString().Length > 0)
+            {
+                double toRetTmp = 0;
+                var replacedStr = value.ToString().Replace(".", ",");
+                bool success = Double.TryParse(replacedStr, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, clone, out toRetTmp);
+                if (success)
+                {
+                    toRet = Math.Round(toRetTmp, 4);
+                    return toRet;
+                }
+                else
+                {
+                    //throw new Exception("Format nije dobar.");
+                    return "No value";
+                }
+            }
+            return toRet;
+            #endregion
+        }
+    }
+
     public class StringDecimalConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

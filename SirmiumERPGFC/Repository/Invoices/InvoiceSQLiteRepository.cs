@@ -41,7 +41,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             
             "Description NVARCHAR(2048) NULL, " +
             "CurrencyCode NVARCHAR(2048) NULL, " +
-            "CurrencyExchangeRate DECIMAL(18, 2) NULL, " +
+            "CurrencyExchangeRate DECIMAL(18, 4) NULL, " +
 
 
             "CityId INTEGER NULL, " +
@@ -58,7 +58,7 @@ namespace SirmiumERPGFC.Repository.Invoices
             "DiscountIdentifier GUID NULL, " +
             "DiscountCode NVARCHAR(48) NULL, " +
             "DiscountName NVARCHAR(48) NULL, " +
-            "DiscountAmount DECIMAL NULL, " +
+            "DiscountAmount DECIMAL(18, 3) NULL, " +
 
             "VatId INTEGER NULL, " +
             "VatIdentifier GUID NULL, " +
@@ -67,9 +67,9 @@ namespace SirmiumERPGFC.Repository.Invoices
             "VatAmount DECIMAL NULL, " +
 
             "PdvType INTEGER NULL, " +
-            "TotalPrice DECIMAL(18,2) NULL," +
-            "TotalPDV DECIMAL(18,2) NULL," +
-            "TotalRebate DECIMAL(18,2) NULL," +
+            "TotalPrice DECIMAL(18,3) NULL," +
+            "TotalPDV DECIMAL(18,3) NULL," +
+            "TotalRebate DECIMAL(18,3) NULL," +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +

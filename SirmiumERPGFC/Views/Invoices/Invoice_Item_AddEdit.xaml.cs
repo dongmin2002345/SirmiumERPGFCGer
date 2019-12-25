@@ -280,7 +280,7 @@ namespace SirmiumERPGFC.Views.Invoices
                     CurrentInvoiceItemForm.IsSynced = false;
                     if (CurrentInvoice.Vat?.Amount != null)
                     {
-                        CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                        CurrentInvoiceItemForm.PDVPercent = CurrentInvoice.Vat.Amount;
                     }
                     if (CurrentInvoice.Discount?.Amount != null)
                     {
@@ -296,7 +296,7 @@ namespace SirmiumERPGFC.Views.Invoices
                 CurrentInvoiceItemForm.IsSynced = false;
                 if (CurrentInvoice.Vat?.Amount != null)
                 {
-                    CurrentInvoiceItemForm.PDV = CurrentInvoice.Vat.Amount;
+                    CurrentInvoiceItemForm.PDVPercent = CurrentInvoice.Vat.Amount;
                 }
                 if (CurrentInvoice.Discount?.Amount != null)
                 {
@@ -342,12 +342,14 @@ namespace SirmiumERPGFC.Views.Invoices
             CurrentInvoiceItemForm.PriceWithPDV = CurrentInvoiceItemDG.PriceWithPDV;
             CurrentInvoiceItemForm.PriceWithoutPDV = CurrentInvoiceItemDG.PriceWithoutPDV;
             CurrentInvoiceItemForm.Discount = CurrentInvoiceItemDG.Discount;
-            CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice.CurrencyExchangeRate;
+
             CurrentInvoiceItemForm.CurrencyCode = CurrentInvoiceItemDG.CurrencyCode;
             CurrentInvoiceItemForm.PDVPercent = CurrentInvoiceItemDG.PDVPercent;
             CurrentInvoiceItemForm.PDV = CurrentInvoiceItemDG.PDV;
             CurrentInvoiceItemForm.Amount = CurrentInvoiceItemDG.Amount;
             CurrentInvoiceItemForm.CurrencyPriceWithPDV = CurrentInvoiceItemDG.CurrencyPriceWithPDV;
+            CurrentInvoiceItemForm.ExchangeRate = CurrentInvoice?.CurrencyExchangeRate;
+
             CurrentInvoiceItemForm.UpdatedAt = CurrentInvoiceItemDG.UpdatedAt;
         }
 

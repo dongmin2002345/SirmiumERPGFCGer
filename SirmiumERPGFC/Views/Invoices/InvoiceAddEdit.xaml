@@ -16,6 +16,7 @@
         <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
         <cbxConverters1:VatEnabledByPdvTypeConverter x:Key="VatEnabledByPdvTypeConverter" />
         <cbxConverters1:PdvTypeConverter x:Key="cbxPdvTypeConverter" />
+        <cbxConverters1:StringDoubleExchangeRateConverter x:Key="StringDoubleExchangeRateConverter" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -126,7 +127,7 @@
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="{DynamicResource Kurs_EURDvotacka}"  VerticalAlignment="Center" Margin="5 0 5 0" />
                     <TextBox Grid.Row="7"  Grid.Column="1" Grid.ColumnSpan="2" Margin="2"  
-                         Text="{Binding Path=CurrentInvoice.CurrencyExchangeRate, Converter={StaticResource stringToDoubleConverter}}" />
+                         Text="{Binding Path=CurrentInvoice.CurrencyExchangeRate, Converter={StaticResource StringDoubleExchangeRateConverter}}" />
                 </Grid>
             </GroupBox>
 
