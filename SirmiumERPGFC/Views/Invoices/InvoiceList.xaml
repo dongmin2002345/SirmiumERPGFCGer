@@ -32,6 +32,7 @@
             <cbxConverters1:StringDoubleConverter x:Key="stringToDoubleConverter" />
             <cbxConverters1:ItemStatusConverter x:Key="ItemStatusConverter" />
             <cbxConverters1:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
+            <cbxConverters1:StringDoubleCurrencyConverter x:Key="StringDoubleCurrencyConverter" />
             <cbxConverters1:PdvTypeConverter x:Key="pdvTypeConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -217,9 +218,9 @@
                         <DataGridTextColumn SortMemberPath="DateOfPayment" Header="{DynamicResource Datum_plaćanja}" Binding="{Binding DateOfPayment, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" Width="Auto"  />
                         <DataGridTextColumn SortMemberPath="Buyer.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding Buyer.Name}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn SortMemberPath="BuyerName" Header="{DynamicResource Kupac}" Binding="{Binding BuyerName}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn SortMemberPath="TotalPrice" Header="{DynamicResource UkupanIznos}" Binding="{Binding TotalPrice}" IsReadOnly="True" Width="Auto" />
-                        <DataGridTextColumn SortMemberPath="TotalPDV" Header="{DynamicResource UkupanPDV}" Binding="{Binding TotalPDV}" IsReadOnly="True" Width="Auto" />
-                        <DataGridTextColumn SortMemberPath="TotalRebate" Header="{DynamicResource UkupanRabat}" Binding="{Binding TotalRebate}" IsReadOnly="True" Width="Auto" />
+                        <DataGridTextColumn SortMemberPath="TotalPrice" Header="{DynamicResource UkupanIznos}" Binding="{Binding TotalPrice, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" Width="Auto" />
+                        <DataGridTextColumn SortMemberPath="TotalPDV" Header="{DynamicResource UkupanPDV}" Binding="{Binding TotalPDV, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" Width="Auto" />
+                        <DataGridTextColumn SortMemberPath="TotalRebate" Header="{DynamicResource UkupanRabat}" Binding="{Binding TotalRebate, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" Width="Auto" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Path=Address}" IsReadOnly="True" Width="70">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
@@ -228,8 +229,8 @@
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Grad}" Binding="{Binding City.Name}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="CurrencyExchangeRate" Header="{DynamicResource Kurs_EUR}" Binding="{Binding CurrencyExchangeRate}" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="Vat.Amount" Header="{DynamicResource PDV}" Binding="{Binding Vat.Amount}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="CurrencyExchangeRate" Header="{DynamicResource Kurs_EUR}" Binding="{Binding CurrencyExchangeRate, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Vat.Amount" Header="{DynamicResource PDV}" Binding="{Binding Vat.Amount, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Discount.Name" Header="{DynamicResource Popust}" Binding="{Binding Discount.Name}"  IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Description" Header="{DynamicResource Komentar}" Binding="{Binding Path=Description}" IsReadOnly="True">
                             <DataGridTextColumn.CellStyle>
@@ -370,19 +371,21 @@
                               SelectedItem="{Binding Path=CurrentInvoiceItemDG, Mode=TwoWay}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}"  IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
-                                <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_Mere}" Binding="{Binding UnitOfMeasure}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Quantity" Header="{DynamicResource KoličinaDvotacka}" Binding="{Binding Quantity}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="PriceWithPDV" Header="{DynamicResource Cena_Sa_PDV}" Binding="{Binding PriceWithPDV}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="PriceWithoutPDV" Header="{DynamicResource Cena_Bez_PDV}" Binding="{Binding PriceWithoutPDV}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Discount" Header="{DynamicResource Popust}" Binding="{Binding Discount}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDV_procenat}" Binding="{Binding PDVPercent}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding PDV}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Amount}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ExchangeRate" Header="{DynamicResource KursEuro}" Binding="{Binding ExchangeRate}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="CurrencyPriceWithPDV" Header="{DynamicResource IznosUValuti}" Binding="{Binding CurrencyPriceWithPDV}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Path=Code}" Width="Auto" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Path=Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn SortMemberPath="Quantity" Header="{DynamicResource Količina}" Binding="{Binding Path=Quantity}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="UnitOfMeasure" Header="{DynamicResource Jedinica_Mere}" Binding="{Binding Path=UnitOfMeasure}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="BasePerUnit" Header="{DynamicResource BasePerUnit}" Binding="{Binding Path=BasePerUnit, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="TotalBase" Header="{DynamicResource TotalBase}" Binding="{Binding Path=TotalBase, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Discount" Header="{DynamicResource Popust}" Binding="{Binding Path=Discount}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="DiscountPerUnit" Header="{DynamicResource DiscountPerUnit}" Binding="{Binding Path=DiscountPerUnit, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="TotalDiscount" Header="{DynamicResource TotalDiscount}" Binding="{Binding Path=TotalDiscount, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="BaseAfterDiscount" Header="{DynamicResource BaseAfterDiscount}" Binding="{Binding Path=BaseAfterDiscount, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="PDVPercent" Header="{DynamicResource PDV_procenat}" Binding="{Binding Path=PDVPercent}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="PDV" Header="{DynamicResource PDV}" Binding="{Binding Path=PDV, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="Amount" Header="{DynamicResource Iznos}" Binding="{Binding Path=Amount, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="CurrencyPriceWithPDV" Header="{DynamicResource IznosUValuti}" Binding="{Binding CurrencyPriceWithPDV, Converter={StaticResource StringDoubleCurrencyConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                             </DataGrid.Columns>
                             <DataGrid.RowStyle>
                                 <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">

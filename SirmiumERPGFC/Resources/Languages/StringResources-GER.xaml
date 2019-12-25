@@ -272,7 +272,7 @@
     <system:String x:Key="Radnici_u_odabranoj_firmi">Mitarbeiter in einer ausgewählten Firma </system:String>
     <system:String x:Key="Radnici_unutar_firme">Mitarbeiter in den Firmen</system:String>
     <system:String x:Key="Radnici_unutar_gradilišta">Mitarbeiter auf der Baustelle</system:String>
-    <system:String x:Key="Razlika_vrednosti">Differenzwert</system:String>
+    <system:String x:Key="Razlika_Werti">Differenzwert</system:String>
     <system:String x:Key="REGION">REGION</system:String>
     <system:String x:Key="RegionDvotacka">Region:</system:String>
     <system:String x:Key="Region">Region</system:String>
@@ -323,7 +323,7 @@
     <system:String x:Key="Ugovor_ističe">Der Vertrag läuft ab</system:String>
     <system:String x:Key="Ugovor_od">Vertrag von</system:String>
     <system:String x:Key="UKLONI_RADNIKEKosaCrtaMESECE">Entfernen Mitarbeiter / MONATE</system:String>
-    <system:String x:Key="Ukupna_vrednost">Gesamtwert</system:String>
+    <system:String x:Key="Ukupna_Wert">Gesamtwert</system:String>
     <system:String x:Key="Ulazne_fakture">Eingangsrechnungen</system:String>
     <system:String x:Key="Unos_podsetnika">Erinnerung eingeben</system:String>
     <system:String x:Key="Unos_radnika_i_cena_za_gradilište">Mitarbeitereintrag und Baustellepreis</system:String>
@@ -768,4 +768,20 @@
     <system:String x:Key="OdabranaLokacijaNijeIspravnaUzvicnik">Der Speicherort dieses Dokuments ist nicht verfügbar. Überprüfen Sie, ob es auf der Festplatte vorhanden ist!</system:String>
     <system:String x:Key="OdaberiBarJedanDokumentUzvicnik">Sie müssen mindestens ein Dokument für diesen Vorgang auswählen!</system:String>
     <system:String x:Key="OutlookNijeInstaliranIliNijePovezanUzvicnik">Outlook ist nicht installiert oder nicht in der Anwendungskonfiguration eingerichtet!</system:String>
+
+
+    <system:String x:Key="BasePerUnit">Basis pro Maßeinheit</system:String>
+    <system:String x:Key="TotalBase">Gesamtbasis</system:String>
+    <system:String x:Key="DiscountPerUnit">Rabatt pro Mengeneinheit</system:String>
+    <system:String x:Key="TotalDiscount">Gesamtrabatt</system:String>
+    <system:String x:Key="BaseAfterDiscount">Wert</system:String>
+
+    <system:String x:Key="BasePerUnitDvotacka">Basis pro Maßeinheit:</system:String>
+    <system:String x:Key="TotalBaseDvotacka">Gesamtbasis:</system:String>
+    <system:String x:Key="DiscountPerUnitDvotacka">Rabatt pro Mengeneinheit:</system:String>
+    <system:String x:Key="TotalDiscountDvotacka">Gesamtrabatt:</system:String>
+    <system:String x:Key="BaseAfterDiscountDvotacka">Wert:</system:String>
+    <system:String x:Key="OsnovicaPoJediniciMereDvotacka">Basis pro Maßeinheit:</system:String>
+    <system:String x:Key="UkupnaOsnovica">Gesamtbasis:</system:String>
+    <system:String x:Key="UkupanPopust">Gesamtrabatt:</system:String>
 </ResourceDictionary>

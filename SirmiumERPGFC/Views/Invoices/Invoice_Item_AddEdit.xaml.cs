@@ -426,7 +426,7 @@ namespace SirmiumERPGFC.Views.Invoices
 
                 CurrentInvoice.TotalPrice = (double)InvoiceItemsFromDB.Sum(x => x.Amount);
                 CurrentInvoice.TotalPDV = (double)InvoiceItemsFromDB.Sum(x => x.PDV);
-                CurrentInvoice.TotalRebate = (double)InvoiceItemsFromDB.Sum(x => x.Rebate);
+                CurrentInvoice.TotalRebate = (double)InvoiceItemsFromDB.Sum(x => x.TotalDiscount);
 
 
                 var response = new InvoiceSQLiteRepository().Create(CurrentInvoice);

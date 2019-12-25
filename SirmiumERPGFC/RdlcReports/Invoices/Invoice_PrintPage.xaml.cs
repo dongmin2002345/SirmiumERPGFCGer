@@ -52,11 +52,13 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
         }
 
 
-        string GetFormatted(double? value)
+        string GetFormatted(double? value, string decimalZeroes = "000")
         {
             if (value == null)
                 return "";
-            return value.Value.ToString("#,###,###,###,##0.00").Replace(",", ".");
+
+            var splitvalue = value.Value.ToString($"#,###,###,###,##0.{decimalZeroes}").Split('.');
+            return String.Format("{0},{1}", splitvalue[0].Replace(",", "."), splitvalue[1]);
         }
 
         private async void MetroWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -86,7 +88,7 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                 int id = 1;
                 foreach (var item in itemsFromDB)
                 {
-                    var quantity = GetFormatted((double)item.Quantity);
+                    var quantity = GetFormatted((double)item.Quantity, "00");
 
                     double? priceWithoutPDVSuffix = null;
                     double? priceWithPDVSuffix = null;
@@ -96,11 +98,11 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
 
                     if (CurrentInvoice.CurrencyExchangeRate != null)
                     {
-                        priceWithoutPDVSuffix = (double)((double)item.PriceWithoutPDV / CurrentInvoice.CurrencyExchangeRate.Value);
-                        priceWithPDVSuffix = (double)((double)item.PriceWithPDV / CurrentInvoice.CurrencyExchangeRate.Value);
+                        priceWithoutPDVSuffix = (double)((double)item.BaseAfterDiscount / CurrentInvoice.CurrencyExchangeRate.Value);
+                        priceWithPDVSuffix = (double)((double)(item.BaseAfterDiscount + item.PDV) / CurrentInvoice.CurrencyExchangeRate.Value);
                         amountSuffix = (double)((double)item.Amount / CurrentInvoice.CurrencyExchangeRate.Value);
                         pdvValueSuffix = (double)((double)item.PDV / CurrentInvoice.CurrencyExchangeRate.Value);
-                        rebateSuffix = (double)((double)item.Rebate / CurrentInvoice.CurrencyExchangeRate.Value);
+                        rebateSuffix = (double)((double)item.TotalDiscount / CurrentInvoice.CurrencyExchangeRate.Value);
                     }
 
                     items.Add(new RdlcReports.Invoices.InvoiceItemViewModel()
@@ -112,15 +114,15 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                         UnitOfMeasurement = item.UnitOfMeasure,
                         Quantity = quantity + Environment.NewLine + quantity,
                         PDVPercent = item.PDVPercent + "%",
-                        PriceWithoutPDV = GetFormatted((double)item.PriceWithoutPDV) + Environment.NewLine
+                        PriceWithoutPDV = GetFormatted((double)item.BaseAfterDiscount) + Environment.NewLine
                             + GetFormatted(priceWithoutPDVSuffix),
-                        PriceWithPDV = GetFormatted((double)item.PriceWithPDV) + Environment.NewLine
+                        PriceWithPDV = GetFormatted((double)(item.BaseAfterDiscount + item.PDV)) + Environment.NewLine
                             + GetFormatted(priceWithPDVSuffix),
                         Amount = GetFormatted((double)item.Amount) + Environment.NewLine
                             + GetFormatted(amountSuffix),
                         PDVValue = GetFormatted((double)item.PDV) + Environment.NewLine
                             + GetFormatted(pdvValueSuffix),
-                        Rebate = GetFormatted((double)item.Rebate) + Environment.NewLine
+                        Rebate = GetFormatted((double)item.TotalDiscount) + Environment.NewLine
                             + GetFormatted(rebateSuffix)
                     });
                 }
@@ -132,7 +134,7 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
 
                 double sumOfAmount = (double)itemsFromDB.Sum(x => x.Amount);
                 double sumOfAmountInCurrency = (double)itemsFromDB.Sum(x => x.CurrencyPriceWithPDV);
-                double sumOfBase = (double)itemsFromDB.Sum(x => x.PriceWithoutPDV * x.Quantity); // sum of base
+                double sumOfBase = (double)itemsFromDB.Sum(x => x.BaseAfterDiscount); // sum of base
                 double sumOfPDV = (double)itemsFromDB.Sum(x => x.PDV); // sum of base
                 double? sumOfBaseInCurrency = null;
 
@@ -147,7 +149,7 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                 {
                     new RdlcReports.Invoices.InvoiceViewModel()
                     {
-                        InvoiceNumber = "(97) " + CurrentInvoice.InvoiceNumber,
+                        InvoiceNumber = CurrentInvoice.InvoiceNumber,
                         CityAndInvoiceDate = CurrentInvoice.City?.Name + ", " + CurrentInvoice.InvoiceDate.ToString("dd.MM.yyyy"),
                         DeliveryDateOfGoodsAndServices = CurrentInvoice.DateOfPayment?.ToString("dd.MM.yyyy"),
                         DueDate = CurrentInvoice.DueDate.ToString("dd.MM.yyyy"),

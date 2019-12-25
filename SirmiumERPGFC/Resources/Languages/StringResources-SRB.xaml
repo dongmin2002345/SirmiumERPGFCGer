@@ -767,4 +767,20 @@
     <system:String x:Key="OdabranaLokacijaNijeIspravnaUzvicnik">Lokacija ovog dokumenta je neispravna, proverite da li datoteka postoji na disku!</system:String>
     <system:String x:Key="OdaberiBarJedanDokumentUzvicnik">Morate odabrati bar jedan dokument za ovu operaciju!</system:String>
     <system:String x:Key="OutlookNijeInstaliranIliNijePovezanUzvicnik">Outlook nije instaliran ili nije naveden u konfiguraciji aplikacije!</system:String>
+
+    <system:String x:Key="BasePerUnit">Osnovica po J.M.</system:String>
+    <system:String x:Key="TotalBase">Ukupna osnovica</system:String>
+    <system:String x:Key="DiscountPerUnit">Popust po J.M.</system:String>
+    <system:String x:Key="TotalDiscount">Ukupan popust</system:String>
+    <system:String x:Key="BaseAfterDiscount">Vrednost</system:String>
+    
+    <system:String x:Key="BasePerUnitDvotacka">Osnovica po J.M.:</system:String>
+    <system:String x:Key="TotalBaseDvotacka">Ukupna osnovica:</system:String>
+    <system:String x:Key="DiscountPerUnitDvotacka">Popust po J.M.:</system:String>
+    <system:String x:Key="TotalDiscountDvotacka">Ukupan popust:</system:String>
+    <system:String x:Key="BaseAfterDiscountDvotacka">Vrednost:</system:String>
+    <system:String x:Key="OsnovicaPoJediniciMereDvotacka">Osnovica po J.M.:</system:String>
+    <system:String x:Key="UkupnaOsnovica">Ukupna osnovica:</system:String>
+    <system:String x:Key="UkupanPopust">Ukupan popust:</system:String>
+    
 </ResourceDictionary>

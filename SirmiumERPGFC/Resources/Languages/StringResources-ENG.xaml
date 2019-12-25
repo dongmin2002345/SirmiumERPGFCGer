@@ -760,4 +760,20 @@
     <system:String x:Key="OdabranaLokacijaNijeIspravnaUzvicnik">Location of this document is not available, check if it exists on the disk!</system:String>
     <system:String x:Key="OdaberiBarJedanDokumentUzvicnik">You must select at least one document for this operation!</system:String>
     <system:String x:Key="OutlookNijeInstaliranIliNijePovezanUzvicnik">Outlook is not installed or is not set up in application config!</system:String>
+    
+    
+    <system:String x:Key="BasePerUnit">Base per Unit</system:String>
+    <system:String x:Key="TotalBase">Base Total</system:String>
+    <system:String x:Key="DiscountPerUnit">Discount per Unit</system:String>
+    <system:String x:Key="TotalDiscount">Total Discount</system:String>
+    <system:String x:Key="BaseAfterDiscount">Value</system:String>
+
+    <system:String x:Key="BasePerUnitDvotacka">Base per Unit.:</system:String>
+    <system:String x:Key="TotalBaseDvotacka">Base Total:</system:String>
+    <system:String x:Key="DiscountPerUnitDvotacka">Discount per Unit:</system:String>
+    <system:String x:Key="TotalDiscountDvotacka">Total Discount:</system:String>
+    <system:String x:Key="BaseAfterDiscountDvotacka">Value:</system:String>
+    <system:String x:Key="OsnovicaPoJediniciMereDvotacka">>Base per Unit.:</system:String>
+    <system:String x:Key="UkupnaOsnovica">Base Total:</system:String>
+    <system:String x:Key="UkupanPopust">Total Discount:</system:String>
 </ResourceDictionary>

@@ -87,11 +87,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _Quantity = value;
                     NotifyPropertyChanged("Quantity");
-                    basePrice = PriceWithoutPDV * Quantity;
-                    PriceWithPDV = basePrice + (basePrice * PDV / 100);
-                    rabat = PriceWithPDV * Discount / 100;
-                    Amount = PriceWithPDV - rabat;
-                    
+                    CalculateFieldsAfterPrice();
                 }
             }
         }
@@ -109,6 +105,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _PriceWithPDV = value;
                     NotifyPropertyChanged("PriceWithPDV");
+                    CalculateFieldsAfterPrice();
                 }
             }
         }
@@ -133,14 +130,69 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             }
         }
 
+        #region BasePerUnit
+        public decimal BasePerUnit
+        {
+            get { return PriceWithoutPDV; }
+        }
+        #endregion
+
+
+        #region TotalBase
+        public decimal TotalBase
+        {
+            get { return PriceWithoutPDV * Quantity; }
+        }
+        #endregion
+
+        #region DiscountPercent
+
+        public decimal DiscountPercent
+        {
+            get { return Discount; }
+        }
+        #endregion
+
+        #region DiscountPerUnit
+        public decimal DiscountPerUnit
+        {
+            get
+            {
+                if (DiscountPercent > 0)
+                {
+                    return BasePerUnit * (DiscountPercent / 100);
+                }
+                return 0;
+            }
+        }
+        #endregion
+
+        #region TotalDiscount
+
+        public decimal TotalDiscount
+        {
+            get { return DiscountPerUnit * Quantity; }
+        }
+        #endregion
+
+        #region BaseAfterDiscount
+        public decimal BaseAfterDiscount
+        {
+            get { return TotalBase - TotalDiscount; }
+        }
+        #endregion
+
+
+
+
         private void CalculateFieldsAfterPrice()
         {
-            var calculatedBase = PriceWithoutPDV * Quantity;
-            basePrice = calculatedBase;
-            PriceWithPDV = basePrice + (basePrice * PDVPercent / 100);
-            PDV = PriceWithPDV - basePrice;
-            rabat = PriceWithPDV * Discount / 100;
-            Amount = PriceWithPDV - rabat;
+            var basePerUnitAfterDiscount = (BasePerUnit - DiscountPerUnit);
+            PDV = Quantity * (basePerUnitAfterDiscount / 100) * PDVPercent;
+
+            PriceWithPDV = BaseAfterDiscount + PDV;
+
+            Amount = BaseAfterDiscount + PDV;
 
 
             if (_ExchangeRate != null)
@@ -151,6 +203,14 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             {
                 CurrencyPriceWithPDV = null;
             }
+
+
+            NotifyPropertyChanged("BasePerUnit");
+            NotifyPropertyChanged("TotalBase");
+            NotifyPropertyChanged("DiscountPercent");
+            NotifyPropertyChanged("DiscountPerUnit");
+            NotifyPropertyChanged("TotalDiscount");
+            NotifyPropertyChanged("BaseAfterDiscount");
         }
         #endregion
 
@@ -167,6 +227,7 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
                 {
                     _Discount = value;
                     NotifyPropertyChanged("Discount");
+                    CalculateFieldsAfterPrice();
                 }
             }
         }
@@ -207,16 +268,6 @@ namespace ServiceInterfaces.ViewModels.Common.Invoices
             }
         }
         #endregion
-
-        #region Rebate
-        private decimal _Rebate;
-
-        public decimal Rebate
-        {
-            get { return PriceWithPDV * Discount / 100; }
-        }
-        #endregion
-
 
         #region Amount
         private decimal _Amount;
