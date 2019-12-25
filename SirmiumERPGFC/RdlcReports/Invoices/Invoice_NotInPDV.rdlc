@@ -23,6 +23,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>0.07627in</Top>
+        <Left>0.46801cm</Left>
         <Height>0.30208in</Height>
         <Width>2.75833in</Width>
         <Style>
@@ -57,7 +58,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
         <Top>0.96102cm</Top>
-        <Left>2.54081cm</Left>
+        <Left>3.00882cm</Left>
         <Height>0.635cm</Height>
         <Width>4.46535cm</Width>
         <ZIndex>1</ZIndex>
@@ -74,7 +75,7 @@
       </Textbox>
       <Line Name="Line1">
         <Top>0.12317cm</Top>
-        <Left>0cm</Left>
+        <Left>0.46801cm</Left>
         <Height>0cm</Height>
         <Width>18.95356cm</Width>
         <ZIndex>2</ZIndex>
@@ -105,6 +106,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>0.67002in</Top>
+        <Left>0.46801cm</Left>
         <Height>0.20833in</Height>
         <Width>2.02166in</Width>
         <ZIndex>3</ZIndex>
@@ -138,7 +140,7 @@
         </Paragraphs>
         <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
         <Top>1.70185cm</Top>
-        <Left>5.17029cm</Left>
+        <Left>5.6383cm</Left>
         <Height>0.52917cm</Height>
         <Width>5.18817cm</Width>
         <ZIndex>4</ZIndex>
@@ -172,7 +174,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>0.87835in</Top>
-        <Left>0in</Left>
+        <Left>0.46801cm</Left>
         <Height>0.21875in</Height>
         <Width>2.02166in</Width>
         <ZIndex>5</ZIndex>
@@ -206,7 +208,7 @@
         </Paragraphs>
         <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
         <Top>2.23102cm</Top>
-        <Left>5.17029cm</Left>
+        <Left>5.6383cm</Left>
         <Height>0.55563cm</Height>
         <Width>5.18817cm</Width>
         <ZIndex>6</ZIndex>
@@ -240,6 +242,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>1.31099in</Top>
+        <Left>0.46801cm</Left>
         <Height>0.20833in</Height>
         <Width>1.12615in</Width>
         <ZIndex>7</ZIndex>
@@ -273,7 +276,7 @@
         </Paragraphs>
         <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
         <Top>3.32992cm</Top>
-        <Left>2.86042cm</Left>
+        <Left>3.32843cm</Left>
         <Height>0.52917cm</Height>
         <Width>5.18817cm</Width>
         <ZIndex>8</ZIndex>
@@ -1094,7 +1097,7 @@
         </TablixRowHierarchy>
         <DataSetName>InvoiceItems</DataSetName>
         <Top>4.03548cm</Top>
-        <Left>0.00001cm</Left>
+        <Left>0.46802cm</Left>
         <Height>1.14179cm</Height>
         <Width>18.95356cm</Width>
         <ZIndex>9</ZIndex>
@@ -1123,7 +1126,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>2.10646in</Top>
-        <Left>3.60278in</Left>
+        <Left>3.78704in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
         <ZIndex>10</ZIndex>
@@ -1159,7 +1162,7 @@
         </Paragraphs>
         <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
         <Top>5.35366cm</Top>
-        <Left>13.7654cm</Left>
+        <Left>14.23341cm</Left>
         <Height>0.6cm</Height>
         <Width>5.18817cm</Width>
         <ZIndex>11</ZIndex>
@@ -1193,7 +1196,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>2.35795in</Top>
-        <Left>3.60278in</Left>
+        <Left>3.78704in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
         <ZIndex>12</ZIndex>
@@ -1229,7 +1232,7 @@
         </Paragraphs>
         <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
         <Top>6.02774cm</Top>
-        <Left>13.7654cm</Left>
+        <Left>14.23341cm</Left>
         <Height>0.6cm</Height>
         <Width>5.18817cm</Width>
         <ZIndex>13</ZIndex>
@@ -1263,7 +1266,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>2.87184in</Top>
-        <Left>3.60278in</Left>
+        <Left>3.78704in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
         <ZIndex>14</ZIndex>
@@ -1301,7 +1304,7 @@
         </Paragraphs>
         <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
         <Top>7.29448cm</Top>
-        <Left>13.7654cm</Left>
+        <Left>14.23341cm</Left>
         <Height>0.635cm</Height>
         <Width>5.18817cm</Width>
         <ZIndex>15</ZIndex>
@@ -1336,7 +1339,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>3.12184in</Top>
-        <Left>3.60278in</Left>
+        <Left>3.78704in</Left>
         <Height>0.25in</Height>
         <Width>0.55833in</Width>
         <ZIndex>16</ZIndex>
@@ -1369,7 +1372,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>3.12184in</Top>
-        <Left>4.16111in</Left>
+        <Left>4.34537in</Left>
         <Height>0.25in</Height>
         <Width>3.30092in</Width>
         <ZIndex>17</ZIndex>
@@ -1424,7 +1427,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>10.32344cm</Top>
-        <Left>0.02409cm</Left>
+        <Left>0.4921cm</Left>
         <Height>2.46732cm</Height>
         <Width>6.01899cm</Width>
         <ZIndex>18</ZIndex>
@@ -1453,7 +1456,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>3.69128in</Top>
-        <Left>0.00949in</Left>
+        <Left>0.19375in</Left>
         <Height>0.25in</Height>
         <Width>4.19259in</Width>
         <ZIndex>19</ZIndex>
@@ -1487,7 +1490,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>3.44128in</Top>
-        <Left>0.00948in</Left>
+        <Left>0.19374in</Left>
         <Height>0.25in</Height>
         <Width>4.19259in</Width>
         <ZIndex>20</ZIndex>
@@ -1521,7 +1524,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>2.62184in</Top>
-        <Left>3.60278in</Left>
+        <Left>3.78704in</Left>
         <Height>0.25in</Height>
         <Width>1.81666in</Width>
         <ZIndex>21</ZIndex>
@@ -1559,7 +1562,7 @@
         </Paragraphs>
         <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
         <Top>6.65948cm</Top>
-        <Left>13.7654cm</Left>
+        <Left>14.23341cm</Left>
         <Height>0.635cm</Height>
         <Width>5.18817cm</Width>
         <ZIndex>22</ZIndex>
@@ -1628,7 +1631,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
-            <Top>0.06676cm</Top>
+            <Top>0.04925cm</Top>
             <Left>1.26293cm</Left>
             <Height>0.6cm</Height>
             <Width>1.74274cm</Width>
@@ -1662,7 +1665,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>0.0367in</Top>
+            <Top>0.0125in</Top>
             <Left>1.25278in</Left>
             <Height>0.25in</Height>
             <Width>0.30833in</Width>
@@ -1696,7 +1699,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>CityAndInvoiceDate</rd:DefaultName>
-            <Top>0.12851cm</Top>
+            <Top>0.04925cm</Top>
             <Left>3.96522cm</Left>
             <Height>0.6cm</Height>
             <Width>4.30034cm</Width>
@@ -1888,7 +1891,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>0.2328cm</Top>
-        <Left>10.45784cm</Left>
+        <Left>10.92585cm</Left>
         <Height>3.62629cm</Height>
         <Width>8.51749cm</Width>
         <ZIndex>23</ZIndex>
@@ -1920,7 +1923,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>0.37835in</Top>
-        <Left>0in</Left>
+        <Left>0.46801cm</Left>
         <Height>0.25in</Height>
         <Width>1.00032in</Width>
         <ZIndex>24</ZIndex>
@@ -1975,7 +1978,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>10.32344cm</Top>
-        <Left>6.52807cm</Left>
+        <Left>6.99608cm</Left>
         <Height>2.46732cm</Height>
         <Width>6.01899cm</Width>
         <ZIndex>25</ZIndex>
@@ -2025,7 +2028,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>10.32344cm</Top>
-        <Left>12.95634cm</Left>
+        <Left>13.42435cm</Left>
         <Height>2.46732cm</Height>
         <Width>6.01899cm</Width>
         <ZIndex>26</ZIndex>
@@ -2039,7 +2042,7 @@
     <Height>14.30337cm</Height>
     <Style />
   </Body>
-  <Width>19.04706cm</Width>
+  <Width>20.02602cm</Width>
   <Page>
     <PageHeader>
       <Height>1.81432cm</Height>
@@ -2099,7 +2102,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Left>5.08496in</Left>
+          <Left>5.23496in</Left>
           <Height>0.67263in</Height>
           <Width>2.37708in</Width>
           <Style>
@@ -2178,7 +2181,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Left>0in</Left>
+          <Left>0.381cm</Left>
           <Height>0.65875in</Height>
           <Width>2.37916in</Width>
           <ZIndex>1</ZIndex>
@@ -2197,7 +2200,7 @@
           <Source>Embedded</Source>
           <Value>Logo</Value>
           <Sizing>FitProportional</Sizing>
-          <Left>6.97609cm</Left>
+          <Left>7.35709cm</Left>
           <Height>1.70849cm</Height>
           <Width>5.20417cm</Width>
           <ZIndex>2</ZIndex>
