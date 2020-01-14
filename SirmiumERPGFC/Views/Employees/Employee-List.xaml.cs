@@ -1627,18 +1627,18 @@ namespace SirmiumERPGFC.Views.Employees
                         employeeConstructionSite = new ConstructionSiteSQLiteRepository().GetConstructionSite(employeeConstructionSite?.Identifier ?? Guid.NewGuid())?.ConstructionSite;
                         pdfFormFields.SetField("15 im Rahmen des Werkvertrages vom", employeeConstructionSite.ContractStart.ToString("dd.MM.yyyy") ?? "");
 
-                        pdfFormFields.SetField("Text8.0.0", employeeConstructionSite.InternalCode.Length > 0 ? employeeConstructionSite.InternalCode.ToArray()[0].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.1", employeeConstructionSite.InternalCode.Length > 1 ? employeeConstructionSite.InternalCode.ToArray()[1].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.2", employeeConstructionSite.InternalCode.Length > 2 ? employeeConstructionSite.InternalCode.ToArray()[2].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.3", employeeConstructionSite.InternalCode.Length > 3 ? employeeConstructionSite.InternalCode.ToArray()[3].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.4", employeeConstructionSite.InternalCode.Length > 4 ? employeeConstructionSite.InternalCode.ToArray()[4].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.5", employeeConstructionSite.InternalCode.Length > 5 ? employeeConstructionSite.InternalCode.ToArray()[5].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.6", employeeConstructionSite.InternalCode.Length > 6 ? employeeConstructionSite.InternalCode.ToArray()[6].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.7", employeeConstructionSite.InternalCode.Length > 7 ? employeeConstructionSite.InternalCode.ToArray()[7].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.8", employeeConstructionSite.InternalCode.Length > 8 ? employeeConstructionSite.InternalCode.ToArray()[8].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.9", employeeConstructionSite.InternalCode.Length > 9 ? employeeConstructionSite.InternalCode.ToArray()[9].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.10", employeeConstructionSite.InternalCode.Length > 10 ? employeeConstructionSite.InternalCode.ToArray()[10].ToString() : "");
-                        pdfFormFields.SetField("Text8.0.11", employeeConstructionSite.InternalCode.Length > 11 ? employeeConstructionSite.InternalCode.ToArray()[11].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.0", employeeConstructionSite.InternalCode?.Length > 0 ? employeeConstructionSite.InternalCode.ToArray()[0].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.1", employeeConstructionSite.InternalCode?.Length > 1 ? employeeConstructionSite.InternalCode.ToArray()[1].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.2", employeeConstructionSite.InternalCode?.Length > 2 ? employeeConstructionSite.InternalCode.ToArray()[2].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.3", employeeConstructionSite.InternalCode?.Length > 3 ? employeeConstructionSite.InternalCode.ToArray()[3].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.4", employeeConstructionSite.InternalCode?.Length > 4 ? employeeConstructionSite.InternalCode.ToArray()[4].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.5", employeeConstructionSite.InternalCode?.Length > 5 ? employeeConstructionSite.InternalCode.ToArray()[5].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.6", employeeConstructionSite.InternalCode?.Length > 6 ? employeeConstructionSite.InternalCode.ToArray()[6].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.7", employeeConstructionSite.InternalCode?.Length > 7 ? employeeConstructionSite.InternalCode.ToArray()[7].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.8", employeeConstructionSite.InternalCode?.Length > 8 ? employeeConstructionSite.InternalCode.ToArray()[8].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.9", employeeConstructionSite.InternalCode?.Length > 9 ? employeeConstructionSite.InternalCode.ToArray()[9].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.10", employeeConstructionSite.InternalCode?.Length > 10 ? employeeConstructionSite.InternalCode.ToArray()[10].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.11", employeeConstructionSite.InternalCode?.Length > 11 ? employeeConstructionSite.InternalCode.ToArray()[11].ToString() : "");
 
                         pdfFormFields.SetField("17 Auftragnehmer ausländisches Unternehmen", businessPartnerAddress?.Address ?? "");
                         pdfFormFields.SetField("18 Auftraggeber", businessPartnerAddress?.Address ?? "");
