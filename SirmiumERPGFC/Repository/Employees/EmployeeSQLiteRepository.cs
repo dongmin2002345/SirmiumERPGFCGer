@@ -697,7 +697,6 @@ namespace SirmiumERPGFC.Repository.Employees
 
         #endregion
 
-
         public EmployeeResponse GetEmployee(Guid identifier)
         {
             EmployeeResponse response = new EmployeeResponse();

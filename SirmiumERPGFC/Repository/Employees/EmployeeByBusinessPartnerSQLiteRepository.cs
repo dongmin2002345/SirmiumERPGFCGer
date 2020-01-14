@@ -71,8 +71,6 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Employee = SQLiteHelper.GetEmployee(query, ref counter);
-            dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter);
-            dbEntry.Employee.Passport = SQLiteHelper.GetString(query, ref counter);
             dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -172,6 +170,50 @@ namespace SirmiumERPGFC.Repository.Employees
             }
             response.Success = true;
             response.EmployeeByBusinessPartners = employeeByBusinessPartners;
+            return response;
+        }
+
+        public EmployeeByBusinessPartnerListResponse GetByEmployee(int companyId, Guid EmployeeIdentifier)
+        {
+            EmployeeByBusinessPartnerListResponse response = new EmployeeByBusinessPartnerListResponse();
+            List<EmployeeByBusinessPartnerViewModel> EmployeeByBusinessPartners = new List<EmployeeByBusinessPartnerViewModel>();
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                        SqlCommandSelectPart +
+                        "FROM EmployeeByBusinessPartners " +
+                        "WHERE EmployeeIdentifier = @EmployeeIdentifier " +
+                        "AND CompanyId = @CompanyId " +
+                        "ORDER BY IsSynced, Id DESC;", db);
+
+                    selectCommand.Parameters.AddWithValue("@EmployeeIdentifier", EmployeeIdentifier);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        EmployeeByBusinessPartnerViewModel dbEntry = Read(query);
+                        EmployeeByBusinessPartners.Add(dbEntry);
+                    }
+
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.EmployeeByBusinessPartners = new List<EmployeeByBusinessPartnerViewModel>();
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.EmployeeByBusinessPartners = EmployeeByBusinessPartners;
             return response;
         }
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Reporting.WinForms;
-using Newtonsoft.Json;
 using Ninject;
 using ServiceInterfaces.Abstractions.Employees;
 using ServiceInterfaces.Messages.Employees;
@@ -11,25 +10,20 @@ using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.RdlcReports.Employees;
 using SirmiumERPGFC.Reports.Employees;
 using SirmiumERPGFC.Repository.Employees;
-using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using WpfAppCommonCode.Converters;
+using iTextSharp.text.pdf;
+using System.Reflection;
+using SirmiumERPGFC.Repository.BusinessPartners;
+using SirmiumERPGFC.Repository.ConstructionSites;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -809,25 +803,31 @@ namespace SirmiumERPGFC.Views.Employees
                 EmployeeAttachmentsFromDB = new ObservableCollection<EmployeeAttachmentViewModel>(
                     response.EmployeeAttachments ?? new List<EmployeeAttachmentViewModel>());
 
-                if(EmployeeAttachmentsFromDB.Count == 0)
+                if (EmployeeAttachmentsFromDB.Count == 0)
                 {
-                    for (int i = 0; i < 12; i++)
-                    {
-                        EmployeeAttachmentsFromDB.Add(new EmployeeAttachmentViewModel()
+                    Application.Current.Dispatcher.BeginInvoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(() =>
                         {
-                            Identifier = Guid.NewGuid(),
-                            Code = "Prilog " + (i + 1).ToString(),
-                            Employee = CurrentEmployee,
-                            IsActive = false,
-                            IsSynced = false,
-                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
-                            CreatedBy = new UserViewModel()
+                            for (int i = 0; i < 12; i++)
                             {
-                                Id = MainWindow.CurrentUserId,
-                                FullName = MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName
+                                EmployeeAttachmentsFromDB.Add(new EmployeeAttachmentViewModel()
+                                {
+                                    Identifier = Guid.NewGuid(),
+                                    Code = "Prilog " + (i + 1).ToString(),
+                                    Employee = CurrentEmployee,
+                                    IsActive = false,
+                                    IsSynced = false,
+                                    Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                                    CreatedBy = new UserViewModel()
+                                    {
+                                        Id = MainWindow.CurrentUserId,
+                                        FullName = MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName
+                                    }
+                                });
                             }
-                        });
-                    }
+                        })
+                    );
                 }
             }
             else
@@ -1572,6 +1572,139 @@ namespace SirmiumERPGFC.Views.Employees
             rdlcEmployeeReport.ZoomMode = ZoomMode.Percent;
             rdlcEmployeeReport.ZoomPercent = 100;
             rdlcEmployeeReport.RefreshReport();
+        }
+
+        private void btnPrintEmployeePdf_Click(object sender, RoutedEventArgs e)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "SirmiumERPGFC.Resources.WAK NEU.pdf";
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                using (var memstream = new MemoryStream())
+                {
+                    reader.BaseStream.CopyTo(memstream);
+                    PdfReader pdfReader = new PdfReader(memstream.ToArray());
+
+                    Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                    dlg.FileName = "WAK NEU " + CurrentEmployee.Name + " " + CurrentEmployee.SurName; // Default file name
+                    dlg.DefaultExt = ".pdf"; // Default file extension
+                    dlg.Filter = "Text documents (.pdf)|*.pdf"; // Filter files by extension
+
+                    // Show save file dialog box
+                    Nullable<bool> result = dlg.ShowDialog();
+
+                    // Process save file dialog box results
+                    if (result == true)
+                    {
+                        // Save document
+                        string filename = dlg.FileName;
+
+                        PdfStamper pdfStamper = new PdfStamper(pdfReader, new FileStream(filename, FileMode.Create));
+                        AcroFields pdfFormFields = pdfStamper.AcroFields;
+                        // set form pdfFormFields  
+                        // The first worksheet and W-4 form  
+                        pdfFormFields.SetField("1 Name", CurrentEmployee.Name);
+                        pdfFormFields.SetField("3 Vorname", CurrentEmployee.SurName);
+                        pdfFormFields.SetField("5 Geburtsdatum", CurrentEmployee.DateOfBirth?.ToString("dd.MM.yyyy") ?? "");
+
+                        // Adresa firme u Nemackoj
+                        var employeeBusinessPartner = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
+                        var businessPartnerAddress = new BusinessPartnerLocationSQLiteRepository().GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, employeeBusinessPartner?.Identifier ?? Guid.Empty).BusinessPartnerLocations?.OrderBy(x => x.CreatedAt).FirstOrDefault();
+                        pdfFormFields.SetField("7 Name und Anschrift des entsendenden Unternehmens bzw der Niederlassung im Bundesgebiet", businessPartnerAddress?.Address ?? "");
+                        
+                        pdfFormFields.SetField("9 PassNr oder PassersatzN", CurrentEmployee.Passport);
+                        pdfFormFields.SetField("10 ausgestellt am", CurrentEmployee.VisaFrom?.ToString("dd.MM.yyyy") ?? "");
+                        pdfFormFields.SetField("11 von BehördeStaat", CurrentEmployee.PassportMup);
+
+                        pdfFormFields.SetField("13 von bis", CurrentEmployee.WorkPermitFrom?.ToString("dd.MM.yyyy") ?? "");
+                        pdfFormFields.SetField("Text1", CurrentEmployee.WorkPermitTo?.ToString("dd.MM.yyyy") ?? "");
+
+
+                        // Gradiliste
+                        var employeeConstructionSite = new EmployeeByConstructionSiteSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByConstructionSites?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.ConstructionSite;
+                        employeeConstructionSite = new ConstructionSiteSQLiteRepository().GetConstructionSite(employeeConstructionSite?.Identifier ?? Guid.NewGuid())?.ConstructionSite;
+                        pdfFormFields.SetField("15 im Rahmen des Werkvertrages vom", employeeConstructionSite.ContractStart.ToString("dd.MM.yyyy") ?? "");
+
+                        pdfFormFields.SetField("Text8.0.0", employeeConstructionSite.InternalCode.Length > 0 ? employeeConstructionSite.InternalCode.ToArray()[0].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.1", employeeConstructionSite.InternalCode.Length > 1 ? employeeConstructionSite.InternalCode.ToArray()[1].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.2", employeeConstructionSite.InternalCode.Length > 2 ? employeeConstructionSite.InternalCode.ToArray()[2].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.3", employeeConstructionSite.InternalCode.Length > 3 ? employeeConstructionSite.InternalCode.ToArray()[3].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.4", employeeConstructionSite.InternalCode.Length > 4 ? employeeConstructionSite.InternalCode.ToArray()[4].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.5", employeeConstructionSite.InternalCode.Length > 5 ? employeeConstructionSite.InternalCode.ToArray()[5].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.6", employeeConstructionSite.InternalCode.Length > 6 ? employeeConstructionSite.InternalCode.ToArray()[6].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.7", employeeConstructionSite.InternalCode.Length > 7 ? employeeConstructionSite.InternalCode.ToArray()[7].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.8", employeeConstructionSite.InternalCode.Length > 8 ? employeeConstructionSite.InternalCode.ToArray()[8].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.9", employeeConstructionSite.InternalCode.Length > 9 ? employeeConstructionSite.InternalCode.ToArray()[9].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.10", employeeConstructionSite.InternalCode.Length > 10 ? employeeConstructionSite.InternalCode.ToArray()[10].ToString() : "");
+                        pdfFormFields.SetField("Text8.0.11", employeeConstructionSite.InternalCode.Length > 11 ? employeeConstructionSite.InternalCode.ToArray()[11].ToString() : "");
+
+                        pdfFormFields.SetField("17 Auftragnehmer ausländisches Unternehmen", businessPartnerAddress?.Address ?? "");
+                        pdfFormFields.SetField("18 Auftraggeber", businessPartnerAddress?.Address ?? "");
+                        pdfFormFields.SetField("19 BetriebsstätteBaustelle Anschrift Straße Nr PLZ Ort", employeeConstructionSite.Name);
+
+                        //pdfFormFields.SetField("f1_03(0)", "1");
+                        //pdfFormFields.SetField("f1_04(0)", "8");
+                        //pdfFormFields.SetField("f1_05(0)", "0");
+                        //pdfFormFields.SetField("f1_06(0)", "1");
+                        //pdfFormFields.SetField("f1_07(0)", "16");
+                        //pdfFormFields.SetField("f1_08(0)", "28");
+                        //pdfFormFields.SetField("f1_09(0)", "Franklin A.");
+                        //pdfFormFields.SetField("f1_10(0)", "Benefield");
+                        //pdfFormFields.SetField("f1_11(0)", "532");
+                        //pdfFormFields.SetField("f1_12(0)", "12");
+                        //pdfFormFields.SetField("f1_13(0)", "1234");
+                        //// The form's checkboxes  
+                        //pdfFormFields.SetField("c1_01(0)", "0");
+                        //pdfFormFields.SetField("c1_02(0)", "Yes");
+                        //pdfFormFields.SetField("c1_03(0)", "0");
+                        //pdfFormFields.SetField("c1_04(0)", "Yes");
+                        //// The rest of the form pdfFormFields  
+                        //pdfFormFields.SetField("f1_14(0)", "100 North Cujo Street");
+                        //pdfFormFields.SetField("f1_15(0)", "Nome, AK  67201");
+                        //pdfFormFields.SetField("f1_16(0)", "9");
+                        //pdfFormFields.SetField("f1_17(0)", "10");
+                        //pdfFormFields.SetField("f1_18(0)", "11");
+                        //pdfFormFields.SetField("f1_19(0)", "Walmart, Nome, AK");
+                        //pdfFormFields.SetField("f1_20(0)", "WAL666");
+                        //pdfFormFields.SetField("f1_21(0)", "AB");
+                        //pdfFormFields.SetField("f1_22(0)", "4321");
+                        //// Second Worksheets pdfFormFields  
+                        //// In order to map the fields, I just pass them a sequential  
+                        //// number to mark them; once I know which field is which, I  
+                        //// can pass the appropriate value  
+                        //pdfFormFields.SetField("f2_01(0)", "1");
+                        //pdfFormFields.SetField("f2_02(0)", "2");
+                        //pdfFormFields.SetField("f2_03(0)", "3");
+                        //pdfFormFields.SetField("f2_04(0)", "4");
+                        //pdfFormFields.SetField("f2_05(0)", "5");
+                        //pdfFormFields.SetField("f2_06(0)", "6");
+                        //pdfFormFields.SetField("f2_07(0)", "7");
+                        //pdfFormFields.SetField("f2_08(0)", "8");
+                        //pdfFormFields.SetField("f2_09(0)", "9");
+                        //pdfFormFields.SetField("f2_10(0)", "10");
+                        //pdfFormFields.SetField("f2_11(0)", "11");
+                        //pdfFormFields.SetField("f2_12(0)", "12");
+                        //pdfFormFields.SetField("f2_13(0)", "13");
+                        //pdfFormFields.SetField("f2_14(0)", "14");
+                        //pdfFormFields.SetField("f2_15(0)", "15");
+                        //pdfFormFields.SetField("f2_16(0)", "16");
+                        //pdfFormFields.SetField("f2_17(0)", "17");
+                        //pdfFormFields.SetField("f2_18(0)", "18");
+                        //pdfFormFields.SetField("f2_19(0)", "19");
+                        // report by reading values from completed PDF  
+                        //string sTmp = "W-4 Completed for " + pdfFormFields.GetField("f1_09(0)") + " " + pdfFormFields.GetField("f1_10(0)");
+                        //MessageBox.Show(sTmp, "Finished");
+                        // flatten the form to remove editting options, set it to false  
+                        // to leave the form open to subsequent manual edits  
+                        pdfStamper.FormFlattening = false;
+                        // close the pdf  
+                        pdfStamper.Close();
+
+                    }
+                }
+            }
         }
     }
 }
