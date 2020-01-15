@@ -219,9 +219,15 @@ namespace WpfAppCommonCode.Converters
 
                 toRet = doubleValue.ToString("#,###,###,###,##0.000");
 
-                var priceDecimalParts = toRet.Split('.');
+                if (toRet.Length < 5)
+                    toRet = "0.000";
 
-                toRet = String.Format("{0},{1}", priceDecimalParts[0].Replace(",", "."), priceDecimalParts[1]);
+
+                string end = toRet.Substring(toRet.Length - 3, 3);
+
+                string start = toRet.Substring(0, toRet.Length - 4);
+
+                toRet = String.Format("{0},{1}", start.Replace(",", "."), end);
             }
             return toRet;
         }
@@ -267,14 +273,17 @@ namespace WpfAppCommonCode.Converters
                 if (value.GetType() == typeof(decimal)) { decimal tmpValue = (decimal)value; doubleValue = (double)tmpValue; }
                 else if (value.GetType() == typeof(double)) { doubleValue = (double)value; }
 
-                //toRet = doubleValue.ToString("#,###,###,###,##0.0000");
-                toRet = doubleValue.ToString()?.Replace(",", ".") ?? "0.0";
+                toRet = doubleValue.ToString("#,###,###,###,##0.0000");
 
-                List<string> priceDecimalParts = toRet.Split('.')?.ToList<string>() ?? new List<string>();
-                if (priceDecimalParts.Count() < 2)
-                    priceDecimalParts.Add("0000");
+                if (toRet.Length < 6)
+                    toRet = "0.0000";
 
-                toRet = String.Format("{0},{1}", priceDecimalParts[0].Replace(",", "."), priceDecimalParts[1]);
+
+                string end = toRet.Substring(toRet.Length - 4, 4);
+
+                string start = toRet.Substring(0, toRet.Length - 5);
+
+                toRet = String.Format("{0},{1}", start.Replace(",", "."), end);
             }
             return toRet;
         }
