@@ -267,9 +267,12 @@ namespace WpfAppCommonCode.Converters
                 if (value.GetType() == typeof(decimal)) { decimal tmpValue = (decimal)value; doubleValue = (double)tmpValue; }
                 else if (value.GetType() == typeof(double)) { doubleValue = (double)value; }
 
-                toRet = doubleValue.ToString("#,###,###,###,##0.0000");
+                //toRet = doubleValue.ToString("#,###,###,###,##0.0000");
+                toRet = doubleValue.ToString()?.Replace(",", ".") ?? "0.0";
 
-                var priceDecimalParts = toRet.Split('.');
+                List<string> priceDecimalParts = toRet.Split('.')?.ToList<string>() ?? new List<string>();
+                if (priceDecimalParts.Count() < 2)
+                    priceDecimalParts.Add("0000");
 
                 toRet = String.Format("{0},{1}", priceDecimalParts[0].Replace(",", "."), priceDecimalParts[1]);
             }

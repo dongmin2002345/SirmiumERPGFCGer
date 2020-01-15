@@ -784,4 +784,5 @@
     <system:String x:Key="OsnovicaPoJediniciMereDvotacka">Basis pro Maßeinheit:</system:String>
     <system:String x:Key="UkupnaOsnovica">Gesamtbasis:</system:String>
     <system:String x:Key="UkupanPopust">Gesamtrabatt:</system:String>
+    <system:String x:Key="Štampa_Fakture">Rechnungen drucken</system:String>
 </ResourceDictionary>

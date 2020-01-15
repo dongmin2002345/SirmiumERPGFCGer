@@ -776,4 +776,5 @@
     <system:String x:Key="OsnovicaPoJediniciMereDvotacka">>Base per Unit.:</system:String>
     <system:String x:Key="UkupnaOsnovica">Base Total:</system:String>
     <system:String x:Key="UkupanPopust">Total Discount:</system:String>
+    <system:String x:Key="Štampa_Fakture"> Print invoice</system:String>
 </ResourceDictionary>

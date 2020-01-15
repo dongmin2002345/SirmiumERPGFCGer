@@ -782,5 +782,6 @@
     <system:String x:Key="OsnovicaPoJediniciMereDvotacka">Osnovica po J.M.:</system:String>
     <system:String x:Key="UkupnaOsnovica">Ukupna osnovica:</system:String>
     <system:String x:Key="UkupanPopust">Ukupan popust:</system:String>
+    <system:String x:Key="Štampa_Fakture">Štampa fakture</system:String>
     
 </ResourceDictionary>
