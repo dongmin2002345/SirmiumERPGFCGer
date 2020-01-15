@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1523,10 +1524,9 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 Value = BusinessPartnerType
             };
             rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModelType);
-                        
-            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\BusinessPartners\BusinessPartnerReport.rdlc");
 
+            string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\BusinessPartners\BusinessPartnerReport.rdlc");
             rdlcBusinessPartnerReport.LocalReport.ReportPath = ContentStart;
             rdlcBusinessPartnerReport.SetDisplayMode(DisplayMode.PrintLayout);
             rdlcBusinessPartnerReport.Refresh();

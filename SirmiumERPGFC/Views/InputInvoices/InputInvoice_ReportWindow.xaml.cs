@@ -17,6 +17,7 @@ using SirmiumERPGFC.RdlcReports.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using SirmiumERPGFC.Repository.InputInvoices;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace SirmiumERPGFC.Views.InputInvoices
 {
@@ -93,7 +94,9 @@ namespace SirmiumERPGFC.Views.InputInvoices
             //////string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\InputInvoices\InputInvoicesReport.rdlc");
 
             //////rdlcInputInvoiceReport.LocalReport.ReportPath = ContentStart;
-            rdlcInputInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoicesReport.rdlc";
+            string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\InputInvoices\InputInvoicesReport.rdlc");
+            rdlcInputInvoiceReport.LocalReport.ReportPath = ContentStart;
             // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
             rdlcInputInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
             rdlcInputInvoiceReport.Refresh();

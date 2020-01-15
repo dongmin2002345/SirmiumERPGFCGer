@@ -27,6 +27,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using WpfAppCommonCode.Converters;
 using System.IO;
+using System.Reflection;
 
 namespace SirmiumERPGFC.Views.InputInvoices
 {
@@ -769,21 +770,23 @@ namespace SirmiumERPGFC.Views.InputInvoices
             };
             rdlcInputInvoiceReport.LocalReport.DataSources.Add(rpdsModel);
 
-            //List<ReportParameter> reportParams = new List<ReportParameter>();
-            //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
-            //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
+			//List<ReportParameter> reportParams = new List<ReportParameter>();
+			//string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
+			//reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
 
 
-            //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
-            //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
-            //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
-            //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
+			//var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
+			//businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
+			//var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
+			//rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
 
-            //////string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            //////string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\InputInvoices\/*InputInvoiceReport*/.rdlc");
+			//////string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
+			//////string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\InputInvoices\/*InputInvoiceReport*/.rdlc");
 
-            //////rdlcInputInvoiceReport.LocalReport.ReportPath = ContentStart;
-            rdlcInputInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.InputInvoices.InputInvoiceReport.rdlc";
+			//////rdlcInputInvoiceReport.LocalReport.ReportPath = ContentStart;
+			string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\InputInvoices\InputInvoiceReport.rdlc");
+			rdlcInputInvoiceReport.LocalReport.ReportPath = ContentStart;
             // rdlcInputInvoiceReport.LocalReport.SetParameters(reportParams);
             rdlcInputInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
             rdlcInputInvoiceReport.Refresh();

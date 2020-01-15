@@ -61,7 +61,12 @@ namespace WpfAppCommonCode.Helpers
 
             retVal = retVal.ToLower().Replace(" ", "");
 
-            retVal += " " + valuta.ToLower().Replace(" ", "") + " i " + delovi[1] + "/100";
+            decimal part2parsed;
+            decimal.TryParse(delovi[1], out part2parsed);
+
+            int value = (int)Math.Ceiling(part2parsed / 10.0m);
+
+            retVal += " " + valuta.ToLower().Replace(" ", "") + " i " + value.ToString("{0:00}") + "/100";
 
             return retVal;
 
@@ -87,7 +92,7 @@ namespace WpfAppCommonCode.Helpers
                 if (jed[2] == '1' && jed[1] != '1')
                     return Trocifreni(jed.Substring(0, 3), false) + (Hrvatskezik ? "MILIJUN " : "MILION ") + Sestocifreni(jed.Substring(3, 6), false);
                 else
-                    return Trocifreni(jed.Substring(0, 3), false) + (Hrvatskezik ? "MULUNA " : "MILIONA ") + Sestocifreni(jed.Substring(3, 6), false);
+                    return Trocifreni(jed.Substring(0, 3), false) + (Hrvatskezik ? "MILIJUNA " : "MILIONA ") + Sestocifreni(jed.Substring(3, 6), false);
             }
         }
 
@@ -283,7 +288,7 @@ namespace WpfAppCommonCode.Helpers
             if (jed == "1")
                 return "STO ";
             else if (jed == "2")
-                return "DVJESTO ";
+                return "DVESTO ";
             else if (jed == "3")
                 return "TRISTO ";
             else if (jed == "4")

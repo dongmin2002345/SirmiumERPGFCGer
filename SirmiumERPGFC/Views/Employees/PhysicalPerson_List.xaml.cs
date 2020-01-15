@@ -30,6 +30,7 @@ using Microsoft.Reporting.WinForms;
 using System.IO;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Companies;
+using System.Reflection;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -1402,9 +1403,8 @@ namespace SirmiumERPGFC.Views.Employees
             };
             rdlcPhysicalPersonReport.LocalReport.DataSources.Add(rpdsModel);
                        
-            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\PhysicalPersons\PhysicalPersonReport.rdlc");
-
+            string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\PhysicalPersons\PhysicalPersonReport.rdlc");
             rdlcPhysicalPersonReport.LocalReport.ReportPath = ContentStart;
             // rdlcPhysicalPersonReport.LocalReport.SetParameters(reportParams);
             rdlcPhysicalPersonReport.SetDisplayMode(DisplayMode.PrintLayout);

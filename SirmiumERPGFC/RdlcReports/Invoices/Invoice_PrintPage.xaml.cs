@@ -18,6 +18,7 @@ using SirmiumERPGFC.Repository.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using System.ComponentModel;
 using System.Threading;
+using System.Reflection;
 
 namespace SirmiumERPGFC.RdlcReports.Invoices
 {
@@ -57,8 +58,18 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
             if (value == null)
                 return "";
 
-            var splitvalue = value.Value.ToString($"#,###,###,###,##0.{decimalZeroes}").Split('.');
-            return String.Format("{0},{1}", splitvalue[0].Replace(",", "."), splitvalue[1]);
+            var tmpStr = value.Value.ToString($"#,###,###,###,##0.{decimalZeroes}");
+
+
+
+            if (tmpStr.Length < decimalZeroes.Length + 2) // zbog 0.brojdecimala
+                tmpStr = $"0.{decimalZeroes}";
+
+
+            string end = tmpStr.Substring(tmpStr.Length - decimalZeroes.Length, decimalZeroes.Length);
+
+            string start = tmpStr.Substring(0, tmpStr.Length - (decimalZeroes.Length + 1));
+            return String.Format("{0},{1}", start.Replace(",", "."), end);
         }
 
         private async void MetroWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -142,8 +153,13 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                 {
                     sumOfBaseInCurrency = (double)(sumOfBase / CurrentInvoice.CurrencyExchangeRate);
                 }
-                WpfAppCommonCode.Helpers.BrojUTekst brText = new WpfAppCommonCode.Helpers.BrojUTekst();
-                string textFormTotal = brText.PretvoriBrojUTekst(sumOfAmount.ToString("#0.00"), '.', "RSD", "");
+                WpfAppCommonCode.Helpers.BrojUTekst brText = new WpfAppCommonCode.Helpers.BrojUTekst()
+                {
+                    Hrvatskezik = false
+                };
+
+                string preFormattedText = GetFormatted(sumOfAmount, "00"); 
+                string textFormTotal = brText.PretvoriBrojUTekst(preFormattedText, ',', "RSD", "");
 
                 List<RdlcReports.Invoices.InvoiceViewModel> invoice = new List<RdlcReports.Invoices.InvoiceViewModel>()
                 {
@@ -192,22 +208,26 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                     rdlcInvoiceReport.LocalReport.DataSources.Add(rpdsModel);
                     rdlcInvoiceReport.LocalReport.DataSources.Add(rdpsitems);
 
+                    string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
                     switch (CurrentInvoice.PdvType)
                     {
                         case 1: // sa pdv
-                                {
-                                rdlcInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.Invoices.Invoice_WithPDV.rdlc";
+                            {
+                                string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\Invoices\Invoice_WithPDV.rdlc");
+                                rdlcInvoiceReport.LocalReport.ReportPath = ContentStart;
                                 break;
                             }
                         case 2: // bez pdv
-                                {
-                                rdlcInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.Invoices.Invoice_WithoutPDV.rdlc";
+                            {
+                                string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\Invoices\Invoice_WithoutPDV.rdlc");
+                                rdlcInvoiceReport.LocalReport.ReportPath = ContentStart;
                                 break;
                             }
                         case 3: // nije u sistemu pdv
-                                {
-                                rdlcInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.Invoices.Invoice_NotInPDV.rdlc";
+                            {
+                                string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\Invoices\Invoice_NotInPDV.rdlc");
+                                rdlcInvoiceReport.LocalReport.ReportPath = ContentStart;
                                 break;
                             }
                     }

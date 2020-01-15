@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -92,7 +93,11 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             //////string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\OutputInvoices\OutputInvoicesReport.rdlc");
 
             //////rdlcOutputInvoiceReport.LocalReport.ReportPath = ContentStart;
-            rdlcOutputInvoiceReport.LocalReport.ReportEmbeddedResource = "SirmiumERPGFC.RdlcReports.OutputInvoices.OutputInvoicesReport.rdlc";
+            ///
+
+            string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\OutputInvoices\OutputInvoicesReport.rdlc");
+            rdlcOutputInvoiceReport.LocalReport.ReportPath = ContentStart;
             // rdlcOutputInvoiceReport.LocalReport.SetParameters(reportParams);
             rdlcOutputInvoiceReport.SetDisplayMode(DisplayMode.PrintLayout);
             rdlcOutputInvoiceReport.Refresh();

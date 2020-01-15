@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -90,9 +91,9 @@ namespace SirmiumERPGFC.Views.Employees
             //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
             //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
 
-            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\Employees\EmployeesReport.rdlc");
-
+            
+            string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\Employees\EmployeesReport.rdlc");
             rdlcEmployeeReport.LocalReport.ReportPath = ContentStart;
             // rdlcEmployeeReport.LocalReport.SetParameters(reportParams);
             rdlcEmployeeReport.SetDisplayMode(DisplayMode.PrintLayout);

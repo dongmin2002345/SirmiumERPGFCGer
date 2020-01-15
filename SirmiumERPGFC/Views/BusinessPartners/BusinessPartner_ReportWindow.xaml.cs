@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,55 +47,62 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             InitializeComponent();
 
-            rdlcBusinessPartnerReport.LocalReport.DataSources.Clear();
-
-            List<BusinessPartnersReportViewModel> businessPartner = new List<BusinessPartnersReportViewModel>();
-            List<BusinessPartnerViewModel> BusinessPartnerItems = new BusinessPartnerSQLiteRepository().GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, 1, 50).BusinessPartners;
-            int counter = 1;
-            foreach (var BusinessPartnerItem in BusinessPartnerItems)
+            string path = "";
+            try
             {
-                businessPartner.Add(new BusinessPartnersReportViewModel()
+                rdlcBusinessPartnerReport.LocalReport.DataSources.Clear();
+
+                List<BusinessPartnersReportViewModel> businessPartner = new List<BusinessPartnersReportViewModel>();
+                List<BusinessPartnerViewModel> BusinessPartnerItems = new BusinessPartnerSQLiteRepository().GetBusinessPartnersByPage(MainWindow.CurrentCompanyId, BusinessPartnerSearchObject, 1, 50).BusinessPartners;
+                int counter = 1;
+                foreach (var BusinessPartnerItem in BusinessPartnerItems)
                 {
-                    OrderNumbersForBusinessPartners = counter++,
-                    InternalCode = BusinessPartnerItem?.InternalCode ?? "",
-                    Name = BusinessPartnerItem?.Name ?? "",
-                    NameGer = BusinessPartnerItem?.NameGer ?? "",
-                    TaxNr = BusinessPartnerItem?.TaxNr ?? "",
-                    Valuta = BusinessPartnerItem?.DueDate.ToString("#.00") ?? "",
-                    VatDescription = BusinessPartnerItem?.Vat?.Amount.ToString() ?? "",
-                    PIO = BusinessPartnerItem?.PIO ?? "",
-                    Customer = BusinessPartnerItem?.Customer ?? "",
-                    DiscountName = BusinessPartnerItem?.Discount?.Amount.ToString("#.00") ?? "",
-                    IsInPDV = BusinessPartnerItem?.IsInPDV.ToString() ?? ""
-                });
-            }
-            var rpdsModel = new ReportDataSource()
+                    businessPartner.Add(new BusinessPartnersReportViewModel()
+                    {
+                        OrderNumbersForBusinessPartners = counter++,
+                        InternalCode = BusinessPartnerItem?.InternalCode ?? "",
+                        Name = BusinessPartnerItem?.Name ?? "",
+                        NameGer = BusinessPartnerItem?.NameGer ?? "",
+                        TaxNr = BusinessPartnerItem?.TaxNr ?? "",
+                        Valuta = BusinessPartnerItem?.DueDate.ToString("#.00") ?? "",
+                        VatDescription = BusinessPartnerItem?.Vat?.Amount.ToString() ?? "",
+                        PIO = BusinessPartnerItem?.PIO ?? "",
+                        Customer = BusinessPartnerItem?.Customer ?? "",
+                        DiscountName = BusinessPartnerItem?.Discount?.Amount.ToString("#.00") ?? "",
+                        IsInPDV = BusinessPartnerItem?.IsInPDV.ToString() ?? ""
+                    });
+                }
+                var rpdsModel = new ReportDataSource()
+                {
+                    Name = "DataSet1",
+                    Value = businessPartner
+                };
+                rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModel);
+
+                //List<ReportParameter> reportParams = new List<ReportParameter>();
+                //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
+                //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
+
+
+                //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
+                //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
+                //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
+                //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
+
+
+                string exeFolder = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\BusinessPartners\BusinessPartnersReport.rdlc");
+                rdlcBusinessPartnerReport.LocalReport.ReportPath = ContentStart;
+                // rdlcBusinessPartnerReport.LocalReport.SetParameters(reportParams);
+                rdlcBusinessPartnerReport.SetDisplayMode(DisplayMode.PrintLayout);
+                rdlcBusinessPartnerReport.Refresh();
+                rdlcBusinessPartnerReport.ZoomMode = ZoomMode.Percent;
+                rdlcBusinessPartnerReport.ZoomPercent = 100;
+                rdlcBusinessPartnerReport.RefreshReport();
+            } catch(Exception ex)
             {
-                Name = "DataSet1",
-                Value = businessPartner
-            };
-            rdlcBusinessPartnerReport.LocalReport.DataSources.Add(rpdsModel);
-
-            //List<ReportParameter> reportParams = new List<ReportParameter>();
-            //string parameterText = "Dana " + (CurrentInputInvoice?.InvoiceDate.ToString("dd.MM.yyyy") ?? "") + " na stočni depo klanice Bioesen primljeno je:";
-            //reportParams.Add(new ReportParameter("txtInputInvoiceDate", parameterText));
-
-
-            //var businessPartnerList = new List<InvoiceBusinessPartnerViewModel>();
-            //businessPartnerList.Add(new InvoiceBusinessPartnerViewModel() { Name = "Pera peric " });
-            //var businessPartnerModel = new ReportDataSource() { Name = "DataSet2", Value = businessPartnerList };
-            //rdlcInputNoteReport.LocalReport.DataSources.Add(businessPartnerModel);
-
-            string exeFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-            string ContentStart = System.IO.Path.Combine(exeFolder, @"SirmiumERPGFC\RdlcReports\BusinessPartners\BusinessPartnersReport.rdlc");
-
-            rdlcBusinessPartnerReport.LocalReport.ReportPath = ContentStart;
-            // rdlcBusinessPartnerReport.LocalReport.SetParameters(reportParams);
-            rdlcBusinessPartnerReport.SetDisplayMode(DisplayMode.PrintLayout);
-            rdlcBusinessPartnerReport.Refresh();
-            rdlcBusinessPartnerReport.ZoomMode = ZoomMode.Percent;
-            rdlcBusinessPartnerReport.ZoomPercent = 100;
-            rdlcBusinessPartnerReport.RefreshReport();
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
