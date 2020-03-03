@@ -32,7 +32,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Note = constructionSiteNote.Note,
                 NoteDate = constructionSiteNote.NoteDate,
                 ItemStatus = constructionSiteNote.ItemStatus,
-
+                Path = constructionSiteNote.Path,
                 IsActive = constructionSiteNote.Active,
 
                 CreatedBy = constructionSiteNote.CreatedBy?.ConvertToUserViewModelLite(),
@@ -55,7 +55,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Note = constructionSiteNote.Note,
                 NoteDate = constructionSiteNote.NoteDate,
                 ItemStatus = constructionSiteNote.ItemStatus,
-
+                Path = constructionSiteNote.Path,
                 IsActive = constructionSiteNote.Active,
 
                 UpdatedAt = constructionSiteNote.UpdatedAt,
@@ -77,7 +77,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Note = constructionSiteNoteViewModel.Note,
                 NoteDate = constructionSiteNoteViewModel.NoteDate,
                 ItemStatus = constructionSiteNoteViewModel.ItemStatus,
-
+                Path = constructionSiteNoteViewModel.Path,
                 CreatedById = constructionSiteNoteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = constructionSiteNoteViewModel.Company?.Id ?? null,
 

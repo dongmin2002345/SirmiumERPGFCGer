@@ -13,6 +13,7 @@ namespace DomainCore.ConstructionSites
         public string Note { get; set; }
         public DateTime NoteDate { get; set; }
         public int ItemStatus { get; set; }
+        public string Path { get; set; }
 
     }
 }

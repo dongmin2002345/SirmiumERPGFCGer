@@ -65,6 +65,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "VatDeductionFrom DATETIME NULL, " +
             "VatDeductionTo DATETIME NULL, " +
             "PdvType INTEGER NULL, " +
+            "Path NVARCHAR(2048) NULL, " +
             "IsSynced BOOL NULL, " +
             "UpdatedAt DATETIME NULL, " +
             "CreatedById INTEGER NULL, " +
@@ -81,7 +82,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
             "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
-            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, PdvType, " +
+            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, PdvType, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
@@ -93,7 +94,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
             "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
-            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, PdvType, " +
+            "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, VatDeductionFrom, VatDeductionTo, PdvType, Path, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @PIB, @PIO, @IdentificationNumber, " +
@@ -104,7 +105,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
             "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount, " +
             "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, @DiscountAmount," +
-            "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, @VatDeductionFrom, @VatDeductionTo, @PdvType, " +
+            "@AgencyId, @AgencyIdentifier, @AgencyCode, @AgencyName, @VatDeductionFrom, @VatDeductionTo, @PdvType, @Path, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -145,6 +146,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.VatDeductionFrom = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.VatDeductionTo = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.PdvType = SQLiteHelper.GetIntNullable(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -205,6 +207,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@VatDeductionFrom", ((object)businessPartner.VatDeductionFrom) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatDeductionTo", ((object)businessPartner.VatDeductionTo) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PdvType", ((object)businessPartner.PdvType) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)businessPartner.Path) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", businessPartner.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)businessPartner.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);
@@ -238,7 +241,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "bp.SectorId, bp.SectorIdentifier, bp.SectorCode, bp.SectorName, " +
                         "bp.VatId, bp.VatIdentifier, bp.VatCode, bp.VatDescription, bp.VatAmount, " +
                         "bp.DiscountId, bp.DiscountIdentifier, bp.DiscountCode, bp.DiscountName, bp.DiscountAmount, " +
-                        "bp.AgencyId, bp.AgencyIdentifier, bp.AgencyCode, bp.AgencyName, bp.VatDeductionFrom, bp.VatDeductionTo, bp.PdvType, " +
+                        "bp.AgencyId, bp.AgencyIdentifier, bp.AgencyCode, bp.AgencyName, bp.VatDeductionFrom, bp.VatDeductionTo, bp.PdvType, bp.Path, " +
                         "bp.IsSynced, bp.UpdatedAt, bp.CreatedById, bp.CreatedByName, bp.CompanyId, bp.CompanyName " +
                         "FROM BusinessPartners bp " +
                         "WHERE (@Name IS NULL OR @Name = '' OR bp.Name LIKE @Name OR bp.NameGer LIKE @Name) " +

@@ -24,6 +24,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                      "ConstructionSiteName NVARCHAR(48) NULL, " +
                      "Note NVARCHAR(2048), " +
                      "NoteDate DATETIME NULL, " +
+                     "Path NVARCHAR(2048) NULL, " +
                      "ItemStatus INTEGER NOT NULL, " +
                      "IsSynced BOOL NULL, " +
                      "UpdatedAt DATETIME NULL, " +
@@ -34,16 +35,16 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, ConstructionSiteId, ConstructionSiteIdentifier, " +
-            "ConstructionSiteCode, ConstructionSiteName, Note, NoteDate, ItemStatus, " +
+            "ConstructionSiteCode, ConstructionSiteName, Note, NoteDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSiteNotes " +
             "(Id, ServerId, Identifier, ConstructionSiteId, ConstructionSiteIdentifier, " +
-            "ConstructionSiteCode, ConstructionSiteName, Note, NoteDate, ItemStatus, " +
+            "ConstructionSiteCode, ConstructionSiteName, Note, NoteDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @ConstructionSiteId, @ConstructionSiteIdentifier, " +
-            "@ConstructionSiteCode, @ConstructionSiteName, @Note, @NoteDate, @ItemStatus, " +
+            "@ConstructionSiteCode, @ConstructionSiteName, @Note, @NoteDate, @Path, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -58,6 +59,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
             dbEntry.Note = SQLiteHelper.GetString(query, ref counter);
             dbEntry.NoteDate = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
@@ -76,6 +78,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)constructionSiteNote.ConstructionSite.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Note", constructionSiteNote.Note);
             insertCommand.Parameters.AddWithValue("@NoteDate", ((object)constructionSiteNote.NoteDate) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@Path", ((object)constructionSiteNote.Path) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", constructionSiteNote.ItemStatus);
             insertCommand.Parameters.AddWithValue("@IsSynced", constructionSiteNote.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSiteNote.UpdatedAt) ?? DBNull.Value);

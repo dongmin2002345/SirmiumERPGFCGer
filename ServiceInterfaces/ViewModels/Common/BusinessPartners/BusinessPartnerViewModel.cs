@@ -732,6 +732,22 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region Path
+        private string _Path;
+
+        public string Path
+        {
+            get { return _Path; }
+            set
+            {
+                if (_Path != value)
+                {
+                    _Path = value;
+                    NotifyPropertyChanged("Path");
+                }
+            }
+        }
+        #endregion
 
     }
 }
