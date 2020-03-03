@@ -240,6 +240,7 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="Auto" />
                                 <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ConstructionSite.Code" Header="{DynamicResource Šifra_gradilištaDvotacka}" Binding="{Binding ConstructionSite.Code}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="ConstructionSite.Name" Header="{DynamicResource Naziv_gradilišta}" Binding="{Binding ConstructionSite.Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
