@@ -22,6 +22,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                      "ConstructionSiteIdentifier GUID NULL, " +
                      "ConstructionSiteCode NVARCHAR(48) NULL, " +
                      "ConstructionSiteName NVARCHAR(48) NULL, " +
+                     "ConstructionSiteInternalCode NVARCHAR(48) NULL, " +
                      "Name NVARCHAR(2048), " +
                      "CreateDate DATETIME NULL, " +
                      "Path NVARCHAR(2048) NULL, " +
@@ -35,16 +36,16 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, ConstructionSiteId, ConstructionSiteIdentifier, " +
-            "ConstructionSiteCode, ConstructionSiteName, Name, CreateDate, Path, ItemStatus, " +
+            "ConstructionSiteCode, ConstructionSiteName, ConstructionSiteInternalCode, Name, CreateDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSiteDocuments " +
             "(Id, ServerId, Identifier, ConstructionSiteId, ConstructionSiteIdentifier, " +
-            "ConstructionSiteCode, ConstructionSiteName, Name, CreateDate, Path, ItemStatus, " +
+            "ConstructionSiteCode, ConstructionSiteName, ConstructionSiteInternalCode, Name, CreateDate, Path, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @ConstructionSiteId, @ConstructionSiteIdentifier, " +
-            "@ConstructionSiteCode, @ConstructionSiteName, @Name, @CreateDate, @Path, @ItemStatus, " +
+            "@ConstructionSiteCode, @ConstructionSiteName, @ConstructionSiteInternalCode, @Name, @CreateDate, @Path, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -56,7 +57,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             ConstructionSiteDocumentViewModel dbEntry = new ConstructionSiteDocumentViewModel();
             dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
-            dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
+            dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSiteWithInternalCode(query, ref counter);
             dbEntry.Name = SQLiteHelper.GetString(query, ref counter);
             dbEntry.CreateDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
@@ -76,6 +77,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)constructionSiteDocument.ConstructionSite.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)constructionSiteDocument.ConstructionSite.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)constructionSiteDocument.ConstructionSite.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ConstructionSiteInternalCode", ((object)constructionSiteDocument.ConstructionSite.InternalCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Name", constructionSiteDocument.Name);
             insertCommand.Parameters.AddWithValue("@CreateDate", ((object)constructionSiteDocument.CreateDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Path", ((object)constructionSiteDocument.Path) ?? DBNull.Value);
@@ -157,11 +159,13 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                         "   (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR ConstructionSiteName LIKE @ConstructionSiteName) OR " +
                         "   (@ConstructionSiteName IS NULL OR @ConstructionSiteName = '' OR Name LIKE @ConstructionSiteName) " +
                         ") " +
+                        "AND (@ConstructionSiteInternalCode IS NULL OR @ConstructionSiteInternalCode = '' OR ConstructionSiteInternalCode LIKE @ConstructionSiteInternalCode) " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
                         "ORDER BY IsSynced, Id DESC;", db);
 
                     selectCommand.Parameters.AddWithValue("@ConstructionSiteName", (String.IsNullOrEmpty(filterObject.Search_Name) ? "" : "%" + filterObject.Search_Name + "%"));
+                    selectCommand.Parameters.AddWithValue("@ConstructionSiteInternalCode", (String.IsNullOrEmpty(filterObject.Search_Code) ? "" : "%" + filterObject.Search_Code + "%"));
                     selectCommand.Parameters.AddWithValue("@DateFrom", ((object)filterObject.Search_DateFrom) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@DateTo", ((object)filterObject.Search_DateTo) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);

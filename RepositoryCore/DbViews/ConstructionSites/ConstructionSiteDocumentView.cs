@@ -29,6 +29,7 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "constructionSite.Identifier AS ConstructionSiteIdentifier, " +
                 "constructionSite.Code AS ConstructionSiteCode, " +
                 "constructionSite.Name AS ConstructionSiteName, " +
+                "constructionSite.InternalCode AS ConstructionSiteInternalCode, " +
 
                 "constructionSiteDocument.Name, " +
                 "constructionSiteDocument.CreateDate, " +
