@@ -368,7 +368,7 @@
                                   HeadersVisibility="All"
                                   LoadingRow="DgConstructionSiteNotes_LoadingRow"
                               ItemsSource="{Binding Path=ConstructionSiteNotesFromDB}"
-                              SelectedItem="{Binding Path=CurrentConstructionSiteNoteDG, Mode=TwoWay}" Grid.ColumnSpan="2">
+                              SelectedItem="{Binding Path=CurrentConstructionSiteNoteForm, Mode=TwoWay}" Grid.ColumnSpan="2">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" >
@@ -380,7 +380,19 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn SortMemberPath="NoteDate" Header="{DynamicResource Datum}" Binding="{Binding Path=NoteDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
-                                
+                                <DataGridTemplateColumn Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button x:Name="btnShowNoteDocument" Click="btnShowNoteDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                             <DataGrid.RowStyle>
                                 <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">

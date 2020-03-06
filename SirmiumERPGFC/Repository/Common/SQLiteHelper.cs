@@ -523,6 +523,26 @@ namespace SirmiumERPGFC.Repository.Common
             }
         }
 
+        public static ConstructionSiteViewModel GetConstructionSiteWithInternalCode(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 5;
+                return null;
+            }
+            else
+            {
+                var viewModel = new ConstructionSiteViewModel();
+                viewModel.Id = query.GetInt32(counter++);
+                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.Name = query.GetString(counter++);
+                viewModel.InternalCode = query.GetString(counter++);
+
+                return viewModel;
+            }
+        }
+
         public static UserViewModel GetUser(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))

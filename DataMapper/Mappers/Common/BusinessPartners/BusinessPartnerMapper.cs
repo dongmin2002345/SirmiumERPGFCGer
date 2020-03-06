@@ -69,7 +69,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 VatDeductionTo = businessPartner.VatDeductionTo,
 
                 PdvType = businessPartner.PdvType,
-
+                Path = businessPartner.Path,
                 IsActive = businessPartner.Active,
 
                 CreatedBy = businessPartner.CreatedBy?.ConvertToUserViewModelLite(),
@@ -119,7 +119,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 VatDeductionTo = businessPartner.VatDeductionTo,
 
                 PdvType = businessPartner.PdvType,
-
+                Path = businessPartner.Path,
                 IsActive = businessPartner.Active,
 
                 UpdatedAt = businessPartner.UpdatedAt,
@@ -171,7 +171,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 VatDeductionTo = businessPartnerViewModel.VatDeductionTo,
 
                 PdvType = businessPartnerViewModel.PdvType,
-
+                Path = businessPartnerViewModel.Path,
                 Active = businessPartnerViewModel.IsActive,
                 CreatedById = businessPartnerViewModel.CreatedBy?.Id ?? null,
                 CompanyId = businessPartnerViewModel.Company?.Id ?? null,

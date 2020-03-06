@@ -428,8 +428,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
         {
             if (context.ConstructionSites.Where(x => x.Identifier != null && x.Identifier == constructionSite.Identifier).Count() == 0)
             {
-                if (context.ConstructionSites.Where(x => x.InternalCode == constructionSite.InternalCode).Count() > 0)
-                    throw new Exception("Gradilište sa datom šifrom već postoji u bazi! / Eine Baustelle mit diesem Code existiert bereits in der Datenbank!");
+                //if (context.ConstructionSites.Where(x => x.InternalCode == constructionSite.InternalCode).Count() > 0)
+                    //throw new Exception("Gradilište sa datom šifrom već postoji u bazi! / Eine Baustelle mit diesem Code existiert bereits in der Datenbank!");
 
                 constructionSite.Id = 0;
 

@@ -198,11 +198,14 @@
                                 <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource PretragaDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                                 <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtFilterConstructionSite" Text="{Binding Path=FilterConstructionSiteDocuments.Search_Name, Mode=TwoWay}" Margin="5 0 5 0" />
 
-                                <TextBlock Grid.Row="0" Grid.Column="4" Text="{DynamicResource DatumOdDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                <DatePicker Grid.Row="0" Grid.Column="5" x:Name="dtConstructionSiteFrom" SelectedDate="{Binding Path=FilterConstructionSiteDocuments.Search_DateFrom, Mode=TwoWay}" Margin="5 0 5 0" />
+                                <TextBlock Grid.Row="0" Grid.Column="4" Text="{DynamicResource PretragaDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="0" Grid.Column="5" x:Name="txtFilterConstructionSiteCode" Text="{Binding Path=FilterConstructionSiteDocuments.Search_Code, Mode=TwoWay}" Margin="5 0 5 0" />
 
-                                <TextBlock Grid.Row="0" Grid.Column="6" Text="{DynamicResource DatumDoDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                <DatePicker Grid.Row="0" Grid.Column="7" x:Name="dtConstructionSiteTo" SelectedDate="{Binding Path=FilterConstructionSiteDocuments.Search_DateTo, Mode=TwoWay}" Margin="5 0 5 0" />
+                                <TextBlock Grid.Row="0" Grid.Column="6" Text="{DynamicResource DatumOdDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <DatePicker Grid.Row="0" Grid.Column="7" x:Name="dtConstructionSiteFrom" SelectedDate="{Binding Path=FilterConstructionSiteDocuments.Search_DateFrom, Mode=TwoWay}" Margin="5 0 5 0" />
+
+                                <TextBlock Grid.Row="0" Grid.Column="8" Text="{DynamicResource DatumDoDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <DatePicker Grid.Row="0" Grid.Column="9" x:Name="dtConstructionSiteTo" SelectedDate="{Binding Path=FilterConstructionSiteDocuments.Search_DateTo, Mode=TwoWay}" Margin="5 0 5 0" />
 
                             </Grid>
                         </Expander>
@@ -240,6 +243,7 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="Auto" />
                                 <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="ConstructionSite.InternalCode" Header="{DynamicResource Šifra_gradilištaDvotacka}" Binding="{Binding ConstructionSite.InternalCode}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="ConstructionSite.Name" Header="{DynamicResource Naziv_gradilišta}" Binding="{Binding ConstructionSite.Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -323,11 +327,13 @@
                                 <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource PretragaDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                                 <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtFilterEmployee" Text="{Binding Path=FilterEmployeeDocuments.Search_Name, Mode=TwoWay}" Margin="5 0 5 0" />
 
-                                <TextBlock Grid.Row="0" Grid.Column="4" Text="{DynamicResource DatumOdDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                <DatePicker Grid.Row="0" Grid.Column="5" x:Name="dtEmployeeFrom" SelectedDate="{Binding Path=FilterEmployeeDocuments.Search_DateFrom, Mode=TwoWay}" Margin="5 0 5 0" />
+                                
 
-                                <TextBlock Grid.Row="0" Grid.Column="6" Text="{DynamicResource DatumDoDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                <DatePicker Grid.Row="0" Grid.Column="7" x:Name="dtEmployeeTo" SelectedDate="{Binding Path=FilterEmployeeDocuments.Search_DateTo, Mode=TwoWay}" Margin="5 0 5 0" />
+                                <TextBlock Grid.Row="0" Grid.Column="6" Text="{DynamicResource DatumOdDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <DatePicker Grid.Row="0" Grid.Column="7" x:Name="dtEmployeeFrom" SelectedDate="{Binding Path=FilterEmployeeDocuments.Search_DateFrom, Mode=TwoWay}" Margin="5 0 5 0" />
+
+                                <TextBlock Grid.Row="0" Grid.Column="8" Text="{DynamicResource DatumDoDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <DatePicker Grid.Row="0" Grid.Column="9" x:Name="dtEmployeeTo" SelectedDate="{Binding Path=FilterEmployeeDocuments.Search_DateTo, Mode=TwoWay}" Margin="5 0 5 0" />
 
                             </Grid>
                         </Expander>

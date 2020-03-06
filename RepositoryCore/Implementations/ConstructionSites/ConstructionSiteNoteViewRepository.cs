@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteNoteId, ConstructionSiteNoteIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Note, NoteDate, ItemStatus, " +
+                "Note, NoteDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteNotes " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -68,6 +68,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
                         if (reader["ItemStatus"] != DBNull.Value)
                             constructionSiteNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        if (reader["Path"] != DBNull.Value)
+                            constructionSiteNote.Path = reader["Path"].ToString();
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -114,7 +116,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteNoteId, ConstructionSiteNoteIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Note, NoteDate, ItemStatus, " +
+                "Note, NoteDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteNotes " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -152,6 +154,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
                         if (reader["ItemStatus"] != DBNull.Value)
                             constructionSiteNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        if (reader["Path"] != DBNull.Value)
+                            constructionSiteNote.Path = reader["Path"].ToString();
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -197,7 +201,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteNoteId, ConstructionSiteNoteIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "Note, NoteDate, ItemStatus, " +
+                "Note, NoteDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteNotes " +
                 "WHERE CompanyId = @CompanyId " +
@@ -237,6 +241,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteNote.NoteDate = DateTime.Parse(reader["NoteDate"].ToString());
                         if (reader["ItemStatus"] != DBNull.Value)
                             constructionSiteNote.ItemStatus = Int32.Parse(reader["ItemStatus"].ToString());
+                        if (reader["Path"] != DBNull.Value)
+                            constructionSiteNote.Path = reader["Path"].ToString();
 
                         constructionSiteNote.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteNote.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -304,6 +310,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.Note = constructionSiteNote.Note;
                     dbEntry.NoteDate = constructionSiteNote.NoteDate;
                     dbEntry.ItemStatus = constructionSiteNote.ItemStatus;
+                    dbEntry.Path = constructionSiteNote.Path;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

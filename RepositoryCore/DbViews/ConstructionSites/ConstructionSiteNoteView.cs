@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "CREATE VIEW vConstructionSiteNotes AS " +
                 "SELECT constructionSiteNote.Id AS ConstructionSiteNoteId, constructionSiteNote.Identifier AS ConstructionSiteNoteIdentifier, " +
                 "constructionSite.Id AS ConstructionSiteId, constructionSite.Identifier AS ConstructionSiteIdentifier, constructionSite.Code AS ConstructionSiteCode, constructionSite.Name AS ConstructionSiteName, " +
-                "constructionSiteNote.Note, constructionSiteNote.NoteDate, constructionSiteNote.ItemStatus, constructionSiteNote.Active AS Active, " +
+                "constructionSiteNote.Note, constructionSiteNote.NoteDate, constructionSiteNote.Path, constructionSiteNote.ItemStatus, constructionSiteNote.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (constructionSiteNote.UpdatedAt), (constructionSite.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

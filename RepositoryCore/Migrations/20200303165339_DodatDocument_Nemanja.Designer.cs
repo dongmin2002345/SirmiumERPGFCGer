@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200303165339_DodatDocument_Nemanja")]
+    partial class DodatDocument_Nemanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -1895,37 +1897,6 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("CreatedById");
 
                     b.ToTable("ToDos");
-                });
-
-            modelBuilder.Entity("DomainCore.Common.ToDos.ToDoStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Code");
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<DateTime?>("CreatedAt");
-
-                    b.Property<int?>("CreatedById");
-
-                    b.Property<Guid>("Identifier");
-
-                    b.Property<string>("Name");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("ToDoStatuses");
                 });
 
             modelBuilder.Entity("DomainCore.ConstructionSites.ConstructionSite", b =>
@@ -3899,17 +3870,6 @@ namespace RepositoryCore.Migrations
                 });
 
             modelBuilder.Entity("DomainCore.Common.ToDos.ToDo", b =>
-                {
-                    b.HasOne("DomainCore.Common.Companies.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-                });
-
-            modelBuilder.Entity("DomainCore.Common.ToDos.ToDoStatus", b =>
                 {
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()
