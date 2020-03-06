@@ -141,6 +141,8 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private ICalendarAssignmentRepository calendarAssignmentRepository;
         private IEmployeeAttachmentRepository employeeAttachmentRepository;
         private IPhysicalPersonAttachmentRepository physicalPersonAttachmentRepository;
+
+        private IToDoStatusRepository toDoStatusRepository;
         #endregion
 
         #region Constructor
@@ -672,6 +674,13 @@ namespace RepositoryCore.UnitOfWork.Implementations
                 physicalPersonAttachmentRepository = new PhysicalPersonAttachmentRepository(context);
 
             return physicalPersonAttachmentRepository;
+        }
+
+        public IToDoStatusRepository GetToDoStatusRepository()
+        {
+            if (toDoStatusRepository == null)
+                toDoStatusRepository = new ToDoStatusViewRepository(context);
+            return toDoStatusRepository;
         }
 
         #endregion

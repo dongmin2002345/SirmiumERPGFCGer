@@ -256,6 +256,7 @@ namespace SirmiumERPWeb
             services.AddScoped<ICalendarAssignmentService, CalendarAssignmentService>();
             services.AddScoped<IEmployeeAttachmentService, EmployeeAttachmentService>();
             services.AddScoped<IPhysicalPersonAttachmentService, PhysicalPersonAttachmentService>();
+            services.AddScoped<IToDoStatusService, ToDoStatusService>();
 
 
             services.AddSignalR();
@@ -385,6 +386,8 @@ namespace SirmiumERPWeb
 
             PhysicalPersonAttachmentView.CreateView();
 
+            ToDoStatusView.CreateView();
+
             var mailingTime = new Config().GetConfiguration()["MailTime"];
             Console.WriteLine("Sending mails scheduled at: {0}\nCurrent time: {1}", mailingTime, DateTime.Now.ToString("HH:mm:ss"));
 
@@ -394,4 +397,3 @@ namespace SirmiumERPWeb
         }
     }
 }
-

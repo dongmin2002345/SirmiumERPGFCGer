@@ -274,6 +274,10 @@ namespace ApiExtension.Sender
              { typeof(ToDoViewModel), "ToDo" },
              { typeof(List<ToDoViewModel>), "ToDo" },
 
+             { typeof(ToDoStatusViewModel), "ToDoStatus" },
+             { typeof(List<ToDoStatusViewModel>), "ToDoStatus" },
+
+
             #endregion
 
 			#region Banks

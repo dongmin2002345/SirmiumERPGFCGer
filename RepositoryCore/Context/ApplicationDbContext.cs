@@ -166,6 +166,8 @@ namespace RepositoryCore.Context
 
         public DbSet<PhysicalPersonAttachment> PhysicalPersonAttachments { get; set; }
 
+        public DbSet<ToDoStatus> ToDoStatuses { get; set; }
+
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

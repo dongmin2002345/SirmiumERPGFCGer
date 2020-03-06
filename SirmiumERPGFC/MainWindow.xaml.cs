@@ -593,6 +593,11 @@ namespace SirmiumERPGFC
         {
             cntCtrl.Content = new Documents_Mailing_List();
         }
+
+        private void MniToDoStatus_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new ToDoStatus_List();
+        }
     }
 }
 

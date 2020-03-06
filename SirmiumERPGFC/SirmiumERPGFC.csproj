@@ -382,11 +382,15 @@
     <Compile Include="Repository\Statuses\StatusSQLiteRepository.cs" />
     <Compile Include="Repository\TaxAdministrations\TaxAdministrationSQLiteRepository.cs" />
     <Compile Include="Repository\ToDos\ToDoSQLiteRepository.cs" />
+    <Compile Include="Repository\ToDos\ToDoStatusSQLiteRepository.cs" />
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="Repository\Vats\VatSQLiteRepository.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="ViewComponents\Notifications\CallCenterNotification_Popup.xaml.cs">
       <DependentUpon>CallCenterNotification_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\ToDoStatusPopup.xaml.cs">
+      <DependentUpon>ToDoStatusPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BusinessCalendar\Calendar_AddEdit.xaml.cs">
       <DependentUpon>Calendar_AddEdit.xaml</DependentUpon>
@@ -627,6 +631,12 @@
     </Compile>
     <Compile Include="Views\Home\ToDoPrivateList.xaml.cs">
       <DependentUpon>ToDoPrivateList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\ToDoStatus_AddEdit.xaml.cs">
+      <DependentUpon>ToDoStatus_AddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\ToDoStatus_List.xaml.cs">
+      <DependentUpon>ToDoStatus_List.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InputInvoices\InputInvoiceAddEdit.xaml.cs">
       <DependentUpon>InputInvoiceAddEdit.xaml</DependentUpon>
@@ -890,6 +900,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ViewComponents\Notifications\CallCenterNotification_Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\ToDoStatusPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1210,6 +1224,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Home\ToDoPrivateList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Home\ToDoStatus_AddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Home\ToDoStatus_List.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -116,6 +116,8 @@ namespace RepositoryCore.UnitOfWork.Abstractions
         IEmployeeAttachmentRepository GetEmployeeAttachmentRepository();
         IPhysicalPersonAttachmentRepository GetPhysicalPersonAttachmentRepository();
 
+        IToDoStatusRepository GetToDoStatusRepository();
+
         void Save();
     }
 }

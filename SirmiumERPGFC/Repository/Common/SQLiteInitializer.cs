@@ -70,6 +70,20 @@ namespace SirmiumERPGFC.Repository.Common
                     SQLiteHelper.AddColumnIfNotExists("ToDos", "Path", "NVARCHAR(2048) NULL");
                     #endregion
 
+                    #region ToDoStatuses
+                     if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE ToDoStatuses", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    SqliteCommand createTableToDoStatus = new SqliteCommand(ToDoStatusSQLiteRepository.ToDoStatusTableCreatePart, db);
+                    createTableToDoStatus.ExecuteReader();
+                    #endregion
+
                     #region Limitations
                     if (withTableDrop)
                     {

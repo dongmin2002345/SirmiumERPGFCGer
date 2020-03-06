@@ -149,6 +149,7 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<IEmployeeAttachmentService>().To<EmployeeAttachmentService>();
                 Kernel.Bind<IPhysicalPersonAttachmentService>().To<PhysicalPersonAttachmentService>();
+                Kernel.Bind<IToDoStatusService>().To<ToDoStatusService>();      
             }
         }
     }

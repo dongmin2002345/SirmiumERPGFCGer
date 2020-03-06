@@ -82,6 +82,7 @@
     <Compile Include="Implementations\Common\Shipments\ShipmentService.cs" />
     <Compile Include="Implementations\Common\TaxAdministrations\TaxAdministrationService.cs" />
     <Compile Include="Implementations\Common\ToDos\ToDoService.cs" />
+    <Compile Include="Implementations\Common\ToDos\ToDoStatusService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteCalculationService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteDocumentService.cs" />
     <Compile Include="Implementations\ConstructionSites\ConstructionSiteNoteService.cs" />

@@ -190,6 +190,15 @@
                         </Fluent:Button.LargeIcon>
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
+
+                <Fluent:RibbonGroupBox Header="To Do Status">
+                    <Fluent:Button x:Name="mniToDoStatus" Click="MniToDoStatus_Click" Header="{DynamicResource Statusi}" KeyTip="TDS" >
+                        <Fluent:Button.LargeIcon>
+                            <Image Source="Resources\Icons\Worker.png" HorizontalAlignment="Center" Height="30" Width="30" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Fluent:Button.LargeIcon>
+                    </Fluent:Button>
+                </Fluent:RibbonGroupBox>
+
             </Fluent:RibbonTabItem>
 
             <Fluent:RibbonTabItem Header="{DynamicResource RAČUNI}" KeyTip="RAC">
