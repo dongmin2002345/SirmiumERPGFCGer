@@ -314,6 +314,8 @@
                                 </Style>
                             </DataGrid.RowStyle>
                         </DataGrid>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="2" Text="{DynamicResource Ukupna_vrednost}" VerticalAlignment="Center" TextAlignment="Right" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=TotalSum, Mode=TwoWay}" TextAlignment="Right" />
                     </Grid>
 
                 </GroupBox>
