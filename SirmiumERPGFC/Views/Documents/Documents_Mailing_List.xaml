@@ -305,7 +305,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <Button Grid.Column="0" x:Name="btnSelectAll_Employee" Click="btnSelectAll_Employee_Click" Margin="2" Width="100" Background="#007ACC" 
@@ -324,10 +324,11 @@
                                     </StackPanel>
                                 </Button>
 
-                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource PretragaDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource Pretraga_po_nazivuDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                                 <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtFilterEmployee" Text="{Binding Path=FilterEmployeeDocuments.Search_Name, Mode=TwoWay}" Margin="5 0 5 0" />
 
-                                
+                                <TextBlock Grid.Row="0" Grid.Column="4" Text="{DynamicResource Pretraga_po_šifriDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="0" Grid.Column="5" x:Name="txtFilterBusinessPartnerCode" Text="{Binding Path=FilterEmployeeDocuments.Search_Code, Mode=TwoWay}" Margin="5 0 5 0" />
 
                                 <TextBlock Grid.Row="0" Grid.Column="6" Text="{DynamicResource DatumOdDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                                 <DatePicker Grid.Row="0" Grid.Column="7" x:Name="dtEmployeeFrom" SelectedDate="{Binding Path=FilterEmployeeDocuments.Search_DateFrom, Mode=TwoWay}" Margin="5 0 5 0" />
@@ -372,6 +373,7 @@
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="Auto" />
                                 <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Employee.Name" Header="{DynamicResource Ime}" Binding="{Binding Employee.Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn SortMemberPath="Employee.Code" Header="{DynamicResource Šifra}" Binding="{Binding Employee.Code}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="Employee.SurName" Header="{DynamicResource Prezime}" Binding="{Binding Employee.SurName}" IsReadOnly="True" Width="*" />
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>

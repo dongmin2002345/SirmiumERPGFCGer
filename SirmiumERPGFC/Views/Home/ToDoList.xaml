@@ -12,6 +12,7 @@
         <cbxConverters:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
         <cbxConverters:BoolStringConverter x:Key="BoolStringConverter" />
         <cbxConverters:ToDoDateConverter x:Key="ToDoDateConverter" />
+        <cbxConverters:ToDoDateColorConverter x:Key="ToDoDateColorConverter" />
         <cbxConverters:MultiConverter x:Key="MultiConverter" />
     </UserControl.Resources>
     
@@ -139,6 +140,7 @@
                     <DataGrid.RowStyle>
                         <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
                             <Setter Property="Background" Value="{Binding ToDoDate, Converter={StaticResource ToDoDateConverter}}"  />
+                            <Setter Property="Foreground" Value="{Binding ToDoDate, Converter={StaticResource ToDoDateColorConverter}}"  />
                         </Style>
                     </DataGrid.RowStyle>
                 </DataGrid>

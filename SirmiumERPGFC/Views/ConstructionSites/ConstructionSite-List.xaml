@@ -170,7 +170,7 @@
                           GridLinesVisibility="All"
                           HorizontalGridLinesBrush="Gray"
                           VerticalAlignment="Stretch"
-                          HorizontalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Visible"
                           VerticalScrollBarVisibility="Auto"
                           Style="{DynamicResource AzureDataGrid}"
                           ItemsSource="{Binding Path=ConstructionSitesFromDB}"
