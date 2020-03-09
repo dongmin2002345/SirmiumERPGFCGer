@@ -786,6 +786,6 @@
 
     <system:String x:Key="Plaćeno">Plaćeno</system:String>
     <system:String x:Key="Refundirano">Refundirano</system:String>
-
+    <system:String x:Key="Šifra_već_postoji_uzvičnik">Šifra već postoji u bazi!</system:String>
 
 </ResourceDictionary>
