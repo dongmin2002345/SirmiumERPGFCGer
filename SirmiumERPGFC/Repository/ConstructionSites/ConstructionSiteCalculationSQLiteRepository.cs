@@ -30,6 +30,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                   "ValueDifference DECIMAL NULL, " +
                   "PlusMinus NVARCHAR(48) NULL, " +
                   "ItemStatus INTEGER NOT NULL, " +
+                  "IsPaid BOOL NULL, " +
+                  "IsRefunded BOOL NULL, " +
                   "IsSynced BOOL NULL, " +
                   "UpdatedAt DATETIME NULL, " +
                   "CreatedById INTEGER NULL, " +
@@ -41,17 +43,20 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "SELECT ServerId, Identifier, " + 
             "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
             "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "IsPaid, IsRefunded, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSiteCalculations " +
             "(Id, ServerId, Identifier, " +
             "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
             "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "IsPaid, IsRefunded, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
             "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName, " +
             "@NumOfEmployees, @EmployeePrice, @NumOfMonths, @OldValue, @NewValue, @ValueDifference, @PlusMinus, @ItemStatus, " +
+            "@IsPaid, @IsRefunded, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -72,6 +77,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.ValueDifference = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.PlusMinus = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.IsPaid = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.IsRefunded = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -95,6 +102,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@ValueDifference", ((object)constructionSiteCalculation.ValueDifference) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PlusMinus", ((object)constructionSiteCalculation.PlusMinus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)constructionSiteCalculation.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsPaid", constructionSiteCalculation.IsPaid);
+            insertCommand.Parameters.AddWithValue("@IsRefunded", constructionSiteCalculation.IsRefunded);
 
             insertCommand.Parameters.AddWithValue("@IsSynced", constructionSiteCalculation.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSiteCalculation.UpdatedAt) ?? DBNull.Value);

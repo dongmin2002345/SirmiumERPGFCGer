@@ -99,6 +99,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.NewValue = constructionSiteCalculation.NewValue;
                     dbEntry.ValueDifference = constructionSiteCalculation.ValueDifference;
                     dbEntry.PlusMinus = constructionSiteCalculation.PlusMinus;
+                    dbEntry.IsPaid = constructionSiteCalculation.IsPaid;
+                    dbEntry.IsRefunded = constructionSiteCalculation.IsRefunded;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

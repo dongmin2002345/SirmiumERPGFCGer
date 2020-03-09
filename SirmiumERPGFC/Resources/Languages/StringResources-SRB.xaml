@@ -783,5 +783,9 @@
     <system:String x:Key="UkupnaOsnovica">Ukupna osnovica:</system:String>
     <system:String x:Key="UkupanPopust">Ukupan popust:</system:String>
     <system:String x:Key="Štampa_Fakture">Štampa fakture</system:String>
-    
+
+    <system:String x:Key="Plaćeno">Plaćeno</system:String>
+    <system:String x:Key="Refundirano">Refundirano</system:String>
+
+
 </ResourceDictionary>

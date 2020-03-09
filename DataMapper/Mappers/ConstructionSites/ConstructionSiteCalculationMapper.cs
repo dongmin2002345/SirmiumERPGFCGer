@@ -39,6 +39,9 @@ namespace DataMapper.Mappers.ConstructionSites
 
                 PlusMinus = constructionSiteCalculation.PlusMinus,
                 ItemStatus = constructionSiteCalculation.ItemStatus,
+                IsPaid = constructionSiteCalculation.IsPaid,
+                IsRefunded = constructionSiteCalculation.IsRefunded,
+
 
                 IsActive = constructionSiteCalculation.Active,
 
@@ -69,6 +72,8 @@ namespace DataMapper.Mappers.ConstructionSites
 
                 PlusMinus = constructionSiteCalculation.PlusMinus,
                 ItemStatus = constructionSiteCalculation.ItemStatus,
+                IsPaid = constructionSiteCalculation.IsPaid,
+                IsRefunded = constructionSiteCalculation.IsRefunded,
 
                 IsActive = constructionSiteCalculation.Active,
 
@@ -98,6 +103,8 @@ namespace DataMapper.Mappers.ConstructionSites
 
                 PlusMinus = constructionSiteCalculationViewModel.PlusMinus,
                 ItemStatus = constructionSiteCalculationViewModel.ItemStatus,
+                IsPaid = constructionSiteCalculationViewModel.IsPaid,
+                IsRefunded = constructionSiteCalculationViewModel.IsRefunded,
 
                 CreatedById = constructionSiteCalculationViewModel.CreatedBy?.Id ?? null,
                 CompanyId = constructionSiteCalculationViewModel.Company?.Id ?? null,
