@@ -777,4 +777,8 @@
     <system:String x:Key="UkupnaOsnovica">Base Total:</system:String>
     <system:String x:Key="UkupanPopust">Total Discount:</system:String>
     <system:String x:Key="Štampa_Fakture"> Print invoice</system:String>
+
+    <system:String x:Key="Plaćeno">Paid</system:String>
+    <system:String x:Key="Refundirano">Refunded</system:String>
+    <system:String x:Key="Šifra_već_postoji_uzvičnik">The code already exists in the database!</system:String>
 </ResourceDictionary>

@@ -339,6 +339,23 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
+        #region TotalSum
+        private decimal _TotalSum = 0;
+
+        public decimal TotalSum
+        {
+            get { return _TotalSum; }
+            set
+            {
+                if (_TotalSum != value)
+                {
+                    _TotalSum = value;
+                    NotifyPropertyChanged("TotalSum");
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructor
@@ -426,6 +443,11 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             if (response.Success)
             {
                 ConstructionSiteCalculationsFromDB = new ObservableCollection<ConstructionSiteCalculationViewModel>(response.ConstructionSiteCalculations ?? new List<ConstructionSiteCalculationViewModel>());
+                TotalSum = 0;
+                foreach (var item in ConstructionSiteCalculationsFromDB)
+                {
+                    TotalSum += item.NewValue;
+                }
             }
             else
             {

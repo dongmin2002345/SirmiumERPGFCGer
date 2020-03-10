@@ -134,6 +134,39 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
 
 
+        #region IsPaid
+        private bool _IsPaid = false;
+
+        public bool IsPaid
+        {
+            get { return _IsPaid; }
+            set
+            {
+                if (_IsPaid != value)
+                {
+                    _IsPaid = value;
+                    NotifyPropertyChanged("IsPaid");
+                }
+            }
+        }
+        #endregion
+
+        #region IsRefunded
+        private bool _IsRefunded = false;
+
+        public bool IsRefunded
+        {
+            get { return _IsRefunded; }
+            set
+            {
+                if (_IsRefunded != value)
+                {
+                    _IsRefunded = value;
+                    NotifyPropertyChanged("Refunded");
+                }
+            }
+        }
+        #endregion
 
         #region SubmitButtonContent
         private string _SubmitButtonContent = ((string)Application.Current.FindResource("Proknjiži"));
@@ -255,6 +288,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             {
                 SubmitButtonEnabled = false;
                 CurrentConstructionSiteCalculationForm.ConstructionSite = CurrentConstructionSite;
+                CurrentConstructionSiteCalculationForm.IsPaid = IsPaid;
+                CurrentConstructionSiteCalculationForm.IsRefunded = IsRefunded;
 
                 CurrentConstructionSiteCalculationForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentConstructionSiteCalculationForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
@@ -366,6 +401,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 SubmitButtonEnabled = false;
 
                 CurrentConstructionSite.ConstructionSiteCalculations = ConstructionSiteCalculationsFromDB;
+                var test = CurrentConstructionSite;
                 ConstructionSiteResponse response = constructionSiteService.Create(CurrentConstructionSite);
                 if (!response.Success)
                 {
@@ -412,5 +448,15 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(inPropName));
         }
         #endregion
+
+        //private void cbIsPaid_CheckedChanged(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+        //private void cbIsFounded_CheckedChanged(object sender, RoutedEventArgs e)
+        //{
+
+        //}
     }
 }

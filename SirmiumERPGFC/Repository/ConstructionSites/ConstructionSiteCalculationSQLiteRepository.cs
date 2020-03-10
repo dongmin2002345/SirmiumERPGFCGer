@@ -31,6 +31,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                   "ValueDifference DECIMAL NULL, " +
                   "PlusMinus NVARCHAR(48) NULL, " +
                   "ItemStatus INTEGER NOT NULL, " +
+                  "IsPaid BOOL NULL, " +
+                  "IsRefunded BOOL NULL, " +
                   "IsSynced BOOL NULL, " +
                   "UpdatedAt DATETIME NULL, " +
                   "CreatedById INTEGER NULL, " +
@@ -41,6 +43,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, " + 
             "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
+            "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "IsPaid, IsRefunded, " +
             "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
@@ -48,11 +52,15 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "(Id, ServerId, Identifier, " +
             "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
             "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "IsPaid, IsRefunded, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
             "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName, " +
             "@StatusDate, @NumOfEmployees, @EmployeePrice, @NumOfMonths, @OldValue, @NewValue, @ValueDifference, @PlusMinus, @ItemStatus, " +
+            "@NumOfEmployees, @EmployeePrice, @NumOfMonths, @OldValue, @NewValue, @ValueDifference, @PlusMinus, @ItemStatus, " +
+            "@IsPaid, @IsRefunded, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -74,6 +82,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.ValueDifference = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.PlusMinus = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ItemStatus = SQLiteHelper.GetInt(query, ref counter);
+            dbEntry.IsPaid = SQLiteHelper.GetBoolean(query, ref counter);
+            dbEntry.IsRefunded = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -98,6 +108,8 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@ValueDifference", ((object)constructionSiteCalculation.ValueDifference) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PlusMinus", ((object)constructionSiteCalculation.PlusMinus) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)constructionSiteCalculation.ItemStatus) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsPaid", constructionSiteCalculation.IsPaid);
+            insertCommand.Parameters.AddWithValue("@IsRefunded", constructionSiteCalculation.IsRefunded);
 
             insertCommand.Parameters.AddWithValue("@IsSynced", constructionSiteCalculation.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSiteCalculation.UpdatedAt) ?? DBNull.Value);

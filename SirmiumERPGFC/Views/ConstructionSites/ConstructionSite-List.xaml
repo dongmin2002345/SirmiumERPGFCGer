@@ -170,7 +170,7 @@
                           GridLinesVisibility="All"
                           HorizontalGridLinesBrush="Gray"
                           VerticalAlignment="Stretch"
-                          HorizontalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Visible"
                           VerticalScrollBarVisibility="Auto"
                           Style="{DynamicResource AzureDataGrid}"
                           ItemsSource="{Binding Path=ConstructionSitesFromDB}"
@@ -245,8 +245,8 @@
                 <GroupBox Header="{DynamicResource Kalkulacije_u_okviru_gradilišta}" Grid.Column="0" Margin="2 1 1 2">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="16*"/>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -299,6 +299,20 @@
                                 <DataGridTextColumn SortMemberPath="NumOfMonths" Header="{DynamicResource Broj_meseci}" Binding="{Binding NumOfMonths}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="NewValue" Header="{DynamicResource Ukupna_vrednost}" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="ValueDifference" Header="{DynamicResource Razlika_vrednosti}" Binding="{Binding ValueDifference}" Width="*" IsReadOnly="True" />
+                                <DataGridTextColumn SortMemberPath="IsPaid" Header="{DynamicResource Plaćeno}" Binding="{Binding IsPaid, Converter={StaticResource BoolStringConverter}}"  IsReadOnly="True" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}" >
+                                            <Setter Property="Background" Value="{Binding IsPaid, Converter={StaticResource SyncedConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn SortMemberPath="IsRefunded" Header="{DynamicResource Refundirano}" Binding="{Binding IsRefunded, Converter={StaticResource BoolStringConverter}}"  IsReadOnly="True" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}" >
+                                            <Setter Property="Background" Value="{Binding IsRefunded, Converter={StaticResource SyncedConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn SortMemberPath="ItemStatus" Header="Status" Binding="{Binding Path=ItemStatus, Converter={StaticResource ItemStatusConverter}}" IsReadOnly="True" />
                             </DataGrid.Columns>
                             <DataGrid.RowStyle>
@@ -314,9 +328,12 @@
                                 </Style>
                             </DataGrid.RowStyle>
                         </DataGrid>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="2" Text="{DynamicResource Ukupna_vrednost}" VerticalAlignment="Center" TextAlignment="Right" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Margin="2" Text="{Binding Path=TotalSum, Mode=TwoWay}" TextAlignment="Right" />
                     </Grid>
 
                 </GroupBox>
+                
             </TabItem>
             <TabItem Header="{DynamicResource Napomena}">
                 <GroupBox Header="{DynamicResource Napomena}" Grid.Column="0" Margin="2 1 1 2">

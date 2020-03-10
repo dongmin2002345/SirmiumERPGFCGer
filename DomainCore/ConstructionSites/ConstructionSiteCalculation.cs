@@ -22,6 +22,7 @@ namespace DomainCore.ConstructionSites
 
         public string PlusMinus { get; set; }
         public int ItemStatus { get; set; }
-
+        public bool IsPaid { get; set; }
+        public bool IsRefunded { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200309120929_ConstructionSiteCalculation_Izmene_Katarina")]
+    partial class ConstructionSiteCalculation_Izmene_Katarina
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2024,8 +2026,6 @@ namespace RepositoryCore.Migrations
                     b.Property<decimal>("OldValue");
 
                     b.Property<string>("PlusMinus");
-
-                    b.Property<DateTime>("StatusDate");
 
                     b.Property<DateTime?>("UpdatedAt");
 

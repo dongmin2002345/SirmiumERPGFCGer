@@ -167,11 +167,13 @@ namespace SirmiumERPGFC.Repository.Employees
                         "   ((@EmployeeName IS NULL OR @EmployeeName = '' OR EmpName LIKE @EmployeeName) OR (@EmployeeName IS NULL OR @EmployeeName = '' OR EmpSurName LIKE @EmployeeName)) OR " +
                         "   (@EmployeeName IS NULL OR @EmployeeName = '' OR Name LIKE @EmployeeName) " +
                         ") " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
                         "ORDER BY IsSynced, Id DESC;", db);
 
                     selectCommand.Parameters.AddWithValue("@EmployeeName", (String.IsNullOrEmpty(filterObject.Search_Name) ? "" : "%" + filterObject.Search_Name + "%"));
+                    selectCommand.Parameters.AddWithValue("@EmployeeCode", (String.IsNullOrEmpty(filterObject.Search_Code) ? "" : "%" + filterObject.Search_Code + "%"));
                     selectCommand.Parameters.AddWithValue("@DateFrom", ((object)filterObject.Search_DateFrom) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@DateTo", ((object)filterObject.Search_DateTo) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);

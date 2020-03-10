@@ -198,5 +198,39 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region IsPaid
+        private bool _IsPaid;
+
+        public bool IsPaid
+        {
+            get { return _IsPaid; }
+            set
+            {
+                if (_IsPaid != value)
+                {
+                    _IsPaid = value;
+                    NotifyPropertyChanged("IsPaid");
+                }
+            }
+        }
+        #endregion
+
+        #region IsRefunded
+        private bool _IsRefunded;
+
+        public bool IsRefunded
+        {
+            get { return _IsRefunded; }
+            set
+            {
+                if (_IsRefunded != value)
+                {
+                    _IsRefunded = value;
+                    NotifyPropertyChanged("IsRefunded");
+                }
+            }
+        }
+        #endregion
+
     }
 }

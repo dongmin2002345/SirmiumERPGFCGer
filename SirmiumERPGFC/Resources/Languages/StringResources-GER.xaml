@@ -785,4 +785,9 @@
     <system:String x:Key="UkupnaOsnovica">Gesamtbasis:</system:String>
     <system:String x:Key="UkupanPopust">Gesamtrabatt:</system:String>
     <system:String x:Key="Štampa_Fakture">Rechnungen drucken</system:String>
+
+    <system:String x:Key="Plaćeno">Bezahlt</system:String>
+    <system:String x:Key="Refundirano">Refundiert</system:String>
+    <system:String x:Key="Šifra_već_postoji_uzvičnik">Der Code existiert schon in der Datenbasis!</system:String>
+
 </ResourceDictionary>

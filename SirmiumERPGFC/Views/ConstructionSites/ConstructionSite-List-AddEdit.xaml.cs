@@ -394,11 +394,22 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            ConstructionSiteListResponse constructionSiteList = new ConstructionSiteSQLiteRepository()
+              .GetConstructionSitesByPage(MainWindow.CurrentCompanyId, new ConstructionSiteViewModel());
+
+            var ConstructionSitesFromDB = new ObservableCollection<ConstructionSiteViewModel>(constructionSiteList.ConstructionSites ?? new List<ConstructionSiteViewModel>());
+
             #region Validation
 
             if (CurrentConstructionSite?.Name == null)
             {
                 MainWindow.WarningMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Naziv_gradilista"));
+                return;
+            }
+
+            if (ConstructionSitesFromDB.Any(p => p.InternalCode == CurrentConstructionSite?.InternalCode) && CurrentConstructionSite.Code == null)
+            {
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Šifra_već_postoji_uzvičnik");
                 return;
             }
 

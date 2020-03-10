@@ -41,7 +41,10 @@
                 <DatePicker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" SelectedDate="{Binding Path=CurrentToDo.ToDoDate}" x:Name="dtToDoDate" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpisDvotacka}" />
-                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" Text="{Binding Path=CurrentToDo.Description}" Height="100" TextWrapping="Wrap"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" Text="{Binding Path=CurrentToDo.Description}" Height="100" 
+                      TextWrapping="Wrap"
+                      AcceptsReturn="True"
+                      VerticalScrollBarVisibility="Visible" />
 
                 <!--<TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Name}" />
                 <popups:ToDoStatusPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popToDoStatus" 
