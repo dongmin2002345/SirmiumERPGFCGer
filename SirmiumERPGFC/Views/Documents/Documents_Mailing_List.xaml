@@ -241,10 +241,10 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+                                <DataGridTextColumn SortMemberPath="ConstructionSite.InternalCode" Header="{DynamicResource Šifra_gradilištaDvotacka}" Binding="{Binding ConstructionSite.InternalCode}" IsReadOnly="True" Width="Auto" />
+                                <DataGridTextColumn SortMemberPath="ConstructionSite.Name" Header="{DynamicResource Naziv_gradilišta}" Binding="{Binding ConstructionSite.Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="Auto" />
                                 <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
-                                <DataGridTextColumn SortMemberPath="ConstructionSite.InternalCode" Header="{DynamicResource Šifra_gradilištaDvotacka}" Binding="{Binding ConstructionSite.InternalCode}" IsReadOnly="True" Width="*" />
-                                <DataGridTextColumn SortMemberPath="ConstructionSite.Name" Header="{DynamicResource Naziv_gradilišta}" Binding="{Binding ConstructionSite.Name}" IsReadOnly="True" Width="*" />
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

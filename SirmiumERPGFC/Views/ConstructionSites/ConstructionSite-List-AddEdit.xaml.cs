@@ -407,7 +407,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 return;
             }
 
-            if (ConstructionSitesFromDB.Any(p => p.InternalCode == CurrentConstructionSite?.InternalCode))
+            if (ConstructionSitesFromDB.Any(p => p.InternalCode == CurrentConstructionSite?.InternalCode) && CurrentConstructionSite.Code == null)
             {
                 MainWindow.WarningMessage = (string)Application.Current.FindResource("Šifra_već_postoji_uzvičnik");
                 return;

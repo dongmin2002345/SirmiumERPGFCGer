@@ -7,12 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBox Grid.Row="8" Grid.Column="1" Margin="2" x:Name="txtToDoStatus" IsReadOnly="True" GotFocus="txtToDoStatus_GotFocus" MouseDoubleClick="txtToDoStatus_MouseDoubleClick"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="2" x:Name="txtToDoStatus" IsReadOnly="True" GotFocus="txtToDoStatus_GotFocus" MouseDoubleClick="txtToDoStatus_MouseDoubleClick"/>
         <Popup x:Name="popToDoStatus" PlacementTarget = "{Binding ElementName = txtToDoStatus}" Focusable="False" IsOpen="False">
             <Border Height="Auto" HorizontalAlignment="Stretch" Background="{DynamicResource WhiteBrush}" BorderBrush="{DynamicResource ComboBoxPopupBorderBrush}" BorderThickness="2">
                 <Grid MinWidth="300" MaxHeight="210" Background="{DynamicResource WhiteBrush}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
@@ -50,7 +49,7 @@
                               ItemsSource="{Binding Path=ToDoStatusesFromDB}"
                               SelectedItem="{Binding Path=CurrentToDoStatus}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding ToDoStatus.Code}" IsReadOnly="True" />
+                           
                             <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding ToDoStatus.Name}" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>

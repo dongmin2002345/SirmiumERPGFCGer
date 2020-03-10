@@ -84,6 +84,8 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="ToDoStatus.Name" Header="{DynamicResource Name}" Binding="{Binding ToDoStatus.Name}" IsReadOnly="True"/>
+
                         <DataGridTemplateColumn Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

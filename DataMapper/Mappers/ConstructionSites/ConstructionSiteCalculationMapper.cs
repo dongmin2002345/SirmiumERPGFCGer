@@ -29,6 +29,7 @@ namespace DataMapper.Mappers.ConstructionSites
 
                 ConstructionSite = constructionSiteCalculation.ConstructionSite?.ConvertToConstructionSiteViewModelLite(),
 
+                StatusDate = constructionSiteCalculation.StatusDate,
                 NumOfEmployees = constructionSiteCalculation.NumOfEmployees,
                 EmployeePrice = constructionSiteCalculation.EmployeePrice,
                 NumOfMonths = constructionSiteCalculation.NumOfMonths,
@@ -62,6 +63,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Id = constructionSiteCalculation.Id,
                 Identifier = constructionSiteCalculation.Identifier,
 
+                StatusDate= constructionSiteCalculation.StatusDate,
                 NumOfEmployees = constructionSiteCalculation.NumOfEmployees,
                 EmployeePrice = constructionSiteCalculation.EmployeePrice,
                 NumOfMonths = constructionSiteCalculation.NumOfMonths,
@@ -93,6 +95,7 @@ namespace DataMapper.Mappers.ConstructionSites
 
                 ConstructionSiteId = constructionSiteCalculationViewModel.ConstructionSite?.Id ?? null,
 
+                StatusDate = constructionSiteCalculationViewModel.StatusDate,
                 NumOfEmployees = constructionSiteCalculationViewModel.NumOfEmployees,
                 EmployeePrice = constructionSiteCalculationViewModel.EmployeePrice,
                 NumOfMonths = constructionSiteCalculationViewModel.NumOfMonths,

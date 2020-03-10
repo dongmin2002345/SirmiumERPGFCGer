@@ -92,6 +92,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.CreatedById = constructionSiteCalculation.CreatedById ?? null;
 
                     // Set properties
+                    dbEntry.StatusDate = constructionSiteCalculation.StatusDate;
                     dbEntry.NumOfEmployees = constructionSiteCalculation.NumOfEmployees;
                     dbEntry.EmployeePrice = constructionSiteCalculation.EmployeePrice;
                     dbEntry.NumOfMonths = constructionSiteCalculation.NumOfMonths;

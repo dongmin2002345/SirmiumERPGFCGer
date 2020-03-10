@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200309100432_IzmeneConstructionSiteCalculation_Miodrag")]
+    partial class IzmeneConstructionSiteCalculation_Miodrag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -1888,15 +1890,11 @@ namespace RepositoryCore.Migrations
 
                     b.Property<DateTime?>("UpdatedAt");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ToDos");
                 });
@@ -2012,10 +2010,6 @@ namespace RepositoryCore.Migrations
                     b.Property<decimal>("EmployeePrice");
 
                     b.Property<Guid>("Identifier");
-
-                    b.Property<bool>("IsPaid");
-
-                    b.Property<bool>("IsRefunded");
 
                     b.Property<int>("ItemStatus");
 
@@ -3917,10 +3911,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Identity.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
-
-                    b.HasOne("DomainCore.Common.Identity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("DomainCore.Common.ToDos.ToDoStatus", b =>

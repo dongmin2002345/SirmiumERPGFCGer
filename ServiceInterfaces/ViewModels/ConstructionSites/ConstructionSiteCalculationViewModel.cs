@@ -26,7 +26,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region StatusDate
+        private DateTime _StatusDate;
 
+        public DateTime StatusDate
+        {
+            get { return _StatusDate; }
+            set
+            {
+                if (_StatusDate != value)
+                {
+                    _StatusDate = value;
+                    NotifyPropertyChanged("StatusDate");
+                }
+            }
+        }
+        #endregion
+    
         #region NumOfEmployees
         private int _NumOfEmployees;
 
