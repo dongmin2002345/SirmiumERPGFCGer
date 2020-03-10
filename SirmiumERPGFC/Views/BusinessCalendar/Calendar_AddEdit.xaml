@@ -61,7 +61,7 @@
                          Text="{Binding Path=CurrentCalendarAssignment.Name, Mode=TwoWay}"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0"  Text="{DynamicResource KomentarDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" x:Name="txtDescription" Height="50" TextWrapping="Wrap"
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" x:Name="txtDescription" Height="50" AcceptsReturn="True" TextWrapping="Wrap"
                          Text="{Binding Path=CurrentCalendarAssignment.Description, Mode=TwoWay}"/>
 
 

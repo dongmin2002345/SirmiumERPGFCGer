@@ -68,7 +68,7 @@
                     <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtBirthday" SelectedDate="{Binding Path=CurrentBusinessPartnerPhoneForm.Birthday, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource NapomenaDvotacka}" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneDescription" Text="{Binding Path=CurrentBusinessPartnerPhoneForm.Description, Mode=TwoWay}"/>
+                    <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtPhoneDescription" AcceptsReturn="True" Text="{Binding Path=CurrentBusinessPartnerPhoneForm.Description, Mode=TwoWay}"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2,7,1.5,7" VerticalAlignment="Center" />
                     <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">

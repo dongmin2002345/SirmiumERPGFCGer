@@ -102,7 +102,7 @@
 
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource NapomenaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtNote" Height="50" TextWrapping="Wrap"
+                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" Margin="2" x:Name="txtNote" Height="50" TextWrapping="Wrap" AcceptsReturn="True"
                                 Text="{Binding Path=currentShipment.Note, Mode=TwoWay}"/>
 
                    
