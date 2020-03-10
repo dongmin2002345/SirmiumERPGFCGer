@@ -42,24 +42,21 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, " +
-            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, StatusDate, " +
-            "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
-            "IsPaid, IsRefunded, " +
+            "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
             "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "IsPaid, IsRefunded, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSiteCalculations " +
             "(Id, ServerId, Identifier, " +
             "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
             "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
-            "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
             "IsPaid, IsRefunded, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
-            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName, " +
+            "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName,  " +
             "@StatusDate, @NumOfEmployees, @EmployeePrice, @NumOfMonths, @OldValue, @NewValue, @ValueDifference, @PlusMinus, @ItemStatus, " +
-            "@NumOfEmployees, @EmployeePrice, @NumOfMonths, @OldValue, @NewValue, @ValueDifference, @PlusMinus, @ItemStatus, " +
             "@IsPaid, @IsRefunded, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
