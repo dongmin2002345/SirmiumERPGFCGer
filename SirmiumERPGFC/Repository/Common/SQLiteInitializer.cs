@@ -68,10 +68,16 @@ namespace SirmiumERPGFC.Repository.Common
 
                     SQLiteHelper.AddColumnIfNotExists("ToDos", "ToDoDate", "DATETIME NULL");
                     SQLiteHelper.AddColumnIfNotExists("ToDos", "Path", "NVARCHAR(2048) NULL");
+
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "UserId", "INTEGER NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "UserIdentifier", "GUID NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "UserCode", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "UserFirstName", "NVARCHAR(2048) NULL");
+                    SQLiteHelper.AddColumnIfNotExists("ToDos", "UserLastName", "NVARCHAR(2048) NULL");
                     #endregion
 
                     #region ToDoStatuses
-                     if (withTableDrop)
+                    if (withTableDrop)
                     {
                         try
                         {

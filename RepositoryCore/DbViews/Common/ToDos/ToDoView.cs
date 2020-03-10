@@ -24,11 +24,19 @@ namespace RepositoryCore.DbViews.Common.ToDos
                 "SELECT toDo.Id AS ToDoId, toDo.Identifier AS ToDoIdentifier, " +
                 "toDo.Name AS ToDoName, toDo.Description AS ToDoDescription, toDo.Path, toDo.ToDoDate, toDo.IsPrivate, " +
                 "toDo.Active, toDo.UpdatedAt, " +
+
+                "usr.Id AS UserId, " +
+                "usr.Identifier AS UserIdentifier, " +
+                "usr.Code AS UserCode, " +
+                "usr.FirstName AS UserFirstName, " +
+                "usr.LastName AS UserLastName, " +
+
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +
                 "FROM ToDos toDo " +
                 "LEFT JOIN Users createdBy ON toDo.CreatedById = createdBy.Id " +
-                "LEFT JOIN Companies company ON toDo.CompanyId = company.Id;";
+                "LEFT JOIN Companies company ON toDo.CompanyId = company.Id " +
+                "LEFT JOIN Users usr ON toDo.UserId = usr.Id;";
 
             command = new SqlCommand(strSQLCommand, conn);
             returnvalue = (string)command.ExecuteScalar();

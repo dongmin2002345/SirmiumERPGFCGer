@@ -32,6 +32,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
 
             string queryString =
                 "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, IsPrivate, " +
+                "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -52,6 +53,17 @@ namespace RepositoryCore.Implementations.Common.ToDos
                         toDo.Id = Int32.Parse(reader["ToDoId"].ToString());
                         toDo.Identifier = Guid.Parse(reader["ToDoIdentifier"].ToString());
                         toDo.Name = reader["ToDoName"].ToString();
+
+                        if (reader["UserId"] != DBNull.Value)
+                        {
+                            toDo.User = new User();
+                            toDo.UserId = Int32.Parse(reader["UserId"].ToString());
+                            toDo.User.Id = Int32.Parse(reader["UserId"].ToString());
+                            toDo.User.Identifier = Guid.Parse(reader["UserIdentifier"].ToString());
+                            toDo.User.Code = reader["UserCode"]?.ToString();
+                            toDo.User.FirstName = reader["UserFirstName"]?.ToString();
+                            toDo.User.LastName = reader["UserLastName"]?.ToString();
+                        }
 
                         if (reader["ToDoDescription"] != DBNull.Value)
                             toDo.Description = reader["ToDoDescription"].ToString();
@@ -95,6 +107,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
 
             string queryString =
                 "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, IsPrivate, " +
+                "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
                 "WHERE CompanyId = @CompanyId " +
@@ -117,6 +130,17 @@ namespace RepositoryCore.Implementations.Common.ToDos
                         toDo.Id = Int32.Parse(reader["ToDoId"].ToString());
                         toDo.Identifier = Guid.Parse(reader["ToDoIdentifier"].ToString());
                         toDo.Name = reader["ToDoName"].ToString();
+
+                        if (reader["UserId"] != DBNull.Value)
+                        {
+                            toDo.User = new User();
+                            toDo.UserId = Int32.Parse(reader["UserId"].ToString());
+                            toDo.User.Id = Int32.Parse(reader["UserId"].ToString());
+                            toDo.User.Identifier = Guid.Parse(reader["UserIdentifier"].ToString());
+                            toDo.User.Code = reader["UserCode"]?.ToString();
+                            toDo.User.FirstName = reader["UserFirstName"]?.ToString();
+                            toDo.User.LastName = reader["UserLastName"]?.ToString();
+                        }
 
                         if (reader["ToDoDescription"] != DBNull.Value)
                             toDo.Description = reader["ToDoDescription"].ToString();
@@ -176,12 +200,13 @@ namespace RepositoryCore.Implementations.Common.ToDos
             {
                 // Load remedy that will be updated
                 ToDo dbEntry = context.ToDos
-                .FirstOrDefault(x => x.Identifier == toDo.Identifier && x.Active == true);
+                    .FirstOrDefault(x => x.Identifier == toDo.Identifier && x.Active == true);
 
                 if (dbEntry != null)
                 {
                     dbEntry.CompanyId = toDo.CompanyId ?? null;
                     dbEntry.CreatedById = toDo.CreatedById ?? null;
+                    dbEntry.UserId = toDo?.UserId ?? null;
 
                     // Set properties
                     dbEntry.Name = toDo.Name;

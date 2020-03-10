@@ -71,6 +71,19 @@
                         <DataGridTextColumn SortMemberPath="ToDoDate" Header="{DynamicResource Datum}" Binding="{Binding ToDoDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="CreatedBy.FullName" Header="{DynamicResource Kreirao}" Binding="{Binding CreatedBy.FullName}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="User" Header="{DynamicResource Korisnik}" Width="Auto" IsReadOnly="True">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} {1} ">
+                                    <Binding Path="User.FirstName" />
+                                    <Binding Path="User.LastName" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="ToDoStatus.Name" Header="{DynamicResource Name}" Binding="{Binding ToDoStatus.Name}" IsReadOnly="True"/>
 
                         <DataGridTemplateColumn Header="">
