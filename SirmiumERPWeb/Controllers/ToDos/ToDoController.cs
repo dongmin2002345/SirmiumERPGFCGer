@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceInterfaces.Abstractions.Common.ToDos;
 using ServiceInterfaces.Messages.Common.ToDos;
 using ServiceInterfaces.ViewModels.Common.ToDos;
+using SirmiumERPWeb.Hubs;
 
 namespace SirmiumERPWeb.Controllers.ToDos
 {
@@ -14,9 +16,12 @@ namespace SirmiumERPWeb.Controllers.ToDos
     {
         IToDoService toDoService { get; set; }
 
-        public ToDoController(IServiceProvider provider)
+        IHubContext<NotificationHub> notificationHub;
+
+        public ToDoController(IServiceProvider provider, IHubContext<NotificationHub> hubContext)
         {
             toDoService = provider.GetRequiredService<IToDoService>();
+            notificationHub = hubContext;
         }
 
         [HttpGet]
@@ -59,6 +64,14 @@ namespace SirmiumERPWeb.Controllers.ToDos
             try
             {
                 response = this.toDoService.Create(c);
+                if (response.Success)
+                {
+                    if (c.User != null)
+                    {
+                        string target = "Korisnik_" + c.User.Id;
+                        notificationHub.Clients.Group(target).SendAsync("SendToDo", c);
+                    }
+                }
             }
             catch (Exception ex)
             {

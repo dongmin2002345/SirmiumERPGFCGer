@@ -1,4 +1,5 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
+using ServiceInterfaces.ViewModels.Common.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,23 @@ namespace ServiceInterfaces.ViewModels.Common.ToDos
                 {
                     _Path = value;
                     NotifyPropertyChanged("Path");
+                }
+            }
+        }
+        #endregion
+
+        #region User
+        private UserViewModel _User;
+
+        public UserViewModel User
+        {
+            get { return _User; }
+            set
+            {
+                if (_User != value)
+                {
+                    _User = value;
+                    NotifyPropertyChanged("User");
                 }
             }
         }

@@ -386,6 +386,9 @@
     <Compile Include="Repository\Users\UserSQLiteRepository.cs" />
     <Compile Include="Repository\Vats\VatSQLiteRepository.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="ViewComponents\Notifications\ToDoNotification_Popup.xaml.cs">
+      <DependentUpon>ToDoNotification_Popup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Notifications\CallCenterNotification_Popup.xaml.cs">
       <DependentUpon>CallCenterNotification_Popup.xaml</DependentUpon>
     </Compile>
@@ -896,6 +899,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewComponents\Notifications\ToDoNotification_Popup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
