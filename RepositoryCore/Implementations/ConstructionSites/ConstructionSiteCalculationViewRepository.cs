@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+                "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
                 "IsPaid, IsRefunded, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
@@ -62,7 +62,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ConstructionSite.Code = reader["ConstructionSiteCode"].ToString();
                             constructionSiteCalculation.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
-
+                        if (reader["StatusDate"] != DBNull.Value)
+                            constructionSiteCalculation.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
                         if (reader["NumOfEmployees"] != DBNull.Value)
                             constructionSiteCalculation.NumOfEmployees = Int32.Parse(reader["NumOfEmployees"].ToString());
                         if (reader["EmployeePrice"] != DBNull.Value)
@@ -126,7 +127,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+                "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
                 "IsPaid, IsRefunded, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
@@ -157,7 +158,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ConstructionSite.Code = reader["ConstructionSiteCode"].ToString();
                             constructionSiteCalculation.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
-
+                        if (reader["StatusDate"] != DBNull.Value)
+                            constructionSiteCalculation.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
                         if (reader["NumOfEmployees"] != DBNull.Value)
                             constructionSiteCalculation.NumOfEmployees = Int32.Parse(reader["NumOfEmployees"].ToString());
                         if (reader["EmployeePrice"] != DBNull.Value)
@@ -221,7 +223,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
             string queryString =
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-                "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+                "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
                 "IsPaid, IsRefunded, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
@@ -255,6 +257,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteCalculation.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
                         }
 
+                        if (reader["StatusDate"] != DBNull.Value)
+                            constructionSiteCalculation.StatusDate = DateTime.Parse(reader["StatusDate"].ToString());
                         if (reader["NumOfEmployees"] != DBNull.Value)
                             constructionSiteCalculation.NumOfEmployees = Int32.Parse(reader["NumOfEmployees"].ToString());
                         if (reader["EmployeePrice"] != DBNull.Value)
