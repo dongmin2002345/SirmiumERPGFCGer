@@ -22,6 +22,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
                   "ConstructionSiteIdentifier GUID NULL, " +
                   "ConstructionSiteCode NVARCHAR(48) NULL, " +
                   "ConstructionSiteName NVARCHAR(48) NULL, " +
+                  "StatusDate DATETIME NULL, " +
                   "NumOfEmployees INTEGER NULL, " +
                   "EmployeePrice DECIMAL NULL, " +
                   "NumOfMonths INTEGER NULL, " +
@@ -40,18 +41,18 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, " + 
             "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-            "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSiteCalculations " +
             "(Id, ServerId, Identifier, " +
             "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
-            "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
+            "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, " +
             "@ConstructionSiteId, @ConstructionSiteIdentifier, @ConstructionSiteCode, @ConstructionSiteName, " +
-            "@NumOfEmployees, @EmployeePrice, @NumOfMonths, @OldValue, @NewValue, @ValueDifference, @PlusMinus, @ItemStatus, " +
+            "@StatusDate, @NumOfEmployees, @EmployeePrice, @NumOfMonths, @OldValue, @NewValue, @ValueDifference, @PlusMinus, @ItemStatus, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -64,6 +65,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
             dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
+            dbEntry.StatusDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.NumOfEmployees = SQLiteHelper.GetInt(query, ref counter);
             dbEntry.EmployeePrice = SQLiteHelper.GetDecimal(query, ref counter);
             dbEntry.NumOfMonths = SQLiteHelper.GetInt(query, ref counter);
@@ -87,6 +89,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@ConstructionSiteIdentifier", ((object)constructionSiteCalculation.ConstructionSite.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)constructionSiteCalculation.ConstructionSite.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)constructionSiteCalculation.ConstructionSite.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@StatusDate", ((object)constructionSiteCalculation.StatusDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@NumOfEmployees", ((object)constructionSiteCalculation.NumOfEmployees) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@EmployeePrice", ((object)constructionSiteCalculation.EmployeePrice) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@NumOfMonths", ((object)constructionSiteCalculation.NumOfMonths) ?? DBNull.Value);

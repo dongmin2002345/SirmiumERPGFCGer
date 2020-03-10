@@ -70,6 +70,7 @@
                         <DataGridTextColumn SortMemberPath="ToDoDate" Header="{DynamicResource Datum}" Binding="{Binding ToDoDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="CreatedBy.FullName" Header="{DynamicResource Kreirao}" Binding="{Binding CreatedBy.FullName}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="ToDoStatus.Name" Header="{DynamicResource Name}" Binding="{Binding ToDoStatus.Name}" IsReadOnly="True"/>
 
                         <DataGridTemplateColumn Header="">
                             <DataGridTemplateColumn.CellTemplate>

@@ -10,6 +10,8 @@ namespace DomainCore.ConstructionSites
         public int? ConstructionSiteId { get; set; }
         public ConstructionSite ConstructionSite { get; set; }
 
+        public DateTime StatusDate { get; set; }
+
         public int NumOfEmployees { get; set; }
         public decimal EmployeePrice { get; set; }
         public int NumOfMonths { get; set; }

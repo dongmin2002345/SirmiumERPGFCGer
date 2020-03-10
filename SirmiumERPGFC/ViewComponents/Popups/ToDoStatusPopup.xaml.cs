@@ -30,7 +30,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
     /// </summary>
     public partial class ToDoStatusPopup : UserControl, INotifyPropertyChanged
     {
-        IToDoStatusService ToDoStatusService;
+        IToDoStatusService toDoStatusService;
 
         #region CurrentToDoStatus
         public ToDoStatusViewModel CurrentToDoStatus
@@ -49,7 +49,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             ToDoStatusPopup popup = source as ToDoStatusPopup;
             ToDoStatusViewModel ToDoStatus = (ToDoStatusViewModel)e.NewValue;
-            popup.txtToDoStatus.Text = ToDoStatus != null ? ToDoStatus.Code + " (" + ToDoStatus.Name + ")" : "";
+            popup.txtToDoStatus.Text = ToDoStatus != null ? ToDoStatus.Name + ")" : "";
         }
         #endregion
 
@@ -80,7 +80,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         public ToDoStatusPopup()
         {
-            ToDoStatusService = DependencyResolver.Kernel.Get<IToDoStatusService>();
+            toDoStatusService = DependencyResolver.Kernel.Get<IToDoStatusService>();
 
             InitializeComponent();
 
@@ -96,7 +96,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new ToDoStatusSQLiteRepository().Sync(ToDoStatusService);
+                    new ToDoStatusSQLiteRepository().Sync(toDoStatusService);
 
                     ToDoStatusListResponse ToDoStatusResp = new ToDoStatusSQLiteRepository().GetToDoStatusesForPopup(MainWindow.CurrentCompanyId, filterString);
                     if (ToDoStatusResp.Success)

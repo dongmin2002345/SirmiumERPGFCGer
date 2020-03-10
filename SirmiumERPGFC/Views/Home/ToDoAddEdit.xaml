@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.Views.Home"
+             xmlns:popups="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -41,6 +42,11 @@
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource OpisDvotacka}" />
                 <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" Text="{Binding Path=CurrentToDo.Description}" Height="100" TextWrapping="Wrap"/>
+
+                <!--<TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Name}" />
+                <popups:ToDoStatusPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popToDoStatus" 
+                                      CurrentToDoStatus="{Binding Path=CurrentToDo.ToDoStatus, Mode=TwoWay}"/>-->
+
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
                 <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
