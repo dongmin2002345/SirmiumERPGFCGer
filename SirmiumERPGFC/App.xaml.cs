@@ -116,8 +116,30 @@ namespace SirmiumERPGFC
 
             if (e.Key == Key.Enter)
             {
-                e.Handled = true;
-                uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                if(uie.GetType() == typeof(TextBox)) { 
+                    if (Keyboard.IsKeyDown(Key.LeftShift))
+                    {
+                        e.Handled = true;
+                        var textbox = uie as TextBox;
+                        if(textbox != null && textbox.AcceptsReturn)
+                        {
+                            var selectionIndex = textbox.SelectionStart;
+                            textbox.Text = textbox.Text.Insert(selectionIndex, Environment.NewLine);
+                            textbox.SelectionStart = selectionIndex + 1;
+                        }
+                    }
+                    else
+                    {
+                        e.Handled = true;
+                        uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    }
+                }
+                else
+                {
+                    e.Handled = true;
+                    uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                }
+
             }
         }
 
