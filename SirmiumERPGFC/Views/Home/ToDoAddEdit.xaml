@@ -46,9 +46,9 @@
                       AcceptsReturn="True"
                       VerticalScrollBarVisibility="Visible" />
 
-                <!--<TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Name}" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Name}" />
                 <popups:ToDoStatusPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popToDoStatus" 
-                                      CurrentToDoStatus="{Binding Path=CurrentToDo.ToDoStatus, Mode=TwoWay}"/>-->
+                                      CurrentToDoStatus="{Binding Path=CurrentToDo.ToDoStatus, Mode=TwoWay}"/>
 
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
