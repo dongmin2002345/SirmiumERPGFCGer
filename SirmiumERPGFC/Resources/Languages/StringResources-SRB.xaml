@@ -787,5 +787,6 @@
     <system:String x:Key="Plaćeno">Plaćeno</system:String>
     <system:String x:Key="Refundirano">Refundirano</system:String>
     <system:String x:Key="Šifra_već_postoji_uzvičnik">Šifra već postoji u bazi!</system:String>
+    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_kopirate_odabrni_podatakUpitnik">Da li ste sigurni da želite da kopirate odabrani podatak?</system:String>
 
 </ResourceDictionary>

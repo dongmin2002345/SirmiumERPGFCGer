@@ -789,5 +789,6 @@
     <system:String x:Key="Plaćeno">Bezahlt</system:String>
     <system:String x:Key="Refundirano">Refundiert</system:String>
     <system:String x:Key="Šifra_već_postoji_uzvičnik">Der Code existiert schon in der Datenbasis!</system:String>
+    <system:String x:Key="Da_li_ste_sigurni_da_želite_da_kopirate_odabrni_podatakUpitnik">Möchten Sie die ausgewählten Daten wirklich kopieren?</system:String>
 
 </ResourceDictionary>

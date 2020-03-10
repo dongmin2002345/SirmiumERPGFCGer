@@ -1481,6 +1481,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\Icons\Print.png" />
+    <Content Include="Resources\Icons\copy_docs.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icons\kalendarImaNesto.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
