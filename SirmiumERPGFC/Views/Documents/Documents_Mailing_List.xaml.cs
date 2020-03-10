@@ -165,6 +165,7 @@ namespace SirmiumERPGFC.Views.Documents
                     NotifyPropertyChanged("FilterConstructionSite");
 
                     FilterConstructionSiteDocuments.Search_Name = _FilterConstructionSite?.Name;
+                    FilterConstructionSiteDocuments.Search_Code = _FilterConstructionSite?.InternalCode;
                 }
             }
         }
@@ -897,7 +898,8 @@ namespace SirmiumERPGFC.Views.Documents
 
         private async void FilterConstructionSiteDocuments_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo" )
+            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_Code"
+                || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo" )
             {
                 try
                 {
