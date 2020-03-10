@@ -547,7 +547,7 @@ namespace SirmiumERPGFC.Repository.Common
         {
             if (query.IsDBNull(counter))
             {
-                counter += 4;
+                counter += 5;
                 return null;
             }
             else

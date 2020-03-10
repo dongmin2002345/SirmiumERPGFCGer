@@ -22,14 +22,15 @@ namespace RepositoryCore.DbViews.ConstructionSites
             strSQLCommand =
                 "CREATE VIEW vConstructionSiteCalculations AS " +
                 "SELECT constructionSiteCalculation.Id AS ConstructionSiteCalculationId, constructionSiteCalculation.Identifier AS ConstructionSiteCalculationIdentifier, " +
-           
-                "constructionSiteCalculation.IsPaid, constructionSiteCalculation.IsRefunded," +
-         
-                "constructionSite.Id AS ConstructionSiteId, constructionSite.Identifier AS ConstructionSiteIdentifier, constructionSite.Code AS ConstructionSiteCode, " +
-                "constructionSite.Name AS ConstructionSiteName, constructionSiteCalculation.StatusDate, " +
-                "constructionSiteCalculation.NumOfEmployees, constructionSiteCalculation.EmployeePrice, constructionSiteCalculation.NumOfMonths," +
-                " constructionSiteCalculation.OldValue, constructionSiteCalculation.NewValue, constructionSiteCalculation.ValueDifference," +
-                " constructionSiteCalculation.PlusMinus, constructionSiteCalculation.ItemStatus, constructionSiteCalculation.Active AS Active, " +
+                //"constructionSite.Id AS ConstructionSiteId, constructionSite.Identifier AS ConstructionSiteIdentifier, constructionSite.Code AS ConstructionSiteCode, constructionSite.Name AS ConstructionSiteName, " +
+                //"constructionSiteCalculation.NumOfEmployees, constructionSiteCalculation.EmployeePrice, constructionSiteCalculation.NumOfMonths, constructionSiteCalculation.OldValue, constructionSiteCalculation.NewValue," +
+                //"constructionSiteCalculation.ValueDifference, constructionSiteCalculation.PlusMinus," +
+                //"constructionSiteCalculation.IsPaid, constructionSiteCalculation.IsRefunded," +
+                //"constructionSiteCalculation.ItemStatus, constructionSiteCalculation.Active AS Active, " +
+                "constructionSite.Id AS ConstructionSiteId, constructionSite.Identifier AS ConstructionSiteIdentifier, constructionSite.Code AS ConstructionSiteCode, constructionSite.Name AS ConstructionSiteName, constructionSiteCalculation.StatusDate, " +
+                "constructionSiteCalculation.NumOfEmployees, constructionSiteCalculation.EmployeePrice, constructionSiteCalculation.NumOfMonths, constructionSiteCalculation.OldValue, constructionSiteCalculation.NewValue, constructionSiteCalculation.ValueDifference," +
+                "constructionSiteCalculation.PlusMinus, constructionSiteCalculation.ItemStatus, constructionSiteCalculation.IsPaid, constructionSiteCalculation.IsRefunded," +
+                "constructionSiteCalculation.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (constructionSiteCalculation.UpdatedAt), (constructionSite.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
 

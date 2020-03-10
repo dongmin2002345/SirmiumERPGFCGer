@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using ServiceInterfaces.ViewModels.Common.CallCentars;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
+using ServiceInterfaces.ViewModels.Common.ToDos;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.ViewComponents.Notifications;
 using SirmiumERPGFC.Views.Administrations;
@@ -308,6 +309,17 @@ namespace SirmiumERPGFC
                     Application.Current.Dispatcher.BeginInvoke((System.Action)(() =>
                     {
                         CallCenterNotification_Popup popup = new CallCenterNotification_Popup(msg);
+                        popup.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                        popup.Owner = this;
+                        popup.ShowDialog();
+                    }));
+
+                });
+                hubConnection.On<ToDoViewModel>("SendToDo", (msg) => {
+                    Application.Current.Dispatcher.BeginInvoke((System.Action)(() =>
+                    {
+                        //MainWindow.WarningMessage = $"TO-DO:\n{msg.Name}\n{msg.Description}";
+                        ToDoNotification_Popup popup = new ToDoNotification_Popup(msg);
                         popup.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                         popup.Owner = this;
                         popup.ShowDialog();
