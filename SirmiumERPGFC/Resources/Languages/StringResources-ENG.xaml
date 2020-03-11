@@ -782,4 +782,21 @@
     <system:String x:Key="Refundirano">Refunded</system:String>
     <system:String x:Key="Šifra_već_postoji_uzvičnik">The code already exists in the database!</system:String>
     <system:String x:Key="Da_li_ste_sigurni_da_želite_da_kopirate_odabrni_podatakUpitnik">Are you sure you want to copy the selected data?</system:String>
+    <system:String x:Key="Skener">Scanner</system:String>
+    <system:String x:Key="Grayscale">Grayscale</system:String>
+    <system:String x:Key="BlackAndWhite">Black and white</system:String>
+    <system:String x:Key="Color">Color</system:String>
+    <system:String x:Key="DetaljiDokumenta">Document details</system:String>
+    <system:String x:Key="NazivDokumenta">Document name:</system:String>
+    <system:String x:Key="PutanjaDokumenta">Document store path:</system:String>
+    <system:String x:Key="Skenirano">Scanned</system:String>
+    <system:String x:Key="VrstaSkeniranja">Scan type:</system:String>
+    <system:String x:Key="GreskaPriUcitavanjuSkeneraProbajOpetUzvicnik">Error while contacting scanner, please retry!</system:String>
+    <system:String x:Key="MorasOdabratiVrstuSkeniranjaUzvicnik">Required: Scan type</system:String>
+    <system:String x:Key="MorasOdabratiFolderUzvicnik">Required: Document store path</system:String>
+    <system:String x:Key="MorasSkeniratiNestoIOznacitiStavkeUzvicnik">To generate PDF, you must scan and select something first!</system:String>
+    <system:String x:Key="MorasUnetiNazivDokumentaUzicnik">Required: Document name</system:String>
+    <system:String x:Key="NemaDostupnihSkeneraUzvicnik">No available scanners!</system:String>
+    <system:String x:Key="OdabraniSkenerNijeDostupanUzvicnik">Selected scanner is not available!</system:String>
+    <system:String x:Key="DokumentJeUspesnoSacuvanUzvicnik">Document saved successfully!</system:String>
 </ResourceDictionary>

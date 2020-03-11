@@ -790,5 +790,22 @@
     <system:String x:Key="Refundirano">Refundiert</system:String>
     <system:String x:Key="Šifra_već_postoji_uzvičnik">Der Code existiert schon in der Datenbasis!</system:String>
     <system:String x:Key="Da_li_ste_sigurni_da_želite_da_kopirate_odabrni_podatakUpitnik">Möchten Sie die ausgewählten Daten wirklich kopieren?</system:String>
+    <system:String x:Key="Skener">Scanner</system:String>
+    <system:String x:Key="Grayscale">Graustufen</system:String>
+    <system:String x:Key="BlackAndWhite">Schwarz und weiß</system:String>
+    <system:String x:Key="Color">In Farbe</system:String>
+    <system:String x:Key="DetaljiDokumenta">Dokumentdetails</system:String>
+    <system:String x:Key="NazivDokumenta">Dokumentname:</system:String>
+    <system:String x:Key="PutanjaDokumenta">Dokumentspeicherpfad:</system:String>
+    <system:String x:Key="Skenirano">Gescannt</system:String>
+    <system:String x:Key="VrstaSkeniranja">Scan-Typ:</system:String>
+    <system:String x:Key="GreskaPriUcitavanjuSkeneraProbajOpetUzvicnik">Fehler beim Kontaktieren des Scanners, bitte versuchen Sie es erneut!</system:String>
+    <system:String x:Key="MorasOdabratiVrstuSkeniranjaUzvicnik">Erforderlich: Scan-Typ</system:String>
+    <system:String x:Key="MorasOdabratiFolderUzvicnik">Erforderlich: Dokumentspeicherpfad</system:String>
+    <system:String x:Key="MorasSkeniratiNestoIOznacitiStavkeUzvicnik">Um PDF zu generieren, müssen Sie zuerst etwas scannen und auswählen!</system:String>
+    <system:String x:Key="MorasUnetiNazivDokumentaUzicnik">Erforderlich: Dokumentname</system:String>
+    <system:String x:Key="NemaDostupnihSkeneraUzvicnik">Keine verfügbaren Scanner!</system:String>
+    <system:String x:Key="OdabraniSkenerNijeDostupanUzvicnik">Ausgewählter Scanner ist nicht verfügbar!</system:String>
+    <system:String x:Key="DokumentJeUspesnoSacuvanUzvicnik">Dokument erfolgreich gespeichert!</system:String>
 
 </ResourceDictionary>
