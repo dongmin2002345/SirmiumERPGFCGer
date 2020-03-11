@@ -33,7 +33,9 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "constructionSiteCalculation.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (constructionSiteCalculation.UpdatedAt), (constructionSite.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
+
                 "company.Id AS CompanyId, company.Name AS CompanyName " +
+
                 "FROM ConstructionSiteCalculations constructionSiteCalculation " +
                 "LEFT JOIN ConstructionSites constructionSite ON constructionSiteCalculation.ConstructionSiteId = constructionSite.Id " +
                 "LEFT JOIN Users createdBy ON constructionSiteCalculation.CreatedById = createdBy.Id " +
