@@ -788,5 +788,22 @@
     <system:String x:Key="Refundirano">Refundirano</system:String>
     <system:String x:Key="Šifra_već_postoji_uzvičnik">Šifra već postoji u bazi!</system:String>
     <system:String x:Key="Da_li_ste_sigurni_da_želite_da_kopirate_odabrni_podatakUpitnik">Da li ste sigurni da želite da kopirate odabrani podatak?</system:String>
+    <system:String x:Key="Skener">Skener</system:String>
+    <system:String x:Key="Grayscale">Zasivljeno</system:String>
+    <system:String x:Key="BlackAndWhite">Crno-Belo</system:String>
+    <system:String x:Key="Color">U boji</system:String>
+    <system:String x:Key="DetaljiDokumenta">Detalji dokumenta</system:String>
+    <system:String x:Key="NazivDokumenta">Naziv dokumenta</system:String>
+    <system:String x:Key="PutanjaDokumenta">Putanja za čuvanje dokumenta</system:String>
+    <system:String x:Key="Skenirano">Skenirano</system:String>
+    <system:String x:Key="VrstaSkeniranja">Vrsta skeniranja:</system:String>
+    <system:String x:Key="GreskaPriUcitavanjuSkeneraProbajOpetUzvicnik">Greška pri učitavanju skenera, pokušajte opet!</system:String>
+    <system:String x:Key="MorasOdabratiVrstuSkeniranjaUzvicnik">Obavezno polje: Vrsta skeniranja</system:String>
+    <system:String x:Key="MorasOdabratiFolderUzvicnik">Obavezno polje: Putanja za čuvanje dokumenta</system:String>
+    <system:String x:Key="MorasSkeniratiNestoIOznacitiStavkeUzvicnik">Morate skenirati nešto i označiti stavke za generisanje PDF-a!</system:String>
+    <system:String x:Key="MorasUnetiNazivDokumentaUzicnik">Obavezno polje: Naziv dokumenta</system:String>
+    <system:String x:Key="NemaDostupnihSkeneraUzvicnik">Nema dostupnih skenera!</system:String>
+    <system:String x:Key="OdabraniSkenerNijeDostupanUzvicnik">Odabrani skener nije dostupan!</system:String>
+    <system:String x:Key="DokumentJeUspesnoSacuvanUzvicnik">Dokument je uspešno sačuvan!</system:String>
 
 </ResourceDictionary>

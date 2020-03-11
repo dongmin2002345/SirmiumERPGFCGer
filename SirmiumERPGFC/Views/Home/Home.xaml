@@ -76,6 +76,9 @@
                 <TabItem Header="{DynamicResource CallCentar}" x:Name="CallCentarUserList">
                     <local11:CallCentar_UserList />
                 </TabItem>
+                <TabItem Header="{DynamicResource Skener}">
+                    <local:Scanner_List />
+                </TabItem>
                 <!--<TabItem Header="NAJVAZNIJE VESTI">
                         <local:Important x:Name="important"/>
                     </TabItem>
