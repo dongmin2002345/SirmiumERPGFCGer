@@ -25,6 +25,11 @@ namespace RepositoryCore.DbViews.Common.ToDos
                 "toDo.Name AS ToDoName, toDo.Description AS ToDoDescription, toDo.Path, toDo.ToDoDate, toDo.IsPrivate, " +
                 "toDo.Active, toDo.UpdatedAt, " +
 
+                "toDoStatus.Id AS ToDoStatusId, " +
+                "toDoStatus.Identifier AS ToDoStatusIdentifier, " +
+                "toDoStatus.Code AS ToDoStatusCode, " +
+                "toDoStatus.Name AS ToDoStatusName, " +
+
                 "usr.Id AS UserId, " +
                 "usr.Identifier AS UserIdentifier, " +
                 "usr.Code AS UserCode, " +
@@ -35,6 +40,7 @@ namespace RepositoryCore.DbViews.Common.ToDos
                 "company.Id AS CompanyId, company.Name AS CompanyName " +
                 "FROM ToDos toDo " +
                 "LEFT JOIN Users createdBy ON toDo.CreatedById = createdBy.Id " +
+                "LEFT JOIN ToDoStatuses toDoStatus ON toDo.ToDoStatusId = toDoStatus.Id " +
                 "LEFT JOIN Companies company ON toDo.CompanyId = company.Id " +
                 "LEFT JOIN Users usr ON toDo.UserId = usr.Id;";
 

@@ -23,6 +23,11 @@ namespace SirmiumERPGFC.Repository.ToDos
             "ToDoDate DATETIME NULL, " +
             "IsPrivate BOOL NULL, " +
 
+            "ToDoStatusId INTEGER NULL, " +
+            "ToDoStatusIdentifier GUID NULL, " +
+            "ToDoStatusCode NVARCHAR(2048) NULL, " +
+            "ToDoStatusName NVARCHAR(2048) NULL, " +
+
             "UserId INTEGER NULL, " +
             "UserIdentifier GUID NULL, " +
             "UserCode NVARCHAR(2048) NULL, " +
@@ -38,15 +43,18 @@ namespace SirmiumERPGFC.Repository.ToDos
 
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Name, Description, Path, ToDoDate, IsPrivate, " +
+            "ToDoStatusId, ToDoStatusIdentifier, ToDoStatusCode, ToDoStatusName, " +
             "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ToDos " +
             "(Id, ServerId, Identifier, Name, Description, Path, ToDoDate, IsPrivate, " +
+            "ToDoStatusId, ToDoStatusIdentifier, ToDoStatusCode, ToDoStatusName, " +
             "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (NULL, @ServerId, @Identifier, @Name, @Description, @Path, @ToDoDate, @IsPrivate, " +
+            "@ToDoStatusId, @ToDoStatusIdentifier, @ToDoStatusCode, @ToDoStatusName, " +
             "@UserId, @UserIdentifier, @UserCode, @UserFirstName, @UserLastName, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
@@ -65,7 +73,7 @@ namespace SirmiumERPGFC.Repository.ToDos
             dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ToDoDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.IsPrivate = SQLiteHelper.GetBoolean(query, ref counter);
-
+            dbEntry.ToDoStatus = SQLiteHelper.GetToDoStatus(query, ref counter);
             dbEntry.User = SQLiteHelper.GetUser(query, ref counter);
 
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
@@ -85,6 +93,11 @@ namespace SirmiumERPGFC.Repository.ToDos
             insertCommand.Parameters.AddWithValue("@Path", ((object)toDo.Path) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ToDoDate", ((object)toDo.ToDoDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsPrivate", ((object)toDo.IsPrivate) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@ToDoStatusId", ((object)toDo.ToDoStatus?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ToDoStatusIdentifier", ((object)toDo.ToDoStatus?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ToDoStatusCode", ((object)toDo.ToDoStatus?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ToDoStatusName", ((object)toDo.ToDoStatus?.Name) ?? DBNull.Value);
 
             insertCommand.Parameters.AddWithValue("@UserId", ((object)toDo.User?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@UserIdentifier", ((object)toDo.User?.Identifier) ?? DBNull.Value);

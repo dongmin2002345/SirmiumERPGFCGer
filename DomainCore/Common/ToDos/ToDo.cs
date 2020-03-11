@@ -19,5 +19,8 @@ namespace DomainCore.Common.ToDos
 
         public int? UserId { get; set; }
         public User User { get; set; }
+
+        public int? ToDoStatusId { get; set; }
+        public ToDoStatus ToDoStatus { get; set; }
     }
 }

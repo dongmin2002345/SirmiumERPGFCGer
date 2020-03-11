@@ -25,6 +25,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -46,13 +47,13 @@
                       AcceptsReturn="True"
                       VerticalScrollBarVisibility="Visible" />
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Name}" />
-                <popups:ToDoStatusPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popToDoStatus" 
+                <TextBlock Grid.Row="3" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource StatusDvotacka}" />
+                <popups:ToDoStatusPopup Grid.Row="3" Grid.Column="1" Margin="2" Grid.ColumnSpan="3" x:Name="popToDoStatus" 
                                       CurrentToDoStatus="{Binding Path=CurrentToDo.ToDoStatus, Mode=TwoWay}"/>
 
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
-                <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
+                <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="*" />
@@ -66,8 +67,8 @@
                     </Button>
                 </Grid>
 
-                <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Korisnici_Dvotacka}" Margin="5 0 5 0"/>
-                <popups:UserPopup Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" x:Name="UserPopup"
+                <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Korisnici_Dvotacka}" Margin="5 0 5 0"/>
+                <popups:UserPopup Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Margin="2" x:Name="UserPopup"
                          CurrentUser="{Binding Path=CurrentToDo.User, Mode=TwoWay}"/>
 
             </Grid>

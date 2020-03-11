@@ -13,6 +13,7 @@ using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.Shipments;
 using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
+using ServiceInterfaces.ViewModels.Common.ToDos;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using ServiceInterfaces.ViewModels.Employees;
 using ServiceInterfaces.ViewModels.Statuses;
@@ -541,6 +542,24 @@ namespace SirmiumERPGFC.Repository.Common
 
                 return viewModel;
             }
+        }
+
+        public static ToDoStatusViewModel GetToDoStatus(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+            {
+                var viewModel = new ToDoStatusViewModel();
+                viewModel.Id = query.GetInt32(counter++);
+                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                return viewModel;
+            };
         }
 
         public static UserViewModel GetUser(SqliteDataReader query, ref int counter)

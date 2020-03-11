@@ -2,6 +2,7 @@
 using ServiceInterfaces.ViewModels.Common.Identity;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,6 +75,23 @@ namespace ServiceInterfaces.ViewModels.Common.ToDos
                 {
                     _User = value;
                     NotifyPropertyChanged("User");
+                }
+            }
+        }
+        #endregion
+
+        #region ToDoStatus
+        private ToDoStatusViewModel _ToDoStatus;
+
+        public ToDoStatusViewModel ToDoStatus
+        {
+            get { return _ToDoStatus; }
+            set
+            {
+                if (_ToDoStatus != value)
+                {
+                    _ToDoStatus = value;
+                    NotifyPropertyChanged("ToDoStatus");
                 }
             }
         }

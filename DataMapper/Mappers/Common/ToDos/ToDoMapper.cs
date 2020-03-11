@@ -33,6 +33,7 @@ namespace DataMapper.Mappers.Common.ToDos
                 ToDoDate = toDo.ToDoDate,
                 IsPrivate = toDo.IsPrivate,
                 User = toDo?.User?.ConvertToUserViewModelLite(),
+                ToDoStatus = toDo?.ToDoStatus?.ConvertToToDoStatusViewModelLite(),
 
                 IsActive = toDo.Active,
 
@@ -87,6 +88,7 @@ namespace DataMapper.Mappers.Common.ToDos
                 CreatedById = toDoViewModel.CreatedBy?.Id ?? null,
                 CompanyId = toDoViewModel.Company?.Id ?? null,
                 UserId = toDoViewModel?.User?.Id ?? null,
+                ToDoStatusId = toDoViewModel.ToDoStatus?.Id ?? null,
 
                 CreatedAt = toDoViewModel.CreatedAt,
                 UpdatedAt = toDoViewModel.UpdatedAt

@@ -32,6 +32,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
 
             string queryString =
                 "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, IsPrivate, " +
+                "ToDoStatusId, ToDoStatusIdentifier, ToDoStatusCode, ToDoStatusName, " +
                 "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
@@ -63,6 +64,17 @@ namespace RepositoryCore.Implementations.Common.ToDos
                             toDo.User.Code = reader["UserCode"]?.ToString();
                             toDo.User.FirstName = reader["UserFirstName"]?.ToString();
                             toDo.User.LastName = reader["UserLastName"]?.ToString();
+                        }
+
+                        if (reader["ToDoStatusId"] != DBNull.Value)
+                        {
+                            toDo.ToDoStatus = new ToDoStatus();
+                            toDo.ToDoStatusId = Int32.Parse(reader["ToDoStatusId"].ToString());
+                            toDo.ToDoStatus.Id = Int32.Parse(reader["ToDoStatusId"].ToString());
+                            toDo.ToDoStatus.Identifier = Guid.Parse(reader["ToDoStatusIdentifier"].ToString());
+                            toDo.ToDoStatus.Code = reader["ToDoStatusCode"]?.ToString();
+                            toDo.ToDoStatus.Name = reader["ToDoStatusName"]?.ToString();
+                            
                         }
 
                         if (reader["ToDoDescription"] != DBNull.Value)
@@ -107,6 +119,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
 
             string queryString =
                 "SELECT ToDoId, ToDoIdentifier, ToDoName, ToDoDescription, Path, ToDoDate, IsPrivate, " +
+                "ToDoStatusId, ToDoStatusIdentifier, ToDoStatusCode, ToDoStatusName, " +
                 "UserId, UserIdentifier, UserCode, UserFirstName, UserLastName, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vToDos " +
@@ -130,6 +143,17 @@ namespace RepositoryCore.Implementations.Common.ToDos
                         toDo.Id = Int32.Parse(reader["ToDoId"].ToString());
                         toDo.Identifier = Guid.Parse(reader["ToDoIdentifier"].ToString());
                         toDo.Name = reader["ToDoName"].ToString();
+
+                        if (reader["ToDoStatusId"] != DBNull.Value)
+                        {
+                            toDo.ToDoStatus = new ToDoStatus();
+                            toDo.ToDoStatusId = Int32.Parse(reader["ToDoStatusId"].ToString());
+                            toDo.ToDoStatus.Id = Int32.Parse(reader["ToDoStatusId"].ToString());
+                            toDo.ToDoStatus.Identifier = Guid.Parse(reader["ToDoStatusIdentifier"].ToString());
+                            toDo.ToDoStatus.Code = reader["ToDoStatusCode"]?.ToString();
+                            toDo.ToDoStatus.Name = reader["ToDoStatusName"]?.ToString();
+
+                        }
 
                         if (reader["UserId"] != DBNull.Value)
                         {
@@ -207,6 +231,7 @@ namespace RepositoryCore.Implementations.Common.ToDos
                     dbEntry.CompanyId = toDo.CompanyId ?? null;
                     dbEntry.CreatedById = toDo.CreatedById ?? null;
                     dbEntry.UserId = toDo?.UserId ?? null;
+                    dbEntry.ToDoStatusId = toDo?.ToDoStatusId ?? null;
 
                     // Set properties
                     dbEntry.Name = toDo.Name;

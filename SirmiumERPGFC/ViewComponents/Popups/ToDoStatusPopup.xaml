@@ -12,6 +12,7 @@
             <Border Height="Auto" HorizontalAlignment="Stretch" Background="{DynamicResource WhiteBrush}" BorderBrush="{DynamicResource ComboBoxPopupBorderBrush}" BorderThickness="2">
                 <Grid MinWidth="300" MaxHeight="210" Background="{DynamicResource WhiteBrush}">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
@@ -49,8 +50,8 @@
                               ItemsSource="{Binding Path=ToDoStatusesFromDB}"
                               SelectedItem="{Binding Path=CurrentToDoStatus}">
                         <DataGrid.Columns>
-                           
-                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding ToDoStatus.Name}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnCloseToDoStatusPopup" Click="btnCloseToDoStatusPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">
