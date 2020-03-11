@@ -47,11 +47,11 @@
                         </StackPanel>
                     </Button>
 
-                    <TextBlock Grid.Column="3" VerticalAlignment="Center" Margin="5 2 10 2" Text="{DynamicResource PRETRAGA}" />
-                    <TextBox Grid.Column="4" Margin="2" x:Name="txtSearchName"
+                    <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="5 2 10 2" Text="{DynamicResource PRETRAGA}" />
+                    <TextBox Grid.Column="3" Margin="2" x:Name="txtSearchName"
                     Text="{Binding ToDoStatusSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtSearchName_TextChanged" Controls:TextBoxHelper.ClearTextButton="True"/>
 
-                    <StackPanel Orientation="Horizontal" Grid.Column="5">
+                    <StackPanel Orientation="Horizontal" Grid.Column="4">
                         <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
@@ -99,7 +99,7 @@
                           SelectedItem="{Binding Path=CurrentToDoStatus}">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra_automatski}" Binding="{Binding Code}" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="Sin" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>

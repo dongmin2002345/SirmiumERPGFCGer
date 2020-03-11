@@ -26,7 +26,7 @@ namespace DataMapper.Mappers.Common.ToDos
             {
                 Id = toDoStatus.Id,
                 Identifier = toDoStatus.Identifier,
-
+                Code = toDoStatus.Code,
                 Name = toDoStatus.Name,
 
                 IsActive = toDoStatus.Active,
@@ -49,7 +49,7 @@ namespace DataMapper.Mappers.Common.ToDos
             {
                 Id = toDoStatus.Id,
                 Identifier = toDoStatus.Identifier,
-
+                Code = toDoStatus.Code,
                 Name = toDoStatus.Name,
 
                 IsActive = toDoStatus.Active,
@@ -68,7 +68,7 @@ namespace DataMapper.Mappers.Common.ToDos
             {
                 Id = toDoStatusViewModel.Id,
                 Identifier = toDoStatusViewModel.Identifier,
-
+                Code = toDoStatusViewModel.Code,
                 Name = toDoStatusViewModel.Name,
 
                 CreatedById = toDoStatusViewModel.CreatedBy?.Id ?? null,
