@@ -24,5 +24,6 @@ namespace DomainCore.ConstructionSites
         public int ItemStatus { get; set; }
         public bool IsPaid { get; set; }
         public bool IsRefunded { get; set; }
+        public DateTime DateCondition { get; set; }
     }
 }

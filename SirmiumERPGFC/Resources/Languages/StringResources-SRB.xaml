@@ -806,4 +806,15 @@
     <system:String x:Key="OdabraniSkenerNijeDostupanUzvicnik">Odabrani skener nije dostupan!</system:String>
     <system:String x:Key="DokumentJeUspesnoSacuvanUzvicnik">Dokument je uspešno sačuvan!</system:String>
 
+    <system:String x:Key="Datum_Uplate">Datum uplate</system:String>
+    <system:String x:Key="Datum_Uplate_Dvotacka">Datum uplate:</system:String>
+    <system:String x:Key="Cifra_Uplate">Cifra uplate</system:String>
+    <system:String x:Key="Cifra_Uplate_dvotacka">Cifra uplate:</system:String>
+
+    <system:String x:Key="Datum_Stanja">Datum stanja</system:String>
+    <system:String x:Key="Datum_Stanja_dvotacka">Datum stanja:</system:String>
+
+    <system:String x:Key="Uplata">Uplata</system:String>
+    <system:String x:Key="Uplata_dvotacka">Uplata:</system:String>
+
 </ResourceDictionary>

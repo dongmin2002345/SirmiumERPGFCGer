@@ -37,7 +37,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
-                "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
+                "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -113,6 +113,13 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         if (reader["ContractExpiration"] != DBNull.Value)
                             constructionSite.ContractExpiration = DateTime.Parse(reader["ContractExpiration"].ToString());
 
+                        if (reader["PaymentDate"] != DBNull.Value)
+                            constructionSite.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
+                        if (reader["Path"] != DBNull.Value)
+                            constructionSite.Path = reader["Path"].ToString();
+                        if (reader["PaymentValue"] != DBNull.Value)
+                            constructionSite.PaymentValue = decimal.Parse(reader["PaymentValue"].ToString());
+
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -161,7 +168,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
-                "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
+                "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -236,6 +243,13 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         if (reader["ContractExpiration"] != DBNull.Value)
                             constructionSite.ContractExpiration = DateTime.Parse(reader["ContractExpiration"].ToString());
 
+                        if (reader["PaymentDate"] != DBNull.Value)
+                            constructionSite.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
+                        if (reader["Path"] != DBNull.Value)
+                            constructionSite.Path = reader["Path"].ToString();
+                        if (reader["PaymentValue"] != DBNull.Value)
+                            constructionSite.PaymentValue = decimal.Parse(reader["PaymentValue"].ToString());
+
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -280,7 +294,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
-                "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, " +
+                "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId " +
@@ -357,6 +371,13 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.ContractStart = DateTime.Parse(reader["ContractStart"].ToString());
                         if (reader["ContractExpiration"] != DBNull.Value)
                             constructionSite.ContractExpiration = DateTime.Parse(reader["ContractExpiration"].ToString());
+
+                        if (reader["PaymentDate"] != DBNull.Value)
+                            constructionSite.PaymentDate = DateTime.Parse(reader["PaymentDate"].ToString());
+                        if (reader["Path"] != DBNull.Value)
+                            constructionSite.Path = reader["Path"].ToString();
+                        if (reader["PaymentValue"] != DBNull.Value)
+                            constructionSite.PaymentValue = decimal.Parse(reader["PaymentValue"].ToString());
 
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -468,7 +489,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.ContractStart = constructionSite.ContractStart;
                     dbEntry.ContractExpiration = constructionSite.ContractExpiration;
 
-
+                    dbEntry.PaymentDate = constructionSite.PaymentDate;
+                    dbEntry.Path = constructionSite.Path;
+                    dbEntry.PaymentValue = constructionSite.PaymentValue;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

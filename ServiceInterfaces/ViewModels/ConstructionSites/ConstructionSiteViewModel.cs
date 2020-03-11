@@ -284,6 +284,57 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region PaymentDate
+        private DateTime _PaymentDate = DateTime.Now;
+
+        public DateTime PaymentDate
+        {
+            get { return _PaymentDate; }
+            set
+            {
+                if (_PaymentDate != value)
+                {
+                    _PaymentDate = value;
+                    NotifyPropertyChanged("PaymentDate");
+                }
+            }
+        }
+        #endregion
+
+        #region Path
+        private string _Path;
+
+        public string Path
+        {
+            get { return _Path; }
+            set
+            {
+                if (_Path != value)
+                {
+                    _Path = value;
+                    NotifyPropertyChanged("Path");
+                }
+            }
+        }
+        #endregion
+
+        #region PaymentValue
+        private decimal _PaymentValue;
+
+        public decimal PaymentValue
+        {
+            get { return _PaymentValue; }
+            set
+            {
+                if (_PaymentValue != value)
+                {
+                    _PaymentValue = value;
+                    NotifyPropertyChanged("PaymentValue");
+                }
+            }
+        }
+        #endregion
+
 
         #region IsSynced
         private bool _IsSynced;

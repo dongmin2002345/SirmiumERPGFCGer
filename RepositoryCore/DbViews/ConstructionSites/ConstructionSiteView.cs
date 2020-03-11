@@ -55,6 +55,10 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "constructionSite.ContractStart, " +
                 "constructionSite.ContractExpiration, " +
 
+                "constructionSite.PaymentDate, " +
+                "constructionSite.Path, " +
+                "constructionSite.PaymentValue, " +
+
                 "constructionSite.Active AS Active, " +
 
                 "(SELECT MAX(v) FROM (VALUES " +

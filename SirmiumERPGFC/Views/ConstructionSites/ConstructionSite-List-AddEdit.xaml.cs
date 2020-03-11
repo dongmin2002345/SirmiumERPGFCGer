@@ -468,6 +468,25 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             FlyoutHelper.CloseFlyout(this);
         }
 
+        private void FileDIalog_FileOk(object sender, CancelEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+            string[] fileNames = dialog.FileNames;
+
+            if (fileNames.Length > 0)
+                CurrentConstructionSite.Path = fileNames[0];
+        }
+
+        private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            fileDIalog.Multiselect = true;
+            fileDIalog.FileOk += FileDIalog_FileOk;
+            fileDIalog.Filter = "All Files (*.*)|*.*";
+            fileDIalog.ShowDialog();
+        }
+
         #endregion
         //private void DisplayDocumentData()
         //{

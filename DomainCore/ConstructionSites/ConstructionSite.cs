@@ -34,5 +34,9 @@ namespace DomainCore.ConstructionSites
         public DateTime ProContractDate { get; set; }
         public DateTime ContractStart { get; set; }
         public DateTime ContractExpiration { get; set; }
+
+        public DateTime PaymentDate { get; set; }
+        public string Path { get; set; }
+        public decimal PaymentValue { get; set; }
     }
 }

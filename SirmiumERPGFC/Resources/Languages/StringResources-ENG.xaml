@@ -799,4 +799,16 @@
     <system:String x:Key="NemaDostupnihSkeneraUzvicnik">No available scanners!</system:String>
     <system:String x:Key="OdabraniSkenerNijeDostupanUzvicnik">Selected scanner is not available!</system:String>
     <system:String x:Key="DokumentJeUspesnoSacuvanUzvicnik">Document saved successfully!</system:String>
+
+    <system:String x:Key="Datum_Uplate">Payment Date</system:String>
+    <system:String x:Key="Datum_Uplate_Dvotacka">Payment Date:</system:String>
+    <system:String x:Key="Cifra_Uplate">Payment Value</system:String>
+    <system:String x:Key="Cifra_Uplate_dvotacka">Payment Value:</system:String>
+
+    <system:String x:Key="Datum_Stanja">Date Condition</system:String>
+    <system:String x:Key="Datum_Stanja_dvotacka">Date Condition:</system:String>
+
+    <system:String x:Key="Uplata">Payment</system:String>
+    <system:String x:Key="Uplata_dvotacka">Payment:</system:String>
+
 </ResourceDictionary>

@@ -32,6 +32,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -43,28 +44,31 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Broj_radnika_koji_dolazeDvotacka}" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtNumOfEmployees" Text="{Binding Path=CurrentConstructionSiteCalculationForm.NumOfEmployees}"  />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Datum_Stanja_dvotacka}" />
+                    <DatePicker Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtPostingDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSiteCalculationForm.DateCondition}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cena_po_radnikuDvotacka}" />
-                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculationForm.EmployeePrice}"  />
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Broj_radnika_koji_dolazeDvotacka}" />
+                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtNumOfEmployees" Text="{Binding Path=CurrentConstructionSiteCalculationForm.NumOfEmployees}"  />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Broj_meseciDvotacka}" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculationForm.NumOfMonths}"  />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cena_po_radnikuDvotacka}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculationForm.EmployeePrice}"  />
 
-                    <StackPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="20,5">
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Broj_meseciDvotacka}" />
+                    <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSiteCalculationForm.NumOfMonths}"  />
+
+                    <StackPanel Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="20,5">
                         <CheckBox Name="cbIsPaid"  IsChecked="{Binding IsPaid}">UPLAĆENO</CheckBox>
                         <CheckBox Name="cbIsFunded" IsChecked="{Binding IsRefunded}">REFUNDIRANO</CheckBox>
                     </StackPanel>
 
-                    <Button x:Name="btnAddCalculation" Grid.Row="2" Grid.Column="4" Click="btnAddCalculation_Click" Margin="2" Background="#007ACC">
+                    <Button x:Name="btnAddCalculation" Grid.Row="3" Grid.Column="4" Click="btnAddCalculation_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="btnCancelCalculation" Grid.Row="2" Grid.Column="5" Click="btnCancelCalculation_Click" Margin="2" Background="#007ACC" >
+                    <Button x:Name="btnCancelCalculation" Grid.Row="3" Grid.Column="5" Click="btnCancelCalculation_Click" Margin="2" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\001-error.png" HorizontalAlignment="Center" Height="16" Width="16" />
                             <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular"/>

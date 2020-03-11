@@ -41,7 +41,11 @@ namespace DataMapper.Mappers.ConstructionSites
                 ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
 
-                
+                PaymentDate = constructionSite.PaymentDate,
+                Path = constructionSite.Path,
+                PaymentValue = constructionSite.PaymentValue,
+
+
                 City = constructionSite.City?.ConvertToCityViewModelLite(),
                 Country = constructionSite.Country?.ConvertToCountryViewModelLite(),
                 BusinessPartner = constructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
@@ -84,6 +88,10 @@ namespace DataMapper.Mappers.ConstructionSites
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
 
+                PaymentDate = constructionSite.PaymentDate,
+                Path = constructionSite.Path,
+                PaymentValue = constructionSite.PaymentValue,
+
                 ProContractDate = constructionSite.ProContractDate,
                 ContractStart = constructionSite.ContractStart,
                 ContractExpiration = constructionSite.ContractExpiration,
@@ -113,6 +121,10 @@ namespace DataMapper.Mappers.ConstructionSites
                 ProContractDate = constructionSiteViewModel.ProContractDate,
                 ContractStart = constructionSiteViewModel.ContractStart,
                 ContractExpiration = constructionSiteViewModel.ContractExpiration,
+
+                PaymentDate = constructionSiteViewModel.PaymentDate,
+                Path = constructionSiteViewModel.Path,
+                PaymentValue = constructionSiteViewModel.PaymentValue,
 
                 CityId = constructionSiteViewModel.City?.Id ?? null,
                 CountryId = constructionSiteViewModel.Country?.Id ?? null,

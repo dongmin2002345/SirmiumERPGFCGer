@@ -808,4 +808,15 @@
     <system:String x:Key="OdabraniSkenerNijeDostupanUzvicnik">Ausgewählter Scanner ist nicht verfügbar!</system:String>
     <system:String x:Key="DokumentJeUspesnoSacuvanUzvicnik">Dokument erfolgreich gespeichert!</system:String>
 
+    <system:String x:Key="Datum_Uplate">Zahlungsdatum</system:String>
+    <system:String x:Key="Datum_Uplate_Dvotacka">Zahlungsdatum:</system:String>
+    <system:String x:Key="Cifra_Uplate">Zahlungswert</system:String>
+    <system:String x:Key="Cifra_Uplate_dvotacka">Zahlungswert:</system:String>
+
+    <system:String x:Key="Datum_Stanja">Datumsbedingung</system:String>
+    <system:String x:Key="Datum_Stanja_dvotacka">Datumsbedingung:</system:String>
+
+    <system:String x:Key="Uplata">Zahlung</system:String>
+    <system:String x:Key="Uplata_dvotacka">Zahlung:</system:String>
+
 </ResourceDictionary>

@@ -36,6 +36,7 @@
         <cbxConverters1:PlusMinusConverter x:Key="PlusMinusConverter" />
         <cbxConverters1:ItemStatusConverter x:Key="ItemStatusConverter" />
         <cbxConverters1:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
+        <cbxConverters1:StringDoubleConverter x:Key="stringToDoubleConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -185,7 +186,12 @@
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
                         <DataGridTextColumn SortMemberPath="Status.Name" Header="{DynamicResource Status}" Binding="{Binding Status.Name}" IsReadOnly="True" />
-
+                        <DataGridTextColumn SortMemberPath="PaymentDate" Binding="{Binding PaymentDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{DynamicResource Datum_Uplate}" TextWrapping="Wrap" MaxWidth="70" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn SortMemberPath="PaymentValue" Header="{DynamicResource Cifra_Uplate}" Binding="{Binding PaymentValue, Converter={StaticResource stringToDoubleConverter}}" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="City.Name" Header="{DynamicResource Grad}" Binding="{Binding City.Name}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="Auto" IsReadOnly="True" />
@@ -215,6 +221,11 @@
                                         <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="0" CommandParameter="{Binding}" ToolTip="Promeni">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btnShowDocumentConstructionSite" Click="btnShowDocumentConstructionSite_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="..\..\Resources\Icons\PDFBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
                                         </Button>
                                         <Button x:Name="btnDelete" Click="btnDelete_Click" Margin="3 0 0 0" CommandParameter="{Binding}" ToolTip="Obriši">
@@ -294,6 +305,7 @@
                               SelectedItem="{Binding Path=CurrentConstructionSiteCalculationsDG, Mode=TwoWay}" Grid.ColumnSpan="2">
 
                             <DataGrid.Columns>
+                                <DataGridTextColumn SortMemberPath="DateCondition" Header="{DynamicResource Datum_Stanja}" Binding="{Binding DateCondition, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="NumOfEmployees" Header="{DynamicResource Broj_radnika}" Binding="{Binding NumOfEmployees}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="EmployeePrice" Header="{DynamicResource Cena_za_radnika}" Binding="{Binding EmployeePrice}" Width="*" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="NumOfMonths" Header="{DynamicResource Broj_meseci}" Binding="{Binding NumOfMonths}" Width="*" IsReadOnly="True" />

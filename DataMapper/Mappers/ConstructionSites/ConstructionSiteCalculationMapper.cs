@@ -42,7 +42,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 ItemStatus = constructionSiteCalculation.ItemStatus,
                 IsPaid = constructionSiteCalculation.IsPaid,
                 IsRefunded = constructionSiteCalculation.IsRefunded,
-
+                DateCondition = constructionSiteCalculation.DateCondition,
 
                 IsActive = constructionSiteCalculation.Active,
 
@@ -76,7 +76,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 ItemStatus = constructionSiteCalculation.ItemStatus,
                 IsPaid = constructionSiteCalculation.IsPaid,
                 IsRefunded = constructionSiteCalculation.IsRefunded,
-
+                DateCondition = constructionSiteCalculation.DateCondition,
                 IsActive = constructionSiteCalculation.Active,
 
                 UpdatedAt = constructionSiteCalculation.UpdatedAt,
@@ -108,7 +108,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 ItemStatus = constructionSiteCalculationViewModel.ItemStatus,
                 IsPaid = constructionSiteCalculationViewModel.IsPaid,
                 IsRefunded = constructionSiteCalculationViewModel.IsRefunded,
-
+                DateCondition = constructionSiteCalculationViewModel.DateCondition,
                 CreatedById = constructionSiteCalculationViewModel.CreatedBy?.Id ?? null,
                 CompanyId = constructionSiteCalculationViewModel.Company?.Id ?? null,
 

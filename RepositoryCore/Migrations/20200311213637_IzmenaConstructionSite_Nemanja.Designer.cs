@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200311213637_IzmenaConstructionSite_Nemanja")]
+    partial class IzmenaConstructionSite_Nemanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2019,8 +2021,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<int?>("CreatedById");
 
-                    b.Property<DateTime>("DateCondition");
-
                     b.Property<decimal>("EmployeePrice");
 
                     b.Property<Guid>("Identifier");
@@ -2040,6 +2040,8 @@ namespace RepositoryCore.Migrations
                     b.Property<decimal>("OldValue");
 
                     b.Property<string>("PlusMinus");
+
+                    b.Property<DateTime>("PostingDate");
 
                     b.Property<DateTime>("StatusDate");
 

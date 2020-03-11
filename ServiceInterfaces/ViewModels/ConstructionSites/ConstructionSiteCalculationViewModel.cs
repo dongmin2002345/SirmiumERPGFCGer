@@ -146,6 +146,22 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region DateCondition
+        private DateTime _DateCondition = DateTime.Now;
+
+        public DateTime DateCondition
+        {
+            get { return _DateCondition; }
+            set
+            {
+                if (_DateCondition != value)
+                {
+                    _DateCondition = value;
+                    NotifyPropertyChanged("DateCondition");
+                }
+            }
+        }
+        #endregion
 
         #region PlusMinus
         private string _PlusMinus;

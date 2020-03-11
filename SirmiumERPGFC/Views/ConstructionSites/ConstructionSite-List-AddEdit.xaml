@@ -19,6 +19,7 @@
         <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
         <cbxConverters:GenderConverter x:Key="cbxGenderToStringConverter" />
         <statusConverter:StatusConverter x:Key="StatusConverter" />
+        <statusConverter:StringDoubleConverter x:Key="stringToDoubleConverter" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -34,6 +35,8 @@
             <GroupBox Grid.Row="0" Grid.Column="0" Header="{DynamicResource Osnovni_podaci_o_gradilištu}" Margin="2 2 2 1">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -93,18 +96,38 @@
                     <TextBlock Grid.Row="4" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Datum_statusaDvotacka}" />
                     <DatePicker Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtStatusDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.StatusDate}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="5" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="Datum_predugovoraDvotacka" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Poslovni_partnerDvotacka}" />
+                    <popups:BusinessPartnerPopup Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popBusinessPartner" 
+                                        CurrentBusinessPartner="{Binding Path=CurrentConstructionSite.BusinessPartner, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Datum_predugovoraDvotacka}" />
                     <DatePicker Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtProContractDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ProContractDate}" IsEnabled="True" />
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Početak_ugovoraDvotacka}" />
                     <DatePicker Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtContractStartDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractStart}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="7" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
-                    <DatePicker Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
+                    <TextBlock Grid.Row="6" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Istek_ugovoraDvotacka}" />
+                    <DatePicker Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtContractExpirationDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.ContractExpiration}" IsEnabled="True" />
 
-                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Poslovni_partnerDvotacka}" />
-                    <popups:BusinessPartnerPopup Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popBusinessPartner" 
-                                        CurrentBusinessPartner="{Binding Path=CurrentConstructionSite.BusinessPartner, Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Datum_Uplate_Dvotacka}" />
+                    <DatePicker Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtPaymentDate"  Margin="2" SelectedDate="{Binding Path=CurrentConstructionSite.PaymentDate}" IsEnabled="True" />
+
+                    <TextBlock Grid.Row="7" Grid.Column="3" Text="{DynamicResource Uplata_dvotacka}" Margin="2" VerticalAlignment="Center" />
+                    <Grid Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Text="{Binding Path=CurrentConstructionSite.Path, Mode=TwoWay}" Margin="2" />
+                        <Button x:Name="btnChooseDocument" Grid.Column="1" Click="btnChooseDocument_Click" Margin="2" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource ODABERI}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <TextBlock Grid.Row="8" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cifra_Uplate_dvotacka}" />
+                    <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSite.PaymentValue, Converter={StaticResource stringToDoubleConverter}}"  />
 
                 </Grid>
             </GroupBox>

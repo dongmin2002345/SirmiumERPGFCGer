@@ -32,7 +32,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
-                "IsPaid, IsRefunded, " +
+                "IsPaid, IsRefunded, DateCondition, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -83,6 +83,10 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
                         constructionSiteCalculation.IsPaid = bool.Parse(reader["IsPaid"].ToString());
                         constructionSiteCalculation.IsRefunded = bool.Parse(reader["IsRefunded"].ToString());
+
+                        if (reader["DateCondition"] != DBNull.Value)
+                            constructionSiteCalculation.DateCondition = DateTime.Parse(reader["DateCondition"].ToString());
+
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -128,7 +132,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
-                "IsPaid, IsRefunded, " +
+                "IsPaid, IsRefunded, DateCondition, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -179,6 +183,10 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
                         constructionSiteCalculation.IsPaid = bool.Parse(reader["IsPaid"].ToString());
                         constructionSiteCalculation.IsRefunded = bool.Parse(reader["IsRefunded"].ToString());
+
+                        if (reader["DateCondition"] != DBNull.Value)
+                            constructionSiteCalculation.DateCondition = DateTime.Parse(reader["DateCondition"].ToString());
+
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -224,7 +232,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "StatusDate, NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
-                "IsPaid, IsRefunded, " +
+                "IsPaid, IsRefunded, DateCondition, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                  "WHERE CompanyId = @CompanyId " +
@@ -278,6 +286,10 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
                         constructionSiteCalculation.IsPaid = bool.Parse(reader["IsPaid"].ToString());
                         constructionSiteCalculation.IsRefunded = bool.Parse(reader["IsRefunded"].ToString());
+
+                        if (reader["DateCondition"] != DBNull.Value)
+                            constructionSiteCalculation.DateCondition = DateTime.Parse(reader["DateCondition"].ToString());
+
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -323,7 +335,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "SELECT TOP 1 ConstructionSiteCalculationId, ConstructionSiteCalculationIdentifier, " +
                 "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
                 "NumOfEmployees, EmployeePrice, NumOfMonths, OldValue, NewValue, ValueDifference, PlusMinus, ItemStatus, " +
-                "IsPaid, IsRefunded, " +
+                "IsPaid, IsRefunded, DateCondition, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSiteCalculations " +
                 "WHERE CompanyId = @CompanyId AND ConstructionSiteId = @ConstructionSiteId " +
@@ -374,6 +386,10 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
                         constructionSiteCalculation.IsPaid = bool.Parse(reader["IsPaid"].ToString());
                         constructionSiteCalculation.IsRefunded = bool.Parse(reader["IsRefunded"].ToString());
+
+                        if (reader["DateCondition"] != DBNull.Value)
+                            constructionSiteCalculation.DateCondition = DateTime.Parse(reader["DateCondition"].ToString());
+
                         constructionSiteCalculation.Active = bool.Parse(reader["Active"].ToString());
                         constructionSiteCalculation.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -445,6 +461,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.ValueDifference = constructionSiteCalculation.ValueDifference;
                     dbEntry.PlusMinus = constructionSiteCalculation.PlusMinus;
                     dbEntry.ItemStatus = constructionSiteCalculation.ItemStatus;
+                    dbEntry.DateCondition = constructionSiteCalculation.DateCondition;
 
                     // Set timestamp
                     dbEntry.UpdatedAt = DateTime.Now;

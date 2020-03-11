@@ -345,6 +345,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             CurrentConstructionSiteCalculationForm.NumOfEmployees = CurrentConstructionSiteCalculationDG.NumOfEmployees;
             CurrentConstructionSiteCalculationForm.EmployeePrice = CurrentConstructionSiteCalculationDG.EmployeePrice;
             CurrentConstructionSiteCalculationForm.NumOfMonths = CurrentConstructionSiteCalculationDG.NumOfMonths;
+            CurrentConstructionSiteCalculationForm.DateCondition = CurrentConstructionSiteCalculationDG.DateCondition;
             CurrentConstructionSiteCalculationForm.IsSynced = CurrentConstructionSiteCalculationDG.IsSynced;
             CurrentConstructionSiteCalculationForm.UpdatedAt = CurrentConstructionSiteCalculationDG.UpdatedAt;
         }
