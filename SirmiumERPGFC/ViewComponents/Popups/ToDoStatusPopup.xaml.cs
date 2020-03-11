@@ -155,22 +155,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtToDoStatus.Focus();
         }
 
-        private void btnAddToDoStatus_Click(object sender, RoutedEventArgs e)
-        {
-            popToDoStatus.IsOpen = false;
-
-            ToDoStatusViewModel ToDoStatus = new ToDoStatusViewModel();
-            ToDoStatus.Identifier = Guid.NewGuid();
-
-            ToDoStatus_AddEdit ToDoStatusAddEditForm = new ToDoStatus_AddEdit(ToDoStatus, true, true);
-            ToDoStatusAddEditForm.ToDoStatusCreatedUpdated += new ToDoStatusHandler(ToDoStatusAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, (string)Application.Current.FindResource("Podaci_o_ToDoStatusu"), 95, ToDoStatusAddEditForm);
-
-            txtToDoStatus.Focus();
-        }
-
-        void ToDoStatusAdded() { }
-
         private void dgToDoStatusList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -241,18 +225,16 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddToDoStatus_LostFocus(object sender, RoutedEventArgs e)
+        private void BtnCloseToDoStatus_Click(object sender, RoutedEventArgs e)
         {
             popToDoStatus.IsOpen = false;
 
             txtToDoStatus.Focus();
         }
 
-        private void btnCloseToDoStatusPopup_Click(object sender, RoutedEventArgs e)
+        private void DgToDoStatusList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popToDoStatus.IsOpen = false;
-
-            txtToDoStatus.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #region INotifyPropertyChange implementation
