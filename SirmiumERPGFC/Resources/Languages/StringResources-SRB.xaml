@@ -817,5 +817,6 @@
 
     <system:String x:Key="Uplata">Uplata</system:String>
     <system:String x:Key="Uplata_dvotacka">Uplata:</system:String>
+    <system:String x:Key="UbaciPapirUSkenerUzvicnik">Molimo ubacite papir u skener!</system:String>
 
 </ResourceDictionary>

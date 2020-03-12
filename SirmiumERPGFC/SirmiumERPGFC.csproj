@@ -396,6 +396,7 @@
     <Compile Include="Repository\Vats\VatSQLiteRepository.cs" />
     <Compile Include="Scanners\PDFGenerator.cs" />
     <Compile Include="Scanners\ScannedImageViewModel.cs" />
+    <Compile Include="Scanners\ScannerDocumentHandlingTypeViewModel.cs" />
     <Compile Include="Scanners\ScannerTypeOptionViewModel.cs" />
     <Compile Include="Scanners\WIAScanner.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />

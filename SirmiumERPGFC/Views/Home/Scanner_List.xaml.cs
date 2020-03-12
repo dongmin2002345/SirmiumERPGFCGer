@@ -82,6 +82,44 @@ namespace SirmiumERPGFC.Views.Home
         }
         #endregion
 
+        #region DocumentHandlingTypes
+        private ObservableCollection<ScannerDocumentHandlingTypeViewModel> _DocumentHandlingTypes = new ObservableCollection<ScannerDocumentHandlingTypeViewModel>()
+        {
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.Feeder, Name = "Feeder" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.Flatbed, Name = "Flatbed-Flachbettscanner" },
+        };
+
+        public ObservableCollection<ScannerDocumentHandlingTypeViewModel> DocumentHandlingTypes
+        {
+            get { return _DocumentHandlingTypes; }
+            set
+            {
+                if (_DocumentHandlingTypes != value)
+                {
+                    _DocumentHandlingTypes = value;
+                    NotifyPropertyChanged("DocumentHandlingTypes");
+                }
+            }
+        }
+        #endregion
+
+        #region SelectedDocumentHandlingType
+        private ScannerDocumentHandlingTypeViewModel _SelectedDocumentHandlingType;
+
+        public ScannerDocumentHandlingTypeViewModel SelectedDocumentHandlingType
+        {
+            get { return _SelectedDocumentHandlingType; }
+            set
+            {
+                if (_SelectedDocumentHandlingType != value)
+                {
+                    _SelectedDocumentHandlingType = value;
+                    NotifyPropertyChanged("SelectedDocumentHandlingType");
+                }
+            }
+        }
+        #endregion
+
 
 
         #region CanInteractWithForm
@@ -142,6 +180,7 @@ namespace SirmiumERPGFC.Views.Home
             this.DataContext = this;
 
             SelectedScanType = ScanTypeOptions.FirstOrDefault();
+            SelectedDocumentHandlingType = DocumentHandlingTypes.FirstOrDefault();
         }
 
         private void btnSavePdf_Click(object sender, RoutedEventArgs e)
@@ -237,10 +276,10 @@ namespace SirmiumERPGFC.Views.Home
                     var scanner = new WIAScanner();
                     scanner.InitializeProperties(new Dictionary<WIAScanner.WiaProperty, dynamic>()
                     {
-                        { WiaProperty.DataType, (uint)SelectedScanType.Type }
+                        { WiaProperty.DataType, (uint)SelectedScanType.Type },
                     });
 
-                    var scannedData = scanner.Scan();
+                    var scannedData = scanner.Scan(SelectedDocumentHandlingType.Type);
 
                     if (scannedData != null && scannedData.Count() > 0)
                     {
@@ -265,6 +304,17 @@ namespace SirmiumERPGFC.Views.Home
                 catch (IOException exc)
                 {
                     throw exc;
+                }
+                catch(WiaScannerInsertPaperException exc)
+                {
+                    MainWindow.ErrorMessage = (string)Application.Current.FindResource("UbaciPapirUSkenerUzvicnik");
+                }
+                catch(COMException ex)
+                {
+                    if ((uint)ex.ErrorCode == 0x80210003)
+                        MainWindow.ErrorMessage = (string)Application.Current.FindResource("UbaciPapirUSkenerUzvicnik");
+                    else
+                        MainWindow.ErrorMessage = (string)Application.Current.FindResource("GreskaPriUcitavanjuSkeneraProbajOpetUzvicnik");
                 }
                 catch (Exception ex)
                 {

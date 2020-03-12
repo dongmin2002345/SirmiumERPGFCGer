@@ -30,7 +30,7 @@ namespace SirmiumERPGFC.Scanners
         }
 
 
-        public List<string> Scan()
+        public List<string> Scan(WiaDocumentHandlingType handlingType = WiaDocumentHandlingType.Feeder)
         {
             SelectDevice();
 
@@ -63,6 +63,8 @@ namespace SirmiumERPGFC.Scanners
                 if (device == null)
                     throw new WiaScannerDeviceNotFoundException((string)Application.Current.FindResource("OdabraniSkenerNijeDostupanUzvicnik"));
 
+
+                SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)handlingType);
                 WIA.Item item = device.Items[1] as WIA.Item;
                 try
                 {
@@ -105,7 +107,10 @@ namespace SirmiumERPGFC.Scanners
                 }
                 catch (COMException exc)
                 {
-                    throw new WiaScannerDeviceNotFoundException(exc.Message);
+                    if ((uint)exc.ErrorCode == 0x80210003)
+                        throw new WiaScannerInsertPaperException(exc.Message);
+                    else
+                        throw exc;
                 }
                 catch (Exception exc)
                 {
@@ -114,28 +119,16 @@ namespace SirmiumERPGFC.Scanners
                 finally
                 {
                     item = null;
-                    //determine if there are any more pages waiting
-                    WIA.Property documentHandlingSelect = null;
-                    WIA.Property documentHandlingStatus = null;
-                    foreach (WIA.Property prop in device.Properties)
+
+                    var hasPagesProp = GetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingStatus);
+                    if(hasPagesProp != null)
                     {
-                        if (prop.PropertyID == (uint)WiaProperty.DocumentHandlingSelect)
-                            documentHandlingSelect = prop;
-                        if (prop.PropertyID == (uint)WiaProperty.DocumentHandlingStatus)
-                            documentHandlingStatus = prop;
-                    }
-                    // assume there are no more pages
-                    hasMorePages = false;
-                    // may not exist on flatbed scanner but required for feeder
-                    if (documentHandlingSelect != null)
+                        var hasMorePagesVal = (int)hasPagesProp.get_Value();
+
+                        hasMorePages = (hasMorePagesVal & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0;
+                    } else
                     {
-                        // check for document feeder
-                        if ((Convert.ToUInt32(documentHandlingSelect.get_Value()) &
-                        WIA_DPS_DOCUMENT_HANDLING_SELECT.FEEDER) != 0)
-                        {
-                            hasMorePages = ((Convert.ToUInt32(documentHandlingStatus.get_Value()) &
-                            WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0);
-                        }
+                        hasMorePages = false;
                     }
 
                 }
@@ -366,6 +359,18 @@ namespace SirmiumERPGFC.Scanners
         public class WiaScannerDeviceNotFoundException : Exception
         {
             public WiaScannerDeviceNotFoundException(string exceptionMessage) : base(exceptionMessage) { }
+        }
+        public class WiaScannerInsertPaperException : Exception
+        {
+            public WiaScannerInsertPaperException(string exceptionMessage) : base(exceptionMessage) { }
+        }
+
+
+
+        public enum WiaDocumentHandlingType : uint
+        {
+            Feeder = 1, 
+            Flatbed = 2
         }
     }
 }
