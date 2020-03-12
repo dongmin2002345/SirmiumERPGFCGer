@@ -812,5 +812,6 @@
     <system:String x:Key="Uplata">Payment</system:String>
     <system:String x:Key="Uplata_dvotacka">Payment:</system:String>
     <system:String x:Key="UbaciPapirUSkenerUzvicnik">Please place paper in scanner!</system:String>
+    <system:String x:Key="DocumentScanMode">Document scan mode</system:String>
 
 </ResourceDictionary>

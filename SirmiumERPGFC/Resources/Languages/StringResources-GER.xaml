@@ -819,5 +819,6 @@
     <system:String x:Key="Uplata">Zahlung</system:String>
     <system:String x:Key="Uplata_dvotacka">Zahlung:</system:String>
     <system:String x:Key="UbaciPapirUSkenerUzvicnik">Bitte legen Sie Papier in den Scanner!</system:String>
+    <system:String x:Key="DocumentScanMode">Dokumentenscan-Modus</system:String>
 
 </ResourceDictionary>

@@ -121,6 +121,51 @@ namespace SirmiumERPGFC.Views.Home
         #endregion
 
 
+        #region DocumentScanModes
+        private ObservableCollection<ScannerDocumentHandlingTypeViewModel> _DocumentScanModes = new ObservableCollection<ScannerDocumentHandlingTypeViewModel>()
+        {
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.Duplex, Name = "Duplex" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.FrontFirst, Name = "Front First - Front Zuerst" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.BackFirst, Name = "Back First - Zuerst Zurück" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.FrontOnly, Name = "Front First - Nur Vorne" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.BackOnly, Name = "Back First - Nur Zurück" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.NextPage, Name = "Next Page - Nächste Seite" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.Prefeed, Name = "Pre Feed" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = WiaDocumentHandlingType.AutoAdvance, Name = "Auto Advance - Auto-Weiter" },
+            new ScannerDocumentHandlingTypeViewModel() { Type = null, Name = "Default-Standard" },
+        };
+
+        public ObservableCollection<ScannerDocumentHandlingTypeViewModel> DocumentScanModes
+        {
+            get { return _DocumentScanModes; }
+            set
+            {
+                if (_DocumentScanModes != value)
+                {
+                    _DocumentScanModes = value;
+                    NotifyPropertyChanged("DocumentScanModes");
+                }
+            }
+        }
+        #endregion
+
+        #region SelectedDocumentScanMode
+        private ScannerDocumentHandlingTypeViewModel _SelectedDocumentScanMode;
+
+        public ScannerDocumentHandlingTypeViewModel SelectedDocumentScanMode
+        {
+            get { return _SelectedDocumentScanMode; }
+            set
+            {
+                if (_SelectedDocumentScanMode != value)
+                {
+                    _SelectedDocumentScanMode = value;
+                    NotifyPropertyChanged("SelectedDocumentScanMode");
+                }
+            }
+        }
+        #endregion
+
 
         #region CanInteractWithForm
         private bool _CanInteractWithForm = true;
@@ -181,6 +226,7 @@ namespace SirmiumERPGFC.Views.Home
 
             SelectedScanType = ScanTypeOptions.FirstOrDefault();
             SelectedDocumentHandlingType = DocumentHandlingTypes.FirstOrDefault();
+            SelectedDocumentScanMode = DocumentScanModes.FirstOrDefault();
         }
 
         private void btnSavePdf_Click(object sender, RoutedEventArgs e)
@@ -279,7 +325,7 @@ namespace SirmiumERPGFC.Views.Home
                         { WiaProperty.DataType, (uint)SelectedScanType.Type },
                     });
 
-                    var scannedData = scanner.Scan(SelectedDocumentHandlingType.Type);
+                    var scannedData = scanner.Scan(SelectedDocumentHandlingType.Type.Value, SelectedDocumentScanMode.Type);
 
                     if (scannedData != null && scannedData.Count() > 0)
                     {

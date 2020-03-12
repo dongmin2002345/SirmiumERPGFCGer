@@ -11,6 +11,6 @@ namespace SirmiumERPGFC.Scanners
     public class ScannerDocumentHandlingTypeViewModel : BaseEntityViewModel
     {
         public string Name { get; set; }
-        public WiaDocumentHandlingType Type { get; set; }
+        public WiaDocumentHandlingType? Type { get; set; }
     }
 }

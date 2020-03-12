@@ -30,7 +30,7 @@ namespace SirmiumERPGFC.Scanners
         }
 
 
-        public List<string> Scan(WiaDocumentHandlingType handlingType = WiaDocumentHandlingType.Feeder)
+        public List<string> Scan(WiaDocumentHandlingType handlingType = WiaDocumentHandlingType.Feeder, WiaDocumentHandlingType? duplexOrOtherMode = null)
         {
             SelectDevice();
 
@@ -64,7 +64,13 @@ namespace SirmiumERPGFC.Scanners
                     throw new WiaScannerDeviceNotFoundException((string)Application.Current.FindResource("OdabraniSkenerNijeDostupanUzvicnik"));
 
 
-                SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)handlingType);
+                if(handlingType == WiaDocumentHandlingType.Feeder)
+                {
+                    if (duplexOrOtherMode != null)
+                        SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)(handlingType|duplexOrOtherMode));
+                    else
+                        SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)handlingType);
+                }
                 WIA.Item item = device.Items[1] as WIA.Item;
                 try
                 {
@@ -119,17 +125,18 @@ namespace SirmiumERPGFC.Scanners
                 finally
                 {
                     item = null;
+                    hasMorePages = false;
 
-                    var hasPagesProp = GetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingStatus);
-                    if(hasPagesProp != null)
-                    {
-                        var hasMorePagesVal = (int)hasPagesProp.get_Value();
+                    //var hasPagesProp = GetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingStatus);
+                    //if(hasPagesProp != null)
+                    //{
+                    //    var hasMorePagesVal = (int)hasPagesProp.get_Value();
 
-                        hasMorePages = (hasMorePagesVal & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0;
-                    } else
-                    {
-                        hasMorePages = false;
-                    }
+                    //    hasMorePages = (hasMorePagesVal & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0;
+                    //} else
+                    //{
+                    //    hasMorePages = false;
+                    //}
 
                 }
             }
@@ -369,8 +376,18 @@ namespace SirmiumERPGFC.Scanners
 
         public enum WiaDocumentHandlingType : uint
         {
-            Feeder = 1, 
-            Flatbed = 2
+            Feeder = 0x001, 
+            Flatbed = 0x002,
+
+
+            Duplex = 0x004,
+            FrontFirst = 0x008,
+            BackFirst = 0x010,
+            FrontOnly = 0x020,
+            BackOnly = 0x040,
+            NextPage = 0x080,
+            Prefeed = 0x100,
+            AutoAdvance = 0x200
         }
     }
 }
