@@ -9,6 +9,7 @@ using SirmiumERPGFC.RdlcReports.ConstructionSites;
 using SirmiumERPGFC.Reports.ConstructionSites;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using SirmiumERPGFC.Views.Common;
+using SirmiumERPGFC.Views.Shipments;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -853,6 +854,12 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             ConstructionSite_ReportWindow reportWindow = new ConstructionSite_ReportWindow(CurrentConstructionSite);
             reportWindow.Show();
+        }
+
+        private void btnShipmentNumber_Click(object sender, RoutedEventArgs e)
+        {
+            ReportWindow rw = new ReportWindow(new Shipment_List(CurrentConstructionSite.Shipment?.ShipmentNumber, false));
+            rw.Show();
         }
 
         private void BtnPrintConstructionSiteReport_Click(object sender, RoutedEventArgs e)

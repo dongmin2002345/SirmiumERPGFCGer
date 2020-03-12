@@ -269,6 +269,9 @@
     <Compile Include="Behaviors\DateTimeNowBehavior.cs" />
     <Compile Include="CloseableTabItem.cs" />
     <Compile Include="Common\FlyoutHelper.cs" />
+    <Compile Include="Common\ReportWindow.xaml.cs">
+      <DependentUpon>ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Common\UserRolesHelper.cs" />
     <Compile Include="CustomControls\CustomCalendarButton.cs" />
     <Compile Include="ErrorWindow.xaml.cs">
@@ -401,6 +404,9 @@
     </Compile>
     <Compile Include="ViewComponents\Notifications\CallCenterNotification_Popup.xaml.cs">
       <DependentUpon>CallCenterNotification_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Popups\ShipmantPopup.xaml.cs">
+      <DependentUpon>ShipmantPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewComponents\Popups\ToDoStatusPopup.xaml.cs">
       <DependentUpon>ToDoStatusPopup.xaml</DependentUpon>
@@ -879,6 +885,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Common\ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ErrorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -920,6 +930,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ViewComponents\Notifications\CallCenterNotification_Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\Popups\ShipmantPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

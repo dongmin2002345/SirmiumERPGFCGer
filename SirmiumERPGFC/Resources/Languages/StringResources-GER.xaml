@@ -615,7 +615,7 @@
     <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">Sie müssen eine Servicebereitstellung zum Bearbeiten auswählen!</system:String>
     <system:String x:Key="Pošiljke">Lieferung</system:String>
     <system:String x:Key="Pošiljke_tritacke">Lieferung...</system:String>
-
+    <system:String x:Key="Pošiljke_Dvotacka">Lieferung:</system:String>
     <system:String x:Key="Primalac">Akzeptor</system:String>
     <system:String x:Key="Broj_pošiljke">Lieferungsnummer</system:String>
     <system:String x:Key="Datum_pošiljke">Versanddatum</system:String>

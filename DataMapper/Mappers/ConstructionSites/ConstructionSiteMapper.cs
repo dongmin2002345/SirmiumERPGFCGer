@@ -2,6 +2,7 @@
 using DataMapper.Mappers.Common.Companies;
 using DataMapper.Mappers.Common.Identity;
 using DataMapper.Mappers.Common.Locations;
+using DataMapper.Mappers.Common.Shipments;
 using DataMapper.Mappers.Statuses;
 using DomainCore.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
@@ -50,6 +51,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Country = constructionSite.Country?.ConvertToCountryViewModelLite(),
                 BusinessPartner = constructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
                 Status = constructionSite.Status?.ConvertToStatusViewModelLite(),
+                Shipment = constructionSite.Shipment?.ConvertToShipmentViewModelLite(),
                 StatusDate = constructionSite.StatusDate,
                 IsActive = constructionSite.Active,
 
@@ -130,6 +132,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 CountryId = constructionSiteViewModel.Country?.Id ?? null,
                 BusinessPartnerId = constructionSiteViewModel.BusinessPartner?.Id ?? null,
                 StatusId = constructionSiteViewModel.Status?.Id ?? null,
+                ShipmentId = constructionSiteViewModel.Shipment?.Id ?? null,
                 StatusDate = constructionSiteViewModel.StatusDate,
                 CreatedById = constructionSiteViewModel.CreatedBy?.Id ?? null,
                 CompanyId = constructionSiteViewModel.Company?.Id ?? null,

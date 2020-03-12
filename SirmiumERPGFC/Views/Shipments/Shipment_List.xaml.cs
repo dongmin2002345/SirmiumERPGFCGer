@@ -169,8 +169,24 @@ namespace SirmiumERPGFC.Views.Shipments
             }
         }
         #endregion
-                   
-       
+
+        #region AddEditEnabled
+        private bool _AddEditEnabled;
+
+        public bool AddEditEnabled
+        {
+            get { return _AddEditEnabled; }
+            set
+            {
+                if (_AddEditEnabled != value)
+                {
+                    _AddEditEnabled = value;
+                    NotifyPropertyChanged("AddEditEnabled");
+                }
+            }
+        }
+        #endregion
+
         #region Pagination data
         int currentPage = 1;
         int itemsPerPage = 50;
@@ -235,7 +251,7 @@ namespace SirmiumERPGFC.Views.Shipments
         /// <summary>
         /// FinancialInvoiceList constructor
         /// </summary>
-        public Shipment_List()
+        public Shipment_List(string shipmentCode = "", bool addEditEnabled = true)
         {
             // Get required service
             ShipmentService = DependencyResolver.Kernel.Get<IShipmentService>();
@@ -246,6 +262,8 @@ namespace SirmiumERPGFC.Views.Shipments
             InitializeComponent();
 
             this.DataContext = this;
+            ShipmentSearchObject.SearchBy_ShipmentNumber = shipmentCode;
+            AddEditEnabled = addEditEnabled;
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

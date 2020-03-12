@@ -342,6 +342,24 @@ namespace SirmiumERPGFC.Repository.Common
                 };
         }
 
+        public static ShipmentViewModel GetFullShipment(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new ShipmentViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                   
+                    ShipmentNumber = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                };
+        }
+
         public static OutputInvoiceViewModel GetOutputInvoice(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))

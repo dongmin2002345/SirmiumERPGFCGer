@@ -607,6 +607,7 @@
     <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Courier service information</system:String>
     <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">You need to select a service delivery to edit!</system:String>
     <system:String x:Key="Pošiljke">Shipments</system:String>
+    <system:String x:Key="Pošiljke_Dvotacka">Shipments:</system:String>
     <system:String x:Key="Pošiljke_tritacke">Shipments...</system:String>
     <system:String x:Key="Primalac">Acceptor</system:String>
     <system:String x:Key="Broj_pošiljke">Shipment number</system:String>

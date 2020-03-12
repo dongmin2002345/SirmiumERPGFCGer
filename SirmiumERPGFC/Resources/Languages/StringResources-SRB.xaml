@@ -614,6 +614,7 @@
     <system:String x:Key="Podaci_o_kurirskoj_sluzbi">Podaci o kurirskoj službi</system:String>
     <system:String x:Key="Morate_odabrati_kurirsku_slizbu_za_izmenuUzvičnik">Morate odabrati kurirsku službu za izmenu!</system:String>
     <system:String x:Key="Pošiljke">Pošiljke</system:String>
+    <system:String x:Key="Pošiljke_Dvotacka">Pošiljke:</system:String>
     <system:String x:Key="Pošiljke_tritacke">Pošiljke...</system:String>
     <system:String x:Key="Primalac">Primalac</system:String>
     <system:String x:Key="Broj_pošiljke">Broj pošiljke</system:String>

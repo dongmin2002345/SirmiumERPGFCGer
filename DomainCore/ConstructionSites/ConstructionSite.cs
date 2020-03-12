@@ -1,6 +1,7 @@
 ﻿using DomainCore.Base;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Locations;
+using DomainCore.Common.Shipments;
 using DomainCore.Statuses;
 using System;
 using System.Collections.Generic;
@@ -38,5 +39,8 @@ namespace DomainCore.ConstructionSites
         public DateTime PaymentDate { get; set; }
         public string Path { get; set; }
         public decimal PaymentValue { get; set; }
+
+        public int? ShipmentId { get; set; }
+        public Shipment Shipment { get; set; }
     }
 }
