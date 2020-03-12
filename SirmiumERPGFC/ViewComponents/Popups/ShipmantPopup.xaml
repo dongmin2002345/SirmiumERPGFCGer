@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="SirmiumERPGFC.ViewComponents.Popups.ShipmantPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
+             xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <cbxConverters1:MultiConverter x:Key="MultiConverter" />
+        <cbxConverters1:StringDateTimeShortConverter x:Key="cbxDatetimeToStringConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <TextBox Grid.Row="11" Grid.Column="1" x:Name="txtShipmant" IsReadOnly="True" GotFocus="txtShipmant_GotFocus" MouseDoubleClick="txtShipmant_MouseDoubleClick" />
+        <Popup x:Name="popShipmant" PlacementTarget = "{Binding ElementName = txtShipmant}" Focusable="True" AllowsTransparency="True" StaysOpen="True">
+            <Border Height="Auto" HorizontalAlignment="Stretch" Background="{DynamicResource WhiteBrush}" BorderBrush="SteelBlue" CornerRadius="15" BorderThickness="5" Padding="4">
+                <Grid MinWidth="300" MaxHeight="200" Background="{DynamicResource WhiteBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Margin="2" Name="txtShipmantFilter" TextChanged="txtFilterShipmant_TextChanged" MinWidth="150" />
+                    <Button x:Name="btnChooseShipmantCode" Click="btnChooseShipmant_Click" Grid.Column="1" VerticalAlignment="Center" Margin="2" Width="30" >
+                        <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Button>
+                    <Button x:Name="btnCancleShipmant" Click="btnCancleShipmant_Click" Grid.Column="2" VerticalAlignment="Center" Margin="2" Width="30" >
+                        <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Button>
+                    <Button x:Name="btnCloseShipmantPopup" Click="btnCloseShipmantPopup_Click" Grid.Column="3" VerticalAlignment="Center" Margin="2" Width="30">
+                        <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Button>
+
+                    <DataGrid x:Name="dgShipmantList" 
+                              MouseDoubleClick="dgShipmantList_MouseDoubleClick"
+                              Grid.Row="1" Grid.ColumnSpan="5" Margin="5" 
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False" 
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="Gray" 
+                              VerticalAlignment="Stretch" 
+                              HorizontalScrollBarVisibility="Auto" 
+                              VerticalScrollBarVisibility="Auto" 
+                              RowHeaderWidth="25"
+                              HeadersVisibility="All"
+                              LoadingRow="DgShipmantList_LoadingRow"
+                              ItemsSource="{Binding Path=ShipmentsFromDB}"
+                              SelectedItem="{Binding Path=CurrentShipment}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn SortMemberPath="Code" Header="{DynamicResource Šifra}" Binding="{Binding Code}" Width="Auto" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="ShipmentDate" Header="{DynamicResource Datum_pošiljke}" Binding="{Binding ShipmentDate, Converter={StaticResource cbxDatetimeToStringConverter}}" Width="Auto" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="Auto" IsReadOnly="True" />
+                            <DataGridTextColumn SortMemberPath="ServiceDelivery.Name" Header="{DynamicResource Kurirska_Sluzba}" Binding="{Binding ServiceDelivery.Name}" IsReadOnly="True" MinWidth="200"/>
+                            <DataGridTextColumn SortMemberPath="ShipmentNumber" Header="{DynamicResource Broj_pošiljke}" Binding="{Binding ShipmentNumber}" IsReadOnly="True" MinWidth="200"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

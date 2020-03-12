@@ -1,0 +1,14 @@
+﻿<mah:MetroWindow
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    x:Class="SirmiumERPGFC.Common.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SirmiumERPGFC.Common"
+        mc:Ignorable="d"
+        Title="" Height="700" Width="1200">
+    <Grid Margin="2" x:Name="grdReport">
+
+    </Grid>
+</mah:MetroWindow>

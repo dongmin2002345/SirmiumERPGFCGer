@@ -129,6 +129,10 @@
                     <TextBlock Grid.Row="8" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Cifra_Uplate_dvotacka}" />
                     <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Text="{Binding Path=CurrentConstructionSite.PaymentValue, Converter={StaticResource stringToDoubleConverter}}"  />
 
+                    <TextBlock Grid.Row="8" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource Pošiljke_Dvotacka}" />
+                    <popups:ShipmantPopup Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popShipment" 
+                                        CurrentShipment="{Binding Path=CurrentConstructionSite.Shipment, Mode=TwoWay}"/>
+
                 </Grid>
             </GroupBox>
 

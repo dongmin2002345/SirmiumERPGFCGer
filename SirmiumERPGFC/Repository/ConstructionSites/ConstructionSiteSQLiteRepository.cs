@@ -47,6 +47,12 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "PaymentDate DATETIME NULL, " +
             "Path NVARCHAR(2048) NULL, " +
             "PaymentValue DECIMAL NULL, " +
+
+            "ShipmentId INTEGER NULL, " +
+           "ShipmentIdentifier GUID NULL, " +
+           "ShipmentCode NVARCHAR(2048) NULL, " +
+            "ShipmentNumber NVARCHAR(2048) NULL, " +
+
            "IsSynced BOOL NULL, " +
            "UpdatedAt DATETIME NULL, " +
            "CreatedById INTEGER NULL, " +
@@ -60,6 +66,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "StatusId, StatusIdentifier, StatusCode, StatusName, StatusDate, PaymentDate, Path, PaymentValue, " +
+            "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName ";
 
         public string SqlCommandInsertPart = "INSERT INTO ConstructionSites " +
@@ -68,6 +75,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
             "StatusId, StatusIdentifier, StatusCode, StatusName, StatusDate, PaymentDate, Path, PaymentValue, " +
+            "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
             "IsSynced, UpdatedAt, CreatedById, CreatedByName, CompanyId, CompanyName) " +
 
             "VALUES (" +
@@ -76,6 +84,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
             "@BusinessPartnerId, @BusinessPartnerIdentifier, @BusinessPartnerCode, @BusinessPartnerName, @BusinessPartnerInternalCode, @BusinessPartnerNameGer, " +
             "@StatusId, @StatusIdentifier, @StatusCode, @StatusName, @StatusDate, @PaymentDate, @Path, @PaymentValue, " +
+            "@ShipmentId, @ShipmentIdentifier, @ShipmentCode, @ShipmentNumber, " +
             "@IsSynced, @UpdatedAt, @CreatedById, @CreatedByName, @CompanyId, @CompanyName)";
 
         #endregion
@@ -104,6 +113,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             dbEntry.PaymentDate = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.Path = SQLiteHelper.GetString(query, ref counter);
             dbEntry.PaymentValue = SQLiteHelper.GetDecimal(query, ref counter);
+            dbEntry.Shipment = SQLiteHelper.GetFullShipment(query, ref counter);
             dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
@@ -145,7 +155,10 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@PaymentDate", ((object)constructionSite.PaymentDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Path", ((object)constructionSite.Path) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PaymentValue", ((object)constructionSite.PaymentValue) ?? DBNull.Value);
-
+            insertCommand.Parameters.AddWithValue("@ShipmentId", ((object)constructionSite.Shipment?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ShipmentIdentifier", ((object)constructionSite.Shipment?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ShipmentCode", ((object)constructionSite.Shipment?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ShipmentNumber", ((object)constructionSite.Shipment?.ShipmentNumber) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", constructionSite.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)constructionSite.UpdatedAt) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreatedById", MainWindow.CurrentUser.Id);

@@ -3,6 +3,7 @@ using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.Companies;
 using DomainCore.Common.Identity;
 using DomainCore.Common.Locations;
+using DomainCore.Common.Shipments;
 using DomainCore.ConstructionSites;
 using DomainCore.Statuses;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
                 "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
+                "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId AND Active = 1;";
@@ -120,6 +122,16 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         if (reader["PaymentValue"] != DBNull.Value)
                             constructionSite.PaymentValue = decimal.Parse(reader["PaymentValue"].ToString());
 
+                        if (reader["ShipmentId"] != DBNull.Value)
+                        {
+                            constructionSite.Shipment = new Shipment();
+                            constructionSite.ShipmentId = Int32.Parse(reader["ShipmentId"].ToString());
+                            constructionSite.Shipment.Id = Int32.Parse(reader["ShipmentId"].ToString());
+                            constructionSite.Shipment.Identifier = Guid.Parse(reader["ShipmentIdentifier"].ToString());
+                            constructionSite.Shipment.Code = reader["ShipmentCode"].ToString();
+                            constructionSite.Shipment.ShipmentNumber = reader["ShipmentNumber"].ToString();
+                        }
+
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -169,6 +181,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
                 "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
+                "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE ConstructionSiteId = @ConstructionSiteId AND Active = 1;";
@@ -250,6 +263,16 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         if (reader["PaymentValue"] != DBNull.Value)
                             constructionSite.PaymentValue = decimal.Parse(reader["PaymentValue"].ToString());
 
+                        if (reader["ShipmentId"] != DBNull.Value)
+                        {
+                            constructionSite.Shipment = new Shipment();
+                            constructionSite.ShipmentId = Int32.Parse(reader["ShipmentId"].ToString());
+                            constructionSite.Shipment.Id = Int32.Parse(reader["ShipmentId"].ToString());
+                            constructionSite.Shipment.Identifier = Guid.Parse(reader["ShipmentIdentifier"].ToString());
+                            constructionSite.Shipment.Code = reader["ShipmentCode"].ToString();
+                            constructionSite.Shipment.ShipmentNumber = reader["ShipmentNumber"].ToString();
+                        }
+
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
 
@@ -295,6 +318,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
                 "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
+                "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vConstructionSites " +
                 "WHERE CompanyId = @CompanyId " +
@@ -378,6 +402,16 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.Path = reader["Path"].ToString();
                         if (reader["PaymentValue"] != DBNull.Value)
                             constructionSite.PaymentValue = decimal.Parse(reader["PaymentValue"].ToString());
+
+                        if (reader["ShipmentId"] != DBNull.Value)
+                        {
+                            constructionSite.Shipment = new Shipment();
+                            constructionSite.ShipmentId = Int32.Parse(reader["ShipmentId"].ToString());
+                            constructionSite.Shipment.Id = Int32.Parse(reader["ShipmentId"].ToString());
+                            constructionSite.Shipment.Identifier = Guid.Parse(reader["ShipmentIdentifier"].ToString());
+                            constructionSite.Shipment.Code = reader["ShipmentCode"].ToString();
+                            constructionSite.Shipment.ShipmentNumber = reader["ShipmentNumber"].ToString();
+                        }
 
                         constructionSite.Active = bool.Parse(reader["Active"].ToString());
                         constructionSite.UpdatedAt = DateTime.Parse(reader["UpdatedAt"].ToString());
@@ -475,6 +509,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.CountryId = constructionSite.CountryId ?? null;
                     dbEntry.BusinessPartnerId = constructionSite.BusinessPartnerId ?? null;
                     dbEntry.StatusId = constructionSite.StatusId ?? null;
+                    dbEntry.ShipmentId = constructionSite.ShipmentId ?? null;
                     dbEntry.CompanyId = constructionSite.CompanyId ?? null;
                     dbEntry.CreatedById = constructionSite.CreatedById ?? null;
 

@@ -1,6 +1,7 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Locations;
+using ServiceInterfaces.ViewModels.Common.Shipments;
 using ServiceInterfaces.ViewModels.Statuses;
 using System;
 using System.Collections.ObjectModel;
@@ -141,6 +142,23 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
                 {
                     _Status = value;
                     NotifyPropertyChanged("Status");
+                }
+            }
+        }
+        #endregion
+
+        #region Shipment
+        private ShipmentViewModel _Shipment;
+
+        public ShipmentViewModel Shipment
+        {
+            get { return _Shipment; }
+            set
+            {
+                if (_Shipment != value)
+                {
+                    _Shipment = value;
+                    NotifyPropertyChanged("Shipment");
                 }
             }
         }

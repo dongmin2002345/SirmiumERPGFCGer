@@ -196,6 +196,29 @@
                         <DataGridTextColumn SortMemberPath="BusinessPartner.Name" Header="{DynamicResource Poslovni_partner}" Binding="{Binding BusinessPartner.Name}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Address" Header="{DynamicResource Adresa}" Binding="{Binding Address}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="MaxWorkers" Header="{DynamicResource Max_br_radnika}" Binding="{Binding MaxWorkers}" Width="Auto" IsReadOnly="True" />
+                        
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <TextBlock Text="{DynamicResource Broj_pošiljke}" TextWrapping="Wrap" Width="50" />
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Background="LightBlue">
+                                        <Button x:Name="btnShipmentNumber" Click="btnShipmentNumber_Click">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <TextBlock Margin="2 4 2 0">
+                                                        <Hyperlink>
+                                                            <TextBlock Text="{Binding Shipment.ShipmentNumber}"/>
+                                                        </Hyperlink>
+                                                   </TextBlock>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn SortMemberPath="IsSynced" Header="{DynamicResource Sin}" Binding="{Binding IsSynced, Converter={StaticResource BoolStringConverter}}" Width="Auto" IsReadOnly="True" >
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}" >
