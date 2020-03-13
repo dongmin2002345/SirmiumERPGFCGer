@@ -347,7 +347,14 @@ namespace SirmiumERPGFC.Views.InputInvoices
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
+            {
                 CurrentInputInvoiceDocumentForm.Path = fileNames[0];
+                if (!String.IsNullOrEmpty(CurrentInputInvoiceDocumentForm.Path))
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentInputInvoiceDocumentForm.Path);
+                    CurrentInputInvoiceDocumentForm.Name = fileName;
+                }
+            }
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)

@@ -347,7 +347,14 @@ namespace SirmiumERPGFC.Views.Phonebooks
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
+            {
                 CurrentPhonebookDocumentForm.Path = fileNames[0];
+                if (!String.IsNullOrEmpty(CurrentPhonebookDocumentForm.Path))
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentPhonebookDocumentForm.Path);
+                    CurrentPhonebookDocumentForm.Name = fileName;
+                }
+            }
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)

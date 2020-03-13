@@ -346,7 +346,14 @@ namespace SirmiumERPGFC.Views.Employees
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
+            {
                 CurrentEmployeeDocumentForm.Path = fileNames[0];
+                if (!String.IsNullOrEmpty(CurrentEmployeeDocumentForm.Path))
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentEmployeeDocumentForm.Path);
+                    CurrentEmployeeDocumentForm.Name = fileName;
+                }
+            }
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)

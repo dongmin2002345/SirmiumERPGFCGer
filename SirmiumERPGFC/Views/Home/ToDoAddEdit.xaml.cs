@@ -273,8 +273,16 @@ namespace SirmiumERPGFC.Views.Home
             System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
             string[] fileNames = dialog.FileNames;
 
+
             if (fileNames.Length > 0)
+            {
                 CurrentToDo.Path = fileNames[0];
+                if (!String.IsNullOrEmpty(CurrentToDo.Path))
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentToDo.Path);
+                    CurrentToDo.Name = fileName;
+                }
+            }
         }
     }
 }

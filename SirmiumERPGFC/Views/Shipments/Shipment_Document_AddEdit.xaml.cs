@@ -347,7 +347,14 @@ namespace SirmiumERPGFC.Views.Shipments
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
+            {
                 CurrentShipmentDocumentForm.Path = fileNames[0];
+                if (!String.IsNullOrEmpty(CurrentShipmentDocumentForm.Path))
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentShipmentDocumentForm.Path);
+                    CurrentShipmentDocumentForm.Name = fileName;
+                }
+            }
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)

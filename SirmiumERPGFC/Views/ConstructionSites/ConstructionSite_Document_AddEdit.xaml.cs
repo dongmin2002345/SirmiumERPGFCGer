@@ -344,7 +344,14 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
+            {
                 CurrentConstructionSiteDocumentForm.Path = fileNames[0];
+                if (!String.IsNullOrEmpty(CurrentConstructionSiteDocumentForm.Path))
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentConstructionSiteDocumentForm.Path);
+                    CurrentConstructionSiteDocumentForm.Name = fileName;
+                }
+            }
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
