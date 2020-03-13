@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -404,10 +405,18 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         private void FileDIalog_FileOk(object sender, CancelEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
+            dialog.Multiselect = false;
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
+            {
                 CurrentBusinessPartnerDocumentForm.Path = fileNames[0];
+                if (!String.IsNullOrEmpty(CurrentBusinessPartnerDocumentForm.Path))
+                {
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentBusinessPartnerDocumentForm.Path);
+                    CurrentBusinessPartnerDocumentForm.Name = fileName;
+                }
+            }
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
