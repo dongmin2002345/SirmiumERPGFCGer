@@ -125,19 +125,25 @@ namespace SirmiumERPGFC.Scanners
                 finally
                 {
                     item = null;
+
+                    WIA.Property documentHandlingSelect = null;
+                    WIA.Property documentHandlingStatus = null;
+                    foreach (WIA.Property prop in device.Properties)
+                    {
+                        if (prop.PropertyID == (uint)WiaProperty.DocumentHandlingSelect)
+                            documentHandlingSelect = prop;
+                        if (prop.PropertyID == (uint)WiaProperty.DocumentHandlingStatus)
+                            documentHandlingStatus = prop;
+                    }
                     hasMorePages = false;
 
-                    //var hasPagesProp = GetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingStatus);
-                    //if(hasPagesProp != null)
-                    //{
-                    //    var hasMorePagesVal = (int)hasPagesProp.get_Value();
-
-                    //    hasMorePages = (hasMorePagesVal & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0;
-                    //} else
-                    //{
-                    //    hasMorePages = false;
-                    //}
-
+                    if(documentHandlingSelect != null)
+                    {
+                        if((documentHandlingSelect.get_Value() & ((uint)WiaDocumentHandlingType.Feeder)) != 0)
+                        {
+                            hasMorePages = ((Convert.ToUInt32(documentHandlingStatus.get_Value()) & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0);
+                        }
+                    }
                 }
             }
             return images;
