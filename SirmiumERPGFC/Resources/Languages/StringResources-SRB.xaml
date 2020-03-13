@@ -820,4 +820,9 @@
     <system:String x:Key="UbaciPapirUSkenerUzvicnik">Molimo ubacite papir u skener!</system:String>
     <system:String x:Key="DocumentScanMode">Način skeniranja dokumenata</system:String>
 
+    <system:String x:Key="Kopiranje_je_uspešno_izvršenoUzvičnik">Kopiranje je uspešno izvršeno!</system:String>
+    <system:String x:Key="Kopiranje_fakture">Kopiranje fakture</system:String>
+    <system:String x:Key="Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik">Došlo je do greške pri kopiranju, proverite stanje fakture!</system:String>
+    <system:String x:Key="Morate_odabrati_fakturu_za_kopiranjeUzvičnik">Morate odabrati fakturu za kopiranje!</system:String>
+
 </ResourceDictionary>

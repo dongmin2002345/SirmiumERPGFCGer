@@ -813,5 +813,10 @@
     <system:String x:Key="Uplata_dvotacka">Payment:</system:String>
     <system:String x:Key="UbaciPapirUSkenerUzvicnik">Please place paper in scanner!</system:String>
     <system:String x:Key="DocumentScanMode">Document scan mode</system:String>
+    
+    <system:String x:Key="Kopiranje_je_uspešno_izvršenoUzvičnik">Invoice copied successfully!</system:String>
+    <system:String x:Key="Kopiranje_fakture">Copy invoice</system:String>
+    <system:String x:Key="Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik">An error occured while copying an invoice, please check if the data is valid!</system:String>
+    <system:String x:Key="Morate_odabrati_fakturu_za_kopiranjeUzvičnik">You must select an invoice to copy!</system:String>
 
 </ResourceDictionary>

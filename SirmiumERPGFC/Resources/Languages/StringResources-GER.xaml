@@ -821,4 +821,9 @@
     <system:String x:Key="UbaciPapirUSkenerUzvicnik">Bitte legen Sie Papier in den Scanner!</system:String>
     <system:String x:Key="DocumentScanMode">Dokumentenscan-Modus</system:String>
 
+    <system:String x:Key="Kopiranje_je_uspešno_izvršenoUzvičnik">Rechnung erfolgreich kopiert!</system:String>
+    <system:String x:Key="Kopiranje_fakture">Rechnung kopieren</system:String>
+    <system:String x:Key="Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik">Beim Kopieren einer Rechnung ist ein Fehler aufgetreten. Bitte überprüfen Sie, ob die Daten gültig sind!</system:String>
+    <system:String x:Key="Morate_odabrati_fakturu_za_kopiranjeUzvičnik">Sie müssen eine Rechnung zum Kopieren auswählen!</system:String>
+
 </ResourceDictionary>

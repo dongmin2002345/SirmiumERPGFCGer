@@ -214,20 +214,20 @@ namespace SirmiumERPGFC.RdlcReports.Invoices
                     {
                         case 1: // sa pdv
                             {
-                                string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\Invoices\Invoice_WithPDV.rdlc");
-                                rdlcInvoiceReport.LocalReport.ReportPath = ContentStart;
+                                string ContentStart = @"SirmiumERPGFC.RdlcReports.Invoices.Invoice_WithPDV.rdlc";
+                                rdlcInvoiceReport.LocalReport.ReportEmbeddedResource = ContentStart;
                                 break;
                             }
                         case 2: // bez pdv
                             {
-                                string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\Invoices\Invoice_WithoutPDV.rdlc");
-                                rdlcInvoiceReport.LocalReport.ReportPath = ContentStart;
+                                string ContentStart = @"SirmiumERPGFC.RdlcReports.Invoices.Invoice_WithoutPDV.rdlc";
+                                rdlcInvoiceReport.LocalReport.ReportEmbeddedResource = ContentStart;
                                 break;
                             }
                         case 3: // nije u sistemu pdv
                             {
-                                string ContentStart = System.IO.Path.Combine(exeFolder, @"RdlcReports\Invoices\Invoice_NotInPDV.rdlc");
-                                rdlcInvoiceReport.LocalReport.ReportPath = ContentStart;
+                                string ContentStart = @"SirmiumERPGFC.RdlcReports.Invoices.Invoice_NotInPDV.rdlc";
+                                rdlcInvoiceReport.LocalReport.ReportEmbeddedResource = ContentStart;
                                 break;
                             }
                     }

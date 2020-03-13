@@ -427,19 +427,51 @@ namespace SirmiumERPGFC.Views.Invoices
                 return;
             }
 
-            // Delete data
-            var result = invoiceService.Delete(CurrentInvoice.Identifier);
-            if (result.Success)
+            if(CurrentInvoice.Id < 1)
             {
-                MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
+                var localResult = new InvoiceSQLiteRepository().Delete(CurrentInvoice.Identifier);
+                if (localResult.Success)
+                {
+                    foreach(var item in InvoiceItemsFromDB)
+                    {
+                        if(item.Invoice != null && item.Invoice.Identifier == CurrentInvoice.Identifier)
+                        {
+                            var localResultItem = new InvoiceItemSQLiteRepository().Delete(item.Identifier);
+                            if(!localResultItem.Success)
+                            {
+                                MainWindow.ErrorMessage = localResultItem.Message;
+                            }
+                        }
+                    }
 
-                Thread displayThread = new Thread(() => SyncData());
-                displayThread.IsBackground = true;
-                displayThread.Start();
-            }
-            else
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
+
+                    Thread displayThread = new Thread(() => SyncData());
+                    displayThread.IsBackground = true;
+                    displayThread.Start();
+                }
+                else
+                {
+                    MainWindow.ErrorMessage = localResult.Message;
+                }
+
+                return;
+            } else
             {
-                MainWindow.ErrorMessage = result.Message;
+                // Delete data
+                var result = invoiceService.Delete(CurrentInvoice.Identifier);
+                if (result.Success)
+                {
+                    MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_obrisaniUzvičnik"));
+
+                    Thread displayThread = new Thread(() => SyncData());
+                    displayThread.IsBackground = true;
+                    displayThread.Start();
+                }
+                else
+                {
+                    MainWindow.ErrorMessage = result.Message;
+                }
             }
         }
 
@@ -600,9 +632,11 @@ namespace SirmiumERPGFC.Views.Invoices
         {
             if (CurrentInvoice == null)
             {
-                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fakturu_za_brisanjeUzvičnik"));
+                MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fakturu_za_kopiranjeUzvičnik"));
                 return;
             }
+
+            bool success = true;
 
             var newInvoice = new InvoiceViewModel()
             {
@@ -672,6 +706,7 @@ namespace SirmiumERPGFC.Views.Invoices
                         if(!itemCreateResponse.Success)
                         {
                             MainWindow.ErrorMessage = itemCreateResponse.Message;
+                            success = false;
                             break;
                         }
                     }
@@ -679,11 +714,18 @@ namespace SirmiumERPGFC.Views.Invoices
                 } else
                 {
                     MainWindow.ErrorMessage = itemResponse.Message;
+                    success = false;
                 }
             } else
             {
                 MainWindow.ErrorMessage = response.Message;
+                success = false;
             }
+
+            if(success)
+                MainWindow.SuccessMessage = (string)Application.Current.FindResource("Kopiranje_je_uspešno_izvršenoUzvičnik");
+            else
+                MainWindow.WarningMessage = (string)Application.Current.FindResource("Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik");
 
             Thread displayThread = new Thread(() => DisplayData());
             displayThread.IsBackground = true;
