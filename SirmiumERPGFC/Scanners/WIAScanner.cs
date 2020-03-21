@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -30,23 +31,26 @@ namespace SirmiumERPGFC.Scanners
         }
 
 
-        public List<string> Scan(WiaDocumentHandlingType handlingType = WiaDocumentHandlingType.Feeder, WiaDocumentHandlingType? duplexOrOtherMode = null)
+        public void Scan(WiaDocumentHandlingType handlingType = WiaDocumentHandlingType.Feeder, 
+            WiaDocumentHandlingType? duplexOrOtherMode = null,
+            List<string> imagesFromScanner = null)
         {
+            if (imagesFromScanner == null)
+                imagesFromScanner = new List<string>();
             SelectDevice();
 
             if (SelectedDevice == null)
-                return new List<string>();
+                return;
 
 
-            List<string> images = new List<string>();
             bool hasMorePages = true;
 
-            while (hasMorePages)
-            {
-                // select the correct scanner using the provided scannerId parameter
-                WIA.DeviceManager manager = new WIA.DeviceManager();
-                WIA.Device device = null;
 
+            // select the correct scanner using the provided scannerId parameter
+            WIA.DeviceManager manager = new WIA.DeviceManager();
+            WIA.Device device = null;
+            try
+            {
                 if (manager.DeviceInfos == null || manager.DeviceInfos.Count < 1)
                     throw new WiaScannerDeviceNotFoundException((string)Application.Current.FindResource("NemaDostupnihSkeneraUzvicnik"));
 
@@ -59,18 +63,26 @@ namespace SirmiumERPGFC.Scanners
                         break;
                     }
                 }
+
+                if (handlingType == WiaDocumentHandlingType.Feeder)
+                {
+                    if (duplexOrOtherMode != null)
+                        SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)(handlingType | duplexOrOtherMode));
+                    else
+                        SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)handlingType);
+                }
+            }
+            catch (Exception ex)
+            {
+                device = null;
+            }
+
+            while (hasMorePages)
+            {
                 // device was not found
                 if (device == null)
                     throw new WiaScannerDeviceNotFoundException((string)Application.Current.FindResource("OdabraniSkenerNijeDostupanUzvicnik"));
 
-
-                if(handlingType == WiaDocumentHandlingType.Feeder)
-                {
-                    if (duplexOrOtherMode != null)
-                        SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)(handlingType|duplexOrOtherMode));
-                    else
-                        SetProperty(device.Properties, (uint)WiaProperty.DocumentHandlingSelect, (uint)handlingType);
-                }
                 WIA.Item item = device.Items[1] as WIA.Item;
                 try
                 {
@@ -91,39 +103,37 @@ namespace SirmiumERPGFC.Scanners
                     WIA.ICommonDialog wiaCommonDialog = new WIA.CommonDialog();
 
 
-                    WIA.ImageFile image = (WIA.ImageFile)wiaCommonDialog.ShowTransfer(item, wiaFormatBMP, false);
+                    WIA.ImageFile image = (WIA.ImageFile)wiaCommonDialog.ShowTransfer(item, wiaFormatBMP, true);
+
+                    WIA.ImageFile duplexImage = null;
+                    if(duplexOrOtherMode == WiaDocumentHandlingType.Duplex)
+                    {
+                        Thread.Sleep(100);
+                        duplexImage = (WIA.ImageFile)wiaCommonDialog.ShowTransfer(item, wiaFormatBMP, true);
+                    }
                     // save to temp file
                     string fileName = Path.GetTempFileName();
                     if(image != null)
                     {
                         File.Delete(fileName);
                         image.SaveFile(fileName);
+                        Marshal.FinalReleaseComObject(image);
                         image = null;
                         // add file to output list
-                        images.Add(fileName);
+                        imagesFromScanner.Add(fileName);
                     }
-                }
-                catch(WiaScannerDeviceNotFoundException exc)
-                {
-                    throw exc;
-                }
-                catch(IOException exc)
-                {
-                    throw exc;
-                }
-                catch (COMException exc)
-                {
-                    if ((uint)exc.ErrorCode == 0x80210003)
-                        throw new WiaScannerInsertPaperException(exc.Message);
-                    else
-                        throw exc;
-                }
-                catch (Exception exc)
-                {
-                    throw exc;
-                }
-                finally
-                {
+                    if (duplexImage != null)
+                    {
+                        string duplexFileName = Path.GetTempFileName();
+                        File.Delete(duplexFileName);
+                        duplexImage.SaveFile(duplexFileName);
+                        Marshal.FinalReleaseComObject(duplexImage);
+                        duplexImage = null;
+                        // add file to output list
+                        imagesFromScanner.Add(duplexFileName);
+                    }
+
+
                     item = null;
 
                     WIA.Property documentHandlingSelect = null;
@@ -137,16 +147,49 @@ namespace SirmiumERPGFC.Scanners
                     }
                     hasMorePages = false;
 
-                    if(documentHandlingSelect != null)
+                    if (documentHandlingSelect != null)
                     {
-                        if((documentHandlingSelect.get_Value() & ((uint)WiaDocumentHandlingType.Feeder)) != 0)
+                        var propId = documentHandlingSelect.PropertyID;
+                        var propValue = documentHandlingSelect.get_Value();
+                        var propValueBitCheck = (propValue & ((uint)WiaDocumentHandlingType.Feeder));
+                        if (propValueBitCheck != 0)
                         {
-                            hasMorePages = ((Convert.ToUInt32(documentHandlingStatus.get_Value()) & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0);
+                            var statusId = documentHandlingStatus.PropertyID;
+                            var statusValue = documentHandlingStatus.get_Value();
+                            var statusValueBitCheck = (statusValue & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY);
+                            hasMorePages = (statusValueBitCheck != 0);
                         }
                     }
+
+
+                    //Thread.Sleep(500);
+                }
+                catch (WiaScannerDeviceNotFoundException exc)
+                {
+                    
+                    throw exc;
+                }
+                catch(IOException exc)
+                {
+                    throw exc;
+                }
+                catch (COMException exc)
+                {
+                    if (imagesFromScanner?.Count() < 1)
+                    {
+                        if ((uint)exc.ErrorCode == 0x80210003)
+                            throw new WiaScannerInsertPaperException(exc.Message);
+                        else
+                            throw exc;
+                    }
+                    else // U slucaju da su pokupljene slike, kad dodje do poruke o poslednjoj skeniranoj prekidamo izvrsavanje
+                        return;
+                }
+                catch (Exception exc)
+                {
+                    throw exc;
                 }
             }
-            return images;
         }
 
         void SetProperty(WIA.Properties props, uint property, dynamic value)

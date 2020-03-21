@@ -325,22 +325,39 @@ namespace SirmiumERPGFC.Views.Home
                         { WiaProperty.DataType, (uint)SelectedScanType.Type },
                     });
 
-                    var scannedData = scanner.Scan(SelectedDocumentHandlingType.Type.Value, SelectedDocumentScanMode.Type);
-
-                    if (scannedData != null && scannedData.Count() > 0)
+                    List<string> scannedData = new List<string>();
+                    try
                     {
-                        var images = Images.ToList();
-                        foreach(var item in scannedData)
+                        //int i = 0;
+                        //while(i++ < 10)
+                        //{
+                            
+                        //}
+                        scannedData.Clear();
+                        scanner.Scan(SelectedDocumentHandlingType.Type.Value, SelectedDocumentScanMode.Type, scannedData);
+
+                        if (scannedData != null && scannedData.Count() > 0)
                         {
-                            images.Add(new ScannedImageViewModel()
+                            var images = Images.ToList();
+                            foreach (var item in scannedData)
                             {
-                                Identifier = Guid.NewGuid(),
-                                ImagePath = item,
-                                IsSelected = false,
-                                CreatedAt = DateTime.Now,
-                            });
+                                images.Add(new ScannedImageViewModel()
+                                {
+                                    Identifier = Guid.NewGuid(),
+                                    ImagePath = item,
+                                    IsSelected = false,
+                                    CreatedAt = DateTime.Now,
+                                });
+                            }
+                            Images = new ObservableCollection<ScannedImageViewModel>(images.OrderBy(x => x.UpdatedAt));
                         }
-                        Images = new ObservableCollection<ScannedImageViewModel>(images.OrderBy(x => x.UpdatedAt));
+                        else
+                        {
+                            MainWindow.ErrorMessage = (string)Application.Current.FindResource("UbaciPapirUSkenerUzvicnik");
+                        }
+                    } catch(WiaScannerInsertPaperException exc)
+                    {
+                        MainWindow.ErrorMessage = (string)Application.Current.FindResource("UbaciPapirUSkenerUzvicnik");
                     }
                 }
                 catch (WiaScannerDeviceNotFoundException exc)
