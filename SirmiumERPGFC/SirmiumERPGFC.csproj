@@ -834,7 +834,9 @@
     <EmbeddedResource Include="RdlcReports\Employees\PhysicalPersonReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\EmployeeReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Employees\PhysicalsReport.rdlc" />
-    <EmbeddedResource Include="RdlcReports\Employees\EmployeesReport.rdlc" />
+    <Content Include="RdlcReports\Employees\EmployeesReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoicesReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\InputInvoices\InputInvoiceReport.rdlc" />
     <EmbeddedResource Include="RdlcReports\Invoices\Invoice_NotInPDV.rdlc" />
