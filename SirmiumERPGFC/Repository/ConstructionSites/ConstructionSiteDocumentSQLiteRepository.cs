@@ -78,7 +78,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@ConstructionSiteCode", ((object)constructionSiteDocument.ConstructionSite.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ConstructionSiteName", ((object)constructionSiteDocument.ConstructionSite.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ConstructionSiteInternalCode", ((object)constructionSiteDocument.ConstructionSite.InternalCode) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@Name", constructionSiteDocument.Name);
+            insertCommand.Parameters.AddWithValue("@Name", ((object)constructionSiteDocument.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CreateDate", ((object)constructionSiteDocument.CreateDate) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@Path", ((object)constructionSiteDocument.Path) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)constructionSiteDocument.ItemStatus) ?? DBNull.Value);

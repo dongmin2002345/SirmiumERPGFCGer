@@ -116,7 +116,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
             string queryString =
                 "SELECT ConstructionSiteDocumentId, ConstructionSiteDocumentIdentifier, " +
-                "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
+                "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, ConstructionSiteInternalCode, " +
                 "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
@@ -147,6 +147,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.ConstructionSite.Identifier = Guid.Parse(reader["ConstructionSiteIdentifier"].ToString());
                             constructionSiteDocument.ConstructionSite.Code = reader["ConstructionSiteCode"].ToString();
                             constructionSiteDocument.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
+                            constructionSiteDocument.ConstructionSite.InternalCode = reader["ConstructionSiteInternalCode"].ToString();
                         }
 
                         if (reader["Name"] != DBNull.Value)
@@ -202,7 +203,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
             string queryString =
                 "SELECT ConstructionSiteDocumentId, ConstructionSiteDocumentIdentifier, " +
-                "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, " +
+                "ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteName, ConstructionSiteInternalCode, " +
                 "Name, CreateDate, Path, ItemStatus, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
@@ -235,6 +236,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSiteDocument.ConstructionSite.Identifier = Guid.Parse(reader["ConstructionSiteIdentifier"].ToString());
                             constructionSiteDocument.ConstructionSite.Code = reader["ConstructionSiteCode"].ToString();
                             constructionSiteDocument.ConstructionSite.Name = reader["ConstructionSiteName"].ToString();
+                            constructionSiteDocument.ConstructionSite.InternalCode = reader["ConstructionSiteInternalCode"].ToString();
                         }
 
                         if (reader["Name"] != DBNull.Value)

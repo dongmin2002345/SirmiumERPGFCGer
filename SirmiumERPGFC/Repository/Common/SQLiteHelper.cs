@@ -555,8 +555,8 @@ namespace SirmiumERPGFC.Repository.Common
                 viewModel.Id = query.GetInt32(counter++);
                 viewModel.Identifier = query.GetGuid(counter++);
                 viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
-                viewModel.Name = query.GetString(counter++);
-                viewModel.InternalCode = query.GetString(counter++);
+                viewModel.Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.InternalCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
 
                 return viewModel;
             }
