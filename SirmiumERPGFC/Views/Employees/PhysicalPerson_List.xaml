@@ -135,6 +135,58 @@
                         </StackPanel>
                     </Button>
 
+                    <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="2" CommandParameter="{Binding}" Width="150" ToolTip="Promeni">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="{DynamicResource Promeni}" Foreground="White" FontWeight="Regular" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" Width="150" ToolTip="Obriši">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{DynamicResource Obrisi}" Foreground="White" FontWeight="Regular" />
+                        </StackPanel>
+                    </Button>
+                    <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+                        <Popup.IsOpen>
+                            <MultiBinding Converter="{StaticResource MultiConverter}">
+                                <Binding ElementName="btnDeletePopup" Path="IsFocused" Mode="OneWay"/>
+                                <Binding ElementName="btnDelete" Path="IsMouseCaptured" Mode="OneWay"/>
+                            </MultiBinding>
+                        </Popup.IsOpen>
+                        <Border Height="Auto" HorizontalAlignment="Stretch" Background="White"  BorderThickness="5" CornerRadius="15" BorderBrush="SteelBlue">
+                            <Grid Width="300" Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="{DynamicResource Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik}" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                                <Separator Grid.Row="1" Margin="2" />
+
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Column="0" x:Name="btnDelete" Click="btnDelete_Click" Margin="2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                            <TextBlock Text="{DynamicResource DA}"  FontWeight="Bold" Foreground="white"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Grid.Column="1" x:Name="btnCancel" Margin="2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                            <TextBlock Text="{DynamicResource NE}"  FontWeight="Bold" Foreground="white"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Popup>
 
                     <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtSearchByPhysicalPersonCode" Width="150"
@@ -230,69 +282,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <!--<Button x:Name="btnPhysicalPersonExcel" Click="btnExcel_Click" Margin="2 0 2 0" CommandParameter="{Binding}" ToolTip="Izvezi u EXCEL">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\ExcelBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
-                                            </StackPanel>
-                                        </Button>-->
-                                        <Button x:Name="btnEdit" Click="btnEdit_Click" Margin="0" CommandParameter="{Binding}" ToolTip="Promeni">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                            </StackPanel>
-                                        </Button>
-                                        <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="Obriši">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                            </StackPanel>
-                                        </Button>
-                                        <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Left" Focusable="True" StaysOpen="True" AllowsTransparency="True">
-                                            <Popup.IsOpen>
-                                                <MultiBinding Converter="{StaticResource MultiConverter}">
-                                                    <Binding ElementName="btnDeletePopup" Path="IsFocused" Mode="OneWay"/>
-                                                    <Binding ElementName="btnDelete" Path="IsMouseCaptured" Mode="OneWay"/>
-                                                </MultiBinding>
-                                            </Popup.IsOpen>
-                                            <Border Height="Auto" HorizontalAlignment="Stretch" Background="White"  BorderThickness="5" CornerRadius="15" BorderBrush="SteelBlue">
-                                                <Grid Width="300" Margin="10">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="Auto" />
-                                                    </Grid.RowDefinitions>
-
-                                                    <TextBlock Text="{DynamicResource Da_li_ste_sigurni_da_želite_da_obrišete_odabrni_podatakUpitnik}" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
-                                                    <Separator Grid.Row="1" Margin="2" />
-
-                                                    <Grid Grid.Row="2">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="*" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <Button Grid.Column="0" x:Name="btnDelete" Click="btnDelete_Click" Margin="2">
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                                                <TextBlock Text="{DynamicResource DA}"  FontWeight="Bold" Foreground="white"/>
-                                                            </StackPanel>
-                                                        </Button>
-                                                        <Button Grid.Column="1" x:Name="btnCancel" Margin="2">
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                                                <TextBlock Text="{DynamicResource NE}"  FontWeight="Bold" Foreground="white"/>
-                                                            </StackPanel>
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </Border>
-                                        </Popup>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
