@@ -568,6 +568,9 @@
     <Compile Include="Views\ConstructionSites\ConstructionSite-List.xaml.cs">
       <DependentUpon>ConstructionSite-List.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConstructionSites\ConstructionSiteScanner_Window.xaml.cs">
+      <DependentUpon>ConstructionSiteScanner_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConstructionSites\ConstructionSite_Calculation_AddEdit.xaml.cs">
       <DependentUpon>ConstructionSite_Calculation_AddEdit.xaml</DependentUpon>
     </Compile>
@@ -1149,6 +1152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConstructionSites\ConstructionSite-List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConstructionSites\ConstructionSiteScanner_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

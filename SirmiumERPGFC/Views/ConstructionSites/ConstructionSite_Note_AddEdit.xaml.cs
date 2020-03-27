@@ -358,6 +358,12 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             fileDIalog.ShowDialog();
         }
 
+        private void btnScahnerNote_Click(object sender, RoutedEventArgs e)
+        {
+            ConstructionSiteScanner_Window window = new ConstructionSiteScanner_Window();
+            window.Show();
+        }
+
         #endregion
 
         #region Submit and Cancel 
