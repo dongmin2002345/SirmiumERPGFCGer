@@ -8,7 +8,6 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.ConstructionSites;
-using SirmiumERPGFC.Scanners;
 using SirmiumERPGFC.Views.Home;
 using System;
 using System.Collections.Generic;
@@ -345,10 +344,9 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             System.Windows.Forms.OpenFileDialog dialog = (System.Windows.Forms.OpenFileDialog)sender;
             string[] fileNames = dialog.FileNames;
-            ScannedImageViewModel scannedImageViewModel = new ScannedImageViewModel();
+
             if (fileNames.Length > 0)
-                scannedImageViewModel.ImagePath = fileNames[0];
-            CurrentConstructionSiteNoteForm.Path = scannedImageViewModel.ImagePath;
+                CurrentConstructionSiteNoteForm.Path = fileNames[0];
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
