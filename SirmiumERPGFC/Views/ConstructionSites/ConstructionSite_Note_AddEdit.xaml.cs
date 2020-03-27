@@ -348,6 +348,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             ScannedImageViewModel scannedImageViewModel = new ScannedImageViewModel();
             if (fileNames.Length > 0)
                 scannedImageViewModel.ImagePath = fileNames[0];
+            CurrentConstructionSiteNoteForm.Path = scannedImageViewModel.ImagePath;
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
