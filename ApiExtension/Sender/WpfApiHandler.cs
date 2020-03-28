@@ -364,75 +364,75 @@ namespace ApiExtension.Sender
 
         static WpfApiHandler()
         {
-            WpfApiHandler._loadBaseAddressFromConfigFile();
+            //WpfApiHandler._loadBaseAddressFromConfigFile();
         }
 
-        private static void _loadBaseAddressFromConfigFile()
-        {
-            if (WpfApiHandler._baseAddressLoadedFromConfig == false)
-            {
-                try
-                {
-                    //var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
-                    //string tmpBaseAddress = appConfig.AppSettings.Settings["BaseApiUrl"].Value;
+        //private static void _loadBaseAddressFromConfigFile()
+        //{
+        //    if (WpfApiHandler._baseAddressLoadedFromConfig == false)
+        //    {
+        //        try
+        //        {
+        //            //var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+        //            //string tmpBaseAddress = appConfig.AppSettings.Settings["BaseApiUrl"].Value;
 
-                    ////ExeConfigurationFileMap map = new ExeConfigurationFileMap();
-                    ////map.ExeConfigFilename = Assembly.GetEntryAssembly().Location + ".config";
-                    ////Configuration libConfig = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
-                    ////AppSettingsSection section = (libConfig.GetSection("appSettings") as AppSettingsSection);
-                    ////string tmpBaseAddress = section.Settings["BaseApiUrl"]?.Value;
-                    ///
+        //            ////ExeConfigurationFileMap map = new ExeConfigurationFileMap();
+        //            ////map.ExeConfigFilename = Assembly.GetEntryAssembly().Location + ".config";
+        //            ////Configuration libConfig = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);
+        //            ////AppSettingsSection section = (libConfig.GetSection("appSettings") as AppSettingsSection);
+        //            ////string tmpBaseAddress = section.Settings["BaseApiUrl"]?.Value;
+        //            ///
 
-                    string tmpBaseAddress = "";
+        //            string tmpBaseAddress = "";
 
-                    var path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
+        //            var path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
 
-                    var configPath = Path.Combine(path, "gfc.bin");
+        //            var configPath = Path.Combine(path, "gfc.bin");
 
-                    if(Debugger.IsAttached)
-                    {
-                        if (!File.Exists(configPath))
-                        {
-                            File.WriteAllLines(configPath, new string[] {
-                                "//http://sirmiumerp.com:5005/api",
-                                "http://localhost:5005/api",
-                            });
-                        }
-                    } else
-                    {
-                        if (!File.Exists(configPath))
-                        {
-                            File.WriteAllLines(configPath, new string[] {
-                                "http://sirmiumerp.com:5005/api",
-                                "//http://localhost:5005/api",
-                            });
-                        }
-                    }
-                    var contents = File.ReadAllLines(configPath);
+        //            if(Debugger.IsAttached)
+        //            {
+        //                if (!File.Exists(configPath))
+        //                {
+        //                    File.WriteAllLines(configPath, new string[] {
+        //                        "//http://sirmiumerp.com:5005/api",
+        //                        "http://localhost:5005/api",
+        //                    });
+        //                }
+        //            } else
+        //            {
+        //                if (!File.Exists(configPath))
+        //                {
+        //                    File.WriteAllLines(configPath, new string[] {
+        //                        "http://sirmiumerp.com:5005/api",
+        //                        "//http://localhost:5005/api",
+        //                    });
+        //                }
+        //            }
+        //            var contents = File.ReadAllLines(configPath);
 
-                    if(contents != null && contents.Length > 0)
-                    {
-                        var connStr = contents.Where(x => x.Length > 1)
-                            .FirstOrDefault(x => !x.StartsWith("//"));
+        //            if(contents != null && contents.Length > 0)
+        //            {
+        //                var connStr = contents.Where(x => x.Length > 1)
+        //                    .FirstOrDefault(x => !x.StartsWith("//"));
 
-                        if (!String.IsNullOrEmpty(connStr))
-                            tmpBaseAddress = connStr;
+        //                if (!String.IsNullOrEmpty(connStr))
+        //                    tmpBaseAddress = connStr;
 
-                    }
+        //            }
 
-                    if (!string.IsNullOrWhiteSpace(tmpBaseAddress))
-                    {
-                        WpfApiHandler.BaseApiUrl = tmpBaseAddress;
-                    }
+        //            if (!string.IsNullOrWhiteSpace(tmpBaseAddress))
+        //            {
+        //                WpfApiHandler.BaseApiUrl = tmpBaseAddress;
+        //            }
 
-                }
-                catch (Exception ex)
-                {
+        //        }
+        //        catch (Exception ex)
+        //        {
 
-                }
-                WpfApiHandler._baseAddressLoadedFromConfig = true;
-            }
-        }
+        //        }
+        //        WpfApiHandler._baseAddressLoadedFromConfig = true;
+        //    }
+        //}
 
         public static string GetReportUrlByType(object obj, int id)
         {

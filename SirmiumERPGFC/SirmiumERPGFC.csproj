@@ -268,6 +268,7 @@
     </Compile>
     <Compile Include="Behaviors\DateTimeNowBehavior.cs" />
     <Compile Include="CloseableTabItem.cs" />
+    <Compile Include="Common\DirectoryTreeItemViewModel.cs" />
     <Compile Include="Common\FlyoutHelper.cs" />
     <Compile Include="Common\ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>
@@ -277,6 +278,7 @@
     <Compile Include="ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AppConfigurationHelper.cs" />
     <Compile Include="Helpers\ZipFileHelper.cs" />
     <Compile Include="Identity\AnonymousIdentity.cs" />
     <Compile Include="Identity\CustomIdentity.cs" />
@@ -582,6 +584,9 @@
     </Compile>
     <Compile Include="Views\Documents\Documents_Mailing_List.xaml.cs">
       <DependentUpon>Documents_Mailing_List.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Documents\DocumentTreeView.xaml.cs">
+      <DependentUpon>DocumentTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Employees\Employee_Card_AddEdit.xaml.cs">
       <DependentUpon>Employee_Card_AddEdit.xaml</DependentUpon>
@@ -1172,6 +1177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Documents\Documents_Mailing_List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Documents\DocumentTreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

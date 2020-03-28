@@ -5,6 +5,7 @@ using ServiceInterfaces.ViewModels.Common.CallCentars;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.ToDos;
+using SirmiumERPGFC.Helpers;
 using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.ViewComponents.Notifications;
 using SirmiumERPGFC.Views.Administrations;
@@ -252,6 +253,7 @@ namespace SirmiumERPGFC
             {
                 var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
                 OutlookDefinedPath = appConfig.AppSettings.Settings["OutlookDefinedPath"].Value;
+
 
                 //ExeConfigurationFileMap map = new ExeConfigurationFileMap();
                 //map.ExeConfigFilename = Assembly.GetEntryAssembly().Location + ".config";
@@ -609,6 +611,11 @@ namespace SirmiumERPGFC
         private void MniToDoStatus_Click(object sender, RoutedEventArgs e)
         {
             cntCtrl.Content = new ToDoStatus_List();
+        }
+
+        private void mniDocumentList_Click(object sender, RoutedEventArgs e)
+        {
+            cntCtrl.Content = new DocumentTreeView();
         }
     }
 }
