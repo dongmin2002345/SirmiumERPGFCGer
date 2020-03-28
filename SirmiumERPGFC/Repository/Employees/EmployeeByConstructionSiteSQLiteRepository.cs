@@ -156,7 +156,25 @@ namespace SirmiumERPGFC.Repository.Employees
                     SqliteDataReader query = selectCommand.ExecuteReader();
 
                     while (query.Read())
-                        employeeByConstructionSites.Add(Read(query));
+                    {
+                        int counter = 0;
+                        EmployeeByConstructionSiteViewModel dbEntry = new EmployeeByConstructionSiteViewModel();
+                        dbEntry.Id = SQLiteHelper.GetInt(query, ref counter);
+                        dbEntry.Identifier = SQLiteHelper.GetGuid(query, ref counter);
+                        dbEntry.Code = SQLiteHelper.GetString(query, ref counter);
+                        dbEntry.StartDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.EndDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.RealEndDate = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.Employee = SQLiteHelper.GetEmployeeFull(query, ref counter);
+                        dbEntry.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
+                        dbEntry.ConstructionSite = SQLiteHelper.GetConstructionSite(query, ref counter);
+                        dbEntry.IsSynced = SQLiteHelper.GetBoolean(query, ref counter);
+                        dbEntry.UpdatedAt = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.CreatedBy = SQLiteHelper.GetCreatedBy(query, ref counter);
+                        dbEntry.Company = SQLiteHelper.GetCompany(query, ref counter);
+
+                        employeeByConstructionSites.Add(dbEntry);
+                    }
                     
 
                     selectCommand = new SqliteCommand(
@@ -306,7 +324,7 @@ namespace SirmiumERPGFC.Repository.Employees
                 db.Open();
                 try
                 {
-                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from EmployeeByConstructionSites WHERE CompanyId = @CompanyId", db);
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT COUNT(*) from EmployeeByConstructionSites WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     SqliteDataReader query = selectCommand.ExecuteReader();
                     int count = query.Read() ? query.GetInt32(0) : 0;
@@ -315,7 +333,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         return null;
                     else
                     {
-                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from EmployeeByConstructionSites WHERE CompanyId = @CompanyId", db);
+                        selectCommand = new SqliteCommand("SELECT MAX(UpdatedAt) from EmployeeByConstructionSites WHERE CompanyId = @CompanyId AND IsSynced = 1", db);
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                         query = selectCommand.ExecuteReader();
                         if (query.Read())

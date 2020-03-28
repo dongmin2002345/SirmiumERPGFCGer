@@ -501,6 +501,29 @@ namespace SirmiumERPGFC.Repository.Common
             }
         }
 
+        public static EmployeeViewModel GetEmployeeFull(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 7;
+                return null;
+            }
+            else
+            {
+                var viewModel = new EmployeeViewModel();
+                viewModel.Id = query.GetInt32(counter++);
+                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.Name = query.GetString(counter++);
+                viewModel.EmployeeCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.SurName = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+                viewModel.Passport = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
+
+
+                return viewModel;
+            }
+        }
+
         public static PhysicalPersonViewModel GetPhysicalPerson(SqliteDataReader query, ref int counter)
         {
             if (query.IsDBNull(counter))

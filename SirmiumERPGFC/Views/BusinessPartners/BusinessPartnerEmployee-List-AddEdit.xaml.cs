@@ -15,19 +15,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.BusinessPartners
 {
@@ -53,57 +43,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 {
                     _CurrentBusinessPartner = value;
                     NotifyPropertyChanged("CurrentBusinessPartner");
-                }
-            }
-        }
-        #endregion
-
-        #region ContractStartDate
-        private DateTime _ContractStartDate = DateTime.Now;
-
-        public DateTime ContractStartDate
-        {
-            get { return _ContractStartDate; }
-            set
-            {
-                if (_ContractStartDate != value)
-                {
-                    _ContractStartDate = value;
-                    NotifyPropertyChanged("ContractStartDate");
-                }
-            }
-        }
-        #endregion
-
-        #region ContractEndDate
-        private DateTime _ContractEndDate = DateTime.Now;
-
-        public DateTime ContractEndDate
-        {
-            get { return _ContractEndDate; }
-            set
-            {
-                if (_ContractEndDate != value)
-                {
-                    _ContractEndDate = value;
-                    NotifyPropertyChanged("ContractEndDate");
-                }
-            }
-        }
-        #endregion
-
-        #region RealContractEndDate
-        private DateTime _RealContractEndDate = DateTime.Now;
-
-        public DateTime RealContractEndDate
-        {
-            get { return _RealContractEndDate; }
-            set
-            {
-                if (_RealContractEndDate != value)
-                {
-                    _RealContractEndDate = value;
-                    NotifyPropertyChanged("RealContractEndDate");
                 }
             }
         }
@@ -474,6 +413,16 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             th.Start();
         }
 
+        private void dgEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void dgCompanyEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
         #endregion
 
 
@@ -496,8 +445,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                     Identifier = Guid.NewGuid(),
                     Employee = CurrentEmployeeNotOnBusinessPartner,
                     BusinessPartner = CurrentBusinessPartner,
-                    StartDate = ContractStartDate,
-                    EndDate = ContractEndDate,
+                    StartDate = CurrentEmployeeNotOnBusinessPartner.ContractStartDate,
+                    EndDate = CurrentEmployeeNotOnBusinessPartner.ContractEndDate,
                     Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
                     CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
                 };
@@ -517,9 +466,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 }
 
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
-
-                ContractStartDate = DateTime.Now;
-                ContractEndDate = DateTime.Now;
 
                 DisplayEmployeesNotOnBusinessPartnerData();
                 DisplayEmployeesOnBusinessPartnerData();
@@ -542,16 +488,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
             #endregion
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentEmployeeOnBusinessPartner.Employee.Name + " " + CurrentEmployeeOnBusinessPartner.Employee.SurName);
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
                 Thread th = new Thread(() =>
                 {
-                    CurrentEmployeeOnBusinessPartner.RealEndDate = RealContractEndDate;
                     EmployeeByBusinessPartnerResponse response = employeeByBusinessPartnerService.Delete(CurrentEmployeeOnBusinessPartner);
                     if (!response.Success)
                     {
@@ -570,9 +508,6 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 });
                 th.IsBackground = true;
                 th.Start();
-            }
-
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -693,7 +628,27 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             th.Start();
         }
 
-    
+        private void btnAddPopup_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeNotOnBusinessPartner.AddPopupOpened = true;
+        }
+
+        private void btnCancelAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeNotOnBusinessPartner.AddPopupOpened = false;
+        }
+
+        private void btnDeletePopup_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeOnBusinessPartner.DeletePopupOpened = true;
+        }
+
+        private void btnCancelDelete_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeOnBusinessPartner.DeletePopupOpened = false;
+        }
+
+
 
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
