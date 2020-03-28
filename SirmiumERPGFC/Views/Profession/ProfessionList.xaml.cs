@@ -5,31 +5,18 @@ using ServiceInterfaces.ViewModels.Common.Professions;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Professions;
-using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Profession
 {
     public delegate void ProfessionHandler();
-    /// <summary>
-    /// Interaction logic for ProfessionList.xaml
-    /// </summary>
+
     public partial class ProfessionList : UserControl, INotifyPropertyChanged
     {
         #region Attributes
@@ -251,6 +238,11 @@ namespace SirmiumERPGFC.Views.Profession
 
             RefreshButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             RefreshButtonEnabled = true;
+        }
+
+        private void dgProfessions_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #endregion

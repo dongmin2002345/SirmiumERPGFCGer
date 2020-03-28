@@ -244,7 +244,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             #region Validation
 
-            if (CurrentEmployeeProfessionForm.Profession.Name == null)
+            if (CurrentEmployeeProfessionForm.Profession?.Name == null)
             {
                 MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_polje_naziv_profesije"));
                 return;

@@ -446,7 +446,7 @@ namespace SirmiumERPGFC.Repository.Common
 
         public static BusinessPartnerViewModel GetBusinessPartner(SqliteDataReader query, ref int counter)
         {
-            if (query.IsDBNull(counter))
+            if (query.IsDBNull(counter) || query.GetInt32(counter) == 0)
             {
                 counter += 6;
                 return null;

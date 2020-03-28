@@ -71,6 +71,7 @@
                 <Button  x:Name="btnSubmit" Click="btnSubmit_Click" Margin="5 0 0 0" Grid.Column="2" IsEnabled="{Binding Path=SubmitButtonEnabled, Mode=TwoWay}" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock FontSize="20" Text=" " Foreground="White" FontWeight="Bold"/>
                         <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
@@ -78,6 +79,7 @@
                 <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5 0 0 0" Grid.Column="3" Background="#007ACC">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text=" " FontSize="20" Foreground="White" FontWeight="Bold"/>
                         <TextBlock Text="{DynamicResource ODUSTANI}" FontSize="20" Foreground="White" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>

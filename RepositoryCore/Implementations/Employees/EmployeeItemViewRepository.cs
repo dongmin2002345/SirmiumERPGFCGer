@@ -36,7 +36,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeItems " +
-                "WHERE CompanyId = @CompanyId AND Active = 1;";
+                "WHERE CompanyId = @CompanyId;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -132,7 +132,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vEmployeeItems " +
-                "WHERE EmployeeId = @EmployeeId AND Active = 1;";
+                "WHERE EmployeeId = @EmployeeId;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -357,7 +357,7 @@ namespace RepositoryCore.Implementations.Employees
                 .Union(context.ChangeTracker.Entries()
                    .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(EmployeeItem))
                    .Select(x => x.Entity as EmployeeItem))
-               .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+               .FirstOrDefault(x => x.Identifier == identifier);
             if (dbEntry != null)
             {
                 dbEntry.Active = false;

@@ -100,10 +100,10 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@LicenceDescription", ((object)EmployeeItem.Licence.Description) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ValidFrom", ((object)EmployeeItem.ValidFrom) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ValidTo", ((object)EmployeeItem.ValidTo) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country.Id) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country.Code) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeItem.Country.Name) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeItem.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)EmployeeItem.ItemStatus) ?? DBNull.Value);
 
             insertCommand.Parameters.AddWithValue("@IsSynced", EmployeeItem.IsSynced);

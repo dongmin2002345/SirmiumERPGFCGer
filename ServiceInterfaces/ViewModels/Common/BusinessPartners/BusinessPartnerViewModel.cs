@@ -749,5 +749,75 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+
+
+        #region AddPopupOpened
+        private bool _AddPopupOpened;
+
+        public bool AddPopupOpened
+        {
+            get { return _AddPopupOpened; }
+            set
+            {
+                if (_AddPopupOpened != value)
+                {
+                    _AddPopupOpened = value;
+                    NotifyPropertyChanged("AddPopupOpened");
+                }
+            }
+        }
+        #endregion
+
+        #region ContractStartDate
+        private DateTime _ContractStartDate = DateTime.Now;
+
+        public DateTime ContractStartDate
+        {
+            get { return _ContractStartDate; }
+            set
+            {
+                if (_ContractStartDate != value)
+                {
+                    _ContractStartDate = value;
+                    NotifyPropertyChanged("ContractStartDate");
+                }
+            }
+        }
+        #endregion
+
+        #region ContractEndDate
+        private DateTime _ContractEndDate = DateTime.Now.AddDays(1);
+
+        public DateTime ContractEndDate
+        {
+            get { return _ContractEndDate; }
+            set
+            {
+                if (_ContractEndDate != value)
+                {
+                    _ContractEndDate = value;
+                    NotifyPropertyChanged("ContractEndDate");
+                }
+            }
+        }
+        #endregion
+
+        #region MaxNumOfEmployees
+        private int _MaxNumOfEmployees;
+
+        public int MaxNumOfEmployees
+        {
+            get { return _MaxNumOfEmployees; }
+            set
+            {
+                if (_MaxNumOfEmployees != value)
+                {
+                    _MaxNumOfEmployees = value;
+                    NotifyPropertyChanged("MaxNumOfEmployees");
+                }
+            }
+        }
+        #endregion
+
     }
 }

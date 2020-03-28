@@ -158,6 +158,7 @@
                 <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2 0 1 2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock FontSize="20" Text=" " FontWeight="Bold"/>
                         <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
@@ -165,6 +166,7 @@
                 <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="1 0 2 2">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text=" " FontSize="20" FontWeight="Bold"/>
                         <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>

@@ -12,25 +12,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Employees
 {
-    /// <summary>
-    /// Interaction logic for Employee_Licence_AddEdit.xaml
-    /// </summary>
     public partial class Employee_Licence_AddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes
@@ -191,7 +179,7 @@ namespace SirmiumERPGFC.Views.Employees
             displayThread.IsBackground = true;
             displayThread.Start();
 
-            ValidFrom.Focus();
+            btnAddLicence.Focus();
         }
 
         #endregion
@@ -244,7 +232,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             #region Validation
 
-            if (CurrentEmployeeLicenceForm.Licence.Description == null)
+            if (CurrentEmployeeLicenceForm.Licence?.Description == null)
             {
                 MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_Licence"));
                 return;
@@ -256,9 +244,7 @@ namespace SirmiumERPGFC.Views.Employees
             {
                 SubmitButtonEnabled = false;
 
-
                 CurrentEmployeeLicenceForm.Employee = CurrentEmployee;
-
 
                 CurrentEmployeeLicenceForm.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentEmployeeLicenceForm.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };

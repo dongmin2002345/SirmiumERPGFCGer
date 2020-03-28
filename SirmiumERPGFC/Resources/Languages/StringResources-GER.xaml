@@ -826,4 +826,7 @@
     <system:String x:Key="Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik">Beim Kopieren einer Rechnung ist ein Fehler aufgetreten. Bitte überprüfen Sie, ob die Daten gültig sind!</system:String>
     <system:String x:Key="Morate_odabrati_fakturu_za_kopiranjeUzvičnik">Sie müssen eine Rechnung zum Kopieren auswählen!</system:String>
 
+    <system:String x:Key="Promeni">Veränderung</system:String>
+    <system:String x:Key="Obrisi">Löschen</system:String>
+
 </ResourceDictionary>

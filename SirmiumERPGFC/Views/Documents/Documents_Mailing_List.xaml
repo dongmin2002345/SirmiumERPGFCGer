@@ -26,11 +26,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-
-
-        <TabControl TabStripPlacement="Top" Grid.Row="3" Grid.Column="0" Margin="0 1 0 0" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
+        <TabControl TabStripPlacement="Top" Grid.Row="3" Grid.Column="0" Margin="0 0 0 0" Controls:TabControlHelper.Underlined="TabPanel" x:Name="tabControl">
             <TabItem Header="{DynamicResource DokumentiPoslovnogPartnera}">
-                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1">
+                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1 -3 -1 -1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -61,7 +59,7 @@
                                         IsEnabled="{Binding Path=BusinessPartnerDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -69,6 +67,7 @@
                                         IsEnabled="{Binding Path=BusinessPartnerDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OdznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -88,11 +87,11 @@
                         <Separator Grid.Row="2" Margin="2" Grid.ColumnSpan="4" />
                         <Controls:ProgressRing Grid.Row="3"  Grid.ColumnSpan="4" IsActive="{Binding BusinessPartnerDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgBusinessPartnerDocuments"
-                              Grid.Row="3" 
-                              Margin="2"
-                              MinHeight="200"
-                                   Grid.ColumnSpan="4" 
-                              AutoGenerateColumns="False"
+                                  Grid.Row="3" 
+                                  Margin="2"
+                                  MinHeight="200"
+                                  Grid.ColumnSpan="4" 
+                                  AutoGenerateColumns="False"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
@@ -105,8 +104,8 @@
                                   RowHeaderWidth="25"
                                   HeadersVisibility="All"
                                   LoadingRow="DgBusinessPartnerDocuments_LoadingRow"
-                              ItemsSource="{Binding Path=BusinessPartnerDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentBusinessPartnerDocument, Mode=TwoWay}">
+                                  ItemsSource="{Binding Path=BusinessPartnerDocumentsFromDB}"
+                                  SelectedItem="{Binding Path=CurrentBusinessPartnerDocument, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="" Width="Auto">
@@ -122,13 +121,13 @@
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button x:Name="btnShowDocument" Click="btnShowBusinessPartnerDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                                <Button x:Name="btnShowDocument" Click="btnShowBusinessPartnerDocument_Click" Margin="2 1 1 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button x:Name="btnOpenFolder" Click="btnOpenFolder_BusinessPartner_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                <Button x:Name="btnOpenFolder" Click="btnOpenFolder_BusinessPartner_Click" Margin="1 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
@@ -142,18 +141,17 @@
                         <Button Grid.Row="4" x:Name="btnAddCheckedBusinessPartnerDocuments" Click="btnAddCheckedBusinessPartnerDocuments_Click" Margin="2" Background="#007ACC" 
                                         IsEnabled="{Binding Path=BusinessPartnerDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                 <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="32" Width="32" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </StackPanel>
                         </Button>
                     </Grid>
                 </GroupBox>
-
             </TabItem>
 
-
             <TabItem Header="{DynamicResource DokumentiGradilišta}">
-                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1">
+                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1 -3 -1 -1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -184,7 +182,7 @@
                                         IsEnabled="{Binding Path=ConstructionSiteDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -192,6 +190,7 @@
                                         IsEnabled="{Binding Path=ConstructionSiteDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OdznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -213,11 +212,11 @@
                         <Separator Grid.Row="2" Margin="2" Grid.ColumnSpan="4" />
                         <Controls:ProgressRing Grid.Row="3"  Grid.ColumnSpan="4" IsActive="{Binding ConstructionSiteDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgConstructionSiteDocuments"
-                              Grid.Row="3" 
-                              Margin="2"
-                              MinHeight="200"
-                                   Grid.ColumnSpan="4" 
-                              AutoGenerateColumns="False"
+                                  Grid.Row="3" 
+                                  Margin="2"
+                                  MinHeight="200"
+                                  Grid.ColumnSpan="4" 
+                                  AutoGenerateColumns="False"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
@@ -230,8 +229,8 @@
                                   RowHeaderWidth="25"
                                   HeadersVisibility="All"
                                   LoadingRow="DgConstructionSiteDocuments_LoadingRow"
-                              ItemsSource="{Binding Path=ConstructionSiteDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentConstructionSiteDocument, Mode=TwoWay}">
+                                  ItemsSource="{Binding Path=ConstructionSiteDocumentsFromDB}"
+                                  SelectedItem="{Binding Path=CurrentConstructionSiteDocument, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="" Width="Auto">
@@ -248,13 +247,13 @@
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button x:Name="btnShowDocument" Click="btnShowConstructionSiteDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                                <Button x:Name="btnShowDocument" Click="btnShowConstructionSiteDocument_Click" Margin="2 1 1 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button x:Name="btnOpenFolderConstructionSite" Click="btnOpenFolder_ConstructionSite_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                <Button x:Name="btnOpenFolderConstructionSite" Click="btnOpenFolder_ConstructionSite_Click" Margin="1 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
@@ -270,18 +269,17 @@
                         <Button Grid.Row="4" x:Name="btnAddCheckedConstructionSiteDocuments" Click="btnAddCheckedConstructionSiteDocuments_Click" Margin="2"  Background="#007ACC" 
                                         IsEnabled="{Binding Path=ConstructionSiteDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                 <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="32" Width="32" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </StackPanel>
                         </Button>
                     </Grid>
                 </GroupBox>
-
             </TabItem>
 
-
             <TabItem Header="{DynamicResource DokumentiRadnika}">
-                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1">
+                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1 -3 -1 -1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -293,8 +291,6 @@
 
                         <Expander Header="{DynamicResource PRETRAGA}" Grid.Row="0" IsExpanded="True">
                             <Grid Grid.Row="0">
-
-
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
@@ -312,7 +308,7 @@
                                         IsEnabled="{Binding Path=EmployeeDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -320,6 +316,7 @@
                                         IsEnabled="{Binding Path=EmployeeDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OdznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -342,11 +339,11 @@
                         <Separator Grid.Row="2" Margin="2" Grid.ColumnSpan="4" />
                         <Controls:ProgressRing Grid.Row="3"  Grid.ColumnSpan="4" IsActive="{Binding EmployeeDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgEmployeeDocuments"
-                              Grid.Row="3" 
-                              Margin="2"
-                              MinHeight="200"
-                                   Grid.ColumnSpan="4" 
-                              AutoGenerateColumns="False"
+                                  Grid.Row="3" 
+                                  Margin="2"
+                                  MinHeight="200"
+                                  Grid.ColumnSpan="4" 
+                                  AutoGenerateColumns="False"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
@@ -359,8 +356,8 @@
                                   RowHeaderWidth="25"
                                   HeadersVisibility="All"
                                   LoadingRow="DgEmployeeDocuments_LoadingRow"
-                              ItemsSource="{Binding Path=EmployeeDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentEmployeeDocument, Mode=TwoWay}">
+                                  ItemsSource="{Binding Path=EmployeeDocumentsFromDB}"
+                                  SelectedItem="{Binding Path=CurrentEmployeeDocument, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="" Width="Auto">
@@ -378,13 +375,13 @@
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button x:Name="btnShowDocument" Click="btnShowEmployeeDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                                <Button x:Name="btnShowDocument" Click="btnShowEmployeeDocument_Click" Margin="2 1 1 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button x:Name="btnOpenFolderEmployee" Click="btnOpenFolder_Employee_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                <Button x:Name="btnOpenFolderEmployee" Click="btnOpenFolder_Employee_Click" Margin="1 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
@@ -399,18 +396,17 @@
                         <Button Grid.Row="4" x:Name="btnAddCheckedEmployeeDocuments" Click="btnAddCheckedEmployeeDocuments_Click" Margin="2"  Background="#007ACC" 
                                         IsEnabled="{Binding Path=EmployeeDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                 <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="32" Width="32" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </StackPanel>
                         </Button>
                     </Grid>
                 </GroupBox>
-
             </TabItem>
 
-
             <TabItem Header="{DynamicResource DokumentiFizickogLica}">
-                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1">
+                <GroupBox Header="{DynamicResource Dokumenti}" Grid.Column="1" Margin="-1 -3 -1 -1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -441,7 +437,7 @@
                                         IsEnabled="{Binding Path=PhysicalPersonDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -449,6 +445,7 @@
                                         IsEnabled="{Binding Path=PhysicalPersonDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                         <TextBlock Text="{DynamicResource OdznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
@@ -468,11 +465,11 @@
                         <Separator Grid.Row="2" Margin="2" Grid.ColumnSpan="4" />
                         <Controls:ProgressRing Grid.Row="3"  Grid.ColumnSpan="4" IsActive="{Binding PhysicalPersonDocumentDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                         <DataGrid x:Name="dgPhysicalPersonDocuments"
-                              Grid.Row="3" 
-                              Margin="2"
-                              MinHeight="200"
-                                   Grid.ColumnSpan="4" 
-                              AutoGenerateColumns="False"
+                                  Grid.Row="3" 
+                                  Margin="2"
+                                  MinHeight="200"
+                                  Grid.ColumnSpan="4" 
+                                  AutoGenerateColumns="False"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
@@ -485,8 +482,8 @@
                                   RowHeaderWidth="25"
                                   HeadersVisibility="All"
                                   LoadingRow="DgPhysicalPersonDocuments_LoadingRow"
-                              ItemsSource="{Binding Path=PhysicalPersonDocumentsFromDB}"
-                              SelectedItem="{Binding Path=CurrentPhysicalPersonDocument, Mode=TwoWay}">
+                                  ItemsSource="{Binding Path=PhysicalPersonDocumentsFromDB}"
+                                  SelectedItem="{Binding Path=CurrentPhysicalPersonDocument, Mode=TwoWay}">
 
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="" Width="Auto">
@@ -503,13 +500,13 @@
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button x:Name="btnShowDocument" Click="btnShowPhysicalPersonDocument_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                                <Button x:Name="btnShowDocument" Click="btnShowPhysicalPersonDocument_Click" Margin="2 1 1 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button x:Name="btnOpenFolderPhysicalPerson" Click="btnOpenFolder_PhysicalPerson_Click" Margin="2 0 0 0" CommandParameter="{Binding}" ToolTip="Prikaži dokument">
+                                                <Button x:Name="btnOpenFolderPhysicalPerson" Click="btnOpenFolder_PhysicalPerson_Click" Margin="1 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="Prikaži dokument">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="..\..\Resources\Icons\OtvoriFolder.png" HorizontalAlignment="Center" Height="16" Width="16" />
                                                     </StackPanel>
@@ -524,18 +521,17 @@
                         <Button Grid.Row="4" x:Name="btnAddCheckedPhysicalPersonDocuments" Click="btnAddCheckedPhysicalPersonDocuments_Click" Margin="2" Background="#007ACC" 
                                         IsEnabled="{Binding Path=PhysicalPersonDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text="{DynamicResource DodajStavke}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                                 <Image Source="..\..\Resources\Icons\DuplaStrelicaDesna.png" HorizontalAlignment="Center" Height="32" Width="32" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </StackPanel>
                         </Button>
                     </Grid>
                 </GroupBox>
-
             </TabItem>
-
         </TabControl>
 
-        <GroupBox Grid.Column="1" Header="{DynamicResource DODATE_STAVKE}" Margin="2">
+        <GroupBox Grid.Column="1" Header="{DynamicResource DODATE_STAVKE}" Margin="1 24 2 2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -560,44 +556,46 @@
                     <Button x:Name="btnSelectAllAdded" Click="btnSelectAllAdded_Click" Margin="2" HorizontalAlignment="Stretch" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-
+                            <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                             <TextBlock Text="{DynamicResource OznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="1" Grid.Row="0" x:Name="btnDeselectAllAdded" Click="btnDeselectAllAdded_Click" Margin="2" HorizontalAlignment="Stretch" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                             <TextBlock Text="{DynamicResource OdznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="2" Grid.Row="0" x:Name="btnRemoveSelected" Click="btnRemoveSelected_Click" Margin="2" HorizontalAlignment="Stretch" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                             <TextBlock Text="{DynamicResource UkloniOznaceno}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </Grid>
 
                 <DataGrid x:Name="dgAddedDocuments"
-                              Grid.Row="1" 
-                              Margin="2"
-                              MinHeight="200"
-                                   Grid.ColumnSpan="2" 
-                              AutoGenerateColumns="False"
-                                  CanUserAddRows="False"
-                                  CanUserDeleteRows="False"
-                                  CanUserResizeRows="False"
-                                  CanUserResizeColumns="True"  
-                                  GridLinesVisibility="All"
-                                  HorizontalGridLinesBrush="Gray"
-                                  VerticalAlignment="Stretch"
-                                  HorizontalScrollBarVisibility="Auto"
-                                  VerticalScrollBarVisibility="Auto"
-                                  RowHeaderWidth="25"
-                                  HeadersVisibility="All"
-                                  LoadingRow="dgAddedDocuments_LoadingRow"
-                              ItemsSource="{Binding Path=DocumentsForMail}"
-                              SelectedItem="{Binding Path=SelectedDocumentForMail, Mode=TwoWay}">
+                          Grid.Row="1" 
+                          Margin="2"
+                          MinHeight="200"
+                          Grid.ColumnSpan="2" 
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserResizeRows="False"
+                          CanUserResizeColumns="True"  
+                          GridLinesVisibility="All"
+                          HorizontalGridLinesBrush="Gray"
+                          VerticalAlignment="Stretch"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          RowHeaderWidth="25"
+                          HeadersVisibility="All"
+                          LoadingRow="dgAddedDocuments_LoadingRow"
+                          ItemsSource="{Binding Path=DocumentsForMail}"
+                          SelectedItem="{Binding Path=SelectedDocumentForMail, Mode=TwoWay}">
 
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="" Width="Auto">
@@ -613,8 +611,8 @@
                         <DataGridTemplateColumn Header="" Width="36">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="{DynamicResource UkloniStavku}">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                        <Button x:Name="btnDeletePopup" Margin="2 1 2 1" CommandParameter="{Binding}" Width="30" ToolTip="{DynamicResource UkloniStavku}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>

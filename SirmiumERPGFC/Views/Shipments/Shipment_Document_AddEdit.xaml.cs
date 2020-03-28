@@ -8,6 +8,7 @@ using ServiceInterfaces.ViewModels.Common.Shipments;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Shipments;
+using SirmiumERPGFC.Views.Home;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -365,6 +366,12 @@ namespace SirmiumERPGFC.Views.Shipments
             fileDIalog.FileOk += FileDIalog_FileOk;
             fileDIalog.Filter = "All Files (*.*)|*.*";
             fileDIalog.ShowDialog();
+        }
+
+        private void btnScahner_Click(object sender, RoutedEventArgs e)
+        {
+            Scanner_Window window = new Scanner_Window();
+            window.Show();
         }
 
         #endregion

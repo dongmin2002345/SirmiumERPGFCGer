@@ -1,10 +1,6 @@
 ﻿using ServiceInterfaces.ViewModels.Base;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
 {
@@ -181,6 +177,24 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
                 {
                     _Search_BusinessPartner = value;
                     NotifyPropertyChanged("Search_BusinessPartner");
+                }
+            }
+        }
+        #endregion
+
+
+        #region DeletePopupOpened
+        private bool _DeletePopupOpened;
+
+        public bool DeletePopupOpened
+        {
+            get { return _DeletePopupOpened; }
+            set
+            {
+                if (_DeletePopupOpened != value)
+                {
+                    _DeletePopupOpened = value;
+                    NotifyPropertyChanged("DeletePopupOpened");
                 }
             }
         }

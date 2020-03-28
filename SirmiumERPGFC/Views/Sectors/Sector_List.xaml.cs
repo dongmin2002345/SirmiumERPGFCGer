@@ -5,31 +5,18 @@ using ServiceInterfaces.ViewModels.Common.Sectors;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Sectors;
-using SirmiumERPGFC.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Sectors
 {
 	public delegate void SectorHandler();
-	/// <summary>
-	/// Interaction logic for Sector_List.xaml
-	/// </summary>
+
 	public partial class Sector_List : UserControl, INotifyPropertyChanged
 	{
 		#region Attributes
@@ -253,12 +240,17 @@ namespace SirmiumERPGFC.Views.Sectors
             RefreshButtonEnabled = true;
 		}
 
-        #endregion
+		private void dgSectors_LoadingRow(object sender, DataGridRowEventArgs e)
+		{
+			e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+		}
+
+		#endregion
 
 
-        #region Add sector, edit sector and delete sector
+		#region Add sector, edit sector and delete sector
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+		private void btnAdd_Click(object sender, RoutedEventArgs e)
 		{
 			SectorViewModel sector = new SectorViewModel();
 			sector.Identifier = Guid.NewGuid();

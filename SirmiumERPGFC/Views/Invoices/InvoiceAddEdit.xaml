@@ -131,48 +131,6 @@
                 </Grid>
             </GroupBox>
 
-            <!--    Invoice informations    -->
-            <!--<GroupBox Header="{DynamicResource Detalji_faktureDvotacka}" Margin="2 1 2 1" Grid.Row="1" Grid.ColumnSpan="2"
-                      x:Name="gbItems">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource NetoDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="2" x:Name="txtBase" 
-                             Text="{Binding Path=CurrentInvoice.AmountNet, Converter={StaticResource stringToDoubleConverter}}" Grid.ColumnSpan="2"  />
-
-
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="{DynamicResource PDVProcenatDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"   />
-                    <TextBox Grid.Row="1" Grid.Column="4" Margin="2" x:Name="txtPdvPercent" 
-                        Text="{Binding Path=CurrentInvoice.PdvPercent}"  />
-
-                    <TextBox Grid.Row="1" Grid.Column="5" Margin="2" x:Name="txtPdv" 
-                             Text="{Binding Path=CurrentInvoice.Pdv, Converter={StaticResource stringToDoubleConverter}}" IsEnabled="False"/>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource BrutoDvotacka}" VerticalAlignment="Center"  Margin="5 0 5 0" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Margin="2" x:Name="txtTotalValue" 
-                             Text="{Binding Path=CurrentInvoice.AmountGross, Converter={StaticResource stringToDoubleConverter}}" Grid.ColumnSpan="2" IsEnabled="False"/>
-
-                </Grid>
-            </GroupBox>-->
-
             <!--    Save button    -->
             <Grid Grid.Row="2" Margin="2 2 2 2">
                 <Grid.ColumnDefinitions>
@@ -185,6 +143,7 @@
                 <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2 0 1 2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock FontSize="20" Text=" " FontWeight="Bold"/>
                         <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>
@@ -192,6 +151,7 @@
                 <Button Grid.Column="3" x:Name="btnCancel" Click="BtnCancel_Click" Margin="1 0 2 2">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text=" " FontSize="20" FontWeight="Bold"/>
                         <TextBlock Text="{DynamicResource ZATVORI}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>

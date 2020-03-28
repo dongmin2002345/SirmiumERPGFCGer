@@ -37,7 +37,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <GroupBox Header="{DynamicResource Napomene}" Margin="2 1 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
+            <GroupBox Header="{DynamicResource Napomene}" Margin="2 2 2 1" Grid.Row="0" Grid.ColumnSpan="2" IsEnabled="{Binding Path=IsHeaderCreated, Mode=TwoWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -82,9 +82,9 @@
 
             <GroupBox Header="Dodate stavke" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
                 <DataGrid x:Name="dgOutputInvoiceNotes"
-                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
-                              Margin="5" MinHeight="200"
-                                 AutoGenerateColumns="False"
+                          Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
+                          Margin="5" MinHeight="200"
+                          AutoGenerateColumns="False"
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           CanUserResizeRows="False"
@@ -97,8 +97,8 @@
 		                  HeadersVisibility="All"
                           LoadingRow="DgOutputInvoiceNotes_LoadingRow"
                           PreviewMouseWheel="dg_PreviewMouseWheel"
-                              ItemsSource="{Binding Path=OutputInvoiceNotesFromDB}"
-                              SelectedItem="{Binding Path=CurrentOutputInvoiceNoteDG, Mode=TwoWay}">
+                          ItemsSource="{Binding Path=OutputInvoiceNotesFromDB}"
+                          SelectedItem="{Binding Path=CurrentOutputInvoiceNoteDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource Napomena}" Binding="{Binding Path=Note}" Width="*" IsReadOnly="True" >
@@ -113,8 +113,8 @@
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnEditNote" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditNote_Click">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                        <Button x:Name="btnEditNote" Margin="2 1 1 1" CommandParameter="{Binding}" Width="30" Click="btnEditNote_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
@@ -196,6 +196,7 @@
                 <Button Grid.Column="2" x:Name="btnSubmit" Click="BtnSubmit_Click" Margin="2" IsEnabled="{Binding Path=SubmitButtonEnabled}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\submit.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock FontSize="20" Text=" " FontWeight="Bold"/>
                         <TextBlock FontSize="20" Text="{Binding Path=SubmitButtonContent}" FontWeight="Bold"/>
                     </StackPanel>
                 </Button>

@@ -250,6 +250,11 @@ namespace SirmiumERPGFC.Views.Employees
             RefreshButtonEnabled = true;
 		}
 
+		private void dgLicenceTypes_LoadingRow(object sender, DataGridRowEventArgs e)
+		{
+			e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+		}
+
 		#endregion
 
 		#region Add, edit and delete methods
