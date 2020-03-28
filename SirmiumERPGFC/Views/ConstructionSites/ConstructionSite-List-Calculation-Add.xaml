@@ -60,6 +60,7 @@
             <Button Grid.Column="2" x:Name="btnSave" Click="btnSave_Click" Margin="5 0 0 5" IsEnabled="{Binding Path=SaveButtonEnabled, Mode=TwoWay}" Background="#007ACC">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="25" Width="25" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <TextBlock FontSize="25" Text=" " Foreground="White" FontWeight="Bold"/>
                     <TextBlock FontSize="25" Text="{Binding Path=SaveButtonContent, Mode=TwoWay}" x:Name="btnSaveContent" Foreground="White" FontWeight="Bold"/>
                 </StackPanel>
             </Button>

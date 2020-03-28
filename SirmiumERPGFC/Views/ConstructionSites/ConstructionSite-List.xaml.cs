@@ -8,26 +8,16 @@ using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.RdlcReports.ConstructionSites;
 using SirmiumERPGFC.Reports.ConstructionSites;
 using SirmiumERPGFC.Repository.ConstructionSites;
-using SirmiumERPGFC.Views.Common;
 using SirmiumERPGFC.Views.Shipments;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 
 namespace SirmiumERPGFC.Views.ConstructionSites
@@ -580,7 +570,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
         #endregion
 
-        private void DgConstructionSites_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void dgConstructionSites_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
