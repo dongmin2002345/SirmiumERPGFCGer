@@ -12,25 +12,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SirmiumERPGFC.Views.Employees
 {
-    /// <summary>
-    /// Interaction logic for Employee_Document_AddEdit.xaml
-    /// </summary>
     public partial class Employee_Document_AddEdit : UserControl, INotifyPropertyChanged
     {
         #region Attributes
@@ -185,6 +173,7 @@ namespace SirmiumERPGFC.Views.Employees
             CurrentEmployee = employee;
             CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
             CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
+            CurrentEmployeeDocumentForm.CreateDate = DateTime.Now;
             CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
 
             Thread displayThread = new Thread(() => DisplayEmployeeDocumentData());
@@ -271,6 +260,7 @@ namespace SirmiumERPGFC.Views.Employees
 
                     CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
                     CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
+                    CurrentEmployeeDocumentForm.CreateDate = DateTime.Now;
                     CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
                     CurrentEmployeeDocumentForm.IsSynced = false;
                     return;
@@ -278,6 +268,7 @@ namespace SirmiumERPGFC.Views.Employees
 
                 CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
                 CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
+                CurrentEmployeeDocumentForm.CreateDate = DateTime.Now;
                 CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
                 CurrentEmployeeDocumentForm.IsSynced = false;
                 EmployeeCreatedUpdated();
@@ -319,6 +310,7 @@ namespace SirmiumERPGFC.Views.Employees
 
                 CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
                 CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
+                CurrentEmployeeDocumentForm.CreateDate = DateTime.Now;
                 CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
 
                 CurrentEmployeeDocumentDG = null;
@@ -337,6 +329,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             CurrentEmployeeDocumentForm = new EmployeeDocumentViewModel();
             CurrentEmployeeDocumentForm.Identifier = Guid.NewGuid();
+            CurrentEmployeeDocumentForm.CreateDate = DateTime.Now;
             CurrentEmployeeDocumentForm.ItemStatus = ItemStatus.Added;
         }
 

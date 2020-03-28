@@ -69,14 +69,13 @@
     <Style TargetType="{x:Type Button}">
         <Setter Property="Background" Value="#007ACC" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="MinHeight" Value="22" />
-        <Setter Property="MinWidth" Value="22" />
+        <Setter Property="MinHeight" Value="26" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="3" BorderBrush="Black" BorderThickness="1.5">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="Black" BorderThickness="1.5">
                         <ContentPresenter HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                           RecognizesAccessKey="True"
@@ -128,6 +127,24 @@
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="BorderThickness" Value="2" />
+    </Style>
+
+    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#007ACC"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="TabItem">

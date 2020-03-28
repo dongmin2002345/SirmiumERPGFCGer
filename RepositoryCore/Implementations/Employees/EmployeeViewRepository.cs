@@ -47,7 +47,7 @@ namespace RepositoryCore.Implementations.Employees
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployees " +
-                "WHERE CompanyId = @CompanyId AND Active = 1;";
+                "WHERE CompanyId = @CompanyId;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -251,7 +251,7 @@ namespace RepositoryCore.Implementations.Employees
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vEmployees " +
-                "WHERE EmployeeId = @EmployeeId AND Active = 1;";
+                "WHERE EmployeeId = @EmployeeId;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

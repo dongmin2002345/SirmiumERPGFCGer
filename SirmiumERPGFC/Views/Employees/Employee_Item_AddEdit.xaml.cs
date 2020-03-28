@@ -244,7 +244,7 @@ namespace SirmiumERPGFC.Views.Employees
         {
             #region Validation
 
-            if (CurrentEmployeeItemForm.FamilyMember.Name == null)
+            if (CurrentEmployeeItemForm.FamilyMember?.Name == null)
             {
                 MainWindow.ErrorMessage = ((string)Application.Current.FindResource("Obavezno_poljeDvotačka_clanporodice"));
                 return;
