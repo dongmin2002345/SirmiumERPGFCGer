@@ -1,4 +1,6 @@
-﻿using SirmiumERPGFC.Identity;
+﻿using ApiExtension.Sender;
+using SirmiumERPGFC.Helpers;
+using SirmiumERPGFC.Identity;
 using SirmiumERPGFC.Identity.Views;
 using System;
 using System.IO;
@@ -40,6 +42,16 @@ namespace SirmiumERPGFC
             this.Resources.MergedDictionaries.Add(dict);
 
             base.OnStartup(e);
+
+            try
+            {
+                AppConfigurationHelper.ReadConfig();
+
+                WpfApiHandler.BaseApiUrl = AppConfigurationHelper.Configuration.ApiUrl;
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             //Show the login view
             LoginWindow loginWindow = new LoginWindow();

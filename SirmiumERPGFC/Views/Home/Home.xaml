@@ -8,7 +8,7 @@
              xmlns:cbxConverters="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:local1="clr-namespace:SirmiumERPGFC.Views.Phonebooks"
              xmlns:local11="clr-namespace:SirmiumERPGFC.Views.CallCentars"
-             xmlns:businesscalendar="clr-namespace:SirmiumERPGFC.Views.BusinessCalendar"
+             xmlns:businesscalendar="clr-namespace:SirmiumERPGFC.Views.BusinessCalendar" xmlns:commnon="clr-namespace:SirmiumERPGFC.Views.Documents"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Background="White" Loaded="UserControl_Loaded">
 
@@ -78,6 +78,9 @@
                 </TabItem>
                 <TabItem Header="{DynamicResource Skener}">
                     <local:Scanner_List />
+                </TabItem>
+                <TabItem Header="{DynamicResource Dokumenti}">
+                    <commnon:DocumentTreeView />
                 </TabItem>
                 <!--<TabItem Header="NAJVAZNIJE VESTI">
                         <local:Important x:Name="important"/>
