@@ -8,6 +8,7 @@ using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.ConstructionSites;
+using SirmiumERPGFC.Views.Home;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -423,6 +424,12 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
 
         #endregion
+
+        private void btnScahnerNote_Click(object sender, RoutedEventArgs e)
+        {
+            Scanner_Window window = new Scanner_Window();
+            window.Show();
+        }
 
         #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;

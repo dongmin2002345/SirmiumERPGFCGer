@@ -819,4 +819,7 @@
     <system:String x:Key="Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik">An error occured while copying an invoice, please check if the data is valid!</system:String>
     <system:String x:Key="Morate_odabrati_fakturu_za_kopiranjeUzvičnik">You must select an invoice to copy!</system:String>
 
+    <system:String x:Key="Promeni">Change</system:String>
+    <system:String x:Key="Obrisi">Delete</system:String>
+
 </ResourceDictionary>
