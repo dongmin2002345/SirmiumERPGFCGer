@@ -87,6 +87,7 @@
                     <Button x:Name="btnScahner" Grid.Row="5" Grid.Column="3" Click="btnScahner_Click" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\scanner.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" " Foreground="White" FontWeight="Regular"/>
                             <TextBlock Text="{DynamicResource Skener}" Foreground="White" FontWeight="Regular"/>
                         </StackPanel>
                     </Button>
@@ -95,6 +96,7 @@
                     <Button x:Name="btnAddPhone" Grid.Row="5" Grid.Column="4" Click="btnAddPhone_Click" Margin="2" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\saveNovi.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" " Foreground="White" FontWeight="Regular" />
                             <TextBlock Text="{DynamicResource SAČUVAJ_STAVKU}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
@@ -102,6 +104,7 @@
                     <Button x:Name="btnCancelPhone" Grid.Row="5" Grid.Column="5" Click="btnCancelPhone_Click" Margin="2" Background="#007ACC" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" " Foreground="White" FontWeight="Regular" />
                             <TextBlock Text="{DynamicResource ODUSTANI}" Foreground="White" FontWeight="Regular" />
                         </StackPanel>
                     </Button>
@@ -110,9 +113,9 @@
 
             <GroupBox Header="{DynamicResource Telefoni}" Margin="2 1 2 1" Grid.Row="1" MinHeight="250">
                 <DataGrid x:Name="dgBusinessPartnerPhoneForms"
-                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
-                              Margin="5" MinHeight="200"
-                                 AutoGenerateColumns="False"
+                          Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
+                          Margin="5" MinHeight="200"
+                          AutoGenerateColumns="False"
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           CanUserResizeRows="False"
@@ -125,8 +128,8 @@
 		                  HeadersVisibility="All"
                           LoadingRow="DgBusinessPartnerPhones_LoadingRow"
                           PreviewMouseWheel="dg_PreviewMouseWheel"
-                              ItemsSource="{Binding Path=BusinessPartnerPhonesFromDB}"
-                              SelectedItem="{Binding Path=CurrentBusinessPartnerPhoneDG, Mode=TwoWay}">
+                          ItemsSource="{Binding Path=BusinessPartnerPhonesFromDB}"
+                          SelectedItem="{Binding Path=CurrentBusinessPartnerPhoneDG, Mode=TwoWay}">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="ContactPersonFirstName" Header="{DynamicResource Ime}" Binding="{Binding ContactPersonFirstName}" Width="*" IsReadOnly="True" />
@@ -142,13 +145,13 @@
                         <DataGridTemplateColumn Header="" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="btnEditPhone" Margin="2 0 0 0" CommandParameter="{Binding}" Click="btnEditPhone_Click">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+                                        <Button x:Name="btnEditPhone" Margin="2 1 1 1" CommandParameter="{Binding}" Width="30" Click="btnEditPhone_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
                                         </Button>
-                                        <Button x:Name="btnDeletePopup" Margin="2 0 0 0" CommandParameter="{Binding}" IsEnabled="{Binding CanBeModified}"  ToolTip="Obriši">
+                                        <Button x:Name="btnDeletePopup" Margin="1 1 2 1" CommandParameter="{Binding}" IsEnabled="{Binding CanBeModified}" Width="30" ToolTip="Obriši">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="18" Width="18" RenderOptions.BitmapScalingMode="HighQuality" />
                                             </StackPanel>
