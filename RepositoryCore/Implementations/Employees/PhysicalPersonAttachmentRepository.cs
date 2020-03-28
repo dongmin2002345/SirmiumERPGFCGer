@@ -73,7 +73,7 @@ namespace RepositoryCore.Implementations.Employees
         {
             List<PhysicalPersonAttachment> attachments = new List<PhysicalPersonAttachment>();
             string queryString = selectPart +
-                "WHERE CompanyId = @CompanyId AND Active = 1;";
+                "WHERE CompanyId = @CompanyId;";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -144,7 +144,7 @@ namespace RepositoryCore.Implementations.Employees
         {
             List<PhysicalPersonAttachment> attachments = new List<PhysicalPersonAttachment>();
             string queryString = selectPart +
-                "WHERE PhysicalPersonId = @PhysicalPersonId AND Active = 1;";
+                "WHERE PhysicalPersonId = @PhysicalPersonId;";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))

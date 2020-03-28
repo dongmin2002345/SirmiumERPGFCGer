@@ -801,23 +801,29 @@ namespace SirmiumERPGFC.Views.Employees
 
                 if (PhysicalPersonAttachmentsFromDB.Count == 0)
                 {
-                    for (int i = 0; i < 12; i++)
-                    {
-                        PhysicalPersonAttachmentsFromDB.Add(new PhysicalPersonAttachmentViewModel()
+                    Application.Current.Dispatcher.BeginInvoke(
+                        System.Windows.Threading.DispatcherPriority.Normal,
+                        new Action(() =>
                         {
-                            Identifier = Guid.NewGuid(),
-                            Code = "Prilog " + (i + 1).ToString(),
-                            PhysicalPerson = CurrentPhysicalPerson,
-                            IsActive = false,
-                            IsSynced = false,
-                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
-                            CreatedBy = new UserViewModel()
+                            for (int i = 0; i < 12; i++)
                             {
-                                Id = MainWindow.CurrentUserId,
-                                FullName = MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName
+                                PhysicalPersonAttachmentsFromDB.Add(new PhysicalPersonAttachmentViewModel()
+                                {
+                                    Identifier = Guid.NewGuid(),
+                                    Code = "Prilog " + (i + 1).ToString(),
+                                    PhysicalPerson = CurrentPhysicalPerson,
+                                    IsActive = false,
+                                    IsSynced = false,
+                                    Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                                    CreatedBy = new UserViewModel()
+                                    {
+                                        Id = MainWindow.CurrentUserId,
+                                        FullName = MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName
+                                    }
+                                });
                             }
-                        });
-                    }
+                        })
+                    );
                 }
             }
             else
@@ -997,11 +1003,11 @@ namespace SirmiumERPGFC.Views.Employees
             SyncButtonContent = ((string)Application.Current.FindResource("OSVEŽI"));
             SyncButtonEnabled = true;
         }
+
         private void DgPhysicalPersons_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
-
         private void DgPhysicalPersonCards_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();

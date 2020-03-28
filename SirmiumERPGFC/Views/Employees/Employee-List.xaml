@@ -271,7 +271,7 @@
                 <Controls:ProgressRing Grid.Row="2" IsActive="{Binding EmployeeDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10"/>
                 <DataGrid x:Name="dgEmployees"
                               Grid.Row="1"
-                              Margin="0 5 0 0"
+                              Margin="2"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"

@@ -36,7 +36,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonItems " +
-                "WHERE CompanyId = @CompanyId AND Active = 1;";
+                "WHERE CompanyId = @CompanyId;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -133,7 +133,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, " +
                 "CompanyId, CompanyName " +
                 "FROM vPhysicalPersonItems " +
-                "WHERE PhysicalPersonId = @PhysicalPersonId AND Active = 1;";
+                "WHERE PhysicalPersonId = @PhysicalPersonId;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -362,7 +362,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                 .Union(context.ChangeTracker.Entries()
                     .Where(x => x.State == EntityState.Added && x.Entity.GetType() == typeof(PhysicalPersonItem))
                     .Select(x => x.Entity as PhysicalPersonItem))
-                .FirstOrDefault(x => x.Identifier == identifier && x.Active == true);
+                .FirstOrDefault(x => x.Identifier == identifier);
 
             if (dbEntry != null)
             {
