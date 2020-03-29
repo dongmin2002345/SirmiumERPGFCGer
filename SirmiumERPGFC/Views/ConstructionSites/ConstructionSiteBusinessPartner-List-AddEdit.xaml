@@ -60,7 +60,7 @@
                 </Grid>
             </Expander>
 
-            <GroupBox Grid.Row="1" Header="{DynamicResource FIRME}" Grid.ColumnSpan="6" Margin="2 1 1 1">
+            <GroupBox Grid.Row="1" Header="{DynamicResource FIRME}" Grid.ColumnSpan="6" Margin="2 1 1 2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

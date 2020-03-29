@@ -204,5 +204,23 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+
+        #region DeletePopupOpened
+        private bool _DeletePopupOpened;
+
+        public bool DeletePopupOpened
+        {
+            get { return _DeletePopupOpened; }
+            set
+            {
+                if (_DeletePopupOpened != value)
+                {
+                    _DeletePopupOpened = value;
+                    NotifyPropertyChanged("DeletePopupOpened");
+                }
+            }
+        }
+        #endregion
+
     }
 }

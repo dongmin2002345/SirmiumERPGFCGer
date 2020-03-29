@@ -68,57 +68,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         }
         #endregion
 
-        #region ContractStartDate
-        private DateTime _ContractStartDate = DateTime.Now;
-
-        public DateTime ContractStartDate
-        {
-            get { return _ContractStartDate; }
-            set
-            {
-                if (_ContractStartDate != value)
-                {
-                    _ContractStartDate = value;
-                    NotifyPropertyChanged("ContractStartDate");
-                }
-            }
-        }
-        #endregion
-
-        #region ContractEndDate
-        private DateTime _ContractEndDate = DateTime.Now;
-
-        public DateTime ContractEndDate
-        {
-            get { return _ContractEndDate; }
-            set
-            {
-                if (_ContractEndDate != value)
-                {
-                    _ContractEndDate = value;
-                    NotifyPropertyChanged("ContractEndDate");
-                }
-            }
-        }
-        #endregion
-
-        #region RealContractEndDate
-        private DateTime _RealContractEndDate = DateTime.Now;
-
-        public DateTime RealContractEndDate
-        {
-            get { return _RealContractEndDate; }
-            set
-            {
-                if (_RealContractEndDate != value)
-                {
-                    _RealContractEndDate = value;
-                    NotifyPropertyChanged("RealContractEndDate");
-                }
-            }
-        }
-        #endregion
-
 
         #region EmployeesNotOnConstructionSiteFromDB
         private ObservableCollection<EmployeeViewModel> _EmployeesNotOnConstructionSiteFromDB;
@@ -467,6 +416,16 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             th.Start();
         }
 
+        private void dgEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void dgConstructionSiteEmployees_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
         #endregion
 
         #region Add, delete and cancel
@@ -491,8 +450,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                     Employee = CurrentEmployeeNotOnConstructionSite,
                     ConstructionSite = CurrentConstructionSite,
                     BusinessPartner = CurrentBusinessPartner,
-                    StartDate = ContractStartDate,
-                    EndDate = ContractEndDate, 
+                    StartDate = CurrentEmployeeNotOnConstructionSite.ContractStartDate,
+                    EndDate = CurrentEmployeeNotOnConstructionSite.ContractEndDate, 
                     Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
                     CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
                 };
@@ -513,9 +472,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
                 MainWindow.SuccessMessage = ((string)Application.Current.FindResource("Podaci_su_uspešno_unetiUzvičnik"));
 
-                ContractStartDate = DateTime.Now;
-                ContractEndDate = DateTime.Now;
-
                 DisplayEmployeesNotOnConstructionSiteData();
                 DisplayEmployeesOnConstructionSiteData();
             });
@@ -535,16 +491,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
 
             #endregion
 
-            SirmiumERPVisualEffects.AddEffectOnDialogShow(this);
-
-            // Create confirmation window
-            DeleteConfirmation deleteConfirmationForm = new DeleteConfirmation("radnika", CurrentEmployeeOnConstructionSite.Employee?.Name + " " + CurrentEmployeeOnConstructionSite.Employee?.SurName);
-            var showDialog = deleteConfirmationForm.ShowDialog();
-            if (showDialog != null && showDialog.Value)
-            {
                 Thread th = new Thread(() =>
                 {
-                    CurrentEmployeeOnConstructionSite.RealEndDate = RealContractEndDate;
                     EmployeeByConstructionSiteResponse response = employeeByConstructionSiteService.Delete(CurrentEmployeeOnConstructionSite);
                     if (!response.Success)
                     {
@@ -564,9 +512,6 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 });
                 th.IsBackground = true;
                 th.Start();
-            }
-
-            SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -700,5 +645,25 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private void btnAddPopup_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeNotOnConstructionSite.AddPopupOpened = true;
+        }
+
+        private void btnCancelAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeNotOnConstructionSite.AddPopupOpened = false;
+        }
+
+        private void btnDeletePopup_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeOnConstructionSite.DeletePopupOpened = true;
+        }
+
+        private void btnCancelDelete_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEmployeeOnConstructionSite.DeletePopupOpened = false;
+        }
     }
 }

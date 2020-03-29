@@ -1575,6 +1575,16 @@ namespace SirmiumERPGFC.Views.Employees
 
         private void btnPrintEmployeePdf_Click(object sender, RoutedEventArgs e)
         {
+            #region Validation 
+            
+            if (CurrentEmployee == null)
+            {
+                MainWindow.WarningMessage = "No Current employee!";
+                return;
+            }
+
+            #endregion
+
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = "SirmiumERPGFC.Resources.WAK NEU.pdf";
 
