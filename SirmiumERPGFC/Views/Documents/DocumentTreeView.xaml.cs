@@ -230,6 +230,42 @@ namespace SirmiumERPGFC.Views.Documents
         #endregion
 
 
+        #region IsCopyInProgress
+        private bool _IsCopyInProgress;
+
+        public bool IsCopyInProgress
+        {
+            get { return _IsCopyInProgress; }
+            set
+            {
+                if (_IsCopyInProgress != value)
+                {
+                    _IsCopyInProgress = value;
+                    NotifyPropertyChanged("IsCopyInProgress");
+                }
+            }
+        }
+        #endregion
+
+        #region CopyPercentage
+        private double _CopyPercentage;
+
+        public double CopyPercentage
+        {
+            get { return _CopyPercentage; }
+            set
+            {
+                if (_CopyPercentage != value)
+                {
+                    _CopyPercentage = value;
+                    NotifyPropertyChanged("CopyPercentage");
+                }
+            }
+        }
+        #endregion
+
+
+
         public DocumentTreeView()
         {
             InitializeComponent();
@@ -544,33 +580,71 @@ namespace SirmiumERPGFC.Views.Documents
                 MessageBox.Show("Morate odabrati dokumente za kopiranje!");
                 return;
             }
-            var filesToUpload = FilesToUpload.ToList();
 
-            foreach (var item in filesToUpload)
+            Thread td = new Thread(() =>
             {
-                var newPath = System.IO.Path.Combine(SelectedTreeItem.FullPath, item.Name);
-
-                if(newPath == item.FullPath)
+                try
                 {
-                    MainWindow.ErrorMessage = "Ne mozete kopirati datoteku na njenu izvornu lokaciju!";
-                    continue;
-                }
+                    LoadingData = true;
+                    IsCopyInProgress = true;
+                    var filesToUpload = FilesToUpload.ToList();
 
-                if (File.Exists(newPath))
-                {
-                    var result = MessageBox.Show($"Vec postoji datoteka {item.Name} na odabranoj lokaciji. Zelite li da je prepisete?", "Duplikat!", MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.Yes)
+                    foreach (var item in filesToUpload)
                     {
-                        File.Delete(newPath);
+                        CopyPercentage = 0;
+                        var newPath = System.IO.Path.Combine(SelectedTreeItem.FullPath, item.Name);
 
+                        if (newPath == item.FullPath)
+                        {
+                            MainWindow.ErrorMessage = "Ne mozete kopirati datoteku na njenu izvornu lokaciju!";
+                            continue;
+                        }
+
+                        if (File.Exists(newPath))
+                        {
+                            var result = MessageBox.Show($"Vec postoji datoteka {item.Name} na odabranoj lokaciji. Zelite li da je prepisete?", "Duplikat!", MessageBoxButton.YesNo);
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                File.Delete(newPath);
+
+                            }
+                            else
+                                continue;
+                        }
+
+                        string oldPath = item.FullPath;
+                        var copy = new CopyFileHelper(item.FullPath, newPath);
+
+                        copy.OnProgressChanged += Copy_OnProgressChanged;
+                        copy.OnComplete += Copy_OnComplete;
+
+                        copy.Copy();
+                        Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            FilesToUpload.Remove(item);
+                        }));
+
+                        if(!IsCopyInProgress)
+                        {
+                            MainWindow.WarningMessage = "Kopiranje je prekinuto!";
+                            break;
+                        }
                     }
-                    else
-                        continue;
+                    IsCopyInProgress = false;
+                    DoFilteringOfData(!String.IsNullOrEmpty(FilterText));
+                } catch(Exception ex)
+                {
+                    MainWindow.ErrorMessage = ex.Message;
+                } finally
+                {
+                    IsCopyInProgress = false;
+                    LoadingData = false;
                 }
-                File.Copy(item.FullPath, newPath);
-                FilesToUpload.Remove(item);
-            }
+            });
+            td.IsBackground = true;
+            td.Start();
         }
+
 
         private void btnRename_Click(object sender, RoutedEventArgs e)
         {
@@ -592,26 +666,63 @@ namespace SirmiumERPGFC.Views.Documents
 
                     if (fileInfo != null)
                     {
-                        var newPath = System.IO.Path.Combine(fileInfo.Directory.FullName, item.NewName);
+                        var fileWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(item.Name);
+                        var newName = item.NewName + item.Name.Replace(fileWithoutExtension, "");
+                        var newPath = System.IO.Path.Combine(fileInfo.Directory.FullName, newName);
 
                         if (File.Exists(newPath))
                         {
-                            MessageBox.Show($"Dokument sa unetim nazivom \"{item.NewName}\" vec postoji!");
+                            MessageBox.Show($"Dokument sa unetim nazivom \"{newName}\" vec postoji!");
                             return;
                         }
 
-                        File.Move(item.FullPath, newPath);
+                        Thread td = new Thread(() =>
+                        {
+                            try
+                            {
+                                LoadingData = true;
+                                string oldPath = item.FullPath;
+                                var copy = new CopyFileHelper(item.FullPath, newPath);
 
-                        item.Name = item.NewName;
+                                copy.OnProgressChanged += Copy_OnProgressChanged;
+                                copy.OnComplete += Copy_OnComplete;
 
-                        item.FullPath = newPath;
+                                copy.Copy();
 
-                        Thread td = new Thread(() => DoFilteringOfData(!String.IsNullOrEmpty(FilterText)));
+                                item.Name = item.NewName;
+
+                                item.FullPath = newPath;
+
+                                File.Delete(oldPath);
+
+                                DoFilteringOfData(!String.IsNullOrEmpty(FilterText));
+                            }
+                            catch (Exception ex)
+                            {
+                                MainWindow.ErrorMessage = ex.Message;
+                            } finally
+                            {
+                                LoadingData = false;
+                            }
+
+                        });
+
                         td.IsBackground = true;
                         td.Start();
                     }
                 }
             }
+        }
+
+        private void Copy_OnComplete()
+        {
+            CopyPercentage = 0;
+        }
+
+        private void Copy_OnProgressChanged(double Persentage, ref bool Cancel)
+        {
+            Cancel = !IsCopyInProgress;
+            CopyPercentage = Persentage;
         }
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
@@ -632,6 +743,11 @@ namespace SirmiumERPGFC.Views.Documents
                     MessageBox.Show("Could not open the file.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
+        }
+
+        private void BtnCancelCopy_Click(object sender, RoutedEventArgs e)
+        {
+            IsCopyInProgress = false;
         }
     }
 }

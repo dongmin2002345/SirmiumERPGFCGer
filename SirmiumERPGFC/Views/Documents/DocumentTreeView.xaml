@@ -295,6 +295,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="5*" />
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0" Margin="0,2,0,2" VerticalAlignment="Stretch" IsEnabled="{Binding Path=CanInteract}"
@@ -315,7 +316,22 @@
                     </StackPanel>
                 </Button>
 
-                <DataGrid Grid.Row="2" ItemsSource="{Binding Path=FilesToUpload}" IsEnabled="{Binding Path=CanInteract}"
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <metro:MetroProgressBar Grid.Column="0" IsEnabled="{Binding Path=IsCopyInProgress}" Value="{Binding Path=CopyPercentage}"
+                                        Minimum="0" Maximum="100" Height="32" Margin="0,2,2,0" Background="#CCCCCCCC"/>
+
+                    <Button Grid.Column="1" Margin="0, 2, 0, 0" VerticalAlignment="Stretch" IsEnabled="{Binding Path=IsCopyInProgress}"
+                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="BtnCancelCopy_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\_cancel.png" RenderOptions.BitmapScalingMode="Fant" Width="16" Height="16" Margin="5" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <DataGrid Grid.Row="3" ItemsSource="{Binding Path=FilesToUpload}" IsEnabled="{Binding Path=CanInteract}"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"

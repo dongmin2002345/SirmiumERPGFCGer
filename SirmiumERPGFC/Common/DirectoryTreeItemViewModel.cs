@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace SirmiumERPGFC.Common
 {
@@ -24,7 +25,7 @@ namespace SirmiumERPGFC.Common
                     _Name = value;
                     NotifyPropertyChanged("Name");
 
-                    NewName = _Name;
+                    NewName = System.IO.Path.GetFileNameWithoutExtension(_Name);
                 }
             }
         }
