@@ -1622,7 +1622,7 @@ namespace SirmiumERPGFC.Views.Employees
                         var employeeBusinessPartner = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
                         var businessPartnerAddress = new BusinessPartnerLocationSQLiteRepository().GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, employeeBusinessPartner?.Identifier ?? Guid.Empty).BusinessPartnerLocations?.OrderBy(x => x.CreatedAt).FirstOrDefault();
                         
-                        string businessPartnerLocation = businessPartnerAddress?.BusinessPartner.NameGer + "," + businessPartnerAddress?.Address + "," + businessPartnerAddress?.City.ZipCode + "," + businessPartnerAddress?.City.Name;
+                        string businessPartnerLocation = (businessPartnerAddress?.BusinessPartner.NameGer ?? "") + ", " + (businessPartnerAddress?.Address ?? "") + ", " + (businessPartnerAddress?.City?.ZipCode ?? "") + ", " + (businessPartnerAddress?.City?.Name ?? "");
                         pdfFormFields.SetField("7 Name und Anschrift des entsendenden Unternehmens bzw der Niederlassung im Bundesgebiet", businessPartnerLocation);
                         
                         pdfFormFields.SetField("9 PassNr oder PassersatzN", CurrentEmployee.Passport);
@@ -1654,13 +1654,13 @@ namespace SirmiumERPGFC.Views.Employees
                         var employeeBusinessPartnerS = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
                         employeeBusinessPartnerS = new BusinessPartnerSQLiteRepository().GetBusinessPartner(employeeBusinessPartnerS?.Identifier ?? Guid.NewGuid())?.BusinessPartner;
                         
-                        string employeeBusinesPartnerLocation = employeeBusinessPartnerS?.Name + "," + employeeBusinessPartnerS?.Address + "," + employeeBusinessPartnerS?.CitySrb.ZipCode + "," + employeeBusinessPartnerS?.CitySrb.Name + "," + employeeBusinessPartnerS?.CountrySrb.Name;
+                        string employeeBusinesPartnerLocation = (employeeBusinessPartnerS?.Name ?? "") + ", " + (employeeBusinessPartnerS?.Address ?? "") + ", " + (employeeBusinessPartnerS?.CitySrb?.ZipCode ?? "") + ", " + (employeeBusinessPartnerS?.CitySrb?.Name ?? "") + ", " + (employeeBusinessPartnerS?.CountrySrb?.Name ?? "");
                         pdfFormFields.SetField("17 Auftragnehmer ausländisches Unternehmen", ("\n" + employeeBusinesPartnerLocation));
 
-                        string employeeConstructionCitePartner = employeeConstructionSite?.NamePartner + "," + employeeConstructionSite?.AddressPartner + "," + employeeConstructionSite?.CityPartner.ZipCode + "," + employeeConstructionSite?.CityPartner.Name;
+                        string employeeConstructionCitePartner = (employeeConstructionSite?.NamePartner ?? "") + ", " + (employeeConstructionSite?.AddressPartner ?? "") + ", " + (employeeConstructionSite?.CityPartner?.ZipCode ?? "") + ", " + (employeeConstructionSite?.CityPartner?.Name ?? "");
                         pdfFormFields.SetField("18 Auftraggeber", ("\n" + employeeConstructionCitePartner));
 
-                        string employeeConstructionCiteLocation = employeeConstructionSite?.Name + "," + employeeConstructionSite?.Address + "," + employeeConstructionSite?.City.ZipCode + "," + employeeConstructionSite?.City.Name;
+                        string employeeConstructionCiteLocation = (employeeConstructionSite?.Name ?? "") + ", " + (employeeConstructionSite?.Address ?? "") + ", " + (employeeConstructionSite?.City?.ZipCode ?? "") + ", " + (employeeConstructionSite?.City?.Name ?? "");
                         pdfFormFields.SetField("19 BetriebsstätteBaustelle Anschrift Straße Nr PLZ Ort", employeeConstructionCiteLocation);
 
                         //pdfFormFields.SetField("f1_03(0)", "1");
