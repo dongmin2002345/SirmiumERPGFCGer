@@ -34,7 +34,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "Address, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
                 "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -86,7 +86,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.CityId = Int32.Parse(reader["CityId"].ToString());
                             businessPartnerLocation.City.Id = Int32.Parse(reader["CityId"].ToString());
                             businessPartnerLocation.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.City.Code = reader["CityCode"].ToString();
+                            businessPartnerLocation.City.ZipCode = reader["CityZipCode"].ToString();
                             businessPartnerLocation.City.Name = reader["CityName"].ToString();
                         }
 
@@ -147,7 +147,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "Address, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
                 "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -199,7 +199,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.CityId = Int32.Parse(reader["CityId"].ToString());
                             businessPartnerLocation.City.Id = Int32.Parse(reader["CityId"].ToString());
                             businessPartnerLocation.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.City.Code = reader["CityCode"].ToString();
+                            businessPartnerLocation.City.ZipCode = reader["CityZipCode"].ToString();
                             businessPartnerLocation.City.Name = reader["CityName"].ToString();
                         }
 
@@ -274,7 +274,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "Address, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
                 "RegionId, RegionIdentifier, RegionCode, RegionName, " +
                 "ItemStatus, Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
@@ -328,7 +328,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.CityId = Int32.Parse(reader["CityId"].ToString());
                             businessPartnerLocation.City.Id = Int32.Parse(reader["CityId"].ToString());
                             businessPartnerLocation.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            businessPartnerLocation.City.Code = reader["CityCode"].ToString();
+                            businessPartnerLocation.City.ZipCode = reader["CityZipCode"].ToString();
                             businessPartnerLocation.City.Name = reader["CityName"].ToString();
                         }
 

@@ -1621,7 +1621,9 @@ namespace SirmiumERPGFC.Views.Employees
                         // Adresa firme u Nemackoj
                         var employeeBusinessPartner = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
                         var businessPartnerAddress = new BusinessPartnerLocationSQLiteRepository().GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, employeeBusinessPartner?.Identifier ?? Guid.Empty).BusinessPartnerLocations?.OrderBy(x => x.CreatedAt).FirstOrDefault();
-                        pdfFormFields.SetField("7 Name und Anschrift des entsendenden Unternehmens bzw der Niederlassung im Bundesgebiet", businessPartnerAddress?.Address ?? "");
+                        
+                        string businessPartnerLocation = (businessPartnerAddress?.BusinessPartner.NameGer ?? "") + ", " + (businessPartnerAddress?.Address ?? "") + ", " + (businessPartnerAddress?.City?.ZipCode ?? "") + ", " + (businessPartnerAddress?.City?.Name ?? "");
+                        pdfFormFields.SetField("7 Name und Anschrift des entsendenden Unternehmens bzw der Niederlassung im Bundesgebiet", businessPartnerLocation);
                         
                         pdfFormFields.SetField("9 PassNr oder PassersatzN", CurrentEmployee.Passport);
                         pdfFormFields.SetField("10 ausgestellt am", CurrentEmployee.VisaFrom?.ToString("dd.MM.yyyy") ?? "");
@@ -1649,9 +1651,17 @@ namespace SirmiumERPGFC.Views.Employees
                         pdfFormFields.SetField("Text8.0.10", employeeConstructionSite.InternalCode?.Length > 10 ? employeeConstructionSite.InternalCode.ToArray()[10].ToString() : "");
                         pdfFormFields.SetField("Text8.0.11", employeeConstructionSite.InternalCode?.Length > 11 ? employeeConstructionSite.InternalCode.ToArray()[11].ToString() : "");
 
-                        pdfFormFields.SetField("17 Auftragnehmer ausländisches Unternehmen", businessPartnerAddress?.Address ?? "");
-                        pdfFormFields.SetField("18 Auftraggeber", businessPartnerAddress?.Address ?? "");
-                        pdfFormFields.SetField("19 BetriebsstätteBaustelle Anschrift Straße Nr PLZ Ort", employeeConstructionSite.Name);
+                        var employeeBusinessPartnerS = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
+                        employeeBusinessPartnerS = new BusinessPartnerSQLiteRepository().GetBusinessPartner(employeeBusinessPartnerS?.Identifier ?? Guid.NewGuid())?.BusinessPartner;
+                        
+                        string employeeBusinesPartnerLocation = (employeeBusinessPartnerS?.Name ?? "") + ", " + (employeeBusinessPartnerS?.Address ?? "") + ", " + (employeeBusinessPartnerS?.CitySrb?.ZipCode ?? "") + ", " + (employeeBusinessPartnerS?.CitySrb?.Name ?? "") + ", " + (employeeBusinessPartnerS?.CountrySrb?.Name ?? "");
+                        pdfFormFields.SetField("17 Auftragnehmer ausländisches Unternehmen", ("\n" + employeeBusinesPartnerLocation));
+
+                        string employeeConstructionCitePartner = (employeeConstructionSite?.NamePartner ?? "") + ", " + (employeeConstructionSite?.AddressPartner ?? "") + ", " + (employeeConstructionSite?.CityPartner?.ZipCode ?? "") + ", " + (employeeConstructionSite?.CityPartner?.Name ?? "");
+                        pdfFormFields.SetField("18 Auftraggeber", ("\n" + employeeConstructionCitePartner));
+
+                        string employeeConstructionCiteLocation = (employeeConstructionSite?.Name ?? "") + ", " + (employeeConstructionSite?.Address ?? "") + ", " + (employeeConstructionSite?.City?.ZipCode ?? "") + ", " + (employeeConstructionSite?.City?.Name ?? "");
+                        pdfFormFields.SetField("19 BetriebsstätteBaustelle Anschrift Straße Nr PLZ Ort", employeeConstructionCiteLocation);
 
                         //pdfFormFields.SetField("f1_03(0)", "1");
                         //pdfFormFields.SetField("f1_04(0)", "8");
