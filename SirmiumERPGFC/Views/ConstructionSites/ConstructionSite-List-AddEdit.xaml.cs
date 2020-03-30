@@ -395,7 +395,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             ConstructionSiteListResponse constructionSiteList = new ConstructionSiteSQLiteRepository()
-              .GetConstructionSitesByPage(MainWindow.CurrentCompanyId, new ConstructionSiteViewModel());
+              .GetConstructionSites(MainWindow.CurrentCompanyId, "");
 
             var ConstructionSitesFromDB = new ObservableCollection<ConstructionSiteViewModel>(constructionSiteList.ConstructionSites ?? new List<ConstructionSiteViewModel>());
 

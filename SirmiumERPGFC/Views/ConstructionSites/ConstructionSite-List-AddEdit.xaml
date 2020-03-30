@@ -71,6 +71,8 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource StatusDvotacka}" VerticalAlignment="Center" Margin="5 2 5 2" />
                     <popups:StatusPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popStatus" 
                                         CurrentStatus="{Binding Path=CurrentConstructionSite.Status, Mode=TwoWay}"/>
+                    
+                    
                     <!--<ComboBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="cbxStatus" Margin="2"
                         SelectedItem="{Binding Path=CurrentConstructionSite.Status, Converter={StaticResource StatusConverter}}"
                         ItemsSource="{Binding Path=StatusOptions}">
@@ -131,6 +133,36 @@
                     <popups:ShipmantPopup Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popShipment" Margin="2"
                                         CurrentShipment="{Binding Path=CurrentConstructionSite.Shipment, Mode=TwoWay}"/>
 
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1" Grid.Column="0" Header="{DynamicResource Osnovni_podaci_o_partner}" Margin="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource NazivDvotacka}" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtNamePartner"  Margin="2" Text="{Binding Path=CurrentConstructionSite.NamePartner}" IsEnabled="True" />
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="3" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource AdresaDvotacka}" />
+                    <TextBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" x:Name="txtAddressPartner"  Margin="2" Text="{Binding Path=CurrentConstructionSite.AddressPartner}" IsEnabled="True" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5 2 5 2" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" />
+                    <popups:CityPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCityPartner" 
+                                        CurrentCity="{Binding Path=CurrentConstructionSite.CityPartner, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
 

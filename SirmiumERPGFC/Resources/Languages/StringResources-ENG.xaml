@@ -191,6 +191,7 @@
     <system:String x:Key="Osnovni_podaci_o_dozvoli">Basic information about the license</system:String>
     <system:String x:Key="Osnovni_podaci_o_drzavama">Basic information about countries</system:String>
     <system:String x:Key="Osnovni_podaci_o_gradilištu">Basic data on the construction site</system:String>
+    <system:String x:Key="Osnovni_podaci_o_partner">Basic information about a partner</system:String>
     <system:String x:Key="Osnovni_podaci_o_gradu">Basic information about the city</system:String>
     <system:String x:Key="Oznaka_države">Country designation</system:String>
     <system:String x:Key="Oznaka_državeDvotacka">Country Code:</system:String>

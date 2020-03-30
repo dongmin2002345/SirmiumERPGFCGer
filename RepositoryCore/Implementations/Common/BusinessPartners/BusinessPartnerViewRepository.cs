@@ -36,6 +36,10 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerInternalCode, BusinessPartnerName, " +
                 "PIB, PIO, IdentificationNumber, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
+
+                "CountrySrbId, CountrySrbIdentifier, CountrySrbCode, CountrySrbName, " +
+                "CitySrbId, CitySrbIdentifier, CitySrbZipCode, CitySrbName, " +
+                "Address, " +
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
                 "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
@@ -88,6 +92,29 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.NameGer = reader["NameGer"].ToString();
                         if (reader["IsInPDVGer"] != DBNull.Value)
                             businessPartner.IsInPDVGer = bool.Parse(reader["IsInPDVGer"].ToString());
+
+                        if (reader["CountrySrbId"] != DBNull.Value)
+                        {
+                            businessPartner.CountrySrb = new Country();
+                            businessPartner.CountrySrbId = Int32.Parse(reader["CountrySrbId"].ToString());
+                            businessPartner.CountrySrb.Id = Int32.Parse(reader["CountrySrbId"].ToString());
+                            businessPartner.CountrySrb.Identifier = Guid.Parse(reader["CountrySrbIdentifier"].ToString());
+                            businessPartner.CountrySrb.Code = reader["CountrySrbCode"].ToString();
+                            businessPartner.CountrySrb.Name = reader["CountrySrbName"].ToString();
+                        }
+
+                        if (reader["CitySrbId"] != DBNull.Value)
+                        {
+                            businessPartner.CitySrb = new City();
+                            businessPartner.CitySrbId = Int32.Parse(reader["CitySrbId"].ToString());
+                            businessPartner.CitySrb.Id = Int32.Parse(reader["CitySrbId"].ToString());
+                            businessPartner.CitySrb.Identifier = Guid.Parse(reader["CitySrbIdentifier"].ToString());
+                            businessPartner.CitySrb.ZipCode = reader["CitySrbZipCode"].ToString();
+                            businessPartner.CitySrb.Name = reader["CitySrbName"].ToString();
+                        }
+
+                        if (reader["Address"] != DBNull.Value)
+                            businessPartner.Address = reader["Address"].ToString();
 
                         if (reader["TaxAdministrationId"] != DBNull.Value)
                         {
@@ -222,6 +249,11 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerInternalCode, BusinessPartnerName, " +
                 "PIB, PIO, IdentificationNumber, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
+
+                "CountrySrbId, CountrySrbIdentifier, CountrySrbCode, CountrySrbName, " +
+                "CitySrbId, CitySrbIdentifier, CitySrbZipCode, CitySrbName, " +
+                "Address, " +
+
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
                 "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
@@ -276,6 +308,29 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.NameGer = reader["NameGer"].ToString();
                         if (reader["IsInPDVGer"] != DBNull.Value)
                             businessPartner.IsInPDVGer = bool.Parse(reader["IsInPDVGer"].ToString());
+
+                        if (reader["CountrySrbId"] != DBNull.Value)
+                        {
+                            businessPartner.CountrySrb = new Country();
+                            businessPartner.CountrySrbId = Int32.Parse(reader["CountrySrbId"].ToString());
+                            businessPartner.CountrySrb.Id = Int32.Parse(reader["CountrySrbId"].ToString());
+                            businessPartner.CountrySrb.Identifier = Guid.Parse(reader["CountrySrbIdentifier"].ToString());
+                            businessPartner.CountrySrb.Code = reader["CountrySrbCode"].ToString();
+                            businessPartner.CountrySrb.Name = reader["CountrySrbName"].ToString();
+                        }
+
+                        if (reader["CitySrbId"] != DBNull.Value)
+                        {
+                            businessPartner.CitySrb = new City();
+                            businessPartner.CitySrbId = Int32.Parse(reader["CitySrbId"].ToString());
+                            businessPartner.CitySrb.Id = Int32.Parse(reader["CitySrbId"].ToString());
+                            businessPartner.CitySrb.Identifier = Guid.Parse(reader["CitySrbIdentifier"].ToString());
+                            businessPartner.CitySrb.ZipCode = reader["CitySrbZipCode"].ToString();
+                            businessPartner.CitySrb.Name = reader["CitySrbName"].ToString();
+                        }
+
+                        if (reader["Address"] != DBNull.Value)
+                            businessPartner.Address = reader["Address"].ToString();
 
                         if (reader["TaxAdministrationId"] != DBNull.Value)
                         {
@@ -410,6 +465,11 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
             string queryString =
                 "SELECT BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerInternalCode, BusinessPartnerName, " +
                 "PIB, PIO, IdentificationNumber, DueDate, WebSite, ContactPerson, IsInPDV, JBKJS, NameGer, IsInPDVGer, " +
+
+                "CountrySrbId, CountrySrbIdentifier, CountrySrbCode, CountrySrbName, " +
+                "CitySrbId, CitySrbIdentifier, CitySrbZipCode, CitySrbName, " +
+                "Address, " +
+
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
                 "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
@@ -461,6 +521,29 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.NameGer = reader["NameGer"].ToString();
                         if (reader["IsInPDVGer"] != DBNull.Value)
                             businessPartner.IsInPDVGer = bool.Parse(reader["IsInPDVGer"].ToString());
+
+                        if (reader["CountrySrbId"] != DBNull.Value)
+                        {
+                            businessPartner.CountrySrb = new Country();
+                            businessPartner.CountrySrbId = Int32.Parse(reader["CountrySrbId"].ToString());
+                            businessPartner.CountrySrb.Id = Int32.Parse(reader["CountrySrbId"].ToString());
+                            businessPartner.CountrySrb.Identifier = Guid.Parse(reader["CountrySrbIdentifier"].ToString());
+                            businessPartner.CountrySrb.Code = reader["CountrySrbCode"].ToString();
+                            businessPartner.CountrySrb.Name = reader["CountrySrbName"].ToString();
+                        }
+
+                        if (reader["CitySrbId"] != DBNull.Value)
+                        {
+                            businessPartner.CitySrb = new City();
+                            businessPartner.CitySrbId = Int32.Parse(reader["CitySrbId"].ToString());
+                            businessPartner.CitySrb.Id = Int32.Parse(reader["CitySrbId"].ToString());
+                            businessPartner.CitySrb.Identifier = Guid.Parse(reader["CitySrbIdentifier"].ToString());
+                            businessPartner.CitySrb.ZipCode = reader["CitySrbZipCode"].ToString();
+                            businessPartner.CitySrb.Name = reader["CitySrbName"].ToString();
+                        }
+
+                        if (reader["Address"] != DBNull.Value)
+                            businessPartner.Address = reader["Address"].ToString();
 
                         if (reader["TaxAdministrationId"] != DBNull.Value)
                         {
@@ -637,6 +720,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                 if (dbEntry != null)
                 {
+                    dbEntry.CountrySrbId = businessPartner.CountrySrbId ?? null;
+                    dbEntry.CitySrbId = businessPartner.CitySrbId ?? null;
                     dbEntry.CountryId = businessPartner.CountryId ?? null;
                     dbEntry.SectorId = businessPartner.SectorId ?? null;
                     dbEntry.AgencyId = businessPartner.AgencyId ?? null;
@@ -654,6 +739,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                     dbEntry.PIB = businessPartner.PIB;
                     dbEntry.PIO = businessPartner.PIO;
                     dbEntry.IdentificationNumber = businessPartner.IdentificationNumber;
+                    dbEntry.Address = businessPartner.Address;
 
                     // Set GER properties
                     dbEntry.NameGer = businessPartner.NameGer;

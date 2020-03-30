@@ -226,6 +226,58 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region CountrySrb
+        private CountryViewModel _CountrySrb;
+
+        public CountryViewModel CountrySrb
+        {
+            get { return _CountrySrb; }
+            set
+            {
+                if (_CountrySrb != value)
+                {
+                    _CountrySrb = value;
+                    NotifyPropertyChanged("CountrySrb");
+                }
+            }
+        }
+        #endregion
+
+        #region CitySrb
+        private CityViewModel _CitySrb;
+
+        public CityViewModel CitySrb
+        {
+            get { return _CitySrb; }
+            set
+            {
+                if (_CitySrb != value)
+                {
+                    _CitySrb = value;
+                    NotifyPropertyChanged("CitySrb");
+                }
+            }
+        }
+        #endregion
+
+        #region Address
+        private string _Address;
+
+        public string Address
+        {
+            get { return _Address; }
+            set
+            {
+                if (_Address != value)
+                {
+                    _Address = value;
+                    NotifyPropertyChanged("Address");
+                }
+            }
+        }
+        #endregion
+
+
 
         #region GER 
 

@@ -28,9 +28,17 @@ namespace RepositoryCore.DbViews.ConstructionSites
                 "constructionSite.InternalCode AS ConstructionSiteInternalCode, " +
                 "constructionSite.Name AS ConstructionSiteName, " +
 
+                "constructionSite.NamePartner, " +
+                "constructionSite.AddressPartner, " +
+
+                "cityPartner.Id AS CityPartnerId, " +
+                "cityPartner.Identifier AS CityPartnerIdentifier, " +
+                "cityPartner.ZipCode AS CityPartnerZipCode, " +
+                "cityPartner.Name AS CityPartnerName, " +
+
                 "city.Id AS CityId, " +
                 "city.Identifier AS CityIdentifier, " +
-                "city.Code AS CityCode, " +
+                "city.ZipCode AS CityZipCode, " +
                 "city.Name AS CityName, " +
 
                 "country.Id AS CountryId, " +
@@ -68,7 +76,7 @@ namespace RepositoryCore.DbViews.ConstructionSites
 
                 "(SELECT MAX(v) FROM (VALUES " +
                 "(constructionSite.UpdatedAt), " +
-                "(city.UpdatedAt), (country.UpdatedAt), (businessPartner.UpdatedAt), (status.UpdatedAt), (shipment.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
+                "(city.UpdatedAt), (cityPartner.UpdatedAt), (country.UpdatedAt), (businessPartner.UpdatedAt), (status.UpdatedAt), (shipment.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
 
                 "createdBy.Id AS CreatedById, " +
                 "createdBy.FirstName AS CreatedByFirstName, " +
@@ -77,6 +85,7 @@ namespace RepositoryCore.DbViews.ConstructionSites
 
                 "FROM ConstructionSites constructionSite " +
                 "LEFT JOIN Cities city ON constructionSite.CityId = city.Id " +
+                "LEFT JOIN Cities cityPartner ON constructionSite.CityPartnerId = cityPartner.Id " +
                 "LEFT JOIN Countries country ON constructionSite.CountryId = country.Id " +
                 "LEFT JOIN BusinessPartners businessPartner ON constructionSite.BusinessPartnerId = businessPartner.Id " +
                 "LEFT JOIN Statuses status ON constructionSite.StatusId = status.Id " +

@@ -35,6 +35,10 @@ namespace DataMapper.Mappers.ConstructionSites
                 InternalCode = constructionSite.InternalCode,
 
                 Name = constructionSite.Name,
+
+                NamePartner = constructionSite.NamePartner,
+                AddressPartner = constructionSite.AddressPartner,
+
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
 
@@ -46,7 +50,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 Path = constructionSite.Path,
                 PaymentValue = constructionSite.PaymentValue,
 
-
+                CityPartner = constructionSite.CityPartner?.ConvertToCityViewModelLite(),
                 City = constructionSite.City?.ConvertToCityViewModelLite(),
                 Country = constructionSite.Country?.ConvertToCountryViewModelLite(),
                 BusinessPartner = constructionSite.BusinessPartner?.ConvertToBusinessPartnerViewModelLite(),
@@ -87,6 +91,8 @@ namespace DataMapper.Mappers.ConstructionSites
                 InternalCode = constructionSite.InternalCode, 
 
                 Name = constructionSite.Name,
+                NamePartner = constructionSite.NamePartner,
+                AddressPartner = constructionSite.AddressPartner,
                 Address = constructionSite.Address,
                 MaxWorkers = constructionSite.MaxWorkers,
 
@@ -118,6 +124,8 @@ namespace DataMapper.Mappers.ConstructionSites
 
                 Address = constructionSiteViewModel.Address,
                 Name = constructionSiteViewModel.Name,
+                NamePartner = constructionSiteViewModel.NamePartner,
+                AddressPartner = constructionSiteViewModel.AddressPartner,
                 MaxWorkers = constructionSiteViewModel.MaxWorkers,
 
                 ProContractDate = constructionSiteViewModel.ProContractDate,
@@ -127,7 +135,7 @@ namespace DataMapper.Mappers.ConstructionSites
                 PaymentDate = constructionSiteViewModel.PaymentDate,
                 Path = constructionSiteViewModel.Path,
                 PaymentValue = constructionSiteViewModel.PaymentValue,
-
+                CityPartnerId = constructionSiteViewModel.CityPartner?.Id ?? null,
                 CityId = constructionSiteViewModel.City?.Id ?? null,
                 CountryId = constructionSiteViewModel.Country?.Id ?? null,
                 BusinessPartnerId = constructionSiteViewModel.BusinessPartner?.Id ?? null,

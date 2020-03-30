@@ -828,5 +828,6 @@
 
     <system:String x:Key="Promeni">Veränderung</system:String>
     <system:String x:Key="Obrisi">Löschen</system:String>
+    <system:String x:Key="Osnovni_podaci_o_partner">Grundlegende Informationen zu einem Partner</system:String>
 
 </ResourceDictionary>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200330105622_IzmenaPP_Nemanja")]
+    partial class IzmenaPP_Nemanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1956,13 +1958,9 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<string>("AddressPartner");
-
                     b.Property<int?>("BusinessPartnerId");
 
                     b.Property<int?>("CityId");
-
-                    b.Property<int?>("CityPartnerId");
 
                     b.Property<string>("Code");
 
@@ -1986,8 +1984,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("NamePartner");
-
                     b.Property<string>("Path");
 
                     b.Property<DateTime>("PaymentDate");
@@ -2009,8 +2005,6 @@ namespace RepositoryCore.Migrations
                     b.HasIndex("BusinessPartnerId");
 
                     b.HasIndex("CityId");
-
-                    b.HasIndex("CityPartnerId");
 
                     b.HasIndex("CompanyId");
 
@@ -3989,10 +3983,6 @@ namespace RepositoryCore.Migrations
                     b.HasOne("DomainCore.Common.Locations.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");
-
-                    b.HasOne("DomainCore.Common.Locations.City", "CityPartner")
-                        .WithMany()
-                        .HasForeignKey("CityPartnerId");
 
                     b.HasOne("DomainCore.Common.Companies.Company", "Company")
                         .WithMany()

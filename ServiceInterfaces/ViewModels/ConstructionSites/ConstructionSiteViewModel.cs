@@ -79,6 +79,57 @@ namespace ServiceInterfaces.ViewModels.ConstructionSites
         }
         #endregion
 
+        #region NamePartner
+        private string _NamePartner;
+
+        public string NamePartner
+        {
+            get { return _NamePartner; }
+            set
+            {
+                if (_NamePartner != value)
+                {
+                    _NamePartner = value;
+                    NotifyPropertyChanged("NamePartner");
+                }
+            }
+        }
+        #endregion
+
+        #region AddressPartner
+        private string _AddressPartner;
+
+        public string AddressPartner
+        {
+            get { return _AddressPartner; }
+            set
+            {
+                if (_AddressPartner != value)
+                {
+                    _AddressPartner = value;
+                    NotifyPropertyChanged("AddressPartner");
+                }
+            }
+        }
+        #endregion
+
+        #region CityPartner
+        private CityViewModel _CityPartner;
+
+        public CityViewModel CityPartner
+        {
+            get { return _CityPartner; }
+            set
+            {
+                if (_CityPartner != value)
+                {
+                    _CityPartner = value;
+                    NotifyPropertyChanged("CityPartner");
+                }
+            }
+        }
+        #endregion
+
         #region City
         private CityViewModel _City;
 

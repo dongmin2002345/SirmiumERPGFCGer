@@ -28,8 +28,22 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "ContactPerson NVARCHAR(2048) NULL, " +
             "IsInPdv BOOL NULL, " +
             "JBKJS NVARCHAR(48) NULL, " +
+
+             "CountrySrbId INTEGER NULL, " +
+            "CountrySrbIdentifier GUID NULL, " +
+            "CountrySrbCode NVARCHAR(48) NULL, " +
+            "CountrySrbName NVARCHAR(2048) NULL, " +
+
+            "CitySrbId INTEGER NULL, " +
+            "CitySrbIdentifier GUID NULL, " +
+            "CitySrbCode NVARCHAR(48) NULL, " +
+            "CitySrbName NVARCHAR(2048) NULL, " +
+
+            "Address NVARCHAR(2048) NULL, " +
+
             "NameGer NVARCHAR(2048) NULL, " +
             "IsInPDVGer BOOL NULL, " +
+
             "TaxAdministrationId INTEGER NULL, " +
             "TaxAdministrationIdentifier GUID NULL, " +
             "TaxAdministrationCode NVARCHAR(48) NULL, " +
@@ -76,6 +90,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, IdentificationNumber, " +
             "DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
+
+            "CountrySrbId, CountrySrbIdentifier, CountrySrbCode, CountrySrbName, " +
+            "CitySrbId, CitySrbIdentifier, CitySrbCode, CitySrbName, " +
+            "Address, " +
+
             "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
             "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
@@ -88,6 +107,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
             "(Id, ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, IdentificationNumber, " +
             "DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
+
+            "CountrySrbId, CountrySrbIdentifier, CountrySrbCode, CountrySrbName, " +
+            "CitySrbId, CitySrbIdentifier, CitySrbCode, CitySrbName, " +
+            "Address, " +
+
             "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
             "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
@@ -99,6 +123,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @PIB, @PIO, @IdentificationNumber, " +
             "@DueDate, @WebSite, @ContactPerson, @IsInPdv, @JBKJS, " +
+
+            "@CountrySrbId, @CountrySrbIdentifier, @CountrySrbCode, @CountrySrbName, " +
+            "@CitySrbId, @CitySrbIdentifier, @CitySrbCode, @CitySrbName, " +
+            "@Address, " +
+
             "@NameGer, @IsInPDVGer, @TaxAdministrationId, @TaxAdministrationIdentifier, @TaxAdministrationCode, @TaxAdministrationName, " +
             "@IBAN, @BetriebsNumber, @Customer, @TaxNr, @CommercialNr, @ContactPersonGer, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
@@ -129,6 +158,11 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.ContactPerson = SQLiteHelper.GetString(query, ref counter);
             dbEntry.IsInPDV = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.JBKJS = SQLiteHelper.GetString(query, ref counter);
+
+            dbEntry.CountrySrb = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.CitySrb = SQLiteHelper.GetCity(query, ref counter);
+            dbEntry.Address = SQLiteHelper.GetString(query, ref counter);
+
             dbEntry.NameGer = SQLiteHelper.GetString(query, ref counter);
             dbEntry.IsInPDVGer = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.TaxAdministration = SQLiteHelper.GetTaxAdministration(query, ref counter);
@@ -170,6 +204,19 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@ContactPerson", ((object)businessPartner.ContactPerson) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsInPdv", ((object)businessPartner.IsInPDV) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@JBKJS", ((object)businessPartner.JBKJS) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@CountrySrbId", ((object)businessPartner.CountrySrb?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountrySrbIdentifier", ((object)businessPartner.CountrySrb?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountrySrbCode", ((object)businessPartner.CountrySrb?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountrySrbName", ((object)businessPartner.CountrySrb?.Name) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@CitySrbId", ((object)businessPartner.CitySrb?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CitySrbIdentifier", ((object)businessPartner.CitySrb?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CitySrbCode", ((object)businessPartner.CitySrb?.ZipCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CitySrbName", ((object)businessPartner.CitySrb?.Name) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@Address", ((object)businessPartner.Address) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@NameGer", ((object)businessPartner.NameGer) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsInPDVGer", ((object)businessPartner.IsInPDVGer) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@TaxAdministrationId", ((object)businessPartner.TaxAdministration?.Id) ?? DBNull.Value);
@@ -235,6 +282,9 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                     SqliteCommand selectCommand = new SqliteCommand(
                         "SELECT bp.ServerId, bp.Identifier, bp.Code, bp.InternalCode, bp.Name, bp.PIB, bp.PIO, bp.IdentificationNumber, " +
                         "bp.DueDate, bp.WebSite, bp.ContactPerson, bp.IsInPdv, bp.JBKJS, " +
+                        "bp.CountrySrbId, bp.CountrySrbIdentifier, bp.CountrySrbCode, bp.CountrySrbName, " +
+                        "bp.CitySrbId, bp.CitySrbIdentifier, bp.CitySrbCode, bp.CitySrbName, " +
+                        "bp.Address, " +
                         "bp.NameGer, bp.IsInPDVGer, bp.TaxAdministrationId, bp.TaxAdministrationIdentifier, bp.TaxAdministrationCode, bp.TaxAdministrationName, " +
                         "bp.IBAN, bp.BetriebsNumber, bp.Customer, bp.TaxNr, bp.CommercialNr, bp.ContactPersonGer, " +
                         "bp.CountryId, bp.CountryIdentifier, bp.CountryCode, bp.CountryName, " +

@@ -16,6 +16,11 @@ namespace DomainCore.ConstructionSites
 
         public string Name { get; set; }
 
+        public string NamePartner { get; set; }
+        public string AddressPartner { get; set; }
+        public int? CityPartnerId { get; set; }
+        public City CityPartner { get; set; }
+
         public int? CityId { get; set; }
         public City City { get; set; }
 

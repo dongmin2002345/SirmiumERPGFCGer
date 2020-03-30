@@ -36,6 +36,14 @@ namespace DomainCore.Common.BusinessPartners
         public int? PdvType { get; set; }
         public string Path { get; set; }
 
+        public int? CountrySrbId { get; set; }
+        public Country CountrySrb { get; set; }
+
+        public int? CitySrbId { get; set; }
+        public City CitySrb { get; set; }
+
+        public string Address { get; set; }
+
         #region GER
 
         public string NameGer { get; set; }

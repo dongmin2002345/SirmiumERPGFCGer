@@ -192,6 +192,7 @@
     <system:String x:Key="Osnovni_podaci_o_dozvoli">Osnovni podaci o dozvoli</system:String>
     <system:String x:Key="Osnovni_podaci_o_drzavama">Osnovni podaci o drzavama</system:String>
     <system:String x:Key="Osnovni_podaci_o_gradilištu">Osnovni podaci o gradilištu</system:String>
+    <system:String x:Key="Osnovni_podaci_o_partner">Osnovni podaci o partneru</system:String>
     <system:String x:Key="Osnovni_podaci_o_gradu">Osnovni podaci o gradu</system:String>
     <system:String x:Key="Oznaka_države">Oznaka države</system:String>
     <system:String x:Key="Oznaka_državeDvotacka">Oznaka države:</system:String>

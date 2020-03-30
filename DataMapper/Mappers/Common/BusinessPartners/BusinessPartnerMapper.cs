@@ -40,7 +40,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 PIB = businessPartner.PIB,
                 PIO = businessPartner.PIO,
                 IdentificationNumber = businessPartner.IdentificationNumber,
-
+                Address = businessPartner.Address,
                 DueDate = businessPartner.DueDate,
 
                 WebSite = businessPartner.WebSite,
@@ -57,6 +57,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 BetriebsNumber = businessPartner.BetriebsNumber,
                 Customer = businessPartner.Customer,
                 Country = businessPartner.Country?.ConvertToCountryViewModelLite(),
+                CountrySrb = businessPartner.CountrySrb?.ConvertToCountryViewModelLite(),
+                CitySrb = businessPartner.CitySrb?.ConvertToCityViewModelLite(),
                 Sector = businessPartner.Sector?.ConvertToSectorViewModelLite(),
                 Agency = businessPartner.Agency?.ConvertToAgencyViewModelLite(),
                 Vat = businessPartner.Vat?.ConvertToVatViewModelLite(),
@@ -96,7 +98,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 PIB = businessPartner.PIB,
                 PIO = businessPartner.PIO,
                 IdentificationNumber = businessPartner.IdentificationNumber,
-
+                Address = businessPartner.Address,
                 DueDate = businessPartner.DueDate,
 
                 WebSite = businessPartner.WebSite,
@@ -142,7 +144,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 PIB = businessPartnerViewModel.PIB,
                 PIO = businessPartnerViewModel.PIO,
                 IdentificationNumber = businessPartnerViewModel.IdentificationNumber,
-
+                Address = businessPartnerViewModel.Address,
                 DueDate = businessPartnerViewModel.DueDate,
 
                 WebSite = businessPartnerViewModel.WebSite,
@@ -159,6 +161,8 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 BetriebsNumber = businessPartnerViewModel.BetriebsNumber,
                 Customer = businessPartnerViewModel.Customer,
                 CountryId = businessPartnerViewModel.Country?.Id ?? null,
+                CountrySrbId = businessPartnerViewModel.CountrySrb?.Id ?? null,
+                CitySrbId = businessPartnerViewModel.CitySrb?.Id ?? null,
                 SectorId = businessPartnerViewModel.Sector?.Id ?? null,
                 AgencyId = businessPartnerViewModel.Agency?.Id ?? null,
                 VatId = businessPartnerViewModel.Vat?.Id ?? null,

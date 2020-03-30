@@ -34,7 +34,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
             string queryString =
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "NamePartner, AddressPartner, " +
+                "CityPartnerId, CityPartnerIdentifier, CityPartnerZipCode, CityPartnerName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
@@ -62,6 +64,20 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSite.Code = reader["ConstructionSiteCode"]?.ToString();
                         constructionSite.InternalCode = reader["ConstructionSiteInternalCode"]?.ToString();
                         constructionSite.Name = reader["ConstructionSiteName"].ToString();
+                        if (reader["NamePartner"] != DBNull.Value)
+                            constructionSite.NamePartner = reader["NamePartner"].ToString();
+                        if (reader["AddressPartner"] != DBNull.Value)
+                            constructionSite.AddressPartner = reader["AddressPartner"].ToString();
+
+                        if (reader["CityPartnerId"] != DBNull.Value)
+                        {
+                            constructionSite.CityPartner = new City();
+                            constructionSite.CityPartnerId = Int32.Parse(reader["CityPartnerId"].ToString());
+                            constructionSite.CityPartner.Id = Int32.Parse(reader["CityPartnerId"].ToString());
+                            constructionSite.CityPartner.Identifier = Guid.Parse(reader["CityPartnerIdentifier"].ToString());
+                            constructionSite.CityPartner.ZipCode = reader["CityPartnerZipCode"].ToString();
+                            constructionSite.CityPartner.Name = reader["CityPartnerName"].ToString();
+                        }
 
                         if (reader["CityId"] != DBNull.Value)
                         {
@@ -69,7 +85,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.CityId = Int32.Parse(reader["CityId"].ToString());
                             constructionSite.City.Id = Int32.Parse(reader["CityId"].ToString());
                             constructionSite.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            constructionSite.City.Code = reader["CityCode"].ToString();
+                            constructionSite.City.ZipCode = reader["CityZipCode"].ToString();
                             constructionSite.City.Name = reader["CityName"].ToString();
                         }
 
@@ -176,7 +192,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
             string queryString =
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "NamePartner, AddressPartner, " +
+                "CityPartnerId, CityPartnerIdentifier, CityPartnerZipCode, CityPartnerName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
@@ -204,13 +222,28 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSite.InternalCode = reader["ConstructionSiteInternalCode"]?.ToString();
                         constructionSite.Name = reader["ConstructionSiteName"].ToString();
 
+                        if (reader["NamePartner"] != DBNull.Value)
+                            constructionSite.NamePartner = reader["NamePartner"].ToString();
+                        if (reader["AddressPartner"] != DBNull.Value)
+                            constructionSite.AddressPartner = reader["AddressPartner"].ToString();
+
+                        if (reader["CityPartnerId"] != DBNull.Value)
+                        {
+                            constructionSite.CityPartner = new City();
+                            constructionSite.CityPartnerId = Int32.Parse(reader["CityPartnerId"].ToString());
+                            constructionSite.CityPartner.Id = Int32.Parse(reader["CityPartnerId"].ToString());
+                            constructionSite.CityPartner.Identifier = Guid.Parse(reader["CityPartnerIdentifier"].ToString());
+                            constructionSite.CityPartner.ZipCode = reader["CityPartnerZipCode"].ToString();
+                            constructionSite.CityPartner.Name = reader["CityPartnerName"].ToString();
+                        }
+
                         if (reader["CityId"] != DBNull.Value)
                         {
                             constructionSite.City = new City();
                             constructionSite.CityId = Int32.Parse(reader["CityId"].ToString());
                             constructionSite.City.Id = Int32.Parse(reader["CityId"].ToString());
                             constructionSite.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            constructionSite.City.Code = reader["CityCode"].ToString();
+                            constructionSite.City.ZipCode = reader["CityZipCode"].ToString();
                             constructionSite.City.Name = reader["CityName"].ToString();
                         }
 
@@ -313,7 +346,9 @@ namespace RepositoryCore.Implementations.ConstructionSites
 
             string queryString =
                 "SELECT ConstructionSiteId, ConstructionSiteIdentifier, ConstructionSiteCode, ConstructionSiteInternalCode, ConstructionSiteName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "NamePartner, AddressPartner, " +
+                "CityPartnerId, CityPartnerIdentifier, CityPartnerZipCode, CityPartnerName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
@@ -344,13 +379,28 @@ namespace RepositoryCore.Implementations.ConstructionSites
                         constructionSite.InternalCode = reader["ConstructionSiteInternalCode"]?.ToString();
                         constructionSite.Name = reader["ConstructionSiteName"].ToString();
 
+                        if (reader["NamePartner"] != DBNull.Value)
+                            constructionSite.NamePartner = reader["NamePartner"].ToString();
+                        if (reader["AddressPartner"] != DBNull.Value)
+                            constructionSite.AddressPartner = reader["AddressPartner"].ToString();
+
+                        if (reader["CityPartnerId"] != DBNull.Value)
+                        {
+                            constructionSite.CityPartner = new City();
+                            constructionSite.CityPartnerId = Int32.Parse(reader["CityPartnerId"].ToString());
+                            constructionSite.CityPartner.Id = Int32.Parse(reader["CityPartnerId"].ToString());
+                            constructionSite.CityPartner.Identifier = Guid.Parse(reader["CityPartnerIdentifier"].ToString());
+                            constructionSite.CityPartner.ZipCode = reader["CityPartnerZipCode"].ToString();
+                            constructionSite.CityPartner.Name = reader["CityPartnerName"].ToString();
+                        }
+
                         if (reader["CityId"] != DBNull.Value)
                         {
                             constructionSite.City = new City();
                             constructionSite.CityId = Int32.Parse(reader["CityId"].ToString());
                             constructionSite.City.Id = Int32.Parse(reader["CityId"].ToString());
                             constructionSite.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            constructionSite.City.Code = reader["CityCode"].ToString();
+                            constructionSite.City.ZipCode = reader["CityZipCode"].ToString();
                             constructionSite.City.Name = reader["CityName"].ToString();
                         }
 
@@ -506,6 +556,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 if (dbEntry != null)
                 {
                     dbEntry.CityId = constructionSite.CityId ?? null;
+                    dbEntry.CityPartnerId = constructionSite.CityPartnerId ?? null;
                     dbEntry.CountryId = constructionSite.CountryId ?? null;
                     dbEntry.BusinessPartnerId = constructionSite.BusinessPartnerId ?? null;
                     dbEntry.StatusId = constructionSite.StatusId ?? null;
@@ -517,6 +568,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                     dbEntry.Code = constructionSite.Code;
                     dbEntry.InternalCode = constructionSite.InternalCode;
                     dbEntry.Name = constructionSite.Name;
+                    dbEntry.NamePartner = constructionSite.NamePartner;
+                    dbEntry.AddressPartner = constructionSite.AddressPartner;
                     dbEntry.StatusDate = constructionSite.StatusDate;
                     dbEntry.Address = constructionSite.Address;
                     dbEntry.MaxWorkers = constructionSite.MaxWorkers;
