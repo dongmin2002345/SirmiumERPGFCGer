@@ -12,6 +12,7 @@ namespace SirmiumERPGFC.Common
 {
     public class DirectoryTreeItemViewModel
     {
+
         #region Name
         private string _Name;
 

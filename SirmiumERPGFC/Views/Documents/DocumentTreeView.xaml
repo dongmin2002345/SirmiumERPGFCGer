@@ -10,6 +10,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <local1:MultiConverter x:Key="MultiConverter" />
+        <local1:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <local1:CollapsibleVisibilityConverter x:Key="CollapsibleVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,11 +31,20 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Pretrazi dokumente: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                 <TextBox Grid.Column="1" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
                          metro:TextBoxHelper.ClearTextButton="True"
                     VerticalAlignment="Center" Margin="5" IsEnabled="{Binding Path=CanInteract}" Height="24" VerticalContentAlignment="Center"/>
+
+
+                <Button Grid.Column="2" x:Name="btnStopSearch" Click="btnStopSearch_Click" Margin="2" Width="30" 
+                        Visibility="{Binding Path=LoadingData, Converter={StaticResource CollapsibleVisibilityConverter}}" ToolTip="Obriši">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </StackPanel>
+                </Button>
             </Grid>
         </Expander>
 
@@ -95,9 +106,10 @@
                     </Border>
                 </Popup>
                 
-                <TreeView Grid.Row="1" ItemsSource="{Binding Path=DocumentTreeItems}" SelectedItemChanged="TreeView_SelectedItemChanged">
+                <TreeView Grid.Row="1" ItemsSource="{Binding Path=DocumentTreeItems}" SelectedItemChanged="TreeView_SelectedItemChanged" TreeViewItem.Selected="TreeView_Selected">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
                             <Setter Property="IsExpanded" Value="{Binding Path=IsDirExpanded, Mode=TwoWay}" />
                             <Setter Property="Visibility" Value="Visible" />
                             <Setter Property="Padding" Value="2" />

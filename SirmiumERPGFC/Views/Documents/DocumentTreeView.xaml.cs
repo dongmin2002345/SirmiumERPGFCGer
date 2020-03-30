@@ -173,6 +173,9 @@ namespace SirmiumERPGFC.Views.Documents
                         CanCreateFolder = true;
                     else
                         CanCreateFolder = false;
+
+
+                    //if(_SelectedTreeItem )
                 }
             }
         }
@@ -286,13 +289,11 @@ namespace SirmiumERPGFC.Views.Documents
 
 
 
-                var folder = new DirectoryTreeItemViewModel()
-                {
-                    Name = $"Dokumenti",
-                    IsDirectory = true,
-                    IsDirExpanded = true,
-                    FullPath = AppConfigurationHelper.GetConfiguration().DefaultNetworkDirectory
-                };
+                DirectoryTreeItemViewModel folder = new DirectoryTreeItemViewModel();
+                folder.Name = "Dokumenti";
+                folder.IsDirectory = true;
+                folder.IsDirExpanded = true;
+                folder.FullPath = AppConfigurationHelper.GetConfiguration().DefaultNetworkDirectory;
 
                 GetDirectoryTree(folder);
 
@@ -324,12 +325,9 @@ namespace SirmiumERPGFC.Views.Documents
 
                 LoadingData = true;
 
-                List<DirectoryTreeItemViewModel> itemsToHighlightParents = new List<DirectoryTreeItemViewModel>();
 
-
-                SearchFilesRecursively(FilterText?.ToLower(), SelectedTreeItem, itemsToHighlightParents, shouldSearchRecursively);
-
-                DocumentTreeFiles = new ObservableCollection<DirectoryTreeItemViewModel>(itemsToHighlightParents.OrderBy(x => x.Name));
+                DocumentTreeFiles = new ObservableCollection<DirectoryTreeItemViewModel>();
+                SearchFilesRecursively(FilterText?.ToLower(), SelectedTreeItem, DocumentTreeFiles, shouldSearchRecursively);
             }
             catch (Exception ex)
             {
@@ -342,39 +340,59 @@ namespace SirmiumERPGFC.Views.Documents
 
         bool NameMatches(string filter, string toFilter) => (String.IsNullOrEmpty(filter) || toFilter.ToLower().Contains(filter));
 
-        void SearchFilesRecursively(string filterString, DirectoryTreeItemViewModel item, List<DirectoryTreeItemViewModel> itemsToHighlightParents, bool shouldRecursivelySearch = false)
+        void SearchFilesRecursively(string filterString, DirectoryTreeItemViewModel item, ObservableCollection<DirectoryTreeItemViewModel> itemsToHighlightParents, bool shouldRecursivelySearch = false)
         {
-            IEnumerable<string> files;
+            FileInfo[] files;
+            DirectoryInfo directoryInfo = null;
             try
             {
-                files = Directory.EnumerateFiles(item.FullPath);
+                directoryInfo = new DirectoryInfo(item.FullPath);
+                files = directoryInfo.GetFiles();
             }
             catch (Exception ex)
             {
-                files = new List<string>();
+                files = new FileInfo[0];
             }
-            foreach (var file in files)
+            foreach (var fileInfo in files)
             {
-                var fileInfo = new FileInfo(file);
                 if (NameMatches(filterString, fileInfo.Name))
                 {
-                    itemsToHighlightParents.Add(new DirectoryTreeItemViewModel()
+                    DirectoryTreeItemViewModel itm = new DirectoryTreeItemViewModel();
+                    itm.Name = fileInfo.Name;
+                    itm.CreatedAt = fileInfo.LastWriteTime; 
+                    itm.FileSize = fileInfo.Length / 1024;
+                    itm.FullPath = fileInfo.FullName;
+                    itm.IsDirectory = false;
+
+                    Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        Name = fileInfo.Name,
-                        CreatedAt = fileInfo.LastWriteTime,
-                        FileSize = fileInfo.Length / 1024,
-                        FullPath = file,
-                        IsDirectory = false,
-                    });
+                        itemsToHighlightParents.Add(itm);
+                    }));
                 }
+                if (!LoadingData) break;
             }
             if (shouldRecursivelySearch)
             {
-                if (item.Items != null)
+                if(directoryInfo != null)
                 {
-                    foreach (var dir in item.Items)
+                    DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
+                    if (subDirectories != null)
                     {
-                        SearchFilesRecursively(filterString, dir, itemsToHighlightParents, shouldRecursivelySearch);
+                        foreach (DirectoryInfo dir in subDirectories)
+                        {
+                            DirectoryTreeItemViewModel subDir = new DirectoryTreeItemViewModel();
+                            subDir.Name = dir.Name;
+                            subDir.FullPath = dir.FullName;
+                            subDir.IsDirectory = true;
+                            subDir.IsDirExpanded = true;
+                            if(item.Items != null)
+                                if (!item.Items.Any(x => x.FullPath == subDir.FullPath))
+                                    item.Items.Add(subDir);
+
+                            if (!LoadingData) break;
+                            
+                            SearchFilesRecursively(filterString, subDir, itemsToHighlightParents, shouldRecursivelySearch);
+                        }
                     }
                 }
             }
@@ -382,34 +400,33 @@ namespace SirmiumERPGFC.Views.Documents
 
         void GetDirectoryTree(DirectoryTreeItemViewModel parent)
         {
-            IEnumerable<string> directories;
+            DirectoryInfo[] directories;
             try
             {
-                directories = Directory.EnumerateDirectories(parent.FullPath);
+                var info = new DirectoryInfo(parent.FullPath);
+                directories = info.GetDirectories();
+                parent.IsDirExpanded = true;
             }
             catch (Exception ex)
             {
-                directories = new List<string>();
+                directories = new DirectoryInfo[0];
             }
-            foreach (var item in directories)
+            foreach (DirectoryInfo item in directories)
             {
-                if (String.IsNullOrEmpty(item))
+                if (String.IsNullOrEmpty(item.FullName))
                     continue;
 
-                var attributes = File.GetAttributes(item);
-                if (attributes.HasFlag(FileAttributes.Directory))
+                DirectoryTreeItemViewModel directory = new DirectoryTreeItemViewModel();
+                directory.FullPath = item.FullName;
+                directory.IsDirectory = true;
+                directory.Name = item.Name;
+                directory.ParentNode = parent;
+                Dispatcher.BeginInvoke((Action)(() =>
                 {
-
-                    var directory = new DirectoryTreeItemViewModel()
-                    {
-                        FullPath = item,
-                        IsDirectory = true,
-                        Name = System.IO.Path.GetFileName(item)
-                    };
-                    directory.ParentNode = parent;
-                    parent.Items.Add(directory);
-                    GetDirectoryTree(directory);
-                }
+                    if (!parent.Items.Any(x => x.FullPath == directory.FullPath))
+                        parent.Items.Add(directory);
+                }));
+                //GetDirectoryTree(directory);
             }
         }
 
@@ -417,15 +434,20 @@ namespace SirmiumERPGFC.Views.Documents
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             SelectedTreeItem = e.NewValue as DirectoryTreeItemViewModel;
-
+            SelectedTreeItem.IsDirExpanded = true;
             Thread td = new Thread(() => {
                 try
                 {
                     LoadingData = true;
-                    List<DirectoryTreeItemViewModel> treeItems = new List<DirectoryTreeItemViewModel>();
-                    SearchFilesRecursively(FilterText?.ToLower(), SelectedTreeItem, treeItems, false);
 
-                    DocumentTreeFiles = new ObservableCollection<DirectoryTreeItemViewModel>(treeItems);
+                    GetDirectoryTree(SelectedTreeItem);
+
+                    DocumentTreeFiles = new ObservableCollection<DirectoryTreeItemViewModel>();
+                    SearchFilesRecursively(FilterText?.ToLower(), SelectedTreeItem, DocumentTreeFiles, false);
+
+                    Dispatcher.BeginInvoke((Action)(() => {
+                        SelectedTreeItem.IsDirExpanded = true;
+                    }));
                 }
                 catch (Exception ex) { }
                 finally
@@ -446,14 +468,14 @@ namespace SirmiumERPGFC.Views.Documents
                 return;
             }
 
-            var basePath = SelectedTreeItem?.FullPath;
+            string basePath = SelectedTreeItem?.FullPath;
             if (String.IsNullOrEmpty(basePath))
             {
                 MessageBox.Show("Bazna putanja ne moze biti prazna!");
                 return;
             }
 
-            var newPath = System.IO.Path.Combine(basePath, NewFolderName);
+            string newPath = System.IO.Path.Combine(basePath, NewFolderName);
             if (Directory.Exists(newPath))
             {
                 MessageBox.Show("Folder sa ovim nazivom vec postoji!");
@@ -464,14 +486,14 @@ namespace SirmiumERPGFC.Views.Documents
             {
                 Directory.CreateDirectory(newPath);
 
-                SelectedTreeItem.Items.Add(new DirectoryTreeItemViewModel()
-                {
-                    Name = NewFolderName,
-                    IsDirectory = true,
-                    FullPath = newPath,
-                    IsDirExpanded = true,
-                    ParentNode = SelectedTreeItem,
-                });
+                DirectoryTreeItemViewModel treeItem = new DirectoryTreeItemViewModel();
+                treeItem.Name = NewFolderName;
+                treeItem.IsDirectory = true;
+                treeItem.FullPath = newPath;
+                treeItem.IsDirExpanded = true;
+                treeItem.ParentNode = SelectedTreeItem;
+
+                SelectedTreeItem.Items.Add(treeItem);
 
                 SelectedTreeItem.IsDirExpanded = true;
             } catch(Exception ex)
@@ -499,7 +521,7 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var item = SelectedDocumentTreeFile;
+            DirectoryTreeItemViewModel item = SelectedDocumentTreeFile;
             if (item != null)
             {
                 try
@@ -516,7 +538,7 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void BtnSelectData_Drop(object sender, DragEventArgs e)
         {
-            var data = e.Data;
+            IDataObject data = e.Data;
             if (data != null)
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -530,19 +552,18 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void AppendToUploadList(string[] files)
         {
-            foreach (var file in files)
+            foreach (string file in files)
             {
                 try
                 {
-                    var fileInfo = new FileInfo(file);
+                    FileInfo fileInfo = new FileInfo(file);
                     if (!FilesToUpload.Any(y => y.Name == fileInfo.Name))
                     {
-                        FilesToUpload.Add(new DirectoryTreeItemViewModel()
-                        {
-                            Name = fileInfo.Name,
-                            FullPath = fileInfo.FullName,
-                            FileSize = fileInfo.Length / 1024
-                        });
+                        DirectoryTreeItemViewModel fileToAdd = new DirectoryTreeItemViewModel();
+                        fileToAdd.Name = fileInfo.Name;
+                        fileToAdd.FullPath = fileInfo.FullName;
+                        fileToAdd.FileSize = fileInfo.Length / 1024;
+                        FilesToUpload.Add(fileToAdd);
                     }
                 } catch(Exception ex)
                 {
@@ -556,7 +577,7 @@ namespace SirmiumERPGFC.Views.Documents
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
 
-            var result = ofd.ShowDialog();
+            bool? result = ofd.ShowDialog();
             if (result != null)
             {
                 if (ofd.FileNames != null && ofd.FileNames.Count() > 0)
@@ -587,12 +608,12 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     LoadingData = true;
                     IsCopyInProgress = true;
-                    var filesToUpload = FilesToUpload.ToList();
+                    List<DirectoryTreeItemViewModel> filesToUpload = FilesToUpload.ToList();
 
-                    foreach (var item in filesToUpload)
+                    foreach (DirectoryTreeItemViewModel item in filesToUpload)
                     {
                         CopyPercentage = 0;
-                        var newPath = System.IO.Path.Combine(SelectedTreeItem.FullPath, item.Name);
+                        string newPath = System.IO.Path.Combine(SelectedTreeItem.FullPath, item.Name);
 
                         if (newPath == item.FullPath)
                         {
@@ -602,7 +623,7 @@ namespace SirmiumERPGFC.Views.Documents
 
                         if (File.Exists(newPath))
                         {
-                            var result = MessageBox.Show($"Vec postoji datoteka {item.Name} na odabranoj lokaciji. Zelite li da je prepisete?", "Duplikat!", MessageBoxButton.YesNo);
+                            MessageBoxResult result = MessageBox.Show($"Vec postoji datoteka {item.Name} na odabranoj lokaciji. Zelite li da je prepisete?", "Duplikat!", MessageBoxButton.YesNo);
                             if (result == MessageBoxResult.Yes)
                             {
                                 File.Delete(newPath);
@@ -613,7 +634,7 @@ namespace SirmiumERPGFC.Views.Documents
                         }
 
                         string oldPath = item.FullPath;
-                        var copy = new CopyFileHelper(item.FullPath, newPath);
+                        CopyFileHelper copy = new CopyFileHelper(item.FullPath, newPath);
 
                         copy.OnProgressChanged += Copy_OnProgressChanged;
                         copy.OnComplete += Copy_OnComplete;
@@ -648,7 +669,7 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void btnRename_Click(object sender, RoutedEventArgs e)
         {
-            var item = SelectedDocumentTreeFile;
+            DirectoryTreeItemViewModel item = SelectedDocumentTreeFile;
 
             if (item != null)
             {
@@ -662,13 +683,13 @@ namespace SirmiumERPGFC.Views.Documents
 
                 if (File.Exists(item.FullPath))
                 {
-                    var fileInfo = new FileInfo(item.FullPath);
+                    FileInfo fileInfo = new FileInfo(item.FullPath);
 
                     if (fileInfo != null)
                     {
-                        var fileWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(item.Name);
-                        var newName = item.NewName + item.Name.Replace(fileWithoutExtension, "");
-                        var newPath = System.IO.Path.Combine(fileInfo.Directory.FullName, newName);
+                        string fileWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(item.Name);
+                        string newName = item.NewName + item.Name.Replace(fileWithoutExtension, "");
+                        string newPath = System.IO.Path.Combine(fileInfo.Directory.FullName, newName);
 
                         if (File.Exists(newPath))
                         {
@@ -682,7 +703,7 @@ namespace SirmiumERPGFC.Views.Documents
                             {
                                 LoadingData = true;
                                 string oldPath = item.FullPath;
-                                var copy = new CopyFileHelper(item.FullPath, newPath);
+                                CopyFileHelper copy = new CopyFileHelper(item.FullPath, newPath);
 
                                 copy.OnProgressChanged += Copy_OnProgressChanged;
                                 copy.OnComplete += Copy_OnComplete;
@@ -727,7 +748,7 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
-            var item = SelectedDocumentTreeFile;
+            DirectoryTreeItemViewModel item = SelectedDocumentTreeFile;
 
             if (item != null)
             {
@@ -748,6 +769,25 @@ namespace SirmiumERPGFC.Views.Documents
         private void BtnCancelCopy_Click(object sender, RoutedEventArgs e)
         {
             IsCopyInProgress = false;
+        }
+
+        private void TreeView_Selected(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+                if (tvi == null || e.Handled) return;
+                tvi.IsExpanded = true;
+
+                e.Handled = true;
+            }
+            catch (Exception ex) { }
+        }
+
+        private void btnStopSearch_Click(object sender, RoutedEventArgs e)
+        {
+            LoadingData = false;
         }
     }
 }
