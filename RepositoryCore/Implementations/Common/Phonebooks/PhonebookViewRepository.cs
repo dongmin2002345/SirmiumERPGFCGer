@@ -24,7 +24,7 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
             "RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, " +
-            "CityId, CityIdentifier, CityCode, CityName, " +
+            "CityId, CityIdentifier, CityZipCode, CityName, " +
             "Address, " +
             "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
             "FROM vPhonebooks ";
@@ -56,7 +56,7 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
                 Phonebook.RegionId = Int32.Parse(reader["RegionId"].ToString());
                 Phonebook.Region.Id = Int32.Parse(reader["RegionId"].ToString());
                 Phonebook.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
-                Phonebook.Region.Code = reader["RegionCode"].ToString();
+                Phonebook.Region.RegionCode = reader["RegionCode"].ToString();
                 Phonebook.Region.Name = reader["RegionName"].ToString();
             }
 
@@ -66,17 +66,17 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
                 Phonebook.MunicipalityId = Int32.Parse(reader["MunicipalityId"].ToString());
                 Phonebook.Municipality.Id = Int32.Parse(reader["MunicipalityId"].ToString());
                 Phonebook.Municipality.Identifier = Guid.Parse(reader["MunicipalityIdentifier"].ToString());
-                Phonebook.Municipality.Code = reader["MunicipalityCode"].ToString();
+                Phonebook.Municipality.MunicipalityCode = reader["MunicipalityCode"].ToString();
                 Phonebook.Municipality.Name = reader["MunicipalityName"].ToString();
             }
 
-            if (reader["CityId"] != DBNull.Value) // "CityId, CityIdentifier, CityCode, CityName, " +
+            if (reader["CityId"] != DBNull.Value) // "CityId, CityIdentifier, CityZipCode, CityName, " +
             {
                 Phonebook.City = new City();
                 Phonebook.CityId = Int32.Parse(reader["CityId"].ToString());
                 Phonebook.City.Id = Int32.Parse(reader["CityId"].ToString());
                 Phonebook.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                Phonebook.City.Code = reader["CityCode"].ToString();
+                Phonebook.City.ZipCode = reader["CityZipCode"].ToString();
                 Phonebook.City.Name = reader["CityName"].ToString();
             }
 

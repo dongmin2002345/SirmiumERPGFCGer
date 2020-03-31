@@ -164,7 +164,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.SectorId = Int32.Parse(reader["SectorId"].ToString());
                             businessPartner.Sector.Id = Int32.Parse(reader["SectorId"].ToString());
                             businessPartner.Sector.Identifier = Guid.Parse(reader["SectorIdentifier"].ToString());
-                            businessPartner.Sector.Code = reader["SectorCode"].ToString();
+                            businessPartner.Sector.SecondCode = reader["SectorCode"].ToString();
                             businessPartner.Sector.Name = reader["SectorName"].ToString();
                         }
 
@@ -395,7 +395,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.SectorId = Int32.Parse(reader["SectorId"].ToString());
                             businessPartner.Sector.Id = Int32.Parse(reader["SectorId"].ToString());
                             businessPartner.Sector.Identifier = Guid.Parse(reader["SectorIdentifier"].ToString());
-                            businessPartner.Sector.Code = reader["SectorCode"].ToString();
+                            businessPartner.Sector.SecondCode = reader["SectorCode"].ToString();
                             businessPartner.Sector.Name = reader["SectorName"].ToString();
                         }
 
@@ -623,7 +623,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.SectorId = Int32.Parse(reader["SectorId"].ToString());
                             businessPartner.Sector.Id = Int32.Parse(reader["SectorId"].ToString());
                             businessPartner.Sector.Identifier = Guid.Parse(reader["SectorIdentifier"].ToString());
-                            businessPartner.Sector.Code = reader["SectorCode"].ToString();
+                            businessPartner.Sector.SecondCode = reader["SectorCode"].ToString();
                             businessPartner.Sector.Name = reader["SectorName"].ToString();
                         }
 

@@ -119,11 +119,11 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentCountry != null)
                     {
-                        new SectorSQLiteRepository().Sync(SectorService);
-
                         SectorListResponse SectorResp = new SectorSQLiteRepository().GetSectorsForPopup(MainWindow.CurrentCompanyId, CurrentCountry.Identifier, filterString);
                         if (SectorResp.Success)
                             SectorsFromDB = new ObservableCollection<SectorViewModel>(SectorResp.Sectors ?? new List<SectorViewModel>());
+                        if (SectorsFromDB.Count == 1)
+                            CurrentSector = SectorsFromDB.FirstOrDefault();
                         else
                             SectorsFromDB = new ObservableCollection<SectorViewModel>();
                     }
@@ -149,11 +149,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popSector.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterSector.Focus();
         }
@@ -181,21 +177,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtSector.Focus();
         }
 
-        private void btnAddSector_Click(object sender, RoutedEventArgs e)
-        {
-            popSector.IsOpen = false;
-
-            SectorViewModel Sector = new SectorViewModel();
-            Sector.Identifier = Guid.NewGuid();
-
-            Sector_AddEdit SectorAddEditForm = new Sector_AddEdit(Sector, true, true);
-            SectorAddEditForm.SectorCreatedUpdated += new SectorHandler(SectorAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_sektrorima")), 95, SectorAddEditForm);
-
-            txtSector.Focus();
-        }
-
-        void SectorAdded() { }
 
         private void dgSectorList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -225,10 +206,10 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgSectorList.Items != null && dgSectorList.Items.Count > 0)
                 {
-                    if (dgSectorList.SelectedIndex == -1)
-                        dgSectorList.SelectedIndex = 0;
                     if (dgSectorList.SelectedIndex > 0)
                         dgSectorList.SelectedIndex = dgSectorList.SelectedIndex - 1;
+                    if (dgSectorList.SelectedIndex >= 0)
+                        
                     dgSectorList.ScrollIntoView(dgSectorList.Items[dgSectorList.SelectedIndex]);
                 }
             }
@@ -239,7 +220,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgSectorList.SelectedIndex < dgSectorList.Items.Count)
                         dgSectorList.SelectedIndex = dgSectorList.SelectedIndex + 1;
-                    dgSectorList.ScrollIntoView(dgSectorList.Items[dgSectorList.SelectedIndex]);
+                    if (dgSectorList.SelectedIndex >= 0)
+                        dgSectorList.ScrollIntoView(dgSectorList.Items[dgSectorList.SelectedIndex]);
                 }
             }
 
@@ -267,7 +249,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddSector_LostFocus(object sender, RoutedEventArgs e)
+        private void btnCloseSector_Click(object sender, RoutedEventArgs e)
         {
             popSector.IsOpen = false;
 
@@ -279,6 +261,11 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             popSector.IsOpen = false;
 
             txtSector.Focus();
+        }
+
+        private void DgSectorList_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #region INotifyPropertyChange implementation

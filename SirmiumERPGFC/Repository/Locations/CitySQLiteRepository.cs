@@ -93,11 +93,11 @@ namespace SirmiumERPGFC.Repository.Locations
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)city.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionId", ((object)city.Region?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)city.Region?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)city.Region?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)city.Region?.RegionCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionName", ((object)city.Region?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)city.Municipality?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)city.Municipality?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)city.Municipality?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)city.Municipality?.MunicipalityCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)city.Municipality?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", city.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)city.UpdatedAt) ?? DBNull.Value);

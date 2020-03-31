@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Common.Sectors
                 "CREATE VIEW vAgencies AS " +
                 "SELECT agency.Id AS AgencyId, agency.Identifier AS AgencyIdentifier, agency.Code AS AgencyCode, agency.InternalCode AS AgencyInternalCode, agency.Name AS AgencyName, " +
                 "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
-                "sector.Id AS SectorId, sector.Identifier AS SectorIdentifier, sector.Code AS SectorCode, sector.Name AS SectorName, " +
+                "sector.Id AS SectorId, sector.Identifier AS SectorIdentifier, sector.SecondCode AS SectorCode, sector.Name AS SectorName, " +
                 "agency.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (agency.UpdatedAt), (country.UpdatedAt), (sector.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

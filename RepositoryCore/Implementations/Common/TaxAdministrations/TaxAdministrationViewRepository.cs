@@ -32,7 +32,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
 
             string queryString =
                 "SELECT TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationSecondCode, TaxAdministrationName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "Address1, Address2, Address3, " +
                 "BankId1, BankIdentifier1, BankCode1, BankName1, " +
                 "BankId2, BankIdentifier2, BankCode2, BankName2, " +
@@ -66,7 +66,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.CityId = Int32.Parse(reader["CityId"].ToString());
                             taxAdministration.City.Id = Int32.Parse(reader["CityId"].ToString());
                             taxAdministration.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            taxAdministration.City.Code = reader["CityCode"].ToString();
+                            taxAdministration.City.ZipCode = reader["CityZipCode"].ToString();
                             taxAdministration.City.Name = reader["CityName"].ToString();
                         }
 
@@ -83,7 +83,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.BankId1 = Int32.Parse(reader["BankId1"].ToString());
                             taxAdministration.Bank1.Id = Int32.Parse(reader["BankId1"].ToString());
                             taxAdministration.Bank1.Identifier = Guid.Parse(reader["BankIdentifier1"].ToString());
-                            taxAdministration.Bank1.Code = reader["BankCode1"].ToString();
+                            taxAdministration.Bank1.Swift = reader["BankCode1"].ToString();
                             taxAdministration.Bank1.Name = reader["BankName1"].ToString();
                         }
 
@@ -93,7 +93,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.BankId2 = Int32.Parse(reader["BankId2"].ToString());
                             taxAdministration.Bank2.Id = Int32.Parse(reader["BankId2"].ToString());
                             taxAdministration.Bank2.Identifier = Guid.Parse(reader["BankIdentifier2"].ToString());
-                            taxAdministration.Bank2.Code = reader["BankCode2"].ToString();
+                            taxAdministration.Bank2.Swift = reader["BankCode2"].ToString();
                             taxAdministration.Bank2.Name = reader["BankName2"].ToString();
                         }
 
@@ -148,7 +148,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
 
             string queryString =
                 "SELECT TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationSecondCode, TaxAdministrationName, " +
-                "CityId, CityIdentifier, CityCode, CityName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "Address1, Address2, Address3, " +
                 "BankId1, BankIdentifier1, BankCode1, BankName1, " +
                 "BankId2, BankIdentifier2, BankCode2, BankName2, " +
@@ -184,7 +184,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.CityId = Int32.Parse(reader["CityId"].ToString());
                             taxAdministration.City.Id = Int32.Parse(reader["CityId"].ToString());
                             taxAdministration.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
-                            taxAdministration.City.Code = reader["CityCode"].ToString();
+                            taxAdministration.City.ZipCode = reader["CityZipCode"].ToString();
                             taxAdministration.City.Name = reader["CityName"].ToString();
                         }
 
@@ -201,7 +201,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.BankId1 = Int32.Parse(reader["BankId1"].ToString());
                             taxAdministration.Bank1.Id = Int32.Parse(reader["BankId1"].ToString());
                             taxAdministration.Bank1.Identifier = Guid.Parse(reader["BankIdentifier1"].ToString());
-                            taxAdministration.Bank1.Code = reader["BankCode1"].ToString();
+                            taxAdministration.Bank1.Swift = reader["BankCode1"].ToString();
                             taxAdministration.Bank1.Name = reader["BankName1"].ToString();
                         }
 
@@ -211,7 +211,7 @@ namespace RepositoryCore.Implementations.Common.TaxAdministrations
                             taxAdministration.BankId2 = Int32.Parse(reader["BankId2"].ToString());
                             taxAdministration.Bank2.Id = Int32.Parse(reader["BankId2"].ToString());
                             taxAdministration.Bank2.Identifier = Guid.Parse(reader["BankIdentifier2"].ToString());
-                            taxAdministration.Bank2.Code = reader["BankCode2"].ToString();
+                            taxAdministration.Bank2.Swift = reader["BankCode2"].ToString();
                             taxAdministration.Bank2.Name = reader["BankName2"].ToString();
                         }
 

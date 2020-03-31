@@ -185,11 +185,11 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)Employee.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionId", ((object)Employee.Region?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)Employee.Region?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)Employee.Region?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)Employee.Region?.RegionCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionName", ((object)Employee.Region?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)Employee.Municipality?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)Employee.Municipality?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)Employee.Municipality?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@MunicipalityCode", ((object)Employee.Municipality?.MunicipalityCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityName", ((object)Employee.Municipality?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityId", ((object)Employee.City?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)Employee.City?.Identifier) ?? DBNull.Value);

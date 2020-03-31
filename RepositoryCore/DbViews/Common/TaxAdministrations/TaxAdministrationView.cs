@@ -22,10 +22,10 @@ namespace RepositoryCore.DbViews.Common.TaxAdministrations
             strSQLCommand =
                 "CREATE VIEW vTaxAdministrations AS " +
                 "SELECT taxAdministration.Id AS TaxAdministrationId, taxAdministration.Identifier AS TaxAdministrationIdentifier, taxAdministration.Code AS TaxAdministrationCode, taxAdministration.SecondCode AS TaxAdministrationSecondCode, taxAdministration.Name AS TaxAdministrationName, " +
-                "city.Id AS CityId, city.Identifier AS CityIdentifier, city.Code AS CityCode, city.Name AS CityName, " +
+                "city.Id AS CityId, city.Identifier AS CityIdentifier, city.ZipCode AS CityZipCode, city.Name AS CityName, " +
                 "taxAdministration.Address1, taxAdministration.Address2, taxAdministration.Address3, " +
-                "bank1.Id AS BankId1, bank1.Identifier AS BankIdentifier1, bank1.Code AS BankCode1, bank1.Name AS BankName1, " +
-                "bank2.Id AS BankId2, bank2.Identifier AS BankIdentifier2, bank2.Code AS BankCode2, bank2.Name AS BankName2, " +
+                "bank1.Id AS BankId1, bank1.Identifier AS BankIdentifier1, bank1.Swift AS BankCode1, bank1.Name AS BankName1, " +
+                "bank2.Id AS BankId2, bank2.Identifier AS BankIdentifier2, bank2.Swift AS BankCode2, bank2.Name AS BankName2, " +
                 "taxAdministration.IBAN1, taxAdministration.SWIFT, taxAdministration.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (taxAdministration.UpdatedAt), (city.UpdatedAt), (bank1.UpdatedAt), (bank2.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

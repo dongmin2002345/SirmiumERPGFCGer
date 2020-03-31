@@ -47,7 +47,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             BankPopup popup = source as BankPopup;
             BankViewModel region = (BankViewModel)e.NewValue;
-            popup.txtBank.Text = region != null ? region.Code + " (" + region.Name + ")" : "";
+            popup.txtBank.Text = region != null ? region.Swift + " (" + region.Name + ")" : "";
         }
         #endregion
 
@@ -117,13 +117,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new BankSQLiteRepository().Sync(bankService);
+                    BankListResponse Response = new BankSQLiteRepository().GetBanksForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (Response.Success)
+                    {
+                        if (Response.Banks != null && Response.Banks.Count > 0)
+                        {
+                            BanksFromDB = new ObservableCollection<BankViewModel>(
+                                Response.Banks?.ToList() ?? new List<BankViewModel>());
 
-                    BankListResponse regionResp = new BankSQLiteRepository().GetBanksForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (regionResp.Success)
-                        BanksFromDB = new ObservableCollection<BankViewModel>(regionResp.Banks ?? new List<BankViewModel>());
-                    else
-                        BanksFromDB = new ObservableCollection<BankViewModel>();
+                            if (BanksFromDB.Count == 1)
+                                CurrentBank = BanksFromDB.FirstOrDefault();
+                        }
+                        else
+                        {
+                            BanksFromDB = new ObservableCollection<BankViewModel>();
+
+                            CurrentBank = null;
+                        }
+                    }
                 })
             );
         }
@@ -144,11 +155,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popBank.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtBankFilter.Focus();
         }
@@ -176,22 +183,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtBank.Focus();
         }
 
-        private void btnAddBank_Click(object sender, RoutedEventArgs e)
-        {
-            popBank.IsOpen = false;
-
-            BankViewModel region = new BankViewModel();
-            //region.Code = new BankSQLiteRepository().GetNewCodeValue(MainWindow.CurrentCompanyId);
-            region.Identifier = Guid.NewGuid();
-
-            Bank_List_AddEdit regionAddEditForm = new Bank_List_AddEdit(region, true, true);
-            regionAddEditForm.BankCreatedUpdated += new BankHandler(BankAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_bankama")), 95, regionAddEditForm);
-
-            txtBank.Focus();
-        }
-
-        void BankAdded() { }
 
         private void dgBankList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -221,10 +212,10 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgBankList.Items != null && dgBankList.Items.Count > 0)
                 {
-                    if (dgBankList.SelectedIndex == -1)
-                        dgBankList.SelectedIndex = 0;
                     if (dgBankList.SelectedIndex > 0)
                         dgBankList.SelectedIndex = dgBankList.SelectedIndex - 1;
+                    if (dgBankList.SelectedIndex >= 0)
+                       
                     dgBankList.ScrollIntoView(dgBankList.Items[dgBankList.SelectedIndex]);
                 }
             }
@@ -235,7 +226,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgBankList.SelectedIndex < dgBankList.Items.Count)
                         dgBankList.SelectedIndex = dgBankList.SelectedIndex + 1;
-                    dgBankList.ScrollIntoView(dgBankList.Items[dgBankList.SelectedIndex]);
+                    if (dgBankList.SelectedIndex >= 0)
+                        dgBankList.ScrollIntoView(dgBankList.Items[dgBankList.SelectedIndex]);
                 }
             }
 
@@ -263,11 +255,15 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddBank_LostFocus(object sender, RoutedEventArgs e)
+        private void btnCloseBank_Click(object sender, RoutedEventArgs e)
         {
             popBank.IsOpen = false;
 
             txtBank.Focus();
+        }
+        private void DgBankList_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         private void btnCloseBankPopup_Click(object sender, RoutedEventArgs e)
