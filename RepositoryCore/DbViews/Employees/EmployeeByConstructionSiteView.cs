@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Employees
             strSQLCommand =
                 "CREATE VIEW vEmployeeByConstructionSites AS " +
                 "SELECT employeeByConstructionSite.Id AS EmployeeByConstructionSiteId, employeeByConstructionSite.Identifier AS EmployeeByConstructionSiteIdentifier, employeeByConstructionSite.Code AS EmployeeByConstructionSiteCode, employeeByConstructionSite.StartDate, employeeByConstructionSite.EndDate, employeeByConstructionSite.RealEndDate, " +
-                "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, " +
+                "employee.Id AS EmployeeId, employee.Identifier AS EmployeeIdentifier, employee.Code AS EmployeeCode, employee.Name AS EmployeeName, employee.EmployeeCode AS EmployeeEmployeeCode, " +
                 "employeeByConstructionSite.EmployeeCount, " +
                 "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.NameGer AS BusinessPartnerName, " +
                 "employeeByConstructionSite.BusinessPartnerCount, " +

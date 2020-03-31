@@ -32,7 +32,7 @@ namespace RepositoryCore.Implementations.Employees
 
             string queryString =
                 "SELECT EmployeeByConstructionSiteId, EmployeeByConstructionSiteIdentifier, EmployeeByConstructionSiteCode, StartDate, EndDate, RealEndDate, " +
-                "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
+                "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeEmployeeCode, " +
                 "EmployeeCount, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "BusinessPartnerCount, " +
@@ -72,6 +72,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByConstructionSite.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeByConstructionSite.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeByConstructionSite.Employee.Name = reader["EmployeeName"].ToString();
+                            employeeByConstructionSite.Employee.EmployeeCode = reader["EmployeeEmployeeCode"].ToString();
                         }
 
                         if (reader["EmployeeCount"] != DBNull.Value)
@@ -145,7 +146,7 @@ namespace RepositoryCore.Implementations.Employees
 
             string queryString =
                 "SELECT EmployeeByConstructionSiteId, EmployeeByConstructionSiteIdentifier, EmployeeByConstructionSiteCode, StartDate, EndDate, RealEndDate, " +
-                "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
+                "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeEmployeeCode, " +
                 "EmployeeCount, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "BusinessPartnerCount, " +
@@ -187,6 +188,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByConstructionSite.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeByConstructionSite.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeByConstructionSite.Employee.Name = reader["EmployeeName"].ToString();
+                            employeeByConstructionSite.Employee.EmployeeCode = reader["EmployeeEmployeeCode"].ToString();
                         }
 
                         if (reader["EmployeeCount"] != DBNull.Value)
@@ -260,7 +262,7 @@ namespace RepositoryCore.Implementations.Employees
 
             string queryString =
                 "SELECT EmployeeByConstructionSiteId, EmployeeByConstructionSiteIdentifier, EmployeeByConstructionSiteCode, StartDate, EndDate, RealEndDate, " +
-                "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, " +
+                "EmployeeId, EmployeeIdentifier, EmployeeCode, EmployeeName, EmployeeEmployeeCode, " +
                 "EmployeeCount, " +
                 "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
                 "BusinessPartnerCount, " +
@@ -302,6 +304,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeByConstructionSite.Employee.Identifier = Guid.Parse(reader["EmployeeIdentifier"].ToString());
                             employeeByConstructionSite.Employee.Code = reader["EmployeeCode"].ToString();
                             employeeByConstructionSite.Employee.Name = reader["EmployeeName"].ToString();
+                            employeeByConstructionSite.Employee.EmployeeCode = reader["EmployeeEmployeeCode"].ToString();
                         }
 
                         if (reader["EmployeeCount"] != DBNull.Value)
