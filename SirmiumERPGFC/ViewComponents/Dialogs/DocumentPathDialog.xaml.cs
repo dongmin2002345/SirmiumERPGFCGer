@@ -358,7 +358,7 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
 
         private void btnConfirmFolder_Click(object sender, RoutedEventArgs e)
         {
-            if(SelectedTreeItem == null)
+            if(SelectedTreeItem == null || String.IsNullOrEmpty(SelectedPath))
             {
                 MainWindow.ErrorMessage = "Morate odabrati folder da biste potvrdili putanju!";
                 return;
