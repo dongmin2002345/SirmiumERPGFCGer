@@ -44,12 +44,10 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="{DynamicResource Pretraga_po_imenuDvotacka}"  Grid.Column="0" VerticalAlignment="Center" Margin="5 0 5 0"/>
-                    <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="1" Margin="2" Controls:TextBoxHelper.ClearTextButton="True"
+                    <TextBox x:Name="txtSearchByBusinessPartnerName" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Controls:TextBoxHelper.ClearTextButton="True"
                              Text="{Binding Path=BusinessPartnerOnConstructionSiteSearchObject.Search_Name, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <TextBlock Text="{DynamicResource Pretraga_po_posošuDvotacka}"  Grid.Column="2" VerticalAlignment="Center" Margin="5 0 5 0"/>
-                    <TextBox x:Name="txtSearchByBusinessPartnerPassport" Grid.Column="3" Margin="2" Controls:TextBoxHelper.ClearTextButton="True"
-                             Text="{Binding Path=BusinessPartnerOnConstructionSiteSearchObject.Search_Passport, UpdateSourceTrigger=PropertyChanged}" />
+                    
 
                     <Button  x:Name="btnSearchBusinessPartner" Click="btnSearchBusinessPartner_Click" Margin="2" Grid.Row="0" Grid.Column="4" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">

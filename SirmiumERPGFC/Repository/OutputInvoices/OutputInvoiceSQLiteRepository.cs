@@ -164,10 +164,10 @@ namespace SirmiumERPGFC.Repository.OutputInvoices
                     selectCommand.Parameters.AddWithValue("@Supplier", ((object)OutputInvoiceSearchObject.SearchBy_Supplier) != null ? "%" + OutputInvoiceSearchObject.SearchBy_Supplier + "%" : "");
                     selectCommand.Parameters.AddWithValue("@BusinessPartnerName", ((object)OutputInvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + OutputInvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)OutputInvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + OutputInvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)OutputInvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)OutputInvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
-                    selectCommand.Parameters.AddWithValue("@DateOfPaymentFrom", ((object)OutputInvoiceSearchObject.SearchBy_DateOfPaymentFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@DateOfPaymentTo", ((object)OutputInvoiceSearchObject.SearchBy_DateOfPaymentTo) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)OutputInvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)OutputInvoiceSearchObject.SearchBy_InvoiceDateTo) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentFrom", ((object)OutputInvoiceSearchObject.SearchBy_DateOfPaymentFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentTo", ((object)OutputInvoiceSearchObject.SearchBy_DateOfPaymentTo) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);

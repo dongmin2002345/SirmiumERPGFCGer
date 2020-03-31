@@ -265,10 +265,10 @@ namespace SirmiumERPGFC.Repository.Invoices
 
                     selectCommand.Parameters.AddWithValue("@BuyerName", ((object)InvoiceSearchObject.SearchBy_BusinessPartner) != null ? "%" + InvoiceSearchObject.SearchBy_BusinessPartner + "%" : "");
                     selectCommand.Parameters.AddWithValue("@InvoiceNumber", ((object)InvoiceSearchObject.SearchBy_InvoiceNumber) != null ? "%" + InvoiceSearchObject.SearchBy_InvoiceNumber + "%" : "");
-                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? "");
-                    selectCommand.Parameters.AddWithValue("@DateOfPaymentFrom", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentFrom) ?? "");
-                    selectCommand.Parameters.AddWithValue("@DateOfPaymentTo", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentTo) ?? "");
+                    selectCommand.Parameters.AddWithValue("@DateFrom", ((object)InvoiceSearchObject.SearchBy_InvoiceDateFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateTo", ((object)InvoiceSearchObject.SearchBy_InvoiceDateTo) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentFrom", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentFrom) ?? DBNull.Value);
+                    selectCommand.Parameters.AddWithValue("@DateOfPaymentTo", ((object)InvoiceSearchObject.SearchBy_DateOfPaymentTo) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     selectCommand.Parameters.AddWithValue("@ItemsPerPage", itemsPerPage);
                     selectCommand.Parameters.AddWithValue("@Offset", (currentPage - 1) * itemsPerPage);

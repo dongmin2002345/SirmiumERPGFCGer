@@ -43,7 +43,7 @@
 
                 <TextBlock Text="{DynamicResource ŠifraDvotacka}"  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
                 <TextBox x:Name="txtSearchByCode" Grid.Column="1" 
-                         Text="{Binding Path=AgencySearchObject.Search_Code, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Path=AgencySearchObject.Search_InternalCode, UpdateSourceTrigger=PropertyChanged}"
                          Margin="2"
                          Controls:TextBoxHelper.ClearTextButton="True"/>
 

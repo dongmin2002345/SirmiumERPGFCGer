@@ -1038,6 +1038,13 @@ namespace SirmiumERPGFC.Views.Employees
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
+        private void txtSearchByPhysicalPersonCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Thread th = new Thread(() => DisplayData());
+            th.IsBackground = true;
+            th.Start();
+        }
+
         #endregion
 
         #region Add, edit, delete, lock and cancel
@@ -1433,12 +1440,6 @@ namespace SirmiumERPGFC.Views.Employees
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        private void txtSearchByPhysicalPersonCode_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         #endregion
         //#region Attributes
 

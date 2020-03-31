@@ -118,6 +118,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                         SqlCommandSelectPart +
                         "FROM Agencies " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
+                        "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId " +
@@ -125,6 +126,7 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "LIMIT @ItemsPerPage OFFSET @Offset;", db);
                     
                     selectCommand.Parameters.AddWithValue("@Code", ((object)AgencySearchObject.Search_Code) != null ? "%" + AgencySearchObject.Search_Code + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@InternalCode", ((object)AgencySearchObject.Search_InternalCode) != null ? "%" + AgencySearchObject.Search_InternalCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)AgencySearchObject.Search_Name) != null ? "%" + AgencySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)AgencySearchObject.Search_Country) != null ? "%" + AgencySearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
@@ -143,11 +145,13 @@ namespace SirmiumERPGFC.Repository.Sectors
                         "SELECT Count(*) " +
                         "FROM Agencies " +
                         "WHERE (@Code IS NULL OR @Code = '' OR Code LIKE @Code) " +
+                        "AND (@InternalCode IS NULL OR @InternalCode = '' OR InternalCode LIKE @InternalCode) " +
                         "AND (@Name IS NULL OR @Name = '' OR Name LIKE @Name) " +
                         "AND (@CountryName IS NULL OR @CountryName = '' OR CountryName LIKE @CountryName) " +
                         "AND CompanyId = @CompanyId;", db);
                     
                     selectCommand.Parameters.AddWithValue("@Code", ((object)AgencySearchObject.Search_Code) != null ? "%" + AgencySearchObject.Search_Code + "%" : "");
+                    selectCommand.Parameters.AddWithValue("@InternalCode", ((object)AgencySearchObject.Search_InternalCode) != null ? "%" + AgencySearchObject.Search_InternalCode + "%" : "");
                     selectCommand.Parameters.AddWithValue("@Name", ((object)AgencySearchObject.Search_Name) != null ? "%" + AgencySearchObject.Search_Name + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CountryName", ((object)AgencySearchObject.Search_Country) != null ? "%" + AgencySearchObject.Search_Country + "%" : "");
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
