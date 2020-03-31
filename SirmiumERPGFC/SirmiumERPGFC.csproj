@@ -403,6 +403,12 @@
     <Compile Include="Scanners\ScannerTypeOptionViewModel.cs" />
     <Compile Include="Scanners\WIAScanner.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="ViewComponents\Dialogs\DocumentPathDialog.xaml.cs">
+      <DependentUpon>DocumentPathDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewComponents\Dialogs\DocumentSelectDialog.xaml.cs">
+      <DependentUpon>DocumentSelectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComponents\Notifications\ToDoNotification_Popup.xaml.cs">
       <DependentUpon>ToDoNotification_Popup.xaml</DependentUpon>
     </Compile>
@@ -936,6 +942,14 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewComponents\Dialogs\DocumentPathDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewComponents\Dialogs\DocumentSelectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\Notifications\ToDoNotification_Popup.xaml">
       <Generator>MSBuild:Compile</Generator>

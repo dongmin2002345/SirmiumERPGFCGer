@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using SirmiumERPGFC.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,17 +15,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SirmiumERPGFC.Views.Home
+namespace SirmiumERPGFC.ViewComponents.Dialogs
 {
     /// <summary>
-    /// Interaction logic for Scanner_Window.xaml
+    /// Interaction logic for DocumentSelectDialog.xaml
     /// </summary>
-    public partial class Scanner_Window : MetroWindow, INotifyPropertyChanged
+    public partial class DocumentSelectDialog : MetroWindow, INotifyPropertyChanged
     {
         #region SelectedDocument
-        private string _SelectedDocument;
+        private DirectoryTreeItemViewModel _SelectedDocument;
 
-        public string SelectedDocument
+        public DirectoryTreeItemViewModel SelectedDocument
         {
             get { return _SelectedDocument; }
             set
@@ -39,29 +40,25 @@ namespace SirmiumERPGFC.Views.Home
         #endregion
 
 
-        public Scanner_Window()
+
+        public DocumentSelectDialog()
         {
             InitializeComponent();
 
             this.DataContext = this;
-
-            if (scannerList != null)
-                scannerList.DocumentSaved += new DocumentSavedToPdfHandler(DocumentSavedHandler);
         }
 
-        private void DocumentSavedHandler(string docPath)
-        {
-            SelectedDocument = docPath;
-        }
 
         private void btnConfirmFolder_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedDocument == null)
+            var selectedDoc = documentExplorer?.SelectedDocument;
+            if (selectedDoc == null)
             {
-                MainWindow.ErrorMessage = "Morate skenirati dokument i sačuvati ga u PDF formatu da biste nastavili dalje!";
+                MainWindow.ErrorMessage = "Morate odabrati folder da biste potvrdili putanju!";
                 return;
             }
 
+            SelectedDocument = selectedDoc;
             this.DialogResult = true;
         }
 
@@ -71,7 +68,6 @@ namespace SirmiumERPGFC.Views.Home
             this.DialogResult = false;
             this.Close();
         }
-
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 

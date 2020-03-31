@@ -1,24 +1,22 @@
-﻿<controls:MetroWindow
-        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" 
-        x:Class="SirmiumERPGFC.Views.Home.Scanner_Window"
+﻿<mah:MetroWindow x:Class="SirmiumERPGFC.ViewComponents.Dialogs.DocumentSelectDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SirmiumERPGFC.Views.Home"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:SirmiumERPGFC.ViewComponents.Dialogs" xmlns:local1="clr-namespace:SirmiumERPGFC.Views.Documents"
         mc:Ignorable="d" Background="White" WindowStartupLocation="CenterScreen"
         ShowCloseButton="False" ShowMinButton="False" ShowMaxRestoreButton="False"
         Topmost="True"
-        BorderBrush="#007ACC" BorderThickness="1"
-        
-        Title="SKENER" Height="450" Width="800">
-    <Grid x:Name="Wrapper" Margin="2">
+        Title="ODABERI DOKUMENT" Height="450" Width="800">
+    <Grid Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <local:Scanner_List Grid.Row="0" x:Name="scannerList" />
-        
+        <local1:DocumentTreeView Grid.Row="0" x:Name="documentExplorer" />
+
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -42,4 +40,4 @@
             </Button>
         </Grid>
     </Grid>
-</controls:MetroWindow>
+</mah:MetroWindow>

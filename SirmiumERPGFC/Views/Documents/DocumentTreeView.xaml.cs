@@ -92,6 +92,25 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     _SelectedDocumentTreeFile = value;
                     NotifyPropertyChanged("SelectedDocumentTreeFile");
+
+                    SelectedDocument = SelectedDocumentTreeFile;
+                }
+            }
+        }
+        #endregion
+
+        #region SelectedDocument
+        private DirectoryTreeItemViewModel _SelectedDocument;
+
+        public DirectoryTreeItemViewModel SelectedDocument
+        {
+            get { return _SelectedDocument; }
+            set
+            {
+                if (_SelectedDocument != value)
+                {
+                    _SelectedDocument = value;
+                    NotifyPropertyChanged("SelectedDocument");
                 }
             }
         }

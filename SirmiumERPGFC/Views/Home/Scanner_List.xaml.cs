@@ -22,11 +22,18 @@ using static SirmiumERPGFC.Scanners.WIAScanner;
 
 namespace SirmiumERPGFC.Views.Home
 {
+    public delegate void DocumentSavedToPdfHandler(string docPath);
+
     /// <summary>
     /// Interaction logic for Scanner_List.xaml
     /// </summary>
     public partial class Scanner_List : UserControl, INotifyPropertyChanged
     {
+
+        #region Events
+        public DocumentSavedToPdfHandler DocumentSaved;
+        #endregion
+
         #region Images
         private ObservableCollection<ScannedImageViewModel> _Images = new ObservableCollection<ScannedImageViewModel>();
         public ObservableCollection<ScannedImageViewModel> Images
@@ -219,6 +226,24 @@ namespace SirmiumERPGFC.Views.Home
         #endregion
 
 
+        #region CurrentDocumentFullPath
+        private string _CurrentDocumentFullPath;
+
+        public string CurrentDocumentFullPath
+        {
+            get { return _CurrentDocumentFullPath; }
+            set
+            {
+                if (_CurrentDocumentFullPath != value)
+                {
+                    _CurrentDocumentFullPath = value;
+                    NotifyPropertyChanged("CurrentDocumentFullPath");
+                }
+            }
+        }
+        #endregion
+
+
         public Scanner_List()
         {
             InitializeComponent();
@@ -259,7 +284,11 @@ namespace SirmiumERPGFC.Views.Home
                             SelectedPath, DocumentName, 
                         MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
 
-                    generator.Generate();
+                    CurrentDocumentFullPath = generator.Generate();
+
+                    Dispatcher.BeginInvoke((Action)(() => {
+                        DocumentSaved?.Invoke(CurrentDocumentFullPath);
+                    }));
 
                     MainWindow.SuccessMessage = (string)Application.Current.FindResource("DokumentJeUspesnoSacuvanUzvicnik");
                 } catch(Exception ex)
