@@ -1619,10 +1619,9 @@ namespace SirmiumERPGFC.Views.Employees
                         pdfFormFields.SetField("5 Geburtsdatum", CurrentEmployee.DateOfBirth?.ToString("dd.MM.yyyy") ?? "");
 
                         // Adresa firme u Nemackoj
-                        var employeeBusinessPartner = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
-                        var businessPartnerAddress = new BusinessPartnerLocationSQLiteRepository().GetBusinessPartnerLocationsByBusinessPartner(MainWindow.CurrentCompanyId, employeeBusinessPartner?.Identifier ?? Guid.Empty).BusinessPartnerLocations?.OrderBy(x => x.CreatedAt).FirstOrDefault();
-                        
-                        string businessPartnerLocation = (businessPartnerAddress?.BusinessPartner.NameGer ?? "") + ", " + (businessPartnerAddress?.Address ?? "") + ", " + (businessPartnerAddress?.City?.ZipCode ?? "") + ", " + (businessPartnerAddress?.City?.Name ?? "");
+                        var employeeBusinessPartnerS = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
+                        employeeBusinessPartnerS = new BusinessPartnerSQLiteRepository().GetBusinessPartner(employeeBusinessPartnerS?.Identifier ?? Guid.NewGuid())?.BusinessPartner;
+                        string businessPartnerLocation = (employeeBusinessPartnerS?.NameGer ?? "") + ", " + (employeeBusinessPartnerS?.AddressGer ?? "") + ", " + (employeeBusinessPartnerS?.City?.ZipCode ?? "") + ", " + (employeeBusinessPartnerS?.City?.Name ?? "");
                         pdfFormFields.SetField("7 Name und Anschrift des entsendenden Unternehmens bzw der Niederlassung im Bundesgebiet", businessPartnerLocation);
                         
                         pdfFormFields.SetField("9 PassNr oder PassersatzN", CurrentEmployee.Passport);
@@ -1651,9 +1650,6 @@ namespace SirmiumERPGFC.Views.Employees
                         pdfFormFields.SetField("Text8.0.10", employeeConstructionSite.InternalCode?.Length > 10 ? employeeConstructionSite.InternalCode.ToArray()[10].ToString() : "");
                         pdfFormFields.SetField("Text8.0.11", employeeConstructionSite.InternalCode?.Length > 11 ? employeeConstructionSite.InternalCode.ToArray()[11].ToString() : "");
 
-                        var employeeBusinessPartnerS = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
-                        employeeBusinessPartnerS = new BusinessPartnerSQLiteRepository().GetBusinessPartner(employeeBusinessPartnerS?.Identifier ?? Guid.NewGuid())?.BusinessPartner;
-                        
                         string employeeBusinesPartnerLocation = (employeeBusinessPartnerS?.Name ?? "") + ", " + (employeeBusinessPartnerS?.Address ?? "") + ", " + (employeeBusinessPartnerS?.CitySrb?.ZipCode ?? "") + ", " + (employeeBusinessPartnerS?.CitySrb?.Name ?? "") + ", " + (employeeBusinessPartnerS?.CountrySrb?.Name ?? "");
                         pdfFormFields.SetField("17 Auftragnehmer ausländisches Unternehmen", ("\n" + employeeBusinesPartnerLocation));
 

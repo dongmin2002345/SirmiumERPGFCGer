@@ -107,14 +107,15 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="67*"/>
                     <ColumnDefinition Width="135*"/>
-                    <ColumnDefinition Width="582*"/>
+                    <ColumnDefinition Width="93*"/>
+                    <ColumnDefinition Width="489*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.ColumnSpan="3">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="0,0,-149,0">
                     <Button x:Name="btnAdd" Click="btnAdd_Click" Margin="2" Width="150" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
@@ -202,7 +203,7 @@
 
                 </StackPanel>
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="2">
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="3">
                     <Button x:Name="btnFirstPage" Click="btnFirstPage_Click" Margin="2" Width="30" HorizontalAlignment="Center" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
@@ -227,7 +228,7 @@
                 </StackPanel>
 
                 <!--Listing-->
-                <Controls:ProgressRing Grid.Row="1" IsActive="{Binding PhysicalPersonDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10" Grid.Column="2" Margin="160.254,76,362,75"/>
+                <Controls:ProgressRing Grid.Row="1" IsActive="{Binding PhysicalPersonDataLoading, Mode=TwoWay}" Foreground="{DynamicResource AccentColorBrush}" Panel.ZIndex="10" Grid.Column="3" Margin="67.037,56,362,55"/>
                 <DataGrid x:Name="dgPhysicalPersons"
                           Grid.Row="1"
                           Margin="2"
@@ -246,7 +247,7 @@
 		                  HeadersVisibility="All"
 		                  LoadingRow="DgPhysicalPersons_LoadingRow"
                           ItemsSource="{Binding Path=PhysicalPersonsFromDB}"
-                          SelectedItem="{Binding Path=CurrentPhysicalPerson, Mode=TwoWay}" Grid.ColumnSpan="3">
+                          SelectedItem="{Binding Path=CurrentPhysicalPerson, Mode=TwoWay}" Grid.ColumnSpan="4">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn SortMemberPath="PhysicalPersonCode" Header="{DynamicResource Šifra}" Binding="{Binding PhysicalPersonCode}" Width="Auto" IsReadOnly="True" />

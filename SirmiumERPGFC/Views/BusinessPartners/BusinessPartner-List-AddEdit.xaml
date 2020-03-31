@@ -154,8 +154,10 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -176,56 +178,64 @@
                             <popups:CountryPopup Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popCountryGer"
                                          CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"/>
 
-                            <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource SektorDvotacka}" Margin="5 0 5 0" />
-                            <popups:SectorPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
+                            <TextBlock Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource GradDvotacka}" Margin="5 0 5 0" />
+                            <popups:CityPopup Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popCityGer"
+                                         CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"
+                                         CurrentCity="{Binding Path=CurrentBusinessPartner.City, Mode=TwoWay}"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource AdresaDvotacka}" Margin="5 0 5 0" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtAddressGer" Text="{Binding Path=CurrentBusinessPartner.AddressGer}"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource SektorDvotacka}" Margin="5 0 5 0" />
+                            <popups:SectorPopup Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popSector"
                                          CurrentCountry="{Binding Path=CurrentBusinessPartner.Country, Mode=TwoWay}"
                                          CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"/>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource DelatnostDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <popups:AgencyPopup Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgency" 
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource DelatnostDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <popups:AgencyPopup Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="popAgency" 
                                          CurrentSector="{Binding Path=CurrentBusinessPartner.Sector, Mode=TwoWay}"
                                          CurrentAgency="{Binding Path=CurrentBusinessPartner.Agency, Mode=TwoWay}"/>
 
-                            <TextBlock Grid.Row="2" Grid.Column="3" Text="{DynamicResource Poreski_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
+                            <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource Poreski_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtTaxNr" 
                                Text="{Binding Path=CurrentBusinessPartner.TaxNr}" />
 
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
-                            <ComboBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxIsInPDVGer" Margin="2"
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource Obveznik_PDVCrtaaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                            <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="cbxIsInPDVGer" Margin="2"
                             SelectedItem="{Binding Path=CurrentBusinessPartner.IsInPDVGer, Converter={StaticResource cbxStringToBoolConverter}}"
                             ItemsSource="{Binding Path=IsInPdvOptions}">
                             </ComboBox>
 
-                            <TextBlock Grid.Row="3" Grid.Column="3" Text="{DynamicResource Poreska_Uprava}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <popups:TaxAdministrationPopup Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popTaxAdministration" 
+                            <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Poreska_Uprava}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <popups:TaxAdministrationPopup Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="popTaxAdministration" 
                                          CurrentTaxAdministration="{Binding Path=CurrentBusinessPartner.TaxAdministration, Mode=TwoWay}"/>
 
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource IBANDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtIBAN" 
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource IBANDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtIBAN" 
                              Text="{Binding Path=CurrentBusinessPartner.IBAN}" />
 
-                            <TextBlock Grid.Row="4" Grid.Column="3" Text="{DynamicResource Betriebs_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtBetriebsNumber"  
+                            <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Betriebs_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtBetriebsNumber"  
                              Text="{Binding Path=CurrentBusinessPartner.BetriebsNumber}"/>
 
-                            <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource Registarski_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCommercialNr" 
+                            <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource Registarski_brojDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="txtCommercialNr" 
                              Text="{Binding Path=CurrentBusinessPartner.CommercialNr}" />
 
-                            <TextBlock Grid.Row="5" Grid.Column="3" Text="{DynamicResource Kontakt_osobaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
-                            <TextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPersonGer"  
+                            <TextBlock Grid.Row="6" Grid.Column="3" Text="{DynamicResource Kontakt_osobaDvotacka}" VerticalAlignment="Center" Margin="5 0 5 0" />
+                            <TextBox Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="txtContactPersonGer"  
                              Text="{Binding Path=CurrentBusinessPartner.ContactPersonGer}"/>
 
-                            <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Odbitak_poreza_ODDvotacka}" Margin="5 0 5 0" />
-                            <DatePicker Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtVatDeductionFrom" 
+                            <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource Odbitak_poreza_ODDvotacka}" Margin="5 0 5 0" />
+                            <DatePicker Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" x:Name="dtVatDeductionFrom" 
                                     SelectedDate="{Binding Path=CurrentBusinessPartner.VatDeductionFrom, Mode=TwoWay}"/>
 
-                            <TextBlock Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource Odbitak_poreza_DODvotacka}" Margin="5 0 5 0" />
-                            <DatePicker Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtVatDeductionTo" 
+                            <TextBlock Grid.Row="7" Grid.Column="3" VerticalAlignment="Center" Text="{DynamicResource Odbitak_poreza_DODvotacka}" Margin="5 0 5 0" />
+                            <DatePicker Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" x:Name="dtVatDeductionTo" 
                                     SelectedDate="{Binding Path=CurrentBusinessPartner.VatDeductionTo, Mode=TwoWay}"/>
 
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
-                    <Grid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2">
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="{DynamicResource PutanjaDvotacka}" Margin="2" VerticalAlignment="Center" />
+                    <Grid Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
@@ -238,7 +248,7 @@
                         </Button>
                     </Grid>
 
-                    <Button x:Name="btnScahner" Grid.Row="7" Grid.Column="4" Click="btnScahner_Click" Grid.ColumnSpan="2" Margin="2" Background="#007ACC">
+                    <Button x:Name="btnScahner" Grid.Row="8" Grid.Column="4" Click="btnScahner_Click" Grid.ColumnSpan="2" Margin="2" Background="#007ACC">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="..\..\Resources\Icons\scanner.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock Text="{DynamicResource Skener}" Foreground="White" FontWeight="Regular"/>

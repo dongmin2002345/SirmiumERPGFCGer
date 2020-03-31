@@ -43,6 +43,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
                 "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
+                "AddressGer, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
                 "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
@@ -142,6 +144,19 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Country.Code = reader["CountryCode"].ToString();
                             businessPartner.Country.Name = reader["CountryName"].ToString();
                         }
+
+                        if (reader["CityId"] != DBNull.Value)
+                        {
+                            businessPartner.City = new City();
+                            businessPartner.CityId = Int32.Parse(reader["CityId"].ToString());
+                            businessPartner.City.Id = Int32.Parse(reader["CityId"].ToString());
+                            businessPartner.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
+                            businessPartner.City.ZipCode = reader["CityZipCode"].ToString();
+                            businessPartner.City.Name = reader["CityName"].ToString();
+                        }
+
+                        if (reader["AddressGer"] != DBNull.Value)
+                            businessPartner.AddressGer = reader["AddressGer"].ToString();
 
                         if (reader["SectorId"] != DBNull.Value)
                         {
@@ -257,6 +272,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
                 "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
+                "AddressGer, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
                 "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
@@ -358,6 +375,19 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Country.Code = reader["CountryCode"].ToString();
                             businessPartner.Country.Name = reader["CountryName"].ToString();
                         }
+
+                        if (reader["CityId"] != DBNull.Value)
+                        {
+                            businessPartner.City = new City();
+                            businessPartner.CityId = Int32.Parse(reader["CityId"].ToString());
+                            businessPartner.City.Id = Int32.Parse(reader["CityId"].ToString());
+                            businessPartner.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
+                            businessPartner.City.ZipCode = reader["CityZipCode"].ToString();
+                            businessPartner.City.Name = reader["CityName"].ToString();
+                        }
+
+                        if (reader["AddressGer"] != DBNull.Value)
+                            businessPartner.AddressGer = reader["AddressGer"].ToString();
 
                         if (reader["SectorId"] != DBNull.Value)
                         {
@@ -473,6 +503,8 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 "TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
                 "IBAN, BetriebsNumber, Customer, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+                "CityId, CityIdentifier, CityZipCode, CityName, " +
+                "AddressGer, " +
                 "SectorId, SectorIdentifier, SectorCode, SectorName, " +
                 "AgencyId, AgencyIdentifier, AgencyCode, AgencyName, " +
                 "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
@@ -571,6 +603,19 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartner.Country.Code = reader["CountryCode"].ToString();
                             businessPartner.Country.Name = reader["CountryName"].ToString();
                         }
+
+                        if (reader["CityId"] != DBNull.Value)
+                        {
+                            businessPartner.City = new City();
+                            businessPartner.CityId = Int32.Parse(reader["CityId"].ToString());
+                            businessPartner.City.Id = Int32.Parse(reader["CityId"].ToString());
+                            businessPartner.City.Identifier = Guid.Parse(reader["CityIdentifier"].ToString());
+                            businessPartner.City.ZipCode = reader["CityZipCode"].ToString();
+                            businessPartner.City.Name = reader["CityName"].ToString();
+                        }
+
+                        if (reader["AddressGer"] != DBNull.Value)
+                            businessPartner.AddressGer = reader["AddressGer"].ToString();
 
                         if (reader["SectorId"] != DBNull.Value)
                         {
@@ -722,6 +767,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                 {
                     dbEntry.CountrySrbId = businessPartner.CountrySrbId ?? null;
                     dbEntry.CitySrbId = businessPartner.CitySrbId ?? null;
+                    dbEntry.CityId = businessPartner.CityId ?? null;
                     dbEntry.CountryId = businessPartner.CountryId ?? null;
                     dbEntry.SectorId = businessPartner.SectorId ?? null;
                     dbEntry.AgencyId = businessPartner.AgencyId ?? null;
@@ -743,7 +789,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
 
                     // Set GER properties
                     dbEntry.NameGer = businessPartner.NameGer;
-
+                    dbEntry.AddressGer = businessPartner.AddressGer;
                     dbEntry.IsInPDVGer = businessPartner.IsInPDVGer;
                     dbEntry.IBAN = businessPartner.IBAN;
                     dbEntry.BetriebsNumber = businessPartner.BetriebsNumber;

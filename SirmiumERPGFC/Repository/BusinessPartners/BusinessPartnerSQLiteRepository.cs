@@ -29,7 +29,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "IsInPdv BOOL NULL, " +
             "JBKJS NVARCHAR(48) NULL, " +
 
-             "CountrySrbId INTEGER NULL, " +
+            "CountrySrbId INTEGER NULL, " +
             "CountrySrbIdentifier GUID NULL, " +
             "CountrySrbCode NVARCHAR(48) NULL, " +
             "CountrySrbName NVARCHAR(2048) NULL, " +
@@ -58,6 +58,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             "CountryIdentifier GUID NULL, " +
             "CountryCode NVARCHAR(48) NULL, " +
             "CountryName NVARCHAR(2048) NULL, " +
+
+            "CityId INTEGER NULL, " +
+            "CityIdentifier GUID NULL, " +
+            "CityCode NVARCHAR(48) NULL, " +
+            "CityName NVARCHAR(2048) NULL, " +
+
+            "AddressGer NVARCHAR(2048) NULL, " +
+
             "SectorId INTEGER NULL, " +
             "SectorIdentifier GUID NULL, " +
             "SectorCode NVARCHAR(48) NULL, " +
@@ -90,14 +98,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         public string SqlCommandSelectPart =
             "SELECT ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, IdentificationNumber, " +
             "DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
-
             "CountrySrbId, CountrySrbIdentifier, CountrySrbCode, CountrySrbName, " +
             "CitySrbId, CitySrbIdentifier, CitySrbCode, CitySrbName, " +
             "Address, " +
-
             "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
             "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "CityId, CityIdentifier, CityCode, CityName, " +
+            "AddressGer, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
             "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
@@ -107,14 +115,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
         public string SqlCommandInsertPart = "INSERT INTO BusinessPartners " +
             "(Id, ServerId, Identifier, Code, InternalCode, Name, PIB, PIO, IdentificationNumber, " +
             "DueDate, WebSite, ContactPerson, IsInPdv, JBKJS, " +
-
             "CountrySrbId, CountrySrbIdentifier, CountrySrbCode, CountrySrbName, " +
             "CitySrbId, CitySrbIdentifier, CitySrbCode, CitySrbName, " +
             "Address, " +
-
             "NameGer, IsInPDVGer, TaxAdministrationId, TaxAdministrationIdentifier, TaxAdministrationCode, TaxAdministrationName, " +
             "IBAN, BetriebsNumber, Customer, TaxNr, CommercialNr, ContactPersonGer, " +
             "CountryId, CountryIdentifier, CountryCode, CountryName, " +
+            "CityId, CityIdentifier, CityCode, CityName, " +
+            "AddressGer, " +
             "SectorId, SectorIdentifier, SectorCode, SectorName, " +
             "VatId, VatIdentifier, VatCode, VatDescription, VatAmount, " +
             "DiscountId, DiscountIdentifier, DiscountCode, DiscountName, DiscountAmount, " +
@@ -123,14 +131,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
             "VALUES (NULL, @ServerId, @Identifier, @Code, @InternalCode, @Name, @PIB, @PIO, @IdentificationNumber, " +
             "@DueDate, @WebSite, @ContactPerson, @IsInPdv, @JBKJS, " +
-
             "@CountrySrbId, @CountrySrbIdentifier, @CountrySrbCode, @CountrySrbName, " +
             "@CitySrbId, @CitySrbIdentifier, @CitySrbCode, @CitySrbName, " +
             "@Address, " +
-
             "@NameGer, @IsInPDVGer, @TaxAdministrationId, @TaxAdministrationIdentifier, @TaxAdministrationCode, @TaxAdministrationName, " +
             "@IBAN, @BetriebsNumber, @Customer, @TaxNr, @CommercialNr, @ContactPersonGer, " +
             "@CountryId, @CountryIdentifier, @CountryCode, @CountryName, " +
+            "@CityId, @CityIdentifier, @CityCode, @CityName, " +
+            "@AddressGer, " +
             "@SectorId, @SectorIdentifier, @SectorCode, @SectorName, " +
             "@VatId, @VatIdentifier, @VatCode, @VatDescription, @VatAmount, " +
             "@DiscountId, @DiscountIdentifier, @DiscountCode, @DiscountName, @DiscountAmount," +
@@ -173,6 +181,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             dbEntry.CommercialNr = SQLiteHelper.GetString(query, ref counter);
             dbEntry.ContactPersonGer = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Country = SQLiteHelper.GetCountry(query, ref counter);
+            dbEntry.City = SQLiteHelper.GetCity(query, ref counter);
+            dbEntry.AddressGer = SQLiteHelper.GetString(query, ref counter);
             dbEntry.Sector = SQLiteHelper.GetSector(query, ref counter);
             dbEntry.Vat = SQLiteHelper.GetVat(query, ref counter);
             dbEntry.Discount = SQLiteHelper.GetDiscount(query, ref counter);
@@ -233,6 +243,14 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartner.Country?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartner.Country?.Code) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartner.Country?.Name) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@CityId", ((object)businessPartner.City?.Id) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)businessPartner.City?.Identifier) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityCode", ((object)businessPartner.City?.ZipCode) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CityName", ((object)businessPartner.City?.Name) ?? DBNull.Value);
+
+            insertCommand.Parameters.AddWithValue("@AddressGer", ((object)businessPartner.AddressGer) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@SectorId", ((object)businessPartner.Sector?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)businessPartner.Sector?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.Code) ?? DBNull.Value);
@@ -288,6 +306,8 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
                         "bp.NameGer, bp.IsInPDVGer, bp.TaxAdministrationId, bp.TaxAdministrationIdentifier, bp.TaxAdministrationCode, bp.TaxAdministrationName, " +
                         "bp.IBAN, bp.BetriebsNumber, bp.Customer, bp.TaxNr, bp.CommercialNr, bp.ContactPersonGer, " +
                         "bp.CountryId, bp.CountryIdentifier, bp.CountryCode, bp.CountryName, " +
+                        "bp.CityId, bp.CityIdentifier, bp.CityCode, bp.CityName, " +
+                        "bp.AddressGer, " +
                         "bp.SectorId, bp.SectorIdentifier, bp.SectorCode, bp.SectorName, " +
                         "bp.VatId, bp.VatIdentifier, bp.VatCode, bp.VatDescription, bp.VatAmount, " +
                         "bp.DiscountId, bp.DiscountIdentifier, bp.DiscountCode, bp.DiscountName, bp.DiscountAmount, " +

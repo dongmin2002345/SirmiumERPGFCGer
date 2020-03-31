@@ -59,6 +59,9 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 Country = businessPartner.Country?.ConvertToCountryViewModelLite(),
                 CountrySrb = businessPartner.CountrySrb?.ConvertToCountryViewModelLite(),
                 CitySrb = businessPartner.CitySrb?.ConvertToCityViewModelLite(),
+                City = businessPartner.City?.ConvertToCityViewModelLite(),
+
+                AddressGer = businessPartner.AddressGer,
                 Sector = businessPartner.Sector?.ConvertToSectorViewModelLite(),
                 Agency = businessPartner.Agency?.ConvertToAgencyViewModelLite(),
                 Vat = businessPartner.Vat?.ConvertToVatViewModelLite(),
@@ -107,7 +110,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 IsInPDV = businessPartner.IsInPDV,
 
                 JBKJS = businessPartner.JBKJS,
-
+                AddressGer = businessPartner.AddressGer,
                 NameGer = businessPartner.NameGer,
                 IsInPDVGer = businessPartner.IsInPDVGer,
                 IBAN = businessPartner.IBAN,
@@ -153,7 +156,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 IsInPDV = businessPartnerViewModel.IsInPDV,
 
                 JBKJS = businessPartnerViewModel.JBKJS,
-
+                AddressGer = businessPartnerViewModel.AddressGer,
                 NameGer = businessPartnerViewModel.NameGer,
                 IsInPDVGer = businessPartnerViewModel.IsInPDVGer, 
                 TaxAdministrationId = businessPartnerViewModel.TaxAdministration?.Id ?? null, 
@@ -163,6 +166,7 @@ namespace DataMapper.Mappers.Common.BusinessPartners
                 CountryId = businessPartnerViewModel.Country?.Id ?? null,
                 CountrySrbId = businessPartnerViewModel.CountrySrb?.Id ?? null,
                 CitySrbId = businessPartnerViewModel.CitySrb?.Id ?? null,
+                CityId = businessPartnerViewModel.City?.Id ?? null,
                 SectorId = businessPartnerViewModel.Sector?.Id ?? null,
                 AgencyId = businessPartnerViewModel.Agency?.Id ?? null,
                 VatId = businessPartnerViewModel.Vat?.Id ?? null,

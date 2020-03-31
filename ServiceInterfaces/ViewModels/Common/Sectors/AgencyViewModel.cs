@@ -131,6 +131,23 @@ namespace ServiceInterfaces.ViewModels.Common.Sectors
         }
         #endregion
 
+        #region Search_InternalCode
+        private string _Search_InternalCode;
+
+        public string Search_InternalCode
+        {
+            get { return _Search_InternalCode; }
+            set
+            {
+                if (_Search_InternalCode != value)
+                {
+                    _Search_InternalCode = value;
+                    NotifyPropertyChanged("Search_InternalCode");
+                }
+            }
+        }
+        #endregion
+
         #region Search_Name
         private string _Search_Name;
 

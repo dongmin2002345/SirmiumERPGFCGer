@@ -384,6 +384,40 @@ namespace ServiceInterfaces.ViewModels.Common.BusinessPartners
         }
         #endregion
 
+        #region City
+        private CityViewModel _City;
+
+        public CityViewModel City
+        {
+            get { return _City; }
+            set
+            {
+                if (_City != value)
+                {
+                    _City = value;
+                    NotifyPropertyChanged("City");
+                }
+            }
+        }
+        #endregion
+
+        #region AddressGer
+        private string _AddressGer;
+
+        public string AddressGer
+        {
+            get { return _AddressGer; }
+            set
+            {
+                if (_AddressGer != value)
+                {
+                    _AddressGer = value;
+                    NotifyPropertyChanged("AddressGer");
+                }
+            }
+        }
+        #endregion
+
         #region Sector
         private SectorViewModel _Sector;
 
