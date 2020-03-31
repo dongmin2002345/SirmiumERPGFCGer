@@ -1,4 +1,5 @@
 ﻿using SirmiumERPGFC.Scanners;
+using SirmiumERPGFC.ViewComponents.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -321,14 +322,12 @@ namespace SirmiumERPGFC.Views.Home
         {
             CanInteractWithForm = false;
 
-            using(var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                var selectedResult = dialog.ShowDialog();
+            var dialog = new DocumentPathDialog();
+            bool? selectedResult = dialog.ShowDialog();
 
-                if(selectedResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    SelectedPath = dialog.SelectedPath;
-                }
+            if (selectedResult == true)
+            {
+                SelectedPath = dialog.SelectedPath;
             }
             CanInteractWithForm = true;
         }
