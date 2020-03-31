@@ -44,7 +44,7 @@ namespace ServiceInterfaces.ViewModels.Employees
         #endregion
 
         #region CreateDate
-        private DateTime? _CreateDate;
+        private DateTime? _CreateDate = DateTime.Now;
 
         public DateTime? CreateDate
         {
