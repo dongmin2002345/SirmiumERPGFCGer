@@ -166,7 +166,7 @@ namespace SirmiumERPGFC.Repository.ConstructionSites
             insertCommand.Parameters.AddWithValue("@CityName", ((object)constructionSite.City?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)constructionSite.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)constructionSite.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)constructionSite.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)constructionSite.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)constructionSite.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BusinessPartnerId", ((object)constructionSite.BusinessPartner?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BusinessPartnerIdentifier", ((object)constructionSite.BusinessPartner?.Identifier) ?? DBNull.Value);

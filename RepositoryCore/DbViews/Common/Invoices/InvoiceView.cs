@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Common.Invoices
             strSQLCommand =
                 "CREATE VIEW vInvoices AS " +
                 "SELECT invoice.Id AS InvoiceId, invoice.Identifier AS InvoiceIdentifier, invoice.Code AS InvoiceCode, invoice.InvoiceNumber AS InvoiceNumber, " +
-                "businessPartner.Id AS BuyerId, businessPartner.Identifier AS BuyerIdentifier, businessPartner.Code AS BuyerCode, businessPartner.Name AS BuyerName, " +
+                "businessPartner.Id AS BuyerId, businessPartner.Identifier AS BuyerIdentifier, businessPartner.Code AS BuyerCode, businessPartner.Name AS BuyerName, businessPartner.InternalCode AS BuyerInternalCode, businessPartner.NameGer AS BuyerNameGer, " +
                 "invoice.BuyerName AS EnteredBuyerName, invoice.Address AS Address, invoice.InvoiceDate AS InvoiceDate, invoice.DueDate AS DueDate, invoice.DateOfPayment AS DateOfPayment, " +
                 "invoice.Status AS Status, invoice.StatusDate AS StatusDate, invoice.Description AS Description, invoice.CurrencyCode AS CurrencyCode, invoice.CurrencyExchangeRate AS CurrencyExchangeRate, " +
                 

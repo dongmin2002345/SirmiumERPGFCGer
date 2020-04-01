@@ -46,7 +46,7 @@ namespace RepositoryCore.Implementations.Common.Phonebooks
                 Phonebook.CountryId = Int32.Parse(reader["CountryId"].ToString());
                 Phonebook.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                 Phonebook.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                Phonebook.Country.Code = reader["CountryCode"].ToString();
+                Phonebook.Country.Mark = reader["CountryCode"].ToString();
                 Phonebook.Country.Name = reader["CountryName"].ToString();
             }
 

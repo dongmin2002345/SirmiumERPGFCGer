@@ -75,7 +75,7 @@ namespace SirmiumERPGFC.Repository.Banks
             insertCommand.Parameters.AddWithValue("@Swift", ((object)bank.Swift) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)bank.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)bank.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)bank.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)bank.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)bank.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", bank.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)bank.UpdatedAt) ?? DBNull.Value);

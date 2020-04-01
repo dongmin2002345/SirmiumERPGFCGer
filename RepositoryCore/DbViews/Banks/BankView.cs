@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Banks
             strSQLCommand =
                 "CREATE VIEW vBanks AS " +
                 "SELECT bank.Id AS BankId, bank.Identifier AS BankIdentifier, bank.Code AS BankCode, bank.Name AS BankName, bank.Swift, bank.Active AS Active," +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "(SELECT MAX(v) FROM (VALUES (bank.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +
                 "company.Id AS CompanyId, company.Name AS CompanyName " +

@@ -46,7 +46,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             LicenceTypePopup popup = source as LicenceTypePopup;
             LicenceTypeViewModel LicenceType = (LicenceTypeViewModel)e.NewValue;
-            popup.txtLicenceType.Text = LicenceType != null ? LicenceType.Code + " (" + LicenceType.Category + ")" : "";
+            popup.txtLicenceType.Text = LicenceType != null ? LicenceType.Category + " (" + LicenceType.Description + ")" : "";
         }
         #endregion
 
@@ -93,13 +93,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new LicenceTypeSQLiteRepository().Sync(LicenceTypeService);
+                    LicenceTypeListResponse LicenceTypeResponse = new LicenceTypeSQLiteRepository().GetLicenceTypesForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (LicenceTypeResponse.Success)
+                    {
+                        if (LicenceTypeResponse.LicenceTypes != null && LicenceTypeResponse.LicenceTypes.Count > 0)
+                        {
+                            LicenceTypesFromDB = new ObservableCollection<LicenceTypeViewModel>(
+                                LicenceTypeResponse.LicenceTypes.ToList() ?? new List<LicenceTypeViewModel>());
 
-                    LicenceTypeListResponse LicenceTypeResp = new LicenceTypeSQLiteRepository().GetLicenceTypesForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (LicenceTypeResp.Success)
-                        LicenceTypesFromDB = new ObservableCollection<LicenceTypeViewModel>(LicenceTypeResp.LicenceTypes ?? new List<LicenceTypeViewModel>());
-                    else
-                        LicenceTypesFromDB = new ObservableCollection<LicenceTypeViewModel>();
+                            if (LicenceTypesFromDB.Count == 1)
+                                CurrentLicenceType = LicenceTypesFromDB.FirstOrDefault();
+                        }
+                        else
+                        {
+                            LicenceTypesFromDB = new ObservableCollection<LicenceTypeViewModel>();
+
+                            CurrentLicenceType = null;
+                        }
+                    }
                 })
             );
         }
@@ -120,11 +131,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popLicenceType.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterLicenceType.Focus();
         }
@@ -151,22 +158,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             txtLicenceType.Focus();
         }
-
-        private void btnAddLicenceType_Click(object sender, RoutedEventArgs e)
-        {
-            popLicenceType.IsOpen = false;
-
-            LicenceTypeViewModel LicenceType = new LicenceTypeViewModel();
-            LicenceType.Identifier = Guid.NewGuid();
-
-            LicenceType_List_AddEdit LicenceTypeAddEditForm = new LicenceType_List_AddEdit(LicenceType, true, true);
-            LicenceTypeAddEditForm.LicenceTypeCreatedUpdated += new LicenceTypeHandler(LicenceTypeAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_dozvolu")), 95, LicenceTypeAddEditForm);
-
-            txtLicenceType.Focus();
-        }
-
-        void LicenceTypeAdded() { }
 
         private void dgLicenceTypeList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -196,10 +187,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgLicenceTypeList.Items != null && dgLicenceTypeList.Items.Count > 0)
                 {
-                    if (dgLicenceTypeList.SelectedIndex == -1)
-                        dgLicenceTypeList.SelectedIndex = 0;
                     if (dgLicenceTypeList.SelectedIndex > 0)
                         dgLicenceTypeList.SelectedIndex = dgLicenceTypeList.SelectedIndex - 1;
+                    if (dgLicenceTypeList.SelectedIndex >= 0)
                     dgLicenceTypeList.ScrollIntoView(dgLicenceTypeList.Items[dgLicenceTypeList.SelectedIndex]);
                 }
             }
@@ -210,7 +200,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgLicenceTypeList.SelectedIndex < dgLicenceTypeList.Items.Count)
                         dgLicenceTypeList.SelectedIndex = dgLicenceTypeList.SelectedIndex + 1;
-                    dgLicenceTypeList.ScrollIntoView(dgLicenceTypeList.Items[dgLicenceTypeList.SelectedIndex]);
+                    if (dgLicenceTypeList.SelectedIndex >= 0)
+                        dgLicenceTypeList.ScrollIntoView(dgLicenceTypeList.Items[dgLicenceTypeList.SelectedIndex]);
                 }
             }
 
@@ -238,14 +229,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddLicenceType_LostFocus(object sender, RoutedEventArgs e)
+        private void DgLicenceTypeList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popLicenceType.IsOpen = false;
-
-            txtLicenceType.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseLicenceTypePopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseLicenceType_Click(object sender, RoutedEventArgs e)
         {
             popLicenceType.IsOpen = false;
 

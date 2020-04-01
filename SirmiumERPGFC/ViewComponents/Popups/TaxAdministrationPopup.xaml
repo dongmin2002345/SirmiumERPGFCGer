@@ -4,12 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SirmiumERPGFC.ViewComponents.Popups"
+             xmlns:cbxConverters1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <cbxConverters1:MultiConverter x:Key="MultiConverter" />
+    </UserControl.Resources>
     <Grid>
         <TextBox Grid.Row="8" Grid.Column="1" Margin="2" x:Name="txtTaxAdministration" IsReadOnly="True" GotFocus="txtTaxAdministration_GotFocus" MouseDoubleClick="txtTaxAdministration_MouseDoubleClick"/>
-        <Popup x:Name="popTaxAdministration" PlacementTarget = "{Binding ElementName = txtTaxAdministration}" Focusable="False" IsOpen="False">
-            <Border Height="Auto" HorizontalAlignment="Stretch" Background="{DynamicResource WhiteBrush}" BorderBrush="{DynamicResource ComboBoxPopupBorderBrush}" BorderThickness="2">
+        <Popup x:Name="popTaxAdministration" PlacementTarget = "{Binding ElementName = txtTaxAdministration}" Focusable="True" AllowsTransparency="True" StaysOpen="True">
+            <Border Height="Auto" HorizontalAlignment="Stretch" Background="{DynamicResource WhiteBrush}" BorderBrush="SteelBlue" CornerRadius="15" BorderThickness="5" Padding="4">
                 <Grid MinWidth="300" MaxHeight="210" Background="{DynamicResource WhiteBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -24,29 +29,31 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox Margin="2" Name="txtFilterTaxAdministration" TextChanged="txtFilterTaxAdministration_TextChanged" MinWidth="150" />
-                    <Button x:Name="btnChooseTaxAdministration" Click="btnChooseTaxAdministration_Click" Grid.Column="1" VerticalAlignment="Center" Margin="2">
-                        <Image Source="..\..\Resources\Icons\Ok10.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Button x:Name="btnChooseTaxAdministration" Click="btnChooseTaxAdministration_Click" Grid.Column="1" VerticalAlignment="Center" Margin="2" Width="30">
+                        <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
-                    <Button x:Name="btnCancleTaxAdministration" Click="btnCancleTaxAdministration_Click" Grid.Column="2" VerticalAlignment="Center" Margin="2">
-                        <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Button x:Name="btnCancleTaxAdministration" Click="btnCancleTaxAdministration_Click" Grid.Column="2" VerticalAlignment="Center" Margin="2" Width="30">
+                        <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
-                    <Button x:Name="btnAddTaxAdministration" Click="btnAddTaxAdministration_Click" Grid.Column="3" VerticalAlignment="Center" Margin="2" LostFocus="btnAddTaxAdministration_LostFocus">
-                        <Image Source="..\..\Resources\Icons\Plus02.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Button x:Name="btnCloseTaxAdministration" Click="btnCloseTaxAdministration_Click" Grid.Column="3" VerticalAlignment="Center" Margin="2" Width="30">
+                        <Image Source="..\..\Resources\Icons\DuplaStrelcaLeva.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Button>
 
                     <DataGrid x:Name="dgTaxAdministrationList"
                               MouseDoubleClick="dgTaxAdministrationList_MouseDoubleClick" 
                               Grid.Row="1" Grid.ColumnSpan="4" Margin="5" 
                               AutoGenerateColumns="False" 
-                              CanUserAddRows="False" 
-                              CanUserDeleteRows="False" 
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
                               CanUserResizeRows="False" 
-                              GridLinesVisibility="Horizontal" 
+                              GridLinesVisibility="Horizontal"
                               HorizontalGridLinesBrush="Gray" 
                               VerticalAlignment="Stretch" 
                               HorizontalScrollBarVisibility="Auto" 
                               VerticalScrollBarVisibility="Auto" 
-                              Style="{DynamicResource AzureDataGrid}"
+                              RowHeaderWidth="25"
+                              HeadersVisibility="All"
+                              LoadingRow="DgTaxAdministrationList_LoadingRow"
                               ItemsSource="{Binding Path=TaxAdministrationsFromDB}"
                               SelectedItem="{Binding Path=CurrentTaxAdministration}">
                         <DataGrid.Columns>
@@ -54,12 +61,7 @@
                             <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" MinWidth="300" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btnCloseTaxAdministrationPopup" Click="btnCloseTaxAdministrationPopup_Click" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="2" Background="#007ACC">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image Source="..\..\Resources\Icons\Zatvori.png" HorizontalAlignment="Center" Height="20" Width="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Text="{DynamicResource ZATVORI}" Margin="5 0 5 0" Foreground="White" FontWeight="Regular" FontSize="16" TextAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                    
                 </Grid>
             </Border>
         </Popup>

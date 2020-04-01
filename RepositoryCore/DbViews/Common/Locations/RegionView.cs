@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Common.Locations
             strSQLCommand =
                 "CREATE VIEW vRegions AS " +
                 "SELECT region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.Code, region.RegionCode, region.Name AS RegionName, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, Country.Code AS CountryCode, Country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "region.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (region.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

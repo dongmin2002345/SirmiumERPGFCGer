@@ -61,7 +61,7 @@ namespace RepositoryCore.Implementations.Common.Professions
                             profession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             profession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             profession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            profession.Country.Code = reader["CountryCode"].ToString();
+                            profession.Country.Mark = reader["CountryCode"].ToString();
                             profession.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -142,7 +142,7 @@ namespace RepositoryCore.Implementations.Common.Professions
                             profession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             profession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             profession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            profession.Country.Code = reader["CountryCode"].ToString();
+                            profession.Country.Mark = reader["CountryCode"].ToString();
                             profession.Country.Name = reader["CountryName"].ToString();
                         }
 

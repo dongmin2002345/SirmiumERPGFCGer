@@ -93,13 +93,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new ProfessionSQLiteRepository().Sync(ProfessionService);
+                    ProfessionListResponse ProfessionResponse = new ProfessionSQLiteRepository().GetProfessionsForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (ProfessionResponse.Success)
+                    {
+                        if (ProfessionResponse.Professions != null && ProfessionResponse.Professions.Count > 0)
+                        {
+                            ProfessionsFromDB = new ObservableCollection<ProfessionViewModel>(
+                                ProfessionResponse.Professions.ToList() ?? new List<ProfessionViewModel>());
 
-                    ProfessionListResponse ProfessionResp = new ProfessionSQLiteRepository().GetProfessionsForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (ProfessionResp.Success)
-                        ProfessionsFromDB = new ObservableCollection<ProfessionViewModel>(ProfessionResp.Professions ?? new List<ProfessionViewModel>());
-                    else
-                        ProfessionsFromDB = new ObservableCollection<ProfessionViewModel>();
+                            if (ProfessionsFromDB.Count == 1)
+                                CurrentProfession = ProfessionsFromDB.FirstOrDefault();
+                        }
+                        else
+                        {
+                            ProfessionsFromDB = new ObservableCollection<ProfessionViewModel>();
+
+                            CurrentProfession = null;
+                        }
+                    }
                 })
             );
         }
@@ -120,11 +131,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popProfession.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterProfession.Focus();
         }
@@ -152,21 +159,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtProfession.Focus();
         }
 
-        private void btnAddProfession_Click(object sender, RoutedEventArgs e)
-        {
-            popProfession.IsOpen = false;
-
-            ProfessionViewModel Profession = new ProfessionViewModel();
-            Profession.Identifier = Guid.NewGuid();
-
-            ProfessionAddEdit ProfessionAddEditForm = new ProfessionAddEdit(Profession, true, true);
-            ProfessionAddEditForm.ProfessionCreatedUpdated += new ProfessionHandler(ProfessionAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_zanimanjima")), 95, ProfessionAddEditForm);
-
-            txtProfession.Focus();
-        }
-
-        void ProfessionAdded() { }
 
         private void dgProfessionList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -196,9 +188,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgProfessionList.Items != null && dgProfessionList.Items.Count > 0)
                 {
-                    if (dgProfessionList.SelectedIndex == -1)
-                        dgProfessionList.SelectedIndex = 0;
                     if (dgProfessionList.SelectedIndex > 0)
+                        dgProfessionList.SelectedIndex = dgProfessionList.SelectedIndex - 1;
+                    if (dgProfessionList.SelectedIndex >= 0)
                         dgProfessionList.SelectedIndex = dgProfessionList.SelectedIndex - 1;
                     dgProfessionList.ScrollIntoView(dgProfessionList.Items[dgProfessionList.SelectedIndex]);
                 }
@@ -210,7 +202,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgProfessionList.SelectedIndex < dgProfessionList.Items.Count)
                         dgProfessionList.SelectedIndex = dgProfessionList.SelectedIndex + 1;
-                    dgProfessionList.ScrollIntoView(dgProfessionList.Items[dgProfessionList.SelectedIndex]);
+                    if (dgProfessionList.SelectedIndex >= 0)
+
+                        dgProfessionList.ScrollIntoView(dgProfessionList.Items[dgProfessionList.SelectedIndex]);
                 }
             }
 
@@ -238,14 +232,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddProfession_LostFocus(object sender, RoutedEventArgs e)
+        private void DgProfessionList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popProfession.IsOpen = false;
-
-            txtProfession.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseProfessionPopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseProfession_Click(object sender, RoutedEventArgs e)
         {
             popProfession.IsOpen = false;
 

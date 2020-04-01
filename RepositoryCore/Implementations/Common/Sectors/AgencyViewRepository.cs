@@ -62,7 +62,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             agency.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             agency.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            agency.Country.Code = reader["CountryCode"].ToString();
+                            agency.Country.Mark = reader["CountryCode"].ToString();
                             agency.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -154,7 +154,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             agency.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             agency.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            agency.Country.Code = reader["CountryCode"].ToString();
+                            agency.Country.Mark = reader["CountryCode"].ToString();
                             agency.Country.Name = reader["CountryName"].ToString();
                         }
 

@@ -83,7 +83,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employeeLicence.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employeeLicence.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employeeLicence.Country.Code = reader["CountryCode"].ToString();
+                            employeeLicence.Country.Mark = reader["CountryCode"].ToString();
                             employeeLicence.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -190,7 +190,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employeeLicence.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employeeLicence.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employeeLicence.Country.Code = reader["CountryCode"].ToString();
+                            employeeLicence.Country.Mark = reader["CountryCode"].ToString();
                             employeeLicence.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -299,7 +299,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employeeLicence.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employeeLicence.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employeeLicence.Country.Code = reader["CountryCode"].ToString();
+                            employeeLicence.Country.Mark = reader["CountryCode"].ToString();
                             employeeLicence.Country.Name = reader["CountryName"].ToString();
                         }
 

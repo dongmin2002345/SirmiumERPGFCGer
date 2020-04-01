@@ -76,7 +76,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerLocation.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerLocation.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerLocation.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerLocation.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerLocation.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -189,7 +189,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerLocation.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerLocation.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerLocation.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerLocation.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerLocation.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -318,7 +318,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerLocation.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerLocation.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerLocation.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerLocation.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerLocation.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerLocation.Country.Name = reader["CountryName"].ToString();
                         }
 

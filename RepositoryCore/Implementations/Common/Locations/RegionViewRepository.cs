@@ -60,7 +60,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             region.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             region.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             region.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            region.Country.Code = reader["CountryCode"].ToString();
+                            region.Country.Mark = reader["CountryCode"].ToString();
                             region.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -140,7 +140,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             region.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             region.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             region.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            region.Country.Code = reader["CountryCode"].ToString();
+                            region.Country.Mark = reader["CountryCode"].ToString();
                             region.Country.Name = reader["CountryName"].ToString();
                         }
 

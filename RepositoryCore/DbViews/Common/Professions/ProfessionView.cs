@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Common.Professions
             strSQLCommand =
                 "CREATE VIEW vProfessions AS " +
                 "SELECT profession.Id AS ProfessionId, profession.Identifier AS ProfessionIdentifier, profession.Code AS ProfessionCode, profession.SecondCode AS ProfessionSecondCode, profession.Name AS ProfessionName, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "profession.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (profession.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

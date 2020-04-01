@@ -113,7 +113,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@Address", ((object)businessPartnerOrganizationUnit.Address) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartnerOrganizationUnit.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartnerOrganizationUnit.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartnerOrganizationUnit.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartnerOrganizationUnit.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartnerOrganizationUnit.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityId", ((object)businessPartnerOrganizationUnit.City?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CityIdentifier", ((object)businessPartnerOrganizationUnit.City?.Identifier) ?? DBNull.Value);

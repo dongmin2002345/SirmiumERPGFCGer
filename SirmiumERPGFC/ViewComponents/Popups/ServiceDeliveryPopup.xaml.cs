@@ -53,7 +53,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             ServiceDeliveryPopup popup = source as ServiceDeliveryPopup;
             ServiceDeliveryViewModel serviceDelivery = (ServiceDeliveryViewModel)e.NewValue;
-            popup.txtServiceDelivery.Text = serviceDelivery != null ? serviceDelivery.Name.ToString() : "";
+            popup.txtServiceDelivery.Text = serviceDelivery != null ? serviceDelivery.Code + " (" + serviceDelivery.Name + ")" : "";
         }
         #endregion
 

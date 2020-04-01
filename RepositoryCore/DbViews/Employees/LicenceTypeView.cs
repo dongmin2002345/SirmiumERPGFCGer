@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Employees
             strSQLCommand =
                 "CREATE VIEW vLicenceTypes AS " +
                 "SELECT licenceType.Id AS LicenceTypeId, licenceType.Identifier AS LicenceTypeIdentifier, licenceType.Code AS LicenceTypeCode, licenceType.Category, licenceType.Description, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "licenceType.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (licenceType.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

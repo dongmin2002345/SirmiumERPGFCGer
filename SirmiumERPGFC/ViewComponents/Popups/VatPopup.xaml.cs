@@ -123,11 +123,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popVat.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterVat.Focus();
         }
@@ -155,21 +151,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtVat.Focus();
         }
 
-        private void btnAddVat_Click(object sender, RoutedEventArgs e)
-        {
-            popVat.IsOpen = false;
-
-            VatViewModel vat = new VatViewModel();
-            vat.Identifier = Guid.NewGuid();
-
-            Vat_AddEdit vatAddEditForm = new Vat_AddEdit(vat, true, true);
-            vatAddEditForm.VatCreatedUpdated += new VatHandler(VatAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, (string)Application.Current.FindResource("Podaci_o_PDV_u"), 95, vatAddEditForm);
-
-            txtVat.Focus();
-        }
-
-        void VatAdded() { }
 
         private void dgVatList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -199,10 +180,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgVatList.Items != null && dgVatList.Items.Count > 0)
                 {
-                    if (dgVatList.SelectedIndex == -1)
-                        dgVatList.SelectedIndex = 0;
                     if (dgVatList.SelectedIndex > 0)
                         dgVatList.SelectedIndex = dgVatList.SelectedIndex - 1;
+                    if (dgVatList.SelectedIndex >= 0)
                     dgVatList.ScrollIntoView(dgVatList.Items[dgVatList.SelectedIndex]);
                 }
             }
@@ -213,7 +193,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgVatList.SelectedIndex < dgVatList.Items.Count)
                         dgVatList.SelectedIndex = dgVatList.SelectedIndex + 1;
-                    dgVatList.ScrollIntoView(dgVatList.Items[dgVatList.SelectedIndex]);
+                    if (dgVatList.SelectedIndex >= 0)
+
+                        dgVatList.ScrollIntoView(dgVatList.Items[dgVatList.SelectedIndex]);
                 }
             }
 
@@ -241,14 +223,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddVat_LostFocus(object sender, RoutedEventArgs e)
+        private void DgVatList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popVat.IsOpen = false;
-
-            txtVat.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseVatPopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseVat_Click(object sender, RoutedEventArgs e)
         {
             popVat.IsOpen = false;
 

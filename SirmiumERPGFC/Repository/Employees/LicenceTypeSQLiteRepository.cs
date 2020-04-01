@@ -76,7 +76,7 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@Description", ((object)licenceType.Description) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)licenceType.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)licenceType.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)licenceType.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)licenceType.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)licenceType.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", licenceType.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)licenceType.UpdatedAt) ?? DBNull.Value);

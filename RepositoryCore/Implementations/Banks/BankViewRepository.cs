@@ -63,7 +63,7 @@ namespace RepositoryCore.Implementations.Banks
                             bank.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             bank.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             bank.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            bank.Country.Code = reader["CountryCode"].ToString();
+                            bank.Country.Mark = reader["CountryCode"].ToString();
                             bank.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -144,7 +144,7 @@ namespace RepositoryCore.Implementations.Banks
                             bank.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             bank.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             bank.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            bank.Country.Code = reader["CountryCode"].ToString();
+                            bank.Country.Mark = reader["CountryCode"].ToString();
                             bank.Country.Name = reader["CountryName"].ToString();
                         }
 

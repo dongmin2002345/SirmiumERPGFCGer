@@ -61,7 +61,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             sector.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             sector.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             sector.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            sector.Country.Code = reader["CountryCode"].ToString();
+                            sector.Country.Mark = reader["CountryCode"].ToString();
                             sector.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -141,7 +141,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             sector.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             sector.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             sector.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            sector.Country.Code = reader["CountryCode"].ToString();
+                            sector.Country.Mark = reader["CountryCode"].ToString();
                             sector.Country.Name = reader["CountryName"].ToString();
                         }
 

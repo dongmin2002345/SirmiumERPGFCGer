@@ -1621,6 +1621,7 @@ namespace SirmiumERPGFC.Views.Employees
                         // Adresa firme u Nemackoj
                         var employeeBusinessPartnerS = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
                         employeeBusinessPartnerS = new BusinessPartnerSQLiteRepository().GetBusinessPartner(employeeBusinessPartnerS?.Identifier ?? Guid.NewGuid())?.BusinessPartner;
+                        var employeeProfession = new EmployeeProfessionItemSQLiteRepository().GetEmployeeProfessionsByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee?.Identifier ?? Guid.Empty).EmployeeProfessionItems?.OrderBy(x => x.CreatedAt).FirstOrDefault();
                         string businessPartnerLocation = (employeeBusinessPartnerS?.NameGer ?? "") + ", " + (employeeBusinessPartnerS?.AddressGer ?? "") + ", " + (employeeBusinessPartnerS?.City?.ZipCode ?? "") + ", " + (employeeBusinessPartnerS?.City?.Name ?? "");
                         pdfFormFields.SetField("7 Name und Anschrift des entsendenden Unternehmens bzw der Niederlassung im Bundesgebiet", businessPartnerLocation);
                         
@@ -1631,6 +1632,7 @@ namespace SirmiumERPGFC.Views.Employees
                         pdfFormFields.SetField("13 von bis", CurrentEmployee.WorkPermitFrom?.ToString("dd.MM.yyyy") ?? "");
                         pdfFormFields.SetField("Text1", CurrentEmployee.WorkPermitTo?.ToString("dd.MM.yyyy") ?? "");
 
+                        pdfFormFields.SetField("14 als Art der auszuübenden Beschäftigung", employeeProfession.Profession?.Name ?? "");
 
                         // Gradiliste
                         var employeeConstructionSite = new EmployeeByConstructionSiteSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByConstructionSites?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.ConstructionSite;

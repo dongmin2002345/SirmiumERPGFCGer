@@ -46,7 +46,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             BusinessPartnerPopup popup = source as BusinessPartnerPopup;
             BusinessPartnerViewModel businessPartner = (BusinessPartnerViewModel)e.NewValue;
-            popup.txtBusinessPartner.Text = businessPartner != null ? businessPartner.Code + " (" + businessPartner.Name + ")" : "";
+            popup.txtBusinessPartner.Text = businessPartner != null ? businessPartner.InternalCode + " (" + businessPartner.Name + ")" : "";
         }
         #endregion
 
@@ -131,11 +131,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popBusinessPartner.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterBusinessPartners.Focus();
         }
@@ -162,22 +158,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             txtBusinessPartner.Focus();
         }
-
-        private void btnAddBusinessPartner_Click(object sender, RoutedEventArgs e)
-        {
-            popBusinessPartner.IsOpen = false;
-
-            BusinessPartnerViewModel BusinessPartner = new BusinessPartnerViewModel();
-            BusinessPartner.Identifier = Guid.NewGuid();
-
-            BusinessPartner_List_AddEdit BusinessPartnerAddEditForm = new BusinessPartner_List_AddEdit(BusinessPartner, true, true);
-            BusinessPartnerAddEditForm.BusinessPartnerCreatedUpdated += new BusinessPartnerHandler(BusinessPartnerAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_poslovnim_partnerima")), 95, BusinessPartnerAddEditForm);
-
-            txtBusinessPartner.Focus();
-        }
-
-        void BusinessPartnerAdded() { }
 
         private void dgBusinessPartnerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -207,10 +187,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgBusinessPartnerList.Items != null && dgBusinessPartnerList.Items.Count > 0)
                 {
-                    if (dgBusinessPartnerList.SelectedIndex == -1)
-                        dgBusinessPartnerList.SelectedIndex = 0;
                     if (dgBusinessPartnerList.SelectedIndex > 0)
                         dgBusinessPartnerList.SelectedIndex = dgBusinessPartnerList.SelectedIndex - 1;
+                    if (dgBusinessPartnerList.SelectedIndex >= 0)
                     dgBusinessPartnerList.ScrollIntoView(dgBusinessPartnerList.Items[dgBusinessPartnerList.SelectedIndex]);
                 }
             }
@@ -221,7 +200,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgBusinessPartnerList.SelectedIndex < dgBusinessPartnerList.Items.Count)
                         dgBusinessPartnerList.SelectedIndex = dgBusinessPartnerList.SelectedIndex + 1;
-                    dgBusinessPartnerList.ScrollIntoView(dgBusinessPartnerList.Items[dgBusinessPartnerList.SelectedIndex]);
+                    if (dgBusinessPartnerList.SelectedIndex >= 0)
+                        dgBusinessPartnerList.ScrollIntoView(dgBusinessPartnerList.Items[dgBusinessPartnerList.SelectedIndex]);
                 }
             }
 
@@ -249,20 +229,19 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddBusinessPartner_LostFocus(object sender, RoutedEventArgs e)
+        private void btnCloseBusinessPartner_Click(object sender, RoutedEventArgs e)
         {
             popBusinessPartner.IsOpen = false;
 
             txtBusinessPartner.Focus();
         }
 
-        private void btnCloseBusinessPartnerPopup_Click(object sender, RoutedEventArgs e)
+        private void DgBusinessPartnerList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popBusinessPartner.IsOpen = false;
-
-            txtBusinessPartner.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
+       
         #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;
 

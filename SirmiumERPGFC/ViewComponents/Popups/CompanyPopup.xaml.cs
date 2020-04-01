@@ -119,6 +119,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             if (!textFieldHasFocus)
             {
+                PopulateFromDb();
                 // Show popup
                 popCompany.IsOpen = true;
 
@@ -133,13 +134,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            // Show popup
             popCompany.IsOpen = true;
 
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
-
-            // Set focus to filter field in popup
             txtFilterCompanies.Focus();
         }
 
@@ -173,21 +169,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtCompany.Focus();
         }
 
-
-        private void CompanyAdded(CompanyViewModel comp)
-        {
-            CurrentCompany = comp;
-        }
-
-
-        private void btnAddCompany_LostFocus(object sender, RoutedEventArgs e)
-        {
-            // Close popup
-            popCompany.IsOpen = false;
-
-            // Move focus to next element
-            txtCompany.Focus();
-        }
 
         private void dgCompaniesList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -228,10 +209,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgCompaniesList.Items != null && dgCompaniesList.Items.Count > 0)
                 {
-                    if (dgCompaniesList.SelectedIndex == -1)
-                        dgCompaniesList.SelectedIndex = 0;
                     if (dgCompaniesList.SelectedIndex > 0)
                         dgCompaniesList.SelectedIndex = dgCompaniesList.SelectedIndex - 1;
+                    if (dgCompaniesList.SelectedIndex >= 0)
                     dgCompaniesList.ScrollIntoView(dgCompaniesList.Items[dgCompaniesList.SelectedIndex]);
                 }
             }
@@ -242,7 +222,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgCompaniesList.SelectedIndex < dgCompaniesList.Items.Count)
                         dgCompaniesList.SelectedIndex = dgCompaniesList.SelectedIndex + 1;
-                    dgCompaniesList.ScrollIntoView(dgCompaniesList.Items[dgCompaniesList.SelectedIndex]);
+                    if (dgCompaniesList.SelectedIndex >= 0)
+                        dgCompaniesList.ScrollIntoView(dgCompaniesList.Items[dgCompaniesList.SelectedIndex]);
                 }
             }
 
@@ -273,6 +254,11 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         }
 
         #endregion
+
+        private void DgCompaniesList_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
 
         #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;
