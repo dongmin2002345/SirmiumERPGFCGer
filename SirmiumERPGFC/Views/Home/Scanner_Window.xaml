@@ -8,7 +8,6 @@
         xmlns:local="clr-namespace:SirmiumERPGFC.Views.Home"
         mc:Ignorable="d" Background="White" WindowStartupLocation="CenterScreen"
         ShowCloseButton="False" ShowMinButton="False" ShowMaxRestoreButton="False"
-        Topmost="True"
         BorderBrush="#007ACC" BorderThickness="1"
         
         Title="SKENER" Height="450" Width="800">

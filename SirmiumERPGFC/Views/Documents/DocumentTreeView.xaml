@@ -303,9 +303,10 @@
                     </TextBlock.LayoutTransform>
                 </TextBlock>
             </Expander.Header>
-            <Grid Width="200">
+            <Grid Width="250">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="5*" />
@@ -343,7 +344,28 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-                <DataGrid Grid.Row="3" ItemsSource="{Binding Path=FilesToUpload}" IsEnabled="{Binding Path=CanInteract}"
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal">
+                    <Button x:Name="btnSelectAll" Margin="2" Width="80" IsEnabled="{Binding Path=CanInteract}" ToolTip="Označi sve" Click="btnSelectAll_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" SVE " Foreground="white" FontWeight="Regular"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnDeselectAll" Margin="2" Width="80" IsEnabled="{Binding Path=CanInteract}" ToolTip="Odznači sve" Click="btnDeselectAll_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" NIŠTA " Foreground="white" FontWeight="Regular"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnRemove" Margin="2" Width="80" IsEnabled="{Binding Path=CanInteract}" ToolTip="Ukloni označeno" Click="btnRemove_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" UKLONI " Foreground="white" FontWeight="Regular"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <DataGrid Grid.Row="4" ItemsSource="{Binding Path=FilesToUpload}" IsEnabled="{Binding Path=CanInteract}"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
@@ -353,8 +375,19 @@
                               VerticalAlignment="Stretch"
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto" 
+                          HeadersVisibility="All"
                       SelectionMode="Single">
                     <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="White">
+                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="3"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
                         <DataGridTextColumn Header="File Name"  Binding="{Binding Name}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="FileSize" Binding="{Binding FileSize, StringFormat={}{0} KB}" IsReadOnly="True"  Width="Auto"/>
                     </DataGrid.Columns>
