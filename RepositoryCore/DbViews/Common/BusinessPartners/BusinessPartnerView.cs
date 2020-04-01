@@ -35,7 +35,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.ZipCode AS CityZipCode, city.Name AS CityName, " +
                 "businessPartner.AddressGer, " +
 
-                "sector.Id AS SectorId, sector.Identifier AS SectorIdentifier, sector.Code AS SectorCode, sector.Name AS SectorName, " +
+                "sector.Id AS SectorId, sector.Identifier AS SectorIdentifier, sector.SecondCode AS SectorCode, sector.Name AS SectorName, " +
                 "agency.Id AS AgencyId, agency.Identifier AS AgencyIdentifier, agency.Code AS AgencyCode, agency.Name AS AgencyName, " +
                 "vat.Id AS VatId, vat.Identifier AS VatIdentifier, vat.Code AS VatCode, vat.Description AS VatDescription, vat.Amount AS VatAmount, " +
                 "discount.Id AS DiscountId, discount.Identifier AS DiscountIdentifier, discount.Code AS DiscountCode, discount.Name AS DiscountName, discount.Amount AS DiscountAmount, " +

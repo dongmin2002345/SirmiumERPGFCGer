@@ -61,7 +61,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             municipality.RegionId = Int32.Parse(reader["RegionId"].ToString());
                             municipality.Region.Id = Int32.Parse(reader["RegionId"].ToString());
                             municipality.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
-                            municipality.Region.Code = reader["RegionCode"].ToString();
+                            municipality.Region.RegionCode = reader["RegionCode"].ToString();
                             municipality.Region.Name = reader["RegionName"].ToString();
                         }
 
@@ -153,7 +153,7 @@ namespace RepositoryCore.Implementations.Common.Locations
                             municipality.RegionId = Int32.Parse(reader["RegionId"].ToString());
                             municipality.Region.Id = Int32.Parse(reader["RegionId"].ToString());
                             municipality.Region.Identifier = Guid.Parse(reader["RegionIdentifier"].ToString());
-                            municipality.Region.Code = reader["RegionCode"].ToString();
+                            municipality.Region.RegionCode = reader["RegionCode"].ToString();
                             municipality.Region.Name = reader["RegionName"].ToString();
                         }
 

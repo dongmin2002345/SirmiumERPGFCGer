@@ -72,7 +72,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.BankId = Int32.Parse(reader["BankId"].ToString());
                             businessPartnerBank.Bank.Id = Int32.Parse(reader["BankId"].ToString());
                             businessPartnerBank.Bank.Identifier = Guid.Parse(reader["BankIdentifier"].ToString());
-                            businessPartnerBank.Bank.Code = reader["BankCode"].ToString();
+                            businessPartnerBank.Bank.Swift = reader["BankCode"].ToString();
                             businessPartnerBank.Bank.Name = reader["BankName"].ToString();
                         }
 
@@ -174,7 +174,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.BankId = Int32.Parse(reader["BankId"].ToString());
                             businessPartnerBank.Bank.Id = Int32.Parse(reader["BankId"].ToString());
                             businessPartnerBank.Bank.Identifier = Guid.Parse(reader["BankIdentifier"].ToString());
-                            businessPartnerBank.Bank.Code = reader["BankCode"].ToString();
+                            businessPartnerBank.Bank.Swift = reader["BankCode"].ToString();
                             businessPartnerBank.Bank.Name = reader["BankName"].ToString();
                         }
 
@@ -278,7 +278,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.BankId = Int32.Parse(reader["BankId"].ToString());
                             businessPartnerBank.Bank.Id = Int32.Parse(reader["BankId"].ToString());
                             businessPartnerBank.Bank.Identifier = Guid.Parse(reader["BankIdentifier"].ToString());
-                            businessPartnerBank.Bank.Code = reader["BankCode"].ToString();
+                            businessPartnerBank.Bank.Swift = reader["BankCode"].ToString();
                             businessPartnerBank.Bank.Name = reader["BankName"].ToString();
                         }
 

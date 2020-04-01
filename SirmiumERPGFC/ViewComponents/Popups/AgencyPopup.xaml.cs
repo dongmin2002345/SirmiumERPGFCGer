@@ -121,16 +121,23 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (CurrentSector != null)
                     {
-                        new AgencySQLiteRepository().Sync(agencyService);
-
                         AgencyListResponse response = new AgencySQLiteRepository().GetAgenciesForPopup(MainWindow.CurrentCompanyId, CurrentSector.Identifier, filterString);
+
                         if (response.Success)
+                        {
+
                             AgenciesFromDB = new ObservableCollection<AgencyViewModel>(response.Agencies ?? new List<AgencyViewModel>());
+                            if (AgenciesFromDB.Count == 1)
+                                CurrentAgency = AgenciesFromDB.FirstOrDefault();
+                        }
+
                         else
+                        
                             AgenciesFromDB = new ObservableCollection<AgencyViewModel>();
                     }
                     else
                         AgenciesFromDB = new ObservableCollection<AgencyViewModel>();
+                
                 })
             );
         }
@@ -150,12 +157,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         private void txtAgency_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             textFieldHasFocus = true;
-
-            PopulateFromDb();
             popAgency.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterAgency.Focus();
         }
@@ -183,22 +185,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtAgency.Focus();
         }
 
-        private void btnAddAgency_Click(object sender, RoutedEventArgs e)
-        {
-            popAgency.IsOpen = false;
-
-            AgencyViewModel Agency = new AgencyViewModel();
-            Agency.Identifier = Guid.NewGuid();
-
-            AgencyAddEdit addEditForm = new AgencyAddEdit(Agency, true, true);
-            addEditForm.AgencyCreatedUpdated += new AgencyHandler(AgencyAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Delatnosti")), 95, addEditForm);
-
-            txtAgency.Focus();
-        }
-
-        void AgencyAdded() { }
-
         private void dgAgencyList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DependencyObject dep = (DependencyObject)e.OriginalSource;
@@ -225,24 +211,20 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             if (e.Key == Key.Up)
             {
-                if (dgAgencyList.Items != null && dgAgencyList.Items.Count > 0)
-                {
-                    if (dgAgencyList.SelectedIndex == -1)
-                        dgAgencyList.SelectedIndex = 0;
                     if (dgAgencyList.SelectedIndex > 0)
-                        dgAgencyList.SelectedIndex = dgAgencyList.SelectedIndex - 1;
+                    dgAgencyList.SelectedIndex = dgAgencyList.SelectedIndex - 1;
+                    if (dgAgencyList.SelectedIndex >= 0)
                     dgAgencyList.ScrollIntoView(dgAgencyList.Items[dgAgencyList.SelectedIndex]);
-                }
+                
             }
 
             if (e.Key == Key.Down)
             {
-                if (dgAgencyList.Items != null && dgAgencyList.Items.Count > 0)
-                {
                     if (dgAgencyList.SelectedIndex < dgAgencyList.Items.Count)
                         dgAgencyList.SelectedIndex = dgAgencyList.SelectedIndex + 1;
+                    if (dgAgencyList.SelectedIndex >= 0)
                     dgAgencyList.ScrollIntoView(dgAgencyList.Items[dgAgencyList.SelectedIndex]);
-                }
+                
             }
 
             if (e.Key == Key.Enter)
@@ -269,19 +251,18 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddAgency_LostFocus(object sender, RoutedEventArgs e)
+        private void btnCloseAgency_Click(object sender, RoutedEventArgs e)
         {
             popAgency.IsOpen = false;
 
             txtAgency.Focus();
         }
 
-        private void btnCloseAgencyPopup_Click(object sender, RoutedEventArgs e)
+        private void DgAgencyList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popAgency.IsOpen = false;
-
-            txtAgency.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
+
 
         #region INotifyPropertyChange implementation
         public event PropertyChangedEventHandler PropertyChanged;

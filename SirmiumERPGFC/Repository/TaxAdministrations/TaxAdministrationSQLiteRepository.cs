@@ -112,11 +112,11 @@ namespace SirmiumERPGFC.Repository.TaxAdministrations
             insertCommand.Parameters.AddWithValue("@CityName", ((object)taxAdministration.City?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BankId1", ((object)taxAdministration.Bank1?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BankIdentifier1", ((object)taxAdministration.Bank1?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BankCode1", ((object)taxAdministration.Bank1?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankCode1", ((object)taxAdministration.Bank1?.Swift) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BankName1", ((object)taxAdministration.Bank1?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BankId2", ((object)taxAdministration.Bank2?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BankIdentifier2", ((object)taxAdministration.Bank2?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@BankCode2", ((object)taxAdministration.Bank2?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@BankCode2", ((object)taxAdministration.Bank2?.Swift) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@BankName2", ((object)taxAdministration.Bank2?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IBAN1", ((object)taxAdministration.IBAN1) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SWIFT", ((object)taxAdministration.SWIFT) ?? DBNull.Value);

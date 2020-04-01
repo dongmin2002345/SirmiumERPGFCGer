@@ -105,7 +105,7 @@ namespace SirmiumERPGFC.Repository.Phonebooks
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)Phonebook.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionId", ((object)Phonebook.Region?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)Phonebook.Region?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)Phonebook.Region?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@RegionCode", ((object)Phonebook.Region?.RegionCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionName", ((object)Phonebook.Region?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityId", ((object)Phonebook.Municipality?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@MunicipalityIdentifier", ((object)Phonebook.Municipality?.Identifier) ?? DBNull.Value);

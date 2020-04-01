@@ -88,7 +88,7 @@ namespace SirmiumERPGFC.Repository.Sectors
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)Agency.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SectorId", ((object)Agency.Sector?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)Agency.Sector?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)Agency.Sector?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)Agency.Sector?.SecondCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SectorName", ((object)Agency.Sector?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", Agency.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)Agency.UpdatedAt) ?? DBNull.Value);

@@ -72,7 +72,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.SectorId = Int32.Parse(reader["SectorId"].ToString());
                             agency.Sector.Id = Int32.Parse(reader["SectorId"].ToString());
                             agency.Sector.Identifier = Guid.Parse(reader["SectorIdentifier"].ToString());
-                            agency.Sector.Code = reader["SectorCode"].ToString();
+                            agency.Sector.SecondCode = reader["SectorCode"].ToString();
                             agency.Sector.Name = reader["SectorName"].ToString();
                         }
 
@@ -164,7 +164,7 @@ namespace RepositoryCore.Implementations.Common.Sectors
                             agency.SectorId = Int32.Parse(reader["SectorId"].ToString());
                             agency.Sector.Id = Int32.Parse(reader["SectorId"].ToString());
                             agency.Sector.Identifier = Guid.Parse(reader["SectorIdentifier"].ToString());
-                            agency.Sector.Code = reader["SectorCode"].ToString();
+                            agency.Sector.SecondCode = reader["SectorCode"].ToString();
                             agency.Sector.Name = reader["SectorName"].ToString();
                         }
 

@@ -253,7 +253,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
             insertCommand.Parameters.AddWithValue("@SectorId", ((object)businessPartner.Sector?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SectorIdentifier", ((object)businessPartner.Sector?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@SectorCode", ((object)businessPartner.Sector?.SecondCode) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@SectorName", ((object)businessPartner.Sector?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatId", ((object)businessPartner.Vat?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VatIdentifier", ((object)businessPartner.Vat?.Identifier) ?? DBNull.Value);
