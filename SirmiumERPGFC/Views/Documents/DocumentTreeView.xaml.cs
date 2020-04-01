@@ -483,21 +483,21 @@ namespace SirmiumERPGFC.Views.Documents
         {
             if (String.IsNullOrEmpty(NewFolderName))
             {
-                MessageBox.Show("Naziv foldera ne moze biti prazan!");
+                MainWindow.ErrorMessage = ("Naziv foldera ne moze biti prazan!");
                 return;
             }
 
             string basePath = SelectedTreeItem?.FullPath;
             if (String.IsNullOrEmpty(basePath))
             {
-                MessageBox.Show("Bazna putanja ne moze biti prazna!");
+                MainWindow.ErrorMessage = ("Bazna putanja ne moze biti prazna!");
                 return;
             }
 
             string newPath = System.IO.Path.Combine(basePath, NewFolderName);
             if (Directory.Exists(newPath))
             {
-                MessageBox.Show("Folder sa ovim nazivom vec postoji!");
+                MainWindow.ErrorMessage = ("Folder sa ovim nazivom vec postoji!");
                 return;
             }
 
@@ -532,9 +532,7 @@ namespace SirmiumERPGFC.Views.Documents
         // parameter causes the property name of the caller to be substituted as an argument.
         public void NotifyPropertyChanged(String propertyName) // [CallerMemberName] 
         {
-            Dispatcher.BeginInvoke((Action)(() => {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
@@ -610,14 +608,14 @@ namespace SirmiumERPGFC.Views.Documents
         {
             if (SelectedTreeItem == null)
             {
-                MessageBox.Show("Morate odabrati folder gde ce se smestiti dokumenti!");
+                MainWindow.ErrorMessage = ("Morate odabrati folder gde ce se smestiti dokumenti!");
                 return;
             }
 
 
             if (FilesToUpload == null || FilesToUpload.Count() < 1)
             {
-                MessageBox.Show("Morate odabrati dokumente za kopiranje!");
+                MainWindow.ErrorMessage = ("Morate odabrati dokumente za kopiranje!");
                 return;
             }
 
@@ -627,7 +625,13 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     LoadingData = true;
                     IsCopyInProgress = true;
-                    List<DirectoryTreeItemViewModel> filesToUpload = FilesToUpload.ToList();
+                    List<DirectoryTreeItemViewModel> filesToUpload = FilesToUpload.Where(x => x.IsSelected).ToList();
+
+                    if(filesToUpload.Count() < 1)
+                    {
+                        MainWindow.ErrorMessage = ("Morate odabrati dokumente za kopiranje!");
+                        return;
+                    }
 
                     foreach (DirectoryTreeItemViewModel item in filesToUpload)
                     {
@@ -696,7 +700,7 @@ namespace SirmiumERPGFC.Views.Documents
 
                 if (String.IsNullOrEmpty(item.NewName))
                 {
-                    MessageBox.Show("Nije moguce postaviti prazan naziv dokumenta!");
+                    MainWindow.ErrorMessage = ("Nije moguce postaviti prazan naziv dokumenta!");
                     return;
                 }
 
@@ -712,7 +716,7 @@ namespace SirmiumERPGFC.Views.Documents
 
                         if (File.Exists(newPath))
                         {
-                            MessageBox.Show($"Dokument sa unetim nazivom \"{newName}\" vec postoji!");
+                            MainWindow.ErrorMessage = ($"Dokument sa unetim nazivom \"{newName}\" vec postoji!");
                             return;
                         }
 
@@ -807,6 +811,38 @@ namespace SirmiumERPGFC.Views.Documents
         private void btnStopSearch_Click(object sender, RoutedEventArgs e)
         {
             LoadingData = false;
+        }
+
+        private void btnSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            var items = FilesToUpload.ToList();
+            foreach (var item in items)
+                item.IsSelected = true;
+
+            FilesToUpload = new ObservableCollection<DirectoryTreeItemViewModel>(items);
+        }
+
+        private void btnDeselectAll_Click(object sender, RoutedEventArgs e)
+        {
+            var items = FilesToUpload.ToList();
+            foreach (var item in items)
+                item.IsSelected = false;
+
+            FilesToUpload = new ObservableCollection<DirectoryTreeItemViewModel>(items);
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var itemsToRemove = FilesToUpload.Where(x => x.IsSelected).ToList();
+
+                foreach (var item in itemsToRemove)
+                    FilesToUpload.Remove(item);
+            } catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
         }
     }
 }
