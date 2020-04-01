@@ -24,6 +24,7 @@ using iTextSharp.text.pdf;
 using System.Reflection;
 using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Repository.ConstructionSites;
+using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -42,6 +43,9 @@ namespace SirmiumERPGFC.Views.Employees
         IEmployeeCardService employeeCardService;
         IEmployeeNoteService employeeNoteService;
         IEmployeeAttachmentService employeeAttachmentService;
+        IEmployeeByConstructionSiteService employeeByConstructionSiteService;
+        IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService;
+        IEmployeeByBusinessPartnerService employeeByBusinessPartnerService;
         #endregion
 
         #region EmployeeSearchObject
@@ -601,6 +605,11 @@ namespace SirmiumERPGFC.Views.Employees
             employeeLicenceService = DependencyResolver.Kernel.Get<IEmployeeLicenceService>();
             employeeItemService = DependencyResolver.Kernel.Get<IEmployeeItemService>();
             employeeAttachmentService = DependencyResolver.Kernel.Get<IEmployeeAttachmentService>();
+
+
+            employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();
+            businessPartnerByConstructionSiteService = DependencyResolver.Kernel.Get<IBusinessPartnerByConstructionSiteService>();
+            employeeByBusinessPartnerService = DependencyResolver.Kernel.Get<IEmployeeByBusinessPartnerService>();
             InitializeComponent();
 
             this.DataContext = this;
@@ -887,6 +896,24 @@ namespace SirmiumERPGFC.Views.Employees
             new EmployeeAttachmentSQLiteRepository().Sync(employeeAttachmentService, (synced, toSync) => {
                 SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi")) + "(" + synced + " / " + toSync + ")... ";
             });
+
+
+            SyncButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
+            new EmployeeByConstructionSiteSQLiteRepository().Sync(employeeByConstructionSiteService, (synced, toSync) => {
+                SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi")) + "(" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
+            new BusinessPartnerByConstructionSiteSQLiteRepository().Sync(businessPartnerByConstructionSiteService, (synced, toSync) => {
+                SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi")) + "(" + synced + " / " + toSync + ")... ";
+            });
+
+            SyncButtonContent = ((string)Application.Current.FindResource("Radnici_TriTacke"));
+            new EmployeeByBusinessPartnerSQLiteRepository().Sync(employeeByBusinessPartnerService, (synced, toSync) => {
+                SyncButtonContent = ((string)Application.Current.FindResource("RadnikPrilozi")) + "(" + synced + " / " + toSync + ")... ";
+            });
+
+
             DisplayData();
             CurrentEmployee = null;
             EmployeeNotesFromDB = new ObservableCollection<EmployeeNoteViewModel>();

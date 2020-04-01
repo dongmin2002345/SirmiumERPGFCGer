@@ -138,6 +138,11 @@ namespace SirmiumERPGFC.Views.Home
         private IPhonebookService phonebookService;
         private ICallCentarService callCentarService;
 
+
+        private IEmployeeByConstructionSiteService employeeByConstructionSiteService;
+        private IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService;
+        private IEmployeeByBusinessPartnerService employeeByBusinessPartnerService;
+
         #endregion
 
 
@@ -283,6 +288,10 @@ namespace SirmiumERPGFC.Views.Home
 
             phonebookService = DependencyResolver.Kernel.Get<IPhonebookService>();
             callCentarService = DependencyResolver.Kernel.Get<ICallCentarService>();
+
+            employeeByConstructionSiteService = DependencyResolver.Kernel.Get<IEmployeeByConstructionSiteService>();
+            businessPartnerByConstructionSiteService = DependencyResolver.Kernel.Get<IBusinessPartnerByConstructionSiteService>();
+            employeeByBusinessPartnerService = DependencyResolver.Kernel.Get<IEmployeeByBusinessPartnerService>();
 
             InitializeComponent();
 
@@ -912,6 +921,36 @@ namespace SirmiumERPGFC.Views.Home
                 MaxItemCounter = toSync;
                 ItemValue = synced;
                 ItemContent = "Call centar (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
+            });
+            #endregion
+
+            #region 51. Radnici po gradilištu
+            ItemContent = "Radnici po gradilištu (" + ++counter + "/" + numOfTables + "): ";
+            new EmployeeByConstructionSiteSQLiteRepository().Sync(employeeByConstructionSiteService, (synced, toSync) =>
+            {
+                MaxItemCounter = toSync;
+                ItemValue = synced;
+                ItemContent = "Radnici po gradilištu (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
+            });
+            #endregion
+
+            #region 52. Firme po gradilištima
+            ItemContent = "Firme po gradilištima (" + ++counter + "/" + numOfTables + "): ";
+            new BusinessPartnerByConstructionSiteSQLiteRepository().Sync(businessPartnerByConstructionSiteService, (synced, toSync) =>
+            {
+                MaxItemCounter = toSync;
+                ItemValue = synced;
+                ItemContent = "Firme po gradilištima (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
+            });
+            #endregion
+
+            #region 53. Radnici po firmama
+            ItemContent = "Radnici po firmama (" + ++counter + "/" + numOfTables + "): ";
+            new EmployeeByBusinessPartnerSQLiteRepository().Sync(employeeByBusinessPartnerService, (synced, toSync) =>
+            {
+                MaxItemCounter = toSync;
+                ItemValue = synced;
+                ItemContent = "Radnici po firmama (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
             });
             #endregion
 
