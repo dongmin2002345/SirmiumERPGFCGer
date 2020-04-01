@@ -293,7 +293,7 @@
                             <Grid Grid.Row="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -303,35 +303,44 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Pretraga_po_nazivuDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtFilterEmployee" Text="{Binding Path=FilterEmployeeDocuments.Search_Name, Mode=TwoWay}" Margin="5 0 5 0" />
 
-                                <Button Grid.Column="0" x:Name="btnSelectAll_Employee" Click="btnSelectAll_Employee_Click" Margin="2" Width="100" Background="#007ACC" 
-                                        IsEnabled="{Binding Path=EmployeeDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
-                                        <TextBlock Text="{DynamicResource OznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                </Button>
-                                <Button Grid.Column="1" x:Name="btnDeselectAll_Employee" Click="btnDeselectAll_Employee_Click" Margin="2" Width="100" Background="#007ACC" 
-                                        IsEnabled="{Binding Path=EmployeeDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                        <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
-                                        <TextBlock Text="{DynamicResource OdznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                </Button>
-
-                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource Pretraga_po_nazivuDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtFilterEmployee" Text="{Binding Path=FilterEmployeeDocuments.Search_Name, Mode=TwoWay}" Margin="5 0 5 0" />
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{DynamicResource Pretraga_po_šifriFirmeDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="0" Grid.Column="3" x:Name="txtFilterBusinessPartnerCode" Text="{Binding Path=FilterEmployeeDocuments.Search_Code, Mode=TwoWay}" Margin="5 0 5 0" />
 
                                 <TextBlock Grid.Row="0" Grid.Column="4" Text="{DynamicResource Pretraga_po_šifriDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                                <TextBox Grid.Row="0" Grid.Column="5" x:Name="txtFilterBusinessPartnerCode" Text="{Binding Path=FilterEmployeeDocuments.Search_Code, Mode=TwoWay}" Margin="5 0 5 0" />
+                                <TextBox Grid.Row="0" Grid.Column="5" Text="{Binding Path=FilterEmployeeDocuments.Search_BPCode, Mode=TwoWay}" Margin="5 0 5 0" />
 
                                 <TextBlock Grid.Row="0" Grid.Column="6" Text="{DynamicResource DatumOdDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                                 <DatePicker Grid.Row="0" Grid.Column="7" x:Name="dtEmployeeFrom" SelectedDate="{Binding Path=FilterEmployeeDocuments.Search_DateFrom, Mode=TwoWay}" Margin="5 0 5 0" />
 
                                 <TextBlock Grid.Row="0" Grid.Column="8" Text="{DynamicResource DatumDoDvotacka}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                                 <DatePicker Grid.Row="0" Grid.Column="9" x:Name="dtEmployeeTo" SelectedDate="{Binding Path=FilterEmployeeDocuments.Search_DateTo, Mode=TwoWay}" Margin="5 0 5 0" />
+                                
+                                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Orientation="Horizontal">
+                                    <Button x:Name="btnSelectAll_Employee" Click="btnSelectAll_Employee_Click" Margin="2" Width="100" Background="#007ACC" 
+                                        IsEnabled="{Binding Path=EmployeeDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                            <TextBlock Text="{DynamicResource OznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button x:Name="btnDeselectAll_Employee" Click="btnDeselectAll_Employee_Click" Margin="2" Width="100" Background="#007ACC" 
+                                        IsEnabled="{Binding Path=EmployeeDocumentDataLoading, Converter={StaticResource inverseBoolConverter}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <TextBlock Text=" " FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                            <TextBlock Text="{DynamicResource OdznaciSve}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+
+                                </StackPanel>
 
                             </Grid>
                         </Expander>
@@ -368,10 +377,23 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Naziv}" Binding="{Binding Name}" IsReadOnly="True" Width="Auto" />
+                                <DataGridTextColumn SortMemberPath="Employee.EmployeeCode" Header="{DynamicResource Šifra}" Binding="{Binding Employee.EmployeeCode}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="CreateDate" Header="{DynamicResource Datum_krerianja}" Binding="{Binding CreateDate, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True" />
                                 <DataGridTextColumn SortMemberPath="Employee.Name" Header="{DynamicResource Ime}" Binding="{Binding Employee.Name}" IsReadOnly="True" Width="*" />
-                                <DataGridTextColumn SortMemberPath="Employee.Code" Header="{DynamicResource Šifra}" Binding="{Binding Employee.Code}" IsReadOnly="True" Width="*" />
                                 <DataGridTextColumn SortMemberPath="Employee.SurName" Header="{DynamicResource Prezime}" Binding="{Binding Employee.SurName}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn SortMemberPath="Employee.BusinessPartner.InternalCode" Header="{DynamicResource Šifra_ZagradaFirmeZagrada}" IsReadOnly="True" Width="*">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0} ( {1} )">
+                                            <Binding Path="Employee.BusinessPartner.InternalCode" />
+                                            <Binding Path="Employee.BusinessPartner.NameGer" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

@@ -183,6 +183,24 @@ namespace ServiceInterfaces.ViewModels.Employees
         #endregion
 
 
+        #region Search_BPCode
+        private string _Search_BPCode;
+
+        public string Search_BPCode
+        {
+            get { return _Search_BPCode; }
+            set
+            {
+                if (_Search_BPCode != value)
+                {
+                    _Search_BPCode = value;
+                    NotifyPropertyChanged("Search_BPCode");
+                }
+            }
+        }
+        #endregion
+
+
         #endregion
 
         #region IsSelected

@@ -275,6 +275,24 @@ namespace SirmiumERPGFC.Views.Invoices
         }
         #endregion
 
+        #region CanCopyInvoice
+        private bool _CanCopyInvoice = true;
+
+        public bool CanCopyInvoice
+        {
+            get { return _CanCopyInvoice; }
+            set
+            {
+                if (_CanCopyInvoice != value)
+                {
+                    _CanCopyInvoice = value;
+                    NotifyPropertyChanged("CanCopyInvoice");
+                }
+            }
+        }
+        #endregion
+
+
         #region Display data
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -628,6 +646,7 @@ namespace SirmiumERPGFC.Views.Invoices
             SirmiumERPGFC.Views.Common.SirmiumERPVisualEffects.RemoveEffectOnDialogShow(this);
         }
 
+        SemaphoreSlim btnSemaphore = new SemaphoreSlim(1);
         private void btnCopy_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentInvoice == null)
@@ -636,100 +655,126 @@ namespace SirmiumERPGFC.Views.Invoices
                 return;
             }
 
-            bool success = true;
+            var button = ((Button)sender);
 
-            var newInvoice = new InvoiceViewModel()
+            if(btnSemaphore.Wait(0) && button != null)
             {
-                Id = 0,
-                Identifier = Guid.NewGuid(),
-                Code = "",
-                Address = CurrentInvoice.Address,
-                Buyer = CurrentInvoice.Buyer,
-                BuyerName = CurrentInvoice.BuyerName,
-                City = CurrentInvoice.City,
-                Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
-                CurrencyCode = CurrentInvoice.CurrencyCode,
-                CurrencyExchangeRate = CurrentInvoice.CurrencyExchangeRate,
-                CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId },
-                DateOfPayment = CurrentInvoice.DateOfPayment,
-                Description = CurrentInvoice.Description,
-                Discount = CurrentInvoice.Discount,
-                InvoiceDate = CurrentInvoice.InvoiceDate,
-                DueDate = CurrentInvoice.DueDate,
-                IsSynced = false,
-                IsActive = true,
-                Municipality = CurrentInvoice.Municipality,
-                PdvType = CurrentInvoice.PdvType,
-                Status = ItemStatus.Added,
-                StatusDate = DateTime.Now,
-                TotalPDV = CurrentInvoice.TotalPDV,
-                TotalPrice = CurrentInvoice.TotalPrice,
-                TotalRebate = CurrentInvoice.TotalRebate,
-                Vat = CurrentInvoice.Vat
-            };
-
-            var response = new InvoiceSQLiteRepository().Create(newInvoice);
-            if(response.Success)
-            {
-                var itemResponse = new InvoiceItemSQLiteRepository().GetInvoiceItemsByInvoice(MainWindow.CurrentCompanyId, CurrentInvoice.Identifier);
-                if(itemResponse.Success)
+                button.IsEnabled = false;
+                Thread td = new Thread(() =>
                 {
-                    var itemsToCopy = itemResponse?.InvoiceItems ?? new List<InvoiceItemViewModel>();
-                    foreach(var item in itemsToCopy)
+
+                    if (!CanCopyInvoice)
                     {
-                        var newItem = new InvoiceItemViewModel()
-                        {
-                            Invoice = newInvoice,
-                            Amount = item.Amount,
-                            Code = item.Code,
-                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
-                            CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId },
-                            CurrencyCode = item.CurrencyCode,
-                            CurrencyPriceWithPDV = item.CurrencyPriceWithPDV,
-                            Discount = item.Discount,
-                            ExchangeRate = item.ExchangeRate,
-                            Id = 0,
-                            Identifier = Guid.NewGuid(),
-                            IsActive = true,
-                            IsSynced = false,
-                            ItemStatus = ItemStatus.Added,
-                            Name = item.Name,
-                            PDV = item.PDV,
-                            PDVPercent = item.PDVPercent,
-                            PriceWithoutPDV = item.PriceWithoutPDV,
-                            PriceWithPDV = item.PriceWithPDV,
-                            Quantity = item.Quantity,
-                            UnitOfMeasure = item.UnitOfMeasure,
-                            
-                        };
-                        var itemCreateResponse = new InvoiceItemSQLiteRepository().Create(newItem);
-                        if(!itemCreateResponse.Success)
-                        {
-                            MainWindow.ErrorMessage = itemCreateResponse.Message;
-                            success = false;
-                            break;
-                        }
+                        MainWindow.WarningMessage = ((string)Application.Current.FindResource("Morate_odabrati_fakturu_za_kopiranjeUzvičnik"));
+                        return;
                     }
 
-                } else
-                {
-                    MainWindow.ErrorMessage = itemResponse.Message;
-                    success = false;
-                }
-            } else
-            {
-                MainWindow.ErrorMessage = response.Message;
-                success = false;
+                    bool success = true;
+
+                    var newInvoice = new InvoiceViewModel()
+                    {
+                        Id = 0,
+                        Identifier = Guid.NewGuid(),
+                        Code = "",
+                        Address = CurrentInvoice.Address,
+                        Buyer = CurrentInvoice.Buyer,
+                        BuyerName = CurrentInvoice.BuyerName,
+                        City = CurrentInvoice.City,
+                        Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                        CurrencyCode = CurrentInvoice.CurrencyCode,
+                        CurrencyExchangeRate = CurrentInvoice.CurrencyExchangeRate,
+                        CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId },
+                        DateOfPayment = CurrentInvoice.DateOfPayment,
+                        Description = CurrentInvoice.Description,
+                        Discount = CurrentInvoice.Discount,
+                        InvoiceDate = CurrentInvoice.InvoiceDate,
+                        DueDate = CurrentInvoice.DueDate,
+                        IsSynced = false,
+                        IsActive = true,
+                        Municipality = CurrentInvoice.Municipality,
+                        PdvType = CurrentInvoice.PdvType,
+                        Status = ItemStatus.Added,
+                        StatusDate = DateTime.Now,
+                        TotalPDV = CurrentInvoice.TotalPDV,
+                        TotalPrice = CurrentInvoice.TotalPrice,
+                        TotalRebate = CurrentInvoice.TotalRebate,
+                        Vat = CurrentInvoice.Vat
+                    };
+
+                    var response = new InvoiceSQLiteRepository().Create(newInvoice);
+                    if (response.Success)
+                    {
+                        var itemResponse = new InvoiceItemSQLiteRepository().GetInvoiceItemsByInvoice(MainWindow.CurrentCompanyId, CurrentInvoice.Identifier);
+                        if (itemResponse.Success)
+                        {
+                            var itemsToCopy = itemResponse?.InvoiceItems ?? new List<InvoiceItemViewModel>();
+                            foreach (var item in itemsToCopy)
+                            {
+                                var newItem = new InvoiceItemViewModel()
+                                {
+                                    Invoice = newInvoice,
+                                    Amount = item.Amount,
+                                    Code = item.Code,
+                                    Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                                    CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId },
+                                    CurrencyCode = item.CurrencyCode,
+                                    CurrencyPriceWithPDV = item.CurrencyPriceWithPDV,
+                                    Discount = item.Discount,
+                                    ExchangeRate = item.ExchangeRate,
+                                    Id = 0,
+                                    Identifier = Guid.NewGuid(),
+                                    IsActive = true,
+                                    IsSynced = false,
+                                    ItemStatus = ItemStatus.Added,
+                                    Name = item.Name,
+                                    PDV = item.PDV,
+                                    PDVPercent = item.PDVPercent,
+                                    PriceWithoutPDV = item.PriceWithoutPDV,
+                                    PriceWithPDV = item.PriceWithPDV,
+                                    Quantity = item.Quantity,
+                                    UnitOfMeasure = item.UnitOfMeasure,
+
+                                };
+                                var itemCreateResponse = new InvoiceItemSQLiteRepository().Create(newItem);
+                                if (!itemCreateResponse.Success)
+                                {
+                                    MainWindow.ErrorMessage = itemCreateResponse.Message;
+                                    success = false;
+                                    break;
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            MainWindow.ErrorMessage = itemResponse.Message;
+                            success = false;
+                        }
+                    }
+                    else
+                    {
+                        MainWindow.ErrorMessage = response.Message;
+                        success = false;
+                    }
+
+                    if (success)
+                        MainWindow.SuccessMessage = (string)Application.Current.FindResource("Kopiranje_je_uspešno_izvršenoUzvičnik");
+                    else
+                        MainWindow.WarningMessage = (string)Application.Current.FindResource("Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik");
+
+                    DisplayData();
+
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        btnSemaphore.Release();
+                        if(button != null)
+                            button.IsEnabled = true;
+                    }));
+                });
+
+                td.IsBackground = true;
+                td.Start();
             }
-
-            if(success)
-                MainWindow.SuccessMessage = (string)Application.Current.FindResource("Kopiranje_je_uspešno_izvršenoUzvičnik");
-            else
-                MainWindow.WarningMessage = (string)Application.Current.FindResource("Došlo_je_do_greške_pri_kopiranju_proverite_stanje_faktureUzvičnik");
-
-            Thread displayThread = new Thread(() => DisplayData());
-            displayThread.IsBackground = true;
-            displayThread.Start();
         }
     }
 }

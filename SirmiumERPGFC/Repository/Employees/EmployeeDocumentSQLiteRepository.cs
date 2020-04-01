@@ -71,6 +71,10 @@ namespace SirmiumERPGFC.Repository.Employees
             {
                 dbEntry.Employee.Name = SQLiteHelper.GetString(query, ref counter);
                 dbEntry.Employee.SurName = SQLiteHelper.GetString(query, ref counter);
+                dbEntry.Employee.EmployeeCode = SQLiteHelper.GetString(query, ref counter);
+
+
+                dbEntry.Employee.BusinessPartner = SQLiteHelper.GetBusinessPartner(query, ref counter);
             }
             return dbEntry;
         }
@@ -160,20 +164,25 @@ namespace SirmiumERPGFC.Repository.Employees
                 {
                     SqliteCommand selectCommand = new SqliteCommand(
                         SqlCommandSelectPart +
-                        ", emp.EmpName as EmpName, emp.EmpSurname as EmpSurName " +
+                        ", emp.EmpName as EmpName, emp.EmpSurname as EmpSurName, emp.EmpCode, " +
+                        "empBP.BusinessPartnerId, empBP.BusinessPartnerIdentifier, empBP.BusinessPartnerCode, empBP.BusinessPartnerName, empBP.BusinessPartnerInternalCode, empBP.BusinessPartnerNameGer " +
                         "FROM EmployeeDocuments " +
-                        "LEFT JOIN (SELECT Identifier AS EmpIdentifier, Name AS EmpName, Surname AS EmpSurname FROM Employees) emp ON emp.EmpIdentifier = EmployeeDocuments.EmployeeIdentifier " +
+                        "LEFT JOIN (SELECT Identifier AS EmpIdentifier, Name AS EmpName, Surname AS EmpSurname, EmployeeCode AS EmpCode FROM Employees) emp ON emp.EmpIdentifier = EmployeeDocuments.EmployeeIdentifier " +
+                        "LEFT JOIN (SELECT BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnername, " +
+                        "BusinessPartnerInternalCode, BusinessPartnerNameGer, EmployeeIdentifier AS BPEmployeeIdentifier FROM EmployeeByBusinessPartners) empBP ON emp.EmpIdentifier = empBP.BPEmployeeIdentifier " +
                         "WHERE (" +
                         "   ((@EmployeeName IS NULL OR @EmployeeName = '' OR EmpName LIKE @EmployeeName) OR (@EmployeeName IS NULL OR @EmployeeName = '' OR EmpSurName LIKE @EmployeeName)) OR " +
                         "   (@EmployeeName IS NULL OR @EmployeeName = '' OR Name LIKE @EmployeeName) " +
                         ") " +
-                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR EmployeeCode LIKE @EmployeeCode) " +
+                        "AND (@EmployeeCode IS NULL OR @EmployeeCode = '' OR emp.EmpCode LIKE @EmployeeCode) " +
+                        "AND (@BPCode IS NULL OR @BPCode = '' OR empBP.BusinessPartnerInternalCode LIKE @BPCode) " +
                         "AND (@DateFrom IS NULL OR @DateFrom = '' OR DATE(CreateDate) >= DATE(@DateFrom)) " +
                         "AND (@DateTo IS NULL OR @DateTo = '' OR DATE(CreateDate) <= DATE(@DateTo)) " +
                         "ORDER BY IsSynced, Id DESC;", db);
 
                     selectCommand.Parameters.AddWithValue("@EmployeeName", (String.IsNullOrEmpty(filterObject.Search_Name) ? "" : "%" + filterObject.Search_Name + "%"));
                     selectCommand.Parameters.AddWithValue("@EmployeeCode", (String.IsNullOrEmpty(filterObject.Search_Code) ? "" : "%" + filterObject.Search_Code + "%"));
+                    selectCommand.Parameters.AddWithValue("@BPCode", (String.IsNullOrEmpty(filterObject.Search_BPCode) ? "" : "%" + filterObject.Search_BPCode + "%"));
                     selectCommand.Parameters.AddWithValue("@DateFrom", ((object)filterObject.Search_DateFrom) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@DateTo", ((object)filterObject.Search_DateTo) ?? DBNull.Value);
                     selectCommand.Parameters.AddWithValue("@CompanyId", companyId);

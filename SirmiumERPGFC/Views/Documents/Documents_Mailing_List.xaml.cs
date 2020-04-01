@@ -917,8 +917,8 @@ namespace SirmiumERPGFC.Views.Documents
 
         private async void FilterEmployeeDocuments_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo" 
-                || e.PropertyName == "Search_Code")
+            if (e.PropertyName == "Search_Name" || e.PropertyName == "Search_Code" || e.PropertyName == "Search_BPCode" 
+                || e.PropertyName == "Search_DateFrom" || e.PropertyName == "Search_DateTo")
             {
                 try
                 {

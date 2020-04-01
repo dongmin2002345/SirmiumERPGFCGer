@@ -822,5 +822,6 @@
 
     <system:String x:Key="Promeni">Change</system:String>
     <system:String x:Key="Obrisi">Delete</system:String>
+    <system:String x:Key="Pretraga_po_šifriFirmeDvotacka">Search by bus. part. code: </system:String>
 
 </ResourceDictionary>
