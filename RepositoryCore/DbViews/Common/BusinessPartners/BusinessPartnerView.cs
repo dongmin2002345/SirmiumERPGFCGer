@@ -24,13 +24,13 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "SELECT businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.InternalCode AS BusinessPartnerInternalCode, businessPartner.Name AS BusinessPartnerName, " +
                 "businessPartner.PIB, businessPartner.PIO, businessPartner.IdentificationNumber, businessPartner.DueDate, businessPartner.WebSite, businessPartner.ContactPerson, businessPartner.IsInPDV, businessPartner.JBKJS, businessPartner.NameGer, businessPartner.IsInPDVGer, " +
 
-                "countrySrb.Id AS CountrySrbId, countrySrb.Identifier AS CountrySrbIdentifier, countrySrb.Code AS CountrySrbCode, countrySrb.Name AS CountrySrbName, " +
+                "countrySrb.Id AS CountrySrbId, countrySrb.Identifier AS CountrySrbIdentifier, countrySrb.Mark AS CountrySrbCode, countrySrb.Name AS CountrySrbName, " +
                 "citySrb.Id AS CitySrbId, citySrb.Identifier AS CitySrbIdentifier, citySrb.ZipCode AS CitySrbZipCode, citySrb.Name AS CitySrbName, " +
                 "businessPartner.Address, " +
 
                 "taxAdministration.Id AS TaxAdministrationId, taxAdministration.Identifier AS TaxAdministrationIdentifier, taxAdministration.Code AS TaxAdministrationCode, taxAdministration.Name AS TaxAdministrationName, " +
                 "businessPartner.IBAN, businessPartner.BetriebsNumber, businessPartner.Customer, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
 
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.ZipCode AS CityZipCode, city.Name AS CityName, " +
                 "businessPartner.AddressGer, " +

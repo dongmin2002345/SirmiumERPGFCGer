@@ -172,11 +172,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popCity.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterCities.Focus();
         }
@@ -204,22 +200,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtCity.Focus();
         }
 
-        private void btnAddCity_Click(object sender, RoutedEventArgs e)
-        {
-            popCity.IsOpen = false;
-
-            CityViewModel city = new CityViewModel();
-            //city.ZipCode = new CitySQLiteRepository().GetNewCodeValue(MainWindow.CurrentCompanyId);
-            city.Identifier = Guid.NewGuid();
-
-            CityAddEdit cityAddEditForm = new CityAddEdit(city, true, true);
-            cityAddEditForm.CityCreatedUpdated += new CityHandler(CityAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_gradovima")), 95, cityAddEditForm);
-
-            txtCity.Focus();
-        }
-
-        void CityAdded() { }
 
         private void dgCityList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -249,10 +229,10 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgCityList.Items != null && dgCityList.Items.Count > 0)
                 {
-                    if (dgCityList.SelectedIndex == -1)
-                        dgCityList.SelectedIndex = 0;
                     if (dgCityList.SelectedIndex > 0)
                         dgCityList.SelectedIndex = dgCityList.SelectedIndex - 1;
+                    if (dgCityList.SelectedIndex >= 0)
+                        
                     dgCityList.ScrollIntoView(dgCityList.Items[dgCityList.SelectedIndex]);
                 }
             }
@@ -263,7 +243,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgCityList.SelectedIndex < dgCityList.Items.Count)
                         dgCityList.SelectedIndex = dgCityList.SelectedIndex + 1;
-                    dgCityList.ScrollIntoView(dgCityList.Items[dgCityList.SelectedIndex]);
+                    if (dgCityList.SelectedIndex >= 0)
+                        dgCityList.ScrollIntoView(dgCityList.Items[dgCityList.SelectedIndex]);
                 }
             }
 
@@ -291,18 +272,16 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddCity_LostFocus(object sender, RoutedEventArgs e)
+        private void btnCloseCity_Click(object sender, RoutedEventArgs e)
         {
             popCity.IsOpen = false;
 
             txtCity.Focus();
         }
 
-        private void btnCloseCityPopup_Click(object sender, RoutedEventArgs e)
+        private void DgCityList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popCity.IsOpen = false;
-
-            txtCity.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #region INotifyPropertyChange implementation

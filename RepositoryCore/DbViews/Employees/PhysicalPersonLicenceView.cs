@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.PhysicalPersons
                 "SELECT physicalPersonLicence.Id AS PhysicalPersonLicenceId, physicalPersonLicence.Identifier AS PhysicalPersonLicenceIdentifier, " +
                 "physicalPerson.Id AS PhysicalPersonId, physicalPerson.Identifier AS PhysicalPersonIdentifier, physicalPerson.Code AS PhysicalPersonCode, physicalPerson.Name AS PhysicalPersonName, " +
                 "licence.Id AS LicenceId, licence.Identifier AS LicenceIdentifier, licence.Code AS LicenceCode, licence.Category AS LicenceCategory, licence.Description AS LicenceDescription, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "physicalPersonLicence.ValidFrom, physicalPersonLicence.ValidTo, physicalPersonLicence.ItemStatus," +
                 "physicalPersonLicence.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (physicalPersonLicence.UpdatedAt), (physicalPerson.UpdatedAt), (licence.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +

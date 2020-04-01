@@ -38,7 +38,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "CityPartnerId, CityPartnerIdentifier, CityPartnerZipCode, CityPartnerName, " +
                 "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
                 "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
                 "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
@@ -95,7 +95,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             constructionSite.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             constructionSite.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            constructionSite.Country.Code = reader["CountryCode"].ToString();
+                            constructionSite.Country.Mark = reader["CountryCode"].ToString();
                             constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -107,6 +107,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                             constructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             constructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            constructionSite.BusinessPartner.InternalCode = reader["BusinessPartnerInternalCode"].ToString();
+                            constructionSite.BusinessPartner.NameGer = reader["BusinessPartnerNameGer"].ToString();
                         }
 
                         if (reader["StatusId"] != DBNull.Value)
@@ -196,7 +198,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "CityPartnerId, CityPartnerIdentifier, CityPartnerZipCode, CityPartnerName, " +
                 "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
                 "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
                 "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
@@ -253,7 +255,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             constructionSite.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             constructionSite.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            constructionSite.Country.Code = reader["CountryCode"].ToString();
+                            constructionSite.Country.Mark = reader["CountryCode"].ToString();
                             constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -265,6 +267,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                             constructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             constructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            constructionSite.BusinessPartner.InternalCode = reader["BusinessPartnerInternalCode"].ToString();
+                            constructionSite.BusinessPartner.NameGer = reader["BusinessPartnerNameGer"].ToString();
                         }
 
                         if (reader["StatusId"] != DBNull.Value)
@@ -350,7 +354,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                 "CityPartnerId, CityPartnerIdentifier, CityPartnerZipCode, CityPartnerName, " +
                 "CityId, CityIdentifier, CityZipCode, CityName, " +
                 "CountryId, CountryIdentifier, CountryCode, CountryName, " +
-                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
                 "StatusId, StatusIdentifier, StatusCode, StatusName, " +
                 "StatusDate, Address, MaxWorkers, ProContractDate, ContractStart, ContractExpiration, PaymentDate, Path, PaymentValue, " +
                 "ShipmentId, ShipmentIdentifier, ShipmentCode, ShipmentNumber, " +
@@ -410,7 +414,7 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             constructionSite.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             constructionSite.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            constructionSite.Country.Code = reader["CountryCode"].ToString();
+                            constructionSite.Country.Mark = reader["CountryCode"].ToString();
                             constructionSite.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -422,6 +426,8 @@ namespace RepositoryCore.Implementations.ConstructionSites
                             constructionSite.BusinessPartner.Identifier = Guid.Parse(reader["BusinessPartnerIdentifier"].ToString());
                             constructionSite.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             constructionSite.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            constructionSite.BusinessPartner.InternalCode = reader["BusinessPartnerInternalCode"].ToString();
+                            constructionSite.BusinessPartner.NameGer = reader["BusinessPartnerNameGer"].ToString();
                         }
 
                         if (reader["StatusId"] != DBNull.Value)

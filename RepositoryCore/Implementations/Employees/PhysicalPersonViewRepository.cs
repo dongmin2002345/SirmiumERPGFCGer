@@ -88,7 +88,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPerson.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPerson.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPerson.Country.Code = reader["CountryCode"].ToString();
+                            physicalPerson.Country.Mark = reader["CountryCode"].ToString();
                             physicalPerson.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -133,7 +133,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
                             physicalPerson.PassportCountry.Id = Int32.Parse(reader["PassportCountryId"].ToString());
                             physicalPerson.PassportCountry.Identifier = Guid.Parse(reader["PassportCountryIdentifier"].ToString());
-                            physicalPerson.PassportCountry.Code = reader["PassportCountryCode"].ToString();
+                            physicalPerson.PassportCountry.Mark = reader["PassportCountryCode"].ToString();
                             physicalPerson.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
@@ -162,7 +162,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             physicalPerson.ResidenceCountry.Id = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             physicalPerson.ResidenceCountry.Identifier = Guid.Parse(reader["ResidenceCountryIdentifier"].ToString());
-                            physicalPerson.ResidenceCountry.Code = reader["ResidenceCountryCode"].ToString();
+                            physicalPerson.ResidenceCountry.Mark = reader["ResidenceCountryCode"].ToString();
                             physicalPerson.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
@@ -295,7 +295,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPerson.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPerson.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPerson.Country.Code = reader["CountryCode"].ToString();
+                            physicalPerson.Country.Mark = reader["CountryCode"].ToString();
                             physicalPerson.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -340,7 +340,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
                             physicalPerson.PassportCountry.Id = Int32.Parse(reader["PassportCountryId"].ToString());
                             physicalPerson.PassportCountry.Identifier = Guid.Parse(reader["PassportCountryIdentifier"].ToString());
-                            physicalPerson.PassportCountry.Code = reader["PassportCountryCode"].ToString();
+                            physicalPerson.PassportCountry.Mark = reader["PassportCountryCode"].ToString();
                             physicalPerson.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
@@ -369,7 +369,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             physicalPerson.ResidenceCountry.Id = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             physicalPerson.ResidenceCountry.Identifier = Guid.Parse(reader["ResidenceCountryIdentifier"].ToString());
-                            physicalPerson.ResidenceCountry.Code = reader["ResidenceCountryCode"].ToString();
+                            physicalPerson.ResidenceCountry.Mark = reader["ResidenceCountryCode"].ToString();
                             physicalPerson.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
@@ -502,7 +502,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPerson.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPerson.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPerson.Country.Code = reader["CountryCode"].ToString();
+                            physicalPerson.Country.Mark = reader["CountryCode"].ToString();
                             physicalPerson.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -547,7 +547,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
                             physicalPerson.PassportCountry.Id = Int32.Parse(reader["PassportCountryId"].ToString());
                             physicalPerson.PassportCountry.Identifier = Guid.Parse(reader["PassportCountryIdentifier"].ToString());
-                            physicalPerson.PassportCountry.Code = reader["PassportCountryCode"].ToString();
+                            physicalPerson.PassportCountry.Mark = reader["PassportCountryCode"].ToString();
                             physicalPerson.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
@@ -576,7 +576,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPerson.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             physicalPerson.ResidenceCountry.Id = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             physicalPerson.ResidenceCountry.Identifier = Guid.Parse(reader["ResidenceCountryIdentifier"].ToString());
-                            physicalPerson.ResidenceCountry.Code = reader["ResidenceCountryCode"].ToString();
+                            physicalPerson.ResidenceCountry.Mark = reader["ResidenceCountryCode"].ToString();
                             physicalPerson.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 

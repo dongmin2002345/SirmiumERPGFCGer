@@ -93,13 +93,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new FamilyMemberSQLiteRepository().Sync(FamilyMemberService);
+                    FamilyMemberListResponse FamilyMemberResponse = new FamilyMemberSQLiteRepository().GetFamilyMembersForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (FamilyMemberResponse.Success)
+                    {
+                        if (FamilyMemberResponse.FamilyMembers != null && FamilyMemberResponse.FamilyMembers.Count > 0)
+                        {
+                            FamilyMembersFromDB = new ObservableCollection<FamilyMemberViewModel>(
+                                FamilyMemberResponse.FamilyMembers.ToList() ?? new List<FamilyMemberViewModel>());
 
-                    FamilyMemberListResponse FamilyMemberResp = new FamilyMemberSQLiteRepository().GetFamilyMembersForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (FamilyMemberResp.Success)
-                        FamilyMembersFromDB = new ObservableCollection<FamilyMemberViewModel>(FamilyMemberResp.FamilyMembers ?? new List<FamilyMemberViewModel>());
-                    else
-                        FamilyMembersFromDB = new ObservableCollection<FamilyMemberViewModel>();
+                            if (FamilyMembersFromDB.Count == 1)
+                                CurrentFamilyMember = FamilyMembersFromDB.FirstOrDefault();
+                        }
+                        else
+                        {
+                            FamilyMembersFromDB = new ObservableCollection<FamilyMemberViewModel>();
+
+                            CurrentFamilyMember = null;
+                        }
+                    }
                 })
             );
         }
@@ -120,11 +131,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popFamilyMember.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterFamilyMember.Focus();
         }
@@ -152,21 +159,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtFamilyMember.Focus();
         }
 
-        private void btnAddFamilyMember_Click(object sender, RoutedEventArgs e)
-        {
-            popFamilyMember.IsOpen = false;
-
-            FamilyMemberViewModel FamilyMember = new FamilyMemberViewModel();
-            FamilyMember.Identifier = Guid.NewGuid();
-
-            FamilyMember_List_AddEdit FamilyMemberAddEditForm = new FamilyMember_List_AddEdit(FamilyMember, true, true);
-            FamilyMemberAddEditForm.FamilyMemberCreatedUpdated += new FamilyMemberHandler(FamilyMemberAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_clanovima_porodice")), 95, FamilyMemberAddEditForm);
-
-            txtFamilyMember.Focus();
-        }
-
-        void FamilyMemberAdded() { }
 
         private void dgFamilyMemberList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -196,10 +188,10 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgFamilyMemberList.Items != null && dgFamilyMemberList.Items.Count > 0)
                 {
-                    if (dgFamilyMemberList.SelectedIndex == -1)
-                        dgFamilyMemberList.SelectedIndex = 0;
                     if (dgFamilyMemberList.SelectedIndex > 0)
                         dgFamilyMemberList.SelectedIndex = dgFamilyMemberList.SelectedIndex - 1;
+                    if (dgFamilyMemberList.SelectedIndex >= 0)
+                        
                     dgFamilyMemberList.ScrollIntoView(dgFamilyMemberList.Items[dgFamilyMemberList.SelectedIndex]);
                 }
             }
@@ -210,7 +202,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgFamilyMemberList.SelectedIndex < dgFamilyMemberList.Items.Count)
                         dgFamilyMemberList.SelectedIndex = dgFamilyMemberList.SelectedIndex + 1;
-                    dgFamilyMemberList.ScrollIntoView(dgFamilyMemberList.Items[dgFamilyMemberList.SelectedIndex]);
+                    if (dgFamilyMemberList.SelectedIndex >= 0)
+                        dgFamilyMemberList.ScrollIntoView(dgFamilyMemberList.Items[dgFamilyMemberList.SelectedIndex]);
                 }
             }
 
@@ -238,18 +231,15 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddFamilyMember_LostFocus(object sender, RoutedEventArgs e)
+        private void btnCloseFamilyMember_Click(object sender, RoutedEventArgs e)
         {
             popFamilyMember.IsOpen = false;
 
             txtFamilyMember.Focus();
         }
-
-        private void btnCloseFamilyMemberPopup_Click(object sender, RoutedEventArgs e)
+        private void DgFamilyMemberList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popFamilyMember.IsOpen = false;
-
-            txtFamilyMember.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
         #region INotifyPropertyChange implementation

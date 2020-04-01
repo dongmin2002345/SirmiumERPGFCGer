@@ -25,7 +25,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
         string selectString =
               "SELECT InvoiceId, InvoiceIdentifier, InvoiceCode, InvoiceNumber, " +
 
-              "BuyerId, BuyerIdentifier, BuyerCode, BuyerName, EnteredBuyerName, " +
+              "BuyerId, BuyerIdentifier, BuyerCode, BuyerName, BuyerInternalCode, BuyerNameGer, EnteredBuyerName, " +
               "Address, InvoiceDate, DueDate, DateOfPayment, Status, StatusDate, Description, " +
               "CurrencyCode, CurrencyExchangeRate, " +
 
@@ -61,6 +61,8 @@ namespace RepositoryCore.Implementations.Common.Invoices
                 invoice.Buyer.Identifier = Guid.Parse(reader["BuyerIdentifier"].ToString());
                 invoice.Buyer.Code = reader["BuyerCode"].ToString();
                 invoice.Buyer.Name = reader["BuyerName"].ToString();
+                invoice.Buyer.InternalCode = reader["BuyerInternalCode"].ToString();
+                invoice.Buyer.NameGer = reader["BuyerNameGer"].ToString();
             }
 
             invoice.BuyerName = reader["EnteredBuyerName"]?.ToString();

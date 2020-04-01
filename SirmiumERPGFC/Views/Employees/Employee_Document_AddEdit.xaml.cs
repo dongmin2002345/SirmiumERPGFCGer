@@ -8,6 +8,7 @@ using ServiceInterfaces.ViewModels.Employees;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Employees;
+using SirmiumERPGFC.ViewComponents.Dialogs;
 using SirmiumERPGFC.Views.Home;
 using System;
 using System.Collections.Generic;
@@ -340,30 +341,40 @@ namespace SirmiumERPGFC.Views.Employees
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
-            {
+            
                 CurrentEmployeeDocumentForm.Path = fileNames[0];
-                if (!String.IsNullOrEmpty(CurrentEmployeeDocumentForm.Path))
-                {
-                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentEmployeeDocumentForm.Path);
-                    CurrentEmployeeDocumentForm.Name = fileName;
-                }
-            }
+                
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+            DocumentSelectDialog dcpDialog = new DocumentSelectDialog();
 
-            fileDIalog.Multiselect = true;
-            fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "All Files (*.*)|*.*";
-            fileDIalog.ShowDialog();
+            bool? result = dcpDialog.ShowDialog();
+
+            if (result == true)
+            {
+                CurrentEmployeeDocumentForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+            }
+            //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            //fileDIalog.Multiselect = true;
+            //fileDIalog.FileOk += FileDIalog_FileOk;
+            //fileDIalog.Filter = "All Files (*.*)|*.*";
+            //fileDIalog.ShowDialog();
         }
 
         private void btnScahner_Click(object sender, RoutedEventArgs e)
         {
             Scanner_Window window = new Scanner_Window();
-            window.Show();
+            bool? result = window.ShowDialog();
+
+            if (result == true)
+            {
+                var path = window?.SelectedDocument;
+
+                CurrentEmployeeDocumentForm.Path = path;
+            }
         }
 
         #endregion

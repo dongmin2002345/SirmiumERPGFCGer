@@ -43,13 +43,15 @@ namespace RepositoryCore.DbViews.ConstructionSites
 
                 "country.Id AS CountryId, " +
                 "country.Identifier AS CountryIdentifier, " +
-                "country.Code AS CountryCode, " +
+                "country.Mark AS CountryCode, " +
                 "country.Name AS CountryName, " +
 
                 "businessPartner.Id AS BusinessPartnerId, " +
                 "businessPartner.Identifier AS BusinessPartnerIdentifier, " +
                 "businessPartner.Code AS BusinessPartnerCode, " +
                 "businessPartner.Name AS BusinessPartnerName, " +
+                "businessPartner.InternalCode AS BusinessPartnerInternalCode, " +
+                "businessPartner.NameGer AS BusinessPartnerNameGer, " +
 
                 "status.Id AS StatusId, " +
                 "status.Identifier AS StatusIdentifier, " +

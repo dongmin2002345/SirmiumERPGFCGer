@@ -80,7 +80,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerOrganizationUnit.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerOrganizationUnit.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerOrganizationUnit.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerOrganizationUnit.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -206,7 +206,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerOrganizationUnit.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerOrganizationUnit.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerOrganizationUnit.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerOrganizationUnit.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -333,7 +333,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerOrganizationUnit.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerOrganizationUnit.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerOrganizationUnit.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerOrganizationUnit.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -458,7 +458,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerOrganizationUnit.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerOrganizationUnit.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerOrganizationUnit.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerOrganizationUnit.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerOrganizationUnit.Country.Name = reader["CountryName"].ToString();
                         }
 

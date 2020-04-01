@@ -61,7 +61,7 @@ namespace RepositoryCore.Implementations.Employees
                             licenceType.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             licenceType.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             licenceType.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            licenceType.Country.Code = reader["CountryCode"].ToString();
+                            licenceType.Country.Mark = reader["CountryCode"].ToString();
                             licenceType.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -141,7 +141,7 @@ namespace RepositoryCore.Implementations.Employees
                             licenceType.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             licenceType.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             licenceType.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            licenceType.Country.Code = reader["CountryCode"].ToString();
+                            licenceType.Country.Mark = reader["CountryCode"].ToString();
                             licenceType.Country.Name = reader["CountryName"].ToString();
                         }
 

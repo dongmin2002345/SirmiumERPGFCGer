@@ -76,7 +76,7 @@ namespace SirmiumERPGFC.Repository.Professions
             insertCommand.Parameters.AddWithValue("@Name", ((object)profession.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)profession.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)profession.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)profession.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)profession.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)profession.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@IsSynced", profession.IsSynced);
             insertCommand.Parameters.AddWithValue("@UpdatedAt", ((object)profession.UpdatedAt) ?? DBNull.Value);

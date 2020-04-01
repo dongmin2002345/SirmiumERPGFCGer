@@ -46,7 +46,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             CountryPopup popup = source as CountryPopup;
             CountryViewModel country = (CountryViewModel)e.NewValue;
-            popup.txtCountry.Text = country != null ? country.Code + " (" + country.Name + ")" : "";
+            popup.txtCountry.Text = country != null ? country.Mark + " (" + country.Name + ")" : "";
         }
         #endregion
 
@@ -93,13 +93,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new CountrySQLiteRepository().Sync(countryService);
+                    CountryListResponse CountryResponse = new CountrySQLiteRepository().GetCountriesForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (CountryResponse.Success)
+                    {
+                        if (CountryResponse.Countries != null && CountryResponse.Countries.Count > 0)
+                        {
+                            CountriesFromDB = new ObservableCollection<CountryViewModel>(
+                                CountryResponse.Countries.ToList() ?? new List<CountryViewModel>());
 
-                    CountryListResponse countryResp = new CountrySQLiteRepository().GetCountriesForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (countryResp.Success)
-                        CountriesFromDB = new ObservableCollection<CountryViewModel>(countryResp.Countries ?? new List<CountryViewModel>());
-                    else
-                        CountriesFromDB = new ObservableCollection<CountryViewModel>();
+                            if (CountriesFromDB.Count == 1)
+                                CurrentCountry = CountriesFromDB.FirstOrDefault();
+                        }
+                        else
+                        {
+                            CountriesFromDB = new ObservableCollection<CountryViewModel>();
+
+                            CurrentCountry = null;
+                        }
+                    }
                 })
             );
         }
@@ -120,11 +131,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popCountry.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterCountry.Focus();
         }
@@ -152,21 +159,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtCountry.Focus();
         }
 
-        private void btnAddCountry_Click(object sender, RoutedEventArgs e)
-        {
-            popCountry.IsOpen = false;
-
-            CountryViewModel country = new CountryViewModel();
-            country.Identifier = Guid.NewGuid();
-
-            CountryAddEdit countryAddEditForm = new CountryAddEdit(country, true, true);
-            countryAddEditForm.CountryCreatedUpdated += new CountryHandler(CountryAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_drzavi")), 95, countryAddEditForm);
-
-            txtCountry.Focus();
-        }
-
-        void CountryAdded() { }
 
         private void dgCountryList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -196,10 +188,10 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgCountryList.Items != null && dgCountryList.Items.Count > 0)
                 {
-                    if (dgCountryList.SelectedIndex == -1)
-                        dgCountryList.SelectedIndex = 0;
                     if (dgCountryList.SelectedIndex > 0)
                         dgCountryList.SelectedIndex = dgCountryList.SelectedIndex - 1;
+                    if (dgCountryList.SelectedIndex >= 0)
+                        
                     dgCountryList.ScrollIntoView(dgCountryList.Items[dgCountryList.SelectedIndex]);
                 }
             }
@@ -210,7 +202,8 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgCountryList.SelectedIndex < dgCountryList.Items.Count)
                         dgCountryList.SelectedIndex = dgCountryList.SelectedIndex + 1;
-                    dgCountryList.ScrollIntoView(dgCountryList.Items[dgCountryList.SelectedIndex]);
+                    if (dgCountryList.SelectedIndex >= 0)
+                        dgCountryList.ScrollIntoView(dgCountryList.Items[dgCountryList.SelectedIndex]);
                 }
             }
 
@@ -238,14 +231,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddCountry_LostFocus(object sender, RoutedEventArgs e)
+        private void DgCountryList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popCountry.IsOpen = false;
-
-            txtCountry.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseCountryPopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseCountry_Click(object sender, RoutedEventArgs e)
         {
             popCountry.IsOpen = false;
 

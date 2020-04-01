@@ -22,15 +22,15 @@ namespace RepositoryCore.DbViews.PhysicalPersons
             strSQLCommand =
                 "CREATE VIEW vPhysicalPersons AS " +
                 "SELECT physicalPerson.Id AS PhysicalPersonId, physicalPerson.Identifier AS PhysicalPersonIdentifier, physicalPerson.Code AS PhysicalPersonCode, physicalPerson.PhysicalPersonCode AS PhysicalPersonPhysicalPersonCode, physicalPerson.Name AS PhysicalPersonName, physicalPerson.SurName AS PhysicalPersonSurName, physicalPerson.ConstructionSiteCode AS PhysicalPersonConstructionSiteCode, physicalPerson.ConstructionSiteName AS PhysicalPersonConstructionSiteName, physicalPerson.DateOfBirth, physicalPerson.Gender, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.RegionCode AS RegionCode, region.Name AS RegionName, " +
                 "municipality.Id AS MunicipalityId, municipality.Identifier AS MunicipalityIdentifier, municipality.MunicipalityCode AS MunicipalityCode, municipality.Name AS MunicipalityName, " +
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.ZipCode AS CityZipCode, city.Name AS CityName, " +
                 "physicalPerson.Address, " +
-                "countryPassport.Id AS PassportCountryId, countryPassport.Identifier AS PassportCountryIdentifier, countryPassport.Code AS PassportCountryCode, countryPassport.Name AS PassportCountryName, " +
+                "countryPassport.Id AS PassportCountryId, countryPassport.Identifier AS PassportCountryIdentifier, countryPassport.Mark AS PassportCountryCode, countryPassport.Name AS PassportCountryName, " +
                 "cityPassport.Id AS PassportCityId, cityPassport.Identifier AS PassportCityIdentifier, cityPassport.ZipCode AS PassportCityZipCode, cityPassport.Name AS PassportCityName, " +
                 "physicalPerson.Passport, physicalPerson.VisaFrom, physicalPerson.VisaTo, " +
-                "countryResidence.Id AS ResidenceCountryId, countryResidence.Identifier AS ResidenceCountryIdentifier, countryResidence.Code AS ResidenceCountryCode, countryResidence.Name AS ResidenceCountryName, " +
+                "countryResidence.Id AS ResidenceCountryId, countryResidence.Identifier AS ResidenceCountryIdentifier, countryResidence.Mark AS ResidenceCountryCode, countryResidence.Name AS ResidenceCountryName, " +
                 "cityResidence.Id AS ResidenceCityId, cityResidence.Identifier AS ResidenceCityIdentifier, cityResidence.ZipCode AS ResidenceCityZipCode, cityResidence.Name AS ResidenceCityName, " +
                 "physicalPerson.ResidenceAddress, physicalPerson.EmbassyDate, physicalPerson.VisaDate, physicalPerson.VisaValidFrom, physicalPerson.VisaValidTo, physicalPerson.WorkPermitFrom, physicalPerson.WorkPermitTo, physicalPerson.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (physicalPerson.UpdatedAt), (country.UpdatedAt), (region.UpdatedAt), (municipality.UpdatedAt), (city.UpdatedAt), (countryPassport.UpdatedAt), (cityPassport.UpdatedAt), (countryResidence.UpdatedAt), (cityResidence.UpdatedAt)) AS value(v)) AS UpdatedAt, " +

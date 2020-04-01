@@ -270,7 +270,7 @@ namespace SirmiumERPGFC.Repository.Common
                 {
                     Id = query.GetInt32(counter++),
                     Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
-                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Mark = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
                     Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
@@ -650,9 +650,9 @@ namespace SirmiumERPGFC.Repository.Common
             {
                 var viewModel = new TaxAdministrationViewModel();
                 viewModel.Id = query.GetInt32(counter++);
-                viewModel.Identifier = query.GetGuid(counter++);
+                viewModel.Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1);
                 viewModel.Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
-                viewModel.Name = query.GetString(counter++);
+                viewModel.Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1);
 
 
                 return viewModel;
@@ -670,9 +670,9 @@ namespace SirmiumERPGFC.Repository.Common
                 return new ProfessionViewModel()
                 {
                     Id = query.GetInt32(counter++),
-                    Identifier = query.GetGuid(counter++),
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
                     Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
-                    Name = query.GetString(counter++),
+                    Name = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
                     SecondCode = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
                 };
         }
@@ -688,10 +688,10 @@ namespace SirmiumERPGFC.Repository.Common
                 return new LicenceTypeViewModel()
                 {
                     Id = query.GetInt32(counter++),
-                    Identifier = query.GetGuid(counter++),
-                    Code = query.GetString(counter++),
-                    Category = query.GetString(counter++),
-                    Description = query.GetString(counter++)
+                    Identifier = query.IsDBNull(counter++) ? Guid.Empty : query.GetGuid(counter - 1),
+                    Code = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Category = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1),
+                    Description = query.IsDBNull(counter++) ? "" : query.GetString(counter - 1)
                 };
         }
 

@@ -82,7 +82,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employeeProfession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employeeProfession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employeeProfession.Country.Code = reader["CountryCode"].ToString();
+                            employeeProfession.Country.Mark = reader["CountryCode"].ToString();
                             employeeProfession.Country.Name = reader["CountryName"].ToString();
                         }
                         if (reader["ItemStatus"] != DBNull.Value)
@@ -183,7 +183,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employeeProfession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employeeProfession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employeeProfession.Country.Code = reader["CountryCode"].ToString();
+                            employeeProfession.Country.Mark = reader["CountryCode"].ToString();
                             employeeProfession.Country.Name = reader["CountryName"].ToString();
                         }
                         if (reader["ItemStatus"] != DBNull.Value)
@@ -285,7 +285,7 @@ namespace RepositoryCore.Implementations.Employees
                             employeeProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employeeProfession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employeeProfession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employeeProfession.Country.Code = reader["CountryCode"].ToString();
+                            employeeProfession.Country.Mark = reader["CountryCode"].ToString();
                             employeeProfession.Country.Name = reader["CountryName"].ToString();
                         }
                         if (reader["ItemStatus"] != DBNull.Value)

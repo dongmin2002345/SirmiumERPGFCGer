@@ -8,6 +8,7 @@ using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.BusinessPartners;
+using SirmiumERPGFC.ViewComponents.Dialogs;
 using SirmiumERPGFC.Views.Home;
 using System;
 using System.Collections.Generic;
@@ -426,18 +427,33 @@ namespace SirmiumERPGFC.Views.BusinessPartners
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+            DocumentSelectDialog dcpDialog = new DocumentSelectDialog();
 
-            fileDIalog.Multiselect = true;
-            fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "All Files (*.*)|*.*";
-            fileDIalog.ShowDialog();
+            bool? result = dcpDialog.ShowDialog();
+
+            if (result == true)
+            {
+                CurrentBusinessPartnerPhoneForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+            }
+            //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            //fileDIalog.Multiselect = true;
+            //fileDIalog.FileOk += FileDIalog_FileOk;
+            //fileDIalog.Filter = "All Files (*.*)|*.*";
+            //fileDIalog.ShowDialog();
         }
 
         private void btnScahner_Click(object sender, RoutedEventArgs e)
         {
             Scanner_Window window = new Scanner_Window();
-            window.Show();
+            bool? result = window.ShowDialog();
+
+            if (result == true)
+            {
+                var path = window?.SelectedDocument;
+
+                CurrentBusinessPartnerPhoneForm.Path = path;
+            }
         }
 
         #region INotifyPropertyChange implementation

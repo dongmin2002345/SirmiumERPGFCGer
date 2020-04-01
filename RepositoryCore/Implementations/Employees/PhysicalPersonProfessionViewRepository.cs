@@ -81,7 +81,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonProfession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonProfession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPersonProfession.Country.Code = reader["CountryCode"].ToString();
+                            physicalPersonProfession.Country.Mark = reader["CountryCode"].ToString();
                             physicalPersonProfession.Country.Name = reader["CountryName"].ToString();
                         }
                         if (reader["ItemStatus"] != DBNull.Value)
@@ -182,7 +182,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonProfession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonProfession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPersonProfession.Country.Code = reader["CountryCode"].ToString();
+                            physicalPersonProfession.Country.Mark = reader["CountryCode"].ToString();
                             physicalPersonProfession.Country.Name = reader["CountryName"].ToString();
                         }
                         if (reader["ItemStatus"] != DBNull.Value)
@@ -283,7 +283,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonProfession.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonProfession.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonProfession.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPersonProfession.Country.Code = reader["CountryCode"].ToString();
+                            physicalPersonProfession.Country.Mark = reader["CountryCode"].ToString();
                             physicalPersonProfession.Country.Name = reader["CountryName"].ToString();
                         }
                         if (reader["ItemStatus"] != DBNull.Value)

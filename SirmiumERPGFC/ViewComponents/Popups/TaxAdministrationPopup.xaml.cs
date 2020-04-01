@@ -96,16 +96,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new TaxAdministrationSQLiteRepository().Sync(taxAdministrationService);
+                    TaxAdministrationListResponse TaxAdministrationResponse = new TaxAdministrationSQLiteRepository().TaxAdministrationsForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (TaxAdministrationResponse.Success)
+                    {
+                        if (TaxAdministrationResponse.TaxAdministrations != null && TaxAdministrationResponse.TaxAdministrations.Count > 0)
+                        {
+                            TaxAdministrationsFromDB = new ObservableCollection<TaxAdministrationViewModel>(
+                                TaxAdministrationResponse.TaxAdministrations.ToList() ?? new List<TaxAdministrationViewModel>());
 
-                    TaxAdministrationViewModel searchObject = new TaxAdministrationViewModel();
-                    searchObject.SearchBy_Name = filterString;
+                            if (TaxAdministrationsFromDB.Count == 1)
+                                CurrentTaxAdministration = TaxAdministrationsFromDB.FirstOrDefault();
+                        }
+                        else
+                        {
+                            TaxAdministrationsFromDB = new ObservableCollection<TaxAdministrationViewModel>();
 
-                    TaxAdministrationListResponse response = new TaxAdministrationSQLiteRepository().GetTaxAdministrationsByPage(MainWindow.CurrentCompanyId, searchObject, 1, Int32.MaxValue);
-                    if (response.Success)
-                        TaxAdministrationsFromDB = new ObservableCollection<TaxAdministrationViewModel>(response.TaxAdministrations ?? new List<TaxAdministrationViewModel>());
-                    else
-                        TaxAdministrationsFromDB = new ObservableCollection<TaxAdministrationViewModel>();
+                            CurrentTaxAdministration = null;
+                        }
+                    }
                 })
             );
         }
@@ -126,11 +134,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popTaxAdministration.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterTaxAdministration.Focus();
         }
@@ -157,22 +161,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             txtTaxAdministration.Focus();
         }
-
-        private void btnAddTaxAdministration_Click(object sender, RoutedEventArgs e)
-        {
-            popTaxAdministration.IsOpen = false;
-
-            TaxAdministrationViewModel TaxAdministration = new TaxAdministrationViewModel();
-            TaxAdministration.Identifier = Guid.NewGuid();
-
-            TaxAdministrationAddEdit addEditForm = new TaxAdministrationAddEdit(TaxAdministration, true, true);
-            addEditForm.TaxAdministrationCreatedUpdated += new TaxAdministrationHandler(TaxAdministrationAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Poreska_Uprava")), 95, addEditForm);
-
-            txtTaxAdministration.Focus();
-        }
-
-        void TaxAdministrationAdded() { }
 
         private void dgTaxAdministrationList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -202,10 +190,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgTaxAdministrationList.Items != null && dgTaxAdministrationList.Items.Count > 0)
                 {
-                    if (dgTaxAdministrationList.SelectedIndex == -1)
-                        dgTaxAdministrationList.SelectedIndex = 0;
                     if (dgTaxAdministrationList.SelectedIndex > 0)
                         dgTaxAdministrationList.SelectedIndex = dgTaxAdministrationList.SelectedIndex - 1;
+                    if (dgTaxAdministrationList.SelectedIndex >= 0)
                     dgTaxAdministrationList.ScrollIntoView(dgTaxAdministrationList.Items[dgTaxAdministrationList.SelectedIndex]);
                 }
             }
@@ -216,7 +203,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgTaxAdministrationList.SelectedIndex < dgTaxAdministrationList.Items.Count)
                         dgTaxAdministrationList.SelectedIndex = dgTaxAdministrationList.SelectedIndex + 1;
-                    dgTaxAdministrationList.ScrollIntoView(dgTaxAdministrationList.Items[dgTaxAdministrationList.SelectedIndex]);
+                    if (dgTaxAdministrationList.SelectedIndex >= 0)
+
+                        dgTaxAdministrationList.ScrollIntoView(dgTaxAdministrationList.Items[dgTaxAdministrationList.SelectedIndex]);
                 }
             }
 
@@ -244,14 +233,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddTaxAdministration_LostFocus(object sender, RoutedEventArgs e)
+        private void DgTaxAdministrationList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popTaxAdministration.IsOpen = false;
-
-            txtTaxAdministration.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseTaxAdministrationPopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseTaxAdministration_Click(object sender, RoutedEventArgs e)
         {
             popTaxAdministration.IsOpen = false;
 

@@ -8,6 +8,8 @@ using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.InputInvoices;
+using SirmiumERPGFC.ViewComponents.Dialogs;
+using SirmiumERPGFC.Views.Home;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -347,24 +349,40 @@ namespace SirmiumERPGFC.Views.InputInvoices
             string[] fileNames = dialog.FileNames;
 
             if (fileNames.Length > 0)
-            {
+            
                 CurrentInputInvoiceDocumentForm.Path = fileNames[0];
-                if (!String.IsNullOrEmpty(CurrentInputInvoiceDocumentForm.Path))
-                {
-                    string fileName = System.IO.Path.GetFileNameWithoutExtension(CurrentInputInvoiceDocumentForm.Path);
-                    CurrentInputInvoiceDocumentForm.Name = fileName;
-                }
-            }
+                
         }
 
         private void btnChooseDocument_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+            DocumentSelectDialog dcpDialog = new DocumentSelectDialog();
 
-            fileDIalog.Multiselect = true;
-            fileDIalog.FileOk += FileDIalog_FileOk;
-            fileDIalog.Filter = "All Files (*.*)|*.*";
-            fileDIalog.ShowDialog();
+            bool? result = dcpDialog.ShowDialog();
+
+            if (result == true)
+            {
+                CurrentInputInvoiceDocumentForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+            }
+            //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
+
+            //fileDIalog.Multiselect = true;
+            //fileDIalog.FileOk += FileDIalog_FileOk;
+            //fileDIalog.Filter = "All Files (*.*)|*.*";
+            //fileDIalog.ShowDialog();
+        }
+
+        private void btnScahner_Click(object sender, RoutedEventArgs e)
+        {
+            Scanner_Window window = new Scanner_Window();
+            bool? result = window.ShowDialog();
+
+            if (result == true)
+            {
+                var path = window?.SelectedDocument;
+
+                CurrentInputInvoiceDocumentForm.Path = path;
+            }
         }
 
         #endregion

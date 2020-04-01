@@ -31,7 +31,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
             string queryString =
                 "SELECT OutputInvoiceId, OutputInvoiceIdentifier, OutputInvoiceCode, " +
-                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
                 "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vOutputInvoices " +
@@ -68,6 +68,10 @@ namespace RepositoryCore.Implementations.Common.Invoices
                                 outputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             if (reader["BusinessPartnerName"] != DBNull.Value)
                                 outputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            if (reader["BusinessPartnerInternalCode"] != DBNull.Value)
+                                outputInvoice.BusinessPartner.InternalCode = reader["BusinessPartnerInternalCode"].ToString();
+                            if (reader["BusinessPartnerNameGer"] != DBNull.Value)
+                                outputInvoice.BusinessPartner.NameGer = reader["BusinessPartnerNameGer"].ToString();
                         }
 
                         if (reader["Supplier"] != DBNull.Value)
@@ -150,7 +154,7 @@ namespace RepositoryCore.Implementations.Common.Invoices
 
             string queryString =
                 "SELECT OutputInvoiceId, OutputInvoiceIdentifier, OutputInvoiceCode, " +
-                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, " +
+                "BusinessPartnerId, BusinessPartnerIdentifier, BusinessPartnerCode, BusinessPartnerName, BusinessPartnerInternalCode, BusinessPartnerNameGer, " +
                 "Supplier, Address, InvoiceNumber, InvoiceDate, AmountNet, PdvPercent, Pdv, AmountGross, Currency, DateOfPayment, Status, StatusDate, Description, Path, " +
                 "Active, UpdatedAt, CreatedById, CreatedByFirstName, CreatedByLastName, CompanyId, CompanyName " +
                 "FROM vOutputInvoices " +
@@ -188,6 +192,10 @@ namespace RepositoryCore.Implementations.Common.Invoices
                                 outputInvoice.BusinessPartner.Code = reader["BusinessPartnerCode"].ToString();
                             if (reader["BusinessPartnerName"] != DBNull.Value)
                                 outputInvoice.BusinessPartner.Name = reader["BusinessPartnerName"].ToString();
+                            if (reader["BusinessPartnerInternalCode"] != DBNull.Value)
+                                outputInvoice.BusinessPartner.InternalCode = reader["BusinessPartnerInternalCode"].ToString();
+                            if (reader["BusinessPartnerNameGer"] != DBNull.Value)
+                                outputInvoice.BusinessPartner.NameGer = reader["BusinessPartnerNameGer"].ToString();
                         }
 
                         if (reader["Supplier"] != DBNull.Value)

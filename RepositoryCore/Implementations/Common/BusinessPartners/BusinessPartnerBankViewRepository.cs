@@ -82,7 +82,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerBank.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerBank.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerBank.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerBank.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerBank.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -184,7 +184,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerBank.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerBank.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerBank.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerBank.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerBank.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -288,7 +288,7 @@ namespace RepositoryCore.Implementations.Common.BusinessPartners
                             businessPartnerBank.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerBank.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             businessPartnerBank.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            businessPartnerBank.Country.Code = reader["CountryCode"].ToString();
+                            businessPartnerBank.Country.Mark = reader["CountryCode"].ToString();
                             businessPartnerBank.Country.Name = reader["CountryName"].ToString();
                         }
 

@@ -79,7 +79,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employee.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employee.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employee.Country.Code = reader["CountryCode"].ToString();
+                            employee.Country.Mark = reader["CountryCode"].ToString();
                             employee.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -124,7 +124,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
                             employee.PassportCountry.Id = Int32.Parse(reader["PassportCountryId"].ToString());
                             employee.PassportCountry.Identifier = Guid.Parse(reader["PassportCountryIdentifier"].ToString());
-                            employee.PassportCountry.Code = reader["PassportCountryCode"].ToString();
+                            employee.PassportCountry.Mark = reader["PassportCountryCode"].ToString();
                             employee.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
@@ -156,7 +156,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             employee.ResidenceCountry.Id = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             employee.ResidenceCountry.Identifier = Guid.Parse(reader["ResidenceCountryIdentifier"].ToString());
-                            employee.ResidenceCountry.Code = reader["ResidenceCountryCode"].ToString();
+                            employee.ResidenceCountry.Mark = reader["ResidenceCountryCode"].ToString();
                             employee.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
@@ -281,7 +281,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employee.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employee.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employee.Country.Code = reader["CountryCode"].ToString();
+                            employee.Country.Mark = reader["CountryCode"].ToString();
                             employee.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -326,7 +326,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
                             employee.PassportCountry.Id = Int32.Parse(reader["PassportCountryId"].ToString());
                             employee.PassportCountry.Identifier = Guid.Parse(reader["PassportCountryIdentifier"].ToString());
-                            employee.PassportCountry.Code = reader["PassportCountryCode"].ToString();
+                            employee.PassportCountry.Mark = reader["PassportCountryCode"].ToString();
                             employee.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
@@ -358,7 +358,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             employee.ResidenceCountry.Id = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             employee.ResidenceCountry.Identifier = Guid.Parse(reader["ResidenceCountryIdentifier"].ToString());
-                            employee.ResidenceCountry.Code = reader["ResidenceCountryCode"].ToString();
+                            employee.ResidenceCountry.Mark = reader["ResidenceCountryCode"].ToString();
                             employee.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 
@@ -506,7 +506,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             employee.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             employee.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            employee.Country.Code = reader["CountryCode"].ToString();
+                            employee.Country.Mark = reader["CountryCode"].ToString();
                             employee.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -551,7 +551,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.PassportCountryId = Int32.Parse(reader["PassportCountryId"].ToString());
                             employee.PassportCountry.Id = Int32.Parse(reader["PassportCountryId"].ToString());
                             employee.PassportCountry.Identifier = Guid.Parse(reader["PassportCountryIdentifier"].ToString());
-                            employee.PassportCountry.Code = reader["PassportCountryCode"].ToString();
+                            employee.PassportCountry.Mark = reader["PassportCountryCode"].ToString();
                             employee.PassportCountry.Name = reader["PassportCountryName"].ToString();
                         }
 
@@ -583,7 +583,7 @@ namespace RepositoryCore.Implementations.Employees
                             employee.ResidenceCountryId = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             employee.ResidenceCountry.Id = Int32.Parse(reader["ResidenceCountryId"].ToString());
                             employee.ResidenceCountry.Identifier = Guid.Parse(reader["ResidenceCountryIdentifier"].ToString());
-                            employee.ResidenceCountry.Code = reader["ResidenceCountryCode"].ToString();
+                            employee.ResidenceCountry.Mark = reader["ResidenceCountryCode"].ToString();
                             employee.ResidenceCountry.Name = reader["ResidenceCountryName"].ToString();
                         }
 

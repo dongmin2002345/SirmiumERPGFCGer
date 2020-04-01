@@ -97,13 +97,24 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 System.Windows.Threading.DispatcherPriority.Normal,
                 new Action(() =>
                 {
-                    new StatusSQLiteRepository().Sync(statusService);
+                    StatusListResponse StatusResponse = new StatusSQLiteRepository().GetStatusesForPopup(MainWindow.CurrentCompanyId, filterString);
+                    if (StatusResponse.Success)
+                    {
+                        if (StatusResponse.Statuses != null && StatusResponse.Statuses.Count > 0)
+                        {
+                            StatusesFromDB = new ObservableCollection<StatusViewModel>(
+                                StatusResponse.Statuses.ToList() ?? new List<StatusViewModel>());
 
-                    StatusListResponse statusResp = new StatusSQLiteRepository().GetStatusesForPopup(MainWindow.CurrentCompanyId, filterString);
-                    if (statusResp.Success)
-                        StatusesFromDB = new ObservableCollection<StatusViewModel>(statusResp.Statuses ?? new List<StatusViewModel>());
-                    else
-                        StatusesFromDB = new ObservableCollection<StatusViewModel>();
+                            if (StatusesFromDB.Count == 1)
+                                CurrentStatus = StatusesFromDB.FirstOrDefault();
+                        }
+                        else
+                        {
+                            StatusesFromDB = new ObservableCollection<StatusViewModel>();
+
+                            CurrentStatus = null;
+                        }
+                    }
                 })
             );
         }
@@ -124,11 +135,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popStatus.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtFilterStatus.Focus();
         }
@@ -156,21 +163,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtStatus.Focus();
         }
 
-        private void btnAddStatus_Click(object sender, RoutedEventArgs e)
-        {
-            popStatus.IsOpen = false;
-
-            StatusViewModel status = new StatusViewModel();
-            status.Identifier = Guid.NewGuid();
-
-            Status_AddEdit statusAddEditForm = new Status_AddEdit(status, true, true);
-            statusAddEditForm.StatusCreatedUpdated += new StatusHandler(StatusAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, (string)Application.Current.FindResource("Podaci_o_statusu"), 95, statusAddEditForm);
-
-            txtStatus.Focus();
-        }
-
-        void StatusAdded() { }
 
         private void dgStatusList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -200,10 +192,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgStatusList.Items != null && dgStatusList.Items.Count > 0)
                 {
-                    if (dgStatusList.SelectedIndex == -1)
-                        dgStatusList.SelectedIndex = 0;
                     if (dgStatusList.SelectedIndex > 0)
                         dgStatusList.SelectedIndex = dgStatusList.SelectedIndex - 1;
+                    if (dgStatusList.SelectedIndex >= 0)
                     dgStatusList.ScrollIntoView(dgStatusList.Items[dgStatusList.SelectedIndex]);
                 }
             }
@@ -214,7 +205,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgStatusList.SelectedIndex < dgStatusList.Items.Count)
                         dgStatusList.SelectedIndex = dgStatusList.SelectedIndex + 1;
-                    dgStatusList.ScrollIntoView(dgStatusList.Items[dgStatusList.SelectedIndex]);
+                    if (dgStatusList.SelectedIndex >= 0)
+
+                        dgStatusList.ScrollIntoView(dgStatusList.Items[dgStatusList.SelectedIndex]);
                 }
             }
 
@@ -242,14 +235,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddStatus_LostFocus(object sender, RoutedEventArgs e)
+        private void DgStatusList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popStatus.IsOpen = false;
-
-            txtStatus.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseStatusPopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseStatus_Click(object sender, RoutedEventArgs e)
         {
             popStatus.IsOpen = false;
 

@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Common.Invoices
             strSQLCommand =
                 "CREATE VIEW vOutputInvoices AS " +
                 "SELECT outputInvoice.Id AS OutputInvoiceId, outputInvoice.Identifier AS OutputInvoiceIdentifier, outputInvoice.Code AS OutputInvoiceCode, " +
-                "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, " +
+                "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, businessPartner.InternalCode AS BusinessPartnerInternalCode, businessPartner.NameGer AS BusinessPartnerNameGer, " +
                 "outputInvoice.Supplier, outputInvoice.Address, outputInvoice.InvoiceNumber, outputInvoice.InvoiceDate, outputInvoice.AmountNet, outputInvoice.PdvPercent, outputInvoice.Pdv, outputInvoice.AmountGross, outputInvoice.Currency, outputInvoice.DateOfPayment, outputInvoice.Status, outputInvoice.StatusDate, outputInvoice.Description, outputInvoice.Path, outputInvoice.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (outputInvoice.UpdatedAt), (businessPartner.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

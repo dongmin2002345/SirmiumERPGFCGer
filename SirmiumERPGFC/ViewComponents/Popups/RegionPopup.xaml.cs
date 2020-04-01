@@ -148,11 +148,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popRegion.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtRegionFilter.Focus();
         }
@@ -179,23 +175,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
             txtRegion.Focus();
         }
-
-        private void btnAddRegion_Click(object sender, RoutedEventArgs e)
-        {
-            popRegion.IsOpen = false;
-
-            RegionViewModel region = new RegionViewModel();
-            //region.Code = new RegionSQLiteRepository().GetNewCodeValue(MainWindow.CurrentCompanyId);
-            region.Identifier = Guid.NewGuid();
-
-            RegionAddEdit regionAddEditForm = new RegionAddEdit(region, true, true);
-            regionAddEditForm.RegionCreatedUpdated += new RegionHandler(RegionAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_regionu")), 95, regionAddEditForm);
-
-            txtRegion.Focus();
-        }
-
-        void RegionAdded() { }
 
         private void dgRegionList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -225,10 +204,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgRegionList.Items != null && dgRegionList.Items.Count > 0)
                 {
-                    if (dgRegionList.SelectedIndex == -1)
-                        dgRegionList.SelectedIndex = 0;
                     if (dgRegionList.SelectedIndex > 0)
                         dgRegionList.SelectedIndex = dgRegionList.SelectedIndex - 1;
+                    if (dgRegionList.SelectedIndex >= 0)
                     dgRegionList.ScrollIntoView(dgRegionList.Items[dgRegionList.SelectedIndex]);
                 }
             }
@@ -239,7 +217,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgRegionList.SelectedIndex < dgRegionList.Items.Count)
                         dgRegionList.SelectedIndex = dgRegionList.SelectedIndex + 1;
-                    dgRegionList.ScrollIntoView(dgRegionList.Items[dgRegionList.SelectedIndex]);
+                    if (dgRegionList.SelectedIndex >= 0)
+
+                        dgRegionList.ScrollIntoView(dgRegionList.Items[dgRegionList.SelectedIndex]);
                 }
             }
 
@@ -267,14 +247,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddRegion_LostFocus(object sender, RoutedEventArgs e)
+        private void DgRegionList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popRegion.IsOpen = false;
-
-            txtRegion.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseRegionPopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseRegion_Click(object sender, RoutedEventArgs e)
         {
             popRegion.IsOpen = false;
 

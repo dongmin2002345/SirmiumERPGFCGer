@@ -103,7 +103,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@BankName", ((object)businessPartnerBank.Bank.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartnerBank.Country.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartnerBank.Country.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartnerBank.Country.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartnerBank.Country.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartnerBank.Country.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@AccountNumber", ((object)businessPartnerBank.AccountNumber) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)businessPartnerBank.ItemStatus) ?? DBNull.Value);

@@ -24,7 +24,7 @@ namespace RepositoryCore.DbViews.Common.BusinessPartners
                 "SELECT businessPartnerLocation.Id AS BusinessPartnerLocationId, businessPartnerLocation.Identifier AS BusinessPartnerLocationIdentifier, " +
                 "businessPartner.Id AS BusinessPartnerId, businessPartner.Identifier AS BusinessPartnerIdentifier, businessPartner.Code AS BusinessPartnerCode, businessPartner.Name AS BusinessPartnerName, " +
                 "businessPartnerLocation.Address, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "city.Id AS CityId, city.Identifier AS CityIdentifier, city.ZipCode AS CityZipCode, city.Name AS CityName, " +
                 "municipality.Id AS MunicipalityId, municipality.Identifier AS MunicipalityIdentifier, municipality.MunicipalityCode AS MunicipalityCode, municipality.Name AS MunicipalityName, " +
                 "region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.RegionCode AS RegionCode, region.Name AS RegionName, " +

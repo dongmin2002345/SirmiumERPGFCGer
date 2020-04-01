@@ -89,7 +89,7 @@ namespace SirmiumERPGFC.Repository.Locations
             insertCommand.Parameters.AddWithValue("@Name", ((object)city.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)city.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)city.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)city.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)city.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)city.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionId", ((object)city.Region?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)city.Region?.Identifier) ?? DBNull.Value);

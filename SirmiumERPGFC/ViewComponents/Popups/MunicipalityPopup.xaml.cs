@@ -153,11 +153,7 @@ namespace SirmiumERPGFC.ViewComponents.Popups
         {
             textFieldHasFocus = true;
 
-            PopulateFromDb();
             popMunicipality.IsOpen = true;
-
-            // Hendled is set to true, in order to stop on mouse up event and to set focus 
-            e.Handled = true;
 
             txtMunicipalityFilter.Focus();
         }
@@ -185,22 +181,6 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             txtMunicipality.Focus();
         }
 
-        private void btnAddMunicipality_Click(object sender, RoutedEventArgs e)
-        {
-            popMunicipality.IsOpen = false;
-
-            MunicipalityViewModel municipality = new MunicipalityViewModel();
-            //municipality.Code = new MunicipalitySQLiteRepository().GetNewCodeValue(MainWindow.CurrentCompanyId);
-            municipality.Identifier = Guid.NewGuid();
-
-            MunicipalityAddEdit municipalityAddEditForm = new MunicipalityAddEdit(municipality, true, true);
-            municipalityAddEditForm.MunicipalityCreatedUpdated += new MunicipalityHandler(MunicipalityAdded);
-            FlyoutHelper.OpenFlyoutPopup(this, ((string)Application.Current.FindResource("Podaci_o_opštinama")), 95, municipalityAddEditForm);
-
-            txtMunicipality.Focus();
-        }
-
-        void MunicipalityAdded() { }
 
         private void dgMunicipalityList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -230,9 +210,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
             {
                 if (dgMunicipalityList.Items != null && dgMunicipalityList.Items.Count > 0)
                 {
-                    if (dgMunicipalityList.SelectedIndex == -1)
-                        dgMunicipalityList.SelectedIndex = 0;
                     if (dgMunicipalityList.SelectedIndex > 0)
+                        dgMunicipalityList.SelectedIndex = dgMunicipalityList.SelectedIndex - 1;
+                    if (dgMunicipalityList.SelectedIndex >= 0)
                         dgMunicipalityList.SelectedIndex = dgMunicipalityList.SelectedIndex - 1;
                     dgMunicipalityList.ScrollIntoView(dgMunicipalityList.Items[dgMunicipalityList.SelectedIndex]);
                 }
@@ -244,7 +224,9 @@ namespace SirmiumERPGFC.ViewComponents.Popups
                 {
                     if (dgMunicipalityList.SelectedIndex < dgMunicipalityList.Items.Count)
                         dgMunicipalityList.SelectedIndex = dgMunicipalityList.SelectedIndex + 1;
-                    dgMunicipalityList.ScrollIntoView(dgMunicipalityList.Items[dgMunicipalityList.SelectedIndex]);
+                    if (dgMunicipalityList.SelectedIndex >= 0)
+
+                        dgMunicipalityList.ScrollIntoView(dgMunicipalityList.Items[dgMunicipalityList.SelectedIndex]);
                 }
             }
 
@@ -272,14 +254,12 @@ namespace SirmiumERPGFC.ViewComponents.Popups
 
         #endregion
 
-        private void btnAddMunicipality_LostFocus(object sender, RoutedEventArgs e)
+        private void DgMunicipalityList_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            popMunicipality.IsOpen = false;
-
-            txtMunicipality.Focus();
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void btnCloseMunicipalityPopup_Click(object sender, RoutedEventArgs e)
+        private void btnCloseMunicipality_Click(object sender, RoutedEventArgs e)
         {
             popMunicipality.IsOpen = false;
 

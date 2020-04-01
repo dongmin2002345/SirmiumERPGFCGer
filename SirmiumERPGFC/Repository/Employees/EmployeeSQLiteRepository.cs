@@ -181,7 +181,7 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@Gender", ((object)Employee.Gender) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)Employee.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)Employee.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)Employee.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)Employee.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)Employee.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionId", ((object)Employee.Region?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@RegionIdentifier", ((object)Employee.Region?.Identifier) ?? DBNull.Value);
@@ -200,7 +200,7 @@ namespace SirmiumERPGFC.Repository.Employees
 
             insertCommand.Parameters.AddWithValue("@PassportCountryId", ((object)Employee.PassportCountry?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PassportCountryIdentifier", ((object)Employee.PassportCountry?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@PassportCountryCode", ((object)Employee.PassportCountry?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@PassportCountryCode", ((object)Employee.PassportCountry?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PassportCountryName", ((object)Employee.PassportCountry?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PassportCityId", ((object)Employee.PassportCity?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@PassportCityIdentifier", ((object)Employee.PassportCity?.Identifier) ?? DBNull.Value);
@@ -212,7 +212,7 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@VisaTo", ((object)Employee.VisaTo) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ResidenceCountryId", ((object)Employee.ResidenceCountry?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ResidenceCountryIdentifier", ((object)Employee.ResidenceCountry?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@ResidenceCountryCode", ((object)Employee.ResidenceCountry?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@ResidenceCountryCode", ((object)Employee.ResidenceCountry?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ResidenceCountryName", ((object)Employee.ResidenceCountry?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ResidenceCityId", ((object)Employee.ResidenceCity?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ResidenceCityIdentifier", ((object)Employee.ResidenceCity?.Identifier) ?? DBNull.Value);

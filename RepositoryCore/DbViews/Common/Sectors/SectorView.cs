@@ -22,7 +22,7 @@ namespace RepositoryCore.DbViews.Common.Sectors
             strSQLCommand =
                 "CREATE VIEW vSectors AS " +
                 "SELECT sector.Id AS SectorId, sector.Identifier AS SectorIdentifier, sector.Code AS SectorCode, sector.SecondCode AS SectorSecondCode, sector.Name AS SectorName, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "sector.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (sector.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

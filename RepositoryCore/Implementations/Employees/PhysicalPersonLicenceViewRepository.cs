@@ -83,7 +83,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonLicence.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonLicence.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPersonLicence.Country.Code = reader["CountryCode"].ToString();
+                            physicalPersonLicence.Country.Mark = reader["CountryCode"].ToString();
                             physicalPersonLicence.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -191,7 +191,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonLicence.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonLicence.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPersonLicence.Country.Code = reader["CountryCode"].ToString();
+                            physicalPersonLicence.Country.Mark = reader["CountryCode"].ToString();
                             physicalPersonLicence.Country.Name = reader["CountryName"].ToString();
                         }
 
@@ -300,7 +300,7 @@ namespace RepositoryCore.Implementations.PhysicalPersons
                             physicalPersonLicence.CountryId = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonLicence.Country.Id = Int32.Parse(reader["CountryId"].ToString());
                             physicalPersonLicence.Country.Identifier = Guid.Parse(reader["CountryIdentifier"].ToString());
-                            physicalPersonLicence.Country.Code = reader["CountryCode"].ToString();
+                            physicalPersonLicence.Country.Mark = reader["CountryCode"].ToString();
                             physicalPersonLicence.Country.Name = reader["CountryName"].ToString();
                         }
 

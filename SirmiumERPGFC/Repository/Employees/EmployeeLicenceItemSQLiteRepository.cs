@@ -102,7 +102,7 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@ValidTo", ((object)EmployeeItem.ValidTo) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)EmployeeItem.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)EmployeeItem.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)EmployeeItem.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)EmployeeItem.Country?.Name) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ItemStatus", ((object)EmployeeItem.ItemStatus) ?? DBNull.Value);
 

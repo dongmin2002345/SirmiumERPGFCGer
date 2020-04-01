@@ -23,7 +23,7 @@ namespace RepositoryCore.DbViews.Common.Locations
                 "CREATE VIEW vMunicipalities AS " +
                 "SELECT municipality.Id AS MunicipalityId, municipality.Identifier AS MunicipalityIdentifier, municipality.Code, municipality.MunicipalityCode, municipality.Name, " +
                 "region.Id AS RegionId, region.Identifier AS RegionIdentifier, region.RegionCode AS RegionCode, region.Name AS RegionName, " +
-                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Code AS CountryCode, country.Name AS CountryName, " +
+                "country.Id AS CountryId, country.Identifier AS CountryIdentifier, country.Mark AS CountryCode, country.Name AS CountryName, " +
                 "municipality.Active AS Active, " +
                 "(SELECT MAX(v) FROM (VALUES (municipality.UpdatedAt), (region.UpdatedAt), (country.UpdatedAt)) AS value(v)) AS UpdatedAt, " +
                 "createdBy.Id AS CreatedById, createdBy.FirstName AS CreatedByFirstName, createdBy.LastName AS CreatedByLastName, " +

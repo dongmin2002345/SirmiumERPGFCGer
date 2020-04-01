@@ -217,7 +217,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
 
             insertCommand.Parameters.AddWithValue("@CountrySrbId", ((object)businessPartner.CountrySrb?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountrySrbIdentifier", ((object)businessPartner.CountrySrb?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountrySrbCode", ((object)businessPartner.CountrySrb?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountrySrbCode", ((object)businessPartner.CountrySrb?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountrySrbName", ((object)businessPartner.CountrySrb?.Name) ?? DBNull.Value);
 
             insertCommand.Parameters.AddWithValue("@CitySrbId", ((object)businessPartner.CitySrb?.Id) ?? DBNull.Value);
@@ -241,7 +241,7 @@ namespace SirmiumERPGFC.Repository.BusinessPartners
             insertCommand.Parameters.AddWithValue("@ContactPersonGer", ((object)businessPartner.ContactPersonGer) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryId", ((object)businessPartner.Country?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryIdentifier", ((object)businessPartner.Country?.Identifier) ?? DBNull.Value);
-            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartner.Country?.Code) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@CountryCode", ((object)businessPartner.Country?.Mark) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@CountryName", ((object)businessPartner.Country?.Name) ?? DBNull.Value);
 
             insertCommand.Parameters.AddWithValue("@CityId", ((object)businessPartner.City?.Id) ?? DBNull.Value);
