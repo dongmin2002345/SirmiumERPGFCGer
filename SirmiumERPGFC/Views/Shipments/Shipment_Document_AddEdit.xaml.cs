@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -363,6 +364,7 @@ namespace SirmiumERPGFC.Views.Shipments
             if (result == true)
             {
                 CurrentShipmentDocumentForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+                CurrentShipmentDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentShipmentDocumentForm?.Path ?? "");
             }
             //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
 
@@ -382,6 +384,8 @@ namespace SirmiumERPGFC.Views.Shipments
                 var path = window?.SelectedDocument;
 
                 CurrentShipmentDocumentForm.Path = path;
+                var file = new FileInfo(CurrentShipmentDocumentForm.Path);
+                CurrentShipmentDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentShipmentDocumentForm?.Path ?? "");
             }
         }
 

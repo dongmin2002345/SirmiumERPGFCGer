@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -360,6 +361,11 @@ namespace SirmiumERPGFC.Views.OutputInvoices
             if (result == true)
             {
                 CurrentOutputInvoiceDocumentForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+                var file = new FileInfo(CurrentOutputInvoiceDocumentForm.Path);
+                if (file != null)
+                {
+                    CurrentOutputInvoiceDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentOutputInvoiceDocumentForm?.Path ?? "");
+                }
             }
             //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
 
@@ -379,6 +385,7 @@ namespace SirmiumERPGFC.Views.OutputInvoices
                 var path = window?.SelectedDocument;
 
                 CurrentOutputInvoiceDocumentForm.Path = path;
+                CurrentOutputInvoiceDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentOutputInvoiceDocumentForm?.Path ?? "");
             }
         }
 

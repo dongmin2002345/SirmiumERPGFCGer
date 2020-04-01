@@ -1172,7 +1172,8 @@ namespace SirmiumERPGFC.Views.Documents
                 {
                     try
                     {
-                        Process.Start($"{MainWindow.OutlookDefinedPath}", $"/a \"{path}\" /c ipm.note ");
+                        string outlookPath = AppConfigurationHelper.Configuration?.OutlookDefinedPath ?? "";
+                        Process.Start($"{outlookPath}", $"/a \"{path}\" /c ipm.note ");
                     }
                     catch (Exception error)
                     {

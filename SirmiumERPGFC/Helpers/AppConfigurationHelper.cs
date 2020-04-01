@@ -14,6 +14,8 @@ namespace SirmiumERPGFC.Helpers
     {
         public string DefaultNetworkDirectory { get; set; } = "C:\\Users\\Public\\Documents";
         public string ApiUrl { get; set; } = "";
+
+        public string OutlookDefinedPath { get; set; } = "C:\\Program Files (x86)\\Microsoft Office\\Office14\\OUTLOOK.EXE";
     }
     public static class AppConfigurationHelper
     {
@@ -45,6 +47,9 @@ namespace SirmiumERPGFC.Helpers
             {
                 Configuration.DefaultNetworkDirectory = "C:\\Users\\Public\\Documents";
             }
+
+            if (String.IsNullOrEmpty(Configuration.OutlookDefinedPath))
+                Configuration.OutlookDefinedPath = "C:\\Program Files (x86)\\Microsoft Office\\Office14\\OUTLOOK.EXE";
         }
 
         public static void ReadConfig()

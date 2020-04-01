@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -359,6 +360,7 @@ namespace SirmiumERPGFC.Views.ConstructionSites
             if (result == true)
             {
                 CurrentConstructionSiteDocumentForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+                CurrentConstructionSiteDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentConstructionSiteDocumentForm?.Path ?? "");
             }
             //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
 
@@ -438,6 +440,8 @@ namespace SirmiumERPGFC.Views.ConstructionSites
                 var path = window?.SelectedDocument;
 
                 CurrentConstructionSiteDocumentForm.Path = path;
+                var file = new FileInfo(CurrentConstructionSiteDocumentForm.Path);
+                CurrentConstructionSiteDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentConstructionSiteDocumentForm?.Path ?? "");
             }
         }
 

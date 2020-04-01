@@ -242,19 +242,12 @@ namespace SirmiumERPGFC
         public bool UserIsExpedition = false;
         public bool AppIsClosing = false;
 
-
-        public static string OutlookDefinedPath = "";
-
         private HubConnection hubConnection;
 
         void LoadConfiguration()
         {
             try
             {
-                var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
-                OutlookDefinedPath = appConfig.AppSettings.Settings["OutlookDefinedPath"].Value;
-
-
                 //ExeConfigurationFileMap map = new ExeConfigurationFileMap();
                 //map.ExeConfigFilename = Assembly.GetEntryAssembly().Location + ".config";
                 //Configuration libConfig = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);

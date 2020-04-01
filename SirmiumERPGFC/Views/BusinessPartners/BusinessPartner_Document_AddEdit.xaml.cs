@@ -424,6 +424,7 @@ namespace SirmiumERPGFC.Views.BusinessPartners
             if (result == true)
             {
                 CurrentBusinessPartnerDocumentForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+                CurrentBusinessPartnerDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentBusinessPartnerDocumentForm?.Path ?? "");
             }
             //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
 
@@ -443,6 +444,8 @@ namespace SirmiumERPGFC.Views.BusinessPartners
                 var path = window?.SelectedDocument;
 
                 CurrentBusinessPartnerDocumentForm.Path = path;
+                var file = new FileInfo(CurrentBusinessPartnerDocumentForm.Path);
+                CurrentBusinessPartnerDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentBusinessPartnerDocumentForm?.Path ?? "");
             }
         }
 

@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -355,6 +356,7 @@ namespace SirmiumERPGFC.Views.Employees
             if (result == true)
             {
                 CurrentEmployeeDocumentForm.Path = dcpDialog?.SelectedDocument?.FullPath;
+                CurrentEmployeeDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentEmployeeDocumentForm?.Path ?? "");
             }
             //System.Windows.Forms.OpenFileDialog fileDIalog = new System.Windows.Forms.OpenFileDialog();
 
@@ -374,6 +376,8 @@ namespace SirmiumERPGFC.Views.Employees
                 var path = window?.SelectedDocument;
 
                 CurrentEmployeeDocumentForm.Path = path;
+                var file = new FileInfo(CurrentEmployeeDocumentForm.Path);
+                CurrentEmployeeDocumentForm.Name = System.IO.Path.GetFileNameWithoutExtension(CurrentEmployeeDocumentForm?.Path ?? "");
             }
         }
 
