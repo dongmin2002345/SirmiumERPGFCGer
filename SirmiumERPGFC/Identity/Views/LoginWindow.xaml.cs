@@ -6,6 +6,7 @@ using ServiceInterfaces.Messages.Common.Companies;
 using ServiceInterfaces.Messages.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Companies;
 using ServiceInterfaces.ViewModels.Common.Identity;
+using SirmiumERPGFC.Helpers;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Common;
 using SirmiumERPGFC.Repository.Companies;
@@ -239,6 +240,29 @@ namespace SirmiumERPGFC.Identity.Views
                         dict.Source = new Uri("..\\..\\Resources\\Languages\\StringResources-ENG.xaml", UriKind.Relative);
                         App.Current.Resources.MergedDictionaries.Add(dict);
                     }
+
+                    Thread td = new Thread(() => {
+                        try
+                        {
+                            AzureNetworkDriveMapper azureNetworkDriveMapper = new AzureNetworkDriveMapper(
+                            DriveLetter: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveLetter,
+                            DriveNetworkPath: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveNetworkPath,
+                            SubDir: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.SubDir,
+                            Username: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Username,
+                            Password: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Password,
+                            IsPersistent: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Persistent ?? true);
+                            if (!String.IsNullOrEmpty(AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveNetworkPath))
+                            {
+                                if (!azureNetworkDriveMapper.IsDriveAndExists())
+                                    azureNetworkDriveMapper.MapDrive();
+                            }
+                        } catch(Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    });
+                    td.IsBackground = true;
+                    td.Start();
 
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();

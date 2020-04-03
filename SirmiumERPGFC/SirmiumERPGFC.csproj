@@ -280,6 +280,7 @@
     </Compile>
     <Compile Include="Helpers\AppConfigurationHelper.cs" />
     <Compile Include="Helpers\CopyFileHelper.cs" />
+    <Compile Include="Helpers\NetworkDriveMappers.cs" />
     <Compile Include="Helpers\ZipFileHelper.cs" />
     <Compile Include="Identity\AnonymousIdentity.cs" />
     <Compile Include="Identity\CustomIdentity.cs" />

@@ -234,6 +234,8 @@ namespace SirmiumERPGFC.Views.Documents
         }
         #endregion
 
+
+
         #region FilesToUpload
         private ObservableCollection<DirectoryTreeItemViewModel> _FilesToUpload = new ObservableCollection<DirectoryTreeItemViewModel>();
 
@@ -312,7 +314,7 @@ namespace SirmiumERPGFC.Views.Documents
                 folder.Name = "Dokumenti";
                 folder.IsDirectory = true;
                 folder.IsDirExpanded = true;
-                folder.FullPath = AppConfigurationHelper.GetConfiguration().DefaultNetworkDirectory;
+                folder.FullPath = AppConfigurationHelper.GetConfiguration()?.AzureNetworkDrive?.DriveLetter + "\\";
 
                 GetDirectoryTree(folder);
 

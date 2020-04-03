@@ -200,7 +200,7 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
                 folder.Name = "Dokumenti";
                 folder.IsDirectory = true;
                 folder.IsDirExpanded = true;
-                folder.FullPath = AppConfigurationHelper.GetConfiguration().DefaultNetworkDirectory;
+                folder.FullPath = AppConfigurationHelper.GetConfiguration()?.AzureNetworkDrive?.DriveLetter + "\\";
 
                 GetDirectoryTree(folder);
 
