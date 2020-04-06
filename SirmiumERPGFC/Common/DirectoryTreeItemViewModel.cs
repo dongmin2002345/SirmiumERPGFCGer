@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.Azure.Storage.File;
 
 namespace SirmiumERPGFC.Common
 {
@@ -184,6 +185,42 @@ namespace SirmiumERPGFC.Common
                 {
                     _Items = value;
                     NotifyPropertyChanged("Items");
+                }
+            }
+        }
+        #endregion
+
+
+
+        #region File
+        private CloudFile _File;
+
+        public CloudFile File
+        {
+            get { return _File; }
+            set
+            {
+                if (_File != value)
+                {
+                    _File = value;
+                    NotifyPropertyChanged("File");
+                }
+            }
+        }
+        #endregion
+
+        #region Directory
+        private CloudFileDirectory _Directory;
+
+        public CloudFileDirectory Directory
+        {
+            get { return _Directory; }
+            set
+            {
+                if (_Directory != value)
+                {
+                    _Directory = value;
+                    NotifyPropertyChanged("Directory");
                 }
             }
         }

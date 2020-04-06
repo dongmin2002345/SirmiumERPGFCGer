@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using Microsoft.Azure.Storage.File;
 using Microsoft.Win32;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Helpers;
@@ -175,13 +176,14 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
         }
         #endregion
 
-
+        AzureDataClient azureClient;
         public DocumentPathDialog()
         {
             InitializeComponent();
 
             this.DataContext = this;
 
+            azureClient = new AzureDataClient();
 
             Thread td = new Thread(() => DisplayFolderTree());
             td.IsBackground = true;
@@ -201,8 +203,11 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
                 folder.IsDirectory = true;
                 folder.IsDirExpanded = true;
                 folder.FullPath = AppConfigurationHelper.GetConfiguration()?.AzureNetworkDrive?.DriveLetter + "\\";
+                folder.Directory = azureClient.rootDirectory;
+
 
                 GetDirectoryTree(folder);
+
 
 
                 DocumentTreeItems = new ObservableCollection<DirectoryTreeItemViewModel>()
@@ -219,30 +224,34 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
                 LoadingData = false;
             }
         }
-        
+
         void GetDirectoryTree(DirectoryTreeItemViewModel parent)
         {
-            DirectoryInfo[] directories;
+            List<CloudFileDirectory> directories;
             try
             {
-                var info = new DirectoryInfo(parent.FullPath);
-                directories = info.GetDirectories();
-                parent.IsDirExpanded = true;
+                directories = azureClient.GetSubDirectories(parent.Directory);
+
+
+                //var info = new DirectoryInfo(parent.FullPath);
+                //directories = info.GetDirectories();
+                //parent.IsDirExpanded = true;
             }
             catch (Exception ex)
             {
-                directories = new DirectoryInfo[0];
+                directories = new List<CloudFileDirectory>();
             }
-            foreach (DirectoryInfo item in directories)
+            foreach (CloudFileDirectory item in directories)
             {
-                if (String.IsNullOrEmpty(item.FullName))
+                if (String.IsNullOrEmpty(item.Name))
                     continue;
 
                 DirectoryTreeItemViewModel directory = new DirectoryTreeItemViewModel();
-                directory.FullPath = item.FullName;
+                directory.FullPath = item.Uri.LocalPath;
                 directory.IsDirectory = true;
                 directory.Name = item.Name;
                 directory.ParentNode = parent;
+                directory.Directory = item;
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     if (!parent.Items.Any(x => x.FullPath == directory.FullPath))

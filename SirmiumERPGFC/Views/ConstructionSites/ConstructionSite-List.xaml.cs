@@ -4,6 +4,7 @@ using ServiceInterfaces.Abstractions.ConstructionSites;
 using ServiceInterfaces.Messages.ConstructionSites;
 using ServiceInterfaces.ViewModels.ConstructionSites;
 using SirmiumERPGFC.Common;
+using SirmiumERPGFC.Helpers;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.RdlcReports.ConstructionSites;
 using SirmiumERPGFC.Reports.ConstructionSites;
@@ -13,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -645,11 +647,24 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentConstructionSiteDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentConstructionSiteDocument.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => {});
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {
@@ -661,11 +676,24 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentConstructionSiteNoteForm.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentConstructionSiteNoteForm.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {
@@ -677,11 +705,24 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentConstructionSiteDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentConstructionSiteDocument.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {
@@ -693,11 +734,24 @@ namespace SirmiumERPGFC.Views.ConstructionSites
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentConstructionSite.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentConstructionSite.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {

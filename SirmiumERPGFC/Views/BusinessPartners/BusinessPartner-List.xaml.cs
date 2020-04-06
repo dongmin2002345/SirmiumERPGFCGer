@@ -4,6 +4,7 @@ using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Messages.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using SirmiumERPGFC.Common;
+using SirmiumERPGFC.Helpers;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.RdlcReports.BusinessPartners;
 using SirmiumERPGFC.Reports.BusinessPartners;
@@ -1193,11 +1194,24 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentBusinessPartnerDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentBusinessPartnerDocument.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {
@@ -1209,11 +1223,24 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentPhoneDG.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentPhoneDG.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {
@@ -1225,11 +1252,24 @@ namespace SirmiumERPGFC.Views.BusinessPartners
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentBusinessPartner.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentBusinessPartner.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {

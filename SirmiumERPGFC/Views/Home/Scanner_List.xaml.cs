@@ -1,4 +1,5 @@
-﻿using SirmiumERPGFC.Scanners;
+﻿using SirmiumERPGFC.Helpers;
+using SirmiumERPGFC.Scanners;
 using SirmiumERPGFC.ViewComponents.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -300,19 +301,32 @@ namespace SirmiumERPGFC.Views.Home
             {
                 try
                 {
+                    var tempPath = System.IO.Path.GetTempPath();
+
                     var generator = new PDFGenerator(Images
                             .Where(x => x.IsSelected)
                             .OrderBy(x => x.CreatedAt)
                             .Select(x => x.ImagePath)
-                            .ToList(), 
-                            SelectedPath, DocumentName, 
+                            .ToList(),
+                            tempPath, DocumentName, 
                         MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
 
                     CurrentDocumentFullPath = generator.Generate();
 
-                    Dispatcher.BeginInvoke((Action)(() => {
-                        DocumentSaved?.Invoke(CurrentDocumentFullPath);
-                    }));
+                    if(IsOnHomePage)
+                    {
+                        File.Copy(CurrentDocumentFullPath, $"{SelectedPath}\\{DocumentName}.pdf");
+                        Dispatcher.BeginInvoke((Action)(() => {
+                            DocumentSaved?.Invoke(CurrentDocumentFullPath);
+                        }));
+                    } else
+                    {
+                        var azureClient = new AzureDataClient();
+                        var file = azureClient.GetFile($"{SelectedPath}/{DocumentName}.pdf");
+                        if(!file.Exists())
+                            file.UploadFromFile(CurrentDocumentFullPath);
+                    }
+
 
                     MainWindow.SuccessMessage = (string)Application.Current.FindResource("DokumentJeUspesnoSacuvanUzvicnik");
                 } catch(Exception ex)

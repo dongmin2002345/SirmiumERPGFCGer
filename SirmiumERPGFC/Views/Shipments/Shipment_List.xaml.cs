@@ -3,12 +3,14 @@ using ServiceInterfaces.Abstractions.Common.Shipments;
 using ServiceInterfaces.Messages.Common.Shipments;
 using ServiceInterfaces.ViewModels.Common.Shipments;
 using SirmiumERPGFC.Common;
+using SirmiumERPGFC.Helpers;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.Shipments;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -544,11 +546,24 @@ namespace SirmiumERPGFC.Views.Shipments
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentShipmentDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentShipmentDocument.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {

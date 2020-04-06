@@ -25,6 +25,7 @@ using System.Reflection;
 using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Repository.ConstructionSites;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
+using SirmiumERPGFC.Helpers;
 
 namespace SirmiumERPGFC.Views.Employees
 {
@@ -1345,11 +1346,24 @@ namespace SirmiumERPGFC.Views.Employees
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentEmployeeDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentEmployeeDocument.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {

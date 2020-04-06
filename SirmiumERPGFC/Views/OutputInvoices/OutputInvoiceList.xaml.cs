@@ -5,6 +5,7 @@ using ServiceInterfaces.Abstractions.Common.OutputInvoices;
 using ServiceInterfaces.Messages.Common.OutputInvoices;
 using ServiceInterfaces.ViewModels.Common.OutputInvoices;
 using SirmiumERPGFC.Common;
+using SirmiumERPGFC.Helpers;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.RdlcReports.OutputInvoices;
 using SirmiumERPGFC.Reports.OutputInvoices;
@@ -673,11 +674,24 @@ namespace SirmiumERPGFC.Views.OutputInvoices
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentOutputInvoiceDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentOutputInvoiceDocument.Path);
+
+                if (file.Exists())
+                {
+                    string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                    if (String.IsNullOrEmpty(copiedFile))
+                        return;
+
+
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+
+                    process.Start();
+                }
+                else throw new FileNotFoundException();
             }
             catch (Exception error)
             {
