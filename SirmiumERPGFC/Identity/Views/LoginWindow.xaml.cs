@@ -241,28 +241,28 @@ namespace SirmiumERPGFC.Identity.Views
                         App.Current.Resources.MergedDictionaries.Add(dict);
                     }
 
-                    Thread td = new Thread(() => {
-                        try
-                        {
-                            AzureNetworkDriveMapper azureNetworkDriveMapper = new AzureNetworkDriveMapper(
-                            DriveLetter: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveLetter,
-                            DriveNetworkPath: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveNetworkPath,
-                            SubDir: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.SubDir,
-                            Username: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Username,
-                            Password: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Password,
-                            IsPersistent: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Persistent ?? true);
-                            if (!String.IsNullOrEmpty(AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveNetworkPath))
-                            {
-                                if (!azureNetworkDriveMapper.IsDriveAndExists())
-                                    azureNetworkDriveMapper.MapDrive();
-                            }
-                        } catch(Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    });
-                    td.IsBackground = true;
-                    td.Start();
+                    //Thread td = new Thread(() => {
+                    //    try
+                    //    {
+                    //        AzureNetworkDriveMapper azureNetworkDriveMapper = new AzureNetworkDriveMapper(
+                    //        DriveLetter: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveLetter,
+                    //        DriveNetworkPath: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveNetworkPath,
+                    //        SubDir: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.SubDir,
+                    //        Username: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Username,
+                    //        Password: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Password,
+                    //        IsPersistent: AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Persistent ?? true);
+                    //        if (!String.IsNullOrEmpty(AppConfigurationHelper.Configuration?.AzureNetworkDrive?.DriveNetworkPath))
+                    //        {
+                    //            if (!azureNetworkDriveMapper.IsDriveAndExists())
+                    //                azureNetworkDriveMapper.MapDrive();
+                    //        }
+                    //    } catch(Exception ex)
+                    //    {
+                    //        MessageBox.Show(ex.Message);
+                    //    }
+                    //});
+                    //td.IsBackground = true;
+                    //td.Start();
 
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
