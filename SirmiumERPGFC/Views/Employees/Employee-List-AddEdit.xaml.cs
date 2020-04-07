@@ -163,7 +163,6 @@ namespace SirmiumERPGFC.Views.Employees
         }
         #endregion
 
-
         #region ItemsEnabled
         private bool _ItemsEnabled;
 
@@ -189,7 +188,8 @@ namespace SirmiumERPGFC.Views.Employees
                 return new ObservableCollection<String>(new List<string>() {
                            GenderConverter.Choose,
                            GenderConverter.ChooseM,
-                           GenderConverter.ChooseF});
+                           GenderConverter.ChooseF,
+                           GenderConverter.ChooseD});
             }
         }
         #endregion
@@ -220,6 +220,8 @@ namespace SirmiumERPGFC.Views.Employees
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             #region Validation
+
+            var test = CurrentEmployee;
 
             if (CurrentEmployee?.EmployeeCode == null)
             {

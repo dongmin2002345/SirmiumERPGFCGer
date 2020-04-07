@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryCore.Context;
 
 namespace RepositoryCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200407121555_IzmenaEmployee_Nemanja1")]
+    partial class IzmenaEmployee_Nemanja1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2200,8 +2202,6 @@ namespace RepositoryCore.Migrations
 
                     b.Property<Guid>("Identifier");
 
-                    b.Property<bool>("IsVisaApplied");
-
                     b.Property<int?>("MunicipalityId");
 
                     b.Property<string>("Name");
@@ -2225,6 +2225,8 @@ namespace RepositoryCore.Migrations
                     b.Property<string>("SurName");
 
                     b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<bool>("VisaApplied");
 
                     b.Property<DateTime?>("VisaDate");
 

@@ -52,6 +52,7 @@ namespace DataMapper.Mappers.Employees
                 PassportMup = employee.PassportMup,
                 VisaFrom = employee.VisaFrom,
                 VisaTo = employee.VisaTo,
+                IsVisaApplied = employee.IsVisaApplied,
 
                 ResidenceCountry = employee.ResidenceCountry?.ConvertToCountryViewModelLite(),
                 ResidenceCity = employee.ResidenceCity?.ConvertToCityViewModelLite(),
@@ -100,6 +101,7 @@ namespace DataMapper.Mappers.Employees
                 PassportMup = employee.PassportMup,
                 VisaFrom = employee.VisaFrom,
                 VisaTo = employee.VisaTo,
+                IsVisaApplied = employee.IsVisaApplied,
                 WorkPermitFrom = employee.WorkPermitFrom,
                 WorkPermitTo = employee.WorkPermitTo,
 
@@ -142,6 +144,7 @@ namespace DataMapper.Mappers.Employees
                 PassportMup = employeeViewModel.PassportMup,
                 VisaFrom = employeeViewModel.VisaFrom,
                 VisaTo = employeeViewModel.VisaTo,
+                IsVisaApplied = employeeViewModel.IsVisaApplied,
 
                 ResidenceCountryId = employeeViewModel?.ResidenceCountry?.Id ?? null,
                 ResidenceCityId = employeeViewModel?.ResidenceCity?.Id ?? null,

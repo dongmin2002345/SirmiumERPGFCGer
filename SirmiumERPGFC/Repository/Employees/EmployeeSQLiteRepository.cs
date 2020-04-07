@@ -56,7 +56,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "PassportMup NVARCHAR(2048) NULL, " +
             "VisaFrom DATETIME NULL, " +
             "VisaTo DATETIME NULL, " +
-
+            "IsVisaApplied BOOL NULL, " +
             "ResidenceCountryId INTEGER NULL, " +
             "ResidenceCountryIdentifier GUID, " +
             "ResidenceCountryCode NVARCHAR(2048) NULL, " +
@@ -88,7 +88,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
             "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
-            "Passport, PassportMup, VisaFrom, VisaTo, " +
+            "Passport, PassportMup, VisaFrom, VisaTo, IsVisaApplied, " +
             "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
             "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, ResidenceAddress, " +
             "EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -100,7 +100,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "DateOfBirth, Gender, CountryId, CountryIdentifier, CountryCode, CountryName, RegionId, RegionIdentifier, RegionCode, RegionName, " +
             "MunicipalityId, MunicipalityIdentifier, MunicipalityCode, MunicipalityName, CityId, CityIdentifier, CityCode, CityName, Address, " +
             "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, PassportCityId, PassportCityIdentifier, PassportCityCode, PassportCityName, " +
-            "Passport, PassportMup, VisaFrom, VisaTo, " +
+            "Passport, PassportMup, VisaFrom, VisaTo, IsVisaApplied, " +
             "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
             "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityCode, ResidenceCityName, ResidenceAddress, " +
             "EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -111,7 +111,7 @@ namespace SirmiumERPGFC.Repository.Employees
             "@DateOfBirth, @Gender, @CountryId, @CountryIdentifier, @CountryCode, @CountryName, @RegionId, @RegionIdentifier, @RegionCode, @RegionName, " +
             "@MunicipalityId, @MunicipalityIdentifier, @MunicipalityCode, @MunicipalityName, @CityId, @CityIdentifier, @CityCode, @CityName, @Address, " +
             "@PassportCountryId, @PassportCountryIdentifier, @PassportCountryCode, @PassportCountryName, @PassportCityId, @PassportCityIdentifier, @PassportCityCode, @PassportCityName, " +
-            "@Passport, @PassportMup, @VisaFrom, @VisaTo, " +
+            "@Passport, @PassportMup, @VisaFrom, @VisaTo, @IsVisaApplied, " +
             "@ResidenceCountryId, @ResidenceCountryIdentifier, @ResidenceCountryCode, @ResidenceCountryName, " +
             "@ResidenceCityId, @ResidenceCityIdentifier, @ResidenceCityCode, @ResidenceCityName, @ResidenceAddress, " +
             "@EmbassyDate, @VisaDate, @VisaValidFrom, @VisaValidTo, @WorkPermitFrom, @WorkPermitTo, " +
@@ -146,6 +146,7 @@ namespace SirmiumERPGFC.Repository.Employees
             dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
             dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
             dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
+            dbEntry.IsVisaApplied = SQLiteHelper.GetBoolean(query, ref counter);
             dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
             dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
             dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
@@ -210,6 +211,8 @@ namespace SirmiumERPGFC.Repository.Employees
             insertCommand.Parameters.AddWithValue("@PassportMup", ((object)Employee.PassportMup) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VisaFrom", ((object)Employee.VisaFrom) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@VisaTo", ((object)Employee.VisaTo) ?? DBNull.Value);
+            insertCommand.Parameters.AddWithValue("@IsVisaApplied", ((object)Employee.IsVisaApplied) ?? DBNull.Value);
+
             insertCommand.Parameters.AddWithValue("@ResidenceCountryId", ((object)Employee.ResidenceCountry?.Id) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ResidenceCountryIdentifier", ((object)Employee.ResidenceCountry?.Identifier) ?? DBNull.Value);
             insertCommand.Parameters.AddWithValue("@ResidenceCountryCode", ((object)Employee.ResidenceCountry?.Mark) ?? DBNull.Value);

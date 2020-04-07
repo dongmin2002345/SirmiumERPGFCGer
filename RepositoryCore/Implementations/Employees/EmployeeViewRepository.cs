@@ -41,7 +41,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Address, " +
                 "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                 "PassportCityId, PassportCityIdentifier, PassportCityZipCode, PassportCityName, " +
-                "Passport, PassportMup, VisaFrom, VisaTo, " +
+                "Passport, PassportMup, VisaFrom, VisaTo, IsVisaApplied, " +
                 "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                 "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityZipCode, ResidenceCityName, " +
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -148,8 +148,9 @@ namespace RepositoryCore.Implementations.Employees
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
                         if (reader["VisaTo"] != DBNull.Value)
                             employee.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
+                        if (reader["IsVisaApplied"] != DBNull.Value)
+                            employee.IsVisaApplied = bool.Parse(reader["IsVisaApplied"].ToString());
 
-                        
                         if (reader["ResidenceCountryId"] != DBNull.Value) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                         {
                             employee.ResidenceCountry = new Country();
@@ -245,7 +246,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Address, " +
                 "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                 "PassportCityId, PassportCityIdentifier, PassportCityZipCode, PassportCityName, " +
-                "Passport, PassportMup, VisaFrom, VisaTo, " +
+                "Passport, PassportMup, VisaFrom, VisaTo, IsVisaApplied, " +
                 "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                 "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityZipCode, ResidenceCityName, " +
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -350,7 +351,8 @@ namespace RepositoryCore.Implementations.Employees
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
                         if (reader["VisaTo"] != DBNull.Value)
                             employee.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
-
+                        if (reader["IsVisaApplied"] != DBNull.Value)
+                            employee.IsVisaApplied = bool.Parse(reader["IsVisaApplied"].ToString());
 
                         if (reader["ResidenceCountryId"] != DBNull.Value) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                         {
@@ -458,7 +460,7 @@ namespace RepositoryCore.Implementations.Employees
                 "Address, " +
                 "PassportCountryId, PassportCountryIdentifier, PassportCountryCode, PassportCountryName, " +
                 "PassportCityId, PassportCityIdentifier, PassportCityZipCode, PassportCityName, " +
-                "Passport, PassportMup, VisaFrom, VisaTo, " +
+                "Passport, PassportMup, VisaFrom, VisaTo, IsVisaApplied, " +
                 "ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
                 "ResidenceCityId, ResidenceCityIdentifier, ResidenceCityZipCode, ResidenceCityName, " +
                 "ResidenceAddress, EmbassyDate, VisaDate, VisaValidFrom, VisaValidTo, WorkPermitFrom, WorkPermitTo, " +
@@ -575,6 +577,8 @@ namespace RepositoryCore.Implementations.Employees
                             employee.VisaFrom = DateTime.Parse(reader["VisaFrom"].ToString());
                         if (reader["VisaTo"] != DBNull.Value)
                             employee.VisaTo = DateTime.Parse(reader["VisaTo"].ToString());
+                        if (reader["IsVisaApplied"] != DBNull.Value)
+                            employee.IsVisaApplied = bool.Parse(reader["IsVisaApplied"].ToString());
 
 
                         if (reader["ResidenceCountryId"] != DBNull.Value) //"ResidenceCountryId, ResidenceCountryIdentifier, ResidenceCountryCode, ResidenceCountryName, " +
@@ -741,6 +745,7 @@ namespace RepositoryCore.Implementations.Employees
                     dbEntry.PassportMup = employee.PassportMup;
                     dbEntry.VisaFrom = employee.VisaFrom;
                     dbEntry.VisaTo = employee.VisaTo;
+                    dbEntry.IsVisaApplied = employee.IsVisaApplied;
 
                     dbEntry.PassportCountryId = employee.PassportCountryId;
                     dbEntry.PassportCityId = employee.PassportCityId;

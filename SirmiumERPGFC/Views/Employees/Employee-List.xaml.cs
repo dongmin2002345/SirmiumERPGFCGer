@@ -1658,6 +1658,7 @@ namespace SirmiumERPGFC.Views.Employees
                         pdfFormFields.SetField("1 Name", CurrentEmployee.Name);
                         pdfFormFields.SetField("3 Vorname", CurrentEmployee.SurName);
                         pdfFormFields.SetField("5 Geburtsdatum", CurrentEmployee.DateOfBirth?.ToString("dd.MM.yyyy") ?? "");
+                        pdfFormFields.SetField("Text7.", CurrentEmployee.Gender.ToString() ?? "");
 
                         // Adresa firme u Nemackoj
                         var employeeBusinessPartnerS = new EmployeeByBusinessPartnerSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByBusinessPartners?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.BusinessPartner;
@@ -1670,10 +1671,12 @@ namespace SirmiumERPGFC.Views.Employees
                         pdfFormFields.SetField("10 ausgestellt am", CurrentEmployee.VisaFrom?.ToString("dd.MM.yyyy") ?? "");
                         pdfFormFields.SetField("11 von BehördeStaat", CurrentEmployee.PassportMup);
 
+                        pdfFormFields.SetField("Text7.", CurrentEmployee.IsVisaApplied.ToString() ?? "");
+
                         pdfFormFields.SetField("13 von bis", CurrentEmployee.WorkPermitFrom?.ToString("dd.MM.yyyy") ?? "");
                         pdfFormFields.SetField("Text1", CurrentEmployee.WorkPermitTo?.ToString("dd.MM.yyyy") ?? "");
 
-                        pdfFormFields.SetField("14 als Art der auszuübenden Beschäftigung", employeeProfession.Profession?.Name ?? "");
+                        pdfFormFields.SetField("14 als Art der auszuübenden Beschäftigung", employeeProfession?.Profession?.Name ?? "");
 
                         // Gradiliste
                         var employeeConstructionSite = new EmployeeByConstructionSiteSQLiteRepository().GetByEmployee(MainWindow.CurrentCompanyId, CurrentEmployee.Identifier).EmployeeByConstructionSites?.OrderByDescending(x => x.CreatedAt)?.FirstOrDefault()?.ConstructionSite;
