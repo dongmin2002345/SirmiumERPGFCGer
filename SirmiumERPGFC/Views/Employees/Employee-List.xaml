@@ -290,7 +290,7 @@
                               GridLinesVisibility="All"
                               HorizontalGridLinesBrush="Gray"
                               VerticalAlignment="Stretch"
-                              HorizontalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Visible"
                               VerticalScrollBarVisibility="Auto"
 		                      RowHeaderWidth="25"
 		                      HeadersVisibility="All"
@@ -302,7 +302,6 @@
                         <DataGridTextColumn SortMemberPath="EmployeeCode" Header="{DynamicResource Šifra}" Binding="{Binding EmployeeCode}"  Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SurName" Header="{DynamicResource Prezime}" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
-                        <DataGridTextColumn SortMemberPath="IsVisaApplied" Header="{DynamicResource Da_li_je_vizirano_Dvotacka}" Binding="{Binding IsVisaApplied, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True">
                            
                         <DataGridTextColumn.Header>
