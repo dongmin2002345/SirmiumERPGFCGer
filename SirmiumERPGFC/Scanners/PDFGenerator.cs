@@ -25,7 +25,7 @@ namespace SirmiumERPGFC.Scanners
 
         public string Generate()
         {
-            string filename = $"{FilePath}\\{Title}.pdf";
+            string filename = $"{FilePath}{Title}.pdf";
             var s_document = new PdfDocument();
             s_document.Info.Title = Title;
             s_document.Info.Author = Author;
@@ -41,7 +41,7 @@ namespace SirmiumERPGFC.Scanners
 
             if (File.Exists(filename))
             {
-                filename = $"{FilePath}\\{Title}_{Guid.NewGuid()}.pdf";
+                filename = $"{FilePath}{Title}_{Guid.NewGuid()}.pdf";
             }
             s_document.Save(filename);
 

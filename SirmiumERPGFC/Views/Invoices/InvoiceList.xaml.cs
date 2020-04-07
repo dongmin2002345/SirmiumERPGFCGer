@@ -725,7 +725,7 @@ namespace SirmiumERPGFC.Views.Invoices
                                     Identifier = Guid.NewGuid(),
                                     IsActive = true,
                                     IsSynced = false,
-                                    ItemStatus = ItemStatus.Added,
+                                    ItemStatus = ItemStatus.Submited,
                                     Name = item.Name,
                                     PDV = item.PDV,
                                     PDVPercent = item.PDVPercent,

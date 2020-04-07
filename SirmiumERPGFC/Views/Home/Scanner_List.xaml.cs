@@ -313,7 +313,11 @@ namespace SirmiumERPGFC.Views.Home
 
                     CurrentDocumentFullPath = generator.Generate();
 
-                    if(IsOnHomePage)
+                    bool homePage = true;
+                    Dispatcher.Invoke((Action)(() => {
+                        homePage = IsOnHomePage;
+                    }));
+                    if(homePage)
                     {
                         File.Copy(CurrentDocumentFullPath, $"{SelectedPath}\\{DocumentName}.pdf");
                         Dispatcher.BeginInvoke((Action)(() => {
@@ -323,8 +327,10 @@ namespace SirmiumERPGFC.Views.Home
                     {
                         var azureClient = new AzureDataClient();
                         var file = azureClient.GetFile($"{SelectedPath}/{DocumentName}.pdf");
-                        if(!file.Exists())
-                            file.UploadFromFile(CurrentDocumentFullPath);
+                        file.UploadFromFile(CurrentDocumentFullPath);
+                        Dispatcher.BeginInvoke((Action)(() => {
+                            DocumentSaved?.Invoke(file.Uri.LocalPath);
+                        }));
                     }
 
 
