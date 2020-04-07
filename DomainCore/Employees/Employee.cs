@@ -43,7 +43,7 @@ namespace DomainCore.Employees
 
         public DateTime? VisaFrom { get; set; }
         public DateTime? VisaTo { get; set; }
-
+        public bool IsVisaApplied { get; set; }
         public int? ResidenceCountryId { get; set; }
         public Country ResidenceCountry { get; set; }
 

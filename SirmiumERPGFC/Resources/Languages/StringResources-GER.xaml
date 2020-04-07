@@ -830,5 +830,5 @@
     <system:String x:Key="Obrisi">Löschen</system:String>
     <system:String x:Key="Osnovni_podaci_o_partner">Grundlegende Informationen zu einem Partner</system:String>
     <system:String x:Key="Pretraga_po_šifriFirmeDvotacka">Buchungskreis:</system:String>
-
+    <system:String x:Key="Da_li_je_vizirano_Dvotacka">Wird ein Visum beantragt:</system:String>
 </ResourceDictionary>

@@ -153,7 +153,12 @@
                         <DatePicker Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" 
                                     Text="{Binding Path=CurrentEmployee.VisaTo,  Converter={StaticResource cbxDatetimeToStringConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                    </Grid>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource Da_li_je_vizirano_Dvotacka}" VerticalAlignment="Center" Margin="5 2 5 2"/>
+                    <CheckBox Grid.Row="3" Grid.Column="1"  Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                              IsChecked="{Binding Path=CurrentEmployee.IsVisaApplied, UpdateSourceTrigger=PropertyChanged, Mode =TwoWay}"/>
+                    
+
+                </Grid>
                 </GroupBox>
 
                 <GroupBox Header="{DynamicResource Prebivalište}" Margin="2 1 2 1" Grid.Row="2">

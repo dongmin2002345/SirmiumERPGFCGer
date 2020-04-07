@@ -10,18 +10,19 @@ namespace WpfAppCommonCode.Converters
 {
     public class GenderConverter : IValueConverter
     {
-        public static string Choose = "Odaberiv (WÄHLEN)";
+        public static string Choose = "Odaberi (WÄHLEN)";
         public static string ChooseM = "Muško (MÄNNLICH)";
         public static string ChooseF = "Žensko (WEIBLICH)";
+        public static string ChooseD = "Neodređeno (DIVERSE)";
 
         public static List<String> GenderOptions = new List<string>()
         {
-            ChooseM, ChooseF
+            ChooseM, ChooseF, ChooseD
         };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null && value is string)
+            if (value != null && value is int)
             {
                 int val = 0;
                 Int32.TryParse(value.ToString(), out val);
@@ -30,6 +31,8 @@ namespace WpfAppCommonCode.Converters
                     return ChooseM;
                 else if (val == 2)
                     return ChooseF;
+                else if (val == 3)
+                    return ChooseD;
                 return Choose;
             }
 
@@ -44,6 +47,8 @@ namespace WpfAppCommonCode.Converters
                     return 1;//ChooseM
                 else if (value.ToString() == ChooseF)
                     return 2;//ChooseF
+                else if (value.ToString() == ChooseD)
+                    return 3;//ChooseD
             }
 
             return 0;

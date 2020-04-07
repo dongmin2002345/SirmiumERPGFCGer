@@ -38,6 +38,9 @@
             <cbxConverters:ItemStatusColorConverter x:Key="ItemStatusColorConverter" />
             <!--<cbxConverters:DataGridFieldIsNullConverter x:Key="DataGridFieldIsNullConverter" />
             <cbxConverters:DataGridFieldIsTrueConverter x:Key="DataGridFieldIsTrueConverter" />-->
+            <cbxConverters:BoolStringConverter x:Key="cbxStringToBoolConverter" />
+            <cbxConverters:GenderConverter x:Key="cbxGenderToStringConverter"/>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -299,7 +302,9 @@
                         <DataGridTextColumn SortMemberPath="EmployeeCode" Header="{DynamicResource Šifra}" Binding="{Binding EmployeeCode}"  Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="Name" Header="{DynamicResource Ime}" Binding="{Binding Name}" Width="*" IsReadOnly="True" />
                         <DataGridTextColumn SortMemberPath="SurName" Header="{DynamicResource Prezime}" Binding="{Binding SurName}" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn SortMemberPath="IsVisaApplied" Header="{DynamicResource Da_li_je_vizirano_Dvotacka}" Binding="{Binding IsVisaApplied, Converter={StaticResource BoolStringConverter}}" IsReadOnly="True"/>
                         <DataGridTextColumn SortMemberPath="DateOfBirth" Binding="{Binding DateOfBirth, Converter={StaticResource cbxDatetimeToStringConverter}}" IsReadOnly="True">
+                           
                         <DataGridTextColumn.Header>
                             <TextBlock Text="{DynamicResource Datum_rođenja}" TextWrapping="Wrap" MaxWidth="50" />
                         </DataGridTextColumn.Header>

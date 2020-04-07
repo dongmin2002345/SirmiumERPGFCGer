@@ -29,7 +29,7 @@ namespace RepositoryCore.DbViews.Employees
                 "employee.Address, " +
                 "countryPassport.Id AS PassportCountryId, countryPassport.Identifier AS PassportCountryIdentifier, countryPassport.Mark AS PassportCountryCode, countryPassport.Name AS PassportCountryName, " +
                 "cityPassport.Id AS PassportCityId, cityPassport.Identifier AS PassportCityIdentifier, cityPassport.ZipCode AS PassportCityZipCode, cityPassport.Name AS PassportCityName, " +
-                "employee.Passport, employee.PassportMup, employee.VisaFrom, employee.VisaTo, " +
+                "employee.Passport, employee.PassportMup, employee.VisaFrom, employee.VisaTo, employee.IsVisaApplied, " +
                 "countryResidence.Id AS ResidenceCountryId, countryResidence.Identifier AS ResidenceCountryIdentifier, countryResidence.Mark AS ResidenceCountryCode, countryResidence.Name AS ResidenceCountryName, " +
                 "cityResidence.Id AS ResidenceCityId, cityResidence.Identifier AS ResidenceCityIdentifier, cityResidence.ZipCode AS ResidenceCityZipCode, cityResidence.Name AS ResidenceCityName, " +
                 "employee.ResidenceAddress, employee.EmbassyDate, employee.VisaDate, employee.VisaValidFrom, employee.VisaValidTo, employee.WorkPermitFrom, employee.WorkPermitTo, employee.Active AS Active, " +

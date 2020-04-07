@@ -231,6 +231,22 @@ namespace ServiceInterfaces.ViewModels.Employees
         }
         #endregion
 
+        #region IsVisaApplied
+        private bool _IsVisaApplied;
+
+        public bool IsVisaApplied
+        {
+            get { return _IsVisaApplied; }
+            set
+            {
+                if (_IsVisaApplied != value)
+                {
+                    _IsVisaApplied = value;
+                    NotifyPropertyChanged("IsVisaApplied");
+                }
+            }
+        }
+        #endregion
 
         #region PassportCountry
         private CountryViewModel _PassportCountry;

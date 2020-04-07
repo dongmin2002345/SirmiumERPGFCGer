@@ -830,4 +830,6 @@
     <system:String x:Key="Obrisi">Obriši</system:String>
     <system:String x:Key="Pretraga_po_šifriFirmeDvotacka">Šifra firme:</system:String>
 
+    <system:String x:Key="Da_li_je_vizirano_Dvotacka">Da li je vizirano:</system:String>
+
 </ResourceDictionary>
