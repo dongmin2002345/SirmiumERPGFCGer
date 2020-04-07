@@ -1,4 +1,5 @@
-﻿using SirmiumERPGFC.Scanners;
+﻿using SirmiumERPGFC.Helpers;
+using SirmiumERPGFC.Scanners;
 using SirmiumERPGFC.ViewComponents.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static SirmiumERPGFC.Scanners.WIAScanner;
+using Application = System.Windows.Application;
 
 namespace SirmiumERPGFC.Views.Home
 {
@@ -28,7 +31,7 @@ namespace SirmiumERPGFC.Views.Home
     /// <summary>
     /// Interaction logic for Scanner_List.xaml
     /// </summary>
-    public partial class Scanner_List : UserControl, INotifyPropertyChanged
+    public partial class Scanner_List : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
 
         #region Events
@@ -245,6 +248,27 @@ namespace SirmiumERPGFC.Views.Home
         #endregion
 
 
+        #region IsOnHomePage
+        public bool IsOnHomePage
+        {
+            get { return (bool)GetValue(CurrentAgencyProperty); }
+            set { SetValueDp(CurrentAgencyProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrentAgencyProperty = DependencyProperty.Register(
+            "IsOnHomePage",
+            typeof(bool),
+            typeof(Scanner_List),
+            new PropertyMetadata(delegate { }));
+
+
+        void SetValueDp(DependencyProperty property, object value, String propName = null)
+        {
+            SetValue(property, value);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+        #endregion
+
         public Scanner_List()
         {
             InitializeComponent();
@@ -277,19 +301,38 @@ namespace SirmiumERPGFC.Views.Home
             {
                 try
                 {
+                    var tempPath = System.IO.Path.GetTempPath();
+
                     var generator = new PDFGenerator(Images
                             .Where(x => x.IsSelected)
                             .OrderBy(x => x.CreatedAt)
                             .Select(x => x.ImagePath)
-                            .ToList(), 
-                            SelectedPath, DocumentName, 
+                            .ToList(),
+                            tempPath, DocumentName, 
                         MainWindow.CurrentUser.FirstName + " " + MainWindow.CurrentUser.LastName);
 
                     CurrentDocumentFullPath = generator.Generate();
 
-                    Dispatcher.BeginInvoke((Action)(() => {
-                        DocumentSaved?.Invoke(CurrentDocumentFullPath);
+                    bool homePage = true;
+                    Dispatcher.Invoke((Action)(() => {
+                        homePage = IsOnHomePage;
                     }));
+                    if(homePage)
+                    {
+                        File.Copy(CurrentDocumentFullPath, $"{SelectedPath}\\{DocumentName}.pdf");
+                        Dispatcher.BeginInvoke((Action)(() => {
+                            DocumentSaved?.Invoke(CurrentDocumentFullPath);
+                        }));
+                    } else
+                    {
+                        var azureClient = new AzureDataClient();
+                        var file = azureClient.GetFile($"{SelectedPath}/{DocumentName}.pdf");
+                        file.UploadFromFile(CurrentDocumentFullPath);
+                        Dispatcher.BeginInvoke((Action)(() => {
+                            DocumentSaved?.Invoke(file.Uri.LocalPath);
+                        }));
+                    }
+
 
                     MainWindow.SuccessMessage = (string)Application.Current.FindResource("DokumentJeUspesnoSacuvanUzvicnik");
                 } catch(Exception ex)
@@ -322,12 +365,25 @@ namespace SirmiumERPGFC.Views.Home
         {
             CanInteractWithForm = false;
 
-            var dialog = new DocumentPathDialog();
-            bool? selectedResult = dialog.ShowDialog();
-
-            if (selectedResult == true)
+            if(IsOnHomePage)
             {
-                SelectedPath = dialog.SelectedPath;
+                var openFolderDialog = new FolderBrowserDialog();
+                DialogResult selectedRes = openFolderDialog.ShowDialog();
+                if(selectedRes == DialogResult.OK)
+                {
+                    SelectedPath = openFolderDialog.SelectedPath;
+                }
+
+            } else
+            {
+
+                var dialog = new DocumentPathDialog();
+                bool? selectedResult = dialog.ShowDialog();
+
+                if (selectedResult == true)
+                {
+                    SelectedPath = dialog.SelectedPath;
+                }
             }
             CanInteractWithForm = true;
         }

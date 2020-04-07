@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using ServiceInterfaces.Abstractions.Common.Invoices;
+using ServiceInterfaces.Gloabals;
 using ServiceInterfaces.Messages.Common.Invoices;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
@@ -283,6 +284,22 @@ namespace SirmiumERPGFC.Views.Invoices
                 CurrentInvoice.IsSynced = false;
                 CurrentInvoice.Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId };
                 CurrentInvoice.CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId };
+
+                var itemsResponse = new InvoiceItemSQLiteRepository().GetInvoiceItemsByInvoice(MainWindow.CurrentCompanyId, CurrentInvoice.Identifier);
+
+                if(itemsResponse.InvoiceItems != null)
+                {
+                    CurrentInvoice.InvoiceItems = new ObservableCollection<InvoiceItemViewModel>(itemsResponse?.InvoiceItems ?? new List<InvoiceItemViewModel>());
+                    foreach(var item in CurrentInvoice.InvoiceItems)
+                    {
+                        item.PDVPercent = CurrentInvoice.Vat?.Amount ?? 0;
+                        item.ItemStatus = ItemStatus.Edited;
+                        new InvoiceItemSQLiteRepository().Delete(item.Identifier);
+                        new InvoiceItemSQLiteRepository().Create(item);
+                    }
+                }
+
+                CurrentInvoice.TotalPrice = CurrentInvoice.InvoiceItems.Sum(x => (double)x.PriceWithPDV);
 
                 InvoiceResponse response = new InvoiceSQLiteRepository().Create(CurrentInvoice);
                 if (!response.Success)

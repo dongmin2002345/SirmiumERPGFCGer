@@ -77,7 +77,7 @@
                     <local11:CallCentar_UserList />
                 </TabItem>
                 <TabItem Header="{DynamicResource Skener}">
-                    <local:Scanner_List />
+                    <local:Scanner_List IsOnHomePage="True" />
                 </TabItem>
                 <TabItem Header="{DynamicResource Dokumenti}">
                     <commnon:DocumentTreeView />

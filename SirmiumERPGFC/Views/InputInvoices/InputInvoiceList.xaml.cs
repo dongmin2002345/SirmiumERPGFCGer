@@ -28,6 +28,7 @@ using System.Windows.Navigation;
 using WpfAppCommonCode.Converters;
 using System.IO;
 using System.Reflection;
+using SirmiumERPGFC.Helpers;
 
 namespace SirmiumERPGFC.Views.InputInvoices
 {
@@ -683,12 +684,25 @@ namespace SirmiumERPGFC.Views.InputInvoices
         private void btnShow_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentInputInvoice.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+			{
+				var azureClient = new AzureDataClient();
+				var file = azureClient.GetFile(CurrentInputInvoice.Path);
+
+				if (file.Exists())
+				{
+					string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+					if (String.IsNullOrEmpty(copiedFile))
+						return;
+
+
+					System.Diagnostics.Process process = new System.Diagnostics.Process();
+					Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+					process.StartInfo.FileName = pdf.LocalPath;
+
+					process.Start();
+				}
+				else throw new FileNotFoundException();
             }
             catch (Exception error)
             {
@@ -702,11 +716,24 @@ namespace SirmiumERPGFC.Views.InputInvoices
 		{
 			try
 			{
-				System.Diagnostics.Process process = new System.Diagnostics.Process();
-				//string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-				Uri pdf = new Uri(CurrentInputInvoiceDocument.Path, UriKind.RelativeOrAbsolute);
-				process.StartInfo.FileName = pdf.LocalPath;
-				process.Start();
+				var azureClient = new AzureDataClient();
+				var file = azureClient.GetFile(CurrentInputInvoiceDocument.Path);
+
+				if (file.Exists())
+				{
+					string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+					if (String.IsNullOrEmpty(copiedFile))
+						return;
+
+
+					System.Diagnostics.Process process = new System.Diagnostics.Process();
+					Uri pdf = new Uri(copiedFile, UriKind.RelativeOrAbsolute);
+					process.StartInfo.FileName = pdf.LocalPath;
+
+					process.Start();
+				}
+				else throw new FileNotFoundException();
 			}
 			catch (Exception error)
 			{

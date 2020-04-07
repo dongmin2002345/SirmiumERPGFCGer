@@ -583,11 +583,19 @@ namespace SirmiumERPGFC.Views.Documents
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentBusinessPartnerDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentBusinessPartnerDocument.Path);
+
+                string localFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                if(!String.IsNullOrEmpty(localFile))
+                {
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                    Uri pdf = new Uri(localFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+                    process.Start();
+                }
             }
             catch (Exception error)
             {
@@ -659,11 +667,19 @@ namespace SirmiumERPGFC.Views.Documents
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentConstructionSiteDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentBusinessPartnerDocument.Path);
+
+                string localFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                if (!String.IsNullOrEmpty(localFile))
+                {
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                    Uri pdf = new Uri(localFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+                    process.Start();
+                }
             }
             catch (Exception error)
             {
@@ -734,11 +750,19 @@ namespace SirmiumERPGFC.Views.Documents
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentEmployeeDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentEmployeeDocument.Path);
+
+                string localFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                if (!String.IsNullOrEmpty(localFile))
+                {
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                    Uri pdf = new Uri(localFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+                    process.Start();
+                }
             }
             catch (Exception error)
             {
@@ -809,11 +833,19 @@ namespace SirmiumERPGFC.Views.Documents
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
-                Uri pdf = new Uri(CurrentPhysicalPersonDocument.Path, UriKind.RelativeOrAbsolute);
-                process.StartInfo.FileName = pdf.LocalPath;
-                process.Start();
+                var azureClient = new AzureDataClient();
+                var file = azureClient.GetFile(CurrentPhysicalPersonDocument.Path);
+
+                string localFile = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+
+                if (!String.IsNullOrEmpty(localFile))
+                {
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    //string path = "C:\\Users\\Zdravko83\\Desktop\\1 ZBORNIK.pdf";
+                    Uri pdf = new Uri(localFile, UriKind.RelativeOrAbsolute);
+                    process.StartInfo.FileName = pdf.LocalPath;
+                    process.Start();
+                }
             }
             catch (Exception error)
             {
@@ -1160,26 +1192,46 @@ namespace SirmiumERPGFC.Views.Documents
                 return;
             }
 
-            System.Windows.Forms.FolderBrowserDialog folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            var result = folderBrowser.ShowDialog();
-
-            if(result == System.Windows.Forms.DialogResult.OK)
+            try
             {
+                List<string> completedPaths = new List<string>();
 
-                var path = ZipFileHelper.MakeArchiveFromFiles(paths, folderBrowser.SelectedPath);
 
-                if (!String.IsNullOrEmpty(path))
+                var azureClient = new AzureDataClient();
+                foreach(var item in paths)
                 {
-                    try
+                    var file = azureClient.GetFile(item);
+
+                    var localPath = azureClient.DownloadFileToOpen(file, (progress, total) => { });
+                    completedPaths.Add(localPath);
+                }
+
+
+
+                System.Windows.Forms.FolderBrowserDialog folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+                var result = folderBrowser.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    var path = ZipFileHelper.MakeArchiveFromFiles(completedPaths, folderBrowser.SelectedPath);
+
+                    if (!String.IsNullOrEmpty(path))
                     {
-                        string outlookPath = AppConfigurationHelper.Configuration?.OutlookDefinedPath ?? "";
-                        Process.Start($"{outlookPath}", $"/a \"{path}\" /c ipm.note ");
-                    }
-                    catch (Exception error)
-                    {
-                        MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OutlookNijeInstaliranIliNijePovezanUzvicnik"));
+                        try
+                        {
+                            string outlookPath = AppConfigurationHelper.Configuration?.OutlookDefinedPath ?? "";
+                            Process.Start($"{outlookPath}", $"/a \"{path}\" /c ipm.note ");
+                        }
+                        catch (Exception error)
+                        {
+                            MainWindow.ErrorMessage = ((string)Application.Current.FindResource("OutlookNijeInstaliranIliNijePovezanUzvicnik"));
+                        }
                     }
                 }
+            } catch(Exception ex)
+            {
+
             }
         }
 

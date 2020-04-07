@@ -12,10 +12,21 @@ namespace SirmiumERPGFC.Helpers
 {
     public class GfcConfiguration
     {
-        public string DefaultNetworkDirectory { get; set; } = "C:\\Users\\Public\\Documents";
         public string ApiUrl { get; set; } = "";
 
         public string OutlookDefinedPath { get; set; } = "C:\\Program Files (x86)\\Microsoft Office\\Office14\\OUTLOOK.EXE";
+
+        public AzureNetworkDriveConfiguration AzureNetworkDrive { get; set; }
+    }
+
+    public class AzureNetworkDriveConfiguration
+    {
+        public string DriveLetter { get; set; } = "";
+        public string DriveNetworkPath { get; set; } = "";
+        public string SubDir { get; set; } = "";
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
+        public bool Persistent { get; set; } = true;
     }
     public static class AppConfigurationHelper
     {
@@ -43,13 +54,11 @@ namespace SirmiumERPGFC.Helpers
                 }
             }
 
-            if(String.IsNullOrEmpty(Configuration.DefaultNetworkDirectory))
-            {
-                Configuration.DefaultNetworkDirectory = "C:\\Users\\Public\\Documents";
-            }
-
             if (String.IsNullOrEmpty(Configuration.OutlookDefinedPath))
                 Configuration.OutlookDefinedPath = "C:\\Program Files (x86)\\Microsoft Office\\Office14\\OUTLOOK.EXE";
+
+            if (Configuration.AzureNetworkDrive == null)
+                Configuration.AzureNetworkDrive = new AzureNetworkDriveConfiguration();
         }
 
         public static void ReadConfig()

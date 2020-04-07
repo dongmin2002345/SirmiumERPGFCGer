@@ -24,6 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="3*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Expander Grid.Row="0" Grid.Column="2" Margin="2" Header="Pretraga" IsExpanded="True">
@@ -285,7 +286,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Naziv"  Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*" />
                         <DataGridTextColumn Header="Veličina" Binding="{Binding FileSize, StringFormat={}{0} KB}" IsReadOnly="True" Width="Auto"/>
-                        <DataGridTextColumn Header="Kreirano" Binding="{Binding CreatedAt}" IsReadOnly="True" Width="Auto"/>
+                        <!--<DataGridTextColumn Header="Kreirano" Binding="{Binding CreatedAt}" IsReadOnly="True" Width="Auto"/>-->
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -335,7 +336,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <metro:MetroProgressBar Grid.Column="0" IsEnabled="{Binding Path=IsCopyInProgress}" Value="{Binding Path=CopyPercentage}"
-                                        Minimum="0" Maximum="100" Height="32" Margin="0,2,2,0" Background="#CCCCCCCC"/>
+                                        Minimum="0" Maximum="100" Height="32" Margin="0,2,2,0" Background="#CCCCCCCC" x:Name="copyProgressBar"/>
 
                     <Button Grid.Column="1" Margin="0, 2, 0, 0" VerticalAlignment="Stretch" IsEnabled="{Binding Path=IsCopyInProgress}"
                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="BtnCancelCopy_Click">
@@ -395,5 +396,11 @@
 
             </Grid>
         </Expander>
+
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="4" Margin="2">
+            <StatusBarItem>
+                <TextBlock Margin="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Left" Text="{Binding Path=CurrentStatus}" Foreground="White" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </UserControl>

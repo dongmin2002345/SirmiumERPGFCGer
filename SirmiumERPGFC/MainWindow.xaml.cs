@@ -208,22 +208,26 @@ namespace SirmiumERPGFC
                 {
                     try
                     {
-                        Notifier notifier = new Notifier(cfg =>
+                        var window = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                        if(window != null)
                         {
-                            cfg.PositionProvider = new WindowPositionProvider(
-                                parentWindow: Application.Current.Windows.OfType<MainWindow>().FirstOrDefault(),
-                                corner: Corner.TopRight,
-                                offsetX: 10,
-                                offsetY: 10);
+                            Notifier notifier = new Notifier(cfg =>
+                            {
+                                cfg.PositionProvider = new WindowPositionProvider(
+                                    parentWindow: window,
+                                    corner: Corner.TopRight,
+                                    offsetX: 10,
+                                    offsetY: 10);
 
-                            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                                notificationLifetime: TimeSpan.FromSeconds(3),
-                                maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+                                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                                    notificationLifetime: TimeSpan.FromSeconds(3),
+                                    maximumNotificationCount: MaximumNotificationCount.FromCount(3));
 
-                            cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
-                        });
+                                cfg.Dispatcher = System.Windows.Application.Current.Dispatcher;
+                            });
 
-                        notifier.ShowError(value);
+                            notifier.ShowError(value);
+                        }
                     }
                     catch(Exception ex) { }
                     _ErrorMessage = value;
