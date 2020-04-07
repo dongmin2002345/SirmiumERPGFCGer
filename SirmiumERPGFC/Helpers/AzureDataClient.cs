@@ -23,132 +23,197 @@ namespace SirmiumERPGFC.Helpers
 
         public bool CancelOperation = false;
 
+        bool IsAzureClientValid = false;
+
         public AzureDataClient()
         {
             string connectionStr = "DefaultEndpointsProtocol=https" +
                 ";AccountName=" + (AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Username?.Replace("Azure\\", "") ?? "") +
                 ";AccountKey=" + (AppConfigurationHelper.Configuration?.AzureNetworkDrive?.Password ?? "");
-            cloudStorageAccount = CloudStorageAccount.Parse(connectionStr);
 
-            fileClient = cloudStorageAccount.CreateCloudFileClient();
+            try
+            {
+                cloudStorageAccount = CloudStorageAccount.Parse(connectionStr);
 
-            fileShare = fileClient.GetShareReference(AppConfigurationHelper.Configuration?.AzureNetworkDrive?.SubDir?.Replace("\\", "") ?? "");
+                fileClient = cloudStorageAccount.CreateCloudFileClient();
 
-            rootDirectory = fileShare.GetRootDirectoryReference();
+                fileShare = fileClient.GetShareReference(AppConfigurationHelper.Configuration?.AzureNetworkDrive?.SubDir?.Replace("\\", "") ?? "");
+
+                rootDirectory = fileShare.GetRootDirectoryReference();
+
+                IsAzureClientValid = true;
+            } catch(Exception ex)
+            {
+                IsAzureClientValid = false;
+            }
         }
 
 
         public List<CloudFileDirectory> GetSubDirectories(CloudFileDirectory parent)
         {
-            CancelOperation = false;
-            List<CloudFileDirectory> directories = parent.ListFilesAndDirectories().OfType<CloudFileDirectory>().ToList();
+            try
+            {
+                CancelOperation = false;
+                List<CloudFileDirectory> directories = parent?.ListFilesAndDirectories().OfType<CloudFileDirectory>().ToList() ?? new List<CloudFileDirectory>();
 
-            return directories;
+                return directories;
+            } catch(Exception ex)
+            {
+                return new List<CloudFileDirectory>();
+            }
         }
 
         public CloudFileDirectory CreateDirectory(CloudFileDirectory parent, string name)
         {
-            CancelOperation = false;
-            CloudFileDirectory cd = parent.GetDirectoryReference(name);
-            if (cd.Exists())
-                throw new Exception("Folder already exists!");
+            try
+            {
+                CancelOperation = false;
+                CloudFileDirectory cd = parent?.GetDirectoryReference(name);
+                if (cd.Exists())
+                    throw new Exception("Folder already exists!");
 
-            cd.Create();
+                cd.Create();
 
-            return cd;
+                return cd;
+            } catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         public List<CloudFile> GetFiles(CloudFileDirectory parent)
         {
-            CancelOperation = false;
-            List<CloudFile> files = parent.ListFilesAndDirectories().OfType<CloudFile>().ToList();
+            try
+            {
+                CancelOperation = false;
+                List<CloudFile> files = parent?.ListFilesAndDirectories().OfType<CloudFile>().ToList() ?? new List<CloudFile>();
 
-            return files;
+                return files;
+            } catch(Exception ex)
+            {
+                return new List<CloudFile>();
+            }
         }
 
         public void FindFiles(CloudFileDirectory parent, string filter, bool recursive = false, Action<List<CloudFile>> foundFilesCallback = null, Action<string> currentPath = null)
         {
-            if (CancelOperation)
-                return;
-
-            currentPath?.Invoke("Searching: " + parent?.Uri?.LocalPath);
-
-            List<CloudFile> files = parent.ListFilesAndDirectories().OfType<CloudFile>().Where(x => x.Name.ToLower().Contains(filter)).ToList();
-            foundFilesCallback?.Invoke(files);
-            if (recursive)
+            try
             {
-                List<CloudFileDirectory> dirs = parent.ListFilesAndDirectories().OfType<CloudFileDirectory>().ToList();
-                if(dirs != null)
-                {
-                    foreach(CloudFileDirectory directory in dirs)
-                    {
-                        if (CancelOperation)
-                            return;
+                if (CancelOperation)
+                    return;
 
-                        FindFiles(directory, filter, recursive, foundFilesCallback, currentPath);
+                currentPath?.Invoke("Searching: " + parent?.Uri?.LocalPath);
+
+                List<CloudFile> files = parent?.ListFilesAndDirectories().OfType<CloudFile>().Where(x => x.Name.ToLower().Contains(filter)).ToList() ?? new List<CloudFile>();
+                foundFilesCallback?.Invoke(files);
+                if (recursive)
+                {
+                    List<CloudFileDirectory> dirs = parent?.ListFilesAndDirectories().OfType<CloudFileDirectory>().ToList() ?? new List<CloudFileDirectory>();
+                    if (dirs != null)
+                    {
+                        foreach (CloudFileDirectory directory in dirs)
+                        {
+                            if (CancelOperation)
+                                return;
+
+                            FindFiles(directory, filter, recursive, foundFilesCallback, currentPath);
+                        }
                     }
                 }
+            } catch(Exception ex)
+            {
+
             }
         }
 
         public CloudFile CopyLocal(CloudFileDirectory dir, string path, Action<long, long> progressChanged)
         {
-            var fileName = Path.GetFileName(path);
-            CloudFile file = dir.GetFileReference(fileName);
-            if (file.Exists())
-                throw new Exception("File already exists on server!");
-
-            using (FileStream fs = new ObservableFileStream(path, FileMode.Open, progressChanged))
+            try
             {
-                file.UploadFromStream(fs);
-            }
 
-            return file;
+                var fileName = Path.GetFileName(path);
+                CloudFile file = dir?.GetFileReference(fileName);
+                if (file != null && file.Exists())
+                    throw new Exception("File already exists on server!");
+
+                using (FileStream fs = new ObservableFileStream(path, FileMode.Open, progressChanged))
+                {
+                    file?.UploadFromStream(fs);
+                }
+
+                return file;
+            } catch(Exception ex)
+            {
+                return null;
+            }
         }
 
 
         public CloudFile CopyRemote(CloudFile toCopy, string newName)
         {
-            var dir = toCopy.Parent;
+            try
+            {
+                var dir = toCopy?.Parent;
 
-            CloudFile newPath = dir.GetFileReference(newName);
-            if(newPath.Exists())
-                throw new Exception("File already exists on server!");
+                CloudFile newPath = dir?.GetFileReference(newName);
+                if (newPath != null && newPath.Exists())
+                    throw new Exception("File already exists on server!");
 
 
-            newPath.StartCopy(toCopy);
-            return newPath;
+                newPath.StartCopy(toCopy);
+                return newPath;
+            } catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         public void Delete(CloudFile file)
         {
-            file.DeleteIfExists();
+            try
+            {
+                file?.DeleteIfExists();
+            } catch(Exception ex)
+            {
+            }
         }
 
         public CloudFile GetFile(string filePath)
         {
-            var configRootPath = AppConfigurationHelper.Configuration?.AzureNetworkDrive?.SubDir?.Replace("\\", "/") ?? "";
-            filePath = filePath.Replace(configRootPath, "")?.Substring(1);
+            try
+            {
+                var configRootPath = AppConfigurationHelper.Configuration?.AzureNetworkDrive?.SubDir?.Replace("\\", "/") ?? "";
+                filePath = filePath.Replace(configRootPath, "")?.Substring(1);
 
-            return rootDirectory.GetFileReference(filePath);
+                return rootDirectory.GetFileReference(filePath);
+            } catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         public string DownloadFileToOpen(CloudFile toOpen, Action<long, long> callback)
         {
-            var fileName = Path.GetFileName(toOpen?.Uri?.LocalPath?.Replace("/", "\\") ?? "");
-            var tmpPath = Path.GetTempPath();
-
-            string fullTmpPath = Path.Combine(tmpPath, fileName)?.Replace("\\", "/");
-
-            if (File.Exists(fullTmpPath))
-                File.Delete(fullTmpPath);
-
-            using (var fs = new ObservableFileStream(fullTmpPath, FileMode.OpenOrCreate, callback))
+            try
             {
-                toOpen.DownloadToStream(fs);
-            }
+                var fileName = Path.GetFileName(toOpen?.Uri?.LocalPath?.Replace("/", "\\") ?? "");
+                var tmpPath = Path.GetTempPath();
 
-            return fullTmpPath;
+                string fullTmpPath = Path.Combine(tmpPath, fileName)?.Replace("\\", "/");
+
+                if (File.Exists(fullTmpPath))
+                    File.Delete(fullTmpPath);
+
+                using (var fs = new ObservableFileStream(fullTmpPath, FileMode.OpenOrCreate, callback))
+                {
+                    toOpen?.DownloadToStream(fs);
+                }
+
+                return fullTmpPath;
+            } catch(Exception ex)
+            {
+                return "";
+            }
         }
     }
     public class ObservableFileStream : FileStream
