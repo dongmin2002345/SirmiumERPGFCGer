@@ -31,6 +31,7 @@ using ServiceInterfaces.ViewModels.CalendarAssignments;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
+using ServiceInterfaces.ViewModels.Common.DocumentStores;
 
 namespace ApiExtension.Sender
 {
@@ -358,6 +359,13 @@ namespace ApiExtension.Sender
             #region PhysicalPersonAttachments
             { typeof(PhysicalPersonAttachmentViewModel), "PhysicalPersonAttachment" },
             { typeof(List<PhysicalPersonAttachmentViewModel>), "PhysicalPersonAttachment" },
+            #endregion
+
+            #region DocumentStores
+            { typeof(DocumentFolderViewModel), "DocumentFolder" },
+            { typeof(List<DocumentFolderViewModel>), "DocumentFolder" },
+            { typeof(DocumentFileViewModel), "DocumentFile" },
+            { typeof(List<DocumentFileViewModel>), "DocumentFile" },
             #endregion
         };
 

@@ -22,6 +22,7 @@ using SirmiumERPGFC.Repository.Phonebooks;
 using SirmiumERPGFC.Repository.Invoices;
 using SirmiumERPGFC.Repository.CallCentars;
 using SirmiumERPGFC.Repository.CalendarAssignments;
+using SirmiumERPGFC.Repository.DocumentStores;
 
 namespace SirmiumERPGFC.Repository.Common
 {
@@ -1158,6 +1159,40 @@ namespace SirmiumERPGFC.Repository.Common
                     }
                     createTable = new SqliteCommand(PhysicalPersonAttachmentSQLiteRepository.PhysicalPersonAttachmentsTableCreatePart, db);
                     createTable.ExecuteReader();
+                    #endregion
+
+                    #region DocumentStores
+
+                    #region DocumentFolder
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE DocumentFolders ", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(DocumentFolderSQLiteRepository.DocumentFolderTableCreatePart, db);
+                    createTable.ExecuteReader();
+                    #endregion
+
+                    #region DocumentFile
+                    if (withTableDrop)
+                    {
+                        try
+                        {
+                            SqliteCommand dropTable = new SqliteCommand("DROP TABLE DocumentFiles ", db);
+                            dropTable.ExecuteNonQuery();
+                        }
+                        catch (Exception ex) { }
+                    }
+                    createTable = new SqliteCommand(DocumentFileSQLiteRepository.DocumentFileTableCreatePart, db);
+                    createTable.ExecuteReader();
+
+                    SQLiteHelper.AddColumnIfNotExists("DocumentFiles", "CreatedAt", "DATETIME NULL");
+                    #endregion
+
                     #endregion
                 }
             }

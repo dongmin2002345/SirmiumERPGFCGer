@@ -5,6 +5,7 @@ using RepositoryCore.Abstractions.CalendarAssignments;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Abstractions.Common.CallCentars;
 using RepositoryCore.Abstractions.Common.Companies;
+using RepositoryCore.Abstractions.Common.DocumentStores;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
@@ -26,6 +27,7 @@ using RepositoryCore.Implementations.CalendarAssignments;
 using RepositoryCore.Implementations.Common.BusinessPartners;
 using RepositoryCore.Implementations.Common.CallCentars;
 using RepositoryCore.Implementations.Common.Companies;
+using RepositoryCore.Implementations.Common.DocumentStores;
 using RepositoryCore.Implementations.Common.Identity;
 using RepositoryCore.Implementations.Common.Invoices;
 using RepositoryCore.Implementations.Common.Locations;
@@ -143,6 +145,9 @@ namespace RepositoryCore.UnitOfWork.Implementations
         private IPhysicalPersonAttachmentRepository physicalPersonAttachmentRepository;
 
         private IToDoStatusRepository toDoStatusRepository;
+
+        private IDocumentFolderRepository documentFolderRepository;
+        private IDocumentFileRepository documentFileRepository;
         #endregion
 
         #region Constructor
@@ -681,6 +686,22 @@ namespace RepositoryCore.UnitOfWork.Implementations
             if (toDoStatusRepository == null)
                 toDoStatusRepository = new ToDoStatusViewRepository(context);
             return toDoStatusRepository;
+        }
+
+        public IDocumentFolderRepository GetDocumentFolderRepository()
+        {
+            if (documentFolderRepository == null)
+                documentFolderRepository = new DocumentFolderRepository(context);
+
+            return documentFolderRepository;
+        }
+
+        public IDocumentFileRepository GetDocumentFileRepository()
+        {
+            if (documentFileRepository == null)
+                documentFileRepository = new DocumentFileRepository(context);
+
+            return documentFileRepository;
         }
 
         #endregion

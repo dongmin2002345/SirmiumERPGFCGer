@@ -3,6 +3,7 @@ using RepositoryCore.Abstractions.CalendarAssignments;
 using RepositoryCore.Abstractions.Common.BusinessPartners;
 using RepositoryCore.Abstractions.Common.CallCentars;
 using RepositoryCore.Abstractions.Common.Companies;
+using RepositoryCore.Abstractions.Common.DocumentStores;
 using RepositoryCore.Abstractions.Common.Identity;
 using RepositoryCore.Abstractions.Common.Invoices;
 using RepositoryCore.Abstractions.Common.Locations;
@@ -118,6 +119,8 @@ namespace RepositoryCore.UnitOfWork.Abstractions
 
         IToDoStatusRepository GetToDoStatusRepository();
 
+        IDocumentFolderRepository GetDocumentFolderRepository();
+        IDocumentFileRepository GetDocumentFileRepository();
         void Save();
     }
 }

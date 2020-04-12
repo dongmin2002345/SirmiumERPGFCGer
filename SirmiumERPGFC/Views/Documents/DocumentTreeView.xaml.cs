@@ -1,7 +1,15 @@
 ﻿using Microsoft.Azure.Storage.File;
 using Microsoft.Win32;
+using Ninject;
+using ServiceInterfaces.Abstractions.Common.DocumentStores;
+using ServiceInterfaces.Messages.Common.Invoices;
+using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.DocumentStores;
+using ServiceInterfaces.ViewModels.Common.Identity;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Helpers;
+using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.DocumentStores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,9 +38,9 @@ namespace SirmiumERPGFC.Views.Documents
     public partial class DocumentTreeView : UserControl, INotifyPropertyChanged
     {
         #region DocumentTreeItems
-        private ObservableCollection<DirectoryTreeItemViewModel> _DocumentTreeItems;
+        private ObservableCollection<DocumentFolderViewModel> _DocumentTreeItems;
 
-        public ObservableCollection<DirectoryTreeItemViewModel> DocumentTreeItems
+        public ObservableCollection<DocumentFolderViewModel> DocumentTreeItems
         {
             get { return _DocumentTreeItems; }
             set
@@ -66,9 +74,9 @@ namespace SirmiumERPGFC.Views.Documents
 
 
         #region DocumentTreeFiles
-        private ObservableCollection<DirectoryTreeItemViewModel> _DocumentTreeFiles;
+        private ObservableCollection<DocumentFileViewModel> _DocumentTreeFiles;
 
-        public ObservableCollection<DirectoryTreeItemViewModel> DocumentTreeFiles
+        public ObservableCollection<DocumentFileViewModel> DocumentTreeFiles
         {
             get { return _DocumentTreeFiles; }
             set
@@ -83,9 +91,9 @@ namespace SirmiumERPGFC.Views.Documents
         #endregion
 
         #region SelectedDocumentTreeFile
-        private DirectoryTreeItemViewModel _SelectedDocumentTreeFile;
+        private DocumentFileViewModel _SelectedDocumentTreeFile;
 
-        public DirectoryTreeItemViewModel SelectedDocumentTreeFile
+        public DocumentFileViewModel SelectedDocumentTreeFile
         {
             get { return _SelectedDocumentTreeFile; }
             set
@@ -102,9 +110,9 @@ namespace SirmiumERPGFC.Views.Documents
         #endregion
 
         #region SelectedDocument
-        private DirectoryTreeItemViewModel _SelectedDocument;
+        private DocumentFileViewModel _SelectedDocument;
 
-        public DirectoryTreeItemViewModel SelectedDocument
+        public DocumentFileViewModel SelectedDocument
         {
             get { return _SelectedDocument; }
             set
@@ -152,7 +160,7 @@ namespace SirmiumERPGFC.Views.Documents
                     _FilterText = value;
                     NotifyPropertyChanged("FilterText");
 
-                    Thread td = new Thread(() => DoFilteringOfData(!String.IsNullOrEmpty(FilterText)));
+                    Thread td = new Thread(() => GetFolderDocuments());
                     td.IsBackground = true;
                     td.Start();
                 }
@@ -178,9 +186,9 @@ namespace SirmiumERPGFC.Views.Documents
         #endregion
 
         #region SelectedTreeItem
-        private DirectoryTreeItemViewModel _SelectedTreeItem;
+        private DocumentFolderViewModel _SelectedTreeItem;
 
-        public DirectoryTreeItemViewModel SelectedTreeItem
+        public DocumentFolderViewModel SelectedTreeItem
         {
             get { return _SelectedTreeItem; }
             set
@@ -195,6 +203,7 @@ namespace SirmiumERPGFC.Views.Documents
                     else
                         CanCreateFolder = false;
 
+                    FolderFilterObject.Search_ParentId = SelectedTreeItem?.Id;
 
                     //if(_SelectedTreeItem )
                 }
@@ -291,6 +300,8 @@ namespace SirmiumERPGFC.Views.Documents
         #endregion
 
 
+        private IDocumentFolderService documentFolderService;
+        private IDocumentFileService documentFileService;
         AzureDataClient azureClient;
 
         #region CurrentStatus
@@ -310,11 +321,35 @@ namespace SirmiumERPGFC.Views.Documents
         }
         #endregion
 
+        #region FolderFilterObject
+        private DocumentFolderViewModel _FolderFilterObject = new DocumentFolderViewModel() { Search_MultiLevel = true, Search_ParentId = null };
+
+        public DocumentFolderViewModel FolderFilterObject
+        {
+            get { return _FolderFilterObject; }
+            set
+            {
+                if (_FolderFilterObject != value)
+                {
+                    _FolderFilterObject = value;
+                    NotifyPropertyChanged("FolderFilterObject");
+                }
+            }
+        }
+        #endregion
+
+
         public DocumentTreeView()
         {
             InitializeComponent();
 
+            documentFolderService = DependencyResolver.Kernel.Get<IDocumentFolderService>();
+            documentFileService = DependencyResolver.Kernel.Get<IDocumentFileService>();
+
             this.DataContext = this;
+
+
+            FolderFilterObject.PropertyChanged += FolderFilterObject_PropertyChanged;
 
             azureClient = new AzureDataClient();
 
@@ -323,32 +358,71 @@ namespace SirmiumERPGFC.Views.Documents
             td.Start();
         }
 
+        private void FolderFilterObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(!String.IsNullOrEmpty(e?.PropertyName))
+            {
+                if(e.PropertyName == "Search_Name")
+                {
+                    if(String.IsNullOrEmpty(FolderFilterObject.Search_Name))
+                    {
+                        FolderFilterObject.Search_MultiLevel = true;
+                    } else
+                    {
+                        FolderFilterObject.Search_MultiLevel = false;
+                        SelectedTreeItem = null;
+                    }
+
+                    Thread td = new Thread(() => DisplayFolderTree());
+                    td.IsBackground = true;
+                    td.Start();
+                }
+            }
+        }
+
         private void DisplayFolderTree()
         {
             try
             {
                 LoadingData = true;
 
+                new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((done, toDo) => {
+                    Debug.WriteLine($"Syncing folders: {done} out of {toDo}");
+                
+                }));
+                new DocumentFileSQLiteRepository().Sync(documentFileService, ((done, toDo) => {
+                    Debug.WriteLine($"Syncing documents: {done} out of {toDo}");
+                }));
 
-
-                DirectoryTreeItemViewModel folder = new DirectoryTreeItemViewModel();
-                folder.Name = "Dokumenti";
-                folder.IsDirectory = true;
-                folder.IsDirExpanded = true;
-                folder.FullPath = AppConfigurationHelper.GetConfiguration()?.AzureNetworkDrive?.DriveLetter + "\\";
-                folder.Directory = azureClient.rootDirectory;
-
-
-                GetDirectoryTree(folder);
-
-
-                DocumentTreeItems = new ObservableCollection<DirectoryTreeItemViewModel>()
+                DocumentFolderListResponse response;
+                if(FolderFilterObject.Search_MultiLevel)
                 {
-                    folder
-                };
-                SelectedTreeItem = folder;
+                    response = new DocumentFolderSQLiteRepository().GetRootFolder(MainWindow.CurrentCompanyId);
+                    if (response.Success)
+                    {
+                        DocumentTreeItems = new ObservableCollection<DocumentFolderViewModel>(response?.DocumentFolders ?? new List<DocumentFolderViewModel>());
 
-                DoFilteringOfData(false);
+                        if (DocumentTreeItems.Count() > 0)
+                        {
+                            SelectedTreeItem = DocumentTreeItems[0];
+                            GetDirectoryTree(SelectedTreeItem);
+
+                            GetFolderDocuments();
+                        }
+                    }
+                    else
+                        MainWindow.ErrorMessage = response.Message;
+                } else
+                {
+                    response = new DocumentFolderSQLiteRepository().GetDocumentFolders(MainWindow.CurrentCompanyId, FolderFilterObject);
+                    if (response.Success)
+                    {
+                        DocumentTreeItems = new ObservableCollection<DocumentFolderViewModel>(response?.DocumentFolders ?? new List<DocumentFolderViewModel>());
+                    }
+                    else
+                        MainWindow.ErrorMessage = response.Message;
+                }
+
 
             }
             catch (Exception ex)
@@ -365,133 +439,60 @@ namespace SirmiumERPGFC.Views.Documents
             Dispatcher.BeginInvoke((Action)(() => { CurrentStatus = status; }));
         }
 
-        private void DoFilteringOfData(bool shouldSearchRecursively = false)
+        void GetFolderDocuments()
         {
+            List<DocumentFileViewModel> documents;
+
+            var response = new DocumentFileSQLiteRepository().GetDocumentFiles(MainWindow.CurrentCompanyId, new DocumentFileViewModel() { Search_ParentPath = SelectedTreeItem?.Path, Search_Name = FilterText });
+            if (response.Success)
+                documents = response?.DocumentFiles ?? new List<DocumentFileViewModel>();
+            else
+            {
+                MainWindow.ErrorMessage = response.Message;
+                documents = new List<DocumentFileViewModel>();
+            }
+
+            DocumentTreeFiles = new ObservableCollection<DocumentFileViewModel>(documents ?? new List<DocumentFileViewModel>());
+        }
+
+
+        void GetDirectoryTree(DocumentFolderViewModel parent)
+        {
+            List<DocumentFolderViewModel> directories;
             try
             {
-                if (SelectedTreeItem == null)
-                    return;
+                var response = new DocumentFolderSQLiteRepository().GetDocumentFolders(MainWindow.CurrentCompanyId, FolderFilterObject, false);
 
-                LoadingData = true;
-
-
-                DocumentTreeFiles = new ObservableCollection<DirectoryTreeItemViewModel>();
-                SearchFilesRecursively(FilterText?.ToLower(), SelectedTreeItem, shouldSearchRecursively);
+                directories = response?.DocumentFolders ?? new List<DocumentFolderViewModel>();
             }
             catch (Exception ex)
             {
+                directories = new List<DocumentFolderViewModel>();
             }
-            finally
-            {
-                LoadingData = false;
-            }
-        }
 
-        bool NameMatches(string filter, string toFilter) => (String.IsNullOrEmpty(filter) || toFilter.ToLower().Contains(filter));
-
-        void AppendFiles(List<CloudFile> foundFiles)
-        {
-            try
-            {
-                if (foundFiles == null)
-                    return;
-
-                foreach (CloudFile fileInfo in foundFiles)
-                {
-                    DirectoryTreeItemViewModel itm = new DirectoryTreeItemViewModel();
-                    itm.Name = fileInfo.Name;
-                    if (fileInfo.Properties != null)
-                    {
-                        if (fileInfo.Properties.LastModified != null)
-                            itm.CreatedAt = fileInfo.Properties.LastModified.Value.DateTime;
-                        itm.FileSize = fileInfo.Properties.Length / 1024;
-                    }
-                    itm.FullPath = fileInfo.Uri.LocalPath;
-                    itm.IsDirectory = false;
-                    itm.Directory = fileInfo.Parent;
-                    itm.File = fileInfo;
-
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        DocumentTreeFiles.Add(itm);
-                    }));
-                    if (!LoadingData) break;
-                }
-            } catch(Exception ex)
-            {
-
-            }
-        }
-
-        void SearchFilesRecursively(string filterString, DirectoryTreeItemViewModel item, bool shouldRecursivelySearch = false)
-        {
-            List<CloudFile> files = new List<CloudFile>();
-            try
-            {
-                azureClient.FindFiles(item.Directory, filterString ?? "", shouldRecursivelySearch, AppendFiles, StatusCallback);
-                StatusCallback($"Search completed: {DocumentTreeFiles.Count()} documents found.");
-            }
-            catch (Exception ex)
-            {
-                files = new List<CloudFile>();
-            }
-            azureClient.CancelOperation = false;
-        }
-
-        void GetDirectoryTree(DirectoryTreeItemViewModel parent)
-        {
-            List<CloudFileDirectory> directories;
-            try
-            {
-                directories = azureClient.GetSubDirectories(parent.Directory);
-
-
-                //var info = new DirectoryInfo(parent.FullPath);
-                //directories = info.GetDirectories();
-                //parent.IsDirExpanded = true;
-            }
-            catch (Exception ex)
-            {
-                directories = new List<CloudFileDirectory>();
-            }
-            foreach (CloudFileDirectory item in directories)
-            {
-                if (String.IsNullOrEmpty(item.Name))
-                    continue;
-
-                DirectoryTreeItemViewModel directory = new DirectoryTreeItemViewModel();
-                directory.FullPath = item.Uri.LocalPath;
-                directory.IsDirectory = true;
-                directory.Name = item.Name;
-                directory.ParentNode = parent;
-                directory.Directory = item;
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    if (!parent.Items.Any(x => x.FullPath == directory.FullPath))
-                        parent.Items.Add(directory);
-                }));
-                //GetDirectoryTree(directory);
-            }
+            parent.SubDirectories = new ObservableCollection<DocumentFolderViewModel>(directories);
         }
 
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            SelectedTreeItem = e.NewValue as DirectoryTreeItemViewModel;
-            SelectedTreeItem.IsDirExpanded = true;
+            SelectedTreeItem = e.NewValue as DocumentFolderViewModel;
+
             Thread td = new Thread(() => {
                 try
                 {
                     LoadingData = true;
 
-                    GetDirectoryTree(SelectedTreeItem);
+                    if (FolderFilterObject.Search_MultiLevel)
+                    {
+                        FolderFilterObject.Search_ParentId = SelectedTreeItem?.Id;
+                        if(SelectedTreeItem.SubDirectories == null || SelectedTreeItem.SubDirectories.Count() < 1)
+                        {
+                            GetDirectoryTree(SelectedTreeItem);
+                        }
+                    }
 
-                    DocumentTreeFiles = new ObservableCollection<DirectoryTreeItemViewModel>();
-                    SearchFilesRecursively(FilterText?.ToLower(), SelectedTreeItem, false);
-
-                    Dispatcher.BeginInvoke((Action)(() => {
-                        SelectedTreeItem.IsDirExpanded = true;
-                    }));
+                    GetFolderDocuments();
                 }
                 catch (Exception ex) { }
                 finally
@@ -512,7 +513,7 @@ namespace SirmiumERPGFC.Views.Documents
                 return;
             }
 
-            string basePath = SelectedTreeItem?.FullPath;
+            string basePath = SelectedTreeItem?.Path;
             if (String.IsNullOrEmpty(basePath))
             {
                 MainWindow.ErrorMessage = ("Bazna putanja ne moze biti prazna!");
@@ -530,16 +531,16 @@ namespace SirmiumERPGFC.Views.Documents
             {
                 Directory.CreateDirectory(newPath);
 
-                DirectoryTreeItemViewModel treeItem = new DirectoryTreeItemViewModel();
-                treeItem.Name = NewFolderName;
-                treeItem.IsDirectory = true;
-                treeItem.FullPath = newPath;
-                treeItem.IsDirExpanded = true;
-                treeItem.ParentNode = SelectedTreeItem;
+                //////DirectoryTreeItemViewModel treeItem = new DirectoryTreeItemViewModel();
+                //////treeItem.Name = NewFolderName;
+                //////treeItem.IsDirectory = true;
+                //////treeItem.FullPath = newPath;
+                //////treeItem.IsDirExpanded = true;
+                //////treeItem.ParentNode = SelectedTreeItem;
 
-                SelectedTreeItem.Items.Add(treeItem);
+                //////SelectedTreeItem.Items.Add(treeItem);
 
-                SelectedTreeItem.IsDirExpanded = true;
+                //////SelectedTreeItem.IsDirExpanded = true;
             } catch(Exception ex)
             {
                 MainWindow.ErrorMessage = "Nije moguće kreirati folder, greška na vezi sa mrežnim diskom!";
@@ -563,12 +564,12 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DirectoryTreeItemViewModel item = SelectedDocumentTreeFile;
+            DocumentFileViewModel item = SelectedDocumentTreeFile;
             if (item != null)
             {
                 try
                 {
-                    azureClient.Delete(item.File);
+                    azureClient.Delete(azureClient.GetFile(item.Path));
                     DocumentTreeFiles.Remove(item);
                 }
                 catch (Exception ex)
@@ -662,7 +663,8 @@ namespace SirmiumERPGFC.Views.Documents
                     {
                         CopyPercentage = 0;
 
-                        azureClient.CopyLocal(SelectedTreeItem.Directory, item.FullPath, (progress, total) => {
+                        azureClient.CopyLocal(azureClient.GetDirectory(SelectedTreeItem.Path), item.FullPath, (progress, total) =>
+                        {
                             long percent = (long)(((double)progress / (double)total) * 100);
                             CopyPercentage = percent;
 
@@ -681,7 +683,7 @@ namespace SirmiumERPGFC.Views.Documents
                         }
                     }
                     IsCopyInProgress = false;
-                    DoFilteringOfData(!String.IsNullOrEmpty(FilterText));
+                    GetFolderDocuments();
                 } catch(Exception ex)
                 {
                     MainWindow.ErrorMessage = ex.Message;
@@ -698,11 +700,11 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void btnRename_Click(object sender, RoutedEventArgs e)
         {
-            DirectoryTreeItemViewModel item = SelectedDocumentTreeFile;
+            DocumentFileViewModel item = SelectedDocumentTreeFile;
 
             if (item != null)
             {
-                item = DocumentTreeFiles.FirstOrDefault(x => x.FullPath == item.FullPath);
+                item = DocumentTreeFiles.FirstOrDefault(x => x.Path == item.Path);
 
                 if (String.IsNullOrEmpty(item.NewName))
                 {
@@ -719,12 +721,12 @@ namespace SirmiumERPGFC.Views.Documents
 
                         string fileWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(item.Name);
                         string newName = item.NewName + item.Name.Replace(fileWithoutExtension, "");
+                        var file = azureClient.GetFile(item.Path);
+                        azureClient.CopyRemote(file, newName);
 
-                        azureClient.CopyRemote(item.File, newName);
+                        azureClient.Delete(file);
 
-                        azureClient.Delete(item.File);
-
-                        DoFilteringOfData(!String.IsNullOrEmpty(FilterText));
+                        GetFolderDocuments();
                     }
                     catch (Exception ex)
                     {
@@ -757,7 +759,7 @@ namespace SirmiumERPGFC.Views.Documents
         {
             Thread td = new Thread(() =>
             {
-                DirectoryTreeItemViewModel item = SelectedDocumentTreeFile;
+                DocumentFileViewModel item = SelectedDocumentTreeFile;
 
                 if (item != null)
                 {
@@ -765,7 +767,7 @@ namespace SirmiumERPGFC.Views.Documents
                     {
                         SelectedDocumentTreeFile = null; LoadingData = true;
 
-                        var file = item.File;
+                        var file = azureClient.GetFile(item.Path);
                         if(file.Exists())
                         {
                             string copiedFile = azureClient.DownloadFileToOpen(file, (progress, total) => {
@@ -779,7 +781,7 @@ namespace SirmiumERPGFC.Views.Documents
                                 return;
 
 
-                            Debug.WriteLine(item.File.Uri.LocalPath);
+                            Debug.WriteLine(item.Path);
 
                             StatusCallback($"Openned documnet: {item.Name}");
 
@@ -866,5 +868,51 @@ namespace SirmiumERPGFC.Views.Documents
                 MainWindow.ErrorMessage = ex.Message;
             }
         }
+
+        private void btnRecalculateIndexes_Click(object sender, RoutedEventArgs e)
+        {
+            Thread td = new Thread(() => {
+                try
+                {
+                    LoadingData = true;
+
+                    var clearResponse = documentFolderService.Clear(MainWindow.CurrentCompanyId);
+
+                    if(clearResponse.Success)
+                    {
+
+                        var azureClient = new AzureDataClient();
+                        var rootFolder = new DocumentFolderViewModel() {
+                            Identifier = Guid.NewGuid(),
+                            
+                            Name = "Documents",
+                            Path = azureClient.rootDirectory.Uri.LocalPath,
+                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                            CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
+                        };
+                        azureClient.IndexingDirectoryChanged += delegate (string currentPath, int totalIndexed)
+                        {
+                            CurrentStatus = $"Indexing: {totalIndexed}. {currentPath}";
+                        };
+                        azureClient.ResetIndexNumber();
+                        azureClient.GetDocumentFolders(documentFolderService, documentFileService, rootFolder, true);
+
+                        //DirectoryTreeItemViewModel dirIndex = azureClient.RecalculateIndex();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MainWindow.ErrorMessage = ex.Message;
+                } finally
+                {
+                    LoadingData = false;
+                }
+
+            });
+            td.IsBackground = true;
+            td.Start();
+        }
+
+
     }
 }

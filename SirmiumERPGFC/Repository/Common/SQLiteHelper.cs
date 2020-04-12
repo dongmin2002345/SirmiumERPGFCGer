@@ -2,6 +2,7 @@
 using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.Common.BusinessPartners;
 using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.DocumentStores;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.InputInvoices;
 using ServiceInterfaces.ViewModels.Common.Invoices;
@@ -763,6 +764,24 @@ namespace SirmiumERPGFC.Repository.Common
                     Code = query.GetString(counter++),
                 };
         }
+
+        public static DocumentFolderViewModel GetDocumentFolder(SqliteDataReader query, ref int counter)
+        {
+            if (query.IsDBNull(counter))
+            {
+                counter += 4;
+                return null;
+            }
+            else
+                return new DocumentFolderViewModel()
+                {
+                    Id = query.GetInt32(counter++),
+                    Identifier = query.GetGuid(counter++),
+                    Name = query.GetString(counter++),
+                    Path = query.GetString(counter++),
+                };
+        }
+
     }
 }
 

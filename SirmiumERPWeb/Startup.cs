@@ -33,6 +33,7 @@ using ServiceCore.Implementations.CalendarAssignments;
 using ServiceCore.Implementations.Common;
 using ServiceCore.Implementations.Common.BusinessPartners;
 using ServiceCore.Implementations.Common.Companies;
+using ServiceCore.Implementations.Common.DocumentStores;
 using ServiceCore.Implementations.Common.Identity;
 using ServiceCore.Implementations.Common.InputInvoices;
 using ServiceCore.Implementations.Common.Invoices;
@@ -56,6 +57,7 @@ using ServiceInterfaces.Abstractions.CalendarAssignments;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.CallCentars;
 using ServiceInterfaces.Abstractions.Common.Companies;
+using ServiceInterfaces.Abstractions.Common.DocumentStores;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Invoices;
@@ -257,7 +259,8 @@ namespace SirmiumERPWeb
             services.AddScoped<IEmployeeAttachmentService, EmployeeAttachmentService>();
             services.AddScoped<IPhysicalPersonAttachmentService, PhysicalPersonAttachmentService>();
             services.AddScoped<IToDoStatusService, ToDoStatusService>();
-
+            services.AddScoped<IDocumentFolderService, DocumentFolderService>();
+            services.AddScoped<IDocumentFileService, DocumentFileService>();
 
             services.AddSignalR();
         }

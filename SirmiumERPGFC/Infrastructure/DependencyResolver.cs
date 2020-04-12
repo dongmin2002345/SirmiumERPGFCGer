@@ -5,6 +5,7 @@ using ServiceInterfaces.Abstractions.CalendarAssignments;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.CallCentars;
 using ServiceInterfaces.Abstractions.Common.Companies;
+using ServiceInterfaces.Abstractions.Common.DocumentStores;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Invoices;
@@ -27,6 +28,7 @@ using ServiceWebApi.Implementations.CalendarAssignments;
 using ServiceWebApi.Implementations.Common.BusinessPartners;
 using ServiceWebApi.Implementations.Common.CallCentars;
 using ServiceWebApi.Implementations.Common.Companies;
+using ServiceWebApi.Implementations.Common.DocumentStores;
 using ServiceWebApi.Implementations.Common.Identity;
 using ServiceWebApi.Implementations.Common.InputInvoices;
 using ServiceWebApi.Implementations.Common.Invoices;
@@ -149,7 +151,10 @@ namespace SirmiumERPGFC.Infrastructure
 
                 Kernel.Bind<IEmployeeAttachmentService>().To<EmployeeAttachmentService>();
                 Kernel.Bind<IPhysicalPersonAttachmentService>().To<PhysicalPersonAttachmentService>();
-                Kernel.Bind<IToDoStatusService>().To<ToDoStatusService>();      
+                Kernel.Bind<IToDoStatusService>().To<ToDoStatusService>();
+
+                Kernel.Bind<IDocumentFolderService>().To<DocumentFolderService>();
+                Kernel.Bind<IDocumentFileService>().To<DocumentFileService>();
             }
         }
     }

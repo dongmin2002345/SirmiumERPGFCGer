@@ -72,204 +72,6 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="AutoUpdater.NET, Version=1.4.11.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autoupdater.NET.Official.1.4.11\lib\net40\AutoUpdater.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ControlzEx.4.0.0-alpha0189\lib\net45\ControlzEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Fluent, Version=7.0.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fluent.Ribbon.7.0.0-alpha0456\lib\net45\Fluent.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=1.2.0.246, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.2.0.0-alpha0095\lib\net46\MahApps.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks, Version=3.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.3.0.0-alpha0037\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Modern, Version=3.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.3.0.0-alpha0037\lib\net46\MahApps.Metro.IconPacks.Modern.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Connections.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Connections.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Connections.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Connections.Client, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Connections.Client.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Connections.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Connections.Common, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Connections.Common.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Connections.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.SignalR.Client, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.SignalR.Client.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.SignalR.Client.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.SignalR.Client.Core.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Client.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.SignalR.Common, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.SignalR.Common.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.SignalR.Protocols.Json, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNetCore.SignalR.Protocols.Json.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Storage.Common, Version=11.1.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.Storage.Common.11.1.3\lib\net452\Microsoft.Azure.Storage.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Storage.File, Version=11.1.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.Storage.File.11.1.3\lib\net452\Microsoft.Azure.Storage.File.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Data.Sqlite, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Sqlite.Core.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Logging, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Office.Interop.Excel.14.0.0.1\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.Design, Version=15.3.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.4.0.0-beta-0134\lib\net45\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="PdfSharp-wpf, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp-wpf.1.50.5147\lib\net30\PdfSharp-wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="PdfSharp.Charting-wpf, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp-wpf.1.50.5147\lib\net30\PdfSharp.Charting-wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.1.11.121, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.11\lib\net45\SQLitePCLRaw.batteries_green.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.1.11.121, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.11\lib\net45\SQLitePCLRaw.batteries_v2.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.core, Version=1.1.11.121, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.core.1.1.11\lib\net45\SQLitePCLRaw.core.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.provider.e_sqlite3, Version=1.1.11.121, Culture=neutral, PublicKeyToken=9c301db686d0bd12, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.11\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Pipelines, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Pipelines.4.5.2\lib\netstandard2.0\System.IO.Pipelines.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Channels, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.4.5.0\lib\netstandard2.0\System.Threading.Channels.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ControlzEx.4.0.0-alpha0189\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="ToastNotifications, Version=2.5.0.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
-      <HintPath>..\packages\ToastNotifications.2.5.0\lib\net40\ToastNotifications.dll</HintPath>
-    </Reference>
-    <Reference Include="ToastNotifications.Messages, Version=2.5.0.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
-      <HintPath>..\packages\ToastNotifications.Messages.2.5.0\lib\net40\ToastNotifications.Messages.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -912,622 +714,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="Common\ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ErrorWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Identity\Views\LoginWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RdlcReports\Invoices\Invoice_PrintPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\BorderFocus.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Languages\StringResources-ENG.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Languages\StringResources-GER.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Languages\StringResources-SRB.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ViewComponents\Dialogs\DocumentPathDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ViewComponents\Dialogs\DocumentSelectDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Notifications\ToDoNotification_Popup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ViewComponents\Notifications\CallCenterNotification_Popup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\ShipmantPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\ToDoStatusPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessCalendar\Calendar_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessCalendar\Calendar_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\AgencyPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\BankPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\BusinessPartnerPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\UserPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\CityPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\CompanyPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\CountryPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\DiscountPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\FamilyMemberPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\LicenceTypePopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\MunicipalityPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\ProfessionPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\RegionPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\ServiceDeliveryPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\StatusPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\TaxAdministrationPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\VatPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Administrations\DataSync-List-Excel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewComponents\Popups\SectorPopup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Administrations\Limitations.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Banks\Bank-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Banks\Bank-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner-Ger-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner-Type-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner-Type-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartnerEmployee-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartners-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_Bank_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_Institution_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_Location_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_Note_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_Phone_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BusinessPartners\BusinessPartner_Types_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CallCentars\CallCentar_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CallCentars\CallCentar_UserList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\CallCentars\CallCentar_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Common\SubmitConfirmation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite-List-Calculation-Add.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite-List-Calculation-Remove.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSiteBusinessPartner-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSiteBusinessPartner-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSiteEmployee-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSiteEmployee-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite_Calculation_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite_Note_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConstructionSites\ConstructionSite_ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Documents\Documents_Mailing_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Documents\DocumentTreeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee_Card_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee_Item_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee_Licence_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee_Note_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee_Profession_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee_ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\FamilyMember-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\FamilyMember-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\LicenceType_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\LicenceType_List_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_Card_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_Item_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_Licence_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_Note_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_Profession_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\PhysicalPerson_ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\Scanner_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\Scanner_Window.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\ToDoAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\ToDoList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\ToDoPrivateList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\ToDoStatus_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\ToDoStatus_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\InputInvoices\InputInvoiceAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\InputInvoices\InputInvoiceList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\InputInvoices\InputInvoice_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\InputInvoices\InputInvoice_Note_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\InputInvoices\InputInvoice_ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Invoices\InvoiceAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Invoices\InvoiceList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Invoices\Invoice_Item_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\CityAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\CityList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Common\CommonConfirmation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Common\DeleteConfirmation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Home\Home.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee-List-AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employees\Employee-List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\CountryAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\CountryList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\MunicipalityAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\MunicipalityList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\RegionAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Locations\RegionList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OutputInvoices\OutputInvoiceAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OutputInvoices\OutputInvoiceList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OutputInvoices\OutputInvoice_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OutputInvoices\OutputInvoice_Note_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\OutputInvoices\OutputInvoice_ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Phonebooks\Phonebook_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Phonebooks\Phonebook_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Phonebooks\Phonebook_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Phonebooks\Phonebook_Note_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Phonebooks\Phonebook_Phone_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Prices\Discount_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Prices\Discount_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Prices\ServiceDelivery_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Prices\ServiceDelivery_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sectors\AgencyAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sectors\AgencyList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sectors\Sector_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sectors\Sector_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Profession\ProfessionAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Profession\ProfessionList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Shipments\Shipment_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Shipments\Shipment_Document_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Shipments\Shipment_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Statuses\Status_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Statuses\Status_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TaxAdministrations\TaxAdministrationAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TaxAdministrations\TaxAdministrationList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Users\UserAddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Users\UserList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Vats\Vat_AddEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Vats\Vat_List.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApiExtension\ApiExtension.csproj">
@@ -1558,7 +744,6 @@
     <Content Include="Resources\erp8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Print.png" />
     <Content Include="Resources\Icons\copy_docs.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1568,7 +753,6 @@
     <Content Include="Resources\Icons\kalendarImaNesto.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\ZvonoBelo.png" />
     <Content Include="Resources\Icons\OtvoriFolder.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1586,9 +770,6 @@
     <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll" />
     <Content Include="SqlServerTypes\x86\msvcr120.dll" />
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll" />
-    <Resource Include="Resources\Farm01.png" />
-    <Resource Include="Resources\GFC.png" />
-    <Resource Include="Resources\erp9.png" />
     <Content Include="Resources\Icons\001-error.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1643,8 +824,6 @@
     <Content Include="Resources\Icons\balance.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Banka Ikonica.png" />
-    <Resource Include="Resources\Icons\Banka_Ikonica.png" />
     <Content Include="Resources\Icons\bank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1687,9 +866,6 @@
     <Content Include="Resources\Icons\chevron3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Clanovi Porodice.png" />
-    <Resource Include="Resources\Icons\Clanovi_Porodice.png" />
-    <Resource Include="Resources\Icons\cityscape.png" />
     <Content Include="Resources\Icons\coins.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1699,12 +875,9 @@
     <Content Include="Resources\Icons\credit-card.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Delatnost.png" />
     <Content Include="Resources\Icons\delete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\DeletePlavi.png" />
-    <Resource Include="Resources\Icons\DeleteBeli.png" />
     <Content Include="Resources\Icons\delivery-man.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1714,35 +887,18 @@
     <Content Include="Resources\Icons\delivery-truck.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Drzava.png" />
     <Content Include="Resources\Icons\Dodavanje_Drzave1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Dodaj01.png" />
-    <Resource Include="Resources\Icons\DuplaStrelcaLeva.png" />
-    <Resource Include="Resources\Icons\DuplaStrelicaDesna.png" />
     <Content Include="Resources\Icons\edit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\EditPlavi.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Icons\EditBela.png" />
     <Content Include="Resources\Icons\excel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Excel01.png" />
-    <Resource Include="Resources\Icons\Excel02.png" />
-    <Resource Include="Resources\Icons\ExcelBeli.png" />
     <Content Include="Resources\Icons\fat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Firme.png" />
-    <Resource Include="Resources\Icons\Firme_Na_Gradilistu.png" />
-    <Resource Include="Resources\Icons\FizickaLica.png" />
-    <Resource Include="Resources\Icons\Firme1.png" />
-    <Resource Include="Resources\Icons\FirmePoGradilistima2.png" />
-    <Resource Include="Resources\Icons\Firme02.png" />
     <Content Include="Resources\Icons\flag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1752,10 +908,6 @@
     <Content Include="Resources\Icons\garbage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Gradovi Ikonica.png" />
-    <Resource Include="Resources\Icons\Gradovi_Ikonica.png" />
-    <Resource Include="Resources\Icons\Gradiliste.png" />
-    <Resource Include="Resources\Icons\Gradiliste02.png" />
     <Content Include="Resources\Icons\Gradovi2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1786,7 +938,6 @@
     <Content Include="Resources\Icons\knife.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Korisnici01.png" />
     <Content Include="Resources\Icons\KurirskaSluzba.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1805,23 +956,15 @@
     <Content Include="Resources\Icons\log-in.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Login01.png" />
     <Content Include="Resources\Icons\logistics.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Lupa.png" />
     <Content Include="Resources\Icons\manager.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Opstina Ikonica.png" />
-    <Resource Include="Resources\Icons\Opstina_Ikonica.png" />
-    <Resource Include="Resources\Icons\Opstine.png" />
     <Content Include="Resources\Icons\Opstine2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Ok02.png" />
-    <Resource Include="Resources\Icons\Ok10.png" />
-    <Resource Include="Resources\Icons\Ogranicenja01.png" />
     <Content Include="Resources\Icons\organization.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1864,7 +1007,6 @@
     <Content Include="Resources\Icons\pallet_transfer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\PDFBeli.png" />
     <Content Include="Resources\Icons\PDVprocenat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1889,8 +1031,6 @@
     <Content Include="Resources\Icons\plus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Porodica01.png" />
-    <Resource Include="Resources\Icons\Plus02.png" />
     <Content Include="Resources\Icons\Popust.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1906,15 +1046,9 @@
     <Content Include="Resources\Icons\printer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Procenat poreza.png" />
     <Content Include="Resources\Icons\process.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Radnik.png" />
-    <Resource Include="Resources\Icons\Radnici_Na_Firmama.png" />
-    <Resource Include="Resources\Icons\Radnici_Na_Gradilistu.png" />
-    <Resource Include="Resources\Icons\RadniciPoGradilistima2.png" />
-    <Resource Include="Resources\Icons\RadniciPoFirmama2.png" />
     <Content Include="Resources\Icons\radniNalog.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1927,7 +1061,6 @@
     <Content Include="Resources\Icons\refresh.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Region.png" />
     <Content Include="Resources\Icons\Regioni.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1949,15 +1082,12 @@
     <Content Include="Resources\Icons\sausage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\saveNovi.png" />
     <Content Include="Resources\Icons\scale.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Icons\search.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Sektori.png" />
-    <Resource Include="Resources\Icons\SearchBela.png" />
     <Content Include="Resources\Icons\seller.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1988,20 +1118,12 @@
     <Content Include="Resources\Icons\tax.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Sunhronizuj.png" />
-    <Resource Include="Resources\Icons\StrelicaDesna.png" />
-    <Resource Include="Resources\Icons\StrelicaLeva.png" />
-    <Resource Include="Resources\Icons\submit.png" />
     <Content Include="Resources\Icons\telephone.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Icons\time_management.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Tip Dozvole.png" />
-    <Resource Include="Resources\Icons\Tip_Dozvole.png" />
-    <Resource Include="Resources\Icons\TIP PP.png" />
-    <Resource Include="Resources\Icons\TIP_PP.png" />
     <Content Include="Resources\Icons\toolbox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2014,22 +1136,18 @@
     <Content Include="Resources\Icons\Ukupni lager.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\VozackaDozvola.png" />
     <Content Include="Resources\Icons\UlazneFakture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\UploadBeli.png" />
     <Content Include="Resources\Icons\warehouse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Icons\weight-scale.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Worker.png" />
     <Content Include="Resources\Icons\zacini.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\Zanimanja.png" />
     <Content Include="Resources\Icons\Zatvori.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2039,11 +1157,9 @@
     <Content Include="Resources\Icons\_cancel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Icons\_correct.png" />
     <Content Include="Resources\image005.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Images\saveNovi.png" />
     <Content Include="Resources\Bundesagentur.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2088,4 +1204,354 @@
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets')" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets')" />
+  <ItemGroup>
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\ApiExtension\bin\Debug\ApiExtension.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Autoupdater.NET.Official.1.4.11\lib\net40\AutoUpdater.NET.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\ControlzEx.4.0.0-alpha0189\lib\net45\ControlzEx.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Fluent.Ribbon.7.0.0-alpha0456\lib\net45\Fluent.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\GlobalValidations\bin\Debug\net461\GlobalValidations.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\MahApps.Metro.2.0.0-alpha0095\lib\net46\MahApps.Metro.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\MahApps.Metro.IconPacks.3.0.0-alpha0037\lib\net46\MahApps.Metro.IconPacks.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\MahApps.Metro.IconPacks.Modern.3.0.0-alpha0037\lib\net46\MahApps.Metro.IconPacks.Modern.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.Connections.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Connections.Abstractions.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.Http.Connections.Client.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Connections.Client.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.Http.Connections.Common.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Connections.Common.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.SignalR.Client.Core.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Client.Core.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.SignalR.Client.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Client.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.SignalR.Common.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Common.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.AspNetCore.SignalR.Protocols.Json.1.1.0\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Azure.Storage.Common.11.1.3\lib\net452\Microsoft.Azure.Storage.Common.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Azure.Storage.File.11.1.3\lib\net452\Microsoft.Azure.Storage.File.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Microsoft.CSharp.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Data.Sqlite.Core.2.2.0-preview2-35157\lib\netstandard2.0\Microsoft.Data.Sqlite.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.Configuration.Binder.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.Logging.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.Office.Interop.Excel.14.0.0.1\lib\net20\Microsoft.Office.Interop.Excel.dll">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </ReferencePath>
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Common.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Design.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.WinForms.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\Microsoft.Win32.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\mscorlib.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\netfx.force.conflicts.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\netstandard.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Ninject.4.0.0-beta-0134\lib\net45\Ninject.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\PDFsharp-wpf.1.50.5147\lib\net30\PdfSharp-wpf.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\PDFsharp-wpf.1.50.5147\lib\net30\PdfSharp.Charting-wpf.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\PresentationFramework.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\ServiceInterfaces\bin\Debug\net461\ServiceInterfaces.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\ServiceWebApi\bin\Debug\ServiceWebApi.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\SQLitePCLRaw.bundle_green.1.1.11\lib\net45\SQLitePCLRaw.batteries_green.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\SQLitePCLRaw.bundle_green.1.1.11\lib\net45\SQLitePCLRaw.batteries_v2.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\SQLitePCLRaw.core.1.1.11\lib\net45\SQLitePCLRaw.core.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.11\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.AppContext.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Collections.Concurrent.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Collections.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Collections.NonGeneric.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Collections.Specialized.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.ComponentModel.DataAnnotations.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.ComponentModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.ComponentModel.EventBasedAsync.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.ComponentModel.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.ComponentModel.TypeConverter.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Configuration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Console.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Data.Common.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Deployment.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.Contracts.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.Debug.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.FileVersionInfo.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.Process.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.StackTrace.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.TextWriterTraceListener.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.Tools.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.TraceSource.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Diagnostics.Tracing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Drawing.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Dynamic.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Globalization.Calendars.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Globalization.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Globalization.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.Compression.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.Compression.ZipFile.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.FileSystem.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.FileSystem.DriveInfo.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.FileSystem.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.FileSystem.Watcher.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.IsolatedStorage.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.MemoryMappedFiles.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.IO.Pipelines.4.5.2\lib\netstandard2.0\System.IO.Pipelines.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.Pipes.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.UnmanagedMemoryStream.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Linq.Expressions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Linq.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Linq.Queryable.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.Http.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.NameResolution.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.NetworkInformation.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.Ping.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.Requests.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.Security.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.Sockets.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.WebHeaderCollection.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.WebSockets.Client.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.WebSockets.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Numerics.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.ObjectModel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Reflection.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Reflection.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Reflection.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Resources.Reader.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Resources.ResourceManager.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Resources.Writer.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.CompilerServices.VisualC.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.Handles.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.InteropServices.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.Numerics.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.Serialization.Formatters.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.Serialization.Json.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.Serialization.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Runtime.Serialization.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.Claims.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.Cryptography.Algorithms.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.Cryptography.Csp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.Cryptography.Encoding.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.Cryptography.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.Cryptography.X509Certificates.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.Principal.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Security.SecureString.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Text.Encoding.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Text.Encoding.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Text.RegularExpressions.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.Threading.Channels.4.5.0\lib\netstandard2.0\System.Threading.Channels.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Threading.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Threading.Overlapped.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Threading.Tasks.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Threading.Tasks.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Threading.Thread.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Threading.ThreadPool.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Threading.Timer.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.ValueTuple.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Web.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Windows.Forms.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\ControlzEx.4.0.0-alpha0189\lib\net45\System.Windows.Interactivity.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Xml.ReaderWriter.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Xml.XDocument.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Xml.XmlDocument.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Xml.XmlSerializer.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Xml.XPath.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Xml.XPath.XDocument.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\ToastNotifications.2.5.0\lib\net40\ToastNotifications.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\ToastNotifications.Messages.2.5.0\lib\net40\ToastNotifications.Messages.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\WindowsBase.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\WindowsFormsIntegration.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\WpfAppCommonCode\bin\Debug\WpfAppCommonCode.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.DataGrid.dll" />
+    <ReferencePath Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.Toolkit.dll" />
+    <ReferencePath Include="obj\Debug\Interop.WIA.dll">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </ReferencePath>
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.Reflection.Emit.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.Reflection.Emit.ILGeneration.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.Reflection.Emit.Lightweight.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.ServiceModel.Duplex.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.ServiceModel.Http.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.ServiceModel.NetTcp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.ServiceModel.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Facades\System.ServiceModel.Security.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Common\ReportWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ErrorWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Identity\Views\LoginWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\MainWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\RdlcReports\Invoices\Invoice_PrintPage.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Dialogs\DocumentPathDialog.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Dialogs\DocumentSelectDialog.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Notifications\ToDoNotification_Popup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Notifications\CallCenterNotification_Popup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\ShipmantPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\ToDoStatusPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessCalendar\Calendar_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessCalendar\Calendar_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\AgencyPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\BankPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\BusinessPartnerPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\UserPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\CityPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\CompanyPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\CountryPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\DiscountPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\FamilyMemberPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\LicenceTypePopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\MunicipalityPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\ProfessionPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\RegionPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\ServiceDeliveryPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\StatusPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\TaxAdministrationPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\VatPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Administrations\DataSync-List-Excel.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\ViewComponents\Popups\SectorPopup.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Administrations\Limitations.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Banks\Bank-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Banks\Bank-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner-Ger-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner-Type-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner-Type-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartnerEmployee-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartnerEmployee-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartners-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_Bank_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_Institution_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_Location_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_Note_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_Phone_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_ReportWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\BusinessPartners\BusinessPartner_Types_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\CallCentars\CallCentar_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\CallCentars\CallCentar_UserList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\CallCentars\CallCentar_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Common\SubmitConfirmation.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite-List-Calculation-Add.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite-List-Calculation-Remove.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSiteBusinessPartner-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSiteBusinessPartner-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSiteEmployee-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSiteEmployee-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite_Calculation_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite_Note_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\ConstructionSites\ConstructionSite_ReportWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Documents\Documents_Mailing_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Documents\DocumentTreeView.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee_Card_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee_Item_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee_Licence_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee_Note_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee_Profession_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee_ReportWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\FamilyMember-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\FamilyMember-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\LicenceType_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\LicenceType_List_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_Card_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_Item_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_Licence_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_Note_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_Profession_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\PhysicalPerson_ReportWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\Scanner_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\Scanner_Window.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\ToDoAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\ToDoList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\ToDoPrivateList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\ToDoStatus_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\ToDoStatus_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\InputInvoices\InputInvoiceAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\InputInvoices\InputInvoiceList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\InputInvoices\InputInvoice_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\InputInvoices\InputInvoice_Note_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\InputInvoices\InputInvoice_ReportWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Invoices\InvoiceAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Invoices\InvoiceList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Invoices\Invoice_Item_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\CityAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\CityList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Common\CommonConfirmation.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Common\DeleteConfirmation.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Home\Home.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee-List-AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Employees\Employee-List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\CountryAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\CountryList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\MunicipalityAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\MunicipalityList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\RegionAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Locations\RegionList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\OutputInvoices\OutputInvoiceAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\OutputInvoices\OutputInvoiceList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\OutputInvoices\OutputInvoice_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\OutputInvoices\OutputInvoice_Note_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\OutputInvoices\OutputInvoice_ReportWindow.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Phonebooks\Phonebook_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Phonebooks\Phonebook_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Phonebooks\Phonebook_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Phonebooks\Phonebook_Note_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Phonebooks\Phonebook_Phone_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Prices\Discount_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Prices\Discount_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Prices\ServiceDelivery_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Prices\ServiceDelivery_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Sectors\AgencyAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Sectors\AgencyList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Sectors\Sector_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Sectors\Sector_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Profession\ProfessionAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Profession\ProfessionList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Shipments\Shipment_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Shipments\Shipment_Document_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Shipments\Shipment_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Statuses\Status_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Statuses\Status_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\TaxAdministrations\TaxAdministrationAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\TaxAdministrations\TaxAdministrationList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Users\UserAddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Users\UserList.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Vats\Vat_AddEdit.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\Views\Vats\Vat_List.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\App.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\SirmiumERPGFC_Content.g.cs" />
+    <Compile Include="E:\source\repos\zdravko83\SirmiumERPGFCGer\SirmiumERPGFC\obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
 </Project>

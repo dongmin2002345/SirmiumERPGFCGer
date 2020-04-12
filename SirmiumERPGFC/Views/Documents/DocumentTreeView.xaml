@@ -53,11 +53,26 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
+                <!--<Button Grid.Row="0" x:Name="btnRecalculateIndexes" Margin="0,2,0,0" ToolTip="Indeksiraj foldere. Ova operacija će potrajati, u zavisnosti od količine podataka!" Click="btnRecalculateIndexes_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text=" INDEKSIRAJ "  FontWeight="Regular" Foreground="white"/>
+                    </StackPanel>
+                </Button>-->
 
-                <Button Grid.Row="0" x:Name="btnEnterFolderName" Margin="0,2,0,0" ToolTip="Obriši">
+
+                <TextBlock Grid.Row="0" Text="Pretrazi foldere: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <TextBox Grid.Row="1" Text="{Binding Path=FolderFilterObject.Search_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
+                         metro:TextBoxHelper.ClearTextButton="True"
+                    VerticalAlignment="Center" Margin="5" IsEnabled="{Binding Path=CanInteract}" Height="24" VerticalContentAlignment="Center"/>
+
+
+                <Button Grid.Row="2" x:Name="btnEnterFolderName" Margin="0,2,0,0" ToolTip="Obriši">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock Text=" DODAJ FOLDER "  FontWeight="Regular" Foreground="white"/>
@@ -107,7 +122,7 @@
                     </Border>
                 </Popup>
                 
-                <TreeView Grid.Row="1" ItemsSource="{Binding Path=DocumentTreeItems}" SelectedItemChanged="TreeView_SelectedItemChanged" TreeViewItem.Selected="TreeView_Selected">
+                <TreeView Grid.Row="3" ItemsSource="{Binding Path=DocumentTreeItems}" SelectedItemChanged="TreeView_SelectedItemChanged" TreeViewItem.Selected="TreeView_Selected">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
@@ -135,7 +150,7 @@
                         </Style>
                     </TreeView.ItemContainerStyle>
                     <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type common:DirectoryTreeItemViewModel}" ItemsSource="{Binding Path=Items}">
+                        <HierarchicalDataTemplate DataType="{x:Type common:DirectoryTreeItemViewModel}" ItemsSource="{Binding Path=SubDirectories}">
                             <!--<Button Content="{Binding Name}" Click="TreeViewButton_Click" CommandParameter="{Binding}" />-->
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
@@ -285,7 +300,9 @@
                       SelectionMode="Single">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Naziv"  Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn Header="Veličina" Binding="{Binding FileSize, StringFormat={}{0} KB}" IsReadOnly="True" Width="Auto"/>
+                        <DataGridTextColumn Header="Folder" Binding="{Binding DocumentFolder.Name}" IsReadOnly="True" Width="Auto"/>
+                        <DataGridTextColumn Header="Veličina" Binding="{Binding Size, StringFormat={}{0} KB}" IsReadOnly="True" Width="Auto"/>
+                        <DataGridTextColumn Header="Kreirano" Binding="{Binding CreatedAt}" IsReadOnly="True" Width="Auto"/>
                         <!--<DataGridTextColumn Header="Kreirano" Binding="{Binding CreatedAt}" IsReadOnly="True" Width="Auto"/>-->
                     </DataGrid.Columns>
                 </DataGrid>

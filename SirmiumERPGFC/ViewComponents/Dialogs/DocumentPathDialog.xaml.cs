@@ -206,7 +206,7 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
                 folder.Directory = azureClient.rootDirectory;
 
 
-                GetDirectoryTree(folder);
+                azureClient.GetDirectoryStructure(folder);
 
 
 

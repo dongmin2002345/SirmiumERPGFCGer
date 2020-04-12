@@ -58,7 +58,9 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
                 return;
             }
 
-            SelectedDocument = selectedDoc;
+
+            // TODO: Zameni tip dokumenta
+            SelectedDocument = null;//selectedDoc;
             this.DialogResult = true;
         }
 

@@ -3,6 +3,7 @@ using DomainCore.CalendarAssignments;
 using DomainCore.Common.BusinessPartners;
 using DomainCore.Common.CallCentars;
 using DomainCore.Common.Companies;
+using DomainCore.Common.DocumentStores;
 using DomainCore.Common.Identity;
 using DomainCore.Common.InputInvoices;
 using DomainCore.Common.Invoices;
@@ -169,6 +170,9 @@ namespace RepositoryCore.Context
         public DbSet<ToDoStatus> ToDoStatuses { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        public DbSet<DocumentFolder> DocumentFolders { get; set; }
+        public DbSet<DocumentFile> DocumentFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
