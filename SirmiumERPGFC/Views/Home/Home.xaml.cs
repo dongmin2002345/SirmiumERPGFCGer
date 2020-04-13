@@ -68,7 +68,7 @@ namespace SirmiumERPGFC.Views.Home
         private IBusinessPartnerLocationService businessPartnerLocationService; 
         private IBusinessPartnerNoteService businessPartnerNoteService; 
         //private IBusinessPartnerOrganizationUnitService businessPartnerOrganizationUnitService; // FALI SYNC METOD u SQLiteRepository?
-        private IBusinessPartnerPhoneService businessPartnerPhoneService; 
+        private IBusinessPartnerPhoneService businessPartnerPhoneService;
 
 
         private IEmployeeService employeeService; 
@@ -77,7 +77,7 @@ namespace SirmiumERPGFC.Views.Home
         private IEmployeeLicenceService employeeLicenceService; 
         private IEmployeeItemService employeeItemService; 
         private IEmployeeDocumentService employeeDocumentService; 
-        private IEmployeeCardService employeeCardService; 
+        private IEmployeeCardService employeeCardService;
 
         private ILicenceTypeService licenceTypeService; 
         private IFamilyMemberService familyMemberService; 

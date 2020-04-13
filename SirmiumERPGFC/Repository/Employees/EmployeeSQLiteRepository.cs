@@ -261,7 +261,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         "emp.DateOfBirth, emp.Gender, emp.CountryId, emp.CountryIdentifier, emp.CountryCode, emp.CountryName, emp.RegionId, emp.RegionIdentifier, emp.RegionCode, emp.RegionName, " +
                         "emp.MunicipalityId, emp.MunicipalityIdentifier, emp.MunicipalityCode, emp.MunicipalityName, emp.CityId, emp.CityIdentifier, emp.CityCode, emp.CityName, emp.Address, " +
                         "emp.PassportCountryId, emp.PassportCountryIdentifier, emp.PassportCountryCode, emp.PassportCountryName, emp.PassportCityId, emp.PassportCityIdentifier, emp.PassportCityCode, emp.PassportCityName, " +
-                        "emp.Passport, emp.PassportMup, emp.VisaFrom, emp.VisaTo, " +
+                        "emp.Passport, emp.PassportMup, emp.VisaFrom, emp.VisaTo, emp.IsVisaApplied, " +
                         "emp.ResidenceCountryId, emp.ResidenceCountryIdentifier, emp.ResidenceCountryCode, emp.ResidenceCountryName, " +
                         "emp.ResidenceCityId, emp.ResidenceCityIdentifier, emp.ResidenceCityCode, emp.ResidenceCityName, emp.ResidenceAddress, " +
                         "emp.EmbassyDate, emp.VisaDate, emp.VisaValidFrom, emp.VisaValidTo, emp.WorkPermitFrom, emp.WorkPermitTo, " +
@@ -316,6 +316,7 @@ namespace SirmiumERPGFC.Repository.Employees
                         dbEntry.PassportMup = SQLiteHelper.GetString(query, ref counter);
                         dbEntry.VisaFrom = SQLiteHelper.GetDateTime(query, ref counter);
                         dbEntry.VisaTo = SQLiteHelper.GetDateTime(query, ref counter);
+                        dbEntry.IsVisaApplied = SQLiteHelper.GetBoolean(query, ref counter);
                         dbEntry.ResidenceCountry = SQLiteHelper.GetCountry(query, ref counter);
                         dbEntry.ResidenceCity = SQLiteHelper.GetCity(query, ref counter);
                         dbEntry.ResidenceAddress = SQLiteHelper.GetString(query, ref counter);
