@@ -1,12 +1,20 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Azure.Storage.File;
 using Microsoft.Win32;
+using Ninject;
+using ServiceInterfaces.Abstractions.Common.DocumentStores;
+using ServiceInterfaces.Messages.Common.Invoices;
+using ServiceInterfaces.ViewModels.Common.DocumentStores;
 using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Helpers;
+using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.DocumentStores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,9 +38,9 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
     public partial class DocumentPathDialog : MetroWindow, INotifyPropertyChanged
     {
         #region DocumentTreeItems
-        private ObservableCollection<DirectoryTreeItemViewModel> _DocumentTreeItems;
+        private ObservableCollection<DocumentFolderViewModel> _DocumentTreeItems;
 
-        public ObservableCollection<DirectoryTreeItemViewModel> DocumentTreeItems
+        public ObservableCollection<DocumentFolderViewModel> DocumentTreeItems
         {
             get { return _DocumentTreeItems; }
             set
@@ -45,6 +53,7 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
             }
         }
         #endregion
+
 
         #region LoadingData
         private bool _LoadingData;
@@ -101,9 +110,9 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
 
 
         #region SelectedTreeItem
-        private DirectoryTreeItemViewModel _SelectedTreeItem;
+        private DocumentFolderViewModel _SelectedTreeItem;
 
-        public DirectoryTreeItemViewModel SelectedTreeItem
+        public DocumentFolderViewModel SelectedTreeItem
         {
             get { return _SelectedTreeItem; }
             set
@@ -118,7 +127,9 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
                     else
                         CanCreateFolder = false;
 
-                    SelectedPath = _SelectedTreeItem?.FullPath;
+                    FolderFilterObject.Search_ParentId = SelectedTreeItem?.Id;
+
+                    SelectedPath = _SelectedTreeItem?.Path;
                     //if(_SelectedTreeItem )
                 }
             }
@@ -176,18 +187,60 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
         }
         #endregion
 
+        #region FolderFilterObject
+        private DocumentFolderViewModel _FolderFilterObject = new DocumentFolderViewModel() { Search_MultiLevel = true, Search_ParentId = null };
+
+        public DocumentFolderViewModel FolderFilterObject
+        {
+            get { return _FolderFilterObject; }
+            set
+            {
+                if (_FolderFilterObject != value)
+                {
+                    _FolderFilterObject = value;
+                    NotifyPropertyChanged("FolderFilterObject");
+                }
+            }
+        }
+        #endregion
+
         AzureDataClient azureClient;
+        IDocumentFolderService documentFolderService;
         public DocumentPathDialog()
         {
             InitializeComponent();
+            documentFolderService = DependencyResolver.Kernel.Get<IDocumentFolderService>();
 
             this.DataContext = this;
+            FolderFilterObject.PropertyChanged += FolderFilterObject_PropertyChanged;
 
             azureClient = new AzureDataClient();
 
             Thread td = new Thread(() => DisplayFolderTree());
             td.IsBackground = true;
             td.Start();
+        }
+        private void FolderFilterObject_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(e?.PropertyName))
+            {
+                if (e.PropertyName == "Search_Name")
+                {
+                    if (String.IsNullOrEmpty(FolderFilterObject.Search_Name))
+                    {
+                        FolderFilterObject.Search_MultiLevel = true;
+                    }
+                    else
+                    {
+                        FolderFilterObject.Search_MultiLevel = false;
+                        SelectedTreeItem = null;
+                    }
+
+                    Thread td = new Thread(() => DisplayFolderTree());
+                    td.IsBackground = true;
+                    td.Start();
+                }
+            }
         }
 
         private void DisplayFolderTree()
@@ -196,25 +249,35 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
             {
                 LoadingData = true;
 
-
-
-                DirectoryTreeItemViewModel folder = new DirectoryTreeItemViewModel();
-                folder.Name = "Dokumenti";
-                folder.IsDirectory = true;
-                folder.IsDirExpanded = true;
-                folder.FullPath = AppConfigurationHelper.GetConfiguration()?.AzureNetworkDrive?.DriveLetter + "\\";
-                folder.Directory = azureClient.rootDirectory;
-
-
-                azureClient.GetDirectoryStructure(folder);
-
-
-
-                DocumentTreeItems = new ObservableCollection<DirectoryTreeItemViewModel>()
+                DocumentFolderListResponse response;
+                if (FolderFilterObject.Search_MultiLevel)
                 {
-                    folder
-                };
-                SelectedTreeItem = folder;
+                    response = new DocumentFolderSQLiteRepository().GetRootFolder(MainWindow.CurrentCompanyId);
+                    if (response.Success)
+                    {
+                        DocumentTreeItems = new ObservableCollection<DocumentFolderViewModel>(response?.DocumentFolders ?? new List<DocumentFolderViewModel>());
+
+                        if (DocumentTreeItems.Count() > 0)
+                        {
+                            SelectedTreeItem = DocumentTreeItems[0];
+                            GetDirectoryTree(SelectedTreeItem);
+                        }
+                    }
+                    else
+                        MainWindow.ErrorMessage = response.Message;
+                }
+                else
+                {
+                    response = new DocumentFolderSQLiteRepository().GetDocumentFolders(MainWindow.CurrentCompanyId, FolderFilterObject);
+                    if (response.Success)
+                    {
+                        DocumentTreeItems = new ObservableCollection<DocumentFolderViewModel>(response?.DocumentFolders ?? new List<DocumentFolderViewModel>());
+                    }
+                    else
+                        MainWindow.ErrorMessage = response.Message;
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -225,57 +288,40 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
             }
         }
 
-        void GetDirectoryTree(DirectoryTreeItemViewModel parent)
+        void GetDirectoryTree(DocumentFolderViewModel parent)
         {
-            List<CloudFileDirectory> directories;
+            List<DocumentFolderViewModel> directories;
             try
             {
-                directories = azureClient.GetSubDirectories(parent.Directory);
+                var response = new DocumentFolderSQLiteRepository().GetDocumentFolders(MainWindow.CurrentCompanyId, FolderFilterObject, false);
 
-
-                //var info = new DirectoryInfo(parent.FullPath);
-                //directories = info.GetDirectories();
-                //parent.IsDirExpanded = true;
+                directories = response?.DocumentFolders ?? new List<DocumentFolderViewModel>();
             }
             catch (Exception ex)
             {
-                directories = new List<CloudFileDirectory>();
+                directories = new List<DocumentFolderViewModel>();
             }
-            foreach (CloudFileDirectory item in directories)
-            {
-                if (String.IsNullOrEmpty(item.Name))
-                    continue;
 
-                DirectoryTreeItemViewModel directory = new DirectoryTreeItemViewModel();
-                directory.FullPath = item.Uri.LocalPath;
-                directory.IsDirectory = true;
-                directory.Name = item.Name;
-                directory.ParentNode = parent;
-                directory.Directory = item;
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    if (!parent.Items.Any(x => x.FullPath == directory.FullPath))
-                        parent.Items.Add(directory);
-                }));
-                //GetDirectoryTree(directory);
-            }
+            parent.SubDirectories = new ObservableCollection<DocumentFolderViewModel>(directories);
         }
-
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            SelectedTreeItem = e.NewValue as DirectoryTreeItemViewModel;
-            SelectedTreeItem.IsDirExpanded = true;
+            SelectedTreeItem = e.NewValue as DocumentFolderViewModel;
+
             Thread td = new Thread(() => {
                 try
                 {
                     LoadingData = true;
 
-                    GetDirectoryTree(SelectedTreeItem);
-
-                    Dispatcher.BeginInvoke((Action)(() => {
-                        SelectedTreeItem.IsDirExpanded = true;
-                    }));
+                    if (FolderFilterObject.Search_MultiLevel)
+                    {
+                        FolderFilterObject.Search_ParentId = SelectedTreeItem?.Id;
+                        if (SelectedTreeItem != null && SelectedTreeItem.SubDirectories == null || SelectedTreeItem.SubDirectories.Count() < 1)
+                        {
+                            GetDirectoryTree(SelectedTreeItem);
+                        }
+                    }
                 }
                 catch (Exception ex) { }
                 finally
@@ -286,6 +332,7 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
             td.IsBackground = true;
             td.Start();
         }
+
 
 
 
@@ -319,47 +366,82 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
         }
 
 
-
-        private void btnYes_Click(object sender, RoutedEventArgs e)
+        async Task<string> GetNewFolderName()
         {
+            var parentWindow = this;
+            //MetroWindow parentWindow = Window.GetWindow(this) as MetroWindow;
+            if (parentWindow != null)
+            {
+                return await parentWindow.ShowInputAsync("Kreiraj folder", "Unesite ime foldera",
+                    new MetroDialogSettings()
+                    {
+                        DialogResultOnCancel = MessageDialogResult.Canceled,
+                        AffirmativeButtonText = "Potvrdi",
+                        NegativeButtonText = "Otkaži",
+                        DefaultButtonFocus = MessageDialogResult.Affirmative,
+                    });
+            }
+            return null;
+        }
+
+        private async void btnCreateFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var result = await GetNewFolderName();
+
+            NewFolderName = result;
+
             if (String.IsNullOrEmpty(NewFolderName))
             {
                 MessageBox.Show("Naziv foldera ne moze biti prazan!");
                 return;
             }
 
-            string basePath = SelectedTreeItem?.FullPath;
+            string basePath = SelectedTreeItem?.Path;
             if (String.IsNullOrEmpty(basePath))
             {
                 MessageBox.Show("Bazna putanja ne moze biti prazna!");
                 return;
             }
 
-            string newPath = System.IO.Path.Combine(basePath, NewFolderName);
-            if (Directory.Exists(newPath))
-            {
-                MessageBox.Show("Folder sa ovim nazivom vec postoji!");
-                return;
-            }
-
             try
             {
-                Directory.CreateDirectory(newPath);
+                var parent = azureClient.GetDirectory(basePath);
+                if (!parent.Exists())
+                    throw new Exception("Odabrani folder ne postoji!");
 
-                DirectoryTreeItemViewModel treeItem = new DirectoryTreeItemViewModel();
-                treeItem.Name = NewFolderName;
-                treeItem.IsDirectory = true;
-                treeItem.FullPath = newPath;
-                treeItem.IsDirExpanded = true;
-                treeItem.ParentNode = SelectedTreeItem;
+                var childFolder = parent.GetDirectoryReference(NewFolderName);
+                if (childFolder.Exists())
+                    throw new Exception("Folder sa zadatim imenom već postoji!");
 
-                SelectedTreeItem.Items.Add(treeItem);
+                childFolder.Create();
 
-                SelectedTreeItem.IsDirExpanded = true;
+                var newDir = new DocumentFolderViewModel()
+                {
+                    Identifier = Guid.NewGuid(),
+                    ParentFolder = SelectedTreeItem,
+                    Name = NewFolderName,
+                    Path = childFolder.Uri.LocalPath,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    Company = new ServiceInterfaces.ViewModels.Common.Companies.CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                    CreatedBy = new ServiceInterfaces.ViewModels.Common.Identity.UserViewModel() { Id = MainWindow.CurrentUserId }
+                };
+
+                var response = documentFolderService.Create(newDir);
+                if(response.Success)
+                {
+                    newDir.Id = response?.DocumentFolder?.Id ?? 0;
+                    new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((done, toDo) => {
+                        Debug.WriteLine($"Syncing folders: {done} out of {toDo}");
+                    }));
+                    SelectedTreeItem.SubDirectories.Add(newDir);
+                    SelectedTreeItem.IsDirExpanded = true;
+                    MainWindow.SuccessMessage = "Folder je uspešno kreiran!";
+                }
             }
             catch (Exception ex)
             {
-                MainWindow.ErrorMessage = "Nije moguće kreirati folder, greška na vezi sa mrežnim diskom!";
+                MainWindow.ErrorMessage = ex.Message;
             }
 
             NewFolderName = "";
@@ -380,6 +462,46 @@ namespace SirmiumERPGFC.ViewComponents.Dialogs
             CancelDialog = true;
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void btnDeleteFolder_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedTreeItem != null)
+            {
+                Thread td = new Thread(() => {
+                    try
+                    {
+                        var directory = azureClient.GetDirectory(SelectedTreeItem.Path);
+
+                        var subItemsCount = directory.ListFilesAndDirectories().Count();
+                        if (subItemsCount > 0)
+                        {
+                            MainWindow.ErrorMessage = "Možete brisati samo prazne foldere!";
+                            return;
+                        }
+
+                        var response = documentFolderService.Delete(SelectedTreeItem);
+                        if (response.Success)
+                        {
+                            directory.Delete();
+
+                            new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((done, toDo) => {
+                                Debug.WriteLine($"Syncing folders: {done} out of {toDo}");
+                            }));
+                            DisplayFolderTree();
+                        }
+                        else
+                            MainWindow.ErrorMessage = response.Message;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MainWindow.ErrorMessage = ex.Message;
+                    }
+                });
+                td.IsBackground = true;
+                td.Start();
+            }
         }
     }
 }

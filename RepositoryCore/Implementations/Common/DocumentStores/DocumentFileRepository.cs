@@ -68,8 +68,6 @@ namespace RepositoryCore.Implementations.Common.DocumentStores
                     command.Parameters.AddWithValue("@DocumentFolderId", (object)document?.DocumentFolderId ?? DBNull.Value);
                     command.Parameters.AddWithValue("@UpdatedAt", DateTime.Now);
 
-                    connection.Open();
-
                     command.ExecuteScalar();
                 }
                 else
@@ -122,6 +120,7 @@ namespace RepositoryCore.Implementations.Common.DocumentStores
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = "UPDATE DocumentFiles SET " +
@@ -132,6 +131,9 @@ namespace RepositoryCore.Implementations.Common.DocumentStores
                     command.Parameters.AddWithValue("@Id", id);
                     command.Parameters.AddWithValue("@Active", (object)false);
                     command.Parameters.AddWithValue("@UpdatedAt", DateTime.Now);
+
+
+                    command.ExecuteNonQuery();
                 }
             }
             var DocumentFile = GetDocumentFile(id);
@@ -145,7 +147,7 @@ namespace RepositoryCore.Implementations.Common.DocumentStores
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = selectQuery +
-                        "WHERE Id = @Id ";
+                        "WHERE doc.Id = @Id ";
 
                     command.Parameters.AddWithValue("@Id", id);
 

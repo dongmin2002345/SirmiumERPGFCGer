@@ -17,66 +17,44 @@
         <local1:CollapsibleVisibilityConverter x:Key="CollapsibleVisibilityConverter" />
     </metro:MetroWindow.Resources>
     <Border BorderBrush="SteelBlue" BorderThickness="2">
-        <Grid Margin="2">
+
+        <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
 
-            <Button Grid.Row="0" x:Name="btnEnterFolderName" Margin="0,2,0,0" ToolTip="Dodaj folder" IsEnabled="{Binding Path=CanInteract}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                    <TextBlock Text=" DODAJ FOLDER "  FontWeight="Regular" Foreground="white"/>
-                </StackPanel>
-            </Button>
-            <Popup x:Name="popEnterFolderName" PlacementTarget="{Binding ElementName=btnEnterFolderName}" Placement="Bottom" Focusable="True" StaysOpen="True" AllowsTransparency="True">
-                <Popup.IsOpen>
-                    <MultiBinding Converter="{StaticResource MultiConverter}">
-                        <Binding ElementName="btnEnterFolderName" Path="IsFocused" Mode="OneWay"/>
-                        <Binding ElementName="txtEnterFolderName" Path="IsFocused" Mode="OneWay"/>
-                        <Binding ElementName="btnYes" Path="IsMouseCaptured" Mode="OneWay"/>
-                    </MultiBinding>
-                </Popup.IsOpen>
-                <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="DeepSkyBlue" BorderThickness="5" CornerRadius="15">
-                    <Grid Width="300" Margin="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+            <TextBlock Grid.Row="1" Text="Pretraži foldere: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+            <TextBox Grid.Row="2" Text="{Binding Path=FolderFilterObject.Search_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
+                         metro:TextBoxHelper.ClearTextButton="True" 
+                    VerticalAlignment="Center" Margin="0,2,0,2" IsEnabled="{Binding Path=CanInteract}" Height="24" VerticalContentAlignment="Center"/>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnEnterFolderName" Margin="0,2,0,0" ToolTip="Dodaj folder" Click="btnCreateFolder_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text=" DODAJ "  FontWeight="Regular" Foreground="white"/>
+                    </StackPanel>
+                </Button>
+                
+                <Button x:Name="btnDeleteFolder" Grid.Column="1" Margin="2,2,0,0" ToolTip="Obriši" Click="btnDeleteFolder_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock Text=" OBRIŠI "  FontWeight="Regular" Foreground="white"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
 
-                        <TextBlock Text="UNESITE NAZIV FOLDERA:" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
-                        <TextBox Grid.Row="1" Margin="2" Height="24" FontSize="18" x:Name="txtEnterFolderName" Text="{Binding Path=NewFolderName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <Separator Grid.Row="2" Margin="2" />
 
-                        <Grid Grid.Row="3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" x:Name="btnYes" Click="btnYes_Click" Margin="2" Background="DeepSkyBlue">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                    <TextBlock Text=" DA "  FontWeight="Bold" Foreground="white"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Grid.Column="1" x:Name="btnCancel" Margin="2" Background="DeepSkyBlue">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                    <TextBlock Text=" NE "  FontWeight="Bold" Foreground="white"/>
-                                </StackPanel>
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Border>
-            </Popup>
-
-            <TreeView Grid.Row="1" ItemsSource="{Binding Path=DocumentTreeItems}"  IsEnabled="{Binding Path=CanInteract}"
-                          SelectedItemChanged="TreeView_SelectedItemChanged" TreeViewItem.Selected="TreeView_Selected">
+            <TreeView Grid.Row="4" ItemsSource="{Binding Path=DocumentTreeItems}" SelectedItemChanged="TreeView_SelectedItemChanged" TreeViewItem.Selected="TreeView_Selected">
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
@@ -104,7 +82,7 @@
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type common:DirectoryTreeItemViewModel}" ItemsSource="{Binding Path=Items}">
+                    <HierarchicalDataTemplate DataType="{x:Type common:DirectoryTreeItemViewModel}" ItemsSource="{Binding Path=SubDirectories}">
                         <!--<Button Content="{Binding Name}" Click="TreeViewButton_Click" CommandParameter="{Binding}" />-->
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
@@ -118,13 +96,11 @@
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
-
-
-            <metro:ProgressRing Grid.Row="1" IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}"
+            <metro:ProgressRing Grid.Row="4" IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}"
                                     Visibility="{Binding Path=LoadingData}" 
                                     Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -137,7 +113,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button Grid.Column="1" x:Name="btnCancelFolder" Margin="2,2,0,0" ToolTip="Otkaži" Click="btnCancelFolder_Click">
+                <Button Grid.Column="1" x:Name="btnCancelFolder" Margin="0,2,0,0" ToolTip="Otkaži" Click="btnCancelFolder_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock Text=" ODUSTANI "  FontWeight="Regular" Foreground="white"/>

@@ -119,12 +119,16 @@ namespace SirmiumERPGFC.Repository.DocumentStores
                              SqlCommandSelectPart +
                              "FROM DocumentFiles " +
                              "WHERE (@FileName IS NULL OR @FileName = '' OR Name LIKE @FileName) " +
+                             "AND (@FilterDateFrom IS NULL OR @FilterDateFrom = '' OR DATE(CreatedAt) >= DATE(@FilterDateFrom))" +
+                             "AND (@FilterDateTo IS NULL OR @FilterDateTo = '' OR DATE(CreatedAt) <= DATE(@FilterDateTo)) " +
                              "AND (DocumentFolderPath LIKE @ParentPath) " +
                              "AND CompanyId = @CompanyId " +
                              "ORDER BY Name ASC ", db);
 
                         selectCommand.Parameters.AddWithValue("@ParentPath", ((object)searchObject.Search_ParentPath) != null ? searchObject.Search_ParentPath + "%" : "");
                         selectCommand.Parameters.AddWithValue("@FileName", ((object)searchObject.Search_Name) != null ? "%" + searchObject.Search_Name + "%" : "");
+                        selectCommand.Parameters.AddWithValue("@FilterDateFrom", ((object)searchObject?.Search_DateFrom ?? DBNull.Value));
+                        selectCommand.Parameters.AddWithValue("@FilterDateTo", ((object)searchObject?.Search_DateTo ?? DBNull.Value));
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     } else
                     {
@@ -132,10 +136,14 @@ namespace SirmiumERPGFC.Repository.DocumentStores
                              SqlCommandSelectPart +
                              "FROM DocumentFiles " +
                              "WHERE (DocumentFolderPath = @ParentPath) " +
+                             "AND (@FilterDateFrom IS NULL OR @FilterDateFrom = '' OR DATE(CreatedAt) >= DATE(@FilterDateFrom))" +
+                             "AND (@FilterDateTo IS NULL OR @FilterDateTo = '' OR DATE(CreatedAt) <= DATE(@FilterDateTo)) " +
                              "AND CompanyId = @CompanyId " +
                              "ORDER BY Name ASC ", db);
 
                         selectCommand.Parameters.AddWithValue("@ParentPath", ((object)searchObject.Search_ParentPath) != null ? searchObject.Search_ParentPath : "");
+                        selectCommand.Parameters.AddWithValue("@FilterDateFrom", ((object)searchObject?.Search_DateFrom ?? DBNull.Value));
+                        selectCommand.Parameters.AddWithValue("@FilterDateTo", ((object)searchObject?.Search_DateTo ?? DBNull.Value));
                         selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
                     }
 

@@ -167,16 +167,16 @@ namespace RepositoryCore.Implementations.Common.DocumentStores
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = "UPDATE DocumentFolders SET " +
-                        "Active = @Active, " +
-                        "UpdatedAt = @UpdatedAt " +
+                        "Active = 0, " +
+                        "UpdatedAt = CURRENT_TIMESTAMP " +
                         "WHERE Id = @Id";
 
                     command.Parameters.AddWithValue("@Id", id);
-                    command.Parameters.AddWithValue("@Active", (object)false);
-                    command.Parameters.AddWithValue("@UpdatedAt", DateTime.Now);
+                    command.ExecuteNonQuery();
                 }
             }
             var documentFolder = GetDocumentFolder(id);
@@ -190,7 +190,7 @@ namespace RepositoryCore.Implementations.Common.DocumentStores
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = selectQuery + 
-                        "WHERE Id = @Id ";
+                        "WHERE folder.Id = @Id ";
 
                     command.Parameters.AddWithValue("@Id", id);
 

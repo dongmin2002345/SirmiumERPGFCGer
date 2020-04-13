@@ -194,6 +194,50 @@ namespace SirmiumERPGFC.Repository.DocumentStores
             response.DocumentFolders = folders;
             return response;
         }
+
+
+        public DocumentFolderResponse GetDirectoryByPath(int companyId, string path)
+        {
+            DocumentFolderResponse response = new DocumentFolderResponse();
+            DocumentFolderViewModel folder = null;
+
+            using (SqliteConnection db = new SqliteConnection("Filename=SirmiumERPGFC.db"))
+            {
+                db.Open();
+                try
+                {
+                    SqliteCommand selectCommand = new SqliteCommand(
+                             SqlCommandSelectPart +
+                             "FROM DocumentFolders " +
+                             "WHERE Path = @Path " +
+                             "AND CompanyId = @CompanyId " +
+                             "ORDER BY Name ASC ", db);
+
+                    selectCommand.Parameters.AddWithValue("@Path", path);
+                    selectCommand.Parameters.AddWithValue("@CompanyId", companyId);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    if (query.Read())
+                    {
+                        folder = Read(query);
+                    }
+                }
+                catch (SqliteException error)
+                {
+                    MainWindow.ErrorMessage = error.Message;
+                    response.Success = false;
+                    response.Message = error.Message;
+                    response.DocumentFolder = null;
+                    return response;
+                }
+                db.Close();
+            }
+            response.Success = true;
+            response.DocumentFolder = folder;
+            return response;
+        }
+
         #endregion
 
         #region Sync

@@ -7,7 +7,7 @@
              xmlns:local1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              xmlns:common="clr-namespace:SirmiumERPGFC.Common" xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" Background="White"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1000">
     <UserControl.Resources>
         <local1:MultiConverter x:Key="MultiConverter" />
         <local1:InverseBoolConverter x:Key="InverseBoolConverter" />
@@ -33,57 +33,53 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Pretrazi dokumente: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                <TextBox Grid.Column="1" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Pretraži dokumente: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <TextBox Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
                          metro:TextBoxHelper.ClearTextButton="True"
                     VerticalAlignment="Center" Margin="5" IsEnabled="{Binding Path=CanInteract}" Height="24" VerticalContentAlignment="Center"/>
 
 
-                <Button Grid.Column="2" x:Name="btnStopSearch" Click="btnStopSearch_Click" Margin="2" Width="30" 
-                        Visibility="{Binding Path=LoadingData, Converter={StaticResource CollapsibleVisibilityConverter}}" ToolTip="Obriši">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                    </StackPanel>
-                </Button>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Datum od: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+                <DatePicker Grid.Column="3" Grid.Row="1"
+                         SelectedDate="{Binding Path=FilterDateFrom, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
+                         Margin="2"
+                         metro:TextBoxHelper.ClearTextButton="True"/>
+
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="Datum do: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+                <DatePicker Grid.Column="3" Grid.Row="1"
+                         SelectedDate="{Binding Path=FilterDateTo, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
+                         Margin="2"
+                         metro:TextBoxHelper.ClearTextButton="True"/>
+
             </Grid>
         </Expander>
 
-        <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Margin="2" Header="Folderi" IsEnabled="{Binding Path=CanInteract}">
+        <Expander Header="Indeksiranje dokumenata" Grid.Column="0" Grid.Row="0" Margin="0,2,2,2" IsExpanded="True">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-
-                <!--<Button Grid.Row="0" x:Name="btnRecalculateIndexes" Margin="0,2,0,0" ToolTip="Indeksiraj foldere. Ova operacija će potrajati, u zavisnosti od količine podataka!" Click="btnRecalculateIndexes_Click">
+                <Button Grid.Row="0" x:Name="btnRecalculateIndexes" Margin="0,2,0,0" ToolTip="Indeksiraj foldere. Ova operacija će potrajati, u zavisnosti od količine podataka!"  IsEnabled="{Binding Path=CanInteract}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                         <TextBlock Text=" INDEKSIRAJ "  FontWeight="Regular" Foreground="white"/>
                     </StackPanel>
-                </Button>-->
-
-
-                <TextBlock Grid.Row="0" Text="Pretrazi foldere: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                <TextBox Grid.Row="1" Text="{Binding Path=FolderFilterObject.Search_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
-                         metro:TextBoxHelper.ClearTextButton="True"
-                    VerticalAlignment="Center" Margin="5" IsEnabled="{Binding Path=CanInteract}" Height="24" VerticalContentAlignment="Center"/>
-
-
-                <Button Grid.Row="2" x:Name="btnEnterFolderName" Margin="0,2,0,0" ToolTip="Obriši">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                        <TextBlock Text=" DODAJ FOLDER "  FontWeight="Regular" Foreground="white"/>
-                    </StackPanel>
                 </Button>
-                <Popup x:Name="popEnterFolderName" PlacementTarget="{Binding ElementName=btnEnterFolderName}" Placement="Bottom" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+                <Popup x:Name="popRecalculateItems" PlacementTarget="{Binding ElementName=btnRecalculateIndexes}" Placement="Bottom" Focusable="True" StaysOpen="True" AllowsTransparency="True">
                     <Popup.IsOpen>
                         <MultiBinding Converter="{StaticResource MultiConverter}">
-                            <Binding ElementName="btnEnterFolderName" Path="IsFocused" Mode="OneWay"/>
-                            <Binding ElementName="txtEnterFolderName" Path="IsFocused" Mode="OneWay"/>
-                            <Binding ElementName="btnYes" Path="IsMouseCaptured" Mode="OneWay"/>
+                            <Binding ElementName="btnRecalculateIndexes" Path="IsFocused" Mode="OneWay"/>
+                            <Binding ElementName="btnRecalculate" Path="IsMouseCaptured" Mode="OneWay"/>
                         </MultiBinding>
                     </Popup.IsOpen>
                     <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="DeepSkyBlue" BorderThickness="5" CornerRadius="15">
@@ -95,8 +91,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="UNESITE NAZIV FOLDERA:" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
-                            <TextBox Grid.Row="1" Margin="2" Height="24" FontSize="18" x:Name="txtEnterFolderName" Text="{Binding Path=NewFolderName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="Ova operacija će potrajati duže od sat vremena, da li ste sigurni da želite da nastavite? U toku indeksiranja neće biti moguće izlistavati dokumente!" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
                             <Separator Grid.Row="2" Margin="2" />
 
                             <Grid Grid.Row="3">
@@ -105,13 +100,13 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Button Grid.Column="0" x:Name="btnYes" Click="btnYes_Click" Margin="2" Background="DeepSkyBlue">
+                                <Button Grid.Column="0" x:Name="btnRecalculate" Click="btnRecalculateIndexes_Click" Margin="2" Background="DeepSkyBlue">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                         <TextBlock Text=" DA "  FontWeight="Bold" Foreground="white"/>
                                     </StackPanel>
                                 </Button>
-                                <Button Grid.Column="1" x:Name="btnCancel" Margin="2" Background="DeepSkyBlue">
+                                <Button Grid.Column="1" x:Name="btnDontRecalculate" Margin="2" Background="DeepSkyBlue">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
                                         <TextBlock Text=" NE "  FontWeight="Bold" Foreground="white"/>
@@ -121,8 +116,45 @@
                         </Grid>
                     </Border>
                 </Popup>
+            </Grid>
+        </Expander>
+
+        <GroupBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Margin="0,2,2,2" Header="Folderi" IsEnabled="{Binding Path=CanInteract}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+
+                <TextBlock Grid.Row="1" Text="Pretraži foldere: "  FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <TextBox Grid.Row="2" Text="{Binding Path=FolderFilterObject.Search_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=1000}"
+                         metro:TextBoxHelper.ClearTextButton="True" 
+                    VerticalAlignment="Center" Margin="0,2,0,2" IsEnabled="{Binding Path=CanInteract}" Height="24" VerticalContentAlignment="Center"/>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnEnterFolderName" Margin="0,2,0,0" ToolTip="Dodaj folder" Click="btnCreateFolder_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" DODAJ "  FontWeight="Regular" Foreground="white"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnDeleteFolder" Grid.Column="1" Margin="2,2,0,0" ToolTip="Obriši" Click="btnDeleteFolder_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="..\..\Resources\Icons\Dodaj01.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text=" OBRIŠI "  FontWeight="Regular" Foreground="white"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
                 
-                <TreeView Grid.Row="3" ItemsSource="{Binding Path=DocumentTreeItems}" SelectedItemChanged="TreeView_SelectedItemChanged" TreeViewItem.Selected="TreeView_Selected">
+                
+                <TreeView Grid.Row="4" ItemsSource="{Binding Path=DocumentTreeItems}" SelectedItemChanged="TreeView_SelectedItemChanged" TreeViewItem.Selected="TreeView_Selected">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
@@ -174,116 +206,48 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Button Grid.Row="1" x:Name="btnRenamePopup" Margin="2" Width="150" IsEnabled="{Binding Path=CanInteract}" ToolTip="Preimenuj" >
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\EditBela.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" PREIMENUJ " Foreground="white" FontWeight="Regular"/>
-                        </StackPanel>
-                    </Button>
-                    <Popup x:Name="popRename" PlacementTarget="{Binding ElementName=btnRenamePopup}" Placement="Bottom" Focusable="True" StaysOpen="True" AllowsTransparency="True">
-                        <Popup.IsOpen>
-                            <MultiBinding Converter="{StaticResource MultiConverter}">
-                                <Binding ElementName="btnRenamePopup" Path="IsFocused" Mode="OneWay"/>
-                                <Binding ElementName="txtEnterFileName" Path="IsFocused" Mode="OneWay"/>
-                                <Binding ElementName="btnRename" Path="IsMouseCaptured" Mode="OneWay"/>
-                            </MultiBinding>
-                        </Popup.IsOpen>
-                        <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="DeepSkyBlue" BorderThickness="5" CornerRadius="15">
-                            <Grid Width="350" Margin="10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Text="UNESITE NAZIV STAVKE:" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
-                                <TextBox Grid.Row="1" Margin="2" Height="32" FontSize="18" x:Name="txtEnterFileName" Text="{Binding Path=SelectedDocumentTreeFile.NewName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <Separator Grid.Row="2" Margin="2" />
-
-                                <Grid Grid.Row="3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Button Grid.Column="0" x:Name="btnRename" Click="btnRename_Click" Margin="2" Background="DeepSkyBlue">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                            <TextBlock Text=" DA "  FontWeight="Bold" Foreground="white"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Grid.Column="1" x:Name="btnCancelRename" Margin="2" Background="DeepSkyBlue">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                            <TextBlock Text=" NE "  FontWeight="Bold" Foreground="white"/>
-                                        </StackPanel>
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </Popup>
-                    <Button Grid.Row="1" x:Name="btnDeletePopup" Margin="2" Width="150" IsEnabled="{Binding Path=CanInteract}" ToolTip="Obriši">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\DeleteBeli.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" OBRIŠI "  FontWeight="Regular" Foreground="white"/>
-                        </StackPanel>
-                    </Button>
-                    <Popup x:Name="popDelete" PlacementTarget="{Binding ElementName=btnDeletePopup}" Placement="Bottom" Focusable="True" StaysOpen="True" AllowsTransparency="True">
-                        <Popup.IsOpen>
-                            <MultiBinding Converter="{StaticResource MultiConverter}">
-                                <Binding ElementName="btnDeletePopup" Path="IsFocused" Mode="OneWay"/>
-                                <Binding ElementName="btnDelete" Path="IsMouseCaptured" Mode="OneWay"/>
-                            </MultiBinding>
-                        </Popup.IsOpen>
-                        <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="DeepSkyBlue" BorderThickness="5" CornerRadius="15">
-                            <Grid Width="300" Margin="10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Text="DA LI STE SIGURNI DA ZELITE DA OBRISETE ODABRANU STAVKU?" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
-                                <Separator Grid.Row="2" Margin="2" />
-
-                                <Grid Grid.Row="3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Button Grid.Column="0" x:Name="btnDelete" Click="btnDelete_Click" Margin="2" Background="DeepSkyBlue">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                            <TextBlock Text=" DA "  FontWeight="Bold" Foreground="white"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Grid.Column="1" x:Name="btnCancelDelete" Margin="2" Background="DeepSkyBlue">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                                            <TextBlock Text=" NE "  FontWeight="Bold" Foreground="white"/>
-                                        </StackPanel>
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </Popup>
-
-
-                    <Button Grid.Row="1" x:Name="btnOpen" Click="btnOpen_Click" Margin="2" Width="150" IsEnabled="{Binding Path=CanInteract}" ToolTip="Otvori">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="..\..\Resources\Icons\radniNalog.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
-                            <TextBlock Text=" OTVORI "  FontWeight="Regular" Foreground="white"/>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <DataGrid Grid.Row="1" x:Name="dgDocumentTreeFiles" 
+                <Menu Grid.Row="0" Background="White" BorderBrush="SteelBlue" IsEnabled="{Binding Path=CanInteract}">
+                    <MenuItem Header="SVE" Background="#007ACC" Foreground="White" Click="btnSelectAllDocuments_Click">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\Icons\_correct.png" Width="16" Height="16" Margin="10,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="NIŠTA" Background="#007ACC" Foreground="White" Click="btnDeselectAllDocuments_Click">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\Icons\_cancel.png" Width="16" Height="16" Margin="10,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="PREIMENUJ" Background="#007ACC" Foreground="White" Click="btnRename_Click">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\Icons\EditBela.png" Width="16" Height="16" Margin="10,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="OBRIŠI" Background="#007ACC" Foreground="White" Click="btnDelete_Click">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\Icons\DeleteBeli.png" Width="16" Height="16" Margin="10,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="OTVORI" Background="#007ACC" Foreground="White" Click="btnOpen_Click">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\Icons\radniNalog.png" Width="16" Height="16" Margin="10,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="KOPIRAJ" Background="#007ACC" Foreground="White" Click="BtnCopyDocuments_Click">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\Icons\copy_docs.png" Width="16" Height="16" Margin="10,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="PREMESTI" Background="#007ACC" Foreground="White" Click="BtnMoveDocuments_List">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\Icons\copy_docs.png" Width="16" Height="16" Margin="10,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </Menu>
+                <DataGrid Grid.Row="2" x:Name="dgDocumentTreeFiles" 
                           ItemsSource="{Binding Path=DocumentTreeFiles}"
                           SelectedItem="{Binding Path=SelectedDocumentTreeFile, Mode=TwoWay}"
                               AutoGenerateColumns="False"
@@ -295,19 +259,27 @@
                               VerticalAlignment="Stretch"
                               HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto"
-                              RowHeaderWidth="25"
                               HeadersVisibility="All" 
                       SelectionMode="Single">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Naziv"  Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*" />
-                        <DataGridTextColumn Header="Folder" Binding="{Binding DocumentFolder.Name}" IsReadOnly="True" Width="Auto"/>
+                        <DataGridTemplateColumn Header="" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="White">
+                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="0" Margin="3"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Naziv"  Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
                         <DataGridTextColumn Header="Veličina" Binding="{Binding Size, StringFormat={}{0} KB}" IsReadOnly="True" Width="Auto"/>
                         <DataGridTextColumn Header="Kreirano" Binding="{Binding CreatedAt}" IsReadOnly="True" Width="Auto"/>
+                        <DataGridTextColumn Header="Folder" Binding="{Binding DocumentFolder.Name}" IsReadOnly="True" Width="Auto"/>
                         <!--<DataGridTextColumn Header="Kreirano" Binding="{Binding CreatedAt}" IsReadOnly="True" Width="Auto"/>-->
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <metro:ProgressRing Grid.Row="1" IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}"
+                <metro:ProgressRing Grid.Row="2" IsActive="{Binding Path=LoadingData}" IsEnabled="{Binding Path=LoadingData}"
                                     Visibility="{Binding Path=LoadingData}" 
                                     Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
@@ -414,7 +386,7 @@
             </Grid>
         </Expander>
 
-        <StatusBar Grid.Row="3" Grid.ColumnSpan="4" Margin="2">
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="4" Margin="0,2,2,2">
             <StatusBarItem>
                 <TextBlock Margin="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Left" Text="{Binding Path=CurrentStatus}" Foreground="White" />
             </StatusBarItem>

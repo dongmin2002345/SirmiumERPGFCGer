@@ -132,6 +132,57 @@ namespace ServiceInterfaces.ViewModels.Common.DocumentStores
         }
         #endregion
 
+        #region Search_DateFrom
+        private DateTime? _Search_DateFrom;
+
+        public DateTime? Search_DateFrom
+        {
+            get { return _Search_DateFrom; }
+            set
+            {
+                if (_Search_DateFrom != value)
+                {
+                    _Search_DateFrom = value;
+                    NotifyPropertyChanged("Search_DateFrom");
+                }
+            }
+        }
+        #endregion
+
+        #region Search_DateTo
+        private DateTime? _Search_DateTo;
+
+        public DateTime? Search_DateTo
+        {
+            get { return _Search_DateTo; }
+            set
+            {
+                if (_Search_DateTo != value)
+                {
+                    _Search_DateTo = value;
+                    NotifyPropertyChanged("Search_DateTo");
+                }
+            }
+        }
+        #endregion
+
+
+        #region IsSelected
+        private bool _IsSelected;
+
+        public bool IsSelected
+        {
+            get { return _IsSelected; }
+            set
+            {
+                if (_IsSelected != value)
+                {
+                    _IsSelected = value;
+                    NotifyPropertyChanged("IsSelected");
+                }
+            }
+        }
+        #endregion
 
     }
 }

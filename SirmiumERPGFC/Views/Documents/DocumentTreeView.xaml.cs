@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Storage.File;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Azure.Storage.File;
 using Microsoft.Win32;
 using Ninject;
 using ServiceInterfaces.Abstractions.Common.DocumentStores;
@@ -10,6 +12,7 @@ using SirmiumERPGFC.Common;
 using SirmiumERPGFC.Helpers;
 using SirmiumERPGFC.Infrastructure;
 using SirmiumERPGFC.Repository.DocumentStores;
+using SirmiumERPGFC.ViewComponents.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -167,6 +170,50 @@ namespace SirmiumERPGFC.Views.Documents
             }
         }
         #endregion
+
+
+        #region FilterDateFrom
+        private DateTime? _FilterDateFrom;
+
+        public DateTime? FilterDateFrom
+        {
+            get { return _FilterDateFrom; }
+            set
+            {
+                if (_FilterDateFrom != value)
+                {
+                    _FilterDateFrom = value;
+                    NotifyPropertyChanged("FilterDateFrom");
+
+                    Thread td = new Thread(() => GetFolderDocuments());
+                    td.IsBackground = true;
+                    td.Start();
+                }
+            }
+        }
+        #endregion
+
+        #region FilterDateTo
+        private DateTime? _FilterDateTo;
+
+        public DateTime? FilterDateTo
+        {
+            get { return _FilterDateTo; }
+            set
+            {
+                if (_FilterDateTo != value)
+                {
+                    _FilterDateTo = value;
+                    NotifyPropertyChanged("FilterDateTo");
+
+                    Thread td = new Thread(() => GetFolderDocuments());
+                    td.IsBackground = true;
+                    td.Start();
+                }
+            }
+        }
+        #endregion
+
 
         #region CanInteract
         private bool _CanInteract = true;
@@ -443,7 +490,14 @@ namespace SirmiumERPGFC.Views.Documents
         {
             List<DocumentFileViewModel> documents;
 
-            var response = new DocumentFileSQLiteRepository().GetDocumentFiles(MainWindow.CurrentCompanyId, new DocumentFileViewModel() { Search_ParentPath = SelectedTreeItem?.Path, Search_Name = FilterText });
+            var response = new DocumentFileSQLiteRepository().GetDocumentFiles(MainWindow.CurrentCompanyId, 
+                new DocumentFileViewModel() 
+                { 
+                    Search_ParentPath = SelectedTreeItem?.Path, 
+                    Search_Name = FilterText,
+                    Search_DateFrom = FilterDateFrom,
+                    Search_DateTo = FilterDateTo
+                });
             if (response.Success)
                 documents = response?.DocumentFiles ?? new List<DocumentFileViewModel>();
             else
@@ -486,7 +540,7 @@ namespace SirmiumERPGFC.Views.Documents
                     if (FolderFilterObject.Search_MultiLevel)
                     {
                         FolderFilterObject.Search_ParentId = SelectedTreeItem?.Id;
-                        if(SelectedTreeItem.SubDirectories == null || SelectedTreeItem.SubDirectories.Count() < 1)
+                        if(SelectedTreeItem != null && SelectedTreeItem.SubDirectories == null || SelectedTreeItem.SubDirectories.Count() < 1)
                         {
                             GetDirectoryTree(SelectedTreeItem);
                         }
@@ -504,46 +558,82 @@ namespace SirmiumERPGFC.Views.Documents
             td.Start();
         }
 
-
-        private void btnYes_Click(object sender, RoutedEventArgs e)
+        async Task<string> GetNewFolderName()
         {
+            var parentWindow = this.TryFindParent<MetroWindow>();
+            //MetroWindow parentWindow = Window.GetWindow(this) as MetroWindow;
+            if (parentWindow != null)
+            {
+                return await parentWindow.ShowInputAsync("Kreiraj folder", "Unesite ime foldera",
+                    new MetroDialogSettings()
+                    {
+                        DialogResultOnCancel = MessageDialogResult.Canceled,
+                        AffirmativeButtonText = "Potvrdi",
+                        NegativeButtonText = "Otkaži",
+                        DefaultButtonFocus = MessageDialogResult.Affirmative,
+                    });
+            }
+            return null;
+        }
+
+        private async void btnCreateFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var result = await GetNewFolderName();
+
+            NewFolderName = result;
+
             if (String.IsNullOrEmpty(NewFolderName))
             {
-                MainWindow.ErrorMessage = ("Naziv foldera ne moze biti prazan!");
+                MessageBox.Show("Naziv foldera ne moze biti prazan!");
                 return;
             }
 
             string basePath = SelectedTreeItem?.Path;
             if (String.IsNullOrEmpty(basePath))
             {
-                MainWindow.ErrorMessage = ("Bazna putanja ne moze biti prazna!");
-                return;
-            }
-
-            string newPath = System.IO.Path.Combine(basePath, NewFolderName);
-            if (Directory.Exists(newPath))
-            {
-                MainWindow.ErrorMessage = ("Folder sa ovim nazivom vec postoji!");
+                MessageBox.Show("Bazna putanja ne moze biti prazna!");
                 return;
             }
 
             try
             {
-                Directory.CreateDirectory(newPath);
+                var parent = azureClient.GetDirectory(basePath);
+                if (!parent.Exists())
+                    throw new Exception("Odabrani folder ne postoji!");
 
-                //////DirectoryTreeItemViewModel treeItem = new DirectoryTreeItemViewModel();
-                //////treeItem.Name = NewFolderName;
-                //////treeItem.IsDirectory = true;
-                //////treeItem.FullPath = newPath;
-                //////treeItem.IsDirExpanded = true;
-                //////treeItem.ParentNode = SelectedTreeItem;
+                var childFolder = parent.GetDirectoryReference(NewFolderName);
+                if (childFolder.Exists())
+                    throw new Exception("Folder sa zadatim imenom već postoji!");
 
-                //////SelectedTreeItem.Items.Add(treeItem);
+                childFolder.Create();
 
-                //////SelectedTreeItem.IsDirExpanded = true;
-            } catch(Exception ex)
+                var newDir = new DocumentFolderViewModel()
+                {
+                    Identifier = Guid.NewGuid(),
+                    ParentFolder = SelectedTreeItem,
+                    Name = NewFolderName,
+                    Path = childFolder.Uri.LocalPath,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    Company = new ServiceInterfaces.ViewModels.Common.Companies.CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                    CreatedBy = new ServiceInterfaces.ViewModels.Common.Identity.UserViewModel() { Id = MainWindow.CurrentUserId }
+                };
+
+                var response = documentFolderService.Create(newDir);
+                if (response.Success)
+                {
+                    newDir.Id = response?.DocumentFolder?.Id ?? 0;
+                    new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((done, toDo) => {
+                        Debug.WriteLine($"Syncing folders: {done} out of {toDo}");
+                    }));
+                    SelectedTreeItem.SubDirectories.Add(newDir);
+                    SelectedTreeItem.IsDirExpanded = true;
+                    MainWindow.SuccessMessage = "Folder je uspešno kreiran!";
+                }
+            }
+            catch (Exception ex)
             {
-                MainWindow.ErrorMessage = "Nije moguće kreirati folder, greška na vezi sa mrežnim diskom!";
+                MainWindow.ErrorMessage = ex.Message;
             }
 
             NewFolderName = "";
@@ -564,17 +654,32 @@ namespace SirmiumERPGFC.Views.Documents
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DocumentFileViewModel item = SelectedDocumentTreeFile;
-            if (item != null)
+            var itemsToDelete = DocumentTreeFiles?.Where(x => x.IsSelected)?.ToList() ?? new List<DocumentFileViewModel>();
+            if (itemsToDelete.Count() > 0)
             {
                 try
                 {
-                    azureClient.Delete(azureClient.GetFile(item.Path));
-                    DocumentTreeFiles.Remove(item);
+                    foreach(var item in itemsToDelete)
+                    {
+                        var response = documentFileService.Delete(item);
+                        if (response.Success)
+                        {
+
+                            new DocumentFileSQLiteRepository().Sync(documentFileService, ((done, toDo) =>
+                            {
+                                Debug.WriteLine($"Syncing documents: {done} out of {toDo}");
+                            }));
+
+                            azureClient.Delete(azureClient.GetFile(item.Path));
+                            DocumentTreeFiles.Remove(item);
+                        }
+                        else
+                            MainWindow.ErrorMessage = response.Message;
+                    }
                 }
                 catch (Exception ex)
                 {
-
+                    MainWindow.ErrorMessage = ex.Message;
                 }
             }
         }
@@ -663,13 +768,32 @@ namespace SirmiumERPGFC.Views.Documents
                     {
                         CopyPercentage = 0;
 
-                        azureClient.CopyLocal(azureClient.GetDirectory(SelectedTreeItem.Path), item.FullPath, (progress, total) =>
+                        var copiedFile = azureClient.CopyLocal(azureClient.GetDirectory(SelectedTreeItem.Path), item.FullPath, (progress, total) =>
                         {
                             long percent = (long)(((double)progress / (double)total) * 100);
                             CopyPercentage = percent;
 
                             Thread.Sleep(25);
                         });
+
+                        copiedFile.FetchAttributes();
+
+                        var docFile = new DocumentFileViewModel()
+                        {
+                            Identifier = Guid.NewGuid(),
+                            Name = copiedFile.Name,
+                            Path = copiedFile.Uri.LocalPath,
+                            DocumentFolder = SelectedTreeItem,
+                            Size = copiedFile.Properties.Length / 1024,
+                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                            CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId },
+                            CreatedAt = copiedFile.Properties.LastModified.Value.DateTime
+                        };
+                        var response = documentFileService.Create(docFile);
+                        if(!response.Success)
+                        {
+                            IsCopyInProgress = false;
+                        }
 
                         Dispatcher.BeginInvoke((Action)(() =>
                         {
@@ -683,6 +807,11 @@ namespace SirmiumERPGFC.Views.Documents
                         }
                     }
                     IsCopyInProgress = false;
+
+                    new DocumentFileSQLiteRepository().Sync(documentFileService, ((done, toDo) => {
+                        Debug.WriteLine($"Syncing documents: {done} out of {toDo}");
+                    }));
+
                     GetFolderDocuments();
                 } catch(Exception ex)
                 {
@@ -697,34 +826,61 @@ namespace SirmiumERPGFC.Views.Documents
             td.Start();
         }
 
+        async Task<string> GetNewFileName(string previousValue)
+        {
+            var parentWindow = this.TryFindParent<MainWindow>();
+            //MetroWindow parentWindow = Window.GetWindow(this) as MetroWindow;
+            if (parentWindow != null)
+            {
+                return await parentWindow.ShowInputAsync("Preimenuj", "Unesite novo ime za fajl",
+                    new MetroDialogSettings() 
+                    { 
+                        DialogResultOnCancel = MessageDialogResult.Canceled, AffirmativeButtonText = "Potvrdi", NegativeButtonText = "Otkaži",
+                        DefaultButtonFocus = MessageDialogResult.Affirmative,
+                        DefaultText = previousValue
+                    });
+            }
+            return null;
+        }
 
-        private void btnRename_Click(object sender, RoutedEventArgs e)
+        private async void btnRename_Click(object sender, RoutedEventArgs e)
         {
             DocumentFileViewModel item = SelectedDocumentTreeFile;
 
             if (item != null)
             {
-                item = DocumentTreeFiles.FirstOrDefault(x => x.Path == item.Path);
+                var result = await GetNewFileName(item.NewName);
 
-                if (String.IsNullOrEmpty(item.NewName))
-                {
-                    MainWindow.ErrorMessage = ("Nije moguce postaviti prazan naziv dokumenta!");
+                if (String.IsNullOrEmpty(result))
                     return;
-                }
 
+                item = DocumentTreeFiles.FirstOrDefault(x => x.Path == item.Path);
+                item.NewName = result;
+                
                 Thread td = new Thread(() =>
                 {
                     try
                     {
                         LoadingData = true;
 
-
                         string fileWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(item.Name);
                         string newName = item.NewName + item.Name.Replace(fileWithoutExtension, "");
-                        var file = azureClient.GetFile(item.Path);
-                        azureClient.CopyRemote(file, newName);
 
-                        azureClient.Delete(file);
+                        string oldPath = item.Path;
+                        item.Path = item.Path?.Replace(item.Name, newName);
+                        item.Name = newName;
+                        var response = documentFileService.Create(item);
+                        if (response.Success)
+                        {
+                            var file = azureClient.GetFile(oldPath);
+                            azureClient.CopyRemote(file, newName);
+
+                            azureClient.Delete(file);
+
+                            new DocumentFileSQLiteRepository().Sync(documentFileService, ((done, toDo) => {
+                                Debug.WriteLine($"Syncing documents: {done} out of {toDo}");
+                            }));
+                        }
 
                         GetFolderDocuments();
                     }
@@ -913,6 +1069,230 @@ namespace SirmiumERPGFC.Views.Documents
             td.Start();
         }
 
+        private void btnSelectAllDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            if(DocumentTreeFiles != null)
+            {
+                var items = DocumentTreeFiles.ToList();
+                foreach (var item in items)
+                    item.IsSelected = true;
 
+                DocumentTreeFiles = new ObservableCollection<DocumentFileViewModel>(items);
+            }
+        }
+
+        private void btnDeselectAllDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            if (DocumentTreeFiles != null)
+            {
+                var items = DocumentTreeFiles.ToList();
+                foreach (var item in items)
+                    item.IsSelected = false;
+
+                DocumentTreeFiles = new ObservableCollection<DocumentFileViewModel>(items);
+            }
+        }
+
+        private void BtnDeleteFromList_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteFolder_Click(object sender, RoutedEventArgs e)
+        {
+            if(SelectedTreeItem != null)
+            {
+                Thread td = new Thread(() => {
+                    try
+                    {
+                        var directory = azureClient.GetDirectory(SelectedTreeItem.Path);
+
+                        var subItemsCount = directory.ListFilesAndDirectories().Count();
+                        if (subItemsCount > 0)
+                        {
+                            MainWindow.ErrorMessage = "Možete brisati samo prazne foldere!";
+                            return;
+                        }
+
+                        var response = documentFolderService.Delete(SelectedTreeItem);
+                        if (response.Success)
+                        {
+                            directory.Delete();
+
+                            new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((done, toDo) => {
+                                Debug.WriteLine($"Syncing folders: {done} out of {toDo}");
+                            }));
+                            DisplayFolderTree();
+                        }
+                        else
+                            MainWindow.ErrorMessage = response.Message;
+
+                    } catch(Exception ex)
+                    {
+                        MainWindow.ErrorMessage = ex.Message;
+                    }
+                });
+                td.IsBackground = true;
+                td.Start();
+            }
+        }
+
+        private async void BtnCopyDocuments_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedDocuments = DocumentTreeFiles.Where(x => x.IsSelected).ToList();
+
+            if(selectedDocuments.Count() < 1)
+            {
+                MainWindow.ErrorMessage = "Morate označiti dokumente za kopiranje!";
+                return;
+            }
+            try
+            {
+                await CopyDocuments(selectedDocuments, false);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+
+        private async void BtnMoveDocuments_List(object sender, RoutedEventArgs e)
+        {
+            var selectedDocuments = DocumentTreeFiles.Where(x => x.IsSelected).ToList();
+
+            if (selectedDocuments.Count() < 1)
+            {
+                MainWindow.ErrorMessage = "Morate označiti dokumente za premeštanje!";
+                return;
+            }
+            try
+            {
+                await CopyDocuments(selectedDocuments, true);
+            } catch(Exception ex)
+            {
+                MainWindow.ErrorMessage = ex.Message;
+            }
+        }
+
+        async Task CopyDocuments(List<DocumentFileViewModel> documents, bool isMoveInProgress = false)
+        {
+            var dialog = new DocumentPathDialog();
+            bool? selectedResult = dialog.ShowDialog();
+
+            if (selectedResult == true)
+            {
+                string selectedPath = dialog.SelectedPath;
+
+                var directoryResponse = new DocumentFolderSQLiteRepository().GetDirectoryByPath(MainWindow.CurrentCompanyId, selectedPath);
+                if(directoryResponse?.DocumentFolder == null)
+                {
+                    MainWindow.ErrorMessage = "Došlo je do greške u izboru foldera, molimo ponovite postupak.";
+                    return;
+                }
+
+                DocumentFolderViewModel selectedFolder = directoryResponse.DocumentFolder;
+
+                var directoryWhereToCopy = azureClient.GetDirectory(selectedPath);
+                directoryWhereToCopy.CreateIfNotExists();
+
+                var parentWindow = this.TryFindParent<MetroWindow>();
+                if(parentWindow != null)
+                {
+                    string prefix = isMoveInProgress ? "Premeštanje" : "Kopiranje";
+                    string header = $"{prefix} je u toku";
+                    string content = isMoveInProgress ? "Premeštaju se odabrane datoteke, molimo sačekajte..." : "Kopiraju se odabrane datoteke, molimo sačekajte...";
+                    var progress = await parentWindow.ShowProgressAsync(header, content, true, new MetroDialogSettings()
+                    {
+
+                    });
+                    progress.SetIndeterminate();
+
+                    try
+                    {
+                        foreach (var document in documents)
+                        {
+                            if (progress.IsCanceled)
+                            {
+                                MainWindow.WarningMessage = "Opracija je prekinuta...";
+                                return;
+                            }
+
+                            progress.SetMessage($"{prefix} je u toku, trenutna datoteka: {document.Name}");
+
+
+                            var file = azureClient.GetFile(document.Path);
+                            if (!file.Exists())
+                            {
+                                MainWindow.WarningMessage = $"Datoteka {document.Name} ne postoji na serveru!";
+                                continue;
+                            }
+                            file.FetchAttributes();
+
+                            var newPath = directoryWhereToCopy.GetFileReference(document.Name);
+                            if (newPath.Exists())
+                            {
+                                MainWindow.WarningMessage = $"Datoteka {document.Name} već postoji na odabranoj lokaciji!";
+                                continue;
+                            }
+
+                            var copyResult = await newPath.StartCopyAsync(file);
+
+                            var newDocument = new DocumentFileViewModel()
+                            {
+                                Identifier = Guid.NewGuid(),
+                                Name = document.Name,
+                                Path = newPath.Uri.LocalPath,
+                                DocumentFolder = selectedFolder,
+                                Size = file.Properties.Length / 1024,
+                                CreatedAt = document.CreatedAt,
+                                Company = document.Company,
+                                CreatedBy = document.CreatedBy
+                            };
+
+                            var documentCreateResponse = await Task.FromResult(documentFileService.Create(newDocument));
+
+                            if (documentCreateResponse.Success)
+                            {
+                                if (!String.IsNullOrEmpty(copyResult))
+                                {
+                                    if (isMoveInProgress)
+                                    {
+                                        var response = await Task.FromResult(documentFileService.Delete(document));
+                                        if (response.Success)
+                                        {
+                                            await file.DeleteIfExistsAsync();
+
+                                            DocumentTreeFiles.Remove(document);
+                                        }
+                                        else
+                                            MainWindow.ErrorMessage = response.Message;
+                                    }
+                                }
+                            }
+                            else
+                                MainWindow.WarningMessage = $"Greška pri kreiranju reda u bazi [{documentCreateResponse.Message}]";
+                        }
+                        await progress?.CloseAsync();
+
+                    } catch(Exception ex)
+                    {
+                        await progress?.CloseAsync();
+                        MainWindow.ErrorMessage = ex.Message;
+                    }
+                } else
+                {
+                    MainWindow.ErrorMessage = "Nije moguće učitati dijalog za kopiranje datoteka!";
+                }
+
+                Thread td = new Thread(() => {
+
+                    new DocumentFileSQLiteRepository().Sync(documentFileService, ((done, toDo) => {
+                        Debug.WriteLine($"Syncing documents: {done} out of {toDo}");
+                    }));
+                });
+                td.IsBackground = true;
+                td.Start();
+            }
+        }
     }
 }
