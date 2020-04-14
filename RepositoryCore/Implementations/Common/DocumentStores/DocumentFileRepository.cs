@@ -257,15 +257,17 @@ namespace RepositoryCore.Implementations.Common.DocumentStores
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = "UPDATE DocumentFiles SET " +
-                        "Active = @Active, " +
+                        "Active = 0, " +
                         "UpdatedAt = CURRENT_TIMESTAMP " +
                         "WHERE CompanyId = @CompanyId ";
 
                     command.Parameters.AddWithValue("@CompanyId", companyId);
-                    command.Parameters.AddWithValue("@Active", 0);
+
+                    command.ExecuteNonQuery();
                 }
             }
         }

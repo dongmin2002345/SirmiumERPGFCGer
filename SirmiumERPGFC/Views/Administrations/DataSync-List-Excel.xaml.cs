@@ -1,14 +1,19 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
+using Ninject;
+using ServiceInterfaces.Abstractions.Common.DocumentStores;
 using ServiceInterfaces.Messages.Base;
 using ServiceInterfaces.ViewModels.Banks;
 using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.DocumentStores;
 using ServiceInterfaces.ViewModels.Common.Identity;
 using ServiceInterfaces.ViewModels.Common.Locations;
 using ServiceInterfaces.ViewModels.Common.Professions;
 using ServiceInterfaces.ViewModels.Common.Sectors;
 using ServiceInterfaces.ViewModels.Common.TaxAdministrations;
 using ServiceInterfaces.ViewModels.Employees;
+using SirmiumERPGFC.Helpers;
+using SirmiumERPGFC.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -272,6 +277,42 @@ namespace SirmiumERPGFC.Views.Administrations
                 {
                     _TaxAdministrationButtonEnabled = value;
                     NotifyPropertyChanged("TaxAdministrationButtonEnabled");
+                }
+            }
+        }
+        #endregion
+
+
+        #region DocumentIndexingButtonContent
+        private string _DocumentIndexingButtonContent = " Indeksiranje dokumenata ";
+
+        public string DocumentIndexingButtonContent
+        {
+            get { return _DocumentIndexingButtonContent; }
+            set
+            {
+                if (_DocumentIndexingButtonContent != value)
+                {
+                    _DocumentIndexingButtonContent = value;
+                    NotifyPropertyChanged("DocumentIndexingButtonContent");
+                }
+            }
+        }
+        #endregion
+
+
+        #region DocumentIndexingButtonEnabled
+        private bool _DocumentIndexingButtonEnabled = true;
+
+        public bool DocumentIndexingButtonEnabled
+        {
+            get { return _DocumentIndexingButtonEnabled; }
+            set
+            {
+                if (_DocumentIndexingButtonEnabled != value)
+                {
+                    _DocumentIndexingButtonEnabled = value;
+                    NotifyPropertyChanged("DocumentIndexingButtonEnabled");
                 }
             }
         }
@@ -1003,6 +1044,55 @@ namespace SirmiumERPGFC.Views.Administrations
             });
             th.IsBackground = true;
             th.Start();
+        }
+
+        private void btnRecalculateIndexes_Click(object sender, RoutedEventArgs e)
+        {
+            Thread td = new Thread(() =>
+            {
+                DocumentIndexingButtonEnabled = false;
+
+                try
+                {
+                    DocumentIndexingButtonContent = " Priprema ... ";
+                    IDocumentFolderService documentFolderService = DependencyResolver.Kernel.Get<IDocumentFolderService>();
+                    IDocumentFileService documentFileService = DependencyResolver.Kernel.Get<IDocumentFileService>();
+
+                    var clearResponse = documentFolderService.Clear(MainWindow.CurrentCompanyId);
+
+                    if (clearResponse.Success)
+                    {
+                        var clearFileResponse = documentFileService.Clear(MainWindow.CurrentCompanyId);
+                        if(clearFileResponse.Success)
+                        {
+                            var azureClient = new AzureDataClient();
+                            var rootFolder = new DocumentFolderViewModel()
+                            {
+                                Identifier = Guid.NewGuid(),
+
+                                Name = "Documents",
+                                Path = azureClient.rootDirectory.Uri.LocalPath,
+                                Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                                CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
+                            };
+                            azureClient.IndexingDirectoryChanged += delegate (string currentPath, int totalIndexed)
+                            {
+                                DocumentIndexingButtonContent = $" Indeksirano foldera: {totalIndexed}. Trenutni folder: {currentPath}";
+                            };
+                            azureClient.ResetIndexNumber();
+                            azureClient.GetDocumentFolders(documentFolderService, documentFileService, rootFolder, true);
+                        }
+                    }
+                    DocumentIndexingButtonEnabled = true;
+                    DocumentIndexingButtonContent = " Indeksiranje dokumenata ";
+                } catch(Exception ex)
+                {
+                    MainWindow.ErrorMessage = ex.Message;
+                    DocumentIndexingButtonEnabled = true;
+                }
+            });
+            td.IsBackground = true;
+            td.Start();
         }
     }
 }

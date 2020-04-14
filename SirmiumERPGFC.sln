@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30001.183
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientApp", "ClientApp", "{4276D2C4-C53F-431C-A82A-CE8F1DD3CF26}"
 EndProject
@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Presentation Layer", "2.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiExtension", "ApiExtension\ApiExtension.csproj", "{BA22AFD7-2144-4F0D-A1FF-0D1EA86C8D3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInterfaces", "ServiceInterfaces\ServiceInterfaces.csproj", "{C4CB4F82-733E-4C83-9B84-0B597D6699AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceInterfaces", "ServiceInterfaces\ServiceInterfaces.csproj", "{C4CB4F82-733E-4C83-9B84-0B597D6699AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceWebApi", "ServiceWebApi\ServiceWebApi.csproj", "{C292422A-6914-4953-8657-DF6C1C898316}"
 EndProject
@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SirmiumERPWeb", "SirmiumERP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SirmiumERPGFC", "SirmiumERPGFC\SirmiumERPGFC.csproj", "{4006EE9B-F96D-40F8-92E8-FCB9CF1EFB05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalValidations", "GlobalValidations\GlobalValidations.csproj", "{1AFDD4F3-1326-47A1-95AB-F73814AF1FAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalValidations", "GlobalValidations\GlobalValidations.csproj", "{1AFDD4F3-1326-47A1-95AB-F73814AF1FAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAppCommonCode", "WpfAppCommonCode\WpfAppCommonCode.csproj", "{91CE9CE1-3FB7-4699-970C-9F95CFC8B586}"
 EndProject

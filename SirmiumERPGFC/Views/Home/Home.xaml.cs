@@ -2,6 +2,7 @@
 using ServiceInterfaces.Abstractions.Banks;
 using ServiceInterfaces.Abstractions.Common.BusinessPartners;
 using ServiceInterfaces.Abstractions.Common.CallCentars;
+using ServiceInterfaces.Abstractions.Common.DocumentStores;
 using ServiceInterfaces.Abstractions.Common.Identity;
 using ServiceInterfaces.Abstractions.Common.InputInvoices;
 using ServiceInterfaces.Abstractions.Common.Locations;
@@ -28,6 +29,7 @@ using SirmiumERPGFC.Repository.BusinessPartners;
 using SirmiumERPGFC.Repository.CallCentars;
 using SirmiumERPGFC.Repository.Companies;
 using SirmiumERPGFC.Repository.ConstructionSites;
+using SirmiumERPGFC.Repository.DocumentStores;
 using SirmiumERPGFC.Repository.Employees;
 using SirmiumERPGFC.Repository.InputInvoices;
 using SirmiumERPGFC.Repository.Limitations;
@@ -142,6 +144,9 @@ namespace SirmiumERPGFC.Views.Home
         private IEmployeeByConstructionSiteService employeeByConstructionSiteService;
         private IBusinessPartnerByConstructionSiteService businessPartnerByConstructionSiteService;
         private IEmployeeByBusinessPartnerService employeeByBusinessPartnerService;
+
+        private IDocumentFolderService documentFolderService;
+        private IDocumentFileService documentFileService;
 
         #endregion
 
@@ -293,6 +298,9 @@ namespace SirmiumERPGFC.Views.Home
             businessPartnerByConstructionSiteService = DependencyResolver.Kernel.Get<IBusinessPartnerByConstructionSiteService>();
             employeeByBusinessPartnerService = DependencyResolver.Kernel.Get<IEmployeeByBusinessPartnerService>();
 
+            documentFolderService = DependencyResolver.Kernel.Get<IDocumentFolderService>();
+            documentFileService = DependencyResolver.Kernel.Get<IDocumentFileService>();
+
             InitializeComponent();
 
             this.DataContext = this;
@@ -321,7 +329,7 @@ namespace SirmiumERPGFC.Views.Home
 
         private void SyncData()
         {
-            int numOfTables = 48;
+            int numOfTables = 55;
             int counter = 0;
 
             #region 1. Poslovni partner
@@ -952,6 +960,30 @@ namespace SirmiumERPGFC.Views.Home
                 ItemValue = synced;
                 ItemContent = "Radnici po firmama (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
             });
+            #endregion
+
+            #region 54. i 55. Dokumenti i folderi dokumenata
+            ItemContent = "Folderi (" + ++counter + "/" + numOfTables + "): ";
+            bool notified = false;
+            new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((synced, toSync) => {
+                if(toSync > 0 && notified == false)
+                {
+                    MainWindow.WarningMessage = "Sinhronizacija foldera je u toku, molimo sačekajte dok se ne završi!";
+                    notified = true;
+                }
+                ItemContent = "Folderi (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
+            }));
+
+            ItemContent = "Dokumenti (" + ++counter + "/" + numOfTables + "): ";
+            notified = false;
+            new DocumentFileSQLiteRepository().Sync(documentFileService, ((synced, toSync) => {
+                if (toSync > 0 && notified == false)
+                {
+                    MainWindow.WarningMessage = "Sinhronizacija dokumenata je u toku, molimo sačekajte dok se ne završi!";
+                    notified = true;
+                }
+                ItemContent = "Dokumenti (" + counter + "/" + numOfTables + "): " + synced + "/" + toSync;
+            }));
             #endregion
 
             ItemContent = "Sinhronizacija je uspešno izvršena!";

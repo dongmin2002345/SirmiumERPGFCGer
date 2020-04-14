@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Azure.Storage.File;
+using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using Ninject;
 using ServiceInterfaces.Abstractions.Common.DocumentStores;
@@ -400,7 +401,7 @@ namespace SirmiumERPGFC.Views.Documents
 
             azureClient = new AzureDataClient();
 
-            Thread td = new Thread(() => DisplayFolderTree());
+            Thread td = new Thread(() => DisplayFolderTree(false));
             td.IsBackground = true;
             td.Start();
         }
@@ -427,19 +428,22 @@ namespace SirmiumERPGFC.Views.Documents
             }
         }
 
-        private void DisplayFolderTree()
+        private void DisplayFolderTree(bool shouldSync = true)
         {
             try
             {
                 LoadingData = true;
 
-                new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((done, toDo) => {
-                    Debug.WriteLine($"Syncing folders: {done} out of {toDo}");
-                
-                }));
-                new DocumentFileSQLiteRepository().Sync(documentFileService, ((done, toDo) => {
-                    Debug.WriteLine($"Syncing documents: {done} out of {toDo}");
-                }));
+                if(shouldSync)
+                {
+                    new DocumentFolderSQLiteRepository().Sync(documentFolderService, ((done, toDo) => {
+                        StatusCallback($"Sinhronizacija foldera: {done} od {toDo}. ");
+
+                    }));
+                    new DocumentFileSQLiteRepository().Sync(documentFileService, ((done, toDo) => {
+                        StatusCallback($"Sinhronizacija dokumenata: {done} od {toDo}. ");
+                    }));
+                }
 
                 DocumentFolderListResponse response;
                 if(FolderFilterObject.Search_MultiLevel)
@@ -483,7 +487,7 @@ namespace SirmiumERPGFC.Views.Documents
 
         void StatusCallback(string status)
         {
-            Dispatcher.BeginInvoke((Action)(() => { CurrentStatus = status; }));
+            Dispatcher.BeginInvoke((System.Action)(() => { CurrentStatus = status; }));
         }
 
         void GetFolderDocuments()
@@ -795,7 +799,7 @@ namespace SirmiumERPGFC.Views.Documents
                             IsCopyInProgress = false;
                         }
 
-                        Dispatcher.BeginInvoke((Action)(() =>
+                        Dispatcher.BeginInvoke((System.Action)(() =>
                         {
                             FilesToUpload.Remove(item);
                         }));
@@ -1025,50 +1029,6 @@ namespace SirmiumERPGFC.Views.Documents
             }
         }
 
-        private void btnRecalculateIndexes_Click(object sender, RoutedEventArgs e)
-        {
-            Thread td = new Thread(() => {
-                try
-                {
-                    LoadingData = true;
-
-                    var clearResponse = documentFolderService.Clear(MainWindow.CurrentCompanyId);
-
-                    if(clearResponse.Success)
-                    {
-
-                        var azureClient = new AzureDataClient();
-                        var rootFolder = new DocumentFolderViewModel() {
-                            Identifier = Guid.NewGuid(),
-                            
-                            Name = "Documents",
-                            Path = azureClient.rootDirectory.Uri.LocalPath,
-                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
-                            CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
-                        };
-                        azureClient.IndexingDirectoryChanged += delegate (string currentPath, int totalIndexed)
-                        {
-                            CurrentStatus = $"Indexing: {totalIndexed}. {currentPath}";
-                        };
-                        azureClient.ResetIndexNumber();
-                        azureClient.GetDocumentFolders(documentFolderService, documentFileService, rootFolder, true);
-
-                        //DirectoryTreeItemViewModel dirIndex = azureClient.RecalculateIndex();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MainWindow.ErrorMessage = ex.Message;
-                } finally
-                {
-                    LoadingData = false;
-                }
-
-            });
-            td.IsBackground = true;
-            td.Start();
-        }
-
         private void btnSelectAllDocuments_Click(object sender, RoutedEventArgs e)
         {
             if(DocumentTreeFiles != null)
@@ -1293,6 +1253,13 @@ namespace SirmiumERPGFC.Views.Documents
                 td.IsBackground = true;
                 td.Start();
             }
+        }
+
+        private void btnRefreshFolders_Click(object sender, RoutedEventArgs e)
+        {
+            Thread td = new Thread(() => DisplayFolderTree(true));
+            td.IsBackground = true;
+            td.Start();
         }
     }
 }

@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Administrations"
+             xmlns:local="clr-namespace:SirmiumERPGFC.Views.Administrations" 
+             xmlns:local1="clr-namespace:WpfAppCommonCode.Converters;assembly=WpfAppCommonCode"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <local1:MultiConverter x:Key="MultiConverter" />
+    </UserControl.Resources>
 
     <Control.Background>
         <SolidColorBrush Color="White" />
@@ -74,5 +79,52 @@
             </StackPanel>
         </Button>
 
+        <Button Grid.Row="3" Grid.Column="1" x:Name="btnRecalculateIndexes" Margin="2" ToolTip="Indeksiraj foldere. Ova operacija će potrajati, u zavisnosti od količine podataka!"  IsEnabled="{Binding Path=DocumentIndexingButtonEnabled, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\..\Resources\Icons\Sunhronizuj.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                <TextBlock Text="{Binding Path=DocumentIndexingButtonContent, Mode=TwoWay}"  FontSize="20"/>
+            </StackPanel>
+        </Button>
+        <Popup x:Name="popRecalculateItems" PlacementTarget="{Binding ElementName=btnRecalculateIndexes}" Placement="Bottom" Focusable="True" StaysOpen="True" AllowsTransparency="True">
+            <Popup.IsOpen>
+                <MultiBinding Converter="{StaticResource MultiConverter}">
+                    <Binding ElementName="btnRecalculateIndexes" Path="IsFocused" Mode="OneWay"/>
+                    <Binding ElementName="btnRecalculate" Path="IsMouseCaptured" Mode="OneWay"/>
+                </MultiBinding>
+            </Popup.IsOpen>
+            <Border Height="Auto" HorizontalAlignment="Stretch" Background="White" BorderBrush="DeepSkyBlue" BorderThickness="5" CornerRadius="15">
+                <Grid Width="300" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Ova operacija će potrajati duže od sat vremena, da li ste sigurni da želite da nastavite? U toku indeksiranja neće biti moguće izlistavati dokumente!" Foreground="Black" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <Separator Grid.Row="2" Margin="2" />
+
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" x:Name="btnRecalculate" Click="btnRecalculateIndexes_Click" Margin="2" Background="DeepSkyBlue">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\_correct.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text=" DA "  FontWeight="Bold" Foreground="white"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Column="1" x:Name="btnDontRecalculate" Margin="2" Background="DeepSkyBlue">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="..\..\Resources\Icons\_cancel.png" HorizontalAlignment="Center" Height="16" Width="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                <TextBlock Text=" NE "  FontWeight="Bold" Foreground="white"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Popup>
     </Grid>
 </UserControl>
