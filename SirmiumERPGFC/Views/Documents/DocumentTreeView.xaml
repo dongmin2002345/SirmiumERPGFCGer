@@ -413,8 +413,8 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <DataGridTextColumn Header="File Name"  Binding="{Binding Name}" IsReadOnly="True" Width="*" />
-                                <DataGridTextColumn Header="FileSize" Binding="{Binding FileSize, StringFormat={}{0} KB}" IsReadOnly="True"  Width="Auto"/>
+                                <DataGridTextColumn Header="Naziv"  Binding="{Binding Name}" IsReadOnly="True" Width="*" />
+                                <DataGridTextColumn Header="Veličina" Binding="{Binding Size, StringFormat={}{0} KB}" IsReadOnly="True"  Width="Auto"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
