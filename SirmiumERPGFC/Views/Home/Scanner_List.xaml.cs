@@ -1,4 +1,12 @@
-﻿using SirmiumERPGFC.Helpers;
+﻿using Ninject;
+using ServiceInterfaces.Abstractions.Common.DocumentStores;
+using ServiceInterfaces.Messages.Common.Invoices;
+using ServiceInterfaces.ViewModels.Common.Companies;
+using ServiceInterfaces.ViewModels.Common.DocumentStores;
+using ServiceInterfaces.ViewModels.Common.Identity;
+using SirmiumERPGFC.Helpers;
+using SirmiumERPGFC.Infrastructure;
+using SirmiumERPGFC.Repository.DocumentStores;
 using SirmiumERPGFC.Scanners;
 using SirmiumERPGFC.ViewComponents.Dialogs;
 using System;
@@ -269,10 +277,52 @@ namespace SirmiumERPGFC.Views.Home
         }
         #endregion
 
+        #region DocumentSavePathOptions
+        private Dictionary<string, bool> _DocumentSavePathOptions = new Dictionary<string, bool>()
+        {
+            { "Local", true },
+            { "Server", false }
+        };
+
+        public Dictionary<string, bool> DocumentSavePathOptions
+        {
+            get { return _DocumentSavePathOptions; }
+            set
+            {
+                if (_DocumentSavePathOptions != value)
+                {
+                    _DocumentSavePathOptions = value;
+                    NotifyPropertyChanged("DocumentSavePathOptions");
+                }
+            }
+        }
+        #endregion
+
+        #region DocumentSavePathOption
+        private KeyValuePair<string, bool> _DocumentSavePathOption;
+
+        public KeyValuePair<string, bool> DocumentSavePathOption
+        {
+            get { return _DocumentSavePathOption; }
+            set
+            {
+                if (_DocumentSavePathOption.Key != value.Key)
+                {
+                    _DocumentSavePathOption = value;
+                    NotifyPropertyChanged("DocumentSavePathOption");
+                }
+            }
+        }
+        #endregion
+
+
+
         public Scanner_List()
         {
             InitializeComponent();
             this.DataContext = this;
+
+            DocumentSavePathOption = DocumentSavePathOptions.FirstOrDefault(x => x.Value == true);
 
             SelectedScanType = ScanTypeOptions.FirstOrDefault();
             SelectedDocumentHandlingType = DocumentHandlingTypes.FirstOrDefault();
@@ -313,11 +363,7 @@ namespace SirmiumERPGFC.Views.Home
 
                     CurrentDocumentFullPath = generator.Generate();
 
-                    bool homePage = true;
-                    Dispatcher.Invoke((Action)(() => {
-                        homePage = IsOnHomePage;
-                    }));
-                    if(homePage)
+                    if(DocumentSavePathOption.Value == true)
                     {
                         File.Copy(CurrentDocumentFullPath, $"{SelectedPath}\\{DocumentName}.pdf");
                         Dispatcher.BeginInvoke((Action)(() => {
@@ -325,12 +371,48 @@ namespace SirmiumERPGFC.Views.Home
                         }));
                     } else
                     {
+
+
+                        var documentFolderResp = new DocumentFolderSQLiteRepository().GetDirectoryByPath(MainWindow.CurrentCompanyId, SelectedPath);
+                        var documentFolder = documentFolderResp?.DocumentFolder ?? null;
+
+
                         var azureClient = new AzureDataClient();
+
+
+
                         var file = azureClient.GetFile($"{SelectedPath}/{DocumentName}.pdf");
                         file.UploadFromFile(CurrentDocumentFullPath);
-                        Dispatcher.BeginInvoke((Action)(() => {
-                            DocumentSaved?.Invoke(file.Uri.LocalPath);
-                        }));
+
+                        file.FetchAttributes();
+
+                        var documentFile = new DocumentFileViewModel()
+                        {
+                            Identifier = Guid.NewGuid(),
+                            Name = $"{DocumentName}.pdf",
+                            DocumentFolder = documentFolder,
+                            Path = file.Uri.LocalPath,
+                            Size = file.Properties.Length / 1024,
+                            CreatedAt = file.Properties.LastModified.Value.DateTime,
+                            Company = new CompanyViewModel() { Id = MainWindow.CurrentCompanyId },
+                            CreatedBy = new UserViewModel() { Id = MainWindow.CurrentUserId }
+                        };
+
+                        var documentFileService = DependencyResolver.Kernel.Get<IDocumentFileService>();
+
+                        var response = documentFileService.Create(documentFile);
+                        if(response.Success)
+                        {
+                            Dispatcher.BeginInvoke((Action)(() => {
+                                DocumentSaved?.Invoke(file.Uri.LocalPath);
+                            }));
+                        } else
+                        {
+                            MainWindow.WarningMessage = "Dokument je sačuvan na serveru ali nije indeksiran, molimo kontaktirajte administraciju!";
+                            Dispatcher.BeginInvoke((Action)(() => {
+                                DocumentSaved?.Invoke(file.Uri.LocalPath);
+                            }));
+                        }    
                     }
 
 
@@ -365,7 +447,7 @@ namespace SirmiumERPGFC.Views.Home
         {
             CanInteractWithForm = false;
 
-            if(IsOnHomePage)
+            if(DocumentSavePathOption.Value == true)
             {
                 var openFolderDialog = new FolderBrowserDialog();
                 DialogResult selectedRes = openFolderDialog.ShowDialog();

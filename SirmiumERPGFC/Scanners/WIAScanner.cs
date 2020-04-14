@@ -438,5 +438,11 @@ namespace SirmiumERPGFC.Scanners
             Prefeed = 0x100,
             AutoAdvance = 0x200
         }
+
+        public enum DocumentSavePathOption : uint
+        {
+            Local = 1,
+            Server = 0
+        }
     }
 }

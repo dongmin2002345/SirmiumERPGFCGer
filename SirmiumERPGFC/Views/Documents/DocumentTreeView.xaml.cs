@@ -386,6 +386,23 @@ namespace SirmiumERPGFC.Views.Documents
         }
         #endregion
 
+        #region FilesToMail
+        private ObservableCollection<DocumentFileViewModel> _FilesToMail;
+
+        public ObservableCollection<DocumentFileViewModel> FilesToMail
+        {
+            get { return _FilesToMail; }
+            set
+            {
+                if (_FilesToMail != value)
+                {
+                    _FilesToMail = value;
+                    NotifyPropertyChanged("FilesToMail");
+                }
+            }
+        }
+        #endregion
+
 
         public DocumentTreeView()
         {
@@ -400,6 +417,8 @@ namespace SirmiumERPGFC.Views.Documents
             FolderFilterObject.PropertyChanged += FolderFilterObject_PropertyChanged;
 
             azureClient = new AzureDataClient();
+
+            FilesToMail = new ObservableCollection<DocumentFileViewModel>();
 
             Thread td = new Thread(() => DisplayFolderTree(false));
             td.IsBackground = true;
@@ -421,7 +440,7 @@ namespace SirmiumERPGFC.Views.Documents
                         SelectedTreeItem = null;
                     }
 
-                    Thread td = new Thread(() => DisplayFolderTree());
+                    Thread td = new Thread(() => DisplayFolderTree(false));
                     td.IsBackground = true;
                     td.Start();
                 }
@@ -514,14 +533,25 @@ namespace SirmiumERPGFC.Views.Documents
         }
 
 
-        void GetDirectoryTree(DocumentFolderViewModel parent)
+        void GetDirectoryTree(DocumentFolderViewModel parent, bool isOpenFromParentExpandingEvent = false)
         {
             List<DocumentFolderViewModel> directories;
             try
             {
-                var response = new DocumentFolderSQLiteRepository().GetDocumentFolders(MainWindow.CurrentCompanyId, FolderFilterObject, false);
+                if(!isOpenFromParentExpandingEvent)
+                {
+                    var response = new DocumentFolderSQLiteRepository().GetDocumentFolders(MainWindow.CurrentCompanyId, FolderFilterObject, false);
 
-                directories = response?.DocumentFolders ?? new List<DocumentFolderViewModel>();
+                    directories = response?.DocumentFolders ?? new List<DocumentFolderViewModel>();
+                } else
+                {
+
+                    var response = new DocumentFolderSQLiteRepository().GetDocumentFolders(MainWindow.CurrentCompanyId, new DocumentFolderViewModel() { 
+                        Search_ParentId = parent.Id
+                    }, false);
+
+                    directories = response?.DocumentFolders ?? new List<DocumentFolderViewModel>();
+                }
             }
             catch (Exception ex)
             {
@@ -544,9 +574,9 @@ namespace SirmiumERPGFC.Views.Documents
                     if (FolderFilterObject.Search_MultiLevel)
                     {
                         FolderFilterObject.Search_ParentId = SelectedTreeItem?.Id;
-                        if(SelectedTreeItem != null && SelectedTreeItem.SubDirectories == null || SelectedTreeItem.SubDirectories.Count() < 1)
+                        if (SelectedTreeItem != null && SelectedTreeItem.SubDirectories == null || SelectedTreeItem.SubDirectories.Count() < 1)
                         {
-                            GetDirectoryTree(SelectedTreeItem);
+                            GetDirectoryTree(SelectedTreeItem, true);
                         }
                     }
 
@@ -1260,6 +1290,144 @@ namespace SirmiumERPGFC.Views.Documents
             Thread td = new Thread(() => DisplayFolderTree(true));
             td.IsBackground = true;
             td.Start();
+        }
+
+        private void BtnSendToMailingList_Click(object sender, RoutedEventArgs e)
+        {
+            Thread td = new Thread(() => { 
+                try
+                {
+                    LoadingData = true;
+
+                    var itemsToAdd = DocumentTreeFiles.Where(x => x.IsSelected)?.ToList() ?? new List<DocumentFileViewModel>();
+
+                    if(itemsToAdd.Count() < 1)
+                    {
+                        MainWindow.WarningMessage = "Morate odabrati bar jedan dokument!";
+                        LoadingData = false;
+                        return;
+                    } 
+
+                    foreach(var item in itemsToAdd)
+                    {
+                        if (FilesToMail.Any(x => x.Identifier == item.Identifier))
+                            continue;
+
+                        Dispatcher.BeginInvoke((System.Action)(() => {
+                            FilesToMail.Add(new DocumentFileViewModel()
+                            {
+                                Id = item.Id,
+                                Identifier = item.Identifier,
+
+                                Name = item.Name,
+                                Path = item.Path,
+                                DocumentFolder = item.DocumentFolder,
+                                Size = item.Size
+                            });
+                        }));
+
+                    }
+
+                    Dispatcher.BeginInvoke((System.Action)(() => {
+                        importAndMailExpander.IsExpanded = true;
+                        mailTab.IsSelected = true;
+                    }));
+
+                    LoadingData = false;
+                } catch(Exception ex)
+                {
+                    LoadingData = false;
+                    MainWindow.ErrorMessage = ex.Message;
+                }
+            });
+            td.IsBackground = true;
+            td.Start();
+        }
+
+        private void BtnSendMail_Click(object sender, RoutedEventArgs e)
+        {
+            Thread td = new Thread(() => {
+                try
+                {
+                    LoadingData = true;
+
+                    var itemsToSend = FilesToMail.Where(x => x.IsSelected)?.ToList() ?? new List<DocumentFileViewModel>();
+
+                    if (itemsToSend.Count() < 1)
+                    {
+                        MainWindow.WarningMessage = "Morate odabrati bar jedan dokument!";
+                        LoadingData = false;
+                        return;
+                    }
+
+                    var paths = itemsToSend.Select(x => x.Path);
+
+                    List<string> completedPaths = new List<string>();
+
+
+                    var azureClient = new AzureDataClient();
+                    foreach (var item in paths)
+                    {
+                        var file = azureClient.GetFile(item);
+
+                        var localPath = azureClient.DownloadFileToOpen(file, (progress, total) => {
+                            Debug.WriteLine($"{file.Name}: {progress} / {total}");
+                        });
+                        completedPaths.Add(localPath);
+                    }
+
+                    Dispatcher.BeginInvoke((System.Action)(() => {
+                        System.Windows.Forms.FolderBrowserDialog folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+                        var result = folderBrowser.ShowDialog();
+
+                        if (result == System.Windows.Forms.DialogResult.OK)
+                        {
+
+                            var path = ZipFileHelper.MakeArchiveFromFiles(completedPaths, folderBrowser.SelectedPath);
+
+                            if (!String.IsNullOrEmpty(path))
+                            {
+                                try
+                                {
+                                    string outlookPath = AppConfigurationHelper.Configuration?.OutlookDefinedPath ?? "";
+                                    Process.Start($"{outlookPath}", $"/a \"{path}\" /c ipm.note ");
+                                }
+                                catch (Exception error)
+                                {
+                                    MainWindow.ErrorMessage = ((string)System.Windows.Application.Current.FindResource("OutlookNijeInstaliranIliNijePovezanUzvicnik"));
+                                }
+                            }
+                        }
+                        LoadingData = false;
+                    }));
+                }
+                catch (Exception ex)
+                {
+                    LoadingData = false;
+                    MainWindow.ErrorMessage = ex.Message;
+                }
+            });
+            td.IsBackground = true;
+            td.Start();
+        }
+
+        private void btnRemoveToMail_Click(object sender, RoutedEventArgs e)
+        {
+            var itemsToRemove = FilesToMail.Where(x => x.IsSelected)?.ToList() ?? new List<DocumentFileViewModel>();
+            foreach (var item in itemsToRemove)
+                FilesToMail.Remove(item);
+        }
+
+        private void btnDeselectAllToMail_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in FilesToMail)
+                item.IsSelected = false;
+        }
+
+        private void btnSelectAllToMail_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in FilesToMail)
+                item.IsSelected = true; 
         }
     }
 }

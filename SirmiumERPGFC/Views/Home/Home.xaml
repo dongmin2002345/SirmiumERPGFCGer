@@ -21,7 +21,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
@@ -31,7 +31,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Image Grid.Row="0" Source="..\..\Resources\erp8.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                <Image Grid.Row="0" Source="..\..\Resources\erp8.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,10, 0, 0" />
                 <Image Grid.Row="1" Source="..\..\Resources\GFC.png" VerticalAlignment="Bottom" RenderOptions.BitmapScalingMode="HighQuality" Margin="15 40 15 15" />
             </Grid>
         </Grid>
